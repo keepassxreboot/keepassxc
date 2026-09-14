@@ -107,6 +107,8 @@
         <file>application/scalable/apps/keepassxc-monochrome-dark-locked.svg</file>
         <file>application/scalable/apps/keepassxc-monochrome-light.svg</file>
         <file>application/scalable/apps/keepassxc-monochrome-light-locked.svg</file>
+        <file>application/scalable/apps/keepassxc-monochrome-kde-plasma.svg</file>
+        <file>application/scalable/apps/keepassxc-monochrome-kde-plasma-locked.svg</file>
         <file>application/scalable/apps/keepassxc-locked.svg</file>
         <file>application/scalable/apps/keepassxc-unlocked.svg</file>
         <file>application/scalable/apps/preferences-desktop-icons.svg</file>
