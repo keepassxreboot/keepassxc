@@ -46,6 +46,7 @@ private slots:
     void testCleanUsername();
     void testCleanUsername_data();
     void testEscapeAccelerators();
+    void testResourcesInit();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H
