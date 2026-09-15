@@ -1052,7 +1052,17 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty()) {
         windowTitle = QString("%1[*]").arg(BaseWindowTitle);
     } else {
+        // removing [*] from the QString seems to solve the * problem mentioned in pr #11542
+        // but this was just a hacky see what happens so im not sure its an appropriate fix
         windowTitle = QString("%1[*] - %2").arg(customWindowTitlePart, BaseWindowTitle);
+    }
+
+    // PasswordGeneratorScreen seemed like another place the proxy icon was not needed whilst visually testing
+    if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == StackedWidgetIndex::SettingsScreen
+        || stackedWidgetIndex == StackedWidgetIndex::PasswordGeneratorScreen) {
+        setWindowFilePath("");
+    } else {
+        setWindowFilePath(m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath());
     }
 
     setWindowTitle(windowTitle);
