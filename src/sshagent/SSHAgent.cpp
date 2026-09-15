@@ -21,12 +21,12 @@
 #include "core/Config.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "crypto/Random.h"
 #include "sshagent/BinaryStream.h"
 #include "sshagent/KeeAgentSettings.h"
 
 #include <QFileInfo>
 #include <QLocalSocket>
-#include <QThread>
 
 #ifdef Q_OS_WIN
 #include <QtEndian>
@@ -211,9 +211,7 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
         return false;
     }
 
-    auto threadId = reinterpret_cast<qlonglong>(QThread::currentThreadId());
-    QByteArray mapName = (QString("SSHAgentRequest%1").arg(threadId, 8, 16, QChar('0'))).toLatin1();
-
+    QByteArray mapName = randomGen()->randomArray(16).toHex();
     HANDLE handle = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, AGENT_MAX_MSGLEN, mapName.data());
 
     if (!handle) {
