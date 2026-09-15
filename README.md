@@ -1,73 +1,79 @@
-# <img src="./logo.png" width="45" height="45" align="center" alt="KeePassXL Logo"/> KeePassXL
+<div align="center">
 
-![License](https://shields.io)
-![Platform](https://shields.io)
-![Status](https://shields.io)
+  <h1>
+    <img src="logo.png" width="60" height="60" alt="Logo"/> 
+    <br>
+    KeePassXL
+  </h1>
 
-[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6326/badge)](https://bestpractices.coreinfrastructure.org/projects/6326)
-[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(project:KeepassXC\)/statusIcon)](https://ci.keepassxc.org/?guest=1)
-[![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
-[![GitHub release](https://img.shields.io/github/release/keepassxreboot/keepassxc)](https://github.com/keepassxreboot/keepassxc/releases/)
+  <!-- Badges en fila horizontal -->
+  ![Static Badge](https://img.shields.io/badge/License-GPL--2.0%20%2F%20GPL--3.0-blue)
+  ![Static Badge](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-green)
+  ![Static Badge](https://img.shields.io/badge/Status-Active_Fork-orange)
+  ![Static Badge](https://img.shields.io/github/issues/DevGn0m3/KeePassXL/Help%20Wanted)
 
-[![Matrix community channel](https://img.shields.io/matrix/keepassxc:matrix.org?label=Community%20channel)](https://app.element.io/#/room/#keepassxc:mozilla.org)
-[![Matrix development channel](https://img.shields.io/matrix/keepassxc-dev:matrix.org?label=Development%20channel)](https://app.element.io/#/room/#keepassxc-dev:mozilla.org)
+</div>
 
-[KeePassXC](https://keepassxc.org) is a modern, secure, and open-source password manager that stores and manages your most sensitive information. You can run KeePassXC on Windows, macOS, and Linux systems. KeePassXC is for people with extremely high demands of secure personal data management. It saves many different types of information, such as usernames, passwords, URLs, attachments, and notes in an offline, encrypted file that can be stored in any location, including private and public cloud solutions. For easy identification and management, user-defined titles and icons can be specified for entries. In addition, entries are sorted into customizable groups. An integrated search function allows you to use advanced patterns to easily find any entry in your database. A customizable, fast, and easy-to-use password generator utility allows you to create passwords with any combination of characters or easy to remember passphrases.
 
-## Quick Start
 
-The [QuickStart Guide](https://keepassxc.org/docs/KeePassXC_GettingStarted.html) gets you started using KeePassXC on your Windows, macOS, or Linux computer using pre-compiled binaries from the [downloads page](https://keepassxc.org/download). Additionally, individual Linux distributions may ship their own versions, so please check your distribution's package list to see if KeePassXC is available. Detailed documentation is available in the [User Guide](https://keepassxc.org/docs/KeePassXC_UserGuide.html).
+**KeePassXL** (Cross-Platform Language / Mnemonic) is a modern, secure, and open-source password manager evolved from the original KeePassXC core. While preserving 100% compatibility with the offline KDBX encrypted format, KeePassXL bridges the critical gap between rigorous mathematical cryptography and real-world human memory. 
+
+Traditional single-language Diceware methods generate chaotic, disconnected strings of text that humans struggle to visualize. This psychological friction often drives users to lower their word count or write master keys down. **KeePassXL introduces an Advanced Multi-Language Grammatical Passphrase Generator**, allowing advanced power-users to build custom linguistic templates that weave dynamic vocabulary from separate uncorrelated databases (e.g., English, Spanish, German, Quechua, Nahuatl) alongside custom connector strings, *CamelCase* enforcement, and localized trailing safety patterns. 
+
+By creating an unpredictable "Blind Entropy" sentence structure, KeePassXL effectively breaks modern threat models—including massive neural-network password crackers (such as PassGAN) and AI-driven token probability optimizations—while keeping your master key profoundly memorable.
+
+---
+
+## ⚡ The Evolution: Intelligent Passphrases
+
+Under the **Passphrase -> Advanced** tab, KeePassXL expands your security matrix without changing the core database security schema:
+
+* **Blind Cross-Language Entropy:** Breaks single-language standard dictionaries. Attackers cannot predict linguistic syntax switches or multi-dictionary interleaving.
+* **Semantic Mnemonic Blueprints:** Define your own structural rules using placeholders (`[Word:ES]`, `[Word:EN]`, `[Pattern:ddd]`) to anchor complex phrases to your natural associative memory.
+* **Prototyped for the Real World:** We target current, AI-accelerated automated cracking systems by making the passphrase grammatical structure itself an unguessable secret variable known only to the user.
+
+---
 
 ## Features List
 
-KeePassXC has numerous features for novice and power users alike. Our goal is to create an application that can be used by anyone while still offering advanced features to those that need them.
+KeePassXL inherits all the rock-solid, production-grade features of the KeePassXC codebase while focusing our independent pipeline on generator upgrades.
 
 ### Core Features
+* **Format Stability:** Create, open, and save standard databases in the KDBX format (Fully compatible with KeePass, KeePassXC, Strongbox, and KeePassDX).
+* **Advanced Password & Passphrase Generator** with multi-dictionary and hybrid semantic syntax support.
+* **Full Encryption at Rest:** Sensitive keys are strictly isolated in memory and never exposed outside the runtime environment.
+* **Local First:** Operates entirely offline—giving you total control over where to store your encrypted vault, from local drives to secure self-hosted clouds.
+* **Browser Integration:** Native handshake with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, and Tor-Browser (including Passkeys support).
+* **Hardware Token Security:** Integrated YubiKey and OnlyKey challenge-response authentication mechanisms.
+* **Data Migration:** Easy import pipelines from CSV, 1Password, Bitwarden, Proton Pass, and legacy formats.
 
-* Create, open, and save databases in the KDBX format (KeePass-compatible with KDBX4 and KDBX3)
-* All information is encrypted at rest and never exposed outside the program
-* Store sensitive information in entries that are organized by groups
-* Password generator
-* Search for entries
-* TOTP storage and generation
-* YubiKey/OnlyKey challenge-response support
-* Auto-Type passwords into applications
-* Browser integration with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, and Tor-Browser
-* Support for passkeys using the browser integration
-* Entry icon download
-* Import databases from CSV, 1Password, Bitwarden, Proton Pass, and KeePass1 formats
+### Advanced Capabilities
+* **System Integrations:** SSH Agent integration and FreeDesktop.org Secret Service capabilities (to seamlessly replace Gnome Keyring, etc.).
+* **Command Line Utility:** Full access to your vault via `keepassxl-cli`.
+* **Deep Diagnostic Reports:** Database password health tracking, HIBP (Have I Been Pwned) integration, and password auditing statistics.
+* **Cipher Choices:** AES-256, Twofish, and ChaCha20 encryption standards.
 
-### Advanced
-* Database reports (password health, HIBP, and statistics)
-* Database export to CSV, XML, and HTML formats
-* TOTP storage and generation
-* Field references between entries
-* File attachments and custom attributes
-* Entry history and data restoration
-* Command line interface (keepassxc-cli)
-* SSH Agent integration
-* FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
-* Additional encryption choices: Twofish and ChaCha20
+---
 
-For a full list of changes, read the [CHANGELOG](CHANGELOG.md) document. \
-For a full list of keyboard shortcuts, see [KeyboardShortcuts.adoc](./docs/topics/KeyboardShortcuts.adoc)
+## 🛠️ Building & Contributing
 
-## Building KeePassXC
+KeePassXL is natively built on a powerful, cross-platform **C++ (Qt)** architecture. Modifying code in Windows compiles identically for Linux or macOS. 
 
-Detailed instructions are available in the [Build and Install](./INSTALL.md) page and in the [Wiki](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC).
+### Development Roadmap & Community Help
+Our core cryptographic upgrade is currently actively developed on Windows environments. We are a community-first fork that rejects rigid developmental constraints. 
+* **If you are a C++ / Qt developer (especially on Linux or macOS):** We are actively looking for contributors to help optimize our dynamic string parser pull-requests and maintain deployment packages (.deb, Flatpak, .dmg).
+* To learn how to build the application from source code, please review the [Build and Install](./INSTALL.md) guide.
 
-## Contributing
+Please check our [Issue Tracker](https://github.com) and filter by the **"Help Wanted"** label to see how you can help advance real-world password security.
 
-We are always looking for suggestions on how to improve KeePassXC. If you find any bugs or have an idea for a new feature, please let us know by opening a report in the [issue tracker](https://github.com/keepassxreboot/keepassxc/issues) on GitHub, or join us on [Matrix community channel](https://matrix.to/#/!zUxwGnFkUyycpxeHeM:matrix.org?via=matrix.org) or [Matrix development channel](https://matrix.to/#/!RhJPJPGwQIFVQeXqZa:matrix.org?via=matrix.org), or on IRC in [Libera.Chat](https://web.libera.chat/) channels #keepassxc and #keepassxc-dev.
+---
 
-You may directly contribute your own code by submitting a pull request. Please read the [CONTRIBUTING](.github/CONTRIBUTING.md) document for further information.
+## Generative AI & Code Integrity
 
-Contributors are required to adhere to the project's [Code of Conduct](CODE-OF-CONDUCT.md).
+We acknowledge that Generative AI is a standard element of modern development environments. Contributions leveraging AI assistants or automated agents are welcome, provided they go through our thorough review process. **Any automated or vibe-coded PR submissions must be transparently documented in the pull request.** Security and rigorous code inspection remain absolute.
 
-## Generative AI
-
-Generative AI is fast becoming a first-party feature in most development environments, including GitHub itself. If the majority of a code submission is made using Generative AI (e.g., agent-based or vibe coding) then **we will document that in the pull request.** All code submissions go through a rigorous review process regardless of the development workflow or submitter.
+---
 
 ## License
 
-KeePassXC code is licensed under GPL-2 or GPL-3. Additional licensing for third-party files is detailed in [COPYING](./COPYING).
+KeePassXL is proudly community-driven open-source software licensed under the **GPL-2 or GPL-3**. In accordance with the General Public License copyleft terms, this codebase remains fully open, free, and accessible to the public forever. Additional licensing details for third-party files can be found in the [COPYING](./COPYING) file.
