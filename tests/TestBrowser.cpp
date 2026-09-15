@@ -100,7 +100,7 @@ void TestBrowser::testEncryptMessage()
     encrypted = browserMessageBuilder()->encryptMessage(QJsonObject(), NONCE, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(encrypted.isEmpty());
 
-    // Succesful encryption
+    // Successful encryption
     encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
     QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
 
@@ -137,7 +137,7 @@ void TestBrowser::testDecryptMessage()
     decrypted = browserMessageBuilder()->decryptMessage(QString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(decrypted.isEmpty());
 
-    // Succesful decryption
+    // Successful decryption
     decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
     QCOMPARE(decrypted["action"].toString(), QString("test-action"));
 

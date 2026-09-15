@@ -30,8 +30,6 @@
 
 #include <botan/sodium.h>
 
-#define EXTRA_BYTES 16 // For crypto_box_easy()
-
 using namespace Botan::Sodium;
 
 Q_GLOBAL_STATIC(BrowserMessageBuilder, s_browserMessageBuilder);
@@ -240,7 +238,7 @@ QString BrowserMessageBuilder::encrypt(const QString& plaintext,
     }
 
     std::vector<unsigned char> encryptedData;
-    encryptedData.resize(maxLength + EXTRA_BYTES);
+    encryptedData.resize(maxLength + crypto_box_MACBYTES);
 
     if (crypto_box_easy(encryptedData.data(),
                         messageVec.data(),
@@ -249,7 +247,7 @@ QString BrowserMessageBuilder::encrypt(const QString& plaintext,
                         publicKeyVec.data(),
                         secretKeyVec.data())
         == 0) {
-        const auto res = getQByteArray(encryptedData.data(), (EXTRA_BYTES + messageBytes.length()));
+        const auto res = getQByteArray(encryptedData.data(), (crypto_box_MACBYTES + messageBytes.length()));
         return res.toBase64();
     }
 
@@ -263,7 +261,7 @@ QByteArray BrowserMessageBuilder::decrypt(const QString& encrypted,
                                           const qsizetype maxLength)
 {
     const QByteArray encryptedBytes = base64Decode(encrypted);
-    if (encryptedBytes.length() > maxLength + EXTRA_BYTES) {
+    if (encryptedBytes.length() > maxLength + crypto_box_MACBYTES) {
         qWarning() << "Message length" << encryptedBytes.length() << "exceeds the maximum size.";
         return {};
     }
@@ -295,7 +293,7 @@ QByteArray BrowserMessageBuilder::decrypt(const QString& encrypted,
     }
 
     std::vector<unsigned char> decryptedData;
-    decryptedData.resize(maxLength + EXTRA_BYTES);
+    decryptedData.resize(maxLength + crypto_box_MACBYTES);
 
     if (crypto_box_open_easy(decryptedData.data(),
                              encryptedVec.data(),
