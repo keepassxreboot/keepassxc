@@ -197,9 +197,15 @@ if(UNIX)
     int main() { return 0; }"
             HAVE_MALLOC_H)
 
-    check_cxx_source_compiles("#include <malloc.h>
-    int main() { malloc_usable_size(NULL); return 0; }"
-            HAVE_MALLOC_USABLE_SIZE)
+    if(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+        check_cxx_source_compiles("#include <malloc_np.h>
+        int main() { malloc_usable_size(nullptr); return 0; }"
+                HAVE_MALLOC_USABLE_SIZE)
+    else()
+        check_cxx_source_compiles("#include <malloc.h>
+        int main() { malloc_usable_size(nullptr); return 0; }"
+                HAVE_MALLOC_USABLE_SIZE)
+    endif()
 
     check_cxx_source_compiles("#include <sys/resource.h>
     int main() {

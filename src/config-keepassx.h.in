@@ -41,6 +41,10 @@
 #cmakedefine HAVE_RLIMIT_CORE 1
 #cmakedefine HAVE_PT_DENY_ATTACH 1
 
+/* Secure deallocation */
+#cmakedefine HAVE_MALLOC_H 1
+#cmakedefine HAVE_MALLOC_USABLE_SIZE 1
+
 /* macOS Feature Support */
 #cmakedefine01 XC_APPLE_COMPILER_SUPPORT_BIOMETRY()
 #cmakedefine01 XC_APPLE_COMPILER_SUPPORT_TOUCH_ID()
