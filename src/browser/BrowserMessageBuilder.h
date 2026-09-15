@@ -107,6 +107,7 @@ public:
     QByteArray getArrayFromBase64(const QString& base64str) const;
     QByteArray getSha256Hash(const QString& str) const;
     QString getSha256HashAsBase64(const QString& str) const;
+    QStringList getStringListFromJsonArray(const QJsonArray& jsonArray) const;
 
 private:
     Q_DISABLE_COPY(BrowserMessageBuilder);
