@@ -7529,7 +7529,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Quality: %1</source>
@@ -7844,7 +7844,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Export an attachment of an entry.</source>
@@ -9843,7 +9843,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reason</source>
