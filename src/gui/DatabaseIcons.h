@@ -40,7 +40,8 @@ public:
     {
         ShareActive = 0,
         ShareInactive,
-        Expired
+        Expired,
+        Modified
     };
 
     QPixmap icon(int index, IconSize size = IconSize::Default);

@@ -712,11 +712,17 @@ void Database::setFilePath(const QString& filePath)
     if (filePath != m_data.filePath) {
         QString oldPath = m_data.filePath;
         m_data.filePath = filePath;
+        updateSavedFileModifiedTime();
         // Don't watch for changes until the next open or save operation
         m_fileWatcher->stop();
         m_ignoreFileChangesUntilSaved = false;
         emit filePathChanged(oldPath, filePath);
     }
+}
+
+QDateTime Database::savedFileModifiedTime() const
+{
+    return m_savedFileModifiedTime;
 }
 
 const QByteArray& Database::fileBlockHash() const
@@ -1057,9 +1063,21 @@ void Database::markAsClean()
     m_modified = false;
     stopModifiedTimer();
     m_hasNonDataChange = false;
+    updateSavedFileModifiedTime();
     if (emitSignal) {
         emit databaseSaved();
     }
+}
+
+void Database::updateSavedFileModifiedTime()
+{
+    if (m_data.filePath.isEmpty()) {
+        m_savedFileModifiedTime = {};
+        return;
+    }
+
+    const QFileInfo databaseFile(m_data.filePath);
+    m_savedFileModifiedTime = databaseFile.exists() ? databaseFile.lastModified().toUTC() : QDateTime{};
 }
 
 void Database::markNonDataChange()
