@@ -11,6 +11,8 @@
   ![Static Badge](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-green)
   ![Static Badge](https://img.shields.io/badge/Status-Active_Fork-orange)
   ![Static Badge](https://img.shields.io/github/issues/DevGn0m3/KeePassXL/Help%20Wanted)
+  ![Help Wanted](https://img.shields.io/badge/help%20wanted-contribute-blue)
+
 
 </div>
 
