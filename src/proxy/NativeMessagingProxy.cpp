@@ -93,10 +93,10 @@ void NativeMessagingProxy::setupLocalSocket()
 {
     m_localSocket.reset(new QLocalSocket());
     m_localSocket->connectToServer(BrowserShared::localServerPath());
-    m_localSocket->setReadBufferSize(BrowserShared::NATIVEMSG_MAX_LENGTH);
+    m_localSocket->setReadBufferSize(BrowserShared::SOCKET_BUFFER_SIZE);
     int socketDesc = m_localSocket->socketDescriptor();
     if (socketDesc) {
-        int max = BrowserShared::NATIVEMSG_MAX_LENGTH;
+        int max = BrowserShared::SOCKET_BUFFER_SIZE;
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 

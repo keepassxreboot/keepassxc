@@ -28,10 +28,6 @@
 #include <QDebug>
 #endif
 
-#include <botan/sodium.h>
-
-using namespace Botan::Sodium;
-
 Q_GLOBAL_STATIC(BrowserMessageBuilder, s_browserMessageBuilder);
 
 BrowserMessageBuilder* BrowserMessageBuilder::instance()
@@ -166,15 +162,17 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
 QString BrowserMessageBuilder::encryptMessage(const QJsonObject& message,
                                               const QString& nonce,
                                               const QString& publicKey,
-                                              const QString& secretKey)
+                                              const QString& secretKey,
+                                              const qsizetype maxLength,
+                                              const qsizetype macBytes)
 {
     if (message.isEmpty() || nonce.isEmpty()) {
         return {};
     }
 
-    const QString reply(QJsonDocument(message).toJson());
+    const auto reply(QJsonDocument(message).toJson());
     if (!reply.isEmpty()) {
-        return encrypt(reply, nonce, publicKey, secretKey);
+        return encrypt(reply, nonce, publicKey, secretKey, maxLength, macBytes);
     }
 
     return {};
@@ -183,13 +181,15 @@ QString BrowserMessageBuilder::encryptMessage(const QJsonObject& message,
 QJsonObject BrowserMessageBuilder::decryptMessage(const QString& message,
                                                   const QString& nonce,
                                                   const QString& publicKey,
-                                                  const QString& secretKey)
+                                                  const QString& secretKey,
+                                                  const qsizetype maxLength,
+                                                  const qsizetype macBytes)
 {
     if (message.isEmpty() || nonce.isEmpty()) {
         return {};
     }
 
-    QByteArray ba = decrypt(message, nonce, publicKey, secretKey);
+    const auto ba = decrypt(message, nonce, publicKey, secretKey, maxLength, macBytes);
     if (ba.isEmpty()) {
         return {};
     }
@@ -200,28 +200,59 @@ QJsonObject BrowserMessageBuilder::decryptMessage(const QString& message,
 QString BrowserMessageBuilder::encrypt(const QString& plaintext,
                                        const QString& nonce,
                                        const QString& publicKey,
-                                       const QString& secretKey)
+                                       const QString& secretKey,
+                                       const qsizetype maxLength,
+                                       const qsizetype macBytes)
 {
-    const QByteArray ma = plaintext.toUtf8();
-    const QByteArray na = base64Decode(nonce);
-    const QByteArray ca = base64Decode(publicKey);
-    const QByteArray sa = base64Decode(secretKey);
-
-    std::vector<unsigned char> m(ma.cbegin(), ma.cend());
-    std::vector<unsigned char> n(na.cbegin(), na.cend());
-    std::vector<unsigned char> ck(ca.cbegin(), ca.cend());
-    std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
-
-    std::vector<unsigned char> e;
-    e.resize(BrowserShared::NATIVEMSG_MAX_LENGTH);
-
-    if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
+    const QByteArray messageBytes = plaintext.toUtf8();
+    if (messageBytes.length() > maxLength) {
+        qWarning() << "Message length" << messageBytes.length() << "exceeds the maximum size.";
         return {};
     }
 
-    if (crypto_box_easy(e.data(), m.data(), m.size(), n.data(), ck.data(), sk.data()) == 0) {
-        QByteArray res = getQByteArray(e.data(), (crypto_box_MACBYTES + ma.length()));
-        return res.toBase64();
+    const QByteArray nonceBytes = base64Decode(nonce);
+    if (nonceBytes.length() != crypto_box_NONCEBYTES) {
+        qWarning() << "Nonce length" << nonceBytes.length() << "is invalid.";
+        return {};
+    }
+
+    const QByteArray publicKeyBytes = base64Decode(publicKey);
+    if (publicKeyBytes.length() != crypto_box_PUBLICKEYBYTES) {
+        qWarning() << "Public key length" << publicKeyBytes.length() << "is invalid.";
+        return {};
+    }
+
+    const QByteArray secretKeyBytes = base64Decode(secretKey);
+    if (secretKeyBytes.length() != crypto_box_SECRETKEYBYTES) {
+        qWarning() << "Secret key length" << secretKeyBytes.length() << "is invalid.";
+        return {};
+    }
+
+    const std::vector<unsigned char> messageVec(messageBytes.cbegin(), messageBytes.cend());
+    const std::vector<unsigned char> nonceVec(nonceBytes.cbegin(), nonceBytes.cend());
+    const std::vector<unsigned char> publicKeyVec(publicKeyBytes.cbegin(), publicKeyBytes.cend());
+    const std::vector<unsigned char> secretKeyVec(secretKeyBytes.cbegin(), secretKeyBytes.cend());
+    if (messageVec.empty() || nonceVec.empty() || publicKeyVec.empty() || secretKeyVec.empty()) {
+        return {};
+    }
+
+    std::vector<unsigned char> encryptedData;
+    encryptedData.resize(maxLength + macBytes);
+
+    if (crypto_box_easy(encryptedData.data(),
+                        messageVec.data(),
+                        messageVec.size(),
+                        nonceVec.data(),
+                        publicKeyVec.data(),
+                        secretKeyVec.data())
+        == 0) {
+        const auto res = getQByteArray(encryptedData.data(), (macBytes + messageBytes.length()));
+        const auto resBase64 = res.toBase64();
+        if (resBase64.length() > BrowserShared::SOCKET_BUFFER_SIZE) {
+            qWarning() << "Encoded message length" << resBase64.length() << "exceeds the maximum socket buffer size.";
+            return {};
+        }
+        return resBase64;
     }
 
     return {};
@@ -230,27 +261,60 @@ QString BrowserMessageBuilder::encrypt(const QString& plaintext,
 QByteArray BrowserMessageBuilder::decrypt(const QString& encrypted,
                                           const QString& nonce,
                                           const QString& publicKey,
-                                          const QString& secretKey)
+                                          const QString& secretKey,
+                                          const qsizetype maxLength,
+                                          const qsizetype macBytes)
 {
-    const QByteArray ma = base64Decode(encrypted);
-    const QByteArray na = base64Decode(nonce);
-    const QByteArray ca = base64Decode(publicKey);
-    const QByteArray sa = base64Decode(secretKey);
-
-    std::vector<unsigned char> m(ma.cbegin(), ma.cend());
-    std::vector<unsigned char> n(na.cbegin(), na.cend());
-    std::vector<unsigned char> ck(ca.cbegin(), ca.cend());
-    std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
-
-    std::vector<unsigned char> d;
-    d.resize(BrowserShared::NATIVEMSG_MAX_LENGTH);
-
-    if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
+    const QByteArray encryptedBytes = base64Decode(encrypted);
+    if (encryptedBytes.size() == 0 && encrypted.size() > 0) {
+        qWarning() << "Message is not a valid base64 encoded string.";
+    }
+    if (maxLength < 0 || encryptedBytes.size() < macBytes) {
+        qWarning() << "Message length" << encryptedBytes.length() << "is smaller than required.";
+        return {};
+    }
+    if (encryptedBytes.size() - macBytes > maxLength) {
+        qWarning() << "Message length" << encryptedBytes.length() << "exceeds the maximum size.";
         return {};
     }
 
-    if (crypto_box_open_easy(d.data(), m.data(), ma.length(), n.data(), ck.data(), sk.data()) == 0) {
-        return getQByteArray(d.data(), std::char_traits<char>::length(reinterpret_cast<const char*>(d.data())));
+    const QByteArray nonceBytes = base64Decode(nonce);
+    if (nonceBytes.length() != crypto_box_NONCEBYTES) {
+        qWarning() << "Nonce length" << nonceBytes.length() << "is invalid.";
+        return {};
+    }
+
+    const QByteArray publicKeyBytes = base64Decode(publicKey);
+    if (publicKeyBytes.length() != crypto_box_PUBLICKEYBYTES) {
+        qWarning() << "Public key length" << publicKeyBytes.length() << "is invalid.";
+        return {};
+    }
+
+    const QByteArray secretKeyBytes = base64Decode(secretKey);
+    if (secretKeyBytes.length() != crypto_box_SECRETKEYBYTES) {
+        qWarning() << "Secret key length" << secretKeyBytes.length() << "is invalid.";
+        return {};
+    }
+
+    const std::vector<unsigned char> encryptedVec(encryptedBytes.cbegin(), encryptedBytes.cend());
+    const std::vector<unsigned char> nonceVec(nonceBytes.cbegin(), nonceBytes.cend());
+    const std::vector<unsigned char> publicKeyVec(publicKeyBytes.cbegin(), publicKeyBytes.cend());
+    const std::vector<unsigned char> secretKeyVec(secretKeyBytes.cbegin(), secretKeyBytes.cend());
+    if (encryptedVec.empty() || nonceVec.empty() || publicKeyVec.empty() || secretKeyVec.empty()) {
+        return {};
+    }
+
+    std::vector<unsigned char> decryptedData;
+    decryptedData.resize(encryptedVec.size() - macBytes);
+
+    if (crypto_box_open_easy(decryptedData.data(),
+                             encryptedVec.data(),
+                             encryptedBytes.length(),
+                             nonceVec.data(),
+                             publicKeyVec.data(),
+                             secretKeyVec.data())
+        == 0) {
+        return getQByteArray(decryptedData.data(), decryptedData.size());
     }
 
     return {};
@@ -299,12 +363,18 @@ QJsonObject BrowserMessageBuilder::getJsonObject(const QByteArray& ba) const
 
 QByteArray BrowserMessageBuilder::base64Decode(const QString& str)
 {
-    return QByteArray::fromBase64(str.toUtf8());
+    // Returns an empty QByteArray if the string is not valid base64
+    return QByteArray::fromBase64(str.toUtf8(), QByteArray::AbortOnBase64DecodingErrors);
 }
 
 QString BrowserMessageBuilder::incrementNonce(const QString& nonce)
 {
     const QByteArray nonceArray = base64Decode(nonce);
+    if (nonceArray.length() != crypto_box_NONCEBYTES) {
+        qWarning() << "Nonce length" << nonceArray.length() << "is invalid.";
+        return {};
+    }
+
     std::vector<unsigned char> n(nonceArray.cbegin(), nonceArray.cend());
 
     sodium_increment(n.data(), n.size());
