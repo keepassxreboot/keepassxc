@@ -357,7 +357,9 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
     return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
-        .arg((get ? QString("webauthn.get") : QString("webauthn.create")), publicKey["challenge"].toString(), origin);
+        .arg((get ? QString("webauthn.get") : QString("webauthn.create")),
+             publicKey["challenge"].toString(),
+             origin);
 }
 
 QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const

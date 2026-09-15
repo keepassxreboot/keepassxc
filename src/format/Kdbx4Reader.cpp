@@ -169,6 +169,10 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device, Database* db)
         raiseError(tr("Invalid header field length: field %1").arg(fieldID));
         return false;
     }
+    if (fieldLen > 1024 * 1024) {
+        raiseError(tr("Invalid header field length: field %1").arg(fieldID));
+        return false;
+    }
 
     QByteArray fieldData;
     if (fieldLen != 0) {
@@ -261,6 +265,10 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
     if (!ok) {
+        raiseError(tr("Invalid inner header field length: field %1").arg(static_cast<int>(fieldID)));
+        return false;
+    }
+    if (fieldLen > 1024u * 1024u * 1024u) {
         raiseError(tr("Invalid inner header field length: field %1").arg(static_cast<int>(fieldID)));
         return false;
     }

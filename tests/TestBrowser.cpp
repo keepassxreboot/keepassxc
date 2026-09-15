@@ -631,6 +631,30 @@ void TestBrowser::testSubdomainsAndPaths()
     QCOMPARE(result.length(), 1);
 }
 
+void TestBrowser::testSubdomainAnchor()
+{
+    const QString entryUrl = "https://bad.example.com";
+
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+    auto* entry = new Entry();
+    entry->setGroup(root);
+    entry->setUrl(entryUrl);
+    entry->setUsername("u");
+    entry->setPassword("p");
+
+    // exact
+    QCOMPARE(m_browserService->searchEntries(db, "https://bad.example.com", "").length(), 1);
+    // true subdomain
+    QCOMPARE(m_browserService->searchEntries(db, "https://login.bad.example.com", "").length(), 1);
+    // sibling host (regression for endsWith bug)
+    QCOMPARE(m_browserService->searchEntries(db, "https://notbad.example.com", "").length(), 0);
+    // sibling on same eTLD+1
+    QCOMPARE(m_browserService->searchEntries(db, "https://good.example.com", "").length(), 0);
+    // unrelated
+    QCOMPARE(m_browserService->searchEntries(db, "https://attacker.test", "").length(), 0);
+}
+
 QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root, bool additionalUrl) const
 {
     QList<Entry*> entries;
