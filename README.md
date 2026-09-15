@@ -1,4 +1,4 @@
-# <img src="./logo.svg" width="45" height="45" align="center" alt="KeePassXL Logo"/> KeePassXL
+# <img src="./logo.png" width="45" height="45" align="center" alt="KeePassXL Logo"/> KeePassXL
 
 ![License](https://shields.io)
 ![Platform](https://shields.io)
