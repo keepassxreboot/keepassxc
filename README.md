@@ -1,4 +1,8 @@
-# <img src="https://keepassxc.org/assets/img/keepassxc.svg" width="40" height="40"/> KeePassXC
+# <img src="./logo.svg" width="45" height="45" align="center" alt="KeePassXL Logo"/> KeePassXL
+
+![License](https://shields.io)
+![Platform](https://shields.io)
+![Status](https://shields.io)
 
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6326/badge)](https://bestpractices.coreinfrastructure.org/projects/6326)
 [![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(project:KeepassXC\)/statusIcon)](https://ci.keepassxc.org/?guest=1)
