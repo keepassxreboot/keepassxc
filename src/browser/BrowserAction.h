@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <QString>
 
 class QLocalSocket;
+class QWebSocket;
 
 struct BrowserRequest
 {
@@ -66,16 +67,16 @@ public:
     explicit BrowserAction() = default;
     ~BrowserAction() = default;
 
-    QJsonObject processClientMessage(QLocalSocket* socket, const QJsonObject& json);
+    template <typename T> QJsonObject processClientMessage(T* socket, const QJsonObject& json);
 
 private:
-    QJsonObject handleAction(QLocalSocket* socket, const QJsonObject& json);
+    template <typename T> QJsonObject handleAction(T* socket, const QJsonObject& json);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseHash(const QJsonObject& json, const QString& action);
     QJsonObject handleAssociate(const QJsonObject& json, const QString& action);
     QJsonObject handleTestAssociate(const QJsonObject& json, const QString& action);
     QJsonObject handleGetLogins(const QJsonObject& json, const QString& action);
-    QJsonObject handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action);
+    template <typename T> QJsonObject handleGeneratePassword(T* socket, const QJsonObject& json, const QString& action);
     QJsonObject handleSetLogin(const QJsonObject& json, const QString& action);
     QJsonObject handleLockDatabase(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseGroups(const QJsonObject& json, const QString& action);

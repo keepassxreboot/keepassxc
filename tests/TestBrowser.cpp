@@ -64,7 +64,7 @@ void TestBrowser::testChangePublicKeys()
     json["publicKey"] = PUBLICKEY;
     json["nonce"] = NONCE;
 
-    auto response = m_browserAction->processClientMessage(nullptr, json);
+    auto response = m_browserAction->processClientMessage<QLocalSocket>(nullptr, json);
     QCOMPARE(response["action"].toString(), QString("change-public-keys"));
     QCOMPARE(response["publicKey"].toString() == PUBLICKEY, false);
     QCOMPARE(response["success"].toString(), TRUE_STR);
