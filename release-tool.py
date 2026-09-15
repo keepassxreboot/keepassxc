@@ -234,6 +234,23 @@ def _cmd_exists(cmd, path=None):
     return shutil.which(cmd, path=path) is not None
 
 
+def _cmake_option_is_set(options, name):
+    """Return whether a CMake -D option was explicitly supplied."""
+    option = re.compile(rf'^-D{re.escape(name)}(?::[^=]+)?(?:=|$)')
+    return any(option.match(str(value)) for value in options)
+
+
+def _add_windows_vcpkg_triplet(cmake_opts, platform_target):
+    """Map --platform-target to the built-in vcpkg Windows triplet, without
+    overriding an explicit VCPKG_TARGET_TRIPLET CMake option."""
+    triplets = {
+        'amd64': 'x64-windows',
+        'arm64': 'arm64-windows',
+    }
+    if not _cmake_option_is_set(cmake_opts, 'VCPKG_TARGET_TRIPLET'):
+        cmake_opts.append(f'-DVCPKG_TARGET_TRIPLET={triplets[platform_target]}')
+
+
 def _git_working_dir_clean(*, cwd):
     """Check whether the Git working directory is clean."""
     return _run(['git', 'diff-index', '--quiet', 'HEAD', '--'], check=False, cwd=cwd).returncode == 0
@@ -754,13 +771,19 @@ class Build(Command):
 
     # noinspection PyMethodMayBeStatic
     def build_windows(self, version, src_dir, output_dir, *, parallelism, cmake_opts, platform_target,
-                      sign, sign_identity, sign_timestamp_url, with_tests, mingw, **_):
+                      sign, sign_identity, sign_timestamp_url, with_tests, mingw, use_system_deps,
+                      build_qt, **_):
         # Setup build signing if requested
         if sign:
             cmake_opts.append(f'-DWITH_XC_CODESIGN_IDENTITY={sign_identity}')
             cmake_opts.append(f'-DWITH_XC_CODESIGN_TIMESTAMP_URL={sign_timestamp_url}')
-        # Use vcpkg for dependency deployment
-        cmake_opts.append('-DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON')
+        # windeployqt must run before app-local copying when Qt comes from
+        # vcpkg, otherwise it can lock DLLs that it subsequently replaces.
+        app_local_install = 'OFF' if build_qt else 'ON'
+        cmake_opts.append(f'-DX_VCPKG_APPLOCAL_DEPS_INSTALL={app_local_install}')
+
+        if not mingw and not use_system_deps:
+            _add_windows_vcpkg_triplet(cmake_opts, platform_target)
 
         if mingw:
             vs_env = os.environ.copy()

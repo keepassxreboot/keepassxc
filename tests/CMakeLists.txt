@@ -33,6 +33,20 @@ function(add_unit_test)
     set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8")
 endfunction()
 
+# Regression coverage for the Windows Arm64 windeployqt host-triplet resolution
+# (see cmake/KPXCWindowsDeployQt.cmake). Pure CMake script tests, so they can run
+# on any host platform, not just Windows.
+add_test(NAME test_windows_deployqt_host_triplet_set
+        COMMAND ${CMAKE_COMMAND} -DTEST_CASE=host-triplet-set
+                -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_windows_deployqt_host_triplet.cmake")
+add_test(NAME test_windows_deployqt_host_triplet_arm64
+        COMMAND ${CMAKE_COMMAND} -DTEST_CASE=host-triplet-arm64
+                -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_windows_deployqt_host_triplet.cmake")
+add_test(NAME test_windows_deployqt_host_triplet_unset
+        COMMAND ${CMAKE_COMMAND} -DTEST_CASE=host-triplet-unset
+                -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_windows_deployqt_host_triplet.cmake")
+set_tests_properties(test_windows_deployqt_host_triplet_unset PROPERTIES WILL_FAIL TRUE)
+
 set(TEST_LIBRARIES keepassxc_gui Qt6::Test)
 
 set(testsupport_SOURCES
