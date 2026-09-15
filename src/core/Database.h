@@ -151,6 +151,13 @@ public:
                 bool updateChangedTime = true,
                 bool updateTransformSalt = false,
                 bool transformKey = true);
+    // Snapshot of the master key prior to a change-key, kept transiently so
+    // the cloud-sync engine can unlock the remote DB (which still holds the
+    // old key) and migrate it to the new key. Cleared on successful sync
+    // upload, on releaseData (lock/close), and on destruction. Not persisted.
+    void setSyncPreviousKey(const QSharedPointer<const CompositeKey>& key);
+    QSharedPointer<const CompositeKey> syncPreviousKey() const;
+    void clearSyncPreviousKey();
     QString keyError();
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
@@ -253,6 +260,7 @@ private:
     bool m_hasNonDataChange = false;
     QString m_keyError;
     bool m_isTemporaryDatabase = false;
+    QSharedPointer<const CompositeKey> m_syncPreviousKey;
 
     QStringList m_commonUsernames;
     QStringList m_tagList;

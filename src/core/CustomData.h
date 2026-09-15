@@ -73,6 +73,7 @@ public:
     static const QString FdoSecretsExposedGroup;
     static const QString RandomSlug;
     static const QString RemoteProgramSettings;
+    static const QString CloudSyncSettings;
 
     // Pre-KDBX 4.1
     static const QString ExcludeFromReportsLegacy;

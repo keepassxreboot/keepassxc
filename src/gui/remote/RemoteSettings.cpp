@@ -19,11 +19,14 @@
 
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "remotesync/RemoteSyncParams.h"
+#include "remotesync/RemoteSyncProvider.h"
 
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QScopedPointer>
 
 RemoteSettings::RemoteSettings(const QSharedPointer<Database>& db, QObject* parent)
     : QObject(parent)
@@ -31,22 +34,21 @@ RemoteSettings::RemoteSettings(const QSharedPointer<Database>& db, QObject* pare
     setDatabase(db);
 }
 
-RemoteSettings::~RemoteSettings() = default;
-
 void RemoteSettings::setDatabase(const QSharedPointer<Database>& db)
 {
     m_remoteParams.clear();
+    m_cloudConfig = QJsonObject();
     m_db = db;
     loadSettings();
 }
 
-void RemoteSettings::addRemoteParams(RemoteParams* params)
+void RemoteSettings::addRemoteParams(RemoteParams params)
 {
-    if (params->name.isEmpty()) {
+    if (params.name.isEmpty()) {
         qWarning() << "RemoteSettings::addRemoteParams: Remote parameters name is empty";
         return;
     }
-    m_remoteParams.insert(params->name, params);
+    m_remoteParams.insert(params.name, std::move(params));
 }
 
 void RemoteSettings::removeRemoteParams(const QString& name)
@@ -56,47 +58,102 @@ void RemoteSettings::removeRemoteParams(const QString& name)
 
 RemoteParams* RemoteSettings::getRemoteParams(const QString& name) const
 {
-    if (m_remoteParams.contains(name)) {
-        return m_remoteParams.value(name);
+    auto it = m_remoteParams.constFind(name);
+    if (it == m_remoteParams.constEnd()) {
+        return nullptr;
     }
-    return nullptr;
+    // Logical-const accessor; callers expect a mutable pointer.
+    return const_cast<RemoteParams*>(&it.value());
 }
 
 QList<RemoteParams*> RemoteSettings::getAllRemoteParams() const
 {
-    return m_remoteParams.values();
+    QList<RemoteParams*> result;
+    result.reserve(m_remoteParams.size());
+    for (auto it = m_remoteParams.constBegin(); it != m_remoteParams.constEnd(); ++it) {
+        // See getRemoteParams above for the const_cast rationale.
+        result.append(const_cast<RemoteParams*>(&it.value()));
+    }
+    return result;
+}
+
+QJsonObject RemoteSettings::cloudSyncConfig() const
+{
+    return m_cloudConfig;
+}
+
+void RemoteSettings::setCloudSyncConfig(const QJsonObject& config)
+{
+    m_cloudConfig = config;
+}
+
+void RemoteSettings::clearCloudSyncConfig()
+{
+    m_cloudConfig = QJsonObject();
+}
+
+QString RemoteSettings::activeProvider() const
+{
+    return m_cloudConfig.value(RemoteSyncConfigKeys::Type).toString();
 }
 
 void RemoteSettings::loadSettings()
 {
     if (m_db) {
         fromConfig(m_db->metadata()->customData()->value(CustomData::RemoteProgramSettings));
+        fromCloudConfig(m_db->metadata()->customData()->value(CustomData::CloudSyncSettings));
     }
 }
 
 void RemoteSettings::saveSettings() const
 {
-    if (m_db) {
-        m_db->metadata()->customData()->set(CustomData::RemoteProgramSettings, toConfig());
+    if (!m_db) {
+        return;
     }
+    auto* cd = m_db->metadata()->customData();
+    cd->set(CustomData::RemoteProgramSettings, toConfig());
+    if (m_cloudConfig.isEmpty()) {
+        // Don't leave a stale "{}" key on disk when cloud sync is cleared.
+        if (cd->contains(CustomData::CloudSyncSettings)) {
+            cd->remove(CustomData::CloudSyncSettings);
+        }
+    } else {
+        cd->set(CustomData::CloudSyncSettings, toCloudConfig());
+    }
+}
+
+bool RemoteSettings::hasAnySync() const
+{
+    if (!m_remoteParams.isEmpty()) {
+        return true;
+    }
+    if (m_cloudConfig.isEmpty()) {
+        return false;
+    }
+    const QString type = activeProvider();
+    QScopedPointer<RemoteSyncProvider> provider(RemoteSyncProvider::create(type, nullptr));
+    return provider && provider->isAuthorized(m_cloudConfig);
 }
 
 QString RemoteSettings::toConfig() const
 {
-    QJsonArray config;
-    for (const auto params : m_remoteParams.values()) {
+    // Pure 1.0 shape: flat array of command-sync entries, no "type" field.
+    // Byte-identical to what 1.0 emits for the same input -- this is the
+    // contract that keeps KPXC_REMOTE_SYNC_SETTINGS opaque to downgrade.
+    QJsonArray arr;
+    for (auto it = m_remoteParams.constBegin(); it != m_remoteParams.constEnd(); ++it) {
+        const RemoteParams& params = it.value();
         QJsonObject object;
-        object["name"] = params->name;
-        object["downloadCommand"] = params->downloadCommand;
-        object["downloadCommandInput"] = params->downloadInput;
-        object["downloadTimeoutMsec"] = params->downloadTimeoutMsec;
-        object["uploadCommand"] = params->uploadCommand;
-        object["uploadCommandInput"] = params->uploadInput;
-        object["uploadTimeoutMsec"] = params->uploadTimeoutMsec;
-        config << object;
+        object[RemoteSyncConfigKeys::Name] = params.name;
+        object[QStringLiteral("downloadCommand")] = params.downloadCommand;
+        object[QStringLiteral("downloadCommandInput")] = params.downloadInput;
+        object[QStringLiteral("downloadTimeoutMsec")] = params.downloadTimeoutMsec;
+        object[QStringLiteral("uploadCommand")] = params.uploadCommand;
+        object[QStringLiteral("uploadCommandInput")] = params.uploadInput;
+        object[QStringLiteral("uploadTimeoutMsec")] = params.uploadTimeoutMsec;
+        arr << object;
     }
-    QJsonDocument doc(config);
-    return doc.toJson(QJsonDocument::Compact);
+    return QString::fromUtf8(QJsonDocument(arr).toJson(QJsonDocument::Compact));
 }
 
 void RemoteSettings::fromConfig(const QString& data)
@@ -106,15 +163,35 @@ void RemoteSettings::fromConfig(const QString& data)
     QJsonDocument json = QJsonDocument::fromJson(data.toUtf8());
     for (const auto& item : json.array().toVariantList()) {
         auto itemMap = item.toMap();
-        auto* params = new RemoteParams();
-        params->name = itemMap["name"].toString();
-        params->downloadCommand = itemMap["downloadCommand"].toString();
-        params->downloadInput = itemMap["downloadCommandInput"].toString();
-        params->downloadTimeoutMsec = itemMap.value("downloadTimeoutMsec", 10000).toInt();
-        params->uploadCommand = itemMap["uploadCommand"].toString();
-        params->uploadInput = itemMap["uploadCommandInput"].toString();
-        params->uploadTimeoutMsec = itemMap.value("uploadTimeoutMsec", 10000).toInt();
+        RemoteParams params;
+        params.name = itemMap[RemoteSyncConfigKeys::Name].toString();
+        params.downloadCommand = itemMap[QStringLiteral("downloadCommand")].toString();
+        params.downloadInput = itemMap[QStringLiteral("downloadCommandInput")].toString();
+        params.downloadTimeoutMsec = itemMap.value(QStringLiteral("downloadTimeoutMsec"), 10000).toInt();
+        params.uploadCommand = itemMap[QStringLiteral("uploadCommand")].toString();
+        params.uploadInput = itemMap[QStringLiteral("uploadCommandInput")].toString();
+        params.uploadTimeoutMsec = itemMap.value(QStringLiteral("uploadTimeoutMsec"), 10000).toInt();
 
-        m_remoteParams.insert(params->name, params);
+        m_remoteParams.insert(params.name, std::move(params));
+    }
+}
+
+QString RemoteSettings::toCloudConfig() const
+{
+    if (m_cloudConfig.isEmpty()) {
+        return {};
+    }
+    return QString::fromUtf8(QJsonDocument(m_cloudConfig).toJson(QJsonDocument::Compact));
+}
+
+void RemoteSettings::fromCloudConfig(const QString& data)
+{
+    m_cloudConfig = QJsonObject();
+    if (data.isEmpty()) {
+        return;
+    }
+    QJsonDocument json = QJsonDocument::fromJson(data.toUtf8());
+    if (json.isObject()) {
+        m_cloudConfig = json.object();
     }
 }

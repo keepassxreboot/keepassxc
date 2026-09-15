@@ -95,6 +95,12 @@ add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 
+add_unit_test(NAME testremotesync SOURCES TestRemoteSync.cpp mock/MockRemoteProcess.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testsyncengine SOURCES TestSyncEngine.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
+
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
         LIBS ${TEST_LIBRARIES})
 
@@ -180,8 +186,26 @@ if(KPXC_FEATURE_NETWORK)
     add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
         LIBS ${TEST_LIBRARIES})
 
-    add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp 
+    add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp
         LIBS ${TEST_LIBRARIES})
+
+    add_unit_test(NAME testhttpretryhelper SOURCES TestHttpRetryHelper.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testoauthhttpserver SOURCES TestOAuthHttpServer.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testdropboxsyncprovider SOURCES TestDropboxSyncProvider.cpp
+            LIBS testsupport ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testdropboxloginflow SOURCES TestDropboxLoginFlow.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testnextcloudsyncprovider SOURCES TestNextcloudSyncProvider.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testnextcloudloginflow SOURCES TestNextcloudLoginFlow.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
 endif()
 
 if(WITH_GUI_TESTS)
