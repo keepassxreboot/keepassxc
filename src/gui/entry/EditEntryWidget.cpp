@@ -1005,6 +1005,12 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->revealNotesButton->setChecked(false);
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
+
+    // use a monospace font for the password field
+    // moved the font setter for PaswordWidget from the constructor to here
+    QFont passwordFont = Font::fixedFont();
+    passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
+    m_mainUi->passwordEdit->setFont(passwordFont);
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_mainUi->notesEdit->setFont(Font::fixedFont());
     } else {
