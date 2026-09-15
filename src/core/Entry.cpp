@@ -1029,6 +1029,261 @@ QStringList Entry::calculateDifference(const Entry* other)
     return modifiedFields;
 }
 
+QMap<QString, QStringList> Entry::conflictingAttributes(const QList<Entry*>& entries)
+{
+    QMap<QString, QStringList> attributeValues;
+
+    for (const Entry* entry : entries) {
+        const auto keyList = entry->attributes()->keys();
+        for (const QString& key : keyList) {
+            // A passkey is merged as a whole and never offered as a choice
+            if (EntryAttributes::isPasskeyAttribute(key)) {
+                continue;
+            }
+
+            const auto value = entry->attributes()->value(key);
+            if (value.isEmpty() || attributeValues[key].contains(value)) {
+                continue;
+            }
+
+            attributeValues[key] << value;
+        }
+    }
+
+    // Attributes the entries agree on do not need a decision
+    for (auto i = attributeValues.begin(); i != attributeValues.end();) {
+        if (i.value().size() < 2) {
+            i = attributeValues.erase(i);
+        } else {
+            ++i;
+        }
+    }
+
+    return attributeValues;
+}
+
+QList<Entry*> Entry::unmergeableEntries(const QList<Entry*>& others) const
+{
+    QList<Entry*> entries;
+    bool carriesPasskey = hasPasskey();
+
+    for (auto* other : others) {
+        if (other == this || !other->hasPasskey()) {
+            continue;
+        }
+
+        if (carriesPasskey) {
+            entries << other;
+        } else {
+            carriesPasskey = true;
+        }
+    }
+
+    return entries;
+}
+
+void Entry::mergeFrom(const QList<Entry*>& others, const QHash<QString, QString>& resolvedAttributes, MergeFlags flags)
+{
+    // An entry that cannot be merged as a whole is not merged at all
+    const auto unmergeable = unmergeableEntries(others);
+    QList<Entry*> mergeable;
+    for (auto* other : others) {
+        if (other != this && !unmergeable.contains(other)) {
+            mergeable << other;
+        }
+    }
+
+    // A merge never downgrades protection: an attribute stays protected as long as
+    // any of the merged entries protected it.
+    QSet<QString> protectedKeys;
+    const auto ownKeys = m_attributes->keys();
+    for (const QString& key : ownKeys) {
+        if (m_attributes->isProtected(key)) {
+            protectedKeys << key;
+        }
+    }
+    for (const Entry* other : asConst(mergeable)) {
+        const auto keyList = other->attributes()->keys();
+        for (const QString& key : keyList) {
+            if (other->attributes()->isProtected(key)) {
+                protectedKeys << key;
+            }
+        }
+    }
+
+    // Apply the caller's decisions first, so that the other entries have to yield
+    // to them below
+    for (auto i = resolvedAttributes.constBegin(); i != resolvedAttributes.constEnd(); ++i) {
+        const auto currentValue = m_attributes->value(i.key());
+        if (currentValue == i.value()) {
+            continue;
+        }
+
+        m_attributes->set(i.key(), i.value(), protectedKeys.contains(i.key()));
+
+        // Only once the chosen value is in place is the previous one an extra URL
+        if (flags.testFlag(MergeKeepDiscardedUrls) && isUrlAttribute(i.key())) {
+            addAdditionalUrl(currentValue);
+        }
+    }
+
+    for (const Entry* other : asConst(mergeable)) {
+        mergeAttributesFrom(other, protectedKeys, flags);
+        mergePasskeyFrom(other);
+        mergeAttachmentsFrom(other);
+
+        const auto tagList = other->tagList();
+        for (const QString& tag : tagList) {
+            addTag(tag);
+        }
+
+        const auto associations = other->autoTypeAssociations()->getAll();
+        for (const auto& association : associations) {
+            if (!m_autoTypeAssociations->getAll().contains(association)) {
+                m_autoTypeAssociations->add(association);
+            }
+        }
+
+        if (defaultAutoTypeSequence().isEmpty()) {
+            setDefaultAutoTypeSequence(other->defaultAutoTypeSequence());
+        }
+
+        // An entry that still shows the default icon takes the one it is given
+        if (iconNumber() == DefaultIconNumber && iconUuid().isNull()) {
+            if (!other->iconUuid().isNull()) {
+                setIcon(other->iconUuid());
+            } else if (other->iconNumber() != DefaultIconNumber) {
+                setIcon(other->iconNumber());
+            }
+        }
+
+        const auto customDataKeys = other->customData()->keys();
+        for (const QString& key : customDataKeys) {
+            if (!m_customData->hasKey(key)) {
+                m_customData->set(key, other->customData()->item(key));
+            }
+        }
+
+        if (!hasTotp() && other->hasTotp()) {
+            setTotp(QSharedPointer<Totp::Settings>::create(*other->totpSettings()));
+        }
+    }
+}
+
+void Entry::mergeAttributesFrom(const Entry* other, const QSet<QString>& protectedKeys, MergeFlags flags)
+{
+    const auto keyList = other->attributes()->keys();
+    for (const QString& key : keyList) {
+        // A passkey is merged as a whole, see mergePasskeyFrom()
+        if (EntryAttributes::isPasskeyAttribute(key)) {
+            continue;
+        }
+
+        const auto value = other->attributes()->value(key);
+        if (value.isEmpty() || m_attributes->value(key) == value) {
+            continue;
+        }
+
+        if (!m_attributes->hasKey(key) || m_attributes->value(key).isEmpty()) {
+            m_attributes->set(key, value, protectedKeys.contains(key));
+        } else if (flags.testFlag(MergeConcatenateNotes) && key == EntryAttributes::NotesKey) {
+            // Keep the notes of every merged entry instead of only one of them
+            const auto notes = m_attributes->value(key);
+            if (!notes.contains(value)) {
+                m_attributes->set(key, QString("%1\n\n%2").arg(notes, value), protectedKeys.contains(key));
+            }
+        } else if (flags.testFlag(MergeKeepDiscardedUrls) && isUrlAttribute(key)) {
+            addAdditionalUrl(value);
+        } else if (flags.testFlag(MergeKeepDiscardedValues)) {
+            m_attributes->set(availableAttributeKey(key), value, protectedKeys.contains(key));
+        }
+    }
+}
+
+void Entry::mergePasskeyFrom(const Entry* other)
+{
+    // A passkey is a set of interdependent attributes. It is merged as a whole and
+    // only into an entry that does not carry one yet, so that no passkey ends up
+    // half-merged or silently overwritten.
+    if (!other->hasPasskey() || hasPasskey()) {
+        return;
+    }
+
+    const auto keyList = other->attributes()->keys();
+    for (const QString& key : keyList) {
+        if (EntryAttributes::isPasskeyAttribute(key)) {
+            m_attributes->set(key, other->attributes()->value(key), other->attributes()->isProtected(key));
+        }
+    }
+
+    addTag(tr("Passkey"));
+}
+
+void Entry::mergeAttachmentsFrom(const Entry* other)
+{
+    const auto keyList = other->attachments()->keys();
+    for (const QString& key : keyList) {
+        const auto value = other->attachments()->value(key);
+        if (!m_attachments->hasKey(key)) {
+            m_attachments->set(key, value);
+        } else if (m_attachments->value(key) != value) {
+            m_attachments->set(availableAttachmentKey(key), value);
+        }
+    }
+}
+
+void Entry::addAdditionalUrl(const QString& url)
+{
+    if (url.isEmpty() || url == m_attributes->value(EntryAttributes::URLKey)) {
+        return;
+    }
+
+    const auto keyList = m_attributes->keys();
+    for (const QString& key : keyList) {
+        if (key.startsWith(EntryAttributes::AdditionalUrlAttribute) && m_attributes->value(key) == url) {
+            return;
+        }
+    }
+
+    m_attributes->set(availableAttributeKey(EntryAttributes::AdditionalUrlAttribute), url);
+}
+
+QString Entry::availableAttributeKey(const QString& key) const
+{
+    QString name(key);
+    int i = 1;
+
+    while (m_attributes->hasKey(name)) {
+        name = QString("%1_%2").arg(key, QString::number(i));
+        ++i;
+    }
+
+    return name;
+}
+
+QString Entry::availableAttachmentKey(const QString& key) const
+{
+    // Keep the file extension recognizable when disambiguating a file name
+    const auto extensionIndex = key.lastIndexOf('.');
+    const auto baseName = extensionIndex > 0 ? key.left(extensionIndex) : key;
+    const auto extension = extensionIndex > 0 ? key.mid(extensionIndex) : QString();
+
+    QString name(key);
+    int i = 1;
+
+    while (m_attachments->hasKey(name)) {
+        name = QString("%1_%2%3").arg(baseName, QString::number(i), extension);
+        ++i;
+    }
+
+    return name;
+}
+
+bool Entry::isUrlAttribute(const QString& key)
+{
+    return key == EntryAttributes::URLKey || key.startsWith(EntryAttributes::AdditionalUrlAttribute);
+}
+
 Entry* Entry::clone(CloneFlags flags) const
 {
     auto entry = new Entry();
