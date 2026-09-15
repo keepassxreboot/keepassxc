@@ -200,6 +200,7 @@ void PasswordWidget::popupPasswordGenerator()
     if (m_repeatPasswordWidget) {
         connect(generator, SIGNAL(appliedPassword(QString)), m_repeatPasswordWidget, SLOT(setText(QString)));
     }
+    emit passwordGeneratorOpened(generator);
 }
 
 void PasswordWidget::updateRepeatStatus()

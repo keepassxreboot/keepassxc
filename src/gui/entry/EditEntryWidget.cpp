@@ -39,7 +39,9 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
+#include "core/PasswordProfile.h"
 #include "core/TimeDelta.h"
+#include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
@@ -511,6 +513,13 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
+    connect(m_mainUi->passwordEdit,
+            &PasswordWidget::passwordGeneratorOpened,
+            this,
+            [this](PasswordGeneratorWidget* generator) {
+                generator->setEntryContext(m_db.data(), m_customData.data());
+                connect(generator, &PasswordGeneratorWidget::entryProfileChanged, this, [this] { setModified(); });
+            });
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
 #ifdef KPXC_FEATURE_NETWORK
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
@@ -972,13 +981,34 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     // Set an initial password for new entries if the option is enabled
     if (create && config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
-        PasswordGenerator generator;
-        generator.loadSettingsFromConfig();
-        if (!generator.isValid()) {
-            qWarning() << "Password generator config settings are invalid, using default settings.";
-            generator.reset();
+        const auto profile = m_db->defaultPasswordProfile();
+        QString password;
+        if (profile.isValid() && profile.type() == PasswordProfile::Passphrase) {
+            PassphraseGenerator generator;
+            profile.applyPassphraseSettings(&generator);
+            password = generator.generatePassphrase();
+            if (password.isEmpty()) {
+                showMessage(tr("The default password profile's wordlist is unavailable. Choose a wordlist in the "
+                               "password generator."),
+                            MessageWidget::Warning);
+            }
+        } else {
+            PasswordGenerator generator;
+            if (profile.isValid()) {
+                profile.applyPasswordSettings(&generator);
+            } else {
+                generator.loadSettingsFromConfig();
+            }
+            if (!generator.isValid()) {
+                qWarning() << "Password generator config settings are invalid, using default settings.";
+                generator.reset();
+            }
+            password = generator.generatePassword();
         }
-        m_mainUi->passwordEdit->setText(generator.generatePassword());
+        m_mainUi->passwordEdit->setText(password);
+        if (profile.isValid() && !password.isEmpty()) {
+            m_customData->set(CustomData::PasswordProfile, profile.id().toString(QUuid::WithoutBraces));
+        }
     }
 
     setModified(false);
