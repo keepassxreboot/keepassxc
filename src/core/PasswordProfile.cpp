@@ -19,6 +19,8 @@
 #include "core/Resources.h"
 #include <QDir>
 #include <QFileInfo>
+#include <cmath>
+#include <limits>
 
 PasswordProfile::PasswordProfile()
 {
@@ -148,19 +150,39 @@ PasswordProfile PasswordProfile::fromVariantMap(const QVariantMap& map)
     profile.m_id = QUuid(map.value("id").toString());
     profile.m_name = map.value("name").toString();
     // Reject incomplete or mistyped settings rather than silently weakening a policy.
-    const QStringList integerKeys = map.value("type").toInt() == Password
-                                        ? QStringList{"type", "passwordLength", "charClasses", "generatorFlags"}
-                                        : QStringList{"type", "passphraseWordCount", "wordCase"};
-    for (const auto& key : integerKeys) {
-        const auto value = map.value(key);
+    const auto isInteger = [](const QVariant& value) {
         bool ok = false;
         const auto number = value.toDouble(&ok);
         if (!ok || value.metaType().id() == QMetaType::QString || value.metaType().id() == QMetaType::Bool
-            || number != value.toInt()) {
+            || !std::isfinite(number) || number < std::numeric_limits<int>::min()
+            || number > std::numeric_limits<int>::max()) {
+            return false;
+        }
+        double integerPart;
+        if (std::modf(number, &integerPart) != 0.0) {
+            return false;
+        }
+        const auto integer = value.toInt(&ok);
+        return ok && integer == static_cast<int>(integerPart);
+    };
+    const auto type = map.value("type");
+    if (!isInteger(type)) {
+        return PasswordProfile();
+    }
+    const auto typeNumber = type.toInt();
+    if (typeNumber != Password && typeNumber != Passphrase) {
+        return PasswordProfile();
+    }
+    profile.m_type = static_cast<ProfileType>(typeNumber);
+    const QStringList integerKeys = profile.m_type == Password
+                                        ? QStringList{"passwordLength", "charClasses", "generatorFlags"}
+                                        : QStringList{"passphraseWordCount", "wordCase"};
+    for (const auto& key : integerKeys) {
+        if (!isInteger(map.value(key))) {
             return PasswordProfile();
         }
     }
-    const QStringList stringKeys = map.value("type").toInt() == Password
+    const QStringList stringKeys = profile.m_type == Password
                                        ? QStringList{"id", "name", "customCharacterSet", "excludedCharacterSet"}
                                        : QStringList{"id", "name", "wordSeparator", "wordList"};
     for (const auto& key : stringKeys) {
@@ -168,8 +190,6 @@ PasswordProfile PasswordProfile::fromVariantMap(const QVariantMap& map)
             return PasswordProfile();
         }
     }
-    profile.m_type = static_cast<ProfileType>(map.value("type", Password).toInt());
-
     if (profile.m_type == Password) {
         profile.m_passwordLength = map.value("passwordLength", PasswordGenerator::DefaultLength).toInt();
         profile.m_charClasses = static_cast<PasswordGenerator::CharClasses>(

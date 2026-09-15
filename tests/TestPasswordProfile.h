@@ -34,6 +34,7 @@ private slots:
     void testProfileApplication();
     void testPersistence();
     void testInvalidSettings();
+    void testNumericSettings();
     void testProfileIdentityAndIsolation();
     void testPreserveUnknownData();
     void testMetadataMerge();

@@ -26,6 +26,8 @@
 #include <QSignalSpy>
 #include <QTemporaryDir>
 #include <QTest>
+#include <cmath>
+#include <limits>
 
 #include "core/Database.h"
 #include "core/Metadata.h"
@@ -294,6 +296,50 @@ void TestPasswordProfile::testPersistence()
              entry->customData()->value(CustomData::PasswordProfile));
     QVERIFY(!reopened.publicCustomData().contains(CustomData::PasswordProfiles));
 }
+void TestPasswordProfile::testNumericSettings()
+{
+    PasswordProfile password("Password");
+    PasswordProfile passphrase("Passphrase");
+    passphrase.setPassphraseSettings(5, PassphraseGenerator::LOWERCASE, "-");
+
+    for (const auto& profile : {password, passphrase}) {
+        const auto settings = profile.toVariantMap();
+        const QStringList keys = profile.type() == PasswordProfile::Password
+                                     ? QStringList{"type", "passwordLength", "charClasses", "generatorFlags"}
+                                     : QStringList{"type", "passphraseWordCount", "wordCase"};
+        for (const auto& key : keys) {
+            auto data = settings;
+            const auto number = settings.value(key).toDouble();
+            data[key] = number;
+            QCOMPARE(PasswordProfile::fromVariantMap(data).toVariantMap(), settings);
+
+            const QList<QVariant> invalid{std::nextafter(number, std::numeric_limits<double>::infinity()),
+                                          std::nextafter(number, -std::numeric_limits<double>::infinity()),
+                                          1.5,
+                                          std::numeric_limits<double>::quiet_NaN(),
+                                          std::numeric_limits<double>::infinity(),
+                                          -std::numeric_limits<double>::infinity(),
+                                          std::numeric_limits<double>::max(),
+                                          -std::numeric_limits<double>::max(),
+                                          double(std::numeric_limits<int>::max()) + 1.0,
+                                          double(std::numeric_limits<int>::min()) - 1.0,
+                                          std::numeric_limits<qlonglong>::max(),
+                                          std::numeric_limits<qulonglong>::max(),
+                                          QByteArray("1.0"),
+                                          QString::number(number),
+                                          true};
+            for (const auto& value : invalid) {
+                data[key] = value;
+                QVERIFY2(!PasswordProfile::fromVariantMap(data).isValid(), qPrintable(key));
+            }
+        }
+
+        const auto jsonSettings = QJsonDocument::fromVariant(settings).toJson();
+        const auto restored = QJsonDocument::fromJson(jsonSettings).toVariant().toMap();
+        QCOMPARE(PasswordProfile::fromVariantMap(restored).toVariantMap(), settings);
+    }
+}
+
 void TestPasswordProfile::testInvalidSettings()
 {
     PasswordProfile valid("Test");
