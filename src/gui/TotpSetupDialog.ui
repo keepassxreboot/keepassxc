@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>249</width>
-    <height>278</height>
+    <height>307</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,6 @@
     <widget class="QLabel" name="invalidKeyLabel">
      <property name="font">
       <font>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -26,7 +25,7 @@
       <string>Error: secret key is invalid</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -39,7 +38,7 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="labelSecretKey">
        <property name="text">
         <string>Secret Key:</string>
        </property>
@@ -98,6 +97,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QRadioButton" name="radioUri">
+        <property name="text">
+         <string>Totp Uri</string>
+        </property>
+	<attribute name="buttonGroup">
+         <string notr="true">settingsButtonGroup</string>
+        </attribute>
+       </widget>
+      </item>
+      <item>
        <widget class="QRadioButton" name="radioSteam">
         <property name="text">
          <string>Steam® settings</string>
@@ -130,13 +139,13 @@
      </property>
      <layout class="QFormLayout" name="formLayout_3">
       <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+       <enum>QFormLayout::FieldGrowthPolicy::ExpandingFieldsGrow</enum>
       </property>
       <property name="rowWrapPolicy">
-       <enum>QFormLayout::DontWrapRows</enum>
+       <enum>QFormLayout::RowWrapPolicy::DontWrapRows</enum>
       </property>
       <property name="labelAlignment">
-       <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTop|Qt::AlignmentFlag::AlignTrailing</set>
       </property>
       <property name="horizontalSpacing">
        <number>7</number>
@@ -215,10 +224,10 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>

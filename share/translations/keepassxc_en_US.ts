@@ -10364,6 +10364,10 @@ This option is deprecated, use --set-key-file instead.</translation>
         <translation>Secret Key:</translation>
     </message>
     <message>
+        <source>URI:</source>
+        <translation>URI:</translation>
+    </message>
+    <message>
         <source>Secret key must be in Base32 format</source>
         <translation>Secret key must be in Base32 format</translation>
     </message>
@@ -10374,6 +10378,10 @@ This option is deprecated, use --set-key-file instead.</translation>
     <message>
         <source>Default settings (RFC 6238)</source>
         <translation>Default settings (RFC 6238)</translation>
+    </message>
+    <message>
+        <source>Totp Uri</source>
+        <translation>Totp Uri</translation>
     </message>
     <message>
         <source>Steam® settings</source>
@@ -10421,6 +10429,10 @@ This option is deprecated, use --set-key-file instead.</translation>
 Example: JBSWY3DPEHPK3PXP</source>
         <translation>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</translation>
+    </message>
+    <message>
+        <source>You have entered an invalid TOTP URI. The URI must start with otpauth://totp/</source>
+        <translation>You have entered an invalid Totp Uri. The Uri must start with otpauth://totp/</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
