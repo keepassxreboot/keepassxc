@@ -842,6 +842,60 @@ void Database::removeTag(const QString& tag)
     }
 }
 
+bool Database::hasTag(const QString& tag)
+{
+    if (!m_rootGroup) {
+        return false;
+    }
+
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        if (entry->hasTag(tag)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Database::renameTag(const QString& oldTag, const QString& newTag, QString* error)
+{
+    const QString cleanOldTag = oldTag.trimmed();
+    const QString cleanNewTag = newTag.trimmed();
+
+    if (cleanOldTag.isEmpty() || cleanNewTag.isEmpty()) {
+        if (error) {
+            *error = tr("The tag name cannot be empty.");
+        }
+        return false;
+    }
+
+    if (cleanOldTag.compare(cleanNewTag, Qt::CaseInsensitive) == 0) {
+        if (error) {
+            *error = tr("Both tag names are the same.");
+        }
+        return false;
+    }
+
+    if (hasTag(cleanNewTag)) {
+        if (error) {
+            *error = tr("The tag \"%1\" already exists.").arg(cleanNewTag);
+        }
+        return false;
+    }
+
+    bool renamed = false;
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        renamed |= entry->renameTag(oldTag, newTag);
+    }
+
+    if (!renamed) {
+        if (error) {
+            *error = tr("The tag \"%1\" was not found.").arg(cleanOldTag);
+        }
+    }
+
+    return renamed;
+}
+
 const QUuid& Database::cipher() const
 {
     return m_data.cipher;
