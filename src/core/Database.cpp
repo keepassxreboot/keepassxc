@@ -21,6 +21,7 @@
 #include "core/AsyncTask.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
+#include "core/PasswordProfile.h"
 #include "crypto/Random.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2Reader.h"
@@ -28,6 +29,7 @@
 #include "streams/HashingStream.h"
 
 #include <QFileInfo>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QRegularExpression>
 #include <QSaveFile>
@@ -977,6 +979,127 @@ const QVariantMap& Database::publicCustomData() const
 void Database::setPublicCustomData(const QVariantMap& customData)
 {
     m_data.publicCustomData = customData;
+}
+
+bool Database::addPasswordProfile(const PasswordProfile& profile)
+{
+    if (!profile.isValid()) {
+        return false;
+    }
+    const auto data = metadata()->customData()->value(CustomData::PasswordProfiles);
+    auto document = QJsonDocument::fromJson(data.toUtf8());
+    if (!data.isEmpty() && !document.isObject()) {
+        return false;
+    }
+    auto profiles = document.object();
+    const auto sameId = passwordProfile(profile.id());
+    if (sameId.isValid() && sameId.name() != profile.name()) {
+        return false;
+    }
+    auto stored = profile;
+    const auto previous = passwordProfile(profile.name());
+    if (profiles.contains(profile.name()) && !previous.isValid()) {
+        return false;
+    }
+    if (previous.isValid()) {
+        stored.setId(previous.id());
+    }
+    // Preserve fields from newer clients when updating a known profile.
+    auto fields = profiles.value(profile.name()).toObject().toVariantMap();
+    const auto settings = stored.toVariantMap();
+    for (auto it = settings.cbegin(); it != settings.cend(); ++it) {
+        fields.insert(it.key(), it.value());
+    }
+    profiles.insert(profile.name(), QJsonObject::fromVariantMap(fields));
+    metadata()->customData()->set(CustomData::PasswordProfiles,
+                                  QString::fromUtf8(QJsonDocument(profiles).toJson(QJsonDocument::Compact)));
+    return true;
+}
+
+void Database::removePasswordProfile(const QString& name)
+{
+    auto profiles =
+        QJsonDocument::fromJson(metadata()->customData()->value(CustomData::PasswordProfiles).toUtf8()).object();
+    if (!profiles.contains(name)) {
+        return;
+    }
+    if (defaultPasswordProfile().name() == name) {
+        setDefaultPasswordProfile({});
+    }
+    profiles.remove(name);
+    if (profiles.isEmpty()) {
+        metadata()->customData()->remove(CustomData::PasswordProfiles);
+    } else {
+        metadata()->customData()->set(CustomData::PasswordProfiles,
+                                      QString::fromUtf8(QJsonDocument(profiles).toJson(QJsonDocument::Compact)));
+    }
+}
+
+PasswordProfile Database::passwordProfile(const QString& name) const
+{
+    const auto profiles = passwordProfiles();
+    for (const auto& profile : profiles) {
+        if (profile.name() == name) {
+            return profile;
+        }
+    }
+    return {};
+}
+
+PasswordProfile Database::passwordProfile(const QUuid& id) const
+{
+    const auto profiles = passwordProfiles();
+    for (const auto& profile : profiles) {
+        if (profile.id() == id) {
+            return profile;
+        }
+    }
+    return {};
+}
+
+PasswordProfile Database::defaultPasswordProfile() const
+{
+    return passwordProfile(QUuid(metadata()->customData()->value(CustomData::DefaultPasswordProfile)));
+}
+
+void Database::setDefaultPasswordProfile(const QUuid& id)
+{
+    if (id.isNull()) {
+        metadata()->customData()->remove(CustomData::DefaultPasswordProfile);
+    } else if (passwordProfile(id).isValid()) {
+        metadata()->customData()->set(CustomData::DefaultPasswordProfile, id.toString(QUuid::WithoutBraces));
+    }
+}
+
+QStringList Database::passwordProfileNames() const
+{
+    QStringList names;
+    const auto profiles = passwordProfiles();
+    for (const auto& profile : profiles) {
+        names.append(profile.name());
+    }
+    return names;
+}
+
+bool Database::hasPasswordProfile(const QString& name) const
+{
+    return passwordProfile(name).isValid();
+}
+
+QList<PasswordProfile> Database::passwordProfiles() const
+{
+    QList<PasswordProfile> profiles;
+    const auto data = metadata()->customData()->value(CustomData::PasswordProfiles);
+    const auto map = QJsonDocument::fromJson(data.toUtf8()).object().toVariantMap();
+    QSet<QUuid> ids;
+    for (auto it = map.cbegin(); it != map.cend(); ++it) {
+        auto profile = PasswordProfile::fromVariantMap(it.value().toMap());
+        if (profile.isValid() && profile.name() == it.key() && !ids.contains(profile.id())) {
+            ids.insert(profile.id());
+            profiles.append(profile);
+        }
+    }
+    return profiles;
 }
 
 void Database::createRecycleBin()
