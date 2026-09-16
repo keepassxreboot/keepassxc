@@ -12,7 +12,7 @@
 - Windows: Add native Arm64 builds [#13678]
 
 ### Major Changes
-- Migrate to Qt 6  [#11651, #11651, #7783, #13456, #13473]
+- Migrate to Qt 6  [#11651, #11651, #7783, #13456, #13473, #13684]
 - Linux: Store application state in XDG_STATE_HOME instead of XDG_CACHE_HOME [#9755]
 - Build: Bundle build features under a single KPXC_MINIMAL CMake option [#11003]
 
