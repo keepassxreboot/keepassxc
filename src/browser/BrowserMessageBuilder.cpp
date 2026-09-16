@@ -372,3 +372,15 @@ QString BrowserMessageBuilder::getSha256HashAsBase64(const QString& str) const
 {
     return getBase64FromArray(QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha256));
 }
+
+QStringList BrowserMessageBuilder::getStringListFromJsonArray(const QJsonArray& jsonArray) const
+{
+    QStringList stringList;
+    for (const auto& item : jsonArray) {
+        if (item.isString()) {
+            stringList << item.toString();
+        }
+    }
+
+    return stringList;
+}

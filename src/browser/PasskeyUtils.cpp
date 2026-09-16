@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@
 
 #include <QList>
 #include <QUrl>
+
+#define MAX_SEEN_LABELS 10
 
 Q_GLOBAL_STATIC(PasskeyUtils, s_passkeyUtils);
 
@@ -133,6 +135,37 @@ int PasskeyUtils::validateRpId(const QJsonValue& rpIdValue, const QString& effec
 
     *result = rpId;
     return PASSKEYS_SUCCESS;
+}
+
+// The steps for validation: https://www.w3.org/TR/webauthn-3/#sctn-validating-relation-origin
+bool PasskeyUtils::validateRelatedOrigins(const QStringList& relatedOrigins, const QString& origin) const
+{
+    QSet<QString> labelsSeen;
+
+    for (const auto& originItem : relatedOrigins) {
+        QString effectiveDomain;
+        if (passkeyUtils()->getEffectiveDomain(originItem, &effectiveDomain) != PASSKEYS_SUCCESS) {
+            continue;
+        }
+
+        const auto label = UrlTools::getBaseDomainFromUrl(originItem, true);
+        if (label.isNull() || label.isEmpty()) {
+            continue;
+        }
+
+        if (labelsSeen.size() >= MAX_SEEN_LABELS && !labelsSeen.contains(label)) {
+            continue;
+        }
+
+        if (originItem == origin) {
+            return true;
+        }
+
+        if (labelsSeen.size() < MAX_SEEN_LABELS) {
+            labelsSeen.insert(label);
+        }
+    }
+    return false;
 }
 
 // https://www.w3.org/TR/2021/REC-webauthn-2-20210408/#dom-publickeycredentialcreationoptions-attestation
