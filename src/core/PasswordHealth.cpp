@@ -47,21 +47,28 @@ PasswordHealth::PasswordHealth(const QString& pwd)
 void PasswordHealth::init(double entropy)
 {
     m_score = m_entropy = entropy;
+    m_scoreDetails << QObject::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
 
     switch (quality()) {
+    case Quality::Excellent:
+        m_scoreReasons << QObject::tr("Excellent password");
+        break;
+
+    case Quality::Good:
+        m_scoreReasons << QObject::tr("Good password");
+        break;
+
     case Quality::Bad:
     case Quality::Poor:
         m_scoreReasons << QObject::tr("Very weak password");
-        m_scoreDetails << QObject::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
         break;
 
     case Quality::Weak:
         m_scoreReasons << QObject::tr("Weak password");
-        m_scoreDetails << QObject::tr("Password entropy is %1 bits").arg(QString::number(m_entropy, 'f', 2));
         break;
 
     default:
-        // No reason or details for good and excellent passwords
+        // should never happen
         break;
     }
 }
