@@ -23,6 +23,7 @@
 #include <QSharedPointer>
 #include <QtDBus/QDBusVariant>
 
+class BackgroundPortal;
 class GlobalShortcutsPortal;
 class RemoteDesktopPortal;
 
@@ -35,7 +36,7 @@ public:
 
     bool isDarkMode() const override;
     bool isStatusBarDark() const override;
-    bool isLaunchAtStartupEnabled() const override;
+    bool isLaunchAtStartupEnabled() override;
     void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
     void setUserInputProtection(bool enable) override;
@@ -61,6 +62,7 @@ public:
     bool externalGlobalShortcutsConfigurator() override;
     bool isWayland() const;
 
+    BackgroundPortal* backgroundPortal();
     GlobalShortcutsPortal* globalShortcutsPortal();
     RemoteDesktopPortal* remoteDesktopPortal();
 
@@ -69,7 +71,6 @@ public slots:
 
 private slots:
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
-    void launchAtStartupRequested(uint response, const QVariantMap& results);
 
 private:
     explicit NixUtils(QObject* parent = nullptr);
@@ -102,6 +103,7 @@ private:
 
     void setColorScheme(QDBusVariant value);
 
+    BackgroundPortal* m_backgroundPortal = nullptr;
     GlobalShortcutsPortal* m_globalShortcutsPortal = nullptr;
     RemoteDesktopPortal* m_remoteDesktopPortal = nullptr;
 

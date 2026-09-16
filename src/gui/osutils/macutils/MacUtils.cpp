@@ -121,7 +121,7 @@ QString MacUtils::getLaunchAgentFilename() const
         .fileName();
 }
 
-bool MacUtils::isLaunchAtStartupEnabled() const
+bool MacUtils::isLaunchAtStartupEnabled()
 {
     return QFile::exists(getLaunchAgentFilename());
 }
