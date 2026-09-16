@@ -35,6 +35,11 @@
           "platform": "linux | freebsd",
           "features": ["wayland"]
         },
+        {
+          "name": "qtbase",
+          "platform": "windows",
+          "features": ["windeployqt"]
+        },
         "qtdeclarative",
         "qtimageformats",
         "qtsvg",
