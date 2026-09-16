@@ -110,6 +110,7 @@ public:
     QString filePath() const;
     QString canonicalFilePath() const;
     void setFilePath(const QString& filePath);
+    QDateTime savedFileModifiedTime() const;
 
     const QByteArray& fileBlockHash() const;
     void setIgnoreFileChangesUntilSaved(bool ignore);
@@ -239,6 +240,7 @@ private:
 
     void startModifiedTimer();
     void stopModifiedTimer();
+    void updateSavedFileModifiedTime();
 
     QByteArray m_fileBlockHash;
     bool m_ignoreFileChangesUntilSaved;
@@ -249,6 +251,7 @@ private:
     QTimer m_modifiedTimer;
     QMutex m_saveMutex;
     QPointer<FileWatcher> m_fileWatcher;
+    QDateTime m_savedFileModifiedTime;
     bool m_modified = false;
     bool m_hasNonDataChange = false;
     QString m_keyError;
