@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -165,6 +165,7 @@ public:
         Browser_CustomBrowserType,
         Browser_CustomBrowserLocation,
         Browser_AllowLocalhostWithPasskeys,
+        Browser_WebSocketSupport,
 #ifdef QT_DEBUG
         Browser_CustomExtensionId,
 #endif

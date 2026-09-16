@@ -341,6 +341,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="webSocketSupport">
+         <property name="toolTip">
+          <string>Listens to connections using WebSocket in addition to native messaging.</string>
+         </property>
+         <property name="text">
+          <string>Enable WebSocket listener</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="allowGetDatabaseEntriesRequest">
          <property name="toolTip">
           <string>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</string>
