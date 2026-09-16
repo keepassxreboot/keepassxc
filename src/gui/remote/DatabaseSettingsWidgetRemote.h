@@ -56,6 +56,8 @@ private:
     QListWidgetItem* findItemByName(const QString& name);
     void clearFields();
 
+    bool hasValidPublicHeader(QString& filePath, QString* error);
+
     QScopedPointer<RemoteSettings> m_remoteSettings;
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
     bool m_modified = false;
