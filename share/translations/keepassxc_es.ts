@@ -7369,6 +7369,10 @@ Do you want to overwrite it?</source>
         <source>Toggle Password (%1)</source>
         <translation>Conmutar contraseña (%1)</translation>
     </message>
+    <message>  
+        <source>Copy Password</source>  
+        <translation>Copiar contraseña</translation>  
+    </message>
     <message>
         <source>Generate Password (%1)</source>
         <translation>Generar contraseña (%1)</translation>
