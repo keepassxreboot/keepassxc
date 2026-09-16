@@ -275,7 +275,7 @@ QByteArray Base32::removePadding(const QByteArray& encodedData)
     return newEncodedData;
 }
 
-QByteArray Base32::sanitizeInput(const QByteArray& encodedData)
+QByteArray Base32::sanitizeInput(const QByteArray& encodedData, bool withPadding /* = true */)
 {
     if (encodedData.size() <= 0) {
         return encodedData;
@@ -301,6 +301,9 @@ QByteArray Base32::sanitizeInput(const QByteArray& encodedData)
         }
     }
     newEncodedData.resize(i);
+
+    if (!withPadding)
+        return removePadding(newEncodedData);
 
     return addPadding(newEncodedData);
 }
