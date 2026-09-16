@@ -45,6 +45,9 @@ public:
     Entry* getSelectedEntry() const;
     bool isPasskeyUpdated() const;
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 private slots:
     void updatePasskey();
     void updateProgressBar();
