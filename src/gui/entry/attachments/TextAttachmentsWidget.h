@@ -20,13 +20,7 @@
 #include "AttachmentTypes.h"
 
 #include <QPointer>
-#include <QScopedPointer>
 #include <QWidget>
-
-namespace Ui
-{
-    class TextAttachmentsWidget;
-}
 
 class QSplitter;
 class QTimer;
