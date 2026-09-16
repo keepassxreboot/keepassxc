@@ -21,8 +21,55 @@
 #include "browser/BrowserService.h"
 #include "core/Metadata.h"
 #include "gui/MainWindow.h"
+#include "gui/group/GroupModel.h"
 #include <QCloseEvent>
 #include <QFileInfo>
+#include <QSortFilterProxyModel>
+
+// ---------------------------------------------------------------------------
+// GroupModelNoRecycle
+// Thin QSortFilterProxyModel that hides the recycle bin group (same pattern
+// as DatabaseSettingsWidgetFdoSecrets::GroupModelNoRecycle).
+// ---------------------------------------------------------------------------
+class PasskeyImportDialog::GroupModelNoRecycle : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+    Database* m_db;
+
+public:
+    explicit GroupModelNoRecycle(Database* db, QObject* parent = nullptr)
+        : QSortFilterProxyModel(parent)
+        , m_db(db)
+    {
+        Q_ASSERT(db);
+        setSourceModel(new GroupModel(m_db, this));
+    }
+
+    Group* groupFromIndex(const QModelIndex& index) const
+    {
+        auto* groupModel = qobject_cast<GroupModel*>(sourceModel());
+        Q_ASSERT(groupModel);
+        return groupModel->groupFromIndex(mapToSource(index));
+    }
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override
+    {
+        const auto sourceIdx = sourceModel()->index(sourceRow, 0, sourceParent);
+        if (!sourceIdx.isValid()) {
+            return false;
+        }
+        auto* groupModel = qobject_cast<GroupModel*>(sourceModel());
+        Q_ASSERT(groupModel);
+        const auto* group = groupModel->groupFromIndex(sourceIdx);
+        const auto* recycleBin = m_db->metadata()->recycleBin();
+        return group && !group->isRecycled()
+               && (!recycleBin || group->uuid() != recycleBin->uuid());
+    }
+};
+
+// ---------------------------------------------------------------------------
 
 PasskeyImportDialog::PasskeyImportDialog(QWidget* parent)
     : QDialog(parent)
@@ -38,7 +85,26 @@ PasskeyImportDialog::PasskeyImportDialog(QWidget* parent)
     connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
     connect(m_ui->selectDatabaseCombobBox, SIGNAL(currentIndexChanged(int)), SLOT(changeDatabase(int)));
     connect(m_ui->selectEntryComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeEntry(int)));
-    connect(m_ui->selectGroupComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeGroup(int)));
+
+    // When the user toggles between "default group" and "select group",
+    // re-evaluate which group UUID is current.
+    connect(m_ui->useDefaultGroupRadio, &QRadioButton::toggled,
+            this, &PasskeyImportDialog::onGroupSelectionChanged);
+
+    // When "Select group" becomes checked and nothing is selected yet,
+    // auto-select the root item so the user always has a valid destination.
+    connect(m_ui->selectCustomGroupRadio, &QRadioButton::toggled, this, [this](bool checked) {
+        if (checked && m_groupModel
+                && !m_ui->selectGroupTreeView->selectionModel()->hasSelection()) {
+            const auto rootIdx = m_groupModel->index(0, 0);
+            if (rootIdx.isValid()) {
+                m_ui->selectGroupTreeView->selectionModel()->select(
+                    rootIdx, QItemSelectionModel::SelectCurrent);
+                m_ui->selectGroupTreeView->setCurrentIndex(rootIdx);
+            }
+        }
+        onGroupSelectionChanged();
+    });
 }
 
 PasskeyImportDialog::~PasskeyImportDialog()
@@ -169,16 +235,29 @@ void PasskeyImportDialog::addGroups()
         return;
     }
 
-    m_ui->selectGroupComboBox->clear();
-    m_ui->selectGroupComboBox->addItem(tr("Default passkeys group (Imported Passkeys)"), {});
-
-    for (const auto& group : m_selectedDatabase->rootGroup()->groupsRecursive(true)) {
-        if (!group || group->isRecycled() || group == m_selectedDatabase->metadata()->recycleBin()) {
-            continue;
-        }
-
-        m_ui->selectGroupComboBox->addItem(group->fullPath(), group->uuid());
+    // Disconnect any signal still bound to the old selection model.
+    if (auto* sm = m_ui->selectGroupTreeView->selectionModel()) {
+        disconnect(sm, nullptr, this, nullptr);
     }
+
+    // Reset to the default group and uncheck any custom selection.
+    m_selectedGroupUuid = QUuid();
+    {
+        QSignalBlocker b(m_ui->useDefaultGroupRadio);
+        m_ui->useDefaultGroupRadio->setChecked(true);
+    }
+
+    // (Re-)build the tree model, filtering out the recycle bin.
+    m_groupModel.reset(new GroupModelNoRecycle(m_selectedDatabase.data(), this));
+    m_ui->selectGroupTreeView->setModel(m_groupModel.data());
+    m_ui->selectGroupTreeView->expandAll();
+
+    connect(m_ui->selectGroupTreeView->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &PasskeyImportDialog::onGroupSelectionChanged);
+
+    emit updateEntries();
 }
 
 void PasskeyImportDialog::changeDatabase(int index)
@@ -193,8 +272,18 @@ void PasskeyImportDialog::changeEntry(int index)
     m_selectedEntryUuid = m_ui->selectEntryComboBox->itemData(index).value<QUuid>();
 }
 
-void PasskeyImportDialog::changeGroup(int index)
+void PasskeyImportDialog::onGroupSelectionChanged()
 {
-    m_selectedGroupUuid = m_ui->selectGroupComboBox->itemData(index).value<QUuid>();
+    if (m_ui->useDefaultGroupRadio->isChecked()) {
+        m_selectedGroupUuid = QUuid();
+    } else if (m_groupModel) {
+        const auto indexes = m_ui->selectGroupTreeView->selectionModel()->selectedIndexes();
+        if (!indexes.isEmpty()) {
+            const auto* group = m_groupModel->groupFromIndex(indexes.first());
+            m_selectedGroupUuid = group ? group->uuid() : QUuid();
+        }
+    }
     emit updateEntries();
 }
+
+#include "PasskeyImportDialog.moc"
