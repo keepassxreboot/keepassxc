@@ -77,6 +77,7 @@ public:
     static const QString KPEX_PASSKEY_PRIVATE_KEY_END;
     static const QString KPEX_PASSKEY_FLAG_BE;
     static const QString KPEX_PASSKEY_FLAG_BS;
+    static const QString KPEX_PASSKEY_PRF;
 
     static bool isDefaultAttribute(const QString& key);
     static bool isPasskeyAttribute(const QString& key);

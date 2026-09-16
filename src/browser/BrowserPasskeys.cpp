@@ -126,6 +126,8 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& asse
                                                          const QString& credentialId,
                                                          const QString& userHandle,
                                                          const QString& privateKeyPem,
+                                                         const QString& prfSecret,
+                                                         QString* newPrfSecret,
                                                          const bool beFlag,
                                                          const bool bsFlag)
 {
@@ -133,8 +135,13 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& asse
         return {};
     }
 
-    const auto authenticatorData = buildAuthenticatorData(
-        assertionOptions["rpId"].toString(), assertionOptions["extensions"].toString(), beFlag, bsFlag);
+    auto extensionObject = assertionOptions["extensionsObject"].toObject();
+    const auto allowCredentials = passkeyUtils()->getAllowedCredentialsFromAssertionOptions(assertionOptions);
+    const auto extensionData = passkeyUtils()->buildExtensionData(extensionObject, prfSecret, allowCredentials);
+    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData.extensionData);
+
+    const auto authenticatorData =
+        buildAuthenticatorData(assertionOptions["rpId"].toString(), extensions, beFlag, bsFlag);
     const auto clientDataJson = assertionOptions["clientDataJson"].toString();
     const auto clientDataArray = clientDataJson.toUtf8();
 
@@ -143,10 +150,15 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& asse
         return {};
     }
 
+    // New secret is generated
+    if (prfSecret.isEmpty() && !extensionData.prfSecret.isEmpty() && newPrfSecret) {
+        *newPrfSecret = extensionData.prfSecret;
+    }
+
     QJsonObject responseObject;
     responseObject["authenticatorData"] = browserMessageBuilder()->getBase64FromArray(authenticatorData);
     responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromArray(clientDataArray);
-    responseObject["clientExtensionResults"] = assertionOptions["clientExtensionResults"];
+    responseObject["clientExtensionResults"] = extensionData.extensionObject;
     responseObject["signature"] = browserMessageBuilder()->getBase64FromArray(signature);
     responseObject["userHandle"] = userHandle;
 

@@ -158,6 +158,12 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("user.id does not match the required length");
     case ERROR_KEEPASS_CANNOT_USE_REFERENCES:
         return QObject::tr("Username or password cannot contain references");
+    case ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_SUPPORTED:
+        return QObject::tr("evalByCredential is not supported at registration");
+    case ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_EMPTY:
+        return QObject::tr("evalByCredential is not empty, but allowedCredentials is");
+    case ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_FOUND:
+        return QObject::tr("Credential ID provided in evalByCredential not found");
     default:
         return QObject::tr("Unknown error");
     }
