@@ -443,7 +443,7 @@ void EntryView::fitColumnsToContents()
  */
 void EntryView::resetFixedColumns()
 {
-    for (const auto& col : {EntryModel::Paperclip, EntryModel::Totp, EntryModel::PasswordStrength}) {
+    for (const auto& col : {EntryModel::Paperclip, EntryModel::Totp, EntryModel::PasswordStrength, EntryModel::Icon}) {
         if (!isColumnHidden(col)) {
             header()->setSectionResizeMode(col, QHeaderView::Fixed);
 
@@ -487,6 +487,7 @@ void EntryView::resetViewToDefaults()
     header()->hideSection(EntryModel::PasswordStrength);
     header()->hideSection(EntryModel::Color);
     header()->hideSection(EntryModel::ParentGroupPath);
+    header()->hideSection(EntryModel::Icon);
     onHeaderChanged();
 
     // Reset column order to logical indices

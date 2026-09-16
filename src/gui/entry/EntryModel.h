@@ -50,7 +50,8 @@ public:
         Size = 13,
         PasswordStrength = 14,
         Color = 15,
-        ParentGroupPath = 16
+        ParentGroupPath = 16,
+        Icon = 17
     };
 
     explicit EntryModel(QObject* parent = nullptr);

@@ -23,6 +23,7 @@
 
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseIcons.h"
 #include "gui/IconModels.h"
@@ -361,6 +362,120 @@ void TestEntryModel::testProxyModel()
     delete modelProxy;
     delete modelSource;
     delete db;
+}
+
+void TestEntryModel::testSortByIcon()
+{
+    auto db = new Database();
+    auto root = db->rootGroup();
+
+    auto customIconA = QUuid::fromRfc4122(QByteArray(16, '1'));
+    auto customIconB = QUuid::fromRfc4122(QByteArray(16, '2'));
+    auto customIconNoName = QUuid::fromRfc4122(QByteArray(16, '3'));
+    auto missingIcon = QUuid::fromRfc4122(QByteArray(16, '4'));
+    // Referenced by an entry but deliberately never added to the metadata
+    // (e.g. leftovers of a deleted or merged custom icon).
+    db->metadata()->addCustomIcon(customIconA, QByteArray("icon a"), "Zulu");
+    db->metadata()->addCustomIcon(customIconB, QByteArray("icon b"), "Alpha");
+    db->metadata()->addCustomIcon(customIconNoName, QByteArray("icon c"));
+
+    auto makeEntry = [&](const QString& title, int iconNumber) {
+        auto entry = new Entry();
+        entry->setGroup(root);
+        entry->setTitle(title);
+        entry->setIcon(iconNumber);
+        return entry;
+    };
+    auto makeCustomEntry = [&](const QString& title, const QUuid& uuid) {
+        auto entry = new Entry();
+        entry->setGroup(root);
+        entry->setTitle(title);
+        entry->setIcon(uuid);
+        return entry;
+    };
+
+    auto* icon42 = makeEntry("icon42", 42);
+    auto* icon3 = makeEntry("icon3", 3);
+    auto* icon7 = makeEntry("icon7", 7);
+    auto* namedA = makeCustomEntry("namedA", customIconA);
+    auto* namedB = makeCustomEntry("namedB", customIconB);
+    auto* unnamed = makeCustomEntry("unnamed", customIconNoName);
+    auto* missing = makeCustomEntry("missing", missingIcon);
+    auto* icon3Again = makeEntry("icon3again", 3);
+
+    auto modelSource = new EntryModel(this);
+    modelSource->setGroup(root);
+    // Fix the source order explicitly so that the relative order of entries
+    // sharing an icon is deterministic and independent of group iteration
+    modelSource->setEntries({icon42, icon3, icon7, namedA, namedB, unnamed, missing, icon3Again});
+    QCOMPARE(modelSource->columnCount(), 18);
+    QVERIFY(!modelSource->headerData(EntryModel::Icon, Qt::Horizontal, Qt::ToolTipRole).toString().isEmpty());
+    // The icon column is icon-only, just like Paperclip and Totp. Qt::DecorationRole
+    // is not asserted here because QPixmap cannot be created without a QGuiApplication.
+    QVERIFY(modelSource->data(modelSource->index(0, EntryModel::Icon), Qt::DisplayRole).toString().isEmpty());
+
+    auto modelProxy = new SortFilterHideProxyModel(this);
+    modelProxy->setSourceModel(modelSource);
+    modelProxy->setSortRole(Qt::UserRole);
+
+    auto sortedEntries = [&](Qt::SortOrder order) {
+        modelProxy->sort(EntryModel::Icon, order);
+        QList<Entry*> entries;
+        for (int row = 0; row < modelProxy->rowCount(); ++row) {
+            // Map back to the source model: EntryModel::entryFromIndex() takes a
+            // source index, while the proxy row order is what the view displays
+            entries << modelSource->entryFromIndex(modelProxy->mapToSource(modelProxy->index(row, EntryModel::Icon)));
+        }
+        return entries;
+    };
+
+    // Sort keys, in the order the view shows them, with consecutive duplicates
+    // collapsed: entries sharing an icon must be adjacent, i.e. each key must
+    // appear exactly once and never be interleaved with another key.
+    auto sortedKeys = [&](Qt::SortOrder order) {
+        QStringList keys;
+        auto sourceRow = [&](Entry* wanted) {
+            for (int row = 0; row < modelSource->rowCount(); ++row) {
+                if (modelSource->entryFromIndex(modelSource->index(row, 0)) == wanted) {
+                    return row;
+                }
+            }
+            return -1;
+        };
+        for (auto* entry : sortedEntries(order)) {
+            auto key =
+                modelSource->data(modelSource->index(sourceRow(entry), EntryModel::Icon), Qt::UserRole).toString();
+            if (keys.isEmpty() || keys.last() != key) {
+                keys << key;
+            }
+        }
+        return keys;
+    };
+
+    // Built-in icons (prefixed "0:") are grouped before custom icons (prefixed
+    // "1:"). Within a group the keys are compared as strings with a numeric-mode
+    // QCollator, which in practice still orders the built-ins lexicographically
+    // ("0:42" before "0:7"), and the custom icons by name, case-insensitively.
+    // Entries sharing an icon stay adjacent and keep their pre-existing relative
+    // order, which the ascending case asserts below.
+    QCOMPARE(sortedEntries(Qt::AscendingOrder),
+             QList<Entry*>({icon3, icon3Again, icon42, icon7, namedB, namedA, unnamed, missing}));
+    QCOMPARE(sortedKeys(Qt::AscendingOrder),
+             QStringList({"0:3",
+                          "0:42",
+                          "0:7",
+                          "1:Alpha",
+                          "1:Zulu",
+                          "1:{33333333-3333-3333-3333-333333333333}",
+                          "1:{34343434-3434-3434-3434-343434343434}"}));
+    QCOMPARE(sortedKeys(Qt::DescendingOrder),
+             QStringList({"1:{34343434-3434-3434-3434-343434343434}",
+                          "1:{33333333-3333-3333-3333-333333333333}",
+                          "1:Zulu",
+                          "1:Alpha",
+                          "0:7",
+                          "0:42",
+                          "0:3"}));
 }
 
 void TestEntryModel::testDatabaseDelete()

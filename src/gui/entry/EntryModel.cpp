@@ -117,7 +117,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 17;
+    return 18;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -232,13 +232,18 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
             return result;
         }
-        case Color:
+        case Color: {
             QColor backgroundColor;
             backgroundColor.setNamedColor(entry->backgroundColor());
             if (backgroundColor.isValid()) {
                 result = "▍";
                 return result;
             }
+            break;
+        }
+        case Icon:
+            // Icon-only column: the icon is provided through Qt::DecorationRole
+            return QString();
         }
     } else if (role == Qt::UserRole) { // Qt::UserRole is used as sort role, see EntryView::EntryView()
         switch (index.column()) {
@@ -268,6 +273,22 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->hasTotp();
         case Size:
             return entry->size();
+        case Icon: {
+            // Built-in icons first (sorted by icon number), then custom icons
+            // (sorted by name, falling back to the UUID if the name is empty).
+            // The proxy model compares strings with a numeric-mode QCollator,
+            // so a "0:"/"1:" prefix yields the desired group order while the
+            // number itself still sorts numerically.
+            if (entry->iconUuid().isNull()) {
+                return QStringLiteral("0:") + QString::number(entry->iconNumber());
+            }
+            QString name;
+            auto* db = entry->database();
+            if (db && db->metadata()->hasCustomIcon(entry->iconUuid())) {
+                name = db->metadata()->customIcon(entry->iconUuid()).name;
+            }
+            return QStringLiteral("1:") + (name.isEmpty() ? entry->iconUuid().toString() : name);
+        }
         default:
             // For all other columns, simply use data provided by Qt::Display-
             // Role for sorting
@@ -320,6 +341,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 }
             }
             break;
+        case Icon:
+            return Icons::entryIconPixmap(entry);
         }
     } else if (role == Qt::FontRole) {
         QFont font;
@@ -406,6 +429,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return icons()->icon("totp");
         case PasswordStrength:
             return icons()->icon("lock-question");
+        case Icon:
+            return icons()->icon("entry-edit");
         }
     } else if (role == Qt::ToolTipRole) {
         switch (section) {
@@ -421,6 +446,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Password");
         case PasswordStrength:
             return tr("Password Strength");
+        case Icon:
+            return tr("Entry icon");
         case Url:
             return tr("URL");
         case Notes:

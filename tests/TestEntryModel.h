@@ -33,6 +33,7 @@ private slots:
     void testCustomIconModel();
     void testAutoTypeAssociationsModel();
     void testProxyModel();
+    void testSortByIcon();
     void testDatabaseDelete();
 };
 

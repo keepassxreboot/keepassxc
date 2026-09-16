@@ -2,6 +2,7 @@
 
 ## 2.8.0 (Pending)
 * Placeholder for future release notes
+- Entry list: Add an Icon column that sorts entries by their icon
 
 ## 2.7.12 (2026-03-10)
 
