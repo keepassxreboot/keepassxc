@@ -100,7 +100,11 @@ QIcon Icons::trayIcon(bool unlocked)
 #elif defined(Q_OS_MACOS)
     i = icon(QString("keepassxc-monochrome-light%1").arg(suffix), false);
 #else
-    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconAppearance, suffix), false);
+    // On Linux/Wayland, QIcon::fromTheme() returns an icon with themeName="application",
+    // which the compositor uses to look up the icon in the system theme (wrong icon).
+    // Load directly from the embedded resource to bypass QIcon::fromTheme().
+    i = QIcon(
+        QString(":/icons/application/scalable/apps/%1-%2%3.svg").arg(applicationIconName(), iconAppearance, suffix));
 #endif
     // Set as mask to allow the operating system to recolour the tray icon. This may look weird
     // if we failed to detect the status bar background colour correctly, but it is certainly
