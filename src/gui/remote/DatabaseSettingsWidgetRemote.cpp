@@ -67,6 +67,53 @@ void DatabaseSettingsWidgetRemote::initialize()
     } else {
         m_ui->removeSettingsButton->setDisabled(true);
     }
+
+    // Reciprocal mutual-exclusivity gate. The Cloud Sync tab already locks
+    // itself when Script Sync is configured; without this side, a user could
+    // open the dialog with Cloud Sync already active and add a Script Sync
+    // entry on top -- both would land in CustomData and the save order
+    // (Remote then Cloud) makes recovery non-obvious. Lock save here too so
+    // the dialog enforces "one or the other, not both" symmetrically.
+    m_lockedByCloudSync = hasCloudSyncConfig();
+    if (m_lockedByCloudSync) {
+        m_ui->messageWidget->showMessage(
+            tr("Cloud Sync is configured for this database. Remove it in the Cloud Sync tab before adding "
+               "a Script Sync entry."),
+            MessageWidget::Warning,
+            MessageWidget::DisableAutoHide);
+        m_ui->messageWidget->setCloseButtonVisible(false);
+        m_ui->saveSettingsButton->setEnabled(false);
+    } else {
+        m_ui->saveSettingsButton->setEnabled(true);
+    }
+}
+
+bool DatabaseSettingsWidgetRemote::hasCloudSyncConfig() const
+{
+    return !m_remoteSettings->activeProvider().isEmpty();
+}
+
+void DatabaseSettingsWidgetRemote::onCloudSyncRemoved()
+{
+    // Nothing to do if we weren't locked -- avoid clobbering an unrelated
+    // banner the user may currently be reading.
+    if (!m_lockedByCloudSync) {
+        return;
+    }
+    m_lockedByCloudSync = false;
+    m_ui->messageWidget->hideMessage();
+    m_ui->saveSettingsButton->setEnabled(true);
+
+    // Drop the stale cloud-config snapshot on our own RemoteSettings. The
+    // cloud widget already cleared CustomData::CloudSyncSettings, but our
+    // RemoteSettings instance still holds the m_cloudConfig it loaded at
+    // initialize(). Without this, the now-unlocked saveSettings() path at
+    // dialog Apply would have RemoteSettings::saveSettings re-stamp the
+    // stale config back into CustomData and resurrect the just-removed
+    // provider. The mutual-exclusivity lock used to mask this by skipping
+    // saveSettings entirely; unlocking the UI requires neutralizing the
+    // snapshot it was guarding.
+    m_remoteSettings->clearCloudSyncConfig();
 }
 
 void DatabaseSettingsWidgetRemote::uninitialize()
@@ -75,6 +122,15 @@ void DatabaseSettingsWidgetRemote::uninitialize()
 
 bool DatabaseSettingsWidgetRemote::saveSettings()
 {
+    // Reciprocal gate: when Cloud Sync owns this database, the Script Sync
+    // tab is read-only. Skip both the unsaved-changes prompt (the user
+    // couldn't have made changes -- the save button was disabled) and the
+    // saveSettings round-trip (which would no-op write the same data back,
+    // but is wasteful and could surprise reviewers).
+    if (m_lockedByCloudSync) {
+        return true;
+    }
+
     if (m_modified) {
         auto ans = MessageBox::question(this,
                                         tr("Save Remote Settings"),
@@ -100,16 +156,16 @@ void DatabaseSettingsWidgetRemote::saveCurrentSettings()
         return;
     }
 
-    auto* params = new RemoteParams();
-    params->name = m_ui->nameLineEdit->text();
-    params->downloadCommand = m_ui->downloadCommand->text();
-    params->downloadInput = m_ui->inputForDownload->toPlainText();
-    params->downloadTimeoutMsec = m_ui->downloadTimeoutSec->value() * 1000;
-    params->uploadCommand = m_ui->uploadCommand->text();
-    params->uploadInput = m_ui->inputForUpload->toPlainText();
-    params->uploadTimeoutMsec = m_ui->uploadTimeoutSec->value() * 1000;
+    RemoteParams params;
+    params.name = m_ui->nameLineEdit->text();
+    params.downloadCommand = m_ui->downloadCommand->text();
+    params.downloadInput = m_ui->inputForDownload->toPlainText();
+    params.downloadTimeoutMsec = m_ui->downloadTimeoutSec->value() * 1000;
+    params.uploadCommand = m_ui->uploadCommand->text();
+    params.uploadInput = m_ui->inputForUpload->toPlainText();
+    params.uploadTimeoutMsec = m_ui->uploadTimeoutSec->value() * 1000;
 
-    m_remoteSettings->addRemoteParams(params);
+    m_remoteSettings->addRemoteParams(std::move(params));
     updateSettingsList();
 
     auto item = findItemByName(name);
@@ -133,6 +189,12 @@ void DatabaseSettingsWidgetRemote::removeCurrentSettings()
     } else {
         clearFields();
         m_ui->removeSettingsButton->setDisabled(true);
+        // Last entry just left -- notify the dialog so the Cloud Sync tab's
+        // mutual-exclusivity lock can drop in place. Script Sync removals
+        // are in-memory until Apply, but the Cloud Sync runtime gate in
+        // DatabaseSettingsWidgetCloudSync::saveSettings re-queries fresh
+        // CustomData, so unlocking the UI here without persistence is safe.
+        emit scriptSyncRemoved();
     }
 }
 

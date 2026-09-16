@@ -45,6 +45,19 @@ public slots:
     void uninitialize() override;
     bool saveSettings() override;
 
+    // Invoked by the parent dialog when the user removes a Cloud Sync
+    // provider during this dialog session. Clears the init-time mutual
+    // exclusivity lock so the Script Sync tab re-enables in place without
+    // requiring a dialog close/reopen.
+    void onCloudSyncRemoved();
+
+signals:
+    // Emitted when the user removes the last Script Sync entry from the
+    // list. Lets the Cloud Sync widget drop its init-time mutual
+    // exclusivity lock without a dialog reopen (reciprocal of
+    // DatabaseSettingsWidgetCloudSync::cloudSyncRemoved).
+    void scriptSyncRemoved();
+
 private slots:
     void saveCurrentSettings();
     void removeCurrentSettings();
@@ -55,10 +68,12 @@ private:
     void updateSettingsList();
     QListWidgetItem* findItemByName(const QString& name);
     void clearFields();
+    bool hasCloudSyncConfig() const;
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
     bool m_modified = false;
+    bool m_lockedByCloudSync = false; // Set by initialize() when Cloud Sync is configured -- gates save.
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H

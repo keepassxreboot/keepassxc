@@ -316,7 +316,13 @@ if(KPXC_FEATURE_NETWORK)
             networking/UpdateChecker.cpp
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
-            gui/IconDownloaderDialog.cpp)
+            gui/IconDownloaderDialog.cpp
+            gui/remote/CloudSyncPage.cpp
+            gui/remote/dropbox/DropboxCloudSyncPage.cpp
+            gui/remote/nextcloud/NextcloudCloudSyncPage.cpp
+            gui/remote/nextcloud/NextcloudCloudSyncPage.h
+            gui/remote/nextcloud/NextcloudCloudSyncPage.ui
+            gui/remote/DatabaseSettingsWidgetCloudSync.cpp)
 endif()
 
 add_subdirectory(cli)
@@ -342,6 +348,11 @@ add_subdirectory(fdosecrets)
 if(KPXC_FEATURE_FDOSECRETS)
     set(fdosecrets_LIB fdosecrets)
 endif()
+
+add_subdirectory(remotesync)
+# remotesync's foundation (provider abstraction + engine + command provider)
+# is always built.
+set(remotesync_LIB remotesync)
 
 configure_file(config-keepassx.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
 configure_file(git-info.h.in ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
@@ -375,7 +386,8 @@ target_link_libraries(keepassxc_gui
         ${browser_LIB}
         ${fdosecrets_LIB}
         ${keeshare_LIB}
-        ${sshagent_LIB})
+        ${sshagent_LIB}
+        ${remotesync_LIB})
 
 if(APPLE)
     target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")

@@ -38,6 +38,7 @@ namespace Ui
 class InactivityTimer;
 class SearchWidget;
 class MainWindowEventFilter;
+class QColor;
 
 class MainWindow : public QMainWindow
 {
@@ -156,6 +157,10 @@ private slots:
     void enableMenuAndToolbar();
     void disableMenuAndToolbar();
     void clearSSHAgent();
+#ifdef KPXC_FEATURE_NETWORK
+    void updateSyncStatusBar(const QString& syncName);
+    void updateSyncFailedStatusBar(const QString& syncName, const QString& error);
+#endif
 
 private:
     static const QString BaseWindowTitle;
@@ -165,6 +170,7 @@ private:
     bool saveLastDatabases();
     bool isTrayIconEnabled() const;
     void customOpenUrl(QString url);
+    void setStatusBarBackground(const QColor& color);
 
     static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
     void dragEnterEvent(QDragEnterEvent* event) override;
@@ -193,6 +199,7 @@ private:
 
     Q_DISABLE_COPY(MainWindow)
 
+    bool m_syncStatusShown = false;
     bool m_windowInformationRestored = false;
     bool m_appExitCalled = false;
     bool m_appExiting = false;

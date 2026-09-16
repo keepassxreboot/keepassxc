@@ -24,6 +24,7 @@
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/databasekey/YubiKeyEditWidget.h"
+#include "gui/remote/RemoteSettings.h"
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
@@ -213,6 +214,20 @@ bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
         return false;
     }
 
+    // Capture the current key BEFORE the swap so the cloud-sync engine can
+    // unlock the remote DB (which still holds the old key) on the next sync
+    // and migrate it to the new key without prompting the user.
+    //
+    // Gate the snapshot on sync actually being configured for this database:
+    // for users without any sync (the majority), there is no consumer for
+    // the previous key and retaining a CompositeKey in memory until lock /
+    // close is an unnecessary security exposure.
+    {
+        RemoteSettings remoteSettings(m_db);
+        if (remoteSettings.hasAnySync()) {
+            m_db->setSyncPreviousKey(m_db->key());
+        }
+    }
     m_db->setKey(newKey, true, false, false);
 
     getQuickUnlock()->reset(m_db->publicUuid());
