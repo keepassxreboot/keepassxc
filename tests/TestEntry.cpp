@@ -20,6 +20,7 @@
 
 #include "TestEntry.h"
 #include "core/Clock.h"
+#include "core/CustomData.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/TimeInfo.h"
@@ -105,6 +106,44 @@ void TestEntry::testCopyDataFrom()
     QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
     QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("1"));
     QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("3"));
+}
+
+void TestEntry::testPinnedAttributes()
+{
+    QScopedPointer<Entry> entry(new Entry());
+
+    // No key set yet
+    QVERIFY(entry->pinnedAttributes().isEmpty());
+
+    // Round-trip with names containing JSON separators, quotes and newlines
+    const QStringList names = {"Simple", "With,Comma", "With\"Quote", "With\nNewline", "Unicode é●"};
+    Entry::setPinnedAttributes(entry->customData(), names);
+    QVERIFY(entry->customData()->contains(CustomData::PinnedAttributes));
+    QCOMPARE(entry->pinnedAttributes(), names);
+    QCOMPARE(Entry::pinnedAttributes(entry->customData()), names);
+
+    // Empty names are filtered out
+    Entry::setPinnedAttributes(entry->customData(), {"", "Kept"});
+    QCOMPARE(entry->pinnedAttributes(), QStringList{"Kept"});
+
+    // Duplicates are removed while preserving order
+    Entry::setPinnedAttributes(entry->customData(), {"A", "B", "A"});
+    QCOMPARE(entry->pinnedAttributes(), (QStringList{"A", "B"}));
+
+    // Empty list removes the key entirely
+    Entry::setPinnedAttributes(entry->customData(), {});
+    QVERIFY(!entry->customData()->contains(CustomData::PinnedAttributes));
+    QVERIFY(entry->pinnedAttributes().isEmpty());
+
+    // Malformed JSON yields an empty list without crashing
+    entry->customData()->set(CustomData::PinnedAttributes, "not json at all");
+    QVERIFY(entry->pinnedAttributes().isEmpty());
+    entry->customData()->set(CustomData::PinnedAttributes, "{\"an\":\"object\"}");
+    QVERIFY(entry->pinnedAttributes().isEmpty());
+
+    // Null CustomData pointers are handled gracefully
+    QVERIFY(Entry::pinnedAttributes(nullptr).isEmpty());
+    Entry::setPinnedAttributes(nullptr, {"NoCrash"});
 }
 
 void TestEntry::testClone()

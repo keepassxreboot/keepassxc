@@ -28,8 +28,11 @@
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"
 
+#include <QHBoxLayout>
+#include <QLabel>
 #include <QScrollBar>
 #include <QTabWidget>
+#include <QToolButton>
 namespace
 {
     constexpr int GeneralTabIndex = 0;
@@ -114,6 +117,13 @@ bool EntryPreviewWidget::eventFilter(QObject* object, QEvent* event)
         if (m_currentEntry && m_currentEntry->hasTotp()) {
             emit copyTextRequested(m_currentEntry->totp());
             m_ui->entryTotpLabel->clearFocus();
+            return true;
+        }
+    } else if (event->type() == QEvent::MouseButtonDblClick) {
+        // Pinned attribute values expose their clear text through this property
+        const auto clearValue = object->property("clearValue");
+        if (clearValue.isValid()) {
+            emit copyTextRequested(clearValue.toString());
             return true;
         }
     }
@@ -401,6 +411,84 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     m_ui->entryExpirationLabel->setText(expires);
     m_ui->entryTagsList->tags(m_currentEntry->tagList());
     m_ui->entryTagsList->setReadOnly(true);
+
+    updateEntryPinnedAttributes();
+}
+
+void EntryPreviewWidget::updateEntryPinnedAttributes()
+{
+    Q_ASSERT(m_currentEntry);
+
+    auto layout = m_ui->entryPinnedAttributesLayout;
+    while (layout->count() > 0) {
+        auto item = layout->takeAt(0);
+        delete item->widget();
+        delete item;
+    }
+
+    const EntryAttributes* attributes = m_currentEntry->attributes();
+    const QStringList customKeys = attributes->customKeys();
+    QStringList pinned;
+    for (const QString& name : m_currentEntry->pinnedAttributes()) {
+        // Silently ignore pinned names that no longer exist as custom attributes
+        if (customKeys.contains(name)) {
+            pinned << name;
+        }
+    }
+
+    m_ui->entryPinnedAttributesWidget->setVisible(!pinned.isEmpty());
+
+    QFont font;
+    font.setBold(true);
+    for (const QString& name : pinned) {
+        auto titleLabel = new QLabel(name, m_ui->entryPinnedAttributesWidget);
+        titleLabel->setTextFormat(Qt::PlainText);
+        titleLabel->setFont(font);
+        const auto value = m_currentEntry->resolveMultiplePlaceholders(attributes->value(name));
+        layout->addRow(titleLabel, createPinnedValueWidget(value, attributes->isProtected(name)));
+    }
+}
+
+QWidget* EntryPreviewWidget::createPinnedValueWidget(const QString& clearValue, bool protect)
+{
+    auto container = new QWidget(m_ui->entryPinnedAttributesWidget);
+    auto layout = new QHBoxLayout(container);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(8);
+
+    auto valueLabel = new QLabel(container);
+    valueLabel->setTextFormat(Qt::PlainText);
+    valueLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    valueLabel->setProperty("clearValue", clearValue);
+    valueLabel->setToolTip(tr("Double click to copy value"));
+    valueLabel->installEventFilter(this);
+
+    if (protect) {
+        valueLabel->setText(QString("\u25cf").repeated(6));
+        valueLabel->setFont(Font::fixedFont());
+
+        auto button = new QToolButton(container);
+        button->setCheckable(true);
+        button->setChecked(false);
+        button->setIcon(icons()->onOffIcon("password-show", false));
+        button->setIconSize({12, 12});
+        connect(button, &QToolButton::clicked, this, [valueLabel, button](bool state) {
+            button->setIcon(icons()->onOffIcon("password-show", state));
+            if (state) {
+                valueLabel->setText(valueLabel->property("clearValue").toString());
+                valueLabel->setFont(Font::defaultFont());
+            } else {
+                valueLabel->setText(QString("\u25cf").repeated(6));
+                valueLabel->setFont(Font::fixedFont());
+            }
+        });
+        layout->addWidget(button);
+    } else {
+        valueLabel->setText(clearValue);
+    }
+
+    layout->addWidget(valueLabel, 1);
+    return container;
 }
 
 void EntryPreviewWidget::updateEntryAdvancedTab()
