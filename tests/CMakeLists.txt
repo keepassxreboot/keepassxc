@@ -140,6 +140,9 @@ add_unit_test(NAME testsharing SOURCES TestSharing.cpp
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
+add_unit_test(NAME testtags SOURCES TestTags.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
