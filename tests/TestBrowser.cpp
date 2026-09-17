@@ -75,22 +75,74 @@ void TestBrowser::testEncryptMessage()
     QJsonObject message;
     message["action"] = "test-action";
 
+    QString invalidKey = "dGVzdHN0cmluZw==";
     m_browserAction->m_publicKey = SERVERPUBLICKEY;
     m_browserAction->m_secretKey = SERVERSECRETKEY;
     m_browserAction->m_clientPublicKey = PUBLICKEY;
-    auto encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
+    // Public key length is not valid
+    auto encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, invalidKey, SERVERSECRETKEY);
+    QVERIFY(encrypted.isEmpty());
+
+    // Secret key length is not valid
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, invalidKey);
+    QVERIFY(encrypted.isEmpty());
+
+    // Nonce length is not valid
+    encrypted = browserMessageBuilder()->encryptMessage(message, invalidKey, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(encrypted.isEmpty());
+
+    // Max message length is exceeded (set to 20)
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, 20);
+    QVERIFY(encrypted.isEmpty());
+
+    // Empty message
+    encrypted = browserMessageBuilder()->encryptMessage(QJsonObject(), NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(encrypted.isEmpty());
+
+    // Successful encryption
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
+
+    // Max message length is same as the message length
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, 32);
     QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
 }
 
 void TestBrowser::testDecryptMessage()
 {
     QString message = "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP";
+    QString invalidKey = "dGVzdHN0cmluZw==";
     m_browserAction->m_publicKey = SERVERPUBLICKEY;
     m_browserAction->m_secretKey = SERVERSECRETKEY;
     m_browserAction->m_clientPublicKey = PUBLICKEY;
-    auto decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
+    // Public key length is not valid
+    auto decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, invalidKey, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Secret key length is not valid
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, invalidKey);
+    QVERIFY(decrypted.isEmpty());
+
+    // Nonce length is not valid
+    decrypted = browserMessageBuilder()->decryptMessage(message, invalidKey, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Max message length is exceeded (set to 20)
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, 20);
+    QVERIFY(decrypted.isEmpty());
+
+    // Empty message
+    decrypted = browserMessageBuilder()->decryptMessage(QString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Successful decryption
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QCOMPARE(decrypted["action"].toString(), QString("test-action"));
+
+    // Max message length is same as the message length
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, 32);
     QCOMPARE(decrypted["action"].toString(), QString("test-action"));
 }
 

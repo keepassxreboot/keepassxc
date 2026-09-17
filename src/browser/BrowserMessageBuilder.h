@@ -18,6 +18,8 @@
 #ifndef KEEPASSXC_BROWSERMESSAGEBUILDER_H
 #define KEEPASSXC_BROWSERMESSAGEBUILDER_H
 
+#include "BrowserShared.h"
+
 #include <QPair>
 #include <QString>
 #include <QVariant>
@@ -86,12 +88,23 @@ public:
     QString encryptMessage(const QJsonObject& message,
                            const QString& nonce,
                            const QString& publicKey,
-                           const QString& secretKey);
-    QJsonObject
-    decryptMessage(const QString& message, const QString& nonce, const QString& publicKey, const QString& secretKey);
-    QString encrypt(const QString& plaintext, const QString& nonce, const QString& publicKey, const QString& secretKey);
-    QByteArray
-    decrypt(const QString& encrypted, const QString& nonce, const QString& publicKey, const QString& secretKey);
+                           const QString& secretKey,
+                           const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH);
+    QJsonObject decryptMessage(const QString& message,
+                               const QString& nonce,
+                               const QString& publicKey,
+                               const QString& secretKey,
+                               const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH);
+    QString encrypt(const QString& plaintext,
+                    const QString& nonce,
+                    const QString& publicKey,
+                    const QString& secretKey,
+                    const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH);
+    QByteArray decrypt(const QString& encrypted,
+                       const QString& nonce,
+                       const QString& publicKey,
+                       const QString& secretKey,
+                       const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH);
 
     QString getBase64FromKey(const uchar* array, const uint len);
     QByteArray getQByteArray(const uchar* array, const uint len) const;

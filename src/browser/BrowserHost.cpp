@@ -74,10 +74,10 @@ void BrowserHost::readProxyMessage()
         return;
     }
 
-    socket->setReadBufferSize(BrowserShared::NATIVEMSG_MAX_LENGTH);
+    socket->setReadBufferSize(BrowserShared::SOCKET_BUFFER_SIZE);
     int socketDesc = socket->socketDescriptor();
     if (socketDesc) {
-        int max = BrowserShared::NATIVEMSG_MAX_LENGTH;
+        int max = BrowserShared::SOCKET_BUFFER_SIZE;
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
