@@ -396,7 +396,7 @@ QString Entry::resolveUrl() const
         return {};
     }
 
-    return EntryAttributes::matchReference(entryUrl).hasMatch() ? resolveMultiplePlaceholders(entryUrl) : entryUrl;
+    return EntryPlaceholders::matchReference(entryUrl).hasMatch() ? resolveMultiplePlaceholders(entryUrl) : entryUrl;
 }
 
 QStringList Entry::getAllUrls() const
@@ -1329,7 +1329,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
     // resolving references in format: {REF:<WantedField>@<SearchIn>:<SearchText>}
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
 
-    const QRegularExpressionMatch match = EntryAttributes::matchReference(placeholder);
+    const QRegularExpressionMatch match = EntryPlaceholders::matchReference(placeholder);
     if (!match.hasMatch() || !m_group || !m_group->database()) {
         return placeholder;
     }
@@ -1461,7 +1461,7 @@ Database* Entry::database()
 
 Entry* Entry::resolveReference(const QString& str) const
 {
-    QRegularExpressionMatch match = EntryAttributes::matchReference(str);
+    QRegularExpressionMatch match = EntryPlaceholders::matchReference(str);
     if (!match.hasMatch()) {
         return nullptr;
     }

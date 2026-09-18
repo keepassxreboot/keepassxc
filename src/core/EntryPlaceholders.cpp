@@ -186,6 +186,16 @@ namespace EntryPlaceholders
         return placeholderRegEx.globalMatch(str);
     }
 
+    QRegularExpressionMatch matchReference(const QString& text)
+    {
+        // Updated regex to handle nested braces in SearchText (e.g., {UUID})
+        static const QRegularExpression referenceRegExp(
+            R"(\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>(?:[^{}]|\{[^}]*\})+)\})",
+            QRegularExpression::CaseInsensitiveOption);
+
+        return referenceRegExp.match(text);
+    }
+
     bool containsPlaceholder(const QString& str)
     {
         auto matches = placeholderMatches(str);
@@ -201,8 +211,14 @@ namespace EntryPlaceholders
                 captured.replace(captured.size() - 2, 2, "}");
             }
 
+            // Check for placeholder type
             const auto placeHolderType = placeholderType(captured);
             if (placeHolderType != PlaceholderType::NotPlaceholder && placeHolderType != PlaceholderType::Unknown) {
+                return true;
+            }
+
+            // Check for references. Deeply nested reference placeholders might return an Unknown type.
+            if (matchReference(captured).hasMatch()) {
                 return true;
             }
         }
