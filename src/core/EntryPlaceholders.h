@@ -72,6 +72,7 @@ namespace EntryPlaceholders
     QString resolveDateTimePlaceholder(PlaceholderType placeholderType);
     QString maskPasswordPlaceholders(const QString& str);
     QRegularExpressionMatchIterator placeholderMatches(const QString& str);
+    QRegularExpressionMatch matchReference(const QString& text);
     bool containsPlaceholder(const QString& str);
 } // namespace EntryPlaceholders
 
