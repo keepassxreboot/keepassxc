@@ -25,6 +25,7 @@ const QString CustomData::Created = QStringLiteral("_CREATED_");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 const QString CustomData::FdoSecretsExposedGroup = QStringLiteral("FDO_SECRETS_EXPOSED_GROUP");
+const QString CustomData::FdoSecretsAuthChains = QStringLiteral("FDO_SECRETS_AUTH_CHAINS");
 const QString CustomData::RandomSlug = QStringLiteral("KPXC_RANDOM_SLUG");
 const QString CustomData::RemoteProgramSettings = QStringLiteral("KPXC_REMOTE_SYNC_SETTINGS");
 

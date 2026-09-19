@@ -75,6 +75,7 @@ namespace FdoSecrets
         {
             return hierarchy.front().exePath;
         }
+        QString chainIdentifier() const;
 
         bool operator==(const PeerInfo& other) const;
         bool operator!=(const PeerInfo& other) const;

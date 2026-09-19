@@ -24,6 +24,7 @@
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
 
+#include "core/CustomData.h"
 #include "core/EntryAttributes.h"
 #include "core/EntryPlaceholders.h"
 #include "core/Group.h"
@@ -88,7 +89,8 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        locked = locked || !client->itemAuthorized(m_backend->uuid());
+        bool authorized = client->itemAuthorized(m_backend->uuid()) || isClientChainAuthorized(client);
+        locked = locked || !authorized;
         return {};
     }
 
@@ -271,7 +273,8 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!client->itemAuthorizedResetOnce(backend()->uuid())) {
+        bool authorized = client->itemAuthorizedResetOnce(backend()->uuid()) || isClientChainAuthorized(client);
+        if (!authorized) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
@@ -297,7 +300,8 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!client->itemAuthorizedResetOnce(backend()->uuid())) {
+        bool authorized = client->itemAuthorizedResetOnce(backend()->uuid()) || isClientChainAuthorized(client);
+        if (!authorized) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
@@ -476,4 +480,39 @@ namespace FdoSecrets
         return ss;
     }
 
+    bool Item::isClientChainAuthorized(const DBusClientPtr& client) const
+    {
+        if (!m_backend || !client) {
+            return false;
+        }
+        const auto chain = client->processInfo().chainIdentifier();
+        if (chain.isEmpty()) {
+            return false;
+        }
+        const auto customData = m_backend->customData();
+        if (!customData || !customData->contains(CustomData::FdoSecretsAuthChains)) {
+            return false;
+        }
+        const auto authChains =
+            customData->value(CustomData::FdoSecretsAuthChains).split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+        return authChains.contains(chain);
+    }
+
+    void Item::authorizeClientChain(const QString& chain)
+    {
+        if (!m_backend || chain.isEmpty()) {
+            return;
+        }
+        auto customData = m_backend->customData();
+        if (!customData) {
+            return;
+        }
+        auto authChains =
+            customData->value(CustomData::FdoSecretsAuthChains).split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+        if (!authChains.contains(chain)) {
+            authChains.append(chain);
+            EntryUpdater eu(m_backend);
+            customData->set(CustomData::FdoSecretsAuthChains, authChains.join(QLatin1Char('\n')));
+        }
+    }
 } // namespace FdoSecrets

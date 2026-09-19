@@ -22,6 +22,8 @@
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
+#include <QFileInfo>
+#include <QStringList>
 #include <utility>
 
 namespace FdoSecrets
@@ -46,6 +48,42 @@ namespace FdoSecrets
     bool PeerInfo::operator!=(const PeerInfo& other) const
     {
         return !(*this == other);
+    }
+    QString PeerInfo::chainIdentifier() const
+    {
+        if (hierarchy.isEmpty()) {
+            return {};
+        }
+
+        QStringList chain;
+        for (auto it = hierarchy.crbegin(); it != hierarchy.crend(); ++it) {
+            if (it->pid <= 1 || it->name == QLatin1String("systemd") || it->name == QLatin1String("init")) {
+                continue;
+            }
+            QString procName;
+            if (!it->exePath.isEmpty()) {
+                procName = QFileInfo(it->exePath).fileName();
+            }
+            if (procName.isEmpty()) {
+                procName = it->name;
+            }
+            if (!procName.isEmpty()) {
+                chain.append(procName);
+            }
+        }
+
+        if (chain.isEmpty()) {
+            QString fallback;
+            if (!exePath().isEmpty()) {
+                fallback = QFileInfo(exePath()).fileName();
+            }
+            if (fallback.isEmpty() && !hierarchy.front().name.isEmpty()) {
+                fallback = hierarchy.front().name;
+            }
+            return fallback;
+        }
+
+        return chain.join(QLatin1String("->"));
     }
 
     DBusClient::DBusClient(DBusMgr* dbus, PeerInfo process)

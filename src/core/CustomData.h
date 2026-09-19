@@ -71,6 +71,7 @@ public:
     static const QString Created;
     static const QString BrowserKeyPrefix;
     static const QString FdoSecretsExposedGroup;
+    static const QString FdoSecretsAuthChains;
     static const QString RandomSlug;
     static const QString RemoteProgramSettings;
 

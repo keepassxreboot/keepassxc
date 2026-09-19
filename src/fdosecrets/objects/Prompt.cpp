@@ -390,11 +390,14 @@ namespace FdoSecrets
                 }
                 auto entry = item->backend();
                 auto uuid = entry->uuid();
-                if (client->itemKnown(uuid) || !FdoSecrets::settings()->confirmAccessItem()) {
-                    if (!client->itemAuthorized(uuid)) {
+                if (client->itemKnown(uuid) || !FdoSecrets::settings()->confirmAccessItem()
+                    || item->isClientChainAuthorized(client)) {
+                    if (item->isClientChainAuthorized(client)) {
+                        client->setItemAuthorized(uuid, AuthDecision::Allowed);
+                    } else if (!client->itemAuthorized(uuid)) {
                         m_numRejected += 1;
                     }
-                    // Already saw this entry
+                    // Already saw this entry or authorized by persistent chain
                     continue;
                 }
                 m_entryToItems[uuid] = item;
@@ -445,6 +448,12 @@ namespace FdoSecrets
 
             // set auth
             client->setItemAuthorized(uuid, it.value());
+            if (it.value() == AuthDecision::Allowed) {
+                const auto chain = client->processInfo().chainIdentifier();
+                if (!chain.isEmpty()) {
+                    item->authorizeClientChain(chain);
+                }
+            }
 
             if (client->itemAuthorized(uuid)) {
                 m_unlocked += item->objectPath();

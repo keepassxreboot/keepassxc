@@ -81,6 +81,9 @@ namespace FdoSecrets
         DBusResult getSecretNoNotification(const DBusClientPtr& client, Session* session, Secret& secret) const;
         DBusResult setProperties(const QVariantMap& properties);
 
+        bool isClientChainAuthorized(const DBusClientPtr& client) const;
+        void authorizeClientChain(const QString& chain);
+
         Entry* backend() const;
         Collection* collection() const;
         Service* service() const;
