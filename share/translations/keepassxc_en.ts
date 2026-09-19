@@ -660,6 +660,10 @@
         <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>

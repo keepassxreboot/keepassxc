@@ -54,6 +54,7 @@ public:
         HideWindowOnCopy,
         MinimizeOnCopy,
         MinimizeAfterUnlock,
+        AutocompleteSuggestions,
         AutoGeneratePasswordForNewEntries,
         DropToBackgroundOnCopy,
         UseGroupIconOnEntryCreation,
