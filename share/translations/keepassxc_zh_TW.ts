@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>回報錯誤請至: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>回報問題請至：&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>回報錯誤時需包含以下資訊：</translation>
+        <translation>問題報告需包含以下信息：</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -50,11 +50,11 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC - 存取要求</translation>
+        <translation>KeePassXC -  存取請求</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>可執行檔路徑不存在或無法存取。請仔細檢查客戶端是否正確有效。</translation>
+        <translation>不存在/不可存取的可執行路徑。請再檢查客戶端是否正確無誤。</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>可執行檔案</translation>
+        <translation>可執行</translation>
     </message>
     <message>
         <source>Command Line</source>
@@ -153,6 +153,25 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH 代理連線正在運作！</translation>
+    </message>
+</context>
+<context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>窗口</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>最小化</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>縮放</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>全部置於前端</translation>
     </message>
 </context>
 <context>
@@ -261,6 +280,14 @@
         <source>Custom</source>
         <translation>自定義</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>無</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>重啟 KeePassXC 以套用自動輸入桌面門戶選項。</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -302,7 +329,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>記住資料庫的金鑰檔與硬體金鑰</translation>
+        <translation>記住資料庫的密鑰檔與安全性金鑰</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -467,7 +494,7 @@
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>從自動輸入隱藏過期的項目</translation>
+        <translation>從自動輸入隱藏已過期的項目</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -537,7 +564,7 @@
     </message>
     <message>
         <source>Copy data on double clicking field in entry view</source>
-        <translation>在項目視區中，雙擊欄位複製資料</translation>
+        <translation>在項目檢視中，雙擊欄位複製資料</translation>
     </message>
     <message>
         <source>Show toolbar</source>
@@ -560,10 +587,6 @@
         <translation>匯出設定…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>在項目視區中，雙擊 URL 打開瀏覽器</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>字型：</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>跳過主視窗自動輸入操作的確認</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>雙擊 URL 的操作</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>雙擊 URL 欄位的操作</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>編輯項目</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>在瀏覽器打開項目 URL</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>將項目 URL 複製到剪貼簿</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
-        <translation>为新条目自动生成密码</translation>
+        <translation>為新項目自動生成密碼</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>執行自動輸入後保持遠端桌面連線開啟</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>遠端桌面模式：</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>永遠不記住會話</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>記住會話直到退出</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>記住會話直到被桌面撤銷</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>無</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>設置…</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>使用遠端桌面存取剪貼簿</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>實驗性：優先使用桌面門戶（Wayland 實現）</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -597,11 +680,11 @@
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>多久後清除剪貼簿</translation>
+        <translation>多久後清空剪貼簿</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>多久後清除搜尋字詞</translation>
+        <translation>多久後清空搜尋字詞</translation>
     </message>
     <message>
         <source> min</source>
@@ -610,7 +693,7 @@
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>清除剪貼簿的預訂時間，以秒計算</translation>
+        <translation>清空剪貼簿的預定時間，以秒計算</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>未找到鍵的符號：「%1」</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>未找到字符的符號：「%1」</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -867,33 +961,33 @@ Ctrl+Shift+2 - Copy password&lt;br/&gt;
 Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
 Ctrl+Shift+4 - Copy URL&lt;br/&gt;
 &lt;/p&gt;</source>
-        <translation>&lt;p&gt;以下快捷键可用：&lt;br/&gt;
+        <translation>&lt;p&gt;以下快捷鍵可用：&lt;br/&gt;
 Ctrl+F - 聚焦搜索框&lt;br/&gt;
-Ctrl+1 - 输入用户名&lt;br/&gt;
-Ctrl+2 - 输入密码&lt;br/&gt;
-Ctrl+3 - 输入 TOTP&lt;br/&gt;
-Ctrl+4 - 输入 URL&lt;br/&gt;
-Ctrl+5 - 使用虚拟键盘（仅限 Windows）&lt;br/&gt;
-Ctrl+Shift+1 - 复制用户名&lt;br/&gt;
-Ctrl+Shift+2 - 复制密码&lt;br/&gt;
-Ctrl+Shift+3 - 复制 TOTP&lt;br/&gt;
-Ctrl+Shift+4 - 复制 URL&lt;br/&gt;
+Ctrl+1 - 輸入使用者名稱&lt;br/&gt;
+Ctrl+2 - 輸入密碼&lt;br/&gt;
+Ctrl+3 - 輸入 TOTP&lt;br/&gt;
+Ctrl+4 - 輸入 URL&lt;br/&gt;
+Ctrl+5 - 使用虛擬鍵盤（僅限 Windows）&lt;br/&gt;
+Ctrl+Shift+1 - 複製使用者名稱&lt;br/&gt;
+Ctrl+Shift+2 - 複製密碼&lt;br/&gt;
+Ctrl+Shift+3 - 複製 TOTP&lt;br/&gt;
+Ctrl+Shift+4 - 複製 URL&lt;br/&gt;
 &lt;/p&gt;</translation>
     </message>
     <message>
         <source>You can use advanced search queries to find any entry in your open databases.</source>
-        <translation>您可以使用高级搜索查询在打开的数据库中查找任何条目。</translation>
+        <translation>您可以使用進階搜索在打開的資料庫中查詢任何項目。</translation>
     </message>
 </context>
 <context>
     <name>BinaryStream</name>
     <message>
         <source>Failed to read string data: %1</source>
-        <translation>读取字符串数据失败：%1</translation>
+        <translation>讀取字串資料失敗：%1</translation>
     </message>
     <message>
         <source>String length exceeds 10 MiB limit (requested %1)</source>
-        <translation>字符串程度超过 10 MiB 限制（请求值 %1）</translation>
+        <translation>字串長度超過 10 MiB 限制（請求值 %1）</translation>
     </message>
 </context>
 <context>
@@ -1002,7 +1096,7 @@ Please select the correct database for saving credentials.</source>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
         <translation>發現既有的通行密鑰。
-是否要註冊新的通行密鑰：</translation>
+是否要註冊新的通行密鑰給：</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
@@ -1010,11 +1104,11 @@ Do you want to register a new passkey for:</source>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation>驗證通行密鑰憑證：</translation>
+        <translation>驗證通行密鑰憑證予：</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation>是否要註冊通行密鑰：</translation>
+        <translation>是否要註冊通行密鑰給：</translation>
     </message>
 </context>
 <context>
@@ -1181,7 +1275,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>匹配 URL 協定 (e.g., https://example.com)</translation>
+        <translation>匹配 URL 協定 (例如 https://example.com)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -1193,7 +1287,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>可回傳過期的憑證。標題會加入 [過期] 字串。</translation>
+        <translation>可回傳過期的憑證。標題會加入 [已過期] 字串。</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
@@ -1654,17 +1748,17 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation>將要開啓的資料庫可能建立自
+        <translation>將要開啟的資料庫可能建立自
 版本超前的 KeePassXC。
 
-您可以嘗試直接開啓，但可能導致檔案缺損，
+您可以嘗試直接開啟，但可能導致檔案缺損，
 擅自變更或儲存將有資料損失的風險。
 
 我們建議在此之前先更新 KeePassXC。</translation>
     </message>
     <message>
         <source>Open database anyway</source>
-        <translation>直接開啓資料庫</translation>
+        <translation>直接開啟資料庫</translation>
     </message>
     <message>
         <source>Database unlock canceled.</source>
@@ -1777,16 +1871,16 @@ Are you sure you want to continue with this file?.</source>
         <translation>點擊以加入金鑰檔案。</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;我有一份金鑰檔案&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>硬體金鑰已找到，但未配置任何槽位。</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>再次按下 ESC 以關閉此資料庫</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>我有一份金鑰檔</translation>
     </message>
 </context>
 <context>
@@ -1855,7 +1949,7 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation>刷新資料庫的根群組 ID</translation>
+        <translation>更新資料庫的根群組 ID</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1937,12 +2031,12 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation>刷新資料庫 ID</translation>
+        <translation>更新資料庫 ID</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>真的要刷新資料庫的 ID？
+        <translation>真的要更新資料庫的 ID？
 只有當資料庫屬於另一份複本，且瀏覽器擴充無法連結時，才有必要進行。</translation>
     </message>
     <message>
@@ -2045,7 +2139,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>除非您有需要以其他程式開啓資料庫，否則建議使用最新的格式。</translation>
+        <translation>除非您有需要以其他程式開啟資料庫，否則建議使用最新的格式。</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
@@ -2343,7 +2437,7 @@ removed from the database.</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation>清除</translation>
+        <translation>清空</translation>
     </message>
     <message>
         <source>Display icon:</source>
@@ -2422,7 +2516,7 @@ removed from the database.</source>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation>正在使用的自定義圖示</translation>
+        <translation>正在使用自定義圖示</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
@@ -2528,7 +2622,7 @@ removed from the database.</source>
     </message>
     <message>
         <source>Download command cannot be empty.</source>
-        <translation>下載命令不可爲空。</translation>
+        <translation>下載指令不可爲空。</translation>
     </message>
     <message>
         <source>Download failed with error: %1</source>
@@ -2563,7 +2657,7 @@ get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
 ---
 {TEMP_DATABASE} 作為占位符，表示保存資料庫的臨時位置
-命令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
+指令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
             </translation>
     </message>
     <message>
@@ -2579,7 +2673,7 @@ put {TEMP_DATABASE} DatabaseOnRemote.kdbx
 exit
 ---
 {TEMP_DATABASE} 作為占位符，表示保存資料庫的臨時位置
-命令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
+指令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
             </translation>
     </message>
     <message>
@@ -2694,11 +2788,11 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>執行命令？</translation>
+        <translation>執行指令？</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>真的要執行以下命令？&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>真的要執行以下指令？&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
@@ -2710,7 +2804,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation>過期項目</translation>
+        <translation>已過期項目</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
@@ -2901,15 +2995,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Confirm Delete Group</source>
-        <translation>确认删除组</translation>
+        <translation>確認刪除群組</translation>
     </message>
     <message>
         <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
-        <translation>您确定要永久删除组“%1”吗？</translation>
+        <translation>真的要永遠刪除群組「%1」嗎？</translation>
     </message>
     <message>
         <source>Confirm Recycle Group</source>
-        <translation>确认回收组</translation>
+        <translation>確認回收群組</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2917,19 +3011,19 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Save Database Backup</source>
-        <translation>保存数据库备份</translation>
+        <translation>儲存資料庫備份</translation>
     </message>
     <message>
         <source>Successfully merged the selected database.</source>
-        <translation>已成功合并所选数据库。</translation>
+        <translation>已成功合併所選資料庫</translation>
     </message>
     <message>
         <source>No changes were made by the merge operation.</source>
-        <translation>合并操作未进行任何更改。</translation>
+        <translation>合併操作未進行任何更改。</translation>
     </message>
     <message>
         <source>Merge canceled, no changes were made.</source>
-        <translation>合并已取消，未进行任何更改。</translation>
+        <translation>合併已取消，未進行任何更改。</translation>
     </message>
 </context>
 <context>
@@ -3081,7 +3175,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n 個禮拜</numerusform></translation>
+        <translation><numerusform>%n 週</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
@@ -3358,15 +3452,15 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>過期欄位</translation>
+        <translation>過期時間欄位</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation>過期預先定義</translation>
+        <translation>過期時間預先定義</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation>過期預先定義</translation>
+        <translation>過期時間預先定義</translation>
     </message>
     <message>
         <source>Presets</source>
@@ -3390,7 +3484,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>啟用或停用過期</translation>
+        <translation>啟用或停用過期時間</translation>
     </message>
     <message>
         <source>Tags list</source>
@@ -3526,7 +3620,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Clear agent</source>
-        <translation>清除代理</translation>
+        <translation>清空代理</translation>
     </message>
 </context>
 <context>
@@ -3663,11 +3757,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>清除欄位</translation>
+        <translation>清空欄位</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>清除</translation>
+        <translation>清空</translation>
     </message>
     <message>
         <source>Inactive</source>
@@ -3736,6 +3830,14 @@ Supported extensions are: %1.</source>
         <source>Select import/export file</source>
         <translation>選擇匯入/匯出檔案</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>保持群組結構與共享資料庫一致</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>保持群組結構</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -3745,7 +3847,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>啟用或停用過期</translation>
+        <translation>啟用或停用過期時間</translation>
     </message>
     <message>
         <source>Expires:</source>
@@ -3757,7 +3859,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>過期欄位</translation>
+        <translation>過期時間欄位</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
@@ -3982,15 +4084,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>标题</translation>
+        <translation>標題</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>用户名</translation>
+        <translation>使用者名稱</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>密码</translation>
+        <translation>密碼</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3998,23 +4100,23 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>备注</translation>
+        <translation>備註</translation>
     </message>
     <message>
         <source>Custom Attributes</source>
-        <translation>自定义属性</translation>
+        <translation>自定義屬性</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>图标</translation>
+        <translation>圖示</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>颜色</translation>
+        <translation>顏色</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>过期时间</translation>
+        <translation>過期時間</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -4022,7 +4124,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation>自定义数据</translation>
+        <translation>自定義數據</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -4030,11 +4132,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>自动输入</translation>
+        <translation>自動輸入</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>标签</translation>
+        <translation>標籤</translation>
     </message>
 </context>
 <context>
@@ -4377,7 +4479,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>過期</translation>
+        <translation>過期時間</translation>
     </message>
     <message>
         <source>Tags</source>
@@ -4437,7 +4539,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation>清除</translation>
+        <translation>清空</translation>
     </message>
     <message>
         <source>Never</source>
@@ -4457,7 +4559,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Double click to copy to clipboard</source>
-        <translation>雙擊以複製到剪貼板</translation>
+        <translation>雙擊以複製到剪貼簿</translation>
     </message>
 </context>
 <context>
@@ -4530,7 +4632,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>invalid sort order</source>
-        <translation>排序顺序无效</translation>
+        <translation>排序順序無效</translation>
     </message>
 </context>
 <context>
@@ -4568,7 +4670,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation>在 DBus 註冊服務於路徑 &apos;%1&apos; 失敗</translation>
+        <translation>在 DBus 註冊服務於路徑「%1」失敗</translation>
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
@@ -4584,7 +4686,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation>在 DBus 註冊提示物件於路徑 &apos;%1&apos; 失敗</translation>
+        <translation>在 DBus 註冊提示物件於路徑「%1」失敗</translation>
     </message>
 </context>
 <context>
@@ -4636,6 +4738,25 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo 保密服務：&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC - 全局快捷鍵</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>用於全局快捷鍵的 XDG 桌面門戶在此系統上不可用。</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>全局自動輸入快捷鍵已設置。若要更改它，請打開系統設定並導航至鍵盤或應用程式快捷鍵部分。</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>觸發全局自動輸入</translation>
     </message>
 </context>
 <context>
@@ -4718,7 +4839,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Fit</source>
-        <translation>适应</translation>
+        <translation>適合</translation>
     </message>
 </context>
 <context>
@@ -4906,7 +5027,7 @@ get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
 ---
 {TEMP_DATABASE} 作為占位符，表示保存資料庫的臨時位置
-命令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
+指令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
          </translation>
     </message>
     <message>
@@ -5369,7 +5490,7 @@ Line %2, column %3</source>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>無法讀取加密 IV</translation>
+        <translation>無法讀取加密初始向量</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
@@ -5609,7 +5730,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>載入金鑰檔案 &apos;%1&apos; 時出錯
+        <translation>載入金鑰檔案「%1」時出錯
 訊息：%2</translation>
     </message>
     <message>
@@ -5942,7 +6063,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation>打開「開始使用」指南</translation>
+        <translation>開啟「開始使用」指南</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
@@ -6026,7 +6147,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>清除歷史記錄</translation>
+        <translation>清空歷史記錄</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -6035,20 +6156,6 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>Don&apos;t show again for this version</source>
         <translation>對此版本不再顯示</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>警告：您正在使用非穩定版本的 KeePassXC。
-具有高風險的破壞可能，請備份您的資料庫。
-這個版本並不適合生產用途。</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>注意：您正在使用 KeePassXC 的預先發行版本。
-此版本發行為測試用途，可能會出現一些程式錯誤和小問題。</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -6387,44 +6494,52 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>設定遠端同步…</translation>
     </message>
     <message>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>警告：您正在使用 KeePassXC 的開發快照版本。
+請備份您的資料庫以避免未知錯誤。
+此版本不適用於生產用途。</translation>
+    </message>
+    <message>
+        <source>Clear SSH Agent</source>
+        <translation>清空 SSH 代理</translation>
+    </message>
+    <message>
+        <source>Clear all identities in ssh-agent</source>
+        <translation>清空 ssh-agent 內所有身份</translation>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation>新建項目</translation>
+    </message>
+    <message>
         <source>Password Generator</source>
         <translation>密碼產生器</translation>
     </message>
     <message>
-        <source>Clear SSH Agent</source>
-        <translation>清除 SSH 代理</translation>
-    </message>
-    <message>
-        <source>Clear all identities in ssh-agent</source>
-        <translation>清除 ssh-agent 內所有身份</translation>
-    </message>
-    <message>
-        <source>New Entry</source>
-        <translation>新建条目</translation>
-    </message>
-    <message>
         <source>Edit Entry…</source>
-        <translation>编辑条目…</translation>
+        <translation>編輯項目…</translation>
     </message>
     <message>
         <source>E&amp;xpire Entry</source>
-        <translation>过期条目(&amp;X)</translation>
+        <translation>過期項目 (&amp;X)</translation>
     </message>
     <message>
         <source>Expire Entry</source>
-        <translation>过期条目</translation>
+        <translation>過期項目</translation>
     </message>
     <message>
         <source>&amp;Delete Entry</source>
-        <translation>删除条目(&amp;D)</translation>
+        <translation>刪除項目 (&amp;D)</translation>
     </message>
     <message numerus="yes">
         <source>Move selected entry(s) to the recycle bin</source>
-        <translation><numerusform>将所选条目移动到回收站</numerusform></translation>
+        <translation><numerusform>將所選項目移動到回收桶</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Permanently delete the selected entry(s)</source>
-        <translation><numerusform>永久删除所选条目</numerusform></translation>
+        <translation><numerusform>永久刪除所選項目</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6473,19 +6588,19 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <name>MergeDialog</name>
     <message>
         <source>Database Merge Confirmation</source>
-        <translation>数据库合并确认</translation>
+        <translation>資料庫合併確認</translation>
     </message>
     <message>
         <source>Merge</source>
-        <translation>合并</translation>
+        <translation>合併</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>群组</translation>
+        <translation>群組</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>标题</translation>
+        <translation>標題</translation>
     </message>
     <message>
         <source>UUID</source>
@@ -6493,7 +6608,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Details</source>
-        <translation>详情</translation>
+        <translation>詳情</translation>
     </message>
     <message>
         <source>Change</source>
@@ -6516,19 +6631,19 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Added</source>
-        <translation>已添加</translation>
+        <translation>添加於</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>修改时间</translation>
+        <translation>修改於</translation>
     </message>
     <message>
         <source>Moved</source>
-        <translation>移动时间</translation>
+        <translation>移動於</translation>
     </message>
     <message>
         <source>Deleted</source>
-        <translation>删除时间</translation>
+        <translation>刪除於</translation>
     </message>
     <message>
         <source>Previous location: %1</source>
@@ -6536,51 +6651,51 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Number of entries in group: %1</source>
-        <translation>组中的条目数：%1</translation>
+        <translation>群組中的項目數：%1</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation>群组名称</translation>
+        <translation>群組名稱</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>备注</translation>
+        <translation>備註</translation>
     </message>
     <message>
         <source>Icon (UUID)</source>
-        <translation>图标（UUID）</translation>
+        <translation>圖示（UUID）</translation>
     </message>
     <message>
         <source>Icon (Number)</source>
-        <translation>图标（数字）</translation>
+        <translation>圖示（數字）</translation>
     </message>
     <message>
         <source>Expiry time</source>
-        <translation>过期时间</translation>
+        <translation>過期時間</translation>
     </message>
     <message>
         <source>Modification time</source>
-        <translation>修改时间</translation>
+        <translation>修改時間</translation>
     </message>
     <message>
         <source>%1 (Add local modifications to new entry)</source>
-        <translation>%1（对新条目添加本地修改）</translation>
+        <translation>%1（對新項目添加本地修改）</translation>
     </message>
     <message>
         <source>%1 (Add new modifications to existing entry)</source>
-        <translation>%1（对现有条目添加新修改）</translation>
+        <translation>%1（對現有項目添加新修改）</translation>
     </message>
     <message>
         <source>Explicit deletion</source>
-        <translation>显式删除</translation>
+        <translation>顯式刪除</translation>
     </message>
     <message>
         <source>Implicit deletion (e.g. removal of parent group)</source>
-        <translation>隐式删除（例如移除父组时）</translation>
+        <translation>隱式刪除（例如移除父群組時）</translation>
     </message>
     <message>
         <source>Adding new icon %1</source>
-        <translation>添加新图标 %1</translation>
+        <translation>添加新圖示 %1</translation>
     </message>
 </context>
 <context>
@@ -6666,7 +6781,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation>無法讀取初始向量 (IV) 的所有位元組，預期為 16 但得到了 %1</translation>
+        <translation>無法讀取初始向量的所有位元組，預期為 16 但得到了 %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
@@ -6772,7 +6887,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>加密初始向量 (IV) 對 MD5 kdf 來說太短了</translation>
+        <translation>加密初始向量對 MD5 kdf 來說太短了</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
@@ -6832,11 +6947,11 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Failed to read key file: %1</source>
-        <translation>读取密钥文件失败：%1</translation>
+        <translation>讀取金鑰檔案失敗：%1</translation>
     </message>
     <message>
         <source>Failed to read public key: %1</source>
-        <translation>读取公钥失败：%1</translation>
+        <translation>讀取公鑰失敗：%1</translation>
     </message>
 </context>
 <context>
@@ -6913,7 +7028,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Overwrite Existing File?</source>
-        <translation>是否覆盖现有文件？</translation>
+        <translation>是否覆寫現有檔案？</translation>
     </message>
 </context>
 <context>
@@ -7007,11 +7122,11 @@ The following data is missing:
     </message>
     <message>
         <source>Open Passkey File</source>
-        <translation>打开通行密钥文件</translation>
+        <translation>開啟通行密鑰檔案</translation>
     </message>
     <message>
         <source>Passkey Import Failed</source>
-        <translation>通行密钥导入失败</translation>
+        <translation>通行密鑰匯入失敗</translation>
     </message>
 </context>
 <context>
@@ -7262,7 +7377,7 @@ The following data is missing:
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>資訊熵：%1 位元</translation>
+        <translation>熵值：%1 位元</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -7379,7 +7494,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation>密碼強度：%1</translation>
+        <translation>強度：%1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -7491,7 +7606,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>未收到用戶端公開金鑰</translation>
+        <translation>未收到客戶端公開金鑰</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
@@ -7540,6 +7655,10 @@ Do you want to overwrite it?</source>
     <message>
         <source>No valid UUID provided</source>
         <translation>未提供有效的 UUID</translation>
+    </message>
+    <message>
+        <source>Username or password cannot contain references</source>
+        <translation>使用者名稱或密碼不能包含引用</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -7711,7 +7830,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Could not open output file %1.</source>
-        <translation>無法開啓輸出檔 %1。</translation>
+        <translation>無法開啟輸出檔 %1。</translation>
     </message>
     <message>
         <source>Successfully exported attachment %1 of entry %2 to %3.</source>
@@ -7743,7 +7862,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Could not open attachment file %1.</source>
-        <translation>無法開啓附件檔 %1。</translation>
+        <translation>無法開啟附件檔 %1。</translation>
     </message>
     <message>
         <source>Successfully imported attachment %1 as %2 to entry %3.</source>
@@ -7785,7 +7904,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation>清除剪貼簿的逾時（預設 %1 秒，若不限制填 0）。</translation>
+        <translation>清空剪貼簿的逾時（預設 %1 秒，若不限制填 0）。</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -8088,6 +8207,14 @@ Do you want to overwrite it?</source>
         <translation>平均密碼長度</translation>
     </message>
     <message>
+        <source>Number of passkeys</source>
+        <translation>通行密鑰數</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>已設定 TOTP 項目數</translation>
+    </message>
+    <message>
         <source>Word count for the diceware passphrase.</source>
         <translation>Diceware 密碼短語字數統計</translation>
     </message>
@@ -8144,11 +8271,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation>用於估計 entropy 的密碼。</translation>
+        <translation>用於估計熵值的密碼。</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>估計密碼的 entropy。</translation>
+        <translation>估計密碼的熵值。</translation>
     </message>
     <message>
         <source>Length %1</source>
@@ -8292,7 +8419,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation> 使用延伸 ASCII 碼</translation>
+        <translation>使用延伸 ASCII 碼</translation>
     </message>
     <message>
         <source>Exclude character set</source>
@@ -8365,12 +8492,12 @@ Available commands:
 </source>
         <translation>
 
-可用命令：
+可用指令：
 </translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation>要執行的命令的名稱。</translation>
+        <translation>要執行的指令名稱。</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
@@ -8644,11 +8771,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation>要使用 okon，必須提供經過後處理的檔案 (e.g. file.okon)</translation>
+        <translation>要使用 okon，必須提供經過後處理的檔案 (例如 file.okon)</translation>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
-        <translation>無法啓動 okon 程序：%1</translation>
+        <translation>無法啟動 okon 程序：%1</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
@@ -8747,20 +8874,12 @@ Kernel: %3 %4</source>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>快速解鎖</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>保密服務整合</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>無</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -8776,7 +8895,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation><numerusform>%1 周</numerusform></translation>
+        <translation><numerusform>%1 週</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
@@ -8812,7 +8931,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation>SymmetricCipher::init: %1 的初始矩陣 (IV) 大小無效（針對 %2）。</translation>
+        <translation>SymmetricCipher::init: 無效 %2 初始向量大小 %1。</translation>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
@@ -9211,7 +9330,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Invalid cipher list within encKeyValidation field</source>
-        <translation>無效加密法列表出現於 encKeyValidation 欄</translation>
+        <translation>無法使用的加密法列表出現於 encKeyValidation 欄</translation>
     </message>
     <message>
         <source>Wrong password</source>
@@ -9223,7 +9342,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Invalid cipher list within encrypted data field</source>
-        <translation>無效加密法列表出現於加密資料欄</translation>
+        <translation>無法使用的加密法列表出現於加密資料欄</translation>
     </message>
     <message>
         <source>Cannot initialize cipher</source>
@@ -9283,6 +9402,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>只支援 PBKDF 與 Argon2，無法解密 JSON 檔案</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>硬體金鑰</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>通行密鑰</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>重置快捷鍵</translation>
     </message>
@@ -9300,27 +9427,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
-        <translation>快捷鍵 %1 與 &apos;%2&apos; 衝突。是否覆蓋快捷鍵？</translation>
-    </message>
-    <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>尚未支援加密檔案。</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Proton Pass 匯入</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>通行密鑰</translation>
+        <translation>快捷鍵 %1 與「%2」衝突。是否覆蓋快捷鍵？</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>匯出所用的格式。可用選項為 &apos;xml&apos;, &apos;csv&apos; 或 &apos;html&apos;。預設為 &apos;xml&apos;。</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>啟動後最小化至系統列</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9335,8 +9446,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>%1，列：%2，欄：%3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>尚未支援加密檔案。</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Proton Pass 匯入</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>標籤</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>啟動後最小化至系統列</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9354,35 +9477,35 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
-        <translation><numerusform>%1 个字符</numerusform></translation>
+        <translation><numerusform>%1 個字元</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
-        <translation>您确定要永久删除条目“%1”吗？</translation>
+        <translation>真的要永遠刪除項目「%1」嗎？</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to permanently delete %n entry(s)?</source>
-        <translation><numerusform>您确定要永久删除 %n 个条目吗？</numerusform></translation>
+        <translation><numerusform>真的要永遠刪除 %n 個項目嗎？</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Confirm Delete Entry(s)</source>
-        <translation><numerusform>确认删除条目</numerusform></translation>
+        <translation><numerusform>確認刪除項目</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Confirm Recycle Entry(s)</source>
-        <translation><numerusform>确认回收条目</numerusform></translation>
+        <translation><numerusform>確認回收項目</numerusform></translation>
     </message>
     <message>
         <source>Confirm Delete Plugin Data</source>
-        <translation>确认删除插件数据</translation>
+        <translation>確認刪除插件資料</translation>
     </message>
     <message numerus="yes">
         <source>Delete plugin data from the selected entry(s)?</source>
-        <translation><numerusform>是否从所选条目中删除插件数据？</numerusform></translation>
+        <translation><numerusform>是否從所選項目中刪除插件資料？</numerusform></translation>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
-        <translation>确认替换条目引用</translation>
+        <translation>確認替換項目引用</translation>
     </message>
 </context>
 <context>
@@ -9417,6 +9540,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>內部 zlib 錯誤: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>遠端桌面會話尚未活動</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>會話已經結束</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>使用者取消了交互</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>使用者交互因未知原因被取消</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>遠端桌面會話句柄與預期路徑不匹配</translation>
     </message>
 </context>
 <context>
@@ -9908,9 +10054,17 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>平均密碼長度小於 10 個字元。密碼越長，能提供的保護越多。</translation>
     </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>通行密鑰數</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>已設定 TOTP 項目數</translation>
+    </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
-        <translation><numerusform>%1 个字符</numerusform></translation>
+        <translation><numerusform>%1 個字元</numerusform></translation>
     </message>
 </context>
 <context>
@@ -10109,7 +10263,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;啓用後，任何讀取密碼的嘗試都需要經過確認。若否，客戶端在資料庫解鎖後可直接讀取密碼，無需確認。&lt;/p&gt;&lt;p&gt;此選項只對項目的密碼有效。客戶端仍可直接操作已開放的資料庫：列舉項目、查詢項目屬性。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;啟用後，任何讀取密碼的嘗試都需要經過確認。若否，客戶端在資料庫解鎖後可直接讀取密碼，無需確認。&lt;/p&gt;&lt;p&gt;此選項只對項目的密碼有效。客戶端仍可直接操作已開放的資料庫：列舉項目、查詢項目屬性。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
@@ -10260,7 +10414,7 @@ This option is deprecated, use --set-key-file instead.</source>
     <name>TagModel</name>
     <message>
         <source>Clear Search</source>
-        <translation>清除搜索</translation>
+        <translation>清空搜索</translation>
     </message>
     <message>
         <source>All Entries</source>
@@ -10520,12 +10674,8 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>一般：</translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>找不到與序列號為 %1 的硬體金鑰對應的介面。請將它連接後繼續。</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>無法找到序列號為 %1 的硬體密鑰。請連接後繼續。</translation>
     </message>
 </context>
 <context>
@@ -10586,10 +10736,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>找不到或無法存取序列號為 %1 的硬體金鑰。請將它呈現後繼續。 </translation>
-    </message>
-    <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>硬體金鑰已被鎖定或逾時。將它解鎖或重新呈現後繼續。</translation>
     </message>
@@ -10614,11 +10760,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>The YubiKey PC/SC interface has not been initialized.</source>
-        <translation>YubiKey PC/SC 接口尚未初始化。</translation>
+        <translation>YubiKey PC/SC 介面尚未初始化。</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
-        <translation>无法完成质询响应，PC/SC 错误代码为：%1</translation>
+        <translation>無法完成挑戰應答，PC/SC 錯誤代碼為：%1</translation>
     </message>
 </context>
 <context>

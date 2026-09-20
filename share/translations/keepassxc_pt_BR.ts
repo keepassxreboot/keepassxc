@@ -31,11 +31,11 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Consulte as colaborações no GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver Colaborações no GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Informações de depuração</translation>
+        <translation>Informações de Depuração</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copia para a área de transferência</translation>
+        <translation>Copiar para a área de transferência</translation>
     </message>
 </context>
 <context>
@@ -90,11 +90,11 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Permita os selecionados</translation>
+        <translation>Permitir Selecionados</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Recusar agora e futuramente</translation>
+        <translation>Recusar agora &amp;&amp; futuramente</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
@@ -156,10 +156,29 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>Janela</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>Minimizar</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>Ampliação</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>Enviar todas para a frente</translation>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Configurações do aplicativo</translation>
+        <translation>Configurações do Aplicativo</translation>
     </message>
     <message>
         <source>General</source>
@@ -219,7 +238,7 @@
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation>Selecione o diretório onde o backup será armazenado</translation>
+        <translation>Selecione diretório para armazenar o backup</translation>
     </message>
     <message>
         <source>Confirm Reset</source>
@@ -261,12 +280,20 @@
         <source>Custom</source>
         <translation>Personalizado</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>Nenhum</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>Reinicie KeePassXC para aplicar as preferências de escrita automática.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Configurações básicas</translation>
+        <translation>Configurações Básicas</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -314,19 +341,19 @@
     </message>
     <message>
         <source>File Management</source>
-        <translation>Gerenciador de arquivo</translation>
+        <translation>Gerenciamento de Arquivo</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Salva automaticamente depois de cada alteração</translation>
+        <translation>Salvar automaticamente depois de cada alteração</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Salva automaticamente ao bloquear banco de dados</translation>
+        <translation>Salvar automaticamente ao bloquear banco de dados</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Salva automaticamente as alterações que não sejam dados ao bloquear o banco de dados</translation>
+        <translation>Salvar automaticamente alterações que não são de dados ao bloquear banco de dados</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -378,7 +405,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Tempo limite de download Favicon:</translation>
+        <translation>Tempo limite de download do Favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -391,7 +418,7 @@
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Interface do usuário</translation>
+        <translation>Interface do Usuário</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -399,7 +426,7 @@
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>Barra de ferramentas móvel</translation>
+        <translation>Barra de Ferramentas Móvel</translation>
     </message>
     <message>
         <source>Language selection</source>
@@ -419,7 +446,7 @@
     </message>
     <message>
         <source>Show passwords in color</source>
-        <translation>Colorir senhas</translation>
+        <translation>Mostrar senhas em cores</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
@@ -451,39 +478,39 @@
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Autodigitação</translation>
+        <translation>Auto Digitação</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Usar o título de entrada para coincidir com a janela para Auto-Digitar global</translation>
+        <translation>Usar o título de entrada para coincidir com a janela de Digitação Automática global</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Use o URL de entrada para coincidir com a janela para Auto-Digitar global</translation>
+        <translation>Use o URL de entrada para coincidir com a janela de Digitação Automática global</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Sempre perguntar antes de executar o Auto-Digitar</translation>
+        <translation>Sempre perguntar antes de executar a Digitação Automática</translation>
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Ocultar entradas expiradas de Auto-Digitar:</translation>
+        <translation>Ocultar entradas expiradas da Digitação Automática:</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Bloquear novamente o banco de dados anteriormente bloqueado depois de executar o Auto-Digitar</translation>
+        <translation>Bloquear novamente o banco de dados anteriormente bloqueado depois de executar a Digitação Automática</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>Atraso para início de digitação automática:</translation>
+        <translation>Atraso do início da Digitação Automática:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Atalho para Auto-Digitação global:</translation>
+        <translation>Atalho da Digitação Automática global:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Auto-Digitar inicia com atraso de milissegundos</translation>
+        <translation>A Digitação Automática inicia com atraso de milissegundos</translation>
     </message>
     <message>
         <source> ms</source>
@@ -492,15 +519,15 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Atraso para digitação automática:</translation>
+        <translation>Atraso da Digitação Automática:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Atalho para Auto-Digitar global</translation>
+        <translation>Atalho da Digitação Automática global</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Digitação de caracteres com Auto-Digitar com atraso de milissegundos</translation>
+        <translation>Digitação de caracteres com a Digitação Automática com atraso de milissegundos</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
@@ -560,10 +587,6 @@
         <translation>Exportar configurações...</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Abra o navegador clicando duas vezes no campo URL na entrada exibida</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Tamanho da fonte:</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>Ignorar confirmação para ações de Auto-Digitação da janela principal</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>Ação de duplo clique no URL:</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>Ação de duplo clique no campo URL</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>Editar entrada</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>Abrir URL no navegador</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>Copiar URL para a àrea de transferência</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
         <translation>Gerar palavras-passe automaticamente para novas entradas</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>Manter ligação remota ativa após executar a escrita automática</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>Modo de ligação remota:</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>Nunca memoriza sessão</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>Memorizar sessão até sair</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>Memorizar sessão até ser revogada pelo ambiente de trabalho</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Nenhum</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>Configurar...</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>Utilizar ligação remota para acesso à área de transferência</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>Experimental: Prioridade aos portais de ambiente de trabalho (implementação Wayland)</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -684,11 +767,11 @@
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>A sequência de escrita automática não pode ser utilizada por causa do seguinte erro:</translation>
+        <translation>A sequência da Digitação Automática não pode ser utilizada por causa do seguinte erro:</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>Erro de escrita automática</translation>
+        <translation>Erro de Digitação Automática</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -696,11 +779,11 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC requer a permissão de Acessibilidade para realizar Auto-Digitar no nível de entrada. Se você já garantiu as permissões, você deve reiniciar o KeePassXC.</translation>
+        <translation>KeePassXC requer a Permissão de Acessibilidade para realizar a Digitação Automática no nível de entrada. Se você já garantiu as permissões, você deve reiniciar o KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC requer as permissões de Acessibilidade e de Gravação de Tela para realizar o Auto-Digitar global. Gravação de Tela é necessário para usar o título da janela e encontrar as entradas. Se você já garantiu as permissões, você deve reiniciar o KeePassXC.</translation>
+        <translation>KeePassXC requer as permissões de Acessibilidade e de Gravação de Tela para realizar a Digitação Automática global. Gravação de Tela é necessário para usar o título da janela e encontrar as entradas. Se você já garantiu as permissões, você deve reiniciar o KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>Nenhum símbolo encontrado para a chave: &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>Nenhum símbolo encontrado para o carácter: &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -796,11 +890,11 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Digitação - KeePassXC</translation>
+        <translation>Digitação Automática - KeePassXC</translation>
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation>Duplo clique na linha para escrita automática ou para encontrar uma entrada através de pesquisa:</translation>
+        <translation>Duplo clique na linha para Digitação Automática ou para encontrar uma entrada através de pesquisa:</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -1002,9 +1096,7 @@ Por favor, selecione o banco de dados correto para salvar as credenciais.</trans
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
         <translation>Uma chave de acesso já existente foi encontrada.
-Deseja registrar uma nova chave de acesso para:
-
-</translation>
+Deseja registrar uma nova chave de acesso para:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
@@ -1696,7 +1788,7 @@ Para impedir que esses erros apareçam, você deve ir em &quot;Configurações d
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Formato antigo de arquivo de chave</translation>
+        <translation>Formato antigo de arquivo-chave</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -1724,7 +1816,7 @@ Para impedir que esses erros apareçam, você deve ir em &quot;Configurações d
     </message>
     <message>
         <source>authenticate to access the database</source>
-        <translation>Autentique para acessar o banco de dados</translation>
+        <translation>Autentique-se para acessar o banco de dados</translation>
     </message>
     <message>
         <source>Failed to authenticate with Quick Unlock: %1</source>
@@ -1779,16 +1871,16 @@ Tem certeza de que deseja continuar com este arquivo?</translation>
         <translation>Clique para adicionar um arquivo-chave.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Eu tenho um arquivo-chave&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Chaves de hardware encontradas, mas nenhum slot configurado.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>Pressione ESC novamente para fechar este banco de dados</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>Eu tenho um ficheiro-chave</translation>
     </message>
 </context>
 <context>
@@ -1913,7 +2005,7 @@ Isso pode impedir a conexão com o plugin do navegador.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Removido com sucesso% n chave (s) criptográficas das configurações do KeePassXC.</numerusform><numerusform>Removido com sucesso% n chave (s) criptográficas das configurações do KeePassXC.</numerusform><numerusform>Removido com sucesso% n chave (s) criptográficas das configurações do KeePassXC.</numerusform></translation>
+        <translation><numerusform>Removido com sucesso %n chave(s) criptográficas das configurações do KeePassXC.</numerusform><numerusform>Removido com sucesso %n chave(s) criptográficas das configurações do KeePassXC.</numerusform><numerusform>Removido com sucesso %n chave(s) criptográficas das configurações do KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -2283,7 +2375,7 @@ add up to the specified amount at most.</source>
         <translation>Quando salvar essa configuração ou editar uma entrada
 os itens mais antigo do histórico de uma entrada serão
 removidos de forma que os itens restantes
-serão adicionados até a quantidade máxima especificada</translation>
+sejam adicionados até quantidade máxima especificada</translation>
     </message>
     <message>
         <source>Limit the total size of history items per entry to:</source>
@@ -2686,11 +2778,11 @@ Este é definitivamente um bug, por favor denuncie para os desenvolvedores.</tra
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>Confirmar digitação automática</translation>
+        <translation>Confirmar a Digitação Automática</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation>Executar digitação automática na janela anteriormente ativa?</translation>
+        <translation>Executar Digitação Automática na janela anteriormente ativa?</translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2714,7 +2806,7 @@ Este é definitivamente um bug, por favor denuncie para os desenvolvedores.</tra
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>A entradas que vai caducar dentro de %1 dia</numerusform><numerusform>As entradas que vão caducar dentro de %1 dias</numerusform><numerusform>As entradas que vão caducar dentro de %1 dia(s)</numerusform></translation>
+        <translation><numerusform>Entrada que vai caducar em %1 dia(s)</numerusform><numerusform>Entradas que vão caducar em %1 dia(s)</numerusform><numerusform>Entradas que vão caducar dentro de %1 dia(s)</numerusform></translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2955,7 +3047,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Digitação</translation>
+        <translation>Digitação Automática</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -3021,13 +3113,13 @@ Infelizmente, todas as alterações feitas foram perdidas.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation>Erro de validação de digitação automática</translation>
+        <translation>Erro de validação de Digitação Automática</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
 %1
 Would you like to correct it?</source>
-        <translation>Ocorreu um erro ao validar a sequência personalizada de digitação automática:
+        <translation>Ocorreu um erro ao validar a sequência personalizada de Digitação Automática:
 %1
 Gostaria de a corrigir?</translation>
     </message>
@@ -3183,23 +3275,23 @@ Gostaria de a corrigir?</translation>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Habilitar Auto-Digitação para esta entrada</translation>
+        <translation>Habilitar a Digitação Automática para esta entrada</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Herdar sequência pré-definida de Auto-Digitação do grupo</translation>
+        <translation>Herdar sequência pré-definida da Digitação Automática do grupo</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Usar sequência de Auto-Digitação personalizada:</translation>
+        <translation>Usar sequência da Digitação Automática personalizada:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation>Personalizar sequência de Auto-Digitar</translation>
+        <translation>Personalizar sequência da Digitação Automática</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation>Abrir a página de ajuda do Auto-Digitar</translation>
+        <translation>Abrir a página de ajuda da Digitação Automática</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -3249,7 +3341,7 @@ Gostaria de a corrigir?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation>Sequência de Auto-Digitar personalizada para esta janela</translation>
+        <translation>Sequência da Digitação Automática personalizada para esta janela</translation>
     </message>
 </context>
 <context>
@@ -3584,7 +3676,7 @@ Gostaria de a corrigir?</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Oculta as entradas deste grupo (e dos subgrupos) da extensão do navegador</translation>
+        <translation>Oculta as entradas da extensão do browser para este e para os subgrupos</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
@@ -3736,6 +3828,14 @@ Extensões suportadas são: %1</translation>
         <source>Select import/export file</source>
         <translation>Selecione o arquivo de importação/exportação</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>Manter estrutura do grupo com a base de dados partilhada</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>Manter estrutura do grupo</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -3761,11 +3861,11 @@ Extensões suportadas são: %1</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>Usar a sequência padrão de Auto-Digitar do grupo pai</translation>
+        <translation>Usar a sequência padrão da Digitação Automática do grupo pai</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Auto-Digitar:</translation>
+        <translation>Digitação Automática:</translation>
     </message>
     <message>
         <source>Search:</source>
@@ -3773,7 +3873,7 @@ Extensões suportadas são: %1</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Alternar Auto-Digitar para estes sub grupos</translation>
+        <translation>Alternar a Digitação Automática para estes sub grupos</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -3781,7 +3881,7 @@ Extensões suportadas são: %1</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation>Campo de sequência de Auto-Digitar padrão</translation>
+        <translation>Campo de sequência da Digitação Automática padrão</translation>
     </message>
     <message>
         <source>Notes field</source>
@@ -3793,7 +3893,7 @@ Extensões suportadas são: %1</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>Configurar sequência padrão de Auto-Digitar</translation>
+        <translation>Configurar sequência padrão da Digitação Automática</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
@@ -4460,7 +4560,7 @@ Deseja fazer a substituição do anexo já existente?</translation>
     </message>
     <message>
         <source>Double click to copy to clipboard</source>
-        <translation>Faça dois cliques para copiar o valor</translation>
+        <translation>Faça dois cliques para copiar para a área de transferência</translation>
     </message>
 </context>
 <context>
@@ -4490,7 +4590,7 @@ Deseja fazer a substituição do anexo já existente?</translation>
     </message>
     <message numerus="yes">
         <source>+ %1 entry(s)...</source>
-        <translation><numerusform>+ %1 entrada...</numerusform><numerusform>+ %1 entradas...</numerusform><numerusform>+ %1 entrada(s)...</numerusform></translation>
+        <translation><numerusform>+ %1 entrada...</numerusform><numerusform>+ %1 entradas...</numerusform><numerusform>+ %1 entradas...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4601,7 +4701,7 @@ Isso vai deixar as suas senhas e as suas informações confidenciais vulnerávei
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n entrada foi usada por %1</numerusform><numerusform>%n entradas foram usadas por %1</numerusform><numerusform>%n entradas foram usadas por %1</numerusform></translation>
+        <translation><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform><numerusform>%n entrada(s) foram utilizadas por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4638,6 +4738,25 @@ Isso vai deixar as suas senhas e as suas informações confidenciais vulnerávei
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC - Atalhos globais</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>O portal XDG Desktop Portal de atalhos globais não está disponível neste sistema.</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>O atalho global de escrita automático já está configurado. Para o alterar, abra as definições do sistema e aceda à secção Teclado ou Atalhos.</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>Ativar escrita automática global</translation>
     </message>
 </context>
 <context>
@@ -4738,7 +4857,7 @@ Você pode habilitar o serviço de ícones do DuckDuckGo na seção de seguranç
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation>Contagem de registros: %1</translation>
+        <translation>Contagem de entradas: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4877,7 +4996,7 @@ Você pode habilitar o serviço de ícones do DuckDuckGo na seção de seguranç
     </message>
     <message>
         <source>Proton Pass JSON Export</source>
-        <translation>Exportar para Proton Pass JSON</translation>
+        <translation>Exportar Proton Pass JSON</translation>
     </message>
     <message>
         <source>Temporary Database</source>
@@ -5294,7 +5413,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Janela associada ao Auto-Digitar ou sequência ausente</translation>
+        <translation>Janela associada à Digitação Automática ou sequência ausente</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -5855,7 +5974,7 @@ Tem certeza que deseja continuar com este arquivo?</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Executar &amp;Auto Digitação</translation>
+        <translation>Executar Digitação &amp;Automática</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
@@ -6038,20 +6157,6 @@ Tem certeza que deseja continuar com este arquivo?</translation>
         <translation>Não exibir novamenete para esta versão</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>AVISO: está a utilizar uma versão instável do KeePassXC!
-Existe um risco elevado de corrupção de ficheiros. Deve criar um backup da base de dados.
-Esta versão não deve ser utilizada em ambientes de produção.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>AVISO: você está usando uma versão de testes do KeePassXC!
-Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes de produção.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>Sem Etiquetas</translation>
     </message>
@@ -6085,7 +6190,7 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 Entradas(s)</numerusform><numerusform>%1 Entradas(s)</numerusform><numerusform>%1 Entradas(s)</numerusform></translation>
+        <translation><numerusform>%1 Entrada(s)</numerusform><numerusform>%1 Entrada(s)</numerusform><numerusform>%1 Entrada(s)</numerusform></translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -6388,8 +6493,12 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
         <translation>Configurar Sincronização Remota...</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Gerador de Senha</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>AVISO: está a utilizar uma versão de desenvolvimento do KeePassXC!
+Deve criar um backup da base de dados para o caso de ocorrerem erros.
+Esta versão não deve ser utilizada em ambientes de produção.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6402,6 +6511,10 @@ Pode encontrar erros graves e esta versão não deve ser utilizada em ambientes 
     <message>
         <source>New Entry</source>
         <translation>Nova entrada</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Gerador de Senha</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6906,7 +7019,7 @@ Você deseja sobrescrevê-lo?
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for writing.</source>
-        <translation>Não é possível abrir o arquivo &quot;%1&quot; para gravação.</translation>
+        <translation>Não foi possível abrir o arquivo &quot;%1&quot; para gravação.</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
@@ -6988,7 +7101,7 @@ Você deseja sobrescrevê-lo?
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for reading.</source>
-        <translation>Não é possível abrir o arquivo &quot;%1&quot; para leitura.</translation>
+        <translation>Não foi possível abrir o arquivo &quot;%1&quot; para leitura.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
@@ -7203,7 +7316,7 @@ Os seguintes dados estão faltando:
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Senha</translation>
+        <translation>Frase secreta</translation>
     </message>
     <message>
         <source>Word Separator:</source>
@@ -7541,6 +7654,10 @@ Tem certeza que deseja substitui-la?</translation>
     <message>
         <source>No valid UUID provided</source>
         <translation>Nenhuma UUID válida fornecida</translation>
+    </message>
+    <message>
+        <source>Username or password cannot contain references</source>
+        <translation>O nome de usuário ou a senha não podem conter referências</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -7986,7 +8103,7 @@ Tem certeza que deseja substitui-la?</translation>
     </message>
     <message>
         <source>Found unexpected Key type %1</source>
-        <translation>Tipo de Chave inesperada encontrado %1</translation>
+        <translation>Tipo de Chave inesperado encontrado %1</translation>
     </message>
     <message>
         <source>Cannot remove all the keys from a database.</source>
@@ -8087,6 +8204,14 @@ Tem certeza que deseja substitui-la?</translation>
     <message>
         <source>Average password length</source>
         <translation>Comprimento médio da senha</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Número de chaves de acesso</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Entradas com configuração TOTP</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8736,7 +8861,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Digitar</translation>
+        <translation>Digitação Automática</translation>
     </message>
     <message>
         <source>SSH Agent</source>
@@ -8747,20 +8872,12 @@ Kernel: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Desbloqueio rápido</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Integração com Secret Service</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Nada</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -8991,7 +9108,7 @@ Foi encontrada a versão %2.%3.%4</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>bloquear todas os bancos de dados abertas</translation>
+        <translation>bloquear todas os bancos de dados abertos</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -9045,7 +9162,7 @@ Foi encontrada a versão %2.%3.%4</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
-        <translation>Alerta: Falha ao bloquear captura de tela em uma janela.</translation>
+        <translation>Alerta: Falha ao bloquear captura de tela em uma janela pai.</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
@@ -9053,7 +9170,7 @@ Foi encontrada a versão %2.%3.%4</translation>
     </message>
     <message>
         <source>Invalid KDF</source>
-        <translation>Função de derivação de chave (KDF) inválido</translation>
+        <translation>KDF inválido</translation>
     </message>
     <message>
         <source>Access to all entries is denied</source>
@@ -9284,6 +9401,14 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
         <translation>Apenas PBKDF e Argon2 são suportados, não é possível descriptografar o arquivo json</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>Dispositivos de segurança</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Chave de acesso</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>Redefinir Atalhos</translation>
     </message>
@@ -9304,24 +9429,8 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
         <translation>O atalho %1 está em conflito com &apos;%2&apos;. Substituir o atalho?</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>Os arquivos criptografados não são suportados.</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Importar do Proton Pass</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>Chave de acesso</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>Formato a ser usado ao exportar. As opções disponíveis são &apos;XML&apos;, &apos;CSV&apos; ou &apos;HTML&apos;. Padrões para &apos;XML&apos;.</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>iniciar minimizado na bandeja do sistema</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9336,8 +9445,20 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
         <translation>%1, linha: %2, coluna: %3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Os arquivos criptografados não são suportados.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Importar do Proton Pass</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Etiquetas</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>iniciar minimizado na bandeja do sistema</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9418,6 +9539,29 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
     <message>
         <source>Internal zlib error: </source>
         <translation>Erro interno do zlib: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>A sessão de ligação remota não está ativa</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>Sessão encerrada</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>O utilizador cancelou a interação</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>A interação com o utilizador foi cancelada por um motivo desconhecido</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>A sessão da ligação remota não coincide com o caminho esperado</translation>
     </message>
 </context>
 <context>
@@ -9511,7 +9655,7 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Excluir entrada...</numerusform><numerusform>Excluir entradas...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Excluir entradas...</numerusform><numerusform>Excluir entradas...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -9909,6 +10053,14 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>O tamanho médio das senhas é menor que dez caracteres. Senhas maiores são mais seguras.</translation>
     </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Número de chaves de acesso</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Entradas com configuração TOTP</translation>
+    </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
         <translation><numerusform>%1 carácter</numerusform><numerusform>%1 caracteres</numerusform><numerusform>%1 caracteres</numerusform></translation>
@@ -10150,7 +10302,7 @@ Essa opção está obsoleta; em vez disso, use --set-key-file.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Isso melhora a compatibilidade com determinados aplicativos que buscam a senha sem antes desbloquear o banco de dados.&lt;p&gt;No entanto, esta ativação também pode travar o cliente se o banco de dados não puder ser desbloqueado dentro de um determinado limite de tempo. (Geralmente 25s, mas pode haver um valor diferente definido nos aplicativos.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Isso melhora a compatibilidade com determinados aplicativos que buscam a senha sem antes desbloquear o banco de dados.&lt;/p&gt;&lt;p&gt;No entanto, esta ativação também pode travar o cliente se o banco de dados não puder ser desbloqueado dentro de um determinado limite de tempo. (Geralmente 25s, mas pode haver um valor diferente definido nos aplicativos.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -10521,12 +10673,8 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Geral:</translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Não foi possível localizar a interface para o dispositivo com o número de série %1. Introduza o seu dispositivo para continuar.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>Não foi possível encontrar a chave de hardware com o número de série %1. Conecte a chave de segurança e continue.</translation>
     </message>
 </context>
 <context>
@@ -10586,10 +10734,6 @@ Exemplo: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Não foi possível localizar ou acessar a interface para o dispositivo com o número de série %1. Introduza o seu dispositivo para continuar.</translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>O dispositivo está bloqueado ou o tempo esgotou. Desbloqueie ou reintroduza o dispositivo para continuar.</translation>

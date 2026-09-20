@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -260,6 +279,14 @@
     <message>
         <source>Custom</source>
         <translation>Vetjake</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -560,10 +587,6 @@
         <translation>Eksportoni rregullime…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Me dyklikim të fushës së URL-së, te pamja e zërit, hap shfletuesin</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Madhësi shkronjash:</translation>
     </message>
@@ -576,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -771,6 +854,17 @@
     <message>
         <source>Sequence</source>
         <translation>Sekuencë</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1767,15 +1861,15 @@ Jeni i sigurt se doni të vazhdohet me këtë kartelë?</translation>
         <translation>Klikoni që të shtohet një kartelë kyç.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Kam një kartelë kyç&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>U gjetën kyçe hardware, por s’ka të formësuar vende për to.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3726,6 +3820,14 @@ Zgjatimet e mbuluara janë: %1.</translation>
         <source>Select import/export file</source>
         <translation>Përzgjidhni kartelë importim/eksportimi</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -4628,6 +4730,25 @@ Kjo do t’i lërë të cenueshme fjalëkalimet tuaja dhe informacione me spec!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Shërbim të Fshehtash Fdo:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6030,20 +6151,6 @@ Jeni i sigurt se doni të vazhdohet me këtë kartelë?</translation>
         <translation>Mos e shfaq më për këtë version</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>KUJDES: Po përdorni një montim të paqëndrueshëm të KeePassXC-së.
-Ka një rrezik të lartë dëmtimi, mbani një kopjeruajtje të bazave tuaja të të dhënave.
-Ky version s’është menduar për përdorim të vërtetë.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>SHËNIM: Po përdorni një version paraqarkullim të KeePassXC-së.
-Prisni ca të meta dhe probleme të vogla, ky version është menduar për qëllime testimi.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>Pa Etiketa</translation>
     </message>
@@ -6380,8 +6487,10 @@ Prisni ca të meta dhe probleme të vogla, ky version është menduar për qëll
         <translation>Ujdisni Njëkohësim të Largët…</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Prodhues Fjalëkalimesh</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6394,6 +6503,10 @@ Prisni ca të meta dhe probleme të vogla, ky version është menduar për qëll
     <message>
         <source>New Entry</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Prodhues Fjalëkalimesh</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -7535,6 +7648,10 @@ Doni të mbishkruhet?</translation>
         <translation>S’u dha UUID i vlefshëm</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Gabim i panjohur</translation>
     </message>
@@ -8079,6 +8196,14 @@ Doni të mbishkruhet?</translation>
     <message>
         <source>Average password length</source>
         <translation>Gjatësi mesatare fjalëkalimesh</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8740,20 +8865,12 @@ Kernel: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Shkyçje e Shpejtë</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Integrim Shërbimi të Fshehtash</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Asnjë</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9276,6 +9393,14 @@ Kjo mundësi është nxjerrë nga përdorimi, në vend të saj përdorni --set-k
         <translation>Mbulohen vetëm PBKDF dhe Argon2, s’mund të shfshehtëzohet kartelë json</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Kyçkalim</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>Riktheji Shkurtoret te Parazgjedhjet</translation>
     </message>
@@ -9296,24 +9421,8 @@ Kjo mundësi është nxjerrë nga përdorimi, në vend të saj përdorni --set-k
         <translation>Shkurtorja %1 përplaset me “%2”. Të mbishkruhet shkurtorja?</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>Nuk mbulohen kartela të fshehtëzuara.</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Importim Proton Pass-i</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>Kyçkalim</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>Format për t’u përdorur kur eksportohet. Zgjedhjet e mundshme janë &apos;xml&apos;, &apos;csv&apos; ose &apos;html&apos;. Si parazgjedhje përdoret &apos;xml&apos;.</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>nise të  minimizuar në panel sistemi</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9328,8 +9437,20 @@ Kjo mundësi është nxjerrë nga përdorimi, në vend të saj përdorni --set-k
         <translation>%1, rreshti: %2, shtylla: %3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Nuk mbulohen kartela të fshehtëzuara.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Importim Proton Pass-i</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Etiketa</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>nise të  minimizuar në panel sistemi</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9410,6 +9531,29 @@ Kjo mundësi është nxjerrë nga përdorimi, në vend të saj përdorni --set-k
     <message>
         <source>Internal zlib error: </source>
         <translation>Gabim i brendshëm zlib-i: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9900,6 +10044,14 @@ Kjo mundësi është nxjerrë nga përdorimi, në vend të saj përdorni --set-k
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Gjatësia mesatare e fjalëkalimeve është më pak se dhjetë shenja. Fjalëkalimet më të gjatë japin më tepër siguri.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10513,12 +10665,8 @@ Shembull: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Të përgjithshme: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>S’u gjet dot ndërfaqe për kyçin hardware me numrin serial %1. Ju lutemi, që të vazhdohet, lidheni.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10573,15 +10721,11 @@ Shembull: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware keys found, but no slots are configured</source>
-        <translation>U gjetën kyçe hardware, por s’ka të formësuar vende për to.</translation>
+        <translation>U gjetën kyçe hardware, por s’ka të formësuar vende për to</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>S’u gjet dot, ose s’u përdor dot kyç hardware me numër serial %1. Që të vazhdohet, ju lutemi, silleni. </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Kyçi hardware është i kyçur, ose mbaroi koha. Që të vazhdohet, shkyçeni, ose riparaqiteni.</translation>
