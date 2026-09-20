@@ -646,6 +646,7 @@ class Build(Command):
         parser.add_argument('--with-tests', help='Build and run tests.', action='store_true')
         parser.add_argument('--minimal', help='Build with minimal feature set.', action='store_true')
         parser.add_argument('--build-qt', help='Build Qt6 dependency.', action='store_true')
+        parser.add_argument('--override-version', help='Override displayed version number.')
 
         if sys.platform == 'darwin':
             parser.add_argument('--macos-target', default=12, metavar='MACOSX_DEPLOYMENT_TARGET',
@@ -712,12 +713,16 @@ class Build(Command):
                 Check.check_version_in_cmake(version, src_dir)
             except Error as e:
                 logger.warning(e.msg, *e.args)
-                cmake_opts.append(f'-DOVERRIDE_VERSION={version}-snapshot')
+                cmake_opts.insert(0, f'-DOVERRIDE_VERSION={version}-snapshot')
             cmake_opts.append('-DKEEPASSXC_BUILD_TYPE=Snapshot')
             version += '-snapshot'
         else:
             Check.perform_version_checks(version, src_dir, tag_name, version_exists=True, checkout=True)
             cmake_opts.append('-DKEEPASSXC_BUILD_TYPE=Release')
+
+        if kwargs['override_version']:
+            cmake_opts.append(f'-DOVERRIDE_VERSION={kwargs["override_version"]}')
+            version = kwargs['override_version']
 
         if cmake_generator:
             cmake_opts.extend(['-G', cmake_generator])
