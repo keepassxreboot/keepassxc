@@ -234,23 +234,6 @@ def _cmd_exists(cmd, path=None):
     return shutil.which(cmd, path=path) is not None
 
 
-def _cmake_option_is_set(options, name):
-    """Return whether a CMake -D option was explicitly supplied."""
-    option = re.compile(rf'^-D{re.escape(name)}(?::[^=]+)?(?:=|$)')
-    return any(option.match(str(value)) for value in options)
-
-
-def _add_windows_vcpkg_triplet(cmake_opts, platform_target):
-    """Map --platform-target to the built-in vcpkg Windows triplet, without
-    overriding an explicit VCPKG_TARGET_TRIPLET CMake option."""
-    triplets = {
-        'amd64': 'x64-windows',
-        'arm64': 'arm64-windows',
-    }
-    if not _cmake_option_is_set(cmake_opts, 'VCPKG_TARGET_TRIPLET'):
-        cmake_opts.append(f'-DVCPKG_TARGET_TRIPLET={triplets[platform_target]}')
-
-
 def _git_working_dir_clean(*, cwd):
     """Check whether the Git working directory is clean."""
     return _run(['git', 'diff-index', '--quiet', 'HEAD', '--'], check=False, cwd=cwd).returncode == 0
@@ -783,7 +766,13 @@ class Build(Command):
         cmake_opts.append(f'-DX_VCPKG_APPLOCAL_DEPS_INSTALL={app_local_install}')
 
         if not mingw and not use_system_deps:
-            _add_windows_vcpkg_triplet(cmake_opts, platform_target)
+            # Map --platform-target to the built-in vcpkg Windows triplet, without
+            # overriding an explicit VCPKG_TARGET_TRIPLET CMake option.
+            triplets = {
+                'amd64': 'x64-windows',
+                'arm64': 'arm64-windows',
+            }
+            cmake_opts.insert(0, f'-DVCPKG_TARGET_TRIPLET={triplets[platform_target]}')
 
         if mingw:
             vs_env = os.environ.copy()
