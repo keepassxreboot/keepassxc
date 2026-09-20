@@ -128,7 +128,7 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK 覆写</translation>
+        <translation>SSH_AUTH_SOCK 重写</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -148,11 +148,30 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置覆写。</translation>
+        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置重写。</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH 代理连接工作正常！</translation>
+    </message>
+</context>
+<context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>窗口</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>最小化</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>缩放</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>全部置于前端</translation>
     </message>
 </context>
 <context>
@@ -260,6 +279,14 @@
     <message>
         <source>Custom</source>
         <translation>自定义</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>重启 KeePassXC 以应用自动输入桌面门户首选项。</translation>
     </message>
 </context>
 <context>
@@ -533,7 +560,7 @@
     </message>
     <message>
         <source>Show confirmation before moving entries to recycle bin</source>
-        <translation>在将条目移动到回收站之前显示确认</translation>
+        <translation>删除条目到回收站之前提示确认</translation>
     </message>
     <message>
         <source>Copy data on double clicking field in entry view</source>
@@ -560,10 +587,6 @@
         <translation>导出设置…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>在条目视图中，双击 URL 字段打开浏览器</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>字体大小：</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>跳过主窗口自动输入操作的确认</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>双击 URL 的操作：</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>双击 URL 字段的操作</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>编辑条目</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>在浏览器中打开条目 URL</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>将条目 URL 复制到剪贴板</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
         <translation>为新条目自动生成密码</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>执行自动输入后保持远程桌面连接打开</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>远程桌面模式：</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>从不记住会话</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>记住会话直到退出</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>记住会话，直到被桌面撤销</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>配置…</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>使用远程桌面访问剪贴板</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>实验性：优先使用桌面门户（Wayland 实现）</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -771,6 +854,17 @@
     <message>
         <source>Sequence</source>
         <translation>输入序列</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>未找到键的符号：“%1”</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>未找到字符的符号：“%1”</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1152,7 @@ Do you want to overwrite it?</source>
 Do you want to delete the entry?
 </source>
         <translation>已收到删除条目“%1”的请求。
-是否要删除该条目？
+确认要删除该条目吗？
 </translation>
     </message>
     <message>
@@ -1136,7 +1230,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>为这些浏览器启用集成：</translation>
+        <translation>为这些浏览器开启集成：</translation>
     </message>
     <message>
         <source>Vivaldi</source>
@@ -1777,16 +1871,16 @@ Are you sure you want to continue with this file?.</source>
         <translation>点击以添加密钥文件。</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;我有一份密钥文件&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>硬件密钥已找到，但未配置任何插槽。</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>再次按下 ESC 以关闭数据库</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>我有一份金鑰檔</translation>
     </message>
 </context>
 <context>
@@ -1871,7 +1965,7 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -1911,7 +2005,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>已成功从 KeePassXC 设置中移除 %n 个加密密钥。</numerusform></translation>
+        <translation><numerusform>已成功从 KeePassXC 设置中删除了 %n 个加密密钥。</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1921,7 +2015,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>正在移除存储的权限…</translation>
+        <translation>正在删除存储的权限...</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -1929,7 +2023,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>已成功从 %n 个条目中移除权限。</numerusform></translation>
+        <translation><numerusform>已成功从 %n 个条目中删除权限。</numerusform></translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -1955,11 +2049,11 @@ This is only necessary if your database is a copy of another and the browser ext
     </message>
     <message>
         <source>Removed keys from database</source>
-        <translation>已从数据库中移除密钥</translation>
+        <translation>从数据库中删除密钥</translation>
     </message>
     <message>
         <source>Removed permissions</source>
-        <translation>已移除的权限</translation>
+        <translation>已删除的权限</translation>
     </message>
     <message>
         <source>No entry with permissions found!</source>
@@ -2967,11 +3061,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation>确认移除</translation>
+        <translation>确认删除</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>您确定要移除此 URL 吗？</translation>
+        <translation>您确定要删除这个 URL？</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -3061,7 +3155,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>您确定要移除此属性吗？</translation>
+        <translation>您确定要删除这个属性吗？</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -3120,11 +3214,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation>移除所选属性</translation>
+        <translation>删除所选属性</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
@@ -3220,7 +3314,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation>移除所选窗口关联</translation>
+        <translation>删除所选窗口关联</translation>
     </message>
     <message>
         <source>-</source>
@@ -3280,7 +3374,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -3311,7 +3405,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>显示所选历史状态下的条目</translation>
+        <translation>在选定的历史状态下显示条目</translation>
     </message>
     <message>
         <source>Show</source>
@@ -3319,7 +3413,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>将条目还原到所选历史状态</translation>
+        <translation>还原到所选历史记录</translation>
     </message>
     <message>
         <source>Restore</source>
@@ -3327,7 +3421,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>删除所选历史状态</translation>
+        <translation>删除所选历史记录</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3437,7 +3531,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>数据库关闭/锁定时从代理中移除密钥</translation>
+        <translation>数据库关闭或锁定时，从代理中删除密钥</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -3481,7 +3575,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>从代理中移除</translation>
+        <translation>从代理中删除</translation>
     </message>
     <message>
         <source>External file</source>
@@ -3514,11 +3608,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>多久后从代理中移除密钥</translation>
+        <translation>多久后从代理中删除密钥</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation>在指定秒数后从代理中移除密钥</translation>
+        <translation>从代理中删除密钥的等待秒数</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -3569,7 +3663,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>继承自父组（%1）</translation>
+        <translation>继承自父群组（%1）</translation>
     </message>
 </context>
 <context>
@@ -3736,6 +3830,14 @@ Supported extensions are: %1.</source>
         <source>Select import/export file</source>
         <translation>选择导入/导出文件</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>保持群组结构与共享群组一致</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>保持群组结构</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -3761,7 +3863,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>使用父组的默认自动输入序列</translation>
+        <translation>使用父群组的默认自动输入序列</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
@@ -3931,11 +4033,11 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation>移除所选插件数据</translation>
+        <translation>删除所选插件数据</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
@@ -4071,11 +4173,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>移除所选附件</translation>
+        <translation>删除所选附件</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
@@ -4095,11 +4197,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation>确认移除</translation>
+        <translation>确认删除</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>您确定要移除 %n 个附件吗？</numerusform></translation>
+        <translation><numerusform>您确定要删除 %n 个附件吗？</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -4636,6 +4738,25 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo 保密服务：&lt;/b&gt;%1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC - 全局快捷键</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>用于全局快捷键的 XDG 桌面门户在此系统上不可用。</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>全局自动输入快捷键已配置。要更改它，请打开系统设置并导航到键盘或应用程序快捷键部分。</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>触发全局自动输入</translation>
     </message>
 </context>
 <context>
@@ -5568,7 +5689,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation>密钥组件已设置，点击以更改或移除</translation>
+        <translation>密钥组件已设置，点击以更改或删除</translation>
     </message>
 </context>
 <context>
@@ -5625,11 +5746,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Remove Key File</source>
-        <translation>移除密钥文件</translation>
+        <translation>删除密钥文件</translation>
     </message>
     <message>
         <source>Key File set, click to change or remove</source>
-        <translation>密钥文件已设置，点击以更改或移除</translation>
+        <translation>密钥文件已设置，点击以更改或删除</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
@@ -5969,7 +6090,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
-        <translation>从 SSH 代理中移除密钥</translation>
+        <translation>从 SSH 代理中删除密钥</translation>
     </message>
     <message>
         <source>Compact Mode</source>
@@ -6036,20 +6157,6 @@ Are you sure you want to continue with this file?</source>
         <translation>不再显示此版本</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>警告：您正在使用的是非稳定版的 KeePassXC。
-文件损坏的风险较高，请妥善备份您的数据库。
-此版本不适用于生产用途。</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>注意：您使用的是 KeePassXC 的预发布版本。
-可能会有一些错误和小问题，此版本仅供测试目的使用。</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>无标签</translation>
     </message>
@@ -6103,7 +6210,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation>1Password 1PUX…</translation>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
@@ -6227,7 +6334,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Remove Passkey From Entry</source>
-        <translation>从条目中移除通行密钥</translation>
+        <translation>从条目内移除通行密钥</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {USERNAME}</source>
@@ -6386,8 +6493,12 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>设置远程同步…</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>密码生成器</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>警告：您正在使用 KeePassXC 的开发快照版本。
+请备份您的数据库，以防出现未知错误。
+此版本不适用于生产用途。</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6400,6 +6511,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>New Entry</source>
         <translation>新建条目</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>密码生成器</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6507,7 +6622,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation>已移除自定义数据 %1 [%2]</translation>
+        <translation>删除自定义数据 %1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
@@ -6951,7 +7066,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Create new entry</source>
-        <translation>创建新条目</translation>
+        <translation>新建条目</translation>
     </message>
     <message>
         <source>Relying Party: %1</source>
@@ -7045,11 +7160,11 @@ The following data is missing:
     </message>
     <message>
         <source>Remove Password</source>
-        <translation>移除密码</translation>
+        <translation>删除密码</translation>
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation>密码已设置，点击以更改或移除</translation>
+        <translation>密码已设置，点击以更改或删除</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
@@ -7455,7 +7570,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>移除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -7539,6 +7654,10 @@ Do you want to overwrite it?</source>
     <message>
         <source>No valid UUID provided</source>
         <translation>未提供有效的 UUID</translation>
+    </message>
+    <message>
+        <source>Username or password cannot contain references</source>
+        <translation>用户名或密码不能包含引用</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -7750,15 +7869,15 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Remove an attachment of an entry.</source>
-        <translation>移除条目的附件。</translation>
+        <translation>删除条目的附件。</translation>
     </message>
     <message>
         <source>Name of the attachment to be removed.</source>
-        <translation>要移除的附件名称。</translation>
+        <translation>要删除的附件名称。</translation>
     </message>
     <message>
         <source>Successfully removed attachment %1 from entry %2.</source>
-        <translation>已成功从条目 %2 中移除附件 %1。</translation>
+        <translation>成功删除条目 %2 的附件 %1。</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -7972,11 +8091,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Cannot remove password: The database does not have a password.</source>
-        <translation>无法移除密码：数据库没有密码。</translation>
+        <translation>无法删除密码：数据库不含密码。</translation>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation>无法移除文件密钥：数据库没有文件密钥。</translation>
+        <translation>无法删除文件密钥：数据库不含文件密钥。</translation>
     </message>
     <message>
         <source>Loading the new key file failed: %1</source>
@@ -7988,7 +8107,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Cannot remove all the keys from a database.</source>
-        <translation>无法从数据库中移除所有密钥 。</translation>
+        <translation>无法从数据库中删除所有密钥 。</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
@@ -8085,6 +8204,14 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>平均密码长度</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>通行密鑰數量</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>TOTP 設定數</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8479,7 +8606,7 @@ Available commands:
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>要移除的条目的路径。</translation>
+        <translation>要删除条目的路径。</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
@@ -8744,20 +8871,12 @@ CPU 架构：%2
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>快速解锁</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>保密服务集成</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>无</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9280,6 +9399,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>仅有 PBKDF 和 Argon2 受支持，无法解密 JSON 文件</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>硬件密钥</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>通行密钥</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>重置快捷键</translation>
     </message>
@@ -9300,24 +9427,8 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>快捷键 %1 与 &apos;%2&apos; 冲突。是否覆盖快捷键？</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>加密文件不支持。</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Proton Pass 导入</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>通行密钥</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>导出时使用的格式。可用的选项是“xml”、“csv”或“html”。默认值为“xml”。</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>启动时最小化到系统托盘</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9332,8 +9443,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>%1，行：%2，列：%3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>加密文件不支持。</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Proton Pass 导入</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>标签</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>启动时最小化到系统托盘</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9414,6 +9537,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>内部 zlib 错误：</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>远程桌面会话未处于活动状态</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>会话已结束</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>用户取消了交互</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>用户交互因未知原因被取消</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>远程桌面会话句柄与预期路径不匹配</translation>
     </message>
 </context>
 <context>
@@ -9905,6 +10051,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>密码平均短于 10 位，更长的密码提供更强的安全性。</translation>
     </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>通行密鑰數量</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>已設定 TOTP 項目數</translation>
+    </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
         <translation><numerusform>%1 个字符</numerusform></translation>
@@ -9950,7 +10104,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation>没有代理运行，无法移除身份。</translation>
+        <translation>代理未在运行，无法删除身份。</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
@@ -9958,11 +10112,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Failed to remove all SSH identities from agent.</source>
-        <translation>无法从代理中移除所有 SSH 身份。</translation>
+        <translation>从代理中删除所有 SSH 身份失败。</translation>
     </message>
     <message>
         <source>All SSH identities removed from agent.</source>
-        <translation>所有 SSH 身份已从代理中移除。</translation>
+        <translation>已从代理中删除所有 SSH 身份。</translation>
     </message>
 </context>
 <context>
@@ -10280,19 +10434,19 @@ This option is deprecated, use --set-key-file instead.</source>
     <name>TagView</name>
     <message>
         <source>Remove Search</source>
-        <translation>移除搜索</translation>
+        <translation>删除搜索</translation>
     </message>
     <message>
         <source>Remove Tag</source>
-        <translation>移除标签</translation>
+        <translation>删除标签</translation>
     </message>
     <message>
         <source>Confirm Remove Tag</source>
-        <translation>确认移除标签</translation>
+        <translation>确认删除标签</translation>
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation>是否从此数据库中的所有条目中移除标签“%1”？</translation>
+        <translation>要删除数据库中所有条目包含的“%1”标签吗？</translation>
     </message>
 </context>
 <context>
@@ -10419,7 +10573,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>确认移除 TOTP 设置</translation>
+        <translation>确认删除 TOTP 设置</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
@@ -10465,7 +10619,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>您的 KeePassXC 已经是最新版本</translation>
+        <translation>您的 KeePassXC 已经是最版本</translation>
     </message>
 </context>
 <context>
@@ -10517,12 +10671,8 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>常规：</translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>无法找到序列号为 %1 的硬件密钥接口。请连接后继续。</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>无法找到序列号为 %1 的硬件密钥。请连接后继续。</translation>
     </message>
 </context>
 <context>
@@ -10553,11 +10703,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation>移除质询响应</translation>
+        <translation>删除质询响应</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>质询响应已设置，点击以更改或移除</translation>
+        <translation>质询响应已设置，点击以更改或删除</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
@@ -10582,10 +10732,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>无法找到或访问序列号为 %1 的硬件密钥。请感应后继续。</translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>硬件密钥已锁定或超时。解锁或重新感应以继续。</translation>

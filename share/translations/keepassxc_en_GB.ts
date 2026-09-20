@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>Window</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>Minimise</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>Zoom</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>Bring All to Front</translation>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -260,6 +279,14 @@
     <message>
         <source>Custom</source>
         <translation>Custom</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>None</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>Restart KeePassXC to apply the Auto-Type desktop portals preference.</translation>
     </message>
 </context>
 <context>
@@ -560,10 +587,6 @@
         <translation>Export settings…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Open browser on double clicking URL field in entry view</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Font size:</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>Skip confirmation for main window Auto-Type actions</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>Double-click action for URL:</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>Double-click action for URL field</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>Edit entry</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>Open entry URL in browser</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>Copy entry URL to clipboard</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
         <translation>Auto-generate password for new entries</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>Keep remote desktop connection open after performing Auto-Type</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>Remote desktop mode:</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>Never remember session</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>Remember session until exit</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>Remember session until revoked by desktop</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>None</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>Configure...</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>Use remote desktop for clipboard access</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>Experimental: Prefer desktop portals (Wayland implementation)</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>No symbol found for key: &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>No symbol found for character: &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -889,11 +983,11 @@ Ctrl+Shift+4 - Copy URL&lt;br/&gt;
     <name>BinaryStream</name>
     <message>
         <source>Failed to read string data: %1</source>
-        <translation type="unfinished"/>
+        <translation>Failed to read string data: %1</translation>
     </message>
     <message>
         <source>String length exceeds 10 MiB limit (requested %1)</source>
-        <translation type="unfinished"/>
+        <translation>String length exceeds 10 MiB limit (requested %1)</translation>
     </message>
 </context>
 <context>
@@ -1560,7 +1654,7 @@ Are you sure you want to import?</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Could not save. Database has not been initialised!</translation>
+        <translation>Could not save, database has not been initialised!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
@@ -1777,16 +1871,16 @@ Are you sure you want to continue with this file?.</translation>
         <translation>Click to add a key file.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Hardware keys found, but no slots are configured.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>Press ESC again to close this database</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>I have a key file</translation>
     </message>
 </context>
 <context>
@@ -3736,6 +3830,14 @@ Supported extensions are: %1.</translation>
         <source>Select import/export file</source>
         <translation>Select import/export file</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>Maintain group structure with shared database</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>Keep Group Structure</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -3773,7 +3875,7 @@ Supported extensions are: %1.</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Auto-Type toggle for this group and subgroups</translation>
+        <translation>Auto-Type toggle for this and subgroups</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -4638,6 +4740,25 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC - Global Shortcuts</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>The XDG Desktop Portal for global shortcuts is not available on this system.</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>Trigger global Auto-Type</translation>
     </message>
 </context>
 <context>
@@ -6039,20 +6160,6 @@ Are you sure you want to continue with this file?</translation>
         <translation>Don&apos;t show again for this version</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption; maintain a backup of your databases.
-This version is not meant for production use.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues; this version is meant for testing purposes.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>No Tags</translation>
     </message>
@@ -6389,8 +6496,12 @@ Expect some bugs and minor issues; this version is meant for testing purposes.</
         <translation>Setup Remote Sync…</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Password Generator</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6403,6 +6514,10 @@ Expect some bugs and minor issues; this version is meant for testing purposes.</
     <message>
         <source>New Entry</source>
         <translation>New Entry</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Password Generator</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6834,11 +6949,11 @@ Expect some bugs and minor issues; this version is meant for testing purposes.</
     </message>
     <message>
         <source>Failed to read key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Failed to read key file: %1</translation>
     </message>
     <message>
         <source>Failed to read public key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Failed to read public key: %1</translation>
     </message>
 </context>
 <context>
@@ -7544,6 +7659,10 @@ Do you want to overwrite it?</translation>
         <translation>No valid UUID provided</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation>Username or password cannot contain references</translation>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Unknown error</translation>
     </message>
@@ -8088,6 +8207,14 @@ Do you want to overwrite it?</translation>
     <message>
         <source>Average password length</source>
         <translation>Average password length</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Number of passkeys</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Entries with TOTP setup</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8749,20 +8876,12 @@ Kernel: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Quick Unlock</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Secret Service Integration</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>None</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -8923,12 +9042,12 @@ Kernel: %3 %4</translation>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 ms</numerusform><numerusform>%1ms</numerusform></translation>
+        <translation><numerusform>%1ms</numerusform><numerusform>%1ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 s</numerusform><numerusform>%1s</numerusform></translation>
+        <translation><numerusform>%1s</numerusform><numerusform>%1s</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -9285,6 +9404,14 @@ This option is deprecated, use --set-key-file instead.</translation>
         <translation>Only PBKDF and Argon2 are supported, cannot decrypt json file</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>Hardware Keys</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passkey</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>Reset Shortcuts</translation>
     </message>
@@ -9305,24 +9432,8 @@ This option is deprecated, use --set-key-file instead.</translation>
         <translation>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>Encrypted files are not supported.</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Proton Pass Import</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>Passkey</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>start minimised to the system tray</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9337,8 +9448,20 @@ This option is deprecated, use --set-key-file instead.</translation>
         <translation>%1, row: %2, column: %3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Encrypted files are not supported.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Proton Pass Import</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Tags</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>start minimised to the system tray</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9419,6 +9542,29 @@ This option is deprecated, use --set-key-file instead.</translation>
     <message>
         <source>Internal zlib error: </source>
         <translation>Internal zlib error: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>Remote desktop session is not active</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>Session closed</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>User cancelled the interaction</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>User interaction was canceled for unknown reason</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>Remote desktop session handle does not match expected path</translation>
     </message>
 </context>
 <context>
@@ -9909,6 +10055,14 @@ This option is deprecated, use --set-key-file instead.</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Average password length is fewer than ten characters. Longer passwords provide more security.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Number of passkeys</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Entries with TOTP setup</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10522,12 +10676,8 @@ Example: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>General: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Could not find interface for hardware key with serial number %1. Please connect it to continue.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>Could not find hardware key with serial number %1. Please connect it to continue.</translation>
     </message>
 </context>
 <context>
@@ -10587,10 +10737,6 @@ Example: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Could not find or access hardware key with serial number %1. Please present it to continue. </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Hardware key is locked or timed out. Unlock or re-present it to continue.</translation>

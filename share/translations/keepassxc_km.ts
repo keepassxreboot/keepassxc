@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC ត្រូវបានចែកចាយ តាមលក្ខន្តិកៈរបស់ GNU General Public License (GPL) កំណែទី២។ </translation>
+        <translation>KeePassXC ត្រូវបានចែកចាយ តាមលក្ខន្តិកៈរបស់ GNU General Public License (GPL) កំណែទី2 ឬ (តាមជម្រើសរបស់អ្នក) កំណែទី3។ </translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>បញ្ចុលពត៌មានខាងក្រោមនៅពេលអ្នករាយការណ៍ពីកំហុស</translation>
+        <translation>រួមមានពត៌មានខាងក្រោមនៅពេលអ្នករាយការណ៍ពីបញ្ហា៖</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -70,11 +70,11 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>ប្រតិបត្តិ</translation>
+        <translation>អនុវត្តន៍បាន</translation>
     </message>
     <message>
         <source>Command Line</source>
-        <translation>Command Line</translation>
+        <translation>ឃ្លាបញ្ជារ</translation>
     </message>
     <message>
         <source>Details</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>អនុញ្ញាតទាំងអស់ និងអនាគត</translation>
+        <translation>អនុញ្ញាតទាំងអស់ &amp;&amp; &amp;អនាគត</translation>
     </message>
 </context>
 <context>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation>ការប្រើ SSH ដោយចំហរ</translation>
+        <translation>ការប្រើ OpenSSH</translation>
     </message>
     <message>
         <source>Use both agents</source>
@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -179,7 +198,7 @@
     </message>
     <message>
         <source>Icon only</source>
-        <translation>តែរូបតំណាងទេ</translation>
+        <translation>តែរូបតំណាងប៉ុណ្ណោះ</translation>
     </message>
     <message>
         <source>Text only</source>
@@ -199,7 +218,7 @@
     </message>
     <message>
         <source>Monochrome</source>
-        <translation>ពណ៌តែមួយ</translation>
+        <translation>មួយពណ៌</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
@@ -259,7 +278,15 @@
     </message>
     <message>
         <source>Custom</source>
-        <translation>កែកុន</translation>
+        <translation>ផ្ទាល់ខ្លួន</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -358,8 +385,7 @@
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Use group icon on entry creation
-ប្រើរូបតំណាងពេលបង្កើតក្រុមថ្មី</translation>
+        <translation>ប្រើប្រាស់រូបក្រុមលើការបង្កើតទិន្នន័យបញ្ចូល</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
@@ -379,7 +405,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>អស់ពេលក្នុងការទាញយករូបតំណាង</translation>
+        <translation>កំណត់ពេលក្នុងការទាញយករូបតំណាង</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -501,7 +527,7 @@
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>ការពន្យារពេលការសរសេរតួអក្សរនៃការសរសេរចូលដោយស្វ័យប្រវត្តិ</translation>
+        <translation>ការពន្យារពេលមីលីវិនាទីនៃការសរសេរតួអក្សររបស់ការសរសេរចូលដោយស្វ័យប្រវត្តិ</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
@@ -561,12 +587,8 @@
         <translation>នាំចេញលការកំណត់…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>បើកកម្មវិធីរុករកតាមអ៊ីនធឺណិតដោយចុចពីរដងលើ URL នៅក្នុងទិដ្ឋភាពធាតុ</translation>
-    </message>
-    <message>
         <source>Font size:</source>
-        <translation>ទំហំពុម្ពអក្សរ</translation>
+        <translation>ទំហំពុម្ពអក្សរ:</translation>
     </message>
     <message>
         <source>Font size selection</source>
@@ -577,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -697,7 +779,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC ទាមទារ​ការអនុញ្ញាត​ការ​ប្រើប្រាស់​ដើម្បី​អនុវត្ត​កម្រិត​ចូល​ប្រភេទ​ស្វ័យប្រវត្តិ។ ប្រសិនបើអ្នកបានផ្តល់ការអនុញ្ញាតរួចហើយ អ្នកប្រហែលជាត្រូវចាប់ផ្តើមឡើងវិញ KeePassXC ។</translation>
+        <translation>KeePassXC ទាមទារ​ការអនុញ្ញាត​ការ​ប្រើប្រាស់​ដើម្បី​អនុវត្ត​កម្រិត​ចូល​ប្រភេទ​ស្វ័យប្រវត្តិ។ ប្រសិនបើអ្នកបានផ្តល់ការអនុញ្ញាតរួចហើយ អ្នកប្រហែលជាត្រូវចាប់ផ្តើម KeePassXC ឡើងវិញ ។</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -775,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -817,7 +910,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>បញ្ឈប់</translation>
+        <translation>បោះបង់</translation>
     </message>
     <message>
         <source>Type {USERNAME}</source>
@@ -933,7 +1026,7 @@ Ctrl+Shift+4 - Copy URL&lt;br/&gt;
     </message>
     <message>
         <source>Cancel</source>
-        <translation>បញ្ឈប់</translation>
+        <translation>បោះបង់</translation>
     </message>
     <message>
         <source>You have multiple databases open.
@@ -1620,7 +1713,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>បញ្ឈប់</translation>
+        <translation>បោះបង់</translation>
     </message>
     <message>
         <source>Unlock</source>
@@ -1758,15 +1851,15 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1910,7 +2003,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>បានលុបការអនុញ្ញាត % 1 ចេញពីទិន្នន័យ % 2 ដោយជោគជ័យ។</numerusform></translation>
+        <translation><numerusform>បានលុបការអនុញ្ញាត %1 ចេញពីទិន្នន័យ %2 ដោយជោគជ័យ។</numerusform></translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -2103,7 +2196,7 @@ If you keep this number, your database may take hours, days, or even longer to o
     </message>
     <message>
         <source>Cancel</source>
-        <translation>បញ្ឈប់</translation>
+        <translation>បោះបង់</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
@@ -3705,6 +3798,14 @@ Supported extensions are: %1.</source>
         <source>Select import/export file</source>
         <translation>ជ្រើសរើសប្រភពឯកសារនាំចូល និងនាំចេញ</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -4149,7 +4250,7 @@ Error: %1</source>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
-        <translation>ឯកសារភ្ជាប់ &quot;% 1&quot; មានស្រាប់ហើយ។
+        <translation>ឯកសារភ្ជាប់ &quot;%1&quot; មានស្រាប់ហើយ។
 តើអ្នកចង់សរសេរជាន់លើឯកសារភ្ជាប់ដែលមានស្រាប់ឬទេ?</translation>
     </message>
     <message>
@@ -4605,6 +4706,25 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
 </context>
 <context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Group</name>
     <message>
         <source>[empty]</source>
@@ -4631,7 +4751,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>Cancel</source>
-        <translation>បញ្ឈប់</translation>
+        <translation>បោះបង់</translation>
     </message>
     <message>
         <source>Having trouble downloading icons?
@@ -5523,7 +5643,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>បញ្ឈប់</translation>
+        <translation>បោះបង់</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
@@ -5995,20 +6115,6 @@ Are you sure you want to continue with this file?</source>
         <translation>កុំបង្ហាញកំណែនេះម្តងទៀត</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>ការព្រមាន៖ អ្នកកំពុងប្រើប្រាស់កំណែបង្កើត KeePassXC ដែលមិនថិរភាព។
-មានហានិភ័យខ្ពស់ទៅលើការខូច រក្សាការបម្រុងទុកនៃមូលដ្ឋានទិន្នន័យរបស់អ្នក។
-កំណែនេះមិនមែនសម្រាប់គោលបំណងការប្រើប្រាស់ផ្នែកផលិតកម្មទេ។</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>ចំណាំ៖ អ្នកកំពុងប្រើប្រាស់កំណែមុនចេញផ្សាយរបស់កម្មវិធី KeePassXC។
-កំហុស និងបញ្ហាតូចតាចមួយចំនួននឹងអាចកើតមានឡើង ដោយសារកំណែនេះមានគោលបំណងសម្រាប់ការធ្វើតេស្តតែប៉ុណ្ណោះ។</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>គ្មានស្លាក</translation>
     </message>
@@ -6345,7 +6451,9 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password Generator</source>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6358,6 +6466,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>New Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7496,6 +7608,10 @@ Do you want to overwrite it?</source>
         <translation>មិនបានផ្តល់ជូន UID បានត្រឹមត្រូវ</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>កំហុសឆ្គងដែលមិនស្គាល់</translation>
     </message>
@@ -8040,6 +8156,14 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>ប្រវែងពាក្យសម្ងាត់ជាមធ្យម</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8701,20 +8825,12 @@ Kernel: %3 %4</source>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>ដោះសោររហ័ស</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>ការដាក់បញ្ចូលសេវាពាក្យសម្ងាត់</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>គ្មាន</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9236,6 +9352,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"/>
     </message>
@@ -9256,23 +9380,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9288,8 +9396,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>ស្លាក</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9370,6 +9490,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>បញ្ហា zlib ខាងក្នុង៖ </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9860,6 +10003,14 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>ប្រវែងពាក្យសម្ងាត់ជាមធ្យម គឺតិចជាងដប់តួអក្សរ។ ពាក្យ​សម្ងាត់ដែល​វែង​ជាង​ផ្តល់​សុវត្ថិភាពខ្លាំង​បន្ថែម​ទៀត។</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10473,12 +10624,8 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>ទូទៅ៖ </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>មិនអាចស្វែងរកផ្ទៃសម្រាប់ឃីហាតវែរដែលមានលេខស៊េរី %1។ សូមភ្ជាប់លេខលេខស៊េរីដើម្បីបន្ត។</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10538,10 +10685,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>មិន​អាច​រក​ឃើញ ឬ​ចូលប្រើប្រាស់ឃីហាតវែរដែលមានលេខស៊េរី  %1 ទេ។ សូមបង្ហាញលេខលេខស៊េរីដើម្បីបន្ត។ </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>ឃីហាតវែរត្រូវបានទប់ស្កាត់ ឬអស់ពេល។ ឈប់ទប់ស្កាត់ ឬបង្ហាញវាឡើងវិញ ដើម្បីបន្ត។</translation>
