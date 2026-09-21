@@ -95,7 +95,7 @@ int PasskeyUtils::getEffectiveDomain(const QString& origin, QString* result) con
         return ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED;
     }
 
-    const auto effectiveDomain = QUrl::fromUserInput(origin).host();
+    const auto effectiveDomain = QUrl::fromUserInput(origin).host(QUrl::FullyEncoded);
     if (!isDomain(effectiveDomain)) {
         return ERROR_PASSKEYS_DOMAIN_IS_NOT_VALID;
     }
@@ -219,7 +219,7 @@ bool PasskeyUtils::isRegistrableDomainSuffix(const QString& hostSuffixString, co
         return false;
     }
 
-    const auto hostSuffix = QUrl::fromUserInput(hostSuffixString).host();
+    const auto hostSuffix = QUrl::fromUserInput(hostSuffixString).host(QUrl::FullyEncoded);
     if (hostSuffix == originalHost) {
         return true;
     }
@@ -255,7 +255,7 @@ bool PasskeyUtils::isRegistrableDomainSuffix(const QString& hostSuffixString, co
 
 bool PasskeyUtils::isDomain(const QString& hostName) const
 {
-    const auto domain = QUrl::fromUserInput(hostName).host();
+    const auto domain = QUrl::fromUserInput(hostName).host(QUrl::FullyEncoded);
     return !domain.isEmpty() && !domain.endsWith('.') && Tools::isAsciiString(domain)
            && !UrlTools::domainHasIllegalCharacters(domain) && !UrlTools::isIpAddress(hostName);
 }
