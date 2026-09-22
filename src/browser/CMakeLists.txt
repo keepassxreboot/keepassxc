@@ -38,6 +38,5 @@ if(KPXC_FEATURE_BROWSER)
 
     add_library(browser STATIC ${browser_SOURCES})
     target_link_libraries(browser
-            PUBLIC Qt6::Core Qt6::Concurrent Qt6::Widgets Qt6::Network
-            PRIVATE Botan::botan)
+            PUBLIC Qt6::Core Qt6::Concurrent Qt6::Widgets Qt6::Network Botan::botan)
 endif()
