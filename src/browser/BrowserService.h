@@ -103,14 +103,16 @@ public:
                            const QString& username,
                            const QString& credentialId,
                            const QString& userHandle,
-                           const QString& privateKey);
+                           const QString& privateKey,
+                           const QString& prfSecret);
     void addPasskeyToEntry(Entry* entry,
                            const QString& rpId,
                            const QString& rpName,
                            const QString& username,
                            const QString& credentialId,
                            const QString& userHandle,
-                           const QString& privateKey);
+                           const QString& privateKey,
+                           const QString& prfSecret);
 
     void addEntry(const EntryParameters& entryParameters,
                   const QString& group,
