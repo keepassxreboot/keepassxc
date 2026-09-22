@@ -51,10 +51,6 @@
 <context>
     <name>AccessControlDialog</name>
     <message>
-        <source>KeePassXC -  Access Request</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -100,6 +96,10 @@
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Access Request</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
