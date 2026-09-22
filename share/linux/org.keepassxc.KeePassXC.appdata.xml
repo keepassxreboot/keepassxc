@@ -45,7 +45,7 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="2.8.0-beta1" date="2026-09-21" type="development">
+    <release version="2.8.0-beta1" date="2026-09-23" type="development">
         <description>
             <ul>
               <li>Add remote database synchronization and import using external tools [#7222, #10896, #11271]</li>
@@ -87,6 +87,7 @@
               <li>Prevent mouse wheel scrolling from changing the unfocused alternative save method setting [#13358]</li>
               <li>Fix password font size not following application font size [#13658]</li>
               <li>Fix typos and documentation links [#10124, #10893, #9993]</li>
+              <li>Fix null pointer dereference in Secret Service integration [#13655]</li>
               <li>Auto-Type: Support {PGDN} placeholder [#13463]</li>
               <li>Auto-Type: Refactor Auto-Type plugins to integrate them into the main binary [#13469]</li>
               <li>Browser: Fix showing and closing the password generator [#9984, #9743]</li>

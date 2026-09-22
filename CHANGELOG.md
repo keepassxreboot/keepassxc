@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.8.0-beta1 (2026-09-21)
+## 2.8.0-beta1 (2026-09-23)
 
 ### New Features
 - Add remote database synchronization and import using external tools [#7222, #10896, #11271]
