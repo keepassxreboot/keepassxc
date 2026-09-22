@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ BrowserPasskeysClient* BrowserPasskeysClient::instance()
 // https://www.w3.org/TR/2019/REC-webauthn-1-20190304/#createCredential
 int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publicKeyOptions,
                                                         const QString& origin,
+                                                        const QStringList& relatedOrigins,
                                                         QJsonObject* result) const
 {
     if (!result || publicKeyOptions.isEmpty()) {
@@ -41,14 +42,14 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
 
     // Check validity of some basic values
     const auto checkResultError = passkeyUtils()->checkLimits(publicKeyOptions);
-    if (checkResultError > 0) {
+    if (checkResultError != PASSKEYS_SUCCESS) {
         return checkResultError;
     }
 
     // Get effective domain
     QString effectiveDomain;
     const auto effectiveDomainResponse = passkeyUtils()->getEffectiveDomain(origin, &effectiveDomain);
-    if (effectiveDomainResponse > 0) {
+    if (effectiveDomainResponse != PASSKEYS_SUCCESS) {
         return effectiveDomainResponse;
     }
 
@@ -56,8 +57,11 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     QString rpId;
     const auto rpName = publicKeyOptions["rp"]["name"].toString();
     const auto rpIdResponse = passkeyUtils()->validateRpId(publicKeyOptions["rp"]["id"], effectiveDomain, &rpId);
-    if (rpIdResponse > 0) {
-        return rpIdResponse;
+    if (rpIdResponse != PASSKEYS_SUCCESS) {
+        // Validate Related Origin Requests if found
+        if (relatedOrigins.isEmpty() || !passkeyUtils()->validateRelatedOrigins(relatedOrigins, origin)) {
+            return rpIdResponse;
+        }
     }
 
     // Check PublicKeyCredentialTypes
@@ -126,6 +130,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
 // https://www.w3.org/TR/2019/REC-webauthn-1-20190304/#getAssertion
 int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptions,
                                                const QString& origin,
+                                               const QStringList& relatedOrigins,
                                                QJsonObject* result) const
 {
     if (!result || publicKeyOptions.isEmpty()) {
@@ -135,15 +140,18 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
     // Get effective domain
     QString effectiveDomain;
     const auto effectiveDomainResponse = passkeyUtils()->getEffectiveDomain(origin, &effectiveDomain);
-    if (effectiveDomainResponse > 0) {
+    if (effectiveDomainResponse != PASSKEYS_SUCCESS) {
         return effectiveDomainResponse;
     }
 
     // Validate RP ID
     QString rpId;
     const auto rpIdResponse = passkeyUtils()->validateRpId(publicKeyOptions["rpId"], effectiveDomain, &rpId);
-    if (rpIdResponse > 0) {
-        return rpIdResponse;
+    if (rpIdResponse != PASSKEYS_SUCCESS) {
+        // Validate Related Origin Requests if found
+        if (relatedOrigins.isEmpty() || !passkeyUtils()->validateRelatedOrigins(relatedOrigins, origin)) {
+            return rpIdResponse;
+        }
     }
 
     // Extensions

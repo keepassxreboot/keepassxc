@@ -36,6 +36,7 @@ private slots:
     void testDecryptMessage();
     void testGetBase64FromKey();
     void testIncrementNonce();
+    void testGetStringListFromJsonArray();
     void testBuildResponse();
     void testSortPriority();
     void testSortPriority_data();

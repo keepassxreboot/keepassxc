@@ -24,7 +24,9 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
+#include <QJsonArray>
 #include <QJsonObject>
+#include <QStringList>
 #include <QTest>
 
 #include <botan/sodium.h>
@@ -236,6 +238,17 @@ void TestBrowser::testIncrementNonce()
     const QString invalidNonce = "dGVzdHN0cmluZw==";
     result = browserMessageBuilder()->incrementNonce(invalidNonce);
     QVERIFY(result.isEmpty());
+}
+
+void TestBrowser::testGetStringListFromJsonArray()
+{
+    QJsonArray array = {QString("first"), QString("second")};
+    QJsonArray mixedArray = {1, 2.2, QString()};
+    QJsonArray emptyArray = {};
+
+    QCOMPARE(browserMessageBuilder()->getStringListFromJsonArray(array), QStringList({"first", "second"}));
+    QCOMPARE(browserMessageBuilder()->getStringListFromJsonArray(mixedArray), QStringList({""}));
+    QCOMPARE(browserMessageBuilder()->getStringListFromJsonArray(emptyArray), QStringList({}));
 }
 
 void TestBrowser::testBuildResponse()
