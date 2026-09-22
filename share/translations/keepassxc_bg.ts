@@ -660,7 +660,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Предложения за автоматично попълване на потребителското име и други атрибути</translation>
     </message>
 </context>
 <context>

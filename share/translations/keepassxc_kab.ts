@@ -6596,7 +6596,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>%1 (Add local modifications to new entry)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Rnu ibeddilen idiganen ɣer unekcum amaynut)</translation>
     </message>
     <message>
         <source>%1 (Add new modifications to existing entry)</source>
@@ -6631,7 +6631,7 @@ This version is not meant for production use.</source>
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation type="unfinished"/>
+        <translation>Asebter n umarag</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -6639,7 +6639,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Dagi tzemreḍ ad tṣeggmeḍ iɣewwaṛen n uwgelhen n taffa n isefka. Ur ttagad, tzemreḍ ad ten-tbeddleḍ ticki deg iɣewwaṛen n taffa n isefka.</translation>
     </message>
 </context>
 <context>
@@ -6661,7 +6661,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Dagi tzemreḍ ad tṣeggmeḍ iɣewwaṛen n uwgelhen n taffa n isefka. Ur ttagad, tzemreḍ ad ten-tbeddleḍ ticki deg iɣewwaṛen n taffa n isefka.</translation>
     </message>
 </context>
 <context>
@@ -6672,7 +6672,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation type="unfinished"/>
+        <translation>Ttxil-k·m, ččar isem akked uglam afrayan n taffa n isefka-k·m tamaynut:</translation>
     </message>
 </context>
 <context>
@@ -6698,11 +6698,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"/>
+        <translation>Ur izmir ara ad iɣeṛ akk IV n yibiten, yettwarǧu 16 maca yewwi-d %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ur izmir ara awennez uwgelhan i opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
@@ -6710,15 +6710,15 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>Yir amasal n OpData01 imi yecceḍ HMAC</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation type="unfinished"/>
+        <translation>Ur yezmir ara ad isesfer aḍris ibanen deg umḍiq-is</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"/>
+        <translation>Yettwaraǧu %1 n yibiten n uḍris ibanen, yettwaf %2</translation>
     </message>
 </context>
 <context>
@@ -6824,7 +6824,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
-        <translation type="unfinished"/>
+        <translation>EOF ur netturaǧu ara lawan n tɣuri n tsarut</translation>
     </message>
     <message>
         <source>Unsupported key part</source>
@@ -6832,7 +6832,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
+        <translation>EOF ur netturaǧu ara lawan n tɣuri n tsarut tazayezt</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
@@ -6840,7 +6840,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation type="unfinished"/>
+        <translation>EOF ur netturaǧu ara lawan n tɣuri n tsarut tusligt</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
@@ -6848,7 +6848,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation type="unfinished"/>
+        <translation>EOF ur netturaǧu ara mi yettaru tasarut tazayezt</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
@@ -6856,7 +6856,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation type="unfinished"/>
+        <translation>EOF ur netturaǧu ara mi yettaru tasarut tusligt</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -6875,19 +6875,19 @@ This version is not meant for production use.</source>
     <name>OpenSSHKeyGenDialog</name>
     <message>
         <source>SSH Key Generator</source>
-        <translation type="unfinished"/>
+        <translation>Asirew n tsarut SSH</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Anaw</translation>
     </message>
     <message>
         <source>Bits</source>
-        <translation type="unfinished"/>
+        <translation>Ibiten</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>Awennit</translation>
     </message>
 </context>
 <context>
@@ -7266,7 +7266,7 @@ Isefka-agi xuṣen:
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"/>
+        <translation>Senser(Esc)</translation>
     </message>
     <message>
         <source>Apply Password</source>
@@ -7359,7 +7359,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>passwordLength</source>
-        <translation type="unfinished"/>
+        <translation>teɣzi n wawal n uɛeddi</translation>
     </message>
     <message>
         <source>Characters: %1</source>

@@ -660,7 +660,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Kullanıcı adı ve ek öznitelikler için otomatik tamamlama önerileri görüntülensin</translation>
     </message>
 </context>
 <context>

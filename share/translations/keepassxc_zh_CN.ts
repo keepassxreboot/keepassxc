@@ -660,7 +660,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>為使用者名稱和附加屬性顯示自動完成建議</translation>
     </message>
 </context>
 <context>
