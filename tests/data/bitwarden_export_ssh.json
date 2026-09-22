@@ -1,0 +1,40 @@
+{
+  "folders": [],
+  "items": [
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-03-05T12:09:28.531Z",
+      "creationDate": "2026-03-05T12:05:30.549Z",
+      "id": "3b085e11-c2cd-42f3-a0b2-59e83e3dd3b9",
+      "type": 5,
+      "reprompt": 0,
+      "name": "SSH RSA Key",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "sshKey": {
+        "privateKey": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn\nNhAAAAAwEAAQAAAQEAqF8zLkrpDi129pdQnR6WrEGcASFd9J0hxnrvrx8epuLvR83OsFNz\ngcI3K9eqm3W00wuSqRmOfqtHZMix8K6yrVHWgivaJU+k72DE3tOOlPSfaPdZ24kbZhW8ta\n21+O1hP3zCJrEpVP3leKrji8mOSUYXbSJg7gQlrMXFr2dYgHE1w07aHk0vYS49O0am9m+l\npLnhUlFrZj556+yIoRPKNnyRpRO/wjGg0PbRPMceOmK+phQ1PVblwUBGoU82U14k6mWiAr\nfj8yzTxcOYxKIXPqB31Bxd3D2LTcz1JZT5nbcJNDQ6cb5DqOAmNV7c2F5puwBqIZHmXmtj\nSWSrOcpHjQAAA8gHdoH6B3aB+gAAAAdzc2gtcnNhAAABAQCoXzMuSukOLXb2l1CdHpasQZ\nwBIV30nSHGeu+vHx6m4u9Hzc6wU3OBwjcr16qbdbTTC5KpGY5+q0dkyLHwrrKtUdaCK9ol\nT6TvYMTe046U9J9o91nbiRtmFby1rbX47WE/fMImsSlU/eV4quOLyY5JRhdtImDuBCWsxc\nWvZ1iAcTXDTtoeTS9hLj07Rqb2b6WkueFSUWtmPnnr7IihE8o2fJGlE7/CMaDQ9tE8xx46\nYr6mFDU9VuXBQEahTzZTXiTqZaICt+PzLNPFw5jEohc+oHfUHF3cPYtNzPUllPmdtwk0ND\npxvkOo4CY1XtzYXmm7AGohkeZea2NJZKs5ykeNAAAAAwEAAQAAAQAHChPlt5QO16/Fl4Xz\nS7gY85VGJtL6yycCWVl0BOUPLSW75srhbFvD7Q7JcnbbkQxCVpWHJF5kxVxyxkFKQsONo4\nJIZvTz4mSO7YjNmCK575BKnyzOlOjkV7xQDDczdRk/wkOLwpRrzUGuzdY9neuo/Jk2It3S\nlbHNi2c8ciGtHP0w8QUZGv1Cz4aaxcbX18pywUdmjN0+KPPXKKSDuokO8KMPN8ZvKfwZrJ\nfkX+XGgY4AIkE72Z4V4HtiM95WWS+PmVYy+P/FMRFGv8Rh6xM2sAaT89Sy6f8bDkcQENLp\nHnP65xNU9gVTdcAHGWlV0HsNmCDudGfygDUUMkt8zQwBAAAAgQDIDJFnNMushRbf3qrVNK\nE8xZBkyUfRrRs9fMHkvNSCrduQO+LNX67P7ixRg0D5yP4o1KS7dmPenRi45d31usIwcUio\nNu4M5qMadPOoU4pSoQK4L9FxxWj38BZhJaiTULnevsK5OWJVHUIBwS8qWCExTwFswwSz+G\nV4xvboxKteAwAAAIEA3Xj1hbqKSDAKSN4Q63u8NEoE+KCihplLs6ZsVPDP+MIdVBtoux7B\nVrPbAIECDurFnj/gaE97uQ40auXbd5NDUm0kjIhmeuUWZXvQTNNU52HI1nDr2egB36Mf0s\noWvK3s/Bs0z4eM+aGalgVBvpnpSeYmV5STMdstgNP8A3V1W00AAACBAMKe+jaqwq6Xd4lD\nwtk5zQP9TS+3o1PjKqVfncGrHx6tZKjPShHRXgu74D9D0w91y8toDA7hoXDDn7wWtdf02B\n8Hcp76lGyWawkG9N9n0oAMYEtu7G/j6UNMviCkwNs2q02f//TQpyv+A9X+pdwq2rIjCUyc\nMU6WqS6pCoG7T/1BAAAADWNvbW1lbnQtZmllbGQBAgMEBQ==\n-----END OPENSSH PRIVATE KEY-----\n",
+        "publicKey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoXzMuSukOLXb2l1CdHpasQZwBIV30nSHGeu+vHx6m4u9Hzc6wU3OBwjcr16qbdbTTC5KpGY5+q0dkyLHwrrKtUdaCK9olT6TvYMTe046U9J9o91nbiRtmFby1rbX47WE/fMImsSlU/eV4quOLyY5JRhdtImDuBCWsxcWvZ1iAcTXDTtoeTS9hLj07Rqb2b6WkueFSUWtmPnnr7IihE8o2fJGlE7/CMaDQ9tE8xx46Yr6mFDU9VuXBQEahTzZTXiTqZaICt+PzLNPFw5jEohc+oHfUHF3cPYtNzPUllPmdtwk0NDpxvkOo4CY1XtzYXmm7AGohkeZea2NJZKs5ykeN comment-field",
+        "keyFingerprint": "SHA256:lO60nR+FVwqLeV3d7BD9i9QutNwu5LYbV4NOVDrHV9c"
+      },
+      "collectionIds": null
+    }, {
+      "passwordHistory": [],
+      "revisionDate": "2026-03-05T12:09:28.531Z",
+      "creationDate": "2026-03-05T12:05:30.549Z",
+      "id": "be6d0a99-9981-457e-9aba-963b9854fd2f",
+      "type": 5,
+      "reprompt": 0,
+      "name": "SSH Ed25519 Key",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "sshKey": {
+        "privateKey": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\nQyNTUxOQAAACB9f1yjUpItVaL1Z6qBiYe0brp1GDnCiTQgBuZir4vwQAAAAJBvHurObx7q\nzgAAAAtzc2gtZWQyNTUxOQAAACB9f1yjUpItVaL1Z6qBiYe0brp1GDnCiTQgBuZir4vwQA\nAAAECIazL429hSbLe02vjjDKfd5sn6YXGVMegywgMhBx4asH1/XKNSki1VovVnqoGJh7Ru\nunUYOcKJNCAG5mKvi/BAAAAADWNvbW1lbnQtZmllbGQ=\n-----END OPENSSH PRIVATE KEY-----\n",
+        "publicKey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1/XKNSki1VovVnqoGJh7RuunUYOcKJNCAG5mKvi/BA comment-field",
+        "keyFingerprint": "SHA256:1ZF2xpdCmXtrcY0nHNBgOT7xQmr88XFBiLkNBVzooYY"
+      },
+      "collectionIds": null
+    }
+  ]
+}

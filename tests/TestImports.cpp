@@ -428,6 +428,92 @@ void TestImports::testBitwardenNestedFolders()
     QCOMPARE(entry->group(), longGroup);
 }
 
+void TestImports::testBitwardenSSHKey()
+{
+    auto bitwardenPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_export_ssh.json"));
+
+    BitwardenReader reader;
+    auto db = reader.convert(bitwardenPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    // Confirm Login fields
+    // Test expected RSA Key
+
+    auto entry = db->rootGroup()->findEntryByPath("/SSH RSA Key");
+    QVERIFY(entry);
+
+    // Public and private key
+    QVERIFY(entry->attachments()->keys().length() == 2);
+
+    // Test expected names
+    QVERIFY(entry->attachments()->hasKey("id_rsa"));
+    QVERIFY(entry->attachments()->hasKey("id_rsa.pub"));
+
+    // Test expected contents
+    QCOMPARE(entry->attachments()->value("id_rsa"),
+             QByteArray("-----BEGIN OPENSSH PRIVATE KEY-----\n"
+                        "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn\n"
+                        "NhAAAAAwEAAQAAAQEAqF8zLkrpDi129pdQnR6WrEGcASFd9J0hxnrvrx8epuLvR83OsFNz\n"
+                        "gcI3K9eqm3W00wuSqRmOfqtHZMix8K6yrVHWgivaJU+k72DE3tOOlPSfaPdZ24kbZhW8ta\n"
+                        "21+O1hP3zCJrEpVP3leKrji8mOSUYXbSJg7gQlrMXFr2dYgHE1w07aHk0vYS49O0am9m+l\n"
+                        "pLnhUlFrZj556+yIoRPKNnyRpRO/wjGg0PbRPMceOmK+phQ1PVblwUBGoU82U14k6mWiAr\n"
+                        "fj8yzTxcOYxKIXPqB31Bxd3D2LTcz1JZT5nbcJNDQ6cb5DqOAmNV7c2F5puwBqIZHmXmtj\n"
+                        "SWSrOcpHjQAAA8gHdoH6B3aB+gAAAAdzc2gtcnNhAAABAQCoXzMuSukOLXb2l1CdHpasQZ\n"
+                        "wBIV30nSHGeu+vHx6m4u9Hzc6wU3OBwjcr16qbdbTTC5KpGY5+q0dkyLHwrrKtUdaCK9ol\n"
+                        "T6TvYMTe046U9J9o91nbiRtmFby1rbX47WE/fMImsSlU/eV4quOLyY5JRhdtImDuBCWsxc\n"
+                        "WvZ1iAcTXDTtoeTS9hLj07Rqb2b6WkueFSUWtmPnnr7IihE8o2fJGlE7/CMaDQ9tE8xx46\n"
+                        "Yr6mFDU9VuXBQEahTzZTXiTqZaICt+PzLNPFw5jEohc+oHfUHF3cPYtNzPUllPmdtwk0ND\n"
+                        "pxvkOo4CY1XtzYXmm7AGohkeZea2NJZKs5ykeNAAAAAwEAAQAAAQAHChPlt5QO16/Fl4Xz\n"
+                        "S7gY85VGJtL6yycCWVl0BOUPLSW75srhbFvD7Q7JcnbbkQxCVpWHJF5kxVxyxkFKQsONo4\n"
+                        "JIZvTz4mSO7YjNmCK575BKnyzOlOjkV7xQDDczdRk/wkOLwpRrzUGuzdY9neuo/Jk2It3S\n"
+                        "lbHNi2c8ciGtHP0w8QUZGv1Cz4aaxcbX18pywUdmjN0+KPPXKKSDuokO8KMPN8ZvKfwZrJ\n"
+                        "fkX+XGgY4AIkE72Z4V4HtiM95WWS+PmVYy+P/FMRFGv8Rh6xM2sAaT89Sy6f8bDkcQENLp\n"
+                        "HnP65xNU9gVTdcAHGWlV0HsNmCDudGfygDUUMkt8zQwBAAAAgQDIDJFnNMushRbf3qrVNK\n"
+                        "E8xZBkyUfRrRs9fMHkvNSCrduQO+LNX67P7ixRg0D5yP4o1KS7dmPenRi45d31usIwcUio\n"
+                        "Nu4M5qMadPOoU4pSoQK4L9FxxWj38BZhJaiTULnevsK5OWJVHUIBwS8qWCExTwFswwSz+G\n"
+                        "V4xvboxKteAwAAAIEA3Xj1hbqKSDAKSN4Q63u8NEoE+KCihplLs6ZsVPDP+MIdVBtoux7B\n"
+                        "VrPbAIECDurFnj/gaE97uQ40auXbd5NDUm0kjIhmeuUWZXvQTNNU52HI1nDr2egB36Mf0s\n"
+                        "oWvK3s/Bs0z4eM+aGalgVBvpnpSeYmV5STMdstgNP8A3V1W00AAACBAMKe+jaqwq6Xd4lD\n"
+                        "wtk5zQP9TS+3o1PjKqVfncGrHx6tZKjPShHRXgu74D9D0w91y8toDA7hoXDDn7wWtdf02B\n"
+                        "8Hcp76lGyWawkG9N9n0oAMYEtu7G/j6UNMviCkwNs2q02f//TQpyv+A9X+pdwq2rIjCUyc\n"
+                        ""
+                        "MU6WqS6pCoG7T/1BAAAADWNvbW1lbnQtZmllbGQBAgMEBQ==\n"
+                        "-----END OPENSSH PRIVATE KEY-----\n"));
+    QCOMPARE(entry->attachments()->value("id_rsa.pub"),
+             QByteArray("ssh-rsa "
+                        "AAAAB3NzaC1yc2EAAAADAQABAAABAQCoXzMuSukOLXb2l1CdHpasQZwBIV30nSHGeu+"
+                        "vHx6m4u9Hzc6wU3OBwjcr16qbdbTTC5KpGY5+q0dkyLHwrrKtUdaCK9olT6TvYMTe046U9J9o91nbiRtmFby1rbX47WE/"
+                        "fMImsSlU/eV4quOLyY5JRhdtImDuBCWsxcWvZ1iAcTXDTtoeTS9hLj07Rqb2b6WkueFSUWtmPnnr7IihE8o2fJGlE7/"
+                        "CMaDQ9tE8xx46Yr6mFDU9VuXBQEahTzZTXiTqZaICt+PzLNPFw5jEohc+"
+                        "oHfUHF3cPYtNzPUllPmdtwk0NDpxvkOo4CY1XtzYXmm7AGohkeZea2NJZKs5ykeN comment-field"));
+
+    entry = db->rootGroup()->findEntryByPath("/SSH Ed25519 Key");
+
+    QVERIFY(entry);
+
+    // Public and private key
+    QVERIFY(entry->attachments()->keys().length() == 2);
+
+    // Test expected names
+    QVERIFY(entry->attachments()->hasKey("id_ed25519"));
+    QVERIFY(entry->attachments()->hasKey("id_ed25519.pub"));
+
+    // Test expected contents
+    QCOMPARE(entry->attachments()->value("id_ed25519"),
+             QByteArray("-----BEGIN OPENSSH PRIVATE KEY-----\n"
+                        "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\n"
+                        "QyNTUxOQAAACB9f1yjUpItVaL1Z6qBiYe0brp1GDnCiTQgBuZir4vwQAAAAJBvHurObx7q\n"
+                        "zgAAAAtzc2gtZWQyNTUxOQAAACB9f1yjUpItVaL1Z6qBiYe0brp1GDnCiTQgBuZir4vwQA\n"
+                        "AAAECIazL429hSbLe02vjjDKfd5sn6YXGVMegywgMhBx4asH1/XKNSki1VovVnqoGJh7Ru\n"
+                        "unUYOcKJNCAG5mKvi/BAAAAADWNvbW1lbnQtZmllbGQ=\n"
+                        "-----END OPENSSH PRIVATE KEY-----\n"));
+    QCOMPARE(
+        entry->attachments()->value("id_ed25519.pub"),
+        QByteArray("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1/XKNSki1VovVnqoGJh7RuunUYOcKJNCAG5mKvi/BA comment-field"));
+}
+
 void TestImports::testProtonPass()
 {
     auto protonPassPath =
