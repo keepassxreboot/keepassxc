@@ -50,6 +50,7 @@
 - Prevent mouse wheel scrolling from changing the unfocused alternative save method setting [#13358]
 - Fix password font size not following application font size [#13658]
 - Fix typos and documentation links [#10124, #10893, #9993]
+- Fix null pointer dereference in Secret Service integration [#13655]
 - Auto-Type: Support {PGDN} placeholder [#13463]
 - Auto-Type: Refactor Auto-Type plugins to integrate them into the main binary [#13469]
 - Browser: Fix showing and closing the password generator [#9984, #9743]
