@@ -115,6 +115,7 @@ if(Botan_FOUND)
                 IMPORTED_CONFIGURATIONS RELEASE
         )
         set_target_properties(Botan::botan PROPERTIES
+                IMPORTED_LOCATION ${Botan_LIBRARY_RELEASE}
                 IMPORTED_LOCATION_RELEASE ${Botan_LIBRARY_RELEASE})
     endif()
     if(Botan_LIBRARY_DEBUG)
