@@ -10553,6 +10553,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>URI:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Secret key must be in Base32 format</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10562,6 +10566,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Totp Uri</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10608,6 +10616,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have entered an invalid TOTP URI. The URI must start with otpauth://totp/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
