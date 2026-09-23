@@ -11,27 +11,27 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Praneškite apie klaidas adresu: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Apie klaidas praneškite adresu: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC platinamas pagal GNU bendrosios viešosios licencijos (GPL) 2 versijos arba (jūsų pasirinkimu) 3 versijos sąlygas.</translation>
+        <translation>KeePassXC yra platinama GNU Bendrosios Viešosios Licencijos (GPL) versijos 2 arba (jūsų pasirinkimu) versijos 3 sąlygomis.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Projekto prižiūrėtojai:</translation>
+        <translation>Projektą prižiūri:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Ypatinga &quot;KeePassXC&quot; komandos padėka debfx už originalaus &quot;KeePassX&quot; sukūrimą.</translation>
+        <translation>Ypatinga padėka nuo KeePassXC komandos yra skiriama debfx už pradinės KeePassX programos sukūrimą.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Autoriai</translation>
+        <translation>Talkininkai</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Peržiūrėkite &quot;GitHub&quot; indėlį&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Žiūrėti talkinimus GitHub puslapyje&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -39,18 +39,18 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Kai pranešate apie klaidą, įtraukite šią informaciją:</translation>
+        <translation>Pranešdami apie klaidą, visuomet pateikite ir šią informaciją:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Kopijuoti į mainų sritį</translation>
+        <translation>Kopijuoti į iškarpinę</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>&quot;KeePassXC&quot; - prieigos užklausa</translation>
+        <translation>KeePassXC - Prieigos Užklausa</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>Paleidėjas</translation>
+        <translation>Vykdomoji programa</translation>
     </message>
     <message>
         <source>Command Line</source>
@@ -148,11 +148,30 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Nėra SSH Agento lizdo. Įsitikinkite, kad SSH_AUTH_SOCK aplinkos kintamasis egzistuoja, arba nustatykite jį pakeičiantį kintamąjį.</translation>
+        <translation>Nėra SSH agento lizdo. Įsitikinkite, kad SSH_AUTH_SOCK aplinkos kintamasis egzistuoja, arba nustatykite jį pakeičiantį kintamąjį.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>SSH Agento ryšys veikia!</translation>
+        <translation>SSH agento ryšys veikia!</translation>
+    </message>
+</context>
+<context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -195,7 +214,7 @@
     </message>
     <message>
         <source>Follow style</source>
-        <translation>Sekti stiliumi</translation>
+        <translation>Sekti stilių</translation>
     </message>
     <message>
         <source>Monochrome</source>
@@ -261,6 +280,14 @@
         <source>Custom</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -294,7 +321,7 @@
     </message>
     <message>
         <source> recent files</source>
-        <translation> naujausi failai</translation>
+        <translation>naujausi failai</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -447,7 +474,7 @@
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Nustatyti nustatymus atgal į numatytuosius</translation>
+        <translation>Nustatyti nustatymus atgal į numatytuosius...</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -455,11 +482,11 @@
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Naudoti įrašo antraštę, norint sutapatinti langus visuotiniam Automatiniam rinkimui</translation>
+        <translation>Naudoti įrašo antraštę, norint sutapatinti langus visuotiniam automatiniam rinkimui</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Naudoti įrašo URL, norint sutapatinti langus visuotiniam Automatiniam rinkimui</translation>
+        <translation>Naudoti įrašo URL, norint sutapatinti langus visuotiniam automatiniam rinkimui</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -467,7 +494,7 @@
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Paslėpti nebegaliojančius įrašus nuo Auto-Įvedimo</translation>
+        <translation>Slėpti nebegaliojančius įrašus nuo automatinio rinkimo</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -475,7 +502,7 @@
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>Auto-Įvedimo paleidimo uždelsimas:</translation>
+        <translation>Automatinio rinkimo paleidimo uždelsimas:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
@@ -483,7 +510,7 @@
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Auto-įvedimo paleidimo uždelsimas milisekundėmis</translation>
+        <translation>Automatinio rinkimo paleidimo uždelsimas milisekundėmis</translation>
     </message>
     <message>
         <source> ms</source>
@@ -492,7 +519,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Auto-Įvedimo delsa</translation>
+        <translation>Automatinio rinkimo rašymo uždelsimas:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -560,10 +587,6 @@
         <translation>Eksportuoti nustatymus…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Šrifto dydis:</translation>
     </message>
@@ -576,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -688,7 +771,7 @@
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>Auto-Įvedimo Klaida</translation>
+        <translation>Automatinio rinkimo klaida</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -724,7 +807,7 @@
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation>Įrašas neturi PICKCHARS atributo: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -812,7 +906,7 @@
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation>Rašymo Seka</translation>
+        <translation>Įvedimo Seka</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -820,7 +914,7 @@
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation>Rašyti {USERNAME}</translation>
+        <translation>Įvesti {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
@@ -889,7 +983,7 @@ Ctrl+Shift+4 - Copy URL&lt;br/&gt;
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC - Naršyklės prieigos užklausa</translation>
+        <translation>KeePassXC - Naršyklės Prieigos Užklausa</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
@@ -1046,7 +1140,8 @@ Ar norite jį perrašyti?</translation>
 Do you want to delete the entry?
 </source>
         <translation>Gauta užklausa ištrinti įrašą &quot;%1&quot;.
-Ar norite ištrinti įrašą?</translation>
+Ar norite ištrinti įrašą?
+</translation>
     </message>
     <message>
         <source>%1 (Passkey)</source>
@@ -1155,7 +1250,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Rodyti pranešimą, kai prašoma pateikti įgaliojimus</translation>
+        <translation>Rodyti pranešimą, kai prašoma pateikti prisijungimo duomenis</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
@@ -1175,15 +1270,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Grąžinti tik geriausiai atitinkančius įgaliojimus</translation>
+        <translation>Grąžinti tik geriausiai atitinkančius prisijungimo duomenis</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Grąžina įgaliojimus, kurių galiojimo laikas pasibaigęs. Prie pavadinimo pridedama eilutė [pasibaigęs].</translation>
+        <translation>Grąžina prisijungimo duomenis, kurių galiojimo laikas pasibaigęs. Prie pavadinimo pridedama eilutė [pasibaigęs].</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Leisti grąžinti pasibaigusius įgaliojimus</translation>
+        <translation>Leisti grąžinti negaliojančius prisijungimo duomenis</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -1201,12 +1296,12 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Niekada neklausti prieš prieinant prie įgaliojimų</translation>
+        <translation>Niekada neklausti prieš prieinant prie prisijungimo duomenų</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Niekada neklausti prieš atnaujinant įgaliojimus</translation>
+        <translation>Niekada neklausti prieš atnaujinant prisijungimo duomenis</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
@@ -1671,7 +1766,7 @@ Kad ši klaida nepasirodytų, turite eiti į &quot;Duomenų bazės nustatymai / 
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>Bandyti vėl su tuščiu slaptažodžiu</translation>
+        <translation>Pakartoti su tuščiu slaptažodžiu</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
@@ -1758,15 +1853,15 @@ Are you sure you want to continue with this file?.</source>
         <translation>Spustelėkite norėdami pridėti rakto failą.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Aš turiu rakto failą&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1789,7 +1884,7 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation>Duomenų bazės Įgaliojimai</translation>
+        <translation>Duomenų bazės prisijungimo duomenys</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -1892,7 +1987,7 @@ Tai gali nebeleisti prisijungti prie naršyklės plėtinio.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform><numerusform>Sėkmingai pašalintas (-i) %n šifravimo raktas (-ai) iš KeePassXC nustatymų.</numerusform></translation>
+        <translation><numerusform>Iš &quot;KeePassXC&quot; nustatymų sėkmingai pašalintas %n šifravimo raktas.</numerusform><numerusform>Iš &quot;KeePassXC&quot; nustatymų sėkmingai pašalinta %n šifravimo raktų.</numerusform><numerusform>Iš &quot;KeePassXC&quot; nustatymų sėkmingai pašalinta %n šifravimo raktų.</numerusform><numerusform>Iš &quot;KeePassXC&quot; nustatymų sėkmingai pašalinta %n šifravimo raktų.</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1928,7 +2023,7 @@ Tai būtina tik tuo atveju, jei jūsų duomenų bazė yra kito kopija ir naršyk
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation type="unfinished"/>
+        <translation>Konvertuokite senus &quot;KeePassHTTP&quot; atributus į su &quot;KeePassXC-Browser&quot; suderinamus pasirinktinius duomenis</translation>
     </message>
     <message>
         <source>No keys found</source>
@@ -2093,7 +2188,7 @@ Ar tikrai norite tęsti darbą be slaptažodžio?</translation>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation>Su &quot;Argon2&quot; naudojate labai daug pagrindinių transformacijų.
+        <translation>Su &quot;Argon2&quot; naudojate labai daug pagrindinių transformacijos raundų.
 
 Jei išsaugosite šį numerį, duomenų bazės atidarymas gali užtrukti valandas, dienas ar net ilgiau.</translation>
     </message>
@@ -2196,7 +2291,7 @@ Jei išlaikysite šį numerį, jūsų duomenų bazė nebus apsaugota nuo brutali
     </message>
     <message>
         <source>Default username field</source>
-        <translation>Numatytas naudotojo vardo laukas</translation>
+        <translation>Numatytojo slapyvardžio laukas</translation>
     </message>
     <message>
         <source>History Settings</source>
@@ -2646,11 +2741,11 @@ Tai tikrai klaida, praneškite apie tai kūrėjams.</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>Patvirtinti Auto-Įvedimą</translation>
+        <translation>Patvirtinti automatinį rinkimą</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation>Atlikti Auto-Rašymą į anksčiau aktyvų langą?</translation>
+        <translation>Atlikti automatinį rinkimą į anksčiau aktyvų langą?</translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -3037,7 +3132,7 @@ Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n val.</numerusform><numerusform>%n val.</numerusform><numerusform>%n val.</numerusform><numerusform>%n val.</numerusform></translation>
+        <translation><numerusform>%n valanda</numerusform><numerusform>%n valandos</numerusform><numerusform>%n valandos</numerusform><numerusform>%n valandų</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
@@ -3049,7 +3144,7 @@ Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n metai (-ai)</numerusform><numerusform>%n metai (-ai)</numerusform><numerusform>%n metai (-ai)</numerusform><numerusform>%n metai (-ai)</numerusform></translation>
+        <translation><numerusform>%n metas</numerusform><numerusform>%n metai</numerusform><numerusform>%n metai</numerusform><numerusform>%n metų</numerusform></translation>
     </message>
     <message>
         <source>Failed to decrypt SSH key, ensure password is correct.</source>
@@ -3068,7 +3163,7 @@ Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation>Attribute value</translation>
+        <translation>Attribute reikšmė</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
@@ -3155,7 +3250,7 @@ Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation>Pasirinktinė automatinio tipo seka</translation>
+        <translation>Pasirinktinė automatinio rinkimo seka</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
@@ -3209,7 +3304,7 @@ Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation>Pasirinktinė šio lango automatinio rinkimo seka</translation>
+        <translation>Pasirinktinė rinkimo seka šiam langui</translation>
     </message>
 </context>
 <context>
@@ -3572,11 +3667,11 @@ Ar norėtumėte ją ištaisyti?</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation>Praleiskite WWW padomenį nuo atitikimo:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation>Praleiskite WWW padomenį nuo šio ir pogrupių atitikimo perjungimo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Restrict matching to given browser key:</source>
@@ -3696,6 +3791,14 @@ Palaikomi pratęsimai yra: %1.</translation>
         <source>Select import/export file</source>
         <translation>Pasirinkti importo / eksporto failą</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -3725,7 +3828,7 @@ Palaikomi pratęsimai yra: %1.</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Auto-Įvedimas:</translation>
+        <translation>Automatinis rinkimas:</translation>
     </message>
     <message>
         <source>Search:</source>
@@ -3836,7 +3939,7 @@ Palaikomi pratęsimai yra: %1.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramos (-ių)</numerusform></translation>
+        <translation><numerusform>Sėkmingai įkelta %1 iš %n piktogramos</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramų</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramų</numerusform><numerusform>Sėkmingai įkelta %1 iš %n piktogramų</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -3946,15 +4049,15 @@ Dėl to gali sutrikti paveiktų papildinių veikimas.</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Slaptažodis</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3966,11 +4069,11 @@ Dėl to gali sutrikti paveiktų papildinių veikimas.</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"/>
+        <translation>Piktograma</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>Spalva</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -4100,10 +4203,10 @@ Dėl to gali sutrikti paveiktų papildinių veikimas.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>Nepavyksta atidaryti failo (-ų):
-%1</numerusform><numerusform>Nepavyksta atidaryti failo (-ų):
-%1</numerusform><numerusform>Nepavyksta atidaryti failo (-ų):
-%1</numerusform><numerusform>Nepavyksta atidaryti failo (-ų):
+        <translation><numerusform>Nepavyko atidaryti failo:
+%1</numerusform><numerusform>Nepavyko atidaryti failų:
+%1</numerusform><numerusform>Nepavyko atidaryti failų:
+%1</numerusform><numerusform>Nepavyko atidaryti failų:
 %1</numerusform></translation>
     </message>
     <message>
@@ -4160,23 +4263,23 @@ Ar norite perrašyti esamą priedą?</translation>
     </message>
     <message>
         <source>New Text Document</source>
-        <translation type="unfinished"/>
+        <translation>Naujas tekstinis dokumentas</translation>
     </message>
     <message>
         <source>Add file…</source>
-        <translation type="unfinished"/>
+        <translation>Pridėti failą…</translation>
     </message>
     <message>
         <source>Load from Disk…</source>
-        <translation type="unfinished"/>
+        <translation>Įkelti iš disko…</translation>
     </message>
     <message>
         <source>Save…</source>
-        <translation type="unfinished"/>
+        <translation>Įrašyti…</translation>
     </message>
     <message>
         <source>New Attachment</source>
-        <translation type="unfinished"/>
+        <translation>Naujas priedas</translation>
     </message>
 </context>
 <context>
@@ -4469,7 +4572,8 @@ Ar norite perrašyti esamą priedą?</translation>
 This will leave your passwords and sensitive information vulnerable!
 </source>
         <translation>Ketinate eksportuoti duomenų bazę į neužšifruotą failą.
-Dėl to jūsų slaptažodžiai ir slapta informacija bus pažeidžiami!</translation>
+Dėl to jūsų slaptažodžiai ir slapta informacija bus pažeidžiami!
+</translation>
     </message>
     <message>
         <source>database order</source>
@@ -4562,7 +4666,7 @@ Dėl to jūsų slaptažodžiai ir slapta informacija bus pažeidžiami!</transla
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform><numerusform>%n Įrašas (-ai) buvo naudojamas (-i) %1</numerusform></translation>
+        <translation><numerusform>%n Įrašą naudojo %1</numerusform><numerusform>%n Įrašus naudojo %1</numerusform><numerusform>%n Įrašus naudojo %1</numerusform><numerusform>%n Įrašų naudojo %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4599,6 +4703,25 @@ Dėl to jūsų slaptažodžiai ir slapta informacija bus pažeidžiami!</transla
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo slaptoji tarnyba:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5545,7 +5668,7 @@ Jei tai kartojasi, jūsų duomenų bazės failas gali būti sugadintas.</transla
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>astaba: NENAUDOKITE failo, kuris gali pasikeisti, nes dėl to nebegalėsite atrakinti duomenų bazės.</translation>
+        <translation>Pastaba: NENAUDOKITE failo, kuris gali pasikeisti, nes dėl to nebegalėsite atrakinti duomenų bazės.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -5627,7 +5750,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation>įtartinas raktų failas</translation>
+        <translation>Įtartinas raktų failas</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
@@ -5787,7 +5910,7 @@ Ar tikrai norite tęsti darbą su šiuo failu?</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation>Perkelti a&amp;ukštyn</translation>
+        <translation>Perkelti a&amp;ukščiau</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
@@ -5895,7 +6018,7 @@ Ar tikrai norite tęsti darbą su šiuo failu?</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation>&amp;Kaip pradėti</translation>
+        <translation>&amp;Pradžios vadovas</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
@@ -5992,20 +6115,6 @@ Ar tikrai norite tęsti darbą su šiuo failu?</translation>
     <message>
         <source>Don&apos;t show again for this version</source>
         <translation>Daugiau nerodyti šioje versijoje</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>ĮSPĖJIMAS: Jūs naudojate nestabilią KeePassXC versiją.
-Egzistuoja didelė pažeidimų rizika, turėkite atsarginę duomenų bazių kopiją.
-Ši versija neskirta naudoti darbui.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>PASTABA: Jūs naudojate ankstyvąją KeePassXC versiją.
-Tikėkitės klaidų ir nedidelių problemų, ši versija skirta testavimo tikslams.</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -6344,8 +6453,10 @@ Tikėkitės klaidų ir nedidelių problemų, ši versija skirta testavimo tiksla
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Slaptažodžių generatorius</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6358,6 +6469,10 @@ Tikėkitės klaidų ir nedidelių problemų, ši versija skirta testavimo tiksla
     <message>
         <source>New Entry</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Slaptažodžių generatorius</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6489,7 +6604,7 @@ Tikėkitės klaidų ir nedidelių problemų, ši versija skirta testavimo tiksla
     </message>
     <message>
         <source>Previous location: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ankstesnė vieta: %1</translation>
     </message>
     <message>
         <source>Number of entries in group: %1</source>
@@ -6571,11 +6686,11 @@ Tikėkitės klaidų ir nedidelių problemų, ši versija skirta testavimo tiksla
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation>Duomenų bazės Įgaliojimai</translation>
+        <translation>Duomenų bazės prisijungimo duomenys</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Tik jums žinomas įgaliojimų rinkinys, kuriuo apsaugoma jūsų duomenų bazė.</translation>
+        <translation>Tik jums žinomas prisijungimo duomenų rinkinys, kuriuo apsaugoma jūsų duomenų bazė.</translation>
     </message>
 </context>
 <context>
@@ -7328,7 +7443,7 @@ Ar norite jį perrašyti?</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation>Įspėjimas: įjungtas &quot;Caps Lock&quot;!</translation>
+        <translation>Įspėjimas: Įjungtos didžiosios raidės!</translation>
     </message>
     <message>
         <source>Quality: %1</source>
@@ -7495,6 +7610,10 @@ Ar norite jį perrašyti?</translation>
         <translation>Nepateikiamas galiojantis UUID</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Nežinoma klaida</translation>
     </message>
@@ -7628,7 +7747,7 @@ Ar norite jį perrašyti?</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform><numerusform>&quot;%1&quot; slaptažodis buvo nutekintas %2 kartus per (-ius)!</numerusform></translation>
+        <translation><numerusform>&apos;%1&apos; slaptažodis buvo nutekintas %2 kartą!</numerusform><numerusform>&apos;%1&apos; slaptažodis buvo nutekintas %2 kartus!</numerusform><numerusform>&apos;%1&apos; slaptažodis buvo nutekintas %2 kartų!</numerusform><numerusform>&apos;%1&apos; slaptažodis buvo nutekintas %2 kartus!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
@@ -7778,7 +7897,7 @@ Ar norite jį perrašyti?</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform></translation>
+        <translation><numerusform>Iškarpinė bus išvalyta už %1 sekundės</numerusform><numerusform>Iškarpinė bus išvalyta už %1 sekundžių</numerusform><numerusform>Iškarpinė bus išvalyta už %1 sekundžių</numerusform><numerusform>Iškarpinė bus išvalyta už %1 sekundžių</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -7926,7 +8045,7 @@ Ar norite jį perrašyti?</translation>
     </message>
     <message>
         <source>Cannot remove password: The database does not have a password.</source>
-        <translation>Negalima pašalinti slaptažodžio: Duomenų bazėje nėra slaptažodžio.</translation>
+        <translation>Negalima pašalinti slaptažodžio: Duomenų bazė neturi slaptažodžio.</translation>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
@@ -7986,7 +8105,7 @@ Ar norite jį perrašyti?</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>Paskutinį kartą išsaugota</translation>
+        <translation>Paskutinis išsaugojimas</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
@@ -8039,6 +8158,14 @@ Ar norite jį perrašyti?</translation>
     <message>
         <source>Average password length</source>
         <translation>Vidutinis slaptažodžio ilgis</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8363,11 +8490,11 @@ Prieinamos komandos:
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>Deaktyvuokite duomenų bazės slaptažodžio raktą, iš kurio bus atliekamas sujungimas.</translation>
+        <translation>Deaktyvuokite duomenų bazės slaptažodžio raktą, iš kurios bus atliekamas sujungimas.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation>Rašyti tik tuos pakeitimus, kurie buvo aptikti atliekant sujungimo operaciją.</translation>
+        <translation>Rodyti tik tuos pakeitimus, kurie buvo aptikti atliekant sujungimo operaciją.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
@@ -8628,7 +8755,7 @@ Apsvarstykite galimybę sukurti naują rakto failą.</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform><numerusform>Slaptažodis naudojamas %1 kartą (-ius)</numerusform></translation>
+        <translation><numerusform>Slaptažodis naudojamas %1 kartą</numerusform><numerusform>Slaptažodis naudojamas %1 kartus</numerusform><numerusform>Slaptažodis naudojamas %1 kartus</numerusform><numerusform>Slaptažodis naudojamas %1 kartų</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -8648,7 +8775,7 @@ Apsvarstykite galimybę sukurti naują rakto failą.</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform><numerusform>Slaptažodžio galiojimas baigiasi per %1 dieną (-as)</numerusform></translation>
+        <translation><numerusform>Slaptažodžio galiojimo laikas baigiasi po %1 dienos</numerusform><numerusform>Slaptažodžio galiojimo laikas baigiasi po %1 dienų</numerusform><numerusform>Slaptažodžio galiojimo laikas baigiasi po %1 dienų</numerusform><numerusform>Slaptažodžio galiojimo laikas baigiasi po %1 dienų</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -8699,10 +8826,6 @@ Branduolys: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Greitas atrakinimas</translation>
     </message>
@@ -8711,36 +8834,32 @@ Branduolys: %3 %4</translation>
         <translation>Slaptosios tarnybos integracija</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Nėra</translation>
-    </message>
-    <message>
         <source>Enabled extensions:</source>
         <translation>Įjungti plėtiniai:</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation><numerusform>per %1 metus (-us)</numerusform><numerusform>per %1 metus (-us)</numerusform><numerusform>per %1 metus (-us)</numerusform><numerusform>per %1 metus (-us)</numerusform></translation>
+        <translation><numerusform>daugiau kaip %1 metai</numerusform><numerusform>daugiau kaip %1 metai</numerusform><numerusform>daugiau kaip %1 metai</numerusform><numerusform>daugiau kaip %1 metų</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation><numerusform>apie %1 mėnesį (-ius)</numerusform><numerusform>apie %1 mėnesį (-ius)</numerusform><numerusform>apie %1 mėnesį (-ius)</numerusform><numerusform>apie %1 mėnesį (-ius)</numerusform></translation>
+        <translation><numerusform>apie %1 mėnesį</numerusform><numerusform>apie %1 mėnesius</numerusform><numerusform>apie %1 mėnesius</numerusform><numerusform>apie %1 mėnesių</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation><numerusform>%1 savaitė (-ės)</numerusform><numerusform>%1 savaitė (-ės)</numerusform><numerusform>%1 savaitė (-ės)</numerusform><numerusform>%1 savaitė (-ės)</numerusform></translation>
+        <translation><numerusform>%1 savaitė</numerusform><numerusform>%1 savaitės</numerusform><numerusform>%1 savaitės</numerusform><numerusform>%1 savaičių</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation><numerusform>%1 diena (-os)</numerusform><numerusform>%1 diena (-os)</numerusform><numerusform>%1 diena (-os)</numerusform><numerusform>%1 diena (-os)</numerusform></translation>
+        <translation><numerusform>%1 diena</numerusform><numerusform>%1 dienos</numerusform><numerusform>%1 dienos</numerusform><numerusform>%1 dienų</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation><numerusform>%1 val.</numerusform><numerusform>%1 val.</numerusform><numerusform>%1 val.</numerusform><numerusform>%1 val.</numerusform></translation>
+        <translation><numerusform>1 valanda</numerusform><numerusform>%1 valandos</numerusform><numerusform>%1 valandos</numerusform><numerusform>%1 valandų</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation><numerusform>%1 minutė (-os)</numerusform><numerusform>%1 minutė (-os)</numerusform><numerusform>%1 minutė (-os)</numerusform><numerusform>%1 minutė (-os)</numerusform></translation>
+        <translation><numerusform>%1 minutė</numerusform><numerusform>%1 minutės</numerusform><numerusform>%1 minutės</numerusform><numerusform>%1 minučių</numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least %1, found %2.%3.%4</source>
@@ -8832,7 +8951,7 @@ Branduolys: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform><numerusform>Iškarpinės išvalymas per %1 sekundę (-as)...</numerusform></translation>
+        <translation><numerusform>Iškarpinė bus išvalyta už %1 sekundės...</numerusform><numerusform>Iškarpinė bus išvalyta už %1 sekundžių...</numerusform><numerusform>Iškarpinė bus išvalyta už %1 sekundžių...</numerusform><numerusform>Iškarpinė bus išvalyta už %1 sekundžių</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -9234,6 +9353,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"/>
     </message>
@@ -9254,23 +9381,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9286,8 +9397,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Šifruoti failai yra nepalaikomi.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Žymos</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9371,6 +9494,29 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>RemoteHandler</name>
     <message>
         <source>Command `%1` did not finish in time. Process was killed.</source>
@@ -9409,7 +9555,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>Įrašų URL adresų sąrašas</translation>
+        <translation>Įrašo URL adresų sąrašas</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
@@ -9508,7 +9654,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation>Blogas - slaptažodis turi būti pakeistas</translation>
+        <translation>Blogas — slaptažodis turi būti pakeistas</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
@@ -9659,7 +9805,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform><numerusform>Ištrinti įrašą (-us)...</numerusform></translation>
+        <translation><numerusform>Ištrinti įrašą...</numerusform><numerusform>Ištrinti įrašus</numerusform><numerusform>Ištrinti įrašus</numerusform><numerusform>Ištrinti įrašus</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -9753,7 +9899,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation>Palaukite, skaičiuojami duomenų bazės statistiniai duomenys...</translation>
+        <translation>Palaukite, skaičiuojama duomenų bazės statistika...</translation>
     </message>
     <message>
         <source>Database name</source>
@@ -9858,6 +10004,14 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Vidutinis slaptažodžio ilgis - mažiau nei dešimt simbolių. Ilgesni slaptažodžiai užtikrina didesnį saugumą.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10060,7 +10214,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Jei įjungta, bet koks bandymas perskaityti slaptažodį turi būti patvirtintas. Priešingu atveju klientai gali skaityti slaptažodžius be patvirtinimo, kai duomenų bazė atrakinta.&lt;/p&gt;&lt;p&gt;Ši parinktis taikoma tik prieigai prie įrašo slaptažodžio. Klientai visada gali išvardyti atidarytų duomenų bazių elementus ir užklausti jų atributų.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Jei įjungta, bet koks bandymas perskaityti slaptažodį turi būti patvirtintas. Priešingu atveju klientai gali skaityti slaptažodžius be patvirtinimo, kai duomenų bazė atrakinta.&lt;/p&gt;&lt;p&gt;Ši parinktis taikoma tik prieigai prie įrašo slaptažodžio. Klientai visada gali išvardyti atidarytų duomenų bazių elementus ir užklausti jų atributų.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
@@ -10092,7 +10246,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Išsaugoti esamus pakeitimus, kad papildinys būtų įjungtas ir būtų galima redaguoti šį skyrių.</translation>
+        <translation>Išsaugokite esamus pakeitimus, kad papildinys būtų įjungtas ir būtų galima redaguoti šį skyrių.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -10279,7 +10433,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform><numerusform>Nustoja galioti &lt;b&gt;%n&lt;/b&gt; sekunde (-ose)</numerusform></translation>
+        <translation><numerusform>Galiojimas baigiasi už &lt;b&gt;%n&lt;/b&gt; sekundės</numerusform><numerusform>Galiojimas baigiasi už &lt;b&gt;%n&lt;/b&gt; sekundžių </numerusform><numerusform>Galiojimas baigiasi už &lt;b&gt;%n&lt;/b&gt; sekundžių </numerusform><numerusform>Galiojimas baigiasi už &lt;b&gt;%n&lt;/b&gt; sekundžių </numerusform></translation>
     </message>
 </context>
 <context>
@@ -10326,7 +10480,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation>Garo® nustatymai</translation>
+        <translation>Steam® nustatymai</translation>
     </message>
     <message>
         <source>Custom settings:</source>
@@ -10471,12 +10625,8 @@ Pavyzdys: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Bendra: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Nepavyko rasti aparatinės įrangos rakto sąsajos su serijos numeriu %1. Norėdami tęsti, prijunkite jį prie jo.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10536,10 +10686,6 @@ Pavyzdys: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Nepavyko rasti arba pasiekti aparatūros rakto su serijos numeriu %1. Prašome jį pristatyti, kad tęstumėte. </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Aparatūros raktas užrakintas arba nustatytas nustatytas laiku. Atrakinkite arba iš naujo pateikite jį, kad tęstumėte.</translation>
@@ -10617,7 +10763,7 @@ Pavyzdys: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Unknown</source>
         <comment>Unknown hardware key name</comment>
-        <translation type="unfinished"/>
+        <translation>Nežinoma</translation>
     </message>
 </context>
 </TS>

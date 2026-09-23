@@ -3,11 +3,11 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>කීපාස්එක්ස්සී ගැන</translation>
+        <translation>KeePassXC පිළිබඳ</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>පිළිබඳව</translation>
+        <translation>පිළිබඳ</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Details</source>
-        <translation>විස්තර</translation>
+        <translation>තොරතුරු</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -167,7 +186,7 @@
     </message>
     <message>
         <source>Security</source>
-        <translation>ආරක්‍ෂාව</translation>
+        <translation>ආරක්ෂාව</translation>
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
@@ -259,6 +278,14 @@
     </message>
     <message>
         <source>Custom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -387,7 +414,7 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>තත්.</translation>
+        <translation> තත්.</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -488,7 +515,7 @@
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>තත්.</translation>
+        <translation>මිලි තත්.</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
@@ -560,10 +587,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation type="unfinished"/>
     </message>
@@ -576,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -597,7 +680,7 @@
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>පසුරු පුවරුව මැකීම</translation>
+        <translation>මින්පසු පසුරු පුවරුව මකන්න</translation>
     </message>
     <message>
         <source>Clear search query after</source>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -816,7 +910,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>අවලංගු</translation>
+        <translation>අවලංගු කරන්න</translation>
     </message>
     <message>
         <source>Type {USERNAME}</source>
@@ -832,15 +926,15 @@
     </message>
     <message>
         <source>Copy Username</source>
-        <translation>පරිශීලක නාමයේ පිටපතක්</translation>
+        <translation>පරිශීලක නාමය පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation>මුරපදයේ පිටපතක්</translation>
+        <translation>මුරපදය පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation>TOTP පිටපතක්</translation>
+        <translation>TOTP පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
@@ -932,7 +1026,7 @@ Ctrl+Shift+4 - Copy URL&lt;br/&gt;
     </message>
     <message>
         <source>Cancel</source>
-        <translation>අවලංගු</translation>
+        <translation>අවලංගු කරන්න</translation>
     </message>
     <message>
         <source>You have multiple databases open.
@@ -1127,7 +1221,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Vivaldi</source>
-        <translation>විවාල්ඩි</translation>
+        <translation>Vivaldi</translation>
     </message>
     <message>
         <source>&amp;Edge</source>
@@ -1135,7 +1229,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Firefox</source>
-        <translation>ෆයර්ෆොක්ස්</translation>
+        <translation>Firefox</translation>
     </message>
     <message>
         <source>Tor Browser</source>
@@ -1618,7 +1712,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>අවලංගු</translation>
+        <translation>අවලංගු කරන්න</translation>
     </message>
     <message>
         <source>Unlock</source>
@@ -1759,15 +1853,15 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1782,11 +1876,11 @@ Are you sure you want to continue with this file?.</source>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>General</source>
-        <translation>ජනරාල්</translation>
+        <translation>සාමාන්‍ය</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>ආරක්‍ෂාව</translation>
+        <translation>ආරක්ෂාව</translation>
     </message>
     <message>
         <source>Database Credentials</source>
@@ -1798,7 +1892,7 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>බ්රවුසර ඒකාබද්ධ කිරීම</translation>
+        <translation>අතිරික්සුවට අනුකලනය</translation>
     </message>
     <message>
         <source>Maintenance</source>
@@ -1875,7 +1969,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation>නිර්මාණය කළා</translation>
+        <translation>සෑදිණි</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
@@ -2104,7 +2198,7 @@ If you keep this number, your database may take hours, days, or even longer to o
     </message>
     <message>
         <source>Cancel</source>
-        <translation>අවලංගු</translation>
+        <translation>අවලංගු කරන්න</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
@@ -2189,7 +2283,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Database description field</source>
-        <translation>දත්ත සමුදා විස්තර ක්ෂේත්‍රය</translation>
+        <translation>දත්තසමුදායේ විස්තර ක්‍ෂේත්‍රය</translation>
     </message>
     <message>
         <source>Default username:</source>
@@ -3217,7 +3311,7 @@ Would you like to correct it?</source>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>General</source>
-        <translation>ජනරාල්</translation>
+        <translation>සාමාන්‍ය</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
@@ -3347,7 +3441,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation>මුරපද ක්ෂේත්‍රය</translation>
+        <translation>මුරපද ක්‍ෂේත්‍රය</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
@@ -3418,7 +3512,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>පසුරු පුවරුවට පිටපත් කරන්න</translation>
+        <translation>පසුරු පුවරුවට පිටපතක්</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -3502,7 +3596,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Properties</source>
-        <translation>දේපළ</translation>
+        <translation>ගුණාංග</translation>
     </message>
     <message>
         <source>Add group</source>
@@ -3518,7 +3612,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>බ්රවුසර ඒකාබද්ධ කිරීම</translation>
+        <translation>අතිරික්සුවට අනුකලනය</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -3596,7 +3690,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation>මුරපද ක්ෂේත්‍රය</translation>
+        <translation>මුරපද ක්‍ෂේත්‍රය</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -3696,6 +3790,14 @@ Supported extensions are: %1.</source>
     <message>
         <source>Select import/export file</source>
         <translation>ආයාත/අපනයන ගොනුව තෝරන්න</translation>
+    </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3829,7 +3931,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>All files</source>
-        <translation>සියලුම ගොනු</translation>
+        <translation>සියළුම ගොනු</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -4249,7 +4351,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Created</source>
-        <translation>සාදන ලදි</translation>
+        <translation>සෑදිණි</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -4328,7 +4430,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>General</source>
-        <translation>ජනරාල්</translation>
+        <translation>සාමාන්‍ය</translation>
     </message>
     <message>
         <source>Password</source>
@@ -4602,6 +4704,25 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
 </context>
 <context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Group</name>
     <message>
         <source>[empty]</source>
@@ -4628,7 +4749,7 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
     <message>
         <source>Cancel</source>
-        <translation>අවලංගු</translation>
+        <translation>අවලංගු කරන්න</translation>
     </message>
     <message>
         <source>Having trouble downloading icons?
@@ -5595,11 +5716,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Key files</source>
-        <translation>ප්රධාන ගොනු</translation>
+        <translation>යතුරු ගොනු</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>සියලුම ගොනු</translation>
+        <translation>සියළුම ගොනු</translation>
     </message>
     <message>
         <source>Create Key File…</source>
@@ -5994,20 +6115,6 @@ Are you sure you want to continue with this file?</source>
         <translation>මෙම&apos;සඳහා නැවත පෙන්වන්න එපා</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>අවවාදයයි: ඔබ KeePassXC හි අස්ථායී ගොඩනැගීමක් භාවිතා කරයි.
-දූෂණය වීමේ ඉහළ අවදානමක් ඇත, ඔබේ දත්ත සමුදායේ උපස්ථයක් පවත්වා ගන්න.
-මෙම අනුවාදය නිෂ්පාදන භාවිතය සඳහා නොවේ.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>සටහන: ඔබ KeePassXC හි පූර්ව නිකුතුවක් භාවිතා කරයි.
-සමහර දෝෂ සහ සුළු ගැටළු බලාපොරොත්තු වන්න, මෙම අනුවාදය පරීක්ෂණ අරමුණු සඳහා අදහස් කෙරේ.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation type="unfinished"/>
     </message>
@@ -6344,7 +6451,9 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password Generator</source>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6357,6 +6466,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>New Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6975,7 +7088,7 @@ The following data is missing:
     </message>
     <message>
         <source>Password field</source>
-        <translation>මුරපද ක්ෂේත්‍රය</translation>
+        <translation>මුරපද ක්‍ෂේත්‍රය</translation>
     </message>
     <message>
         <source>Confirm password:</source>
@@ -7063,7 +7176,7 @@ The following data is missing:
     </message>
     <message>
         <source>Advanced</source>
-        <translation>උසස්</translation>
+        <translation>වැඩිදුර</translation>
     </message>
     <message>
         <source>Character Types</source>
@@ -7251,7 +7364,7 @@ The following data is missing:
     </message>
     <message>
         <source>All files</source>
-        <translation>සියලුම ගොනු</translation>
+        <translation>සියළුම ගොනු</translation>
     </message>
     <message>
         <source>Select Custom Wordlist</source>
@@ -7495,12 +7608,16 @@ Do you want to overwrite it?</source>
         <translation>වලංගු UUID සපයා නැත</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>නොදන්නා දෝෂයකි</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>බ්රවුසර ඒකාබද්ධ කිරීම</translation>
+        <translation>අතිරික්සුවට අනුකලනය</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
@@ -8039,6 +8156,14 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>සාමාන්ය මුරපද දිග</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8689,19 +8814,15 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>ස්වයංක්‍රීය වර්ගය</translation>
+        <translation>ස්වයං ලිවීම</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH නියෝජිතයා</translation>
+        <translation>SSH නියෝතය</translation>
     </message>
     <message>
         <source>KeeShare</source>
         <translation>KeeShare</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>යූබිකේ</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
@@ -8710,10 +8831,6 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     <message>
         <source>Secret Service Integration</source>
         <translation>රහස් සේවා ඒකාබද්ධ කිරීම</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>කිසිවක් නැත</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -8861,11 +8978,11 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>අවසන් වරට වෙනස් කරන ලදී</translation>
+        <translation>අවසාන සංශෝධනය</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>නිර්මාණය කළා</translation>
+        <translation>සෑදිණි</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
@@ -9235,6 +9352,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"/>
     </message>
@@ -9255,23 +9380,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9287,8 +9396,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>අනන්‍යන</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9369,6 +9490,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>අභ්‍යන්තර zlib දෝෂය: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9860,6 +10004,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>සාමාන්‍ය මුරපද දිග අක්ෂර දහයකට වඩා අඩුය. දිගු මුරපද වැඩි ආරක්ෂාවක් සපයයි.</translation>
     </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
+    </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
@@ -10053,7 +10205,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>General</source>
-        <translation>ජනරාල්</translation>
+        <translation>සාමාන්‍ය</translation>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
@@ -10352,7 +10504,7 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> තත්පර</translation>
+        <translation> තත්.</translation>
     </message>
     <message>
         <source>Code size:</source>
@@ -10472,12 +10624,8 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>ජනරාල්: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>අනුක්‍රමික අංක %1සහිත දෘඪාංග යතුර සඳහා අතුරු මුහුණත සොයා ගැනීමට නොහැකි විය. ඉදිරියට යාමට කරුණාකර එය සම්බන්ධ කරන්න.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10537,10 +10685,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>අනුක්‍රමික අංක %1සහිත දෘඪාංග යතුර සොයා ගැනීමට හෝ ප්‍රවේශ වීමට නොහැකි විය. ඉදිරියට යාමට කරුණාකර එය ඉදිරිපත් කරන්න. </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>දෘඪාංග යතුර අගුලු දමා හෝ කල් ඉකුත් වී ඇත. දිගටම කරගෙන යාමට එය අගුළු හරින්න හෝ නැවත ඉදිරිපත් කරන්න.</translation>

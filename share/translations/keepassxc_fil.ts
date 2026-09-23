@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -259,6 +278,14 @@
     </message>
     <message>
         <source>Custom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -560,10 +587,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation type="unfinished"/>
     </message>
@@ -576,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -771,6 +854,17 @@
     <message>
         <source>Sequence</source>
         <translation>Pagkakasunod-sunod</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1759,15 +1853,15 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3706,6 +3800,14 @@ Ang mga sinusuportahang extension ay: %1.</translation>
         <source>Select import/export file</source>
         <translation>Piliin ang import/export na file</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -4608,6 +4710,25 @@ Iiwan nitong mahina ang mga mo password at sensitibong impormasyon!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6003,20 +6124,6 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>Huwag ipakitang muli para sa bersyong ito</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>BABALA: Gumagamit ka ng hindi matatag na uri ng KeePassXC.
-Mayroong mataas na panganib ng katiwalian, panatilihin ang isang backup ng iyong mga database.
-Ang bersyon na ito ay hindi para sa paggamit ng produksyon.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>TANDAAN: Gumagamit ka ng paunang labas na bersyon ng KeePassXC.
-Asahan ang ilang mga bug at maliliit na isyu, ang bersyon na ito ay para sa mga pagsubok na layunin.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>Walang Mga Tag</translation>
     </message>
@@ -6353,7 +6460,9 @@ Asahan ang ilang mga bug at maliliit na isyu, ang bersyon na ito ay para sa mga 
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password Generator</source>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6366,6 +6475,10 @@ Asahan ang ilang mga bug at maliliit na isyu, ang bersyon na ito ay para sa mga 
     </message>
     <message>
         <source>New Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7504,6 +7617,10 @@ Gusto mo bang i-overwrite ito?</translation>
         <translation>Walang valid na UUID ang ibinigay</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Unknown na error</translation>
     </message>
@@ -8048,6 +8165,14 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>Average password length</source>
         <translation>Average na haba ng password</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8709,20 +8834,12 @@ Kernel: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Mabilis na I-unlock</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Secret Service Integration</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Wala</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9244,6 +9361,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"/>
     </message>
@@ -9264,23 +9389,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9296,8 +9405,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Mga tag</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9378,6 +9499,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Panloob na zlib na error: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9868,6 +10012,14 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Ang average na haba ng password ay hindi baba sa sampung character. Ang mas mahahabang password ay nagbibigay ng higit na seguridad.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10482,12 +10634,8 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Pangkalahatan: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Hindi mahanap ang interface para sa hardware key na may serial number na %1. Mangyaring ikonekta ito para magpatuloy.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10547,10 +10695,6 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Hindi mahanap o ma-access ang hardware key na may serial number na %1. Mangyaring ipakita ito para magpatuloy. </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Naka-lock o nag-time out ang hardware key. I-unlock o muling ipakita ito para makapagpatuloy.</translation>

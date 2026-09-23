@@ -441,7 +441,7 @@
                   <string>Click to add a key file.</string>
                  </property>
                  <property name="text">
-                  <string>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</string>
+                  <string>I have a key file</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

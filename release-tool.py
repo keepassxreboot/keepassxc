@@ -645,6 +645,8 @@ class Build(Command):
         parser.add_argument('-y', '--yes', help='Bypass confirmation prompts.', action='store_true')
         parser.add_argument('--with-tests', help='Build and run tests.', action='store_true')
         parser.add_argument('--minimal', help='Build with minimal feature set.', action='store_true')
+        parser.add_argument('--build-qt', help='Build Qt6 dependency.', action='store_true')
+        parser.add_argument('--override-version', help='Override displayed version number.')
 
         if sys.platform == 'darwin':
             parser.add_argument('--macos-target', default=12, metavar='MACOSX_DEPLOYMENT_TARGET',
@@ -702,6 +704,8 @@ class Build(Command):
 
         if not kwargs['use_system_deps'] and not kwargs.get('docker_image'):
             cmake_opts.append(f'-DCMAKE_TOOLCHAIN_FILE={self._get_vcpkg_toolchain_file()}')
+            if kwargs['build_qt']:
+                cmake_opts.append('-DWITH_BUILD_QT=ON')
 
         if snapshot:
             logger.info('Building a snapshot from HEAD.')
@@ -709,12 +713,16 @@ class Build(Command):
                 Check.check_version_in_cmake(version, src_dir)
             except Error as e:
                 logger.warning(e.msg, *e.args)
-                cmake_opts.append(f'-DOVERRIDE_VERSION={version}-snapshot')
+                cmake_opts.insert(0, f'-DOVERRIDE_VERSION={version}-snapshot')
             cmake_opts.append('-DKEEPASSXC_BUILD_TYPE=Snapshot')
             version += '-snapshot'
         else:
             Check.perform_version_checks(version, src_dir, tag_name, version_exists=True, checkout=True)
             cmake_opts.append('-DKEEPASSXC_BUILD_TYPE=Release')
+
+        if kwargs['override_version']:
+            cmake_opts.append(f'-DOVERRIDE_VERSION={kwargs["override_version"]}')
+            version = kwargs['override_version']
 
         if cmake_generator:
             cmake_opts.extend(['-G', cmake_generator])
@@ -751,13 +759,25 @@ class Build(Command):
 
     # noinspection PyMethodMayBeStatic
     def build_windows(self, version, src_dir, output_dir, *, parallelism, cmake_opts, platform_target,
-                      sign, sign_identity, sign_timestamp_url, with_tests, mingw, **_):
+                      sign, sign_identity, sign_timestamp_url, with_tests, mingw, use_system_deps,
+                      build_qt, **_):
         # Setup build signing if requested
         if sign:
             cmake_opts.append(f'-DWITH_XC_CODESIGN_IDENTITY={sign_identity}')
             cmake_opts.append(f'-DWITH_XC_CODESIGN_TIMESTAMP_URL={sign_timestamp_url}')
-        # Use vcpkg for dependency deployment
-        cmake_opts.append('-DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON')
+        # windeployqt must run before app-local copying when Qt comes from
+        # vcpkg, otherwise it can lock DLLs that it subsequently replaces.
+        app_local_install = 'OFF' if build_qt else 'ON'
+        cmake_opts.append(f'-DX_VCPKG_APPLOCAL_DEPS_INSTALL={app_local_install}')
+
+        if not mingw and not use_system_deps:
+            # Map --platform-target to the built-in vcpkg Windows triplet, without
+            # overriding an explicit VCPKG_TARGET_TRIPLET CMake option.
+            triplets = {
+                'amd64': 'x64-windows',
+                'arm64': 'arm64-windows',
+            }
+            cmake_opts.insert(0, f'-DVCPKG_TARGET_TRIPLET={triplets[platform_target]}')
 
         if mingw:
             vs_env = os.environ.copy()

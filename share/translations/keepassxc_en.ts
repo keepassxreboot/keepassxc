@@ -660,6 +660,10 @@
         <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -1843,15 +1847,15 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8168,6 +8172,14 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Word count for the diceware passphrase.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10071,6 +10083,14 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">

@@ -169,6 +169,17 @@ void TestEntrySearcher::testSearch()
     m_searchResult = m_entrySearcher.search("user:user123|test@email.com", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
 
+    // Test that + modifier enforces case sensitivity
+    m_searchResult = m_entrySearcher.search("+password:testpass", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("+password:Testpass", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search("+password:TestPass", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    // Terms are logical AND together
     m_searchResult = m_entrySearcher.search("password:pass user:user", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
 

@@ -26,8 +26,13 @@
 
 namespace EntryPlaceholders
 {
-    PlaceholderType placeholderType(const QString& placeholder)
+    PlaceholderType placeholderType(const QString& placeholder, int maxDepth)
     {
+        if (--maxDepth < 0) {
+            qWarning() << "Maximum depth of replacement has been reached. Placeholder: " << placeholder;
+            return PlaceholderType::Unknown;
+        }
+
         if (!placeholder.startsWith(QStringLiteral("{")) || !placeholder.endsWith(QStringLiteral("}"))) {
             return PlaceholderType::NotPlaceholder;
         }
@@ -81,7 +86,13 @@ namespace EntryPlaceholders
             {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond},
             {QStringLiteral("{DB_DIR}"), PlaceholderType::DbDir}};
 
-        return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
+        const auto parsedPlaceholderType = placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
+        if (parsedPlaceholderType == PlaceholderType::Unknown) {
+            // Placeholder is identified, but is inside {} brackets
+            const auto trimmedPlaceholder = placeholder.mid(1, placeholder.length() - 2);
+            return placeholderType(trimmedPlaceholder, maxDepth);
+        }
+        return parsedPlaceholderType;
     }
 
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType)
@@ -175,6 +186,16 @@ namespace EntryPlaceholders
         return placeholderRegEx.globalMatch(str);
     }
 
+    QRegularExpressionMatch matchReference(const QString& text)
+    {
+        // Updated regex to handle nested braces in SearchText (e.g., {UUID})
+        static const QRegularExpression referenceRegExp(
+            R"(\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>(?:[^{}]|\{[^}]*\})+)\})",
+            QRegularExpression::CaseInsensitiveOption);
+
+        return referenceRegExp.match(text);
+    }
+
     bool containsPlaceholder(const QString& str)
     {
         auto matches = placeholderMatches(str);
@@ -190,8 +211,14 @@ namespace EntryPlaceholders
                 captured.replace(captured.size() - 2, 2, "}");
             }
 
+            // Check for placeholder type
             const auto placeHolderType = placeholderType(captured);
             if (placeHolderType != PlaceholderType::NotPlaceholder && placeHolderType != PlaceholderType::Unknown) {
+                return true;
+            }
+
+            // Check for references. Deeply nested reference placeholders might return an Unknown type.
+            if (matchReference(captured).hasMatch()) {
                 return true;
             }
         }

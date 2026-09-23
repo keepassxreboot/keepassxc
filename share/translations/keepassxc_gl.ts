@@ -1,68 +1,69 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="be">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="gl">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>Аб KeePassXC</translation>
+        <translation>Sobre o KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Аб праграме</translation>
+        <translation>Sobre</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Паведаміць аб памылцы: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Informar de erros en: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC распаўсюджваецца пад умовамі GNU General Public License (GPL) версіі 2 або (па вашым выбары) версіі 3.</translation>
+        <translation>KeePassXC distribúese baixo licenza pública xeral de GNU, xa sexa a versión 2 ou (á súa elección) a versión 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Праектныя ўтрымальнікі:</translation>
+        <translation>Encargados do mantemento do proxecto:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Асобная падзяка камандзе KeePassXC за дапамогу debfx у стварэнні арыгінальнага KeePassX.</translation>
+        <translation>Grazas especiais do equipo de KeePassXC a debfx por crear KeePassX.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Удзельнікі</translation>
+        <translation>Colaboradores</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Праглядзець удзельнікаў на GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver as contribucións en GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Адладачная інфармацыя</translation>
+        <translation>Información de depuración</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Уключыце наступную інфармацыю, калі вы паведамляеце аб памылцы:</translation>
+        <translation>Inclúe a seguinte información cando informes dun fallo:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Скапіяваць у буфер абмену</translation>
+        <translation>Copiar ó portapapeis</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC - Запыт на доступ</translation>
+        <translation>KeePassXC - Acceder á solicitude</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Няма існуючага/недаступнага шляху да выканаўчага файла. Калі ласка, пераправерце, ці кліент легітымны.</translation>
+        <translation>O camiño non existe ou non é accesible.
+Por favor, revise se o cliente é lexítimo.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1&lt;/span&gt; запытвае доступ да наступных запісаў:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1&lt;/span&gt; está solicitando acceso ás seguintes entradas: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>PID</source>
@@ -70,298 +71,298 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>Выканальны файл</translation>
+        <translation>Executábel</translation>
     </message>
     <message>
         <source>Command Line</source>
-        <translation>Камандны радок</translation>
+        <translation>Liña de ordes</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Дэталі</translation>
+        <translation>Detalles</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>Ваша рашэнне будзе запомнена на працягу часу, пакуль працуе як кліент, так і KeePassXC.</translation>
+        <translation>A túa decisión vai ser lembrada durante a sesión mentres que o cliente solicitante e KeePassXC están a se executar.</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Помніць</translation>
+        <translation>Lembrar</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Дазволіць абраным</translation>
+        <translation>Permitir o escollido</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Адхіліць усё &amp;&amp; Будучыня</translation>
+        <translation>Denegar todos e futuros.</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>Дазволіць усё &amp;&amp; &amp;Будучыня</translation>
+        <translation>Permitir todos e futuros.</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation>Забараніць для гэтай праграмы</translation>
+        <translation>Denegar para este programa.</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Уключыць інтэграцыю праз SSH агента.</translation>
+        <translation>Activar integración de Axente SSH</translation>
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation>Выкарыстоўваць Pageant</translation>
+        <translation>Empregar Pageant.</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation>Выкарыстоўваць OpenSSH</translation>
+        <translation>Empregar OpenSSH</translation>
     </message>
     <message>
         <source>Use both agents</source>
-        <translation>Выкарыстоўваць абодва агента.</translation>
+        <translation>Empregar ambos axentes</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>Прадвызначыць SSH_AUTH_SOCK </translation>
+        <translation>Sobrescribir SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>Значэнне SSH_AUTH_SOCK</translation>
+        <translation>SSH_AUTH_SOCK value</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(пуста)</translation>
+        <translation>(baleiro)</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation>Значэнне SSH_SK_PROVIDER</translation>
+        <translation>Valor de SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation>Прадвызначыць SSH_SK_PROVIDER</translation>
+        <translation>Substitución de SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Няма даступнага парта для SSH агента. Альбо пераканайцеся, што зменная асяроддзя SSH_AUTH_SOCK існуе, альбо ўсталюйце прадвызначэнне.</translation>
+        <translation>Non hai dispoñible ningún Axente SSH. Asegúrate de que a variable do sistema SSH_AUTH_SOCK existe ou sobrescríbea.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Злучэнне праз SSH агент працуе!</translation>
+        <translation>A conexión do Axente SSH está funcionando!</translation>
     </message>
 </context>
 <context>
     <name>AppKit</name>
     <message>
         <source>Window</source>
-        <translation type="unfinished"/>
+        <translation>Xanela</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Ampliar</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
-        <translation type="unfinished"/>
+        <translation>Traer todo ao primeiro plano</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Налады праграмы</translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Агульныя</translation>
+        <translation>Xerak</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Бяспека</translation>
+        <translation>Seguridade</translation>
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation>Гэта налада не можа быць уключаная, калі ўключана згортванне пры разблакіраванні.</translation>
+        <translation>Esta preferencia non se pode habilitar cando se minimiza ou o desbloqueo está activado</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Памылка доступу да файла канфігурацыі %1</translation>
+        <translation>Erro de acceso ó ficheiro de configuración %1</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation>Толькі значок</translation>
+        <translation>Só iconas</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation>Толькі тэкст</translation>
+        <translation>Só texto</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation>Тэкст побач са значком</translation>
+        <translation>Texto ó lado da icona</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation>Тэкст пад значком</translation>
+        <translation>Texto debaixo da icona</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation>Прытрымлівацца стылю</translation>
+        <translation>Seguir estilo</translation>
     </message>
     <message>
         <source>Monochrome</source>
-        <translation>Манахромны</translation>
+        <translation>Monocromo</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation>Манахромны (светлы)</translation>
+        <translation>Monocromo (claro)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation>Манахромны (цёмны)</translation>
+        <translation>Monocromo (escuro)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation>Каляровы</translation>
+        <translation>Colorido</translation>
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Вы павінны перазапусціць праграму, каб задаць новую мову. Ці хацелі б вы перазапусціць праграму зараз?</translation>
+        <translation>Reinicia a aplicación para establecer a nova lingua. Queres reiniciala agora?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation>Выберыце папку рэзервовага сховішча</translation>
+        <translation>Escoller directorio para as copias de seguranza</translation>
     </message>
     <message>
         <source>Confirm Reset</source>
-        <translation>Пацвердзіць скід</translation>
+        <translation>Confirmar restablecemento</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all settings to default?</source>
-        <translation>Вы ўпэўненыя, што хочаце скінуць усе налады да стандартных?</translation>
+        <translation>Estás certo de que queres restablecer tódalas opcións aos valores predeterminados?</translation>
     </message>
     <message>
         <source>Import KeePassXC Settings</source>
-        <translation>Імпарт налад KeePassXC</translation>
+        <translation>Importar configuración de KeePassXC</translation>
     </message>
     <message>
         <source>Failed to import settings from %1, not a valid settings file.</source>
-        <translation>Не ўдалося імпартаваць налады з %1, гэта не сапраўдны файл налад.</translation>
+        <translation>Fallou ao importar a configuración dende %1, non é un ficheiro de configuración válido.</translation>
     </message>
     <message>
         <source>Export KeePassXC Settings</source>
-        <translation>Экспарт налад KeePassXC</translation>
+        <translation>Exportar configuración de KeePassXC</translation>
     </message>
     <message>
         <source>Small</source>
-        <translation>Маленькі</translation>
+        <translation>Pequeno</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation>Звычайны</translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation>Сярэдні</translation>
+        <translation>Mediano</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation>Вялікі</translation>
+        <translation>Grande</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Карыстальніцкі</translation>
+        <translation>Personalizado</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Ningún</translation>
     </message>
     <message>
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
-        <translation type="unfinished"/>
+        <translation>Reinicia KeePassXC para aplicar as preferencias de portais en Auto-Tecleo</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Базавыя налады</translation>
+        <translation>Configuracións básicas</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation>Аўтазапуск</translation>
+        <translation>Inicio</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Запускаць толькі адзін экзэмпляр KeePassXC</translation>
+        <translation>Iniciar só unha instancia de KeePassXC</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Аўтаматычна запускаць KeePassXC пры запуску сістэмы</translation>
+        <translation>Iniciar automaticamente KeePassXC ó inicio do sistema</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>Запускаць праграму згорнутай</translation>
+        <translation>Minimizar a xanela ó iniciar</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Згортваць пасля разблакіравання базы даных</translation>
+        <translation>Minimizar a xanela despois de desbloquear a base de datos</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Запамінаць раней выкарыстаныя базы даных.</translation>
+        <translation>Lembrar bases de datos empregadas con anterioridade</translation>
     </message>
     <message>
         <source> recent files</source>
-        <translation> нядаўнія файлы</translation>
+        <translation>arquivos recentes</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Загружаць раней адкрытыя базы даных пры запуску</translation>
+        <translation>Cargar bases de datos empregadas anteriormente ao inicio</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Запамінаць файлы-ключы базы даных і донглы бяспекі</translation>
+        <translation>Lembrar os últimos ficheiros chave e pequenos dispositivos hardware de autenticación </translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>Правяраць наяўнасць абнаўленняў пры запуску праграмы раз на тыдзень</translation>
+        <translation>Comprobar actualización ó inicio unha vez por semana</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>Уключаць бэта-версіі пры праверцы абнаўленняў</translation>
+        <translation>Incluír versións beta cando se comproben as actualizacións</translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation>Кіраванне файламі</translation>
+        <translation>Xestión de ficheiros</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Аўтаматычна захоўваць пасля кожнай змены</translation>
+        <translation>Gardar automaticamente despois de cada cambio</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Аўтаматычна захоўваць пры блакаванні базы даных</translation>
+        <translation>Gardar automaticamente cando se bloquea a base de datos</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Аўтаматычна захоўваць змены, не звязаныя з данымі, пры блакаванні базы даных</translation>
+        <translation>Gardar automaticamente os cambios que non sexan datos cando se bloquea a base de datos</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Аўтаматычна перазагружаць базу даных пры знешнім змяненні</translation>
+        <translation>Recargar automaticamente a base de datos cando sexa modificada externamente</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Рабіць рэзервовую копію файла базы даных перад захаваннем</translation>
+        <translation>Facer unha copia de seguridade antes de gardar</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -369,294 +370,294 @@
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Выкарыстоўваць альтэрнатыўны спосаб захавання (можа вырашыць праблемы з Dropbox, Google Drive, GVFS і г. д.)</translation>
+        <translation>Empregar método alternativo para gardar (podería resolver problemas con Dropbox, Google Drive, GVFS, etc.)</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
-        <translation>Часовы файл перамешчаны на месца</translation>
+        <translation>Arquivo temporal reubicado</translation>
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
-        <translation>Запісваць непасрэдна ў файл базы даных (небяспечна)</translation>
+        <translation>Escribir directamente no arquivo da base de datos (perigoso)</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Кіраванне запісамі</translation>
+        <translation>Xestión de elementos</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Выкарыстоўваць іконку групы пры стварэнні запісу</translation>
+        <translation>Emprear a icona do grupo na creación dun elemento</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>Мінімізаваць пры адкрыцці URL</translation>
+        <translation>Minimizar ó abrir un URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Хаваць акно пры капіраванні ў буфер абмену</translation>
+        <translation>Agochar a xanela ó copiar ó portapapeis</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation>Мінімізаваць</translation>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>Скінуць у фон</translation>
+        <translation>Enviar ó segundo plano</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Час чакання для загрузкі фавікона:</translation>
+        <translation>Tempo límite para descargar as iconas das páxinas:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Час чакання загрузкі іконкі сайта ў секундах</translation>
+        <translation>Tempo límite (en segundos) para descargar a icona da páxina:</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> сэк</translation>
+        <translation>seg</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Карыстальніцкі інтэрфейс</translation>
+        <translation>Interface de usuario</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Стыль кнопак панэлі інструментаў</translation>
+        <translation>Estilo de botón da barra de ferramentas</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>Панэль інструментаў, якую можна перамяшчаць</translation>
+        <translation>Barra de ferramentas móbil</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation>Выбар мовы</translation>
+        <translation>Escolla de idioma</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation>Мова:</translation>
+        <translation>Idioma:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(перазапусціце праграму, каб актываваць)</translation>
+        <translation>(reiniciar a aplicación para activar)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation>Стыль кнопак панэлі інструментаў:</translation>
+        <translation>Estilo de botón da barra de ferramentas:</translation>
     </message>
     <message>
         <source>Show passwords in color</source>
-        <translation>Паказваць паролі колерам</translation>
+        <translation>Amosar contrasinais en cor</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Выкарыстоўваць монашырынны шрыфт для нататак</translation>
+        <translation>Empregar tripografías mono espazadas para as notas</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>Мінімізаваць замест закрыцця праграмы</translation>
+        <translation>Minimizar no canto de pechar a aplicación</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Паказаць іконку ў сістэмным трэі</translation>
+        <translation>Amosar unha icona na bandexa do sistema</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>Тып іконкі ў трэі</translation>
+        <translation>Tipo de icona na zona do sistema</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Тып іконкі ў трэі:</translation>
+        <translation>Tipo de icona na zona do sistema:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Хаваць акно ў сістэмны трэй пры мінімізацыі</translation>
+        <translation>Agochar a xanela na bandexa de entrada ao minimizar</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Скінуць налады да стандартных…</translation>
+        <translation>Restablecer a configuración por defecto...</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Аўтаматычны ўвод</translation>
+        <translation>Escrita automática</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Выкарыстоўваць назву запісу для супастаўлення з вокнамі для глабальнага аўтаматычнага ўводу</translation>
+        <translation>Empregar o título da entrada para emparellar na escrita automática</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Выкарыстоўваць URL запісу для супастаўлення з вокнамі для глабальнага аўтаматычнага ўводу</translation>
+        <translation>Empregar o URL para emparellar na escrita automática</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Заўсёды запытваць перад выкананнем аўтаматычнага ўводу</translation>
+        <translation>Preguntar sempre antes de escritura automática</translation>
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Хаваць запісы з мінулым тэрмінам дзеяння з аўтаматычнага ўводу</translation>
+        <translation>Agochar entradas caducas procedentes de escritura automática</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Зноў блакаваць раней заблакаваную базу даных пасля выканання аўтаматычнага ўводу</translation>
+        <translation>Bloquear de novo unha base de datos xa bloqueada despois de facer un escritura automática</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>Затрымка перад пачаткам аўтаматычнага ўводу:</translation>
+        <translation>Atraso na escritura automática:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Глабальная камбінацыя клавіш для аўтаматычнага ўводу:</translation>
+        <translation>Atallo de teclado para a escritura automática:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Затрымка перад пачаткам аўтаматычнага ўводу ў мілісекундах</translation>
+        <translation>Atraso na escritura automática en milisegundos</translation>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation> мс</translation>
+        <translation>ms</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Затрымка аўтаматычнага ўводу:</translation>
+        <translation>Atraso na escritura automática:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Глабальная камбінацыя клавіш для аўтаматычнага ўводу</translation>
+        <translation>Atallo de teclado para a escritura automática</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Затрымка пры наборы сімвалаў аўтаматычнага ўводу ў мілісекундах</translation>
+        <translation>Atraso na escritura automática de caracteres en milisegundos</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation>Запамінаць апошні ўведзены запіс на працягу:</translation>
+        <translation>Lembrar a última entrada escrita por:</translation>
     </message>
     <message>
         <source>On database unlock, show entries that will expire within</source>
-        <translation>Пры разблакіроўцы базы даных паказваць запісы, тэрмін дзеяння якіх скончыцца на працягу</translation>
+        <translation>Ao desbloquear a base de datos, amosar entradas que caducarán dentro de</translation>
     </message>
     <message>
         <source>On database unlock, show entries that will expire within </source>
-        <translation>Пры разблакіроўцы базы даных паказваць запісы, тэрмін дзеяння якіх скончыцца на працягу </translation>
+        <translation>Ao desbloquear a base de datos, amosar entradas que caducarán dentro de</translation>
     </message>
     <message>
         <source> days</source>
         <comment>number of days warning for password expiration</comment>
-        <translation> дзён</translation>
+        <translation>días</translation>
     </message>
     <message>
         <source>Destination format:</source>
-        <translation>Фармат прызначэння:</translation>
+        <translation>Formato de destino:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; is replaced with the filename of the saved database without extension&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; is replaced with the specified time format (default: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;See the User Guide for more details&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; замяняецца назвай файла захаванай базы даных без пашырэння&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; замяняецца зададзеным фарматам часу (стандартна: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;Больш падрабязнасцей глядзіце ў Кіраўніцтве карыстальніка&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; substitúese polo nome do ficheiro da base de datos gardada sen extensión &lt;p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; substitúese polo formato de hora especificado (predeterminado: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;Consulta a guía de usuario para máis detalles&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Choose folder...</source>
-        <translation>Выбраць тэчку…</translation>
+        <translation>Escoller cartafol...</translation>
     </message>
     <message>
         <source>Show confirmation before moving entries to recycle bin</source>
-        <translation>Паказваць пацвярджэнне перад перамяшчэннем запісаў у кошык</translation>
+        <translation>Amosar confirmación antes de mover entradas á papeleira</translation>
     </message>
     <message>
         <source>Copy data on double clicking field in entry view</source>
-        <translation>Капіраваць даныя пры падвойным націску на поле ў праглядзе запісу</translation>
+        <translation>Copiar datos ao facer dobre clic no campo na vista de entrada</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation>Паказаць панэль інструментаў</translation>
+        <translation>Amosar barra de ferramentas</translation>
     </message>
     <message>
         <source>Show the menu bar by pressing the Alt key</source>
-        <translation>Паказваць радок меню пры націску клавішы Alt</translation>
+        <translation>Amosar a barra de menú premendo a tecla Alt</translation>
     </message>
     <message>
         <source>Show menubar</source>
-        <translation>Паказаць радок меню</translation>
+        <translation>Amosar barra de menú</translation>
     </message>
     <message>
         <source>Import settings…</source>
-        <translation>Імпартаваць налады…</translation>
+        <translation>Importar configuración…</translation>
     </message>
     <message>
         <source>Export settings…</source>
-        <translation>Экспартаваць налады…</translation>
+        <translation>Exportar configuración…</translation>
     </message>
     <message>
         <source>Font size:</source>
-        <translation>Памер шрыфта:</translation>
+        <translation>Tamaño da fonte:</translation>
     </message>
     <message>
         <source>Font size selection</source>
-        <translation>Выбар памеру шрыфта</translation>
+        <translation>Escolla do tamaño da fonte</translation>
     </message>
     <message>
         <source>Skip confirmation for main window Auto-Type actions</source>
-        <translation type="unfinished"/>
+        <translation>Omitir confirmación para accións de escritura automática na xanela principal</translation>
     </message>
     <message>
         <source>Double-click action for URL:</source>
-        <translation type="unfinished"/>
+        <translation>Acción de dobre clic para URL:</translation>
     </message>
     <message>
         <source>Double-click action for URL field</source>
-        <translation type="unfinished"/>
+        <translation>Acción de dobre clic no campo URL</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>Editar entrada</translation>
     </message>
     <message>
         <source>Open entry URL in browser</source>
-        <translation type="unfinished"/>
+        <translation>Abrir URL da entrada no navegador</translation>
     </message>
     <message>
         <source>Copy entry URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiar URL da entrada ao portapapeis</translation>
     </message>
     <message>
         <source>Auto-generate password for new entries</source>
-        <translation type="unfinished"/>
+        <translation>Xerar automaticamente contrasinal para novas entradas</translation>
     </message>
     <message>
         <source>Keep remote desktop connection open after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Conservar conexión de escritorio remota aberta tras realizar Auto-Tecelo</translation>
     </message>
     <message>
         <source>Remote desktop mode:</source>
-        <translation type="unfinished"/>
+        <translation>Modo de escritorio remoto</translation>
     </message>
     <message>
         <source>Never remember session</source>
-        <translation type="unfinished"/>
+        <translation>Nunca lembrar sesión</translation>
     </message>
     <message>
         <source>Remember session until exit</source>
-        <translation type="unfinished"/>
+        <translation>Lembrar sesión ata pechar</translation>
     </message>
     <message>
         <source>Remember session until revoked by desktop</source>
-        <translation type="unfinished"/>
+        <translation>Lembrar sesión ata revocala por escritorio</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Ningún</translation>
     </message>
     <message>
         <source>Configure...</source>
-        <translation type="unfinished"/>
+        <translation>Configurar</translation>
     </message>
     <message>
         <source>Use remote desktop for clipboard access</source>
-        <translation type="unfinished"/>
+        <translation>Utilizar escritorio remoto para acceder ao portapapeis</translation>
     </message>
     <message>
         <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
-        <translation type="unfinished"/>
+        <translation>Experimental: Preferir portais de escritorio (Implementación Wayland)</translation>
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
@@ -667,286 +668,286 @@
     <name>ApplicationSettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Тайм-аўты</translation>
+        <translation>Prazos</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Тайм-аўт блакавання базы даных у секундах</translation>
+        <translation>Tempo automático para o bloqueo da base de datos en segundos</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> сэк</translation>
+        <translation>seg</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Ачышчаць буфер абмену праз</translation>
+        <translation>Limpar o portapapeis despois</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>Ачышчаць пошукавы запыт праз</translation>
+        <translation>Limpar a busca despois de</translation>
     </message>
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> хвіл</translation>
+        <translation>min</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>Секунды для ачысткі буфера абмену</translation>
+        <translation>Segundos para limpar o porta-papeis</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Блакаваць базы даных пасля бяздзейнасці на працягу</translation>
+        <translation>Bloquear a base de datos despois dun período de inactividade de </translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation>Зручнасць</translation>
+        <translation>Conveniencia</translation>
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation>Уключыць хуткую разблакіроўку базы даных (Touch ID / Windows Hello)</translation>
+        <translation>Habilitar desbloqueo rápido da base de datos (Pegada dactilar/Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Блакаваць базы даных, калі сесія заблакавана ці вечка закрыта</translation>
+        <translation>Bloquear bases de datos cando a sesión está bloqueada ou se pecha a tapa</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Блакаваць базы даных пасля мінімізацыі акна</translation>
+        <translation>Bloquear as bases de datos despois de minimizar a xanela</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Хаваць паролі пры іх рэдагаванні</translation>
+        <translation>Agochar contrasinais mentres se editan</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation>Выкарыстоўваць запаўняльнік для пустых палёў пароляў</translation>
+        <translation>Empregar pista de texto para os campos de contrasinal baleiros</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation>Хаваць паролі ў панэлі папярэдняга прагляду запісу</translation>
+        <translation>Agochar contrasinais no panel de previsualización de entrada</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Канфідэнцыяльнасць</translation>
+        <translation>Privacidade</translation>
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Выкарыстоўваць сэрвіс DuckDuckGo для загрузкі іконак сайтаў</translation>
+        <translation>Empregar DuckDuckGo para descargar as iconas das páxinas web</translation>
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation>Хаваць TOTP у панэлі папярэдняга прагляду запісу</translation>
+        <translation>Agochar TOTP no panel de vista previa da entrada</translation>
     </message>
     <message>
         <source>Lock databases when switching user</source>
-        <translation>Блакаваць базы даных пры змене карыстальніка</translation>
+        <translation>Bloquear bases de datos ao trocar de usuario</translation>
     </message>
     <message>
         <source>Lock Options</source>
-        <translation>Параметры блакавання</translation>
+        <translation>Opcións de bloqueo</translation>
     </message>
     <message>
         <source>Hide notes in the entry preview panel</source>
-        <translation>Хаваць нататкі ў панэлі папярэдняга прагляду запісу</translation>
+        <translation>Agochar notas no panel de vista previa da entrada</translation>
     </message>
 </context>
 <context>
     <name>AttachmentWidget</name>
     <message>
         <source>Attachment Viewer</source>
-        <translation>Праграма для прагляду ўкладанняў</translation>
+        <translation>Visor de anexos</translation>
     </message>
     <message>
         <source>Unknown attachment type</source>
-        <translation>Невядомы тып укладання</translation>
+        <translation>Tipo de anexo descoñecido</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>Запытаная паслядоўнасць аўтаматычнага ўводу не можа быць выкарыстана з-за памылкі:</translation>
+        <translation>A secuencia de escritura automática solicitada non se pode usar debido a un erro:</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>Памылка аўтаматычнага ўводу</translation>
+        <translation>Erro de escritura automática</translation>
     </message>
     <message>
         <source>Permission Required</source>
-        <translation>Патрабуецца дазвол</translation>
+        <translation>Permiso requirido</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC патрабуе дазволу на Даступнасць, каб выканаць аўтаматычны ўвод на ўзроўні запісу. Калі вы ўжо далі дазвол, магчыма, вам давядзецца перазапусціць KeePassXC.</translation>
+        <translation>KeePassXC require o permiso de accesibilidade para realizar escritura automática a nivel de entrada. Se xa concediches o permiso, pode que teñas que reiniciar KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC патрабуе дазволаў на Даступнасць і Запіс экрана, каб выканаць глабальны аўтаматычны ўвод. Запіс экрана неабходны для выкарыстання загалоўка акна для пошуку запісаў. Калі вы ўжо далі дазволы, магчыма, вам давядзецца перазапусціць KeePassXC.</translation>
+        <translation>KeePassXC require os permisos de accesibilidade e gravación de pantalla para realizar escritura automática global. A gravación de pantalla é precisa para usar o título da xanela para atopar entradas. Se xa concediches os permisos, pode que teñas que reiniciar KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation>Прадастаўлены несапраўдны запіс</translation>
+        <translation>Entrada proporcionada non válida</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation>Выяўлены дысбаланс дужак, знойдзена лішняя { або }</translation>
+        <translation>Detectouse un desequilibrio de chaves, atopouse un { ou } extra</translation>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation>Выяўлена занадта шмат паўтораў, максімум %1: %2</translation>
+        <translation>Detectáronse demasiadas repeticións, o máximo é %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation>Выяўлена вельмі павольнае націсканне клавішы, максімум %1: %2</translation>
+        <translation>Detectouse unha pulsación de tecla moi lenta, o máximo é %1: %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
-        <translation>Выяўлена вельмі доўгая затрымка, максімум %1: %2</translation>
+        <translation>Detectouse un atraso moi longo, o máximo é %1: %2</translation>
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation>Запіс не мае атрыбута для PICKCHARS: %1</translation>
+        <translation>A entrada non ten atributo para PICKCHARS: %1</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation>Несапраўдны запаўняльнік: %1</translation>
+        <translation>Marcador non válido: %1</translation>
     </message>
     <message>
         <source>Entry has invalid TOTP settings</source>
-        <translation>Запіс мае несапраўдныя налады TOTP</translation>
+        <translation>A entrada ten configuración TOTP non válida</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Акно</translation>
+        <translation>Xanela</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Паслядоўнасць</translation>
+        <translation>Secuencia</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(пуста)</translation>
+        <translation>(baleiro)</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Паслядоўнасць па змаўчанні</translation>
+        <translation>Secuencia predeterminada</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Імя карыстальніка</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Паслядоўнасць</translation>
+        <translation>Secuencia</translation>
     </message>
 </context>
 <context>
     <name>AutoTypePlatformWayland</name>
     <message>
         <source>No symbol found for key: &apos;%1&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Non se atopou ningún símbolo para a chave: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No symbol found for character: &apos;%1&apos;</source>
-        <translation type="unfinished"/>
+        <translation>Non se atopou ningún símbolo para o carácter: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
-        <translation>Паслядоўнасць спынена: уключаны Caps Lock</translation>
+        <translation>Secuencia abortada: Bloq Maiús está activado</translation>
     </message>
     <message>
         <source>Sequence aborted: Modifier keys held by user</source>
-        <translation>Паслядоўнасць спынена: карыстальнік утрымлівае клавішы-мадыфікатары</translation>
+        <translation>Secuencia abortada: teclas modificadoras premidas polo usuario</translation>
     </message>
     <message>
         <source>Unable to get valid keycode for key: </source>
-        <translation>Немагчыма атрымаць сапраўдны keycode для клавішы:</translation>
+        <translation>Non se puido obter un código de tecla válido para:</translation>
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation>Спроба адправіць несапраўдны сімвал клавіятуры.</translation>
+        <translation>Tentando enviar un símbolo de teclado non válido.</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Аўтаматычны ўвод - KeePassXC</translation>
+        <translation>Escritura automática - KeePassXC</translation>
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation>Двойчы націсніце на радок для выканання аўтаматычнага ўводу ці знайдзіце запіс, выкарыстоўваючы пошук:</translation>
+        <translation>Fai dobre clic nunha fila para executar escritura automática ou atopar unha entrada usando a busca:</translation>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>Шукаць ва ўсіх адкрытых базах даных</translation>
+        <translation>Buscar en tódalas bases de datos abertas</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation>Пошук…</translation>
+        <translation>Buscar…</translation>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation>Набраць паслядоўнасць</translation>
+        <translation>Escribir secuencia</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation>Увесці {USERNAME}</translation>
+        <translation>Escribir {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation>Увесці {PASSWORD}</translation>
+        <translation>Escribir {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation>Увесці {TOTP}</translation>
+        <translation>Escribir {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation>Капіяваць імя карыстальніка</translation>
+        <translation>Copiar nome de usuario</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation>Капіяваць пароль</translation>
+        <translation>Copiar contrasinal</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation>Капіяваць TOTP</translation>
+        <translation>Copiar TOTP</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation>Выкарыстоўваць віртуальную клавіятуру</translation>
+        <translation>Usar teclado virtual</translation>
     </message>
     <message>
         <source>Type {URL}</source>
-        <translation>Увесці {URL}</translation>
+        <translation>Escribir {URL}</translation>
     </message>
     <message>
         <source>Copy URL</source>
-        <translation>Капіяваць URL</translation>
+        <translation>Copiar URL</translation>
     </message>
     <message>
         <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
@@ -961,154 +962,154 @@ Ctrl+Shift+2 - Copy password&lt;br/&gt;
 Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
 Ctrl+Shift+4 - Copy URL&lt;br/&gt;
 &lt;/p&gt;</source>
-        <translation>&lt;p&gt;Даступныя наступныя спалучэнні клавіш:&lt;br/&gt;
-Ctrl+F - Перавесці фокус на пошук&lt;br/&gt;
-Ctrl+1 - Увесці імя карыстальніка&lt;br/&gt;
-Ctrl+2 - Увесці пароль&lt;br/&gt;
-Ctrl+3 - Увесці TOTP&lt;br/&gt;
-Ctrl+4 - Увесці URL&lt;br/&gt;
-Ctrl+5 - Выкарыстаць віртуальную клавіятуру (толькі для Windows)&lt;br/&gt;
-Ctrl+Shift+1 - Капіяваць імя карыстальніка&lt;br/&gt;
-Ctrl+Shift+2 - Капіяваць пароль&lt;br/&gt;
-Ctrl+Shift+3 - Капіяваць TOTP&lt;br/&gt;
-Ctrl+Shift+4 - Капіяваць URL&lt;br/&gt;
-&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Os seguintes atallos están dispoñibles:&lt;br/&gt;
+Ctrl+F - Enfocar busca&lt;br/&gt;
+Ctrl+1 - Escribir nome de usuario&lt;br/&gt;
+Ctrl+2 - Escribir contrasinal&lt;br/&gt;
+Ctrl+3 - Escribir TOTP&lt;br/&gt;
+Ctrl+4 - Escribir URL&lt;br/&gt;
+Ctrl+5 - Usar teclado virtual (só Windows)&lt;br/&gt;
+Ctrl+Maiús+1 - Copiar nome de usuario&lt;br/&gt;
+Ctrl+Maiús+2 - Copiar contrasinal&lt;br/&gt;
+Ctrl+Maiús+3 - Copiar TOTP&lt;br/&gt;
+Ctrl+Maiús+4 - Copiar URL&lt;br/&gt;
+&lt;/p&gt;
+</translation>
     </message>
     <message>
         <source>You can use advanced search queries to find any entry in your open databases.</source>
-        <translation>Вы можаце выкарыстоўваць пашыраныя пошукавыя запыты, каб знайсці любы запіс у адкрытых базах даных.</translation>
+        <translation>Podes usar consultas de busca avanzadas para atopar calquera entrada nas túas bases de datos abertas.</translation>
     </message>
 </context>
 <context>
     <name>BinaryStream</name>
     <message>
         <source>Failed to read string data: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallou ao ler os datos da cadea: %1</translation>
     </message>
     <message>
         <source>String length exceeds 10 MiB limit (requested %1)</source>
-        <translation type="unfinished"/>
+        <translation>A lonxitude da cadea supera o límite de 10 MiB (solicitado %1)</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC - Запыт на доступ з браўзера</translation>
+        <translation>KeePassXC - Solicitude de acceso do navegador</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation>%1 запытвае доступ да наступных запісаў:</translation>
+        <translation>%1 está a solicitar acceso ás seguintes entradas:</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
-        <translation>Запамінаць доступ да адзначаных запісаў</translation>
+        <translation>Lembrar o acceso ás entradas seleccionadas</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Памятаць</translation>
+        <translation>Lembrar</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>Дазволіць доступ да запісаў</translation>
+        <translation>Permitir acceso ás entradas</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Дазволіць выбраным</translation>
+        <translation>Permitir o escollido</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Адхіліць усе</translation>
+        <translation>Denegar todo</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Адключыць для гэтага сайта</translation>
+        <translation>Desactivar para este sitio</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Адмяніць</translation>
+        <translation>Desfacer</translation>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>Ok</source>
-        <translation>ОК</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>У вас адкрыта некалькі баз даных.
-Калі ласка, выберыце правільную базу даных для захавання ўліковых даных.</translation>
+        <translation>Tes varias bases de datos abertas. Escolle a base de datos correcta para gardar as credenciais.</translation>
     </message>
     <message>
         <source>KeePassXC - Select Database</source>
-        <translation>KeePassXC - Выбар базы даных</translation>
+        <translation>KeePassXC - Escoller base de datos</translation>
     </message>
 </context>
 <context>
     <name>BrowserPasskeysConfirmationDialog</name>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Абнавіць</translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <source>Authenticate</source>
-        <translation>Аўтэнтыфікаваць</translation>
+        <translation>Autenticar</translation>
     </message>
     <message>
         <source>Register new</source>
-        <translation>Зарэгістраваць новы</translation>
+        <translation>Rexistrar novo</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Зарэгістраваць</translation>
+        <translation>Rexistrar</translation>
     </message>
     <message numerus="yes">
         <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
-        <translation><numerusform>Тайм-аўт праз &lt;b&gt;%n&lt;/b&gt; секунду...</numerusform><numerusform>Тайм-аўт праз &lt;b&gt;%n&lt;/b&gt; секунды...</numerusform><numerusform>Тайм-аўт праз &lt;b&gt;%n&lt;/b&gt; секунд...</numerusform><numerusform>Тайм-аўт праз &lt;b&gt;%n&lt;/b&gt; секунды...</numerusform></translation>
+        <translation><numerusform>Tempo límite en %n segundo...</numerusform><numerusform>Tempo límite en %n segundos...</numerusform></translation>
     </message>
     <message>
         <source>Relying Party: %1</source>
-        <translation>Давяраючы бок: %1</translation>
+        <translation>Parte de confianza: %1</translation>
     </message>
     <message>
         <source>Username: %1</source>
-        <translation>Імя карыстальніка: %1</translation>
+        <translation>Nome de usuario: %1</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
-        <translation>KeePassXC - Уліковыя даныя ключоў доступу</translation>
+        <translation>KeePassXC - Credenciais de chave de acceso</translation>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation>Дадаць да існуючага запісу</translation>
+        <translation>Engadir á entrada existente</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation>Знойдзены існуючы ключ доступу.
-Вы хочаце зарэгістраваць новы ключ доступу для:</translation>
+        <translation>Atopouse unha chave de acceso existente.
+Queres rexistrar unha nova chave de acceso para:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation>Выберыце існуючы ключ доступу і націсніце Абнавіць, каб замяніць яго.</translation>
+        <translation>Escolle a chave de acceso existente e preme Actualizar para substituíla.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation>Аўтэнтыфікаваць уліковыя даныя ключа доступу для:</translation>
+        <translation>Autenticar credenciais de chave de acceso para:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation>Вы хочаце зарэгістраваць ключ доступу для:</translation>
+        <translation>Queres rexistrar unha chave de acceso para:</translation>
     </message>
 </context>
 <context>
@@ -1117,9 +1118,8 @@ Do you want to register a new passkey for:</source>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation>Атрыманы запыт на стварэнне новай групы &quot;%1&quot;.
-Вы хочаце стварыць гэтую групу?
-</translation>
+        <translation>Recibiuse unha solicitude para crear un novo grupo &quot;%1&quot;.
+Queres crear este grupo?</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -1127,110 +1127,105 @@ Do you want to create this group?
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>Вы атрымалі запыт на супастаўленне для наступнай базы даных:
-%1
+        <translation>Recibiches unha solicitude de asociación para a seguinte base de datos: %1
 
-Дайце злучэнню ўнікальнае імя або ID, напрыклад:
-chrome-ноўтбук.</translation>
+Dálle á conexión un nome ou ID único, por exemplo: Portátil firefox.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>Захаваць і дазволіць доступ</translation>
+        <translation>Gardar e permitir acceso</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Агульны ключ шыфравання з імем &quot;%1&quot; ужо існуе.
-Вы хочаце яго перазапісаць?</translation>
+        <translation>Xa existe unha chave de cifrado compartida co nome &quot;%1&quot;. Queres sobrescribila?</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Вы хочаце абнавіць інфармацыю ў %1 - %2?</translation>
+        <translation>Queres actualizar a información en %1 - %2?</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation>Атрыманы запыт на выдаленне запісу &quot;%1&quot;.
-Вы хочаце выдаліць гэты запіс?
-</translation>
+        <translation>Recibiuse unha solicitude para eliminar a entrada &quot;%1&quot;.
+Queres eliminar a entrada?</translation>
     </message>
     <message>
         <source>%1 (Passkey)</source>
-        <translation>%1 (Ключ доступу)</translation>
+        <translation>%1 (chave de acceso)</translation>
     </message>
     <message>
         <source>KeePassXC - Create a new group</source>
-        <translation>KeePassXC - Стварыць новую групу</translation>
+        <translation>KeePassXC - Crear un novo grupo</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Адключыць</translation>
+        <translation>Desactivar</translation>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation>KeePassXC - Перазапісаць існуючы ключ?</translation>
+        <translation>KeePassXC - Sobrescribir a chave existente?</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
-        <translation>KeePassXC - Абнавіць запіс</translation>
+        <translation>KeePassXC - Actualizar entrada</translation>
     </message>
     <message>
         <source>KeePassXC - Delete entry</source>
-        <translation>KeePassXC - Выдаліць запіс</translation>
+        <translation>KeePassXC - Eliminar entrada</translation>
     </message>
     <message>
         <source>KeePassXC - New key association request</source>
-        <translation>KeePassXC - Новы запыт на супастаўленне ключа</translation>
+        <translation>KeePassXC - Nova solicitude de asociación de chave</translation>
     </message>
     <message>
         <source>Passkey</source>
-        <translation>Ключ доступу</translation>
+        <translation>Chave de acceso</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
-        <translation>KeePassXC - Уліковыя даныя ключоў доступу</translation>
+        <translation>KeePassXC - Credenciais de chave de acceso</translation>
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation>Зарэгістраваць новы ключ доступу для гэтага запісу:</translation>
+        <translation>Rexistrar unha nova chave de acceso nesta entrada:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation>KeePassXC - Абнавіць ключ доступу</translation>
+        <translation>KeePassXC - Actualizar chave de acceso</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation>Запіс ужо мае ключ доступу.
-Вы хочаце перазапісаць ключ доступу ў %1 - %2?</translation>
+        <translation>A entrada xa ten unha chave de acceso. Queres sobrescribir a chave de acceso en %1 - %2?</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Зарэгістраваць</translation>
+        <translation>Rexistrar</translation>
     </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
     <message>
         <source>Dialog</source>
-        <translation>Дыялог</translation>
+        <translation>Diálogo</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Гэта неабходна для доступу да вашых баз даных праз KeePassXC-Browser</translation>
+        <translation>Isto é preciso para acceder ás túas bases de datos con KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>Уключыць інтэграцыю з браўзерам</translation>
+        <translation>Activar integración co navegador</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Агульныя</translation>
+        <translation>Xerak</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Уключыць інтэграцыю для наступных браўзераў:</translation>
+        <translation>Activar integración para estes navegadores:</translation>
     </message>
     <message>
         <source>Vivaldi</source>
@@ -1263,243 +1258,243 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Паказваць апавяшчэнне, калі запытваюцца ўліковыя даныя</translation>
+        <translation>Amosar unha notificación cando se soliciten credenciais</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>Запытваць разблакіроўку базы даных, калі яна заблакавана</translation>
+        <translation>Solicitar desbloquear a base de datos se está bloqueada</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
-        <translation>Вяртаюцца толькі запісы з той жа схемай (http://, https://, ...).</translation>
+        <translation>Só se devolven entradas co mesmo esquema (http://, https://, …).</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>Супастаўляць схему URL (напрыклад, https://example.com)</translation>
+        <translation>Coincidir co esquema da URL (p.ex., https://exemplo.gal)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Вяртае толькі найлепшыя супастаўленні для пэўнага URL замест усіх запісаў для ўсяго дамена.</translation>
+        <translation>Só devolve as mellores coincidencias para unha URL específica en lugar de tódalas entradas de todo o dominio.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Вяртаць толькі найбольш адпаведныя ўліковыя даныя</translation>
+        <translation>Devolver só as credenciais que mellor coincidan</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Вяртае запісы з мінулым тэрмінам дзеяння. У назву дадаецца радок [expired].</translation>
+        <translation>Devolve credenciais caducadas. Engádese a cadea [caducado] ao título.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Дазволіць вяртанне ўліковых даных з мінулым тэрмінам дзеяння</translation>
+        <translation>Permitir devolver credenciais caducadas</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Усе базы даных, падлучаныя да пашырэння, будуць вяртаць адпаведныя ўліковыя даныя.</translation>
+        <translation>Tódalas bases de datos conectadas á extensión devolverán as credenciais que coincidan.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Шукаць адпаведныя ўліковыя даныя ва ўсіх адкрытых базах даных</translation>
+        <translation>Buscar credenciais coincidentes en tódalas bases de datos abertas</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Пашыраныя</translation>
+        <translation>Avanzado</translation>
     </message>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Ніколі не запытваць дазвол перад доступам да ўліковых даных</translation>
+        <translation>Non preguntar xamais antes de acceder ás credenciais</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Ніколі не запытваць дазвол перад абнаўленнем уліковых даных</translation>
+        <translation>Non preguntar xamais antes de actualizar as credenciais</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Не запытваць дазвол для HTTP Basic Auth</translation>
+        <translation>Non solicitar permiso para autenticación HTTP básica</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>Аўтаматычнае стварэнне або абнаўленне радковых палёў не падтрымліваецца.</translation>
+        <translation>Non se admite a creación ou actualización automática de campos de cadea.</translation>
     </message>
     <message>
         <source>Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Вяртаць пашыраныя радковыя палі, якія пачынаюцца з &quot;KPH: &quot;</translation>
+        <translation>Devolver campos de cadea avanzados que comecen por &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Не паказваць усплывальнае акно з прапановай міграцыі састарэлых налад KeePassHTTP.</translation>
+        <translation>Non mostrar a xanela emerxente que suxire a migración da configuración antiga de KeePassHTTP.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation>Не запытваць міграцыю налад KeePassHTTP.</translation>
+        <translation>Non solicitar a migración da configuración de KeePassHTTP.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Аўтаматычна абнаўляе шлях да бінарных файлаў KeePassXC або keepassxc-proxy да скрыптоў натыўных паведамленняў пры запуску.</translation>
+        <translation>Actualiza automaticamente a ruta do binario de KeePassXC ou keepassxc-proxy aos scripts de mensaxería nativa ao iniciar.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
-        <translation>Абнаўляць файлы маніфеста натыўных паведамленняў пры запуску</translation>
+        <translation>Actualizar os ficheiros de manifesto de mensaxería nativa ao iniciar</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Выкарыстоўваць карыстальніцкае размяшчэнне проксі, калі вы ўсталявалі яго ўручную.</translation>
+        <translation>Usar unha localización de proxy personalizada se instalaches un proxy manualmente.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Выкарыстоўваць карыстальніцкае размяшчэнне проксі:</translation>
+        <translation>Usar unha localización de proxy personalizada:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation>Поле для карыстальніцкага размяшчэння проксі</translation>
+        <translation>Campo de localización de proxy personalizado</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>Браўзер для карыстальніцкага файла проксі</translation>
+        <translation>Explorador para o ficheiro de proxy personalizado</translation>
     </message>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Агляд…</translation>
+        <translation>Explorador...</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation>Выкарыстоўваць карыстальніцкае размяшчэнне канфігурацыі браўзера:</translation>
+        <translation>Usar unha localización de configuración personalizada do navegador:</translation>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation>Тып браўзера:</translation>
+        <translation>Tipo de navegador:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Стыль кнопак панэлі інструментаў</translation>
+        <translation>Estilo de botón da barra de ferramentas</translation>
     </message>
     <message>
         <source>Config Location:</source>
-        <translation>Размяшчэнне канфігурацыі:</translation>
+        <translation>Localización da configuración:</translation>
     </message>
     <message>
         <source>Custom browser location field</source>
-        <translation>Поле для карыстальніцкага размяшчэння браўзера</translation>
+        <translation>Campo de localización do navegador personalizado</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation>Агляд для карыстальніцкага шляху браўзера</translation>
+        <translation>Buscar a ruta do navegador personalizado</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
-        <translation>Карыстальніцкі ID пашырэння:</translation>
+        <translation>D da extensión personalizada:</translation>
     </message>
     <message>
         <source>Custom extension ID</source>
-        <translation>Карыстальніцкі ID пашырэння</translation>
+        <translation>ID da extensión personalizada</translation>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation>Выканальныя файлы</translation>
+        <translation>Ficheiros executables</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Выбраць карыстальніцкае размяшчэнне проксі</translation>
+        <translation>Escoller a localización de proxy personalizada</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation>Выбраць размяшчэнне тэчкі для хоста натыўных паведамленняў</translation>
+        <translation>Escoller a localización do cartafol do anfitrión de mensaxería nativa</translation>
     </message>
     <message>
         <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
-        <translation type="unfinished"/>
+        <translation>Permitir que keepassxc-proxy liste tódalas entradas co seu título, URL e UUID nas bases de datos conectadas.</translation>
     </message>
     <message>
         <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
-        <translation type="unfinished"/>
+        <translation>Permitir acceso limitado a tódalas entradas nas bases de datos conectadas (ignora as restricións de acceso por sitio)</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
-        <translation>&lt;b&gt;Папярэджанне:&lt;/b&gt; Змяняйце гэтыя налады толькі ў выпадку неабходнасці.</translation>
+        <translation>&lt;b&gt;Aviso:&lt;/b&gt; Só axusta estas opcións se é preciso.</translation>
     </message>
     <message>
         <source>The custom proxy location does not exist.</source>
-        <translation>Карыстальніцкае размяшчэнне проксі не існуе.</translation>
+        <translation>A localización de proxy personalizada non existe.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
-        <translation>&lt;b&gt;Памылка:&lt;/b&gt; Карыстальніцкае размяшчэнне проксі не існуе. Выпраўце гэта на ўкладцы пашыраных налад.</translation>
+        <translation>&lt;b&gt;Erro:&lt;/b&gt; A localización de proxy personalizada non existe. Corríxeo na lapela de configuración avanzada.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
-        <translation>&lt;b&gt;Памылка:&lt;/b&gt; Усталяваны выканальны файл проксі адсутнічае ў чаканым месцы: %1&lt;br/&gt;Калі ласка, задайце карыстальніцкае размяшчэнне проксі ў пашыраных наладах ці пераўсталюйце праграму.</translation>
+        <translation>&lt;b&gt;Erro:&lt;/b&gt; O executábel do proxy instalado falta na localización agardada: %1 &lt;br/&gt;Establece unha localización de proxy personalizada na configuración avanzada ou reinstala a aplicación.</translation>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation>Дазваляе выкарыстоўваць небяспечны http://localhost з ключамі доступу для мэт тэставання.</translation>
+        <translation>Permite usar http://localhost inseguro con chaves de acceso para fins de proba.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
-        <translation>Дазволіць выкарыстанне localhost з ключамі доступу</translation>
+        <translation>Permitir usar localhost con chaves de acceso</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>KeePassXC-Browser неабходны для працы інтэграцыі з браўзерам. &lt;br /&gt;Спампуйце яго для %1, %2 і %3.</translation>
+        <translation>KeePassXC-Browser é necesario para que funcione a integración co navegador. Descárgao para %1, %2 e %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
-        <translation>Браўзеры, усталяваныя з дапамогай Snap ці Flatpak, не падтрымліваюцца, за выключэннем Firefox, усталяванага з дапамогай Snap.</translation>
+        <translation>Os navegadores instalados mediante Snap ou Flatpak non son compatibles, agás Firefox instalado mediante Snap.</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
-        <translation>Параметры кланавання запісу</translation>
+        <translation>Opcións de clonado de entrada</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Дадаць &apos; - Клон&apos; да назвы</translation>
+        <translation>Engadir &apos; - Clon&apos; ao título</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Замяніць імя карыстальніка і пароль спасылкамі</translation>
+        <translation>Substituír nome de usuario e contrasinal por referencias</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Капіяваць гісторыю</translation>
+        <translation>Copiar historial</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>size, rows, columns</source>
-        <translation>памер, радкі, слупкі</translation>
+        <translation>tamaño, filas, columnas</translation>
     </message>
     <message>
         <source>Column Association</source>
-        <translation>Супастаўленне слупкоў</translation>
+        <translation>Asociación de columnas</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Імя карыстальніка</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1507,7 +1502,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Нататкі</translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -1515,101 +1510,101 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Created</source>
-        <translation>Створана</translation>
+        <translation>Creado</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Апошняя змена</translation>
+        <translation>Derradeira modificación</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Іконка</translation>
+        <translation>Icona</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>Кадаванне</translation>
+        <translation>Codificación</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation>Кодэк</translation>
+        <translation>Códec</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Тэкст кваліфікаваны</translation>
+        <translation>O texto está delimitado por</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation>Кваліфікацыя тэксту</translation>
+        <translation>Delimitación de texto</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>Палі падзелены</translation>
+        <translation>Os campos están separados por</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation>Падзел палёў</translation>
+        <translation>Separación de campos</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Каментары пачынаюцца з</translation>
+        <translation>Os comentarios comezan con</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation>Пропушчана радкоў загалоўка</translation>
+        <translation>Liñas de cabeceira omitidas</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation>Колькасць радкоў загалоўка, якія трэба адкінуць</translation>
+        <translation>Número de liñas de cabeceira a descartar</translation>
     </message>
     <message>
         <source>First line has field names</source>
-        <translation>Першы радок змяшчае назвы палёў</translation>
+        <translation>A primeira liña ten nomes de campos</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Разглядаць &apos;\&apos; як сімвал эскейпу</translation>
+        <translation>Considerar &apos;\&apos; como carácter de escape</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Папярэдні прагляд</translation>
+        <translation>Vista previa</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation>Папярэдні прагляд імпарту CSV</translation>
+        <translation>Vista previa da importación CSV</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Адсутнічае</translation>
+        <translation>Non presente</translation>
     </message>
     <message>
         <source>Column %1</source>
-        <translation>Слупок %1</translation>
+        <translation>Columna %1</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[прапушчана яшчэ %n паведамленне]</numerusform><numerusform>[прапушчана яшчэ %n паведамленні]</numerusform><numerusform>[прапушчана яшчэ %n паведамленняў]</numerusform><numerusform>[прапушчана яшчэ %n паведамленняў]</numerusform></translation>
+        <translation><numerusform>[%n mensaxe(s) máis omitida(s)]</numerusform><numerusform>[%n mensaxe(s) máis omitida(s)]</numerusform></translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation>Не ўдалося разабраць файл CSV: %1</translation>
+        <translation>Fallou ao analizar o ficheiro CSV: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation>Імпартавана з файла CSV: %1</translation>
+        <translation>Importado dende o ficheiro CSV: %1</translation>
     </message>
     <message>
         <source>No Title Selected</source>
-        <translation>Не выбрана назва</translation>
+        <translation>Non se escolleu título</translation>
     </message>
     <message>
         <source>No title column was selected, entries will be hard to tell apart.
 Are you sure you want to import?</source>
-        <translation>Не выбраны слупок з назвай, запісы будзе складана адрозніць.
-Вы ўпэўнены, што хочаце імпартаваць?</translation>
+        <translation>Non se escolleu unha columna de título, será difícil distinguir as entradas.
+Estás certo de que queres importar?</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Тэгі</translation>
+        <translation>Etiquetas</translation>
     </message>
 </context>
 <context>
@@ -1617,12 +1612,12 @@ Are you sure you want to import?</source>
     <message numerus="yes">
         <source>%n row(s)</source>
         <comment>CSV row count</comment>
-        <translation><numerusform>%n радок</numerusform><numerusform>%n радкі</numerusform><numerusform>%n радкоў</numerusform><numerusform>%n радкоў</numerusform></translation>
+        <translation><numerusform>%n fila(s)</numerusform><numerusform>%n fila(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
         <comment>CSV column count</comment>
-        <translation><numerusform>%n слупок</numerusform><numerusform>%n слупкі</numerusform><numerusform>%n слупкоў</numerusform><numerusform>%n слупкоў</numerusform></translation>
+        <translation><numerusform>%n columna(s)</numerusform><numerusform>%n columna(s)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1630,115 +1625,114 @@ Are you sure you want to import?</source>
     <message>
         <source>Passwords</source>
         <comment>Root group name</comment>
-        <translation>Паролі</translation>
+        <translation>Contrasinais</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation>Файл %1 не існуе.</translation>
+        <translation>O ficheiro %1 non existe.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>Немагчыма адкрыць файл %1.</translation>
+        <translation>Non se puido abrir o ficheiro %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>Памылка пры чытанні базы даных: %1</translation>
+        <translation>Erro ao ler a base de datos: %1</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>Не ўдалося захаваць, база даных не паказвае на сапраўдны файл.</translation>
+        <translation>Non se puido gardar, a base de datos non apunta a un ficheiro válido.</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>Захаванне базы даных ужо выконваецца.</translation>
+        <translation>O gardado da base de datos xa está en curso.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Не ўдалося захаваць, база даных не была ініцыялізавана!</translation>
+        <translation>Non se puido gardar, a base de datos non foi inicializada!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>Файл базы даных мае неаб’яднаныя змены.</translation>
+        <translation>O ficheiro da base de datos ten trocos sen fusionar.</translation>
     </message>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation>%1
-Рэзервовая копія базы даных знаходзіцца ў %2</translation>
+        <translation>%1 Copia de seguridade da base de datos situada en %2</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers.</source>
-        <translation>Ключ не трансфармаваны. Гэта памылка, калі ласка, паведаміце пра яе распрацоўнікам.</translation>
+        <translation>A chave non foi transformada. Isto é un erro, por favor infórmao aos desenvolvedores.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
-        <translation>Кошык</translation>
+        <translation>Papeleira</translation>
     </message>
     <message>
         <source>Database file read error.</source>
-        <translation>Памылка чытання файла базы даных.</translation>
+        <translation>Erro ao ler o ficheiro da base de datos.</translation>
     </message>
     <message>
         <source>No file path was provided.</source>
-        <translation>Не пазначаны шлях да файла.</translation>
+        <translation>Non se proporcionou unha ruta de ficheiro.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Разблакіраваць базу даных - KeePassXC</translation>
+        <translation>Desbloquear base de datos - KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>Разблакіраваць базу даных KeePassXC</translation>
+        <translation>Desbloquear base de datos KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation>Увядзіце пароль:</translation>
+        <translation>Introducir contrasinal:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Поле для пароля</translation>
+        <translation>Campo de contrasinal</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Выбар слота апаратнага ключа</translation>
+        <translation>Escolla de rañura de chave de soporte físico</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation>Файл-ключ для разблакіроўкі базы даных</translation>
+        <translation>Ficheiro de chave para desbloquear a base de datos</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Агляд файла-ключа</translation>
+        <translation>Buscar ficheiro de chave</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Агляд…</translation>
+        <translation>Examinar…</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation>Разблакіраваць базу даных</translation>
+        <translation>Desbloquear base de datos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Unlock</source>
-        <translation>Разблакіраваць</translation>
+        <translation>Desbloquear</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Калі ласка, падключыце або дотыкніцеся да вашага YubiKey для працягу…</translation>
+        <translation>Por favor, presenta ou toca a túa YubiKey para continuar…</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
-        <translation>Неадпаведнасць версій базы даных</translation>
+        <translation>Incompatibilidade de versión da base de datos</translation>
     </message>
     <message>
         <source>The database you are trying to open was most likely
@@ -1748,173 +1742,169 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation>База даных, якую вы спрабуеце адкрыць, хутчэй за ўсё, была створана
-навейшай версіяй KeePassXC.
+        <translation>A base de datos que estás a tentar abrir foi probablemente creada cunha versión máis recente de KeePassXC.
 
-Вы можаце паспрабаваць адкрыць яе ўсё роўна, але яна можа быць няпоўнай,
-і захаванне любых змен можа прывесці да страты даных.
+Podes tentar abrila igualmente, pero pode estar incompleta e gardar trocos pode provocar perda de datos.
 
-Мы рэкамендуем вам абнавіць вашу ўстаноўку KeePassXC.</translation>
+Recomendamos que actualices a túa instalación de KeePassXC.</translation>
     </message>
     <message>
         <source>Open database anyway</source>
-        <translation>Усё роўна адкрыць базу даных</translation>
+        <translation>Abrir a base de datos igualmente</translation>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation>Разблакіроўка базы даных скасавана.</translation>
+        <translation>Desbloqueo da base de datos cancelado.</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation>Разблакіроўка не атрымалася, і пароль не быў уведзены</translation>
+        <translation>Fallou o desbloqueo e non se proporcionou contrasinal</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Разблакіроўка базы даных не атрымалася, і вы не ўвялі пароль.
-Вы хочаце паўтарыць спробу з &quot;пустым&quot; паролем?
+        <translation>Fallou o desbloqueo da base de datos e non introduciches un contrasinal.
+Queres reintentar cun contrasinal &quot;baleiro&quot;?
 
-Каб гэта памылка больш не з’яўлялася, вам трэба перайсці ў &quot;Налады базы даных / Бяспека&quot; і скінуць ваш пароль.</translation>
+Para evitar que apareza este erro, debes ir a &quot;Configuración da base de datos / Seguridade&quot; e restablecer o teu contrasinal.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>Паўтарыць з пустым паролем</translation>
+        <translation>Reintentar con contrasinal baleiro</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation>Не ўдалося адкрыць файл-ключ: %1</translation>
+        <translation>Fallou ao abrir o ficheiro de chave: %1</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Стары фармат файла-ключа</translation>
+        <translation>Formato antigo de ficheiro de chave</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation>Вы выкарыстоўваеце стары фармат файла-ключа, які KeePassXC можа&lt;br&gt;перастаць падтрымліваць у будучыні.&lt;br&gt;&lt;br&gt;Калі ласка, разгледзьце магчымасць генерацыі новага файла-ключа, перайшоўшы ў:&lt;br&gt;&lt;strong&gt;База даных &amp;gt; Бяспека базы даных &amp;gt; Змяніць файл-ключ.&lt;/strong&gt;&lt;br&gt;</translation>
+        <translation>Estás a usar un formato antigo de ficheiro de chave que KeePassXC pode &lt;br&gt;deixar de soportar no futuro.&lt;br&gt;&lt;br&gt; Considera xerar un novo ficheiro de chave indo a:&lt;br&gt;&lt;strong&gt; Base de datos &gt; Seguridade da base de datos &gt; Trocar ficheiro de chave.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>Не паказваць гэтае папярэджанне зноў</translation>
+        <translation>Non amosar este aviso de novo</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Файлы-ключы</translation>
+        <translation>Ficheiros de chave</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Выбраць файл-ключ</translation>
+        <translation>Escoller ficheiro de chave</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation>Немагчыма выкарыстаць файл базы даных у якасці файла-ключа</translation>
+        <translation>Non se pode usar o ficheiro da base de datos como ficheiro de chave</translation>
     </message>
     <message>
         <source>authenticate to access the database</source>
-        <translation>аўтэнтыфікаваць для доступу да базы даных</translation>
+        <translation>autenticar para acceder á base de datos</translation>
     </message>
     <message>
         <source>Failed to authenticate with Quick Unlock: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a autenticación con Desbloqueo rápido: %1</translation>
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation>Выбраць файл-ключ:</translation>
+        <translation>Escoller ficheiro de chave:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;У дадатак да пароля, вы можаце выкарыстоўваць сакрэтны файл для павышэння бяспекі вашай базы даных. Гэты файл можна стварыць у наладах бяспекі вашай базы даных.&lt;/p&gt;&lt;p&gt;Гэта &lt;strong&gt;не&lt;/strong&gt; ваш файл базы даных *.kdbx!&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Ademais dun contrasinal, podes usar un ficheiro secreto para mellorar a seguridade da túa base de datos. Este ficheiro pode xerarse na configuración de seguridade da base de datos.&lt;/p&gt;&lt;p&gt; Este &lt;strong&gt;non&lt;/strong&gt; é o teu ficheiro de base de datos *.kdbx!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation>Выкарыстоўваць апаратны ключ [Серыйны нумар: %1]</translation>
+        <translation>Usar chave de soporte físico [Serie: %1]</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation>Выкарыстоўваць апаратны ключ</translation>
+        <translation>Usar chave de soporte físico</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation>Ваш файл базы даных НЕ з’яўляецца файлам-ключом!
-Калі ў вас няма файла-ключа або вы не ведаеце, што гэта такое, вам не трэба яго выбіраць.</translation>
+        <translation>O teu ficheiro de base de datos NON é un ficheiro de chave! Se non tes un ficheiro de chave ou non sabes o que é, non tes que escoller ningún.</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation>Выбраны файл базы даных KeePassXC</translation>
+        <translation>Escolleuse un ficheiro de base de datos de KeePassXC</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation>Выбраны вамі файл выглядае як файл базы даных.
-Файл базы даных НЕ з’яўляецца файлам-ключом!
-
-Вы ўпэўнены, што хочаце працягваць з гэтым файлам?.</translation>
+        <translation>O ficheiro que escolliches parece un ficheiro de base de datos.
+Un ficheiro de base de datos NON é un ficheiro de chave!
+Estás certo de que queres continuar con este ficheiro?</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation>Не знойдзена апаратных ключоў.</translation>
+        <translation>Non se atoparon chaves de soporte físico.</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation>Абнавіць апаратныя ключы</translation>
+        <translation>Actualizar chaves de soporte físico</translation>
     </message>
     <message>
         <source>Click to add a key file.</source>
-        <translation>Націсніце, каб дадаць файл-ключ.</translation>
+        <translation>Preme para engadir un ficheiro de chave.</translation>
     </message>
     <message>
         <source>Hardware keys found, but no slots are configured.</source>
-        <translation>Апаратныя ключы знойдзены, але слоты не настроены.</translation>
+        <translation>Atopáronse chaves de soporte físico, pero non hai rañuras configuradas.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
-        <translation>Націсніце ESC яшчэ раз, каб закрыць гэтую базу даных</translation>
+        <translation>Preme ESC de novo para pechar esta base de datos</translation>
     </message>
     <message>
         <source>I have a key file</source>
-        <translation type="unfinished"/>
+        <translation>Teño un ficheiro de chave</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
     <message>
         <source>Passwords</source>
-        <translation>Паролі</translation>
+        <translation>Contrasinais</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>General</source>
-        <translation>Агульныя</translation>
+        <translation>Xerak</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Бяспека</translation>
+        <translation>Seguridade</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation>Уліковыя даныя базы даных</translation>
+        <translation>Credenciais da base de datos</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Налады шыфравання</translation>
+        <translation>Configuración de cifrado</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Інтэграцыя з браўзерам</translation>
+        <translation>Integración co navegador</translation>
     </message>
     <message>
         <source>Maintenance</source>
-        <translation>Абслугоўванне</translation>
+        <translation>Mantemento</translation>
     </message>
     <message>
         <source>KeeShare</source>
@@ -1922,276 +1912,276 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Інтэграцыя з Secret Service</translation>
+        <translation>Integración con Secret Service</translation>
     </message>
     <message>
         <source>Remote Sync</source>
-        <translation type="unfinished"/>
+        <translation>Sincronización remota</translation>
     </message>
     <message>
         <source>Database Settings: %1</source>
-        <translation>Налады базы даных: %1</translation>
+        <translation>Configuración da base de datos: %1</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation>Налады KeePassXC-Browser</translation>
+        <translation>Configuración de KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation>Адключыць усе браўзеры</translation>
+        <translation>Desconectar tódolos navegadores</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>Забыць усе налады для пэўных сайтаў у запісах</translation>
+        <translation>Esquecer tódalas opcións específicas de sitio nas entradas</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation>Абнавіць ID каранёвай групы базы даных</translation>
+        <translation>Actualizar o ID do grupo raíz da base de datos</translation>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation>Захаваныя ключы</translation>
+        <translation>Chaves almacenadas</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation>Захаваныя ключы браўзера</translation>
+        <translation>Chaves de navegador almacenadas</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation>Выдаліць абраны ключ</translation>
+        <translation>Eliminar a chave escollida</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation>Выдаліць выбраны ключ?</translation>
+        <translation>Eliminar a chave escollida?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>Вы сапраўды хочаце выдаліць выбраны ключ?
-Гэта можа перашкодзіць злучэнню з убудовай для браўзера.</translation>
+        <translation>Seguro que queres eliminar a chave escollida?
+Isto pode impedir a conexión co complemento do navegador.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Ключ</translation>
+        <translation>Chave</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Значэнне</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Створана</translation>
+        <translation>Creado</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Уключыце інтэграцыю з браўзерам, каб атрымаць доступ да гэтых налад.</translation>
+        <translation>Activa a integración co navegador para acceder a estas opcións.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Вы сапраўды хочаце адключыць усе браўзеры?
-Гэта можа перашкодзіць злучэнню з убудовай для браўзера.</translation>
+        <translation>Seguro que queres desconectar tódolos navegadores?
+Isto pode impedir a conexión co complemento do navegador.</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation>Не знойдзена агульных ключоў шыфравання ў наладах KeePassXC.</translation>
+        <translation>Non se atoparon chaves de cifrado compartidas na configuración de KeePassXC.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Паспяхова выдалены %n ключ шыфравання з налад KeePassXC.</numerusform><numerusform>Паспяхова выдалены %n ключы шыфравання з налад KeePassXC.</numerusform><numerusform>Паспяхова выдалена %n ключоў шыфравання з налад KeePassXC.</numerusform><numerusform>Паспяхова выдалена %n ключоў шыфравання з налад KeePassXC.</numerusform></translation>
+        <translation><numerusform>Elimináronse correctamente %n clave(s) de cifrado da configuración de KeePassXC.</numerusform><numerusform>Elimináronse correctamente %n chave(s) de cifrado da configuración de KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Вы сапраўды хочаце забыць усе налады для пэўных сайтаў у кожным запісе?
-Дазволы на доступ да запісаў будуць адменены.</translation>
+        <translation>Seguro que queres esquecer tódalas opcións específicas de sitio en tódalas entradas?
+Revogaranse os permisos de acceso ás entradas.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Выдаленне захаваных дазволаў…</translation>
+        <translation>Eliminando permisos almacenados…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Перапыніць</translation>
+        <translation>Abortar</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Паспяхова выдалены дазволы з %n запісу.</numerusform><numerusform>Паспяхова выдалены дазволы з %n запісаў.</numerusform><numerusform>Паспяхова выдалены дазволы з %n запісаў.</numerusform><numerusform>Паспяхова выдалены дазволы з %n запісаў.</numerusform></translation>
+        <translation><numerusform>Elimináronse correctamente os permisos de %n entrada(s).</numerusform><numerusform>Elimináronse correctamente os permisos de %n entrada(s).</numerusform></translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Актыўная база даных не ўтрымлівае запісу з дазволамі.</translation>
+        <translation>A base de datos activa non contén ningunha entrada con permisos.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation>Абнавіць ID базы даных</translation>
+        <translation>Actualizar o ID da base de datos</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Вы сапраўды хочаце абнавіць ID базы даных?
-Гэта неабходна толькі ў тым выпадку, калі ваша база даных з’яўляецца копіяй іншай і пашырэнне браўзера не можа падключыцца.</translation>
+        <translation>Seguro que queres actualizar o ID da base de datos?
+Isto só é preciso se a túa base de datos é unha copia doutra e a extensión do navegador non pode conectarse.</translation>
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Канвертаваць састарэлыя атрыбуты KeePassHTTP у карыстальніцкія даныя, сумяшчальныя з KeePassXC-Browser</translation>
+        <translation>Converter atributos antigos de KeePassHTTP a datos personalizados compatibles con KeePassXC-Browser</translation>
     </message>
     <message>
         <source>No keys found</source>
-        <translation>Не знойдзена ключоў</translation>
+        <translation>Non se atoparon chaves</translation>
     </message>
     <message>
         <source>Removed keys from database</source>
-        <translation>Ключы выдалены з базы даных</translation>
+        <translation>Elimináronse chaves da base de datos</translation>
     </message>
     <message>
         <source>Removed permissions</source>
-        <translation>Дазволы выдалены</translation>
+        <translation>Elimináronse permisos</translation>
     </message>
     <message>
         <source>No entry with permissions found!</source>
-        <translation>Не знойдзена запісаў з дазволамі!</translation>
+        <translation>Non se atopou ningunha entrada con permisos!</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection…</source>
-        <translation>Дадаць дадатковую абарону…</translation>
+        <translation>Engadir protección adicional…</translation>
     </message>
     <message>
         <source>No password set</source>
-        <translation>Пароль не зададзены</translation>
+        <translation>Non hai contrasinal establecido</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>УВАГА! Вы не задалі пароль. Выкарыстанне базы даных без пароля настойліва не рэкамендуецца!
+        <translation>AVISO! Non estableciches un contrasinal. Usar unha base de datos sen contrasinal non é recomendable!
 
-Вы ўпэўнены, што хочаце працягнуць без пароля?</translation>
+Estás certo de que queres continuar sen contrasinal?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>Працягнуць без пароля</translation>
+        <translation>Continuar sen contrasinal</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation>Не дададзены ключ шыфравання</translation>
+        <translation>Non se engadiu ningunha chave de cifrado</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Вы павінны дадаць як мінімум адзін ключ шыфравання, каб абараніць вашу базу даных!</translation>
+        <translation>Debes engadir polo menos unha chave de cifrado para asegurar a túa base de datos!</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Невядомая памылка</translation>
+        <translation>Erro descoñecido</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation>Не ўдалося змяніць уліковыя даныя базы даных</translation>
+        <translation>Fallou ao trocar as credenciais da base de datos</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation>Слабы пароль</translation>
+        <translation>Contrasinal feble</translation>
     </message>
     <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
-        <translation>Гэта слабы пароль! Для лепшай абароны вашых сакрэтаў вам варта выбраць больш моцны пароль.</translation>
+        <translation>Este é un contrasinal feble! Para unha mellor protección dos teus segredos, deberías escoller un contrasinal máis forte.</translation>
     </message>
     <message>
         <source>The provided password does not meet the minimum quality requirement.</source>
-        <translation>Уведзены пароль не адпавядае мінімальным патрабаванням да якасці.</translation>
+        <translation>O contrasinal proporcionado non cumpre o requisito mínimo de calidade.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
-        <translation>Час расшыфроўкі:</translation>
+        <translation>Tempo de descifrado:</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation>Час расшыфроўкі ў секундах</translation>
+        <translation>Tempo de descifrado en segundos</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>Большыя значэнні забяспечваюць большую абарону, але адкрыццё базы даных будзе займаць больш часу.</translation>
+        <translation>Valores máis altos ofrecen máis protección, pero abrir a base de datos levará máis tempo.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>Фармат базы даных:</translation>
+        <translation>Formato da base de datos:</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation>Фармат базы даных</translation>
+        <translation>Formato da base de datos</translation>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation>Фармат нельга змяніць: ваша база даных выкарыстоўвае функцыі KDBX 4</translation>
+        <translation>O formato non se pode trocar: a túa base de datos usa características de KDBX 4</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>Калі вам не трэба адкрываць базу даных іншымі праграмамі, заўсёды выкарыстоўвайце апошні фармат.</translation>
+        <translation>A menos que precises abrir a base de datos con outros programas, usa sempre o formato máis recente.</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Алгарытм шыфравання:</translation>
+        <translation>Algoritmo de cifrado:</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation>Алгарытм шыфравання</translation>
+        <translation>Algoritmo de cifrado</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES: 256 біт (прадвызначаны)</translation>
+        <translation>AES: 256 bits (predeterminado)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish: 256 біт</translation>
+        <translation>Twofish: 256 bits</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Функцыя атрымання ключа:</translation>
+        <translation>Función de derivación de chave:</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation>Функцыя атрымання ключа</translation>
+        <translation>Función de derivación de chave</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Колькасць ітэрацый пераўтварэння:</translation>
+        <translation>Roldas de transformación:</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation>Ітэрацыі пераўтварэння</translation>
+        <translation>Roldas de transformación</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>Выкарыстанне памяці:</translation>
+        <translation>Uso de memoria:</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation>Выкарыстанне памяці</translation>
+        <translation>Uso de memoria</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Паралельнасць:</translation>
+        <translation>Paralelismo:</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation>Паралельнасць</translation>
+        <translation>Paralelismo</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation>KDBX 4 (рэкамендуецца)</translation>
+        <translation>KDBX 4 (recomendado)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -2200,287 +2190,287 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>Занадта вялікая колькасць ітэрацый</translation>
+        <translation>Número de roldas demasiado alto</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation>Вы выкарыстоўваеце вельмі вялікую колькасць ітэрацый пераўтварэння ключа з Argon2.
+        <translation>Estás a usar un número moi alto de roldas de transformación de chave con Argon2.
 
-Калі вы захаваеце гэтае значэнне, ваша база даных можа адкрывацца гадзінамі, днямі ці нават даўжэй.</translation>
+Se mantés este número, a túa base de datos pode tardar horas, días ou incluso máis en abrirse.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation>Зразумела, захаваць значэнне</translation>
+        <translation>Entendido, manter o número</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation>Занадта малая колькасць ітэрацый</translation>
+        <translation>Número de roldas demasiado baixo</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation>Вы выкарыстоўваеце вельмі малую колькасць ітэрацый пераўтварэння ключа з AES-KDF.
+        <translation>Estás a usar un número moi baixo de roldas de transformación de chave con AES-KDF.
 
-Калі вы захаваеце гэтае значэнне, ваша база даных не будзе абаронена ад грубай сілавой атакі.</translation>
+Se mantés este número, a túa base de datos non estará protexida contra ataques de forza bruta.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation>KDF без змен</translation>
+        <translation>KDF sen cambios</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Не ўдалося пераўтварыць ключ з новымі параметрамі KDF; KDF без змен.</translation>
+        <translation>Fallou ao transformar a chave cos novos parámetros de KDF; KDF sen trocos.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> МіБ</numerusform><numerusform> МіБ</numerusform><numerusform> МіБ</numerusform><numerusform> МіБ</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> паток</numerusform><numerusform> патокі</numerusform><numerusform> патокаў</numerusform><numerusform> патокаў</numerusform></translation>
+        <translation><numerusform>fío(s)</numerusform><numerusform>fío(s)</numerusform></translation>
     </message>
     <message>
         <source>Encryption Settings:</source>
-        <translation>Налады шыфравання:</translation>
+        <translation>Configuración de cifrado:</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Асноўныя</translation>
+        <translation>Básico</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Дадатковыя</translation>
+        <translation>Avanzado</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation>Адкрытыя запісы</translation>
+        <translation>Entradas expostas</translation>
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation>Не адкрываць гэтую базу даных</translation>
+        <translation>Non expoñer esta base de datos</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
-        <translation>Адкрыць запісы ў гэтай групе:</translation>
+        <translation>Expoñer as entradas baixo este grupo:</translation>
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation>Уключыце Secret Service, каб атрымаць доступ да гэтых налад.</translation>
+        <translation>Activar Secret Service para acceder a estas configuracións.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Metadata</source>
-        <translation>Метаданыя базы даных</translation>
+        <translation>Metadatos da base de datos</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Назва базы даных:</translation>
+        <translation>Nome da base de datos:</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Поле назвы базы даных</translation>
+        <translation>Campo do nome da base de datos</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Апісанне базы даных:</translation>
+        <translation>Descrición da base de datos:</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Поле апісання базы даных</translation>
+        <translation>Campo da descrición da base de datos</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Імя карыстальніка па змаўчанні:</translation>
+        <translation>Nome de usuario predeterminado:</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation>Поле імя карыстальніка па змаўчанні</translation>
+        <translation>Campo do nome de usuario predeterminado</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Налады гісторыі</translation>
+        <translation>Configuración do historial</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>Максімальная колькасць элементаў гісторыі для аднаго запісу</translation>
+        <translation>Número máximo de elementos do historial por entrada</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation>Максімальны памер гісторыі для аднаго запісу</translation>
+        <translation>Tamaño máximo do historial por entrada</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation> МіБ</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>Выкарыстоўваць сметніцу</translation>
+        <translation>Usar papeleira</translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Дадатковыя налады базы даных</translation>
+        <translation>Configuración adicional da base de datos</translation>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation>Уключыць сцісканне (рэкамендуецца)</translation>
+        <translation>Activar compresión (recomendado)</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation>Выдаліць Сметніцу</translation>
+        <translation>Eliminar papeleira</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Вы жадаеце выдаліць бягучую сметніцу і ўвесь яе змест?
-Гэтае дзеянне незваротнае.</translation>
+        <translation>ueres eliminar a papeleira actual e todo o seu contido?
+Esta acción non se pode desfacer.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation> (стары)</translation>
+        <translation>(antigo)</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that only the specified amount
 of entries remain at most.</source>
-        <translation>Пры захаванні гэтай налады або рэдагаванні запісу
-самыя старыя элементы гісторыі запісу будуць
-выдалены, каб засталася толькі зададзеная
-колькасць запісаў.</translation>
+        <translation>Ao gardar esta configuración ou editar unha entrada,
+eliminaranse os elementos máis antigos do historial dunha entrada
+de xeito que só permaneza como máximo
+o número especificado de entradas.</translation>
     </message>
     <message>
         <source>Limit the amount of history items per entry to:</source>
-        <translation>Абмежаваць колькасць элементаў гісторыі для аднаго запісу да:</translation>
+        <translation>Limitar o número de elementos do historial por entrada a:</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that the remaining history items
 add up to the specified amount at most.</source>
-        <translation>Пры захаванні гэтай налады або рэдагаванні запісу
-самыя старыя элементы гісторыі запісу будуць
-выдалены такім чынам, каб агульны памер
-астатніх элементаў гісторыі не перавышаў зададзенае значэнне.</translation>
+        <translation>Ao gardar esta configuración ou editar unha entrada,
+eliminaranse os elementos máis antigos do historial
+dunha entrada de xeito que os elementos restantes
+non superen o tamaño especificado.</translation>
     </message>
     <message>
         <source>Limit the total size of history items per entry to:</source>
-        <translation>Абмежаваць агульны памер элементаў гісторыі для аднаго запісу да:</translation>
+        <translation>Limitar o tamaño total dos elementos do historial por entrada a:</translation>
     </message>
     <message>
         <source>Move entries to a recycle bin group
 instead of deleting them from the database.
 Entries deleted from the recycle bin are
 removed from the database.</source>
-        <translation>Перамяшчаць запісы ў групу сметніцы
-замест выдалення іх з базы даных.
-Запісы, выдаленыя са сметніцы,
-выдаляюцца з базы даных.</translation>
+        <translation>Mover as entradas a un grupo de papeleira
+en vez de eliminalas da base de datos.
+As entradas eliminadas da papeleira elimínanse
+definitivamente da base de datos.</translation>
     </message>
     <message>
         <source>Autosave delay since last change</source>
-        <translation>Затрымка аўтазахавання з моманту апошняй змены</translation>
+        <translation>Retardo de gardado automático dende o derradeiro troco</translation>
     </message>
     <message>
         <source>Autosave delay</source>
-        <translation>Затрымка аўтазахавання</translation>
+        <translation>Retardo de gardado automático</translation>
     </message>
     <message>
         <source>Autosave delay since last change in minutes</source>
-        <translation>Затрымка аўтазахавання з моманту апошняй змены ў хвілінах</translation>
+        <translation>Retardo de gardado automático dende o derradeiro troco en minutos</translation>
     </message>
     <message>
         <source> min</source>
-        <translation> хв</translation>
+        <translation>min</translation>
     </message>
     <message>
         <source>Autosave delay since last change checkbox</source>
-        <translation>Сцяжок «Затрымка аўтазахавання з моманту апошняй змены»</translation>
+        <translation>Caixa de verificación do retardo dende o derradeiro troco</translation>
     </message>
     <message>
         <source>Public Database Metadata</source>
-        <translation>Публічныя метаданыя базы даных</translation>
+        <translation>Metadatos públicos da base de datos</translation>
     </message>
     <message>
         <source>Warning: the following settings are not encrypted.</source>
-        <translation>Папярэджанне: наступныя налады не шыфруюцца.</translation>
+        <translation>Aviso: as seguintes configuracións non están cifradas.</translation>
     </message>
     <message>
         <source>Display name:</source>
-        <translation>Імя для адлюстравання:</translation>
+        <translation>Nome visible:</translation>
     </message>
     <message>
         <source>Database public display name</source>
-        <translation>Публічнае імя базы даных</translation>
+        <translation>Nome público visible da base de datos</translation>
     </message>
     <message>
         <source>Display color:</source>
-        <translation>Колер для адлюстравання:</translation>
+        <translation>Cor visible:</translation>
     </message>
     <message>
         <source>Database public display color chooser</source>
-        <translation>Выбар публічнага колеру базы даных</translation>
+        <translation>Selector da cor pública da base de datos</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Ачысціць</translation>
+        <translation>Limpar</translation>
     </message>
     <message>
         <source>Display icon:</source>
-        <translation>Значок для адлюстравання:</translation>
+        <translation>Icona visible:</translation>
     </message>
     <message>
         <source>Select Database Icon</source>
-        <translation>Выбраць значок базы даных</translation>
+        <translation>Escoller icona da base de datos</translation>
     </message>
     <message>
         <source>Publicly visible display name used on the unlock dialog</source>
-        <translation type="unfinished"/>
+        <translation>Nome visible publicamente usado no diálogo de desbloqueo</translation>
     </message>
     <message>
         <source>Publicly visible color used on the unlock dialog</source>
-        <translation type="unfinished"/>
+        <translation>Cor visible publicamente usada no diálogo de desbloqueo</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation>Агульны доступ</translation>
+        <translation>Compartición</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation>Навігацыя</translation>
+        <translation>Ruta de navegación</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Тып</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Шлях</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation>Апошні падпісант</translation>
+        <translation>Derradeiro asinante</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation>Сертыфікаты</translation>
+        <translation>Certificados</translation>
     </message>
     <message>
         <source> &gt; </source>
@@ -2492,157 +2482,157 @@ removed from the database.</source>
     <name>DatabaseSettingsWidgetMaintenance</name>
     <message>
         <source>Manage Custom Icons</source>
-        <translation>Кіраванне карыстальніцкімі значкамі</translation>
+        <translation>Xestionar iconas personalizadas</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation>Выдаліць выбраныя значкі</translation>
+        <translation>Eliminar icona(s) escollida(s)</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation>Выдаліць усе карыстальніцкія значкі, якія не выкарыстоўваюцца ніякім запісам ці групай</translation>
+        <translation>Eliminar tódalas iconas personalizadas que non estean en uso</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation>Ачысціць невыкарыстоўваныя значкі</translation>
+        <translation>Limpar iconas non usadas</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
-        <translation>Пацвердзіць выдаленне</translation>
+        <translation>Confirmar eliminación</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>Хаця б адзін з выбраных значкоў цяпер выкарыстоўваецца як мінімум адным запісам ці групай. Значкі ўсіх закранутых запісаў і груп будуць заменены значкам па змаўчанні. Вы ўпэўнены, што хочаце выдаліць значкі, якія цяпер выкарыстоўваюцца?</translation>
+        <translation>Polo menos unha das iconas escollidas está actualmente en uso por unha entrada ou grupo. As iconas de todas as entradas e grupos afectados serán substituídas pola icona predeterminada. Estás certo de que queres eliminar iconas que están en uso?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation>Карыстальніцкія значкі выкарыстоўваюцца</translation>
+        <translation>Hai iconas personalizadas en uso</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>Усе карыстальніцкія значкі выкарыстоўваюцца як мінімум адным запісам ці групай.</translation>
+        <translation>Tódalas iconas personalizadas están en uso por polo menos unha entrada ou grupo.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation>Невыкарыстоўваныя значкі ачышчаны</translation>
+        <translation>Iconas non usadas eliminadas</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation><numerusform>Ачышчаны %n значок з базы даных.</numerusform><numerusform>Ачышчаны %n значкі з базы даных.</numerusform><numerusform>Ачышчана %n значкоў з базы даных.</numerusform><numerusform>Ачышчана %n значкоў з базы даных.</numerusform></translation>
+        <translation><numerusform>Elimináronse %n icona(s) da base de datos.</numerusform><numerusform>Elimináronse %n icona(s) da base de datos.</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>Назва базы даных:</translation>
+        <translation>Nome da base de datos:</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Поле назвы базы даных</translation>
+        <translation>Campo do nome da base de datos</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Апісанне:</translation>
+        <translation>Descrición:</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Поле апісання базы даных</translation>
+        <translation>Campo da descrición da base de datos</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetRemote</name>
     <message>
         <source>Sync Commands</source>
-        <translation type="unfinished"/>
+        <translation>Comandos de sincronización</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Command Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuración de comandos</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Захаваць</translation>
+        <translation>Gardar</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation>Спампаваць</translation>
+        <translation>Descargar</translation>
     </message>
     <message>
         <source>Command:</source>
-        <translation>Каманда:</translation>
+        <translation>Comando:</translation>
     </message>
     <message>
         <source>Download command field</source>
-        <translation type="unfinished"/>
+        <translation>Campo do comando de descarga</translation>
     </message>
     <message>
         <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>p. ex.: &quot;sftp user@hostname&quot; ou &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
     </message>
     <message>
         <source>Input:</source>
-        <translation type="unfinished"/>
+        <translation>Entrada:</translation>
     </message>
     <message>
         <source>Download input field</source>
-        <translation type="unfinished"/>
+        <translation>Campo de entrada da descarga</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>Запампаваць</translation>
+        <translation>Subir</translation>
     </message>
     <message>
         <source>Upload command field</source>
-        <translation type="unfinished"/>
+        <translation>Campo do comando de subida</translation>
     </message>
     <message>
         <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
-        <translation type="unfinished"/>
+        <translation>p. ex.: &quot;sftp user@hostname&quot; ou &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</translation>
     </message>
     <message>
         <source>Upload input field</source>
-        <translation type="unfinished"/>
+        <translation>Campo de entrada da subida</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>O nome non pode estar baleiro.</translation>
     </message>
     <message>
         <source>Test</source>
-        <translation>Праверыць</translation>
+        <translation>Probar</translation>
     </message>
     <message>
         <source>Download command cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>O comando de descarga non pode estar baleiro.</translation>
     </message>
     <message>
         <source>Download failed with error: %1</source>
-        <translation type="unfinished"/>
+        <translation>A descarga fallou co erro: %1</translation>
     </message>
     <message>
         <source>Download finished, but file %1 could not be found.</source>
-        <translation type="unfinished"/>
+        <translation>A descarga rematou, pero non se atopou o ficheiro %1.</translation>
     </message>
     <message>
         <source>Download successful.</source>
-        <translation>Спампоўка завершана.</translation>
+        <translation>Descarga correcta.</translation>
     </message>
     <message>
         <source>Save Remote Settings</source>
-        <translation>Захаваць аддаленыя налады</translation>
+        <translation>Gardar configuración remota</translation>
     </message>
     <message>
         <source>You have unsaved changes. Do you want to save them?</source>
-        <translation type="unfinished"/>
+        <translation>Tes trocos sen gardar. Queres gardalos?</translation>
     </message>
     <message>
         <source>e.g.:
@@ -2652,13 +2642,12 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last command `exit` has to be sent
             </source>
-        <translation>напр.:
+        <translation>p.ex.:
 get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
 ---
-{TEMP_DATABASE} выкарыстоўваецца ў якасці запаўняльніка для захоўвання базы даных у часовым размяшчэнні
-Каманда павінна завяршацца выхадам. Калі апошняй камандай з&apos;яўляецца `sftp`, неабходна адправіць `exit`
-          </translation>
+{TEMP_DATABASE} úsase como marcador de posición para gardar a base de datos nunha localización temporal
+O comando debe finalizar. No caso de `sftp`, debe enviarse `exit` como derradeiro comando</translation>
     </message>
     <message>
         <source>e.g.:
@@ -2668,644 +2657,641 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last command `exit` has to be sent
             </source>
-        <translation>напр.:
+        <translation>p.ex.:
 put {TEMP_DATABASE} DatabaseOnRemote.kdbx
 exit
 ---
-{TEMP_DATABASE} выкарыстоўваецца ў якасці запаўняльніка для захоўвання базы даных у часовым размяшчэнні
-Каманда павінна завяршацца выхадам. Калі апошняй камандай з&apos;яўляецца `sftp`, неабходна адправіць `exit`
-            </translation>
+{TEMP_DATABASE} úsase como marcador de posición para gardar a base de datos nunha localización temporal
+O comando debe finalizar. No caso de `sftp`, debe enviarse `exit` como derradeiro comando</translation>
     </message>
     <message>
         <source>Timeout:</source>
-        <translation> Час чакання:</translation>
+        <translation>Tempo de espera:</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation>секунд</translation>
+        <translation>segundos</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
-        <translation>Памылка стварэння базы даных</translation>
+        <translation>Erro na creación da base de datos</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>Створаная база даных не мае ключа або KDF, адмова ў захаванні.
-Гэта дакладна памылка, калі ласка, паведаміце пра яе распрацоўнікам.</translation>
+        <translation>A base de datos creada non ten chave nin KDF, rexeitase gardala.
+Isto é definitivamente un erro, por favor infórmao aos desenvolvedores.</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>База даных KeePass 2</translation>
+        <translation>Base de datos KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Адкрыць базу даных</translation>
+        <translation>Abrir base de datos</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation>Не ўдалося адкрыць %1. Файл альбо не існуе, альбо недаступны.</translation>
+        <translation>Non se puido abrir %1. Non existe ou non é accesible.</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>Файл CSV</translation>
+        <translation>Ficheiro CSV</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Аб&apos;яднаць базу даных</translation>
+        <translation>Fusionar base de datos</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Экспартаваць базу даных у файл CSV</translation>
+        <translation>Exportar base de datos a ficheiro CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>Запіс файла CSV не атрымаўся.</translation>
+        <translation>Fallou a escritura do ficheiro CSV.</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation>Запіс файла HTML не атрымаўся.</translation>
+        <translation>Fallou a escritura do ficheiro HTML.</translation>
     </message>
     <message>
         <source>Export database to XML file</source>
-        <translation>Экспартаваць базу даных у файл XML</translation>
+        <translation>Exportar base de datos a ficheiro XML</translation>
     </message>
     <message>
         <source>XML file</source>
-        <translation>Файл XML</translation>
+        <translation>Ficheiro XML</translation>
     </message>
     <message>
         <source>Writing the XML file failed</source>
-        <translation>Запіс файла XML не атрымаўся</translation>
+        <translation>Fallou a escritura do ficheiro XML</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>Пацверджанне экспарту</translation>
+        <translation>Confirmación de exportación</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Вы збіраецеся экспартаваць вашу базу даных у нешыфраваны файл. Гэта зробіць вашы паролі і канфідэнцыйную інфармацыю ўразлівымі! Вы ўпэўнены, што хочаце працягнуць?</translation>
+        <translation>Estás a piques de exportar a túa base de datos a un ficheiro sen cifrar. Isto deixará os teus contrasinais e información sensible vulnerables! Estás certo de que queres continuar?</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [Заблакавана]</translation>
+        <translation>%1 [Bloqueado]</translation>
     </message>
     <message>
         <source>%1 [Temporary]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Temporal]</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Searches and Tags</source>
-        <translation>Пошук і тэгі</translation>
+        <translation>Buscas e etiquetas</translation>
     </message>
     <message>
         <source>Searching…</source>
-        <translation>Пошук…</translation>
+        <translation>Buscando…</translation>
     </message>
     <message>
         <source>Shared group…</source>
-        <translation>Агульная група…</translation>
+        <translation>Grupo compartido…</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>Пацвердзіць Аўтаўвод</translation>
+        <translation>Confirmar escritura automática</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation>Выканаць Аўтаўвод у папярэдне актыўнае акно?</translation>
+        <translation>Realizar escritura automática na xanela activa anteriormente?</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>Выканаць каманду?</translation>
+        <translation>Executar comando?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Вы сапраўды жадаеце выканаць наступную каманду?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Seguro que queres executar o seguinte comando? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Запомніць мой выбар</translation>
+        <translation>Lembrar a miña elección</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Вы сапраўды хочаце перамясціць групу «%1» у сметніцу?</translation>
+        <translation>Seguro que queres mover o grupo &quot;%1&quot; a papeleira?</translation>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation>Тэрмін дзеяння запісаў скончыўся</translation>
+        <translation>Entradas caducadas</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>Тэрмін дзеяння запісу заканчваецца на працягу %1 дня</numerusform><numerusform>Тэрмін дзеяння запісаў заканчваецца на працягу %1 дзён</numerusform><numerusform>Тэрмін дзеяння запісаў заканчваецца на працягу %1 дзён</numerusform><numerusform>Тэрмін дзеяння запісаў заканчваецца на працягу %1 дзён</numerusform></translation>
+        <translation><numerusform>Entradas que caducan en %1 día(s)</numerusform><numerusform>Entradas que caducan en %1 día(s)</numerusform></translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Няма бягучай базы даных.</translation>
+        <translation>Non hai base de datos actual.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Няма зыходнай базы даных, няма чаго рабіць.</translation>
+        <translation>Non hai base de datos de orixe, nada que facer.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>Вынікі пошуку (%1)</translation>
+        <translation>Resultados da busca (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation>Няма вынікаў</translation>
+        <translation>Sen resultados</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation>Увядзіце ўнікальную назву або перазапішыце існуючы пошук са спісу:</translation>
+        <translation>Introduce un nome único ou sobrescribe unha busca existente da lista:</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation>Захаваць пошук</translation>
+        <translation>Gardar busca</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation>Заблакаваць базу даных?</translation>
+        <translation>Bloquear base de datos?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>Вы рэдагуеце запіс. Выкінуць змены і ўсё роўна заблакаваць?</translation>
+        <translation>Estás a editar unha entrada. Descartar os trocos e bloquear igualmente?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>«%1» быў зменены.
-Захаваць змены?</translation>
+        <translation>%1&quot; foi modificado. Gardar trocos?</translation>
     </message>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation>База даных была зменена.
-Захаваць змены?</translation>
+        <translation>A base de datos foi modificada.
+Gardar trocos?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Захаваць змены?</translation>
+        <translation>Gardar trocos?</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>Файл быў зменены</translation>
+        <translation>O ficheiro trocou</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>Адключыць бяспечнае захаванне?</translation>
+        <translation>Desactivar gardado seguro?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC не змог захаваць базу даных некалькі разоў. Гэта, верагодна, выклікана службамі сінхранізацыі файлаў, якія ўтрымліваюць блакіроўку файла захавання.
-Адключыць бяспечнае захаванне і паспрабаваць зноў?</translation>
+        <translation>KeePassXC fallou ao gardar a base de datos varias veces. Probablemente isto está causado por servizos de sincronización de ficheiros que manteñen un bloqueo no ficheiro de gardado.
+Desactivar gardado seguro e tentalo de novo?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Запіс базы даных не атрымаўся: %1</translation>
+        <translation>Fallou a escritura da base de datos: %1</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>Паролі</translation>
+        <translation>Contrasinais</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Захаваць базу даных як</translation>
+        <translation>Gardar base de datos como</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>База даных KeePass 2</translation>
+        <translation>Base de datos KeePass 2</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Ачысціць сметніцу?</translation>
+        <translation>Baleirar a papeleira?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Вы ўпэўнены, што хочаце назаўжды выдаліць усё са сваёй сметніцы?</translation>
+        <translation>Seguro que queres eliminar permanentemente toda a papeleira?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation>Не ўдалося знайсці файл базы даных: %1</translation>
+        <translation>Non se puido atopar o ficheiro da base de datos: %1</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Новая база даных</translation>
+        <translation>Nova base de datos</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [Новая база даных]</translation>
+        <translation>%1 [Nova base de datos]</translation>
     </message>
     <message>
         <source>Remote Sync did not contain any download or upload commands.</source>
-        <translation type="unfinished"/>
+        <translation>A sincronización remota non contiña comandos de descarga nin de subida.</translation>
     </message>
     <message>
         <source>Remote sync &apos;%1&apos; completed successfully!</source>
-        <translation type="unfinished"/>
+        <translation>Sincronización remota &apos;%1&apos; completada correctamente!</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation>Спампоўваецца...</translation>
+        <translation>Descargando...</translation>
     </message>
     <message>
         <source>Uploading...</source>
-        <translation>Запампоўваецца...</translation>
+        <translation>Subindo...</translation>
     </message>
     <message>
         <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>A sincronización remota &apos;%1&apos; fallou: %2</translation>
     </message>
     <message>
         <source>Syncing...</source>
-        <translation>Сінхранізацыя...</translation>
+        <translation>Sincronizando...</translation>
     </message>
     <message>
         <source>Error while saving database %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao gardar a base de datos %1: %2</translation>
     </message>
     <message>
         <source>Remove passkey from entry</source>
-        <translation>Выдаліць ключ доступу з запісу</translation>
+        <translation>Eliminar chave de acceso da entrada</translation>
     </message>
     <message>
         <source>Do you want to remove the passkey from this entry?</source>
-        <translation>Вы хочаце выдаліць ключ доступу з гэтага запісу?</translation>
+        <translation>Queres eliminar a chave de acceso desta entrada?</translation>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally</source>
-        <translation>Файл базы даных «%1» быў зменены звонку</translation>
+        <translation>O ficheiro da base de datos &quot;%1&quot; foi modificado externamente</translation>
     </message>
     <message>
         <source>Do you want to load the changes?</source>
-        <translation>Хочаце загрузіць змены?</translation>
+        <translation>Queres cargar os trocos?</translation>
     </message>
     <message>
         <source>Reloading database…</source>
-        <translation>Перазагрузка базы даных…</translation>
+        <translation>Recargando base de datos…</translation>
     </message>
     <message>
         <source>Reload canceled</source>
-        <translation>Перазагрузка скасавана</translation>
+        <translation>Recarga cancelada</translation>
     </message>
     <message>
         <source>Reload successful</source>
-        <translation>Перазагрузка паспяхова завершана</translation>
+        <translation>Recarga correcta</translation>
     </message>
     <message>
         <source>Reload pending user action…</source>
-        <translation>Перазагрузка чакае дзеяння карыстальніка…</translation>
+        <translation>Recarga pendente de acción do usuario…</translation>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes&lt;br&gt;Ignore the changes on disk until save&lt;br&gt;Discard unsaved changes</source>
-        <translation>Файл базы даных «%1» быў зменены звонку.&lt;br&gt;Як вы хочаце працягнуць?&lt;br&gt;&lt;br&gt;Аб&apos;яднаць усе змены&lt;br&gt;Ігнараваць змены на дыску да захавання&lt;br&gt;Выкінуць незахаваныя змены</translation>
+        <translation>O ficheiro de base de datos &quot;%1&quot; foi modificado externamente.&lt;br&gt; Como queres proceder?&lt;br&gt;&lt;br&gt;Fusionar tódolos trocos&lt;br&gt; Ignorar os trocos no disco ata gardar&lt;br&gt; Descartar os trocos non gardados</translation>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes then save&lt;br&gt;Overwrite the changes on disk&lt;br&gt;Discard unsaved changes</source>
-        <translation>Файл базы даных «%1» быў зменены звонку.&lt;br&gt;Як вы хочаце працягнуць?&lt;br&gt;&lt;br&gt;Аб&apos;яднаць усе змены, затым захаваць&lt;br&gt;Перазапісаць змены на дыску&lt;br&gt;Выкінуць незахаваныя змены</translation>
+        <translation>O ficheiro de base de datos &quot;%1&quot; foi modificado externamente.&lt;br&gt; Como quere proceder?&lt;br&gt;&lt;br&gt; Fusionar tódolos trocos e logo gardar&lt;br&gt; Sobrescribir os trocos no disco&lt;br&gt; Descartar os trocos non gardados</translation>
     </message>
     <message>
         <source>Reload database</source>
-        <translation>Перазагрузіць базу даных</translation>
+        <translation>Recargar base de datos</translation>
     </message>
     <message>
         <source>Database file overwritten.</source>
-        <translation>Файл базы даных перазапісаны.</translation>
+        <translation>Ficheiro da base de datos sobrescrito.</translation>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
-        <translation>Файл базы даных на дыску не можа быць разблакаваны з бягучымі ўліковымі дадзенымі.&lt;br&gt;Каб працягнуць, увядзіце новыя ўліковыя дадзеныя і/або прадставіце апаратны ключ.</translation>
+        <translation>O ficheiro da base de datos no disco non pode desbloquearse coas credenciais actuais. &lt;br&gt;Introduce novas credenciais e/ou presenta unha chave de soporte físico para continuar.</translation>
     </message>
     <message>
         <source>Failed to save backup database: %1</source>
-        <translation>Не атрымалася захаваць рэзервовую копію базы даных: %1</translation>
+        <translation>Fallou ao gardar a copia de seguridade da base de datos: %1</translation>
     </message>
     <message>
         <source>Confirm Delete Group</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar eliminación de grupo</translation>
     </message>
     <message>
         <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
+        <translation>Seguro que queres eliminar permanentemente o grupo &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Confirm Recycle Group</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar enviar grupo a papeleira</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Захаваць</translation>
+        <translation>Gardar</translation>
     </message>
     <message>
         <source>Save Database Backup</source>
-        <translation type="unfinished"/>
+        <translation>Gardar copia de seguridade da base de datos</translation>
     </message>
     <message>
         <source>Successfully merged the selected database.</source>
-        <translation type="unfinished"/>
+        <translation>A base de datos escollida fusionouse correctamente.</translation>
     </message>
     <message>
         <source>No changes were made by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>A operación de fusión non realizou trocos.</translation>
     </message>
     <message>
         <source>Merge canceled, no changes were made.</source>
-        <translation type="unfinished"/>
+        <translation>A operación de fusión non realizou trocos.</translation>
     </message>
 </context>
 <context>
     <name>EditEntryAttachmentsDialog</name>
     <message>
         <source>Edit: %1</source>
-        <translation>Рэдагаваць: %1</translation>
+        <translation>Editar: %1</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Запіс</translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Дадаткова</translation>
+        <translation>Avanzado</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Значок</translation>
+        <translation>Icona</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Аўтаўвод</translation>
+        <translation>Escrita automática</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Інтэграцыя з браўзерам</translation>
+        <translation>Integración co navegador</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation>&lt;пусты URL&gt;</translation>
+        <translation>&lt;empty URL&gt;</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation>Пацвердзіць выдаленне</translation>
+        <translation>Confirmar eliminación</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Вы ўпэўнены, што хочаце выдаліць гэты URL?</translation>
+        <translation>Seguro que queres eliminar este URL?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Уласцівасці</translation>
+        <translation>Propiedades</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Гісторыя</translation>
+        <translation>Historial</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>Агент SSH</translation>
+        <translation>Axente SSH</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>н/д</translation>
+        <translation>n/d</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>Выбраць прыватны ключ</translation>
+        <translation>Escoller chave privada</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Гісторыя запісу</translation>
+        <translation>Historial da entrada</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Дадаць запіс</translation>
+        <translation>Engadir entrada</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Рэдагаваць запіс</translation>
+        <translation>Editar entrada</translation>
     </message>
     <message>
         <source>Some Browser Integration settings are overridden by group settings.</source>
-        <translation>Некаторыя налады інтэграцыі з браўзерам перавызначаны наладамі групы.</translation>
+        <translation>Algúns axustes da integración co navegador son substituídos polos axustes do grupo.</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation>Несапраўдны запіс</translation>
+        <translation>Entrada non válida</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation>Знешняя аперацыя аб&apos;яднання зрабіла гэты запіс несапраўдным.
-На жаль, усе зробленыя змены былі страчаны.</translation>
+        <translation>Unha operación de fusión externa invalidou esta entrada. Por desgraza, calquera troco realizado perdeuse.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation>Памылка праверкі Аўтаўводу</translation>
+        <translation>Erro de validación de escritura automática</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
 %1
 Would you like to correct it?</source>
-        <translation>Адбылася памылка падчас праверкі карыстальніцкай паслядоўнасці Аўтаўводу:
+        <translation>Produciuse un erro ao validar a secuencia personalizada de escritura automática:
 %1
-Вы жадаеце яе выправіць?</translation>
+Queres corrixila?</translation>
     </message>
     <message>
         <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
 %2
 Would you like to correct it?</source>
-        <translation>Адбылася памылка падчас праверкі паслядоўнасці Аўтаўводу для «%1»:
+        <translation>Produciuse un erro ao validar a secuencia de escritura automática para &quot;%1&quot;:
 %2
-Вы жадаеце яе выправіць?</translation>
+Queres corrixila?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>Запіс паспяхова абноўлены.</translation>
+        <translation>Entrada actualizada correctamente.</translation>
     </message>
     <message>
         <source>Unsaved Changes</source>
-        <translation>Незахаваныя змены</translation>
+        <translation>Trocos sen gardar</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Ці жадаеце вы захаваць змены ў гэтым запісе?</translation>
+        <translation>Queres gardar os trocos nesta entrada?</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Новы атрыбут</translation>
+        <translation>Novo atributo</translation>
     </message>
     <message>
         <source>New attribute %1</source>
-        <translation>Новы атрыбут %1</translation>
+        <translation>Novo atributo %1</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Вы ўпэўнены, што хочаце выдаліць гэты атрыбут?</translation>
+        <translation>Seguro que queres eliminar este atributo?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Паказаць</translation>
+        <translation>Amosar</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation>[АБАРОНЕНА] Націсніце «Паказаць» для прагляду або рэдагавання</translation>
+        <translation>[PROTECTED] Preme revelar para ver ou editar</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation>Схаваць</translation>
+        <translation>Agochar</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n гадзіна</numerusform><numerusform>%n гадзіны</numerusform><numerusform>%n гадзін</numerusform><numerusform>%n гадзін</numerusform></translation>
+        <translation><numerusform>%n hora(s)</numerusform><numerusform>%n hora(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n тыдзень</numerusform><numerusform>%n тыдні</numerusform><numerusform>%n тыдняў</numerusform><numerusform>%n тыдняў</numerusform></translation>
+        <translation><numerusform>%n semana(s)</numerusform><numerusform>%n semana(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n месяц</numerusform><numerusform>%n месяцы</numerusform><numerusform>%n месяцаў</numerusform><numerusform>%n месяцаў</numerusform></translation>
+        <translation><numerusform>%n mes(es)</numerusform><numerusform>%n mes(es)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n год</numerusform><numerusform>%n гады</numerusform><numerusform>%n гадоў</numerusform><numerusform>%n гадоў</numerusform></translation>
+        <translation><numerusform>%n ano(s)</numerusform><numerusform>%n ano(s)</numerusform></translation>
     </message>
     <message>
         <source>Failed to decrypt SSH key, ensure password is correct.</source>
-        <translation>Не ўдалося расшыфраваць ключ SSH, пераканайцеся, што пароль правільны.</translation>
+        <translation>Fallou ao descifrar a chave SSH, asegúrate de que o contrasinal é correcto.</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Дадатковыя атрыбуты</translation>
+        <translation>Atributos adicionais</translation>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation>Выбар атрыбуту</translation>
+        <translation>Escolla de atributo</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation>Значэнне атрыбуту</translation>
+        <translation>Valor do atributo</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation>Дадаць новы атрыбут</translation>
+        <translation>Engadir un novo atributo</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Дадаць</translation>
+        <translation>Engadir</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation>Выдаліць выбраны атрыбут</translation>
+        <translation>Eliminar o atributo escollido</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation>Рэдагаваць назву атрыбуту</translation>
+        <translation>Editar nome do atributo</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>Рэдагаваць назву</translation>
+        <translation>Editar nome</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation>Пераключыць абарону атрыбуту</translation>
+        <translation>Alternar protección do atributo</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>Абараніць</translation>
+        <translation>Protexer</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation>Паказаць абаронены атрыбут</translation>
+        <translation>Amosar un atributo protexido</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Паказаць</translation>
+        <translation>Revelar</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Далучэнні</translation>
+        <translation>Anexos</translation>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>Калі адзначана, запіс не будзе адлюстроўвацца ў справаздачах (напрыклад, Health Check і HIBP), нават калі ён не адпавядае патрабаванням якасці.</translation>
+        <translation>Se está marcado, a entrada non aparecerá en informes como Health Check e HIBP aínda que non cumpra os requisitos de calidade.</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation>Выключыць са справаздач базы даных</translation>
+        <translation>Excluír dos informes da base de datos</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Колер пярэдняга плана:</translation>
+        <translation>Cor de primeiro plano:</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation>Выбар колеру пярэдняга плана</translation>
+        <translation>Escolla da cor de primeiro plano</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>Колер фону:</translation>
+        <translation>Cor de fondo:</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation>Выбар колеру фону</translation>
+        <translation>Escolla da cor de fondo</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Уключыць Аўтаўвод для гэтага запісу</translation>
+        <translation>Activar escritura automática para esta entrada</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Атрымаць паслядоўнасць Аўтаўводу па змаўчанні з групы</translation>
+        <translation>Herdar a secuencia de escritura automática predeterminada do grupo</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Выкарыстоўваць карыстальніцкую паслядоўнасць Аўтаўводу:</translation>
+        <translation>Usar secuencia personalizada de escritura automática:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation>Карыстальніцкая паслядоўнасць Аўтаўводу</translation>
+        <translation>Secuencia personalizada de escritura automática</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation>Адкрыць старонку дапамогі па Аўтаўводзе</translation>
+        <translation>Abrir a páxina de axuda de escritura automática</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>Асацыяцыі вокнаў</translation>
+        <translation>Asociacións de xanela</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation>Існуючыя асацыяцыі вокнаў</translation>
+        <translation>Asociacións de xanela existentes</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation>Дадаць новую асацыяцыю вокнаў</translation>
+        <translation>Engadir nova asociación de xanela</translation>
     </message>
     <message>
         <source>+</source>
@@ -3314,7 +3300,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation>Выдаліць выбраную асацыяцыю вокнаў</translation>
+        <translation>Eliminar a asociación de xanela escollida</translation>
     </message>
     <message>
         <source>-</source>
@@ -3323,184 +3309,184 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Загаловак акна:</translation>
+        <translation>Título da xanela:</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation>Вы можаце выкарыстоўваць зорачку (*), каб супаставіць усё</translation>
+        <translation>Podes usar un asterisco (*) para coincidir con todo</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation>Усталяваць загаловак асацыяцыі вокнаў</translation>
+        <translation>Establecer o título da asociación de xanela</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation>Вы можаце выкарыстоўваць зорачку, каб супаставіць усё</translation>
+        <translation>Podes usar un asterisco para coincidir con todo</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>Выкарыстоўваць пэўную паслядоўнасць для гэтай асацыяцыі:</translation>
+        <translation>Usar unha secuencia específica para esta asociación:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation>Карыстальніцкая паслядоўнасць Аўтаўводу для гэтага акна</translation>
+        <translation>Secuencia personalizada de escritura automática para esta xanela</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>General</source>
-        <translation>Агульныя</translation>
+        <translation>Xerak</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>Схаваць гэты запіс ад пашырэння браўзера</translation>
+        <translation>Agochar esta entrada da extensión do navegador</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Прапусціць Аўтаадпраўку для гэтага запісу</translation>
+        <translation>Omitir Auto-Submit para esta entrada</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Выкарыстоўваць гэты запіс толькі з HTTP Basic Auth</translation>
+        <translation>Usar esta entrada só con autenticación básica HTTP</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation>Не выкарыстоўваць гэты запіс з HTTP Basic Auth</translation>
+        <translation>Non usar esta entrada con autenticación básica HTTP</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Дадаць</translation>
+        <translation>Engadir</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Рэдагаваць</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Гэтыя налады ўплываюць на паводзіны запісу з пашырэннем браўзера.</translation>
+        <translation>Estes axustes afectan ao comportamento da entrada coa extensión do navegador.</translation>
     </message>
     <message>
         <source>Additional URLs</source>
-        <translation>Дадатковыя URL-адрасы</translation>
+        <translation>URLs adicionais</translation>
     </message>
     <message>
         <source>Only send this entry to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Адпраўляць гэты запіс у браўзер толькі для дыялогаў HTTP Auth. Калі ўключана, звычайныя формы ўваходу не будуць паказваць гэты запіс для выбару.</translation>
+        <translation>Enviar esta entrada ao navegador só para diálogos de autenticación HTTP. Se está activado, os formularios de inicio de sesión normais non amosarán esta entrada para escolla.</translation>
     </message>
     <message>
         <source>Do not send this entry to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Не адпраўляць гэты запіс у браўзер для дыялогаў HTTP Auth. Калі ўключана, дыялогі HTTP Auth не будуць паказваць гэты запіс для выбару.</translation>
+        <translation>Non enviar esta entrada ao navegador para diálogos de autenticación HTTP. Se está activado, os diálogos de autenticación HTTP non amosarán esta entrada para escolla.</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Entry history selection</source>
-        <translation>Выбар гісторыі запісу</translation>
+        <translation>Escolla do historial da entrada</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>Паказаць запіс у абраным стане гісторыі</translation>
+        <translation>Amosar a entrada no estado de historial escollido</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Паказаць</translation>
+        <translation>Amosar</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>Аднавіць запіс да абранага стану гісторыі</translation>
+        <translation>Restaurar a entrada ao estado de historial escollido</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Аднавіць</translation>
+        <translation>Restaurar</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>Выдаліць абраны стан гісторыі</translation>
+        <translation>Eliminar o estado de historial escollido</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation>Выдаліць усю гісторыю</translation>
+        <translation>Eliminar todo o historial</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Выдаліць усё</translation>
+        <translation>Eliminar todo</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Edit Entry</source>
-        <translation>Рэдагаваць запіс</translation>
+        <translation>Editar entrada</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Поле нататак</translation>
+        <translation>Campo de notas</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation>Поле імя карыстальніка</translation>
+        <translation>Campo de usuario</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Поле тэрміну дзеяння</translation>
+        <translation>Campo de caducidade</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation>Шаблоны тэрміну дзеяння</translation>
+        <translation>Predefinicións de caducidade</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation>Шаблоны тэрміну дзеяння</translation>
+        <translation>Predefinicións de caducidade</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Шаблоны</translation>
+        <translation>Predefinicións</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation>Поле URL-адраса</translation>
+        <translation>Campo URL</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Спампаваць favicon для URL</translation>
+        <translation>Descargar favicon para a URL</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation>Поле назвы</translation>
+        <translation>Campo de título</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Поле пароля</translation>
+        <translation>Campo de contrasinal</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Пераключыць тэрмін дзеяння</translation>
+        <translation>Alternar caducidade</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>Спіс тэгаў</translation>
+        <translation>Lista de etiquetas</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>&amp;Імя карыстальніка:</translation>
+        <translation>&amp;Usuario:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation>&amp;Назва:</translation>
+        <translation>&amp;Título:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>&amp;Пароль:</translation>
+        <translation>&amp;Contrasinal:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
@@ -3508,512 +3494,512 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation>&amp;Нататкі:</translation>
+        <translation>&amp;Notas:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation>Пераключыць бачнасць нататак</translation>
+        <translation>Alternar visibilidade das notas</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation>Т&amp;эгі:</translation>
+        <translation>&amp;Etiquetas:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation>&amp;Тэрмін дзеяння:</translation>
+        <translation>C&amp;aduca:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Выдаліць ключ з агента, калі база даных будзе закрытая/заблакаваная</translation>
+        <translation>Eliminar a chave do axente ao pechar/bloquear a base de datos</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation>Каментарый</translation>
+        <translation>Comentario</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Дадаць ключ у агент, калі база даных будзе адкрытая/разблакаваная</translation>
+        <translation>Engadir a chave ao axente ao abrir/desbloquear a base de datos</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Расшыфраваць</translation>
+        <translation>Descifrar</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Адбітак</translation>
+        <translation>Pegada dixital</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Скапіяваць у буфер абмену</translation>
+        <translation>Copiar ó portapapeis</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Публічны ключ</translation>
+        <translation>Chave pública</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation>Прыватны ключ</translation>
+        <translation>Chave privada</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>Далучэнне</translation>
+        <translation>Anexo</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation>Вонкавы файл ключа</translation>
+        <translation>Ficheiro de chave externo</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>Дадаць у агент</translation>
+        <translation>Engadir ao axente</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>Выдаліць з агента</translation>
+        <translation>Eliminar do axente</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation>Вонкавы файл</translation>
+        <translation>Ficheiro externo</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation>Агляд файла ключа</translation>
+        <translation>Buscar ficheiro de chave</translation>
     </message>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Агляд…</translation>
+        <translation>Examinar…</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation type="unfinished"/>
+        <translation>Xerar</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation>Выбраць файл далучэння</translation>
+        <translation>Escoller ficheiro de anexo</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Патрабаваць пацверджання ад карыстальніка, калі гэты ключ выкарыстоўваецца</translation>
+        <translation>Requirir confirmación do usuario cando se use esta chave</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>н/д</translation>
+        <translation>n/d</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>Выдаліць ключ з агента пасля</translation>
+        <translation>Eliminar a chave do axente despois de</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation>Выдаліць ключ з агента пасля зададзенай колькасці секунд</translation>
+        <translation>Eliminar a chave do axente despois do número de segundos especificado</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation> секунд</translation>
+        <translation>segundos</translation>
     </message>
     <message>
         <source>Clear agent</source>
-        <translation>Ачысціць агент</translation>
+        <translation>Limpar axente</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Значок</translation>
+        <translation>Icona</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Уласцівасці</translation>
+        <translation>Propiedades</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Дадаць групу</translation>
+        <translation>Engadir grupo</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Рэдагаваць групу</translation>
+        <translation>Editar grupo</translation>
     </message>
     <message>
         <source>Group has unsaved changes</source>
-        <translation>У групе ёсць незахаваныя змены</translation>
+        <translation>O grupo ten trocos sen gardar</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Інтэграцыя з браўзерам</translation>
+        <translation>Integración co navegador</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Уключыць</translation>
+        <translation>Activar</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Адключыць</translation>
+        <translation>Desactivar</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Атрымаць у спадчыну ад бацькоўскай групы (%1)</translation>
+        <translation>Herdar do grupo pai (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
-        <translation>Гэтыя налады ўплываюць на паводзіны групы з пашырэннем браўзера.</translation>
+        <translation>Estes axustes afectan ao comportamento do grupo coa extensión do navegador.</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
-        <translation>Схаваць запісы ад пашырэння браўзера:</translation>
+        <translation>Agochar entradas da extensión do navegador:</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Схаваць запісы ад пашырэння браўзера для гэтай і падгруп</translation>
+        <translation>Alternar ocultación de entradas para este grupo e subgrupos</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
-        <translation>Прапусціць Аўтаадпраўку для запісаў:</translation>
+        <translation>Omitir Auto-Submit para entradas:</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Прапусціць Аўтаадпраўку для гэтай і падгруп</translation>
+        <translation>Alternar omisión de Auto-Submit para este grupo e subgrupos</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
-        <translation>Выкарыстоўваць запісы толькі з HTTP Basic Auth:</translation>
+        <translation>Usar entradas só con autenticación básica HTTP:</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Толькі HTTP Auth для гэтай і падгруп</translation>
+        <translation>Alternar só HTTP Auth para este grupo e subgrupos</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
-        <translation>Не выкарыстоўваць запісы з HTTP Basic Auth:</translation>
+        <translation>Non usar entradas con autenticación básica HTTP:</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Не выкарыстоўваць HTTP Auth для гэтай і падгруп</translation>
+        <translation>Alternar non usar HTTP Auth para este grupo e subgrupos</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation>Не ўлічваць субдамен WWW:</translation>
+        <translation>Omitir o subdominio WWW na coincidencia:</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation>Не ўлічваць субдамен WWW для гэтай і падгруп</translation>
+        <translation>Alternar omisión do subdominio WWW para este grupo e subgrupos</translation>
     </message>
     <message>
         <source>Restrict matching to given browser key:</source>
-        <translation>Абмежаваць супастаўленне зададзеным ключом браўзера:</translation>
+        <translation>Restrinxir coincidencia á chave de navegador indicada:</translation>
     </message>
     <message>
         <source>Restrict matching to given browser key toggle for this and sub groups</source>
-        <translation>Абмежаваць супастаўленне зададзеным ключом браўзера для гэтай і падгруп</translation>
+        <translation>Alternar restrición de coincidencia á chave de navegador para este grupo e subgrupos</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Sharing mode field</source>
-        <translation>Поле рэжыму абагульвання</translation>
+        <translation>Campo modo de compartición</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Поле пароля</translation>
+        <translation>Campo de contrasinal</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Тып:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation>Contrasinal:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation>Шлях:</translation>
+        <translation>Ruta:</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation>Поле шляху да файла абагульвання</translation>
+        <translation>Campo de ruta ao ficheiro compartido</translation>
     </message>
     <message>
         <source>Browse for share file</source>
-        <translation>Агляд файла абагульвання</translation>
+        <translation>Buscar ficheiro compartido</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Агляд…</translation>
+        <translation>Examinar…</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>Ачысціць палі</translation>
+        <translation>Limpar campos</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Ачысціць</translation>
+        <translation>Limpar</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation>Неактыўны</translation>
+        <translation>Inactivo</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Імпарт</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Экспарт</translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation>Сінхранізаваць</translation>
+        <translation>Sincronizar</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>Ваша версія KeePassXC не падтрымлівае абагульванне гэтага тыпу кантэйнера.
-Падтрымліваюцца пашырэнні: %1.</translation>
+        <translation>A túa versión de KeePassXC non admite compartir este tipo de contedor.
+As extensións admitidas son: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation>%1 ужо экспартуецца гэтай базай даных.</translation>
+        <translation>%1 xa está a ser exportado por esta base de datos.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation>%1 ужо імпартуецца гэтай базай даных.</translation>
+        <translation>%1 xa está a ser importado por esta base de datos.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 імпартуецца і экспартуецца рознымі групамі ў гэтай базе даных.</translation>
+        <translation>%1 está a ser importado e exportado por diferentes grupos nesta base de datos.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>KeeShare зараз адключаны. Вы можаце ўключыць імпарт/экспарт у наладах праграмы.</translation>
+        <translation>KeeShare está actualmente desactivado. Podes activar a importación/exportación nos axustes da aplicación.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Экспарт базы даных зараз адключаны ў наладах праграмы.</translation>
+        <translation>A exportación da base de datos está actualmente desactivada nos axustes da aplicación.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Імпарт базы даных зараз адключаны ў наладах праграмы.</translation>
+        <translation>A importación da base de datos está actualmente desactivada nos axustes da aplicación.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
-        <translation>Кантэйнер KeeShare</translation>
+        <translation>Contedor KeeShare</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation>Падпісаны кантэйнер KeeShare</translation>
+        <translation>Contedor KeeShare asinado</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>Выбраць крыніцу імпарту</translation>
+        <translation>Escoller orixe de importación</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation>Выбраць мэтавы файл для экспарту</translation>
+        <translation>Escoller destino de exportación</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation>Выбраць файл для імпарту/экспарту</translation>
+        <translation>Escoller ficheiro de importación/exportación</translation>
     </message>
     <message>
         <source>Maintain group structure with shared database</source>
-        <translation type="unfinished"/>
+        <translation>Manter a estrutura de grupos coa base de datos compartida</translation>
     </message>
     <message>
         <source>Keep Group Structure</source>
-        <translation type="unfinished"/>
+        <translation>Manter estrutura de grupos</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Edit Group</source>
-        <translation>Рэдагаваць групу</translation>
+        <translation>Editar grupo</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Пераключыць тэрмін дзеяння</translation>
+        <translation>Alternar caducidade</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation>Тэрмін дзеяння:</translation>
+        <translation>Caduca:</translation>
     </message>
     <message>
         <source>Name field</source>
-        <translation>Поле назвы</translation>
+        <translation>Campo de nome</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Поле тэрміну дзеяння</translation>
+        <translation>Campo de caducidade</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>Выкарыстоўваць паслядоўнасць Аўтаўводу па змаўчанні з бацькоўскай групы</translation>
+        <translation>Usar a secuencia escritura automática predeterminada do grupo pai</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Аўтаўвод:</translation>
+        <translation>Escritura automática:</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>Пошук:</translation>
+        <translation>Buscar:</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Пераключыць Аўтаўвод для гэтай і падгруп</translation>
+        <translation>Alternar escritura automática para este grupo e subgrupos</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Нататкі:</translation>
+        <translation>Notas:</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation>Поле паслядоўнасці Аўтаўводу па змаўчанні</translation>
+        <translation>Campo de secuencia escritura automática predeterminado</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Поле нататак</translation>
+        <translation>Campo de notas</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Назва:</translation>
+        <translation>Nome:</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>Усталяваць паслядоўнасць Аўтаўводу па змаўчанні</translation>
+        <translation>Establecer secuencia escritura automática predeterminada</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation>Пераключыць пошук для гэтай і падгруп</translation>
+        <translation>Alternar busca para este grupo e subgrupos</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Выкарыстоўваць значок па змаўчанні</translation>
+        <translation>Usar icona predeterminada</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Выкарыстоўваць карыстальніцкі значок</translation>
+        <translation>Usar icona personalizada</translation>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation>Выбраць значок…</translation>
+        <translation>Escoller icona…</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
-        <translation>Усталяваць URL-адрас для пошуку favicon</translation>
+        <translation>Establecer a URL para buscar un favicon</translation>
     </message>
     <message>
         <source>Favicon URL</source>
-        <translation>URL-адрас favicon</translation>
+        <translation>URL do favicon</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Спампаваць favicon для URL</translation>
+        <translation>Descargar favicon para a URL</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Спампаваць favicon</translation>
+        <translation>Descargar favicon</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation>Прымяніць выбраны значок да падгруп і запісаў</translation>
+        <translation>Aplicar a icona escollida a subgrupos e entradas</translation>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation>Прымяніць значок да…</translation>
+        <translation>Aplicar icona a…</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
-        <translation>Прымяніць толькі да гэтай групы</translation>
+        <translation>Aplicar só a este grupo</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>Таксама прымяніць да даччыных груп</translation>
+        <translation>Aplicar tamén a grupos fillos</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>Таксама прымяніць да даччыных запісаў</translation>
+        <translation>Aplicar tamén a entradas fillas</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>Таксама прымяніць да ўсіх даччыных элементаў</translation>
+        <translation>Aplicar tamén a todos os descendentes</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Не ўдалося атрымаць favicon.</translation>
+        <translation>Non se puido obter o favicon.</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation>Выбраны існуючы значок.</translation>
+        <translation>Icona existente escollida.</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Выявы</translation>
+        <translation>Imaxes</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>Выбраць выяву(ы)</translation>
+        <translation>Escoller imaxe(s)</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Паспяхова загружаны %1 з %n значка</numerusform><numerusform>Паспяхова загружаны %1 з %n значкоў</numerusform><numerusform>Паспяхова загружаны %1 з %n значкоў</numerusform><numerusform>Паспяхова загружаны %1 з %n значкоў</numerusform></translation>
+        <translation><numerusform>Cargáronse correctamente %1 de %n icona(s)</numerusform><numerusform>Cargáronse correctamente %1 de %n icona(s)</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
-        <translation>Ніводны значок не быў загружаны</translation>
+        <translation>Non se cargou ningunha icona</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>У базе даных ужо існуе %n значок</numerusform><numerusform>У базе даных ужо існуюць %n значкі</numerusform><numerusform>У базе даных ужо існуюць %n значкоў</numerusform><numerusform>У базе даных ужо існуюць %n значкоў</numerusform></translation>
+        <translation><numerusform>%n icona(s) xa existen na base de datos</numerusform><numerusform>%n icona(s) xa existen na base de datos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>Не атрымалася загрузіць наступны значок:</numerusform><numerusform>Не атрымалася загрузіць наступныя значкі:</numerusform><numerusform>Не атрымалася загрузіць наступныя значкі:</numerusform><numerusform>Не атрымалася загрузіць наступныя значкі:</numerusform></translation>
+        <translation><numerusform>Fallaron as seguintes icona(s):</numerusform><numerusform>Fallaron as seguintes icona(s):</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
-        <translation>Вы можаце ўключыць сэрвіс значкоў вэб-сайтаў DuckDuckGo у раздзеле «Налады праграмы» -&gt; «Бяспека»</translation>
+        <translation>Podes activar o servizo de iconas web de DuckDuckGo en Axustes da aplicación -&gt; Seguridade</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Створана:</translation>
+        <translation>Creado:</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation>Дата і час стварэння</translation>
+        <translation>Data e hora de creación</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Зменена:</translation>
+        <translation>Modificado:</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation>Дата і час змены</translation>
+        <translation>Data e hora de modificación</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -4021,330 +4007,333 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation>Унікальны ID</translation>
+        <translation>ID único</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Даныя плагіна</translation>
+        <translation>Datos do complemento</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation>Даныя плагіна</translation>
+        <translation>Datos do complemento</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation>Выдаліць выбраныя даныя плагіна</translation>
+        <translation>Eliminar os datos de complemento escollidos</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Выдаліць даныя плагіна?</translation>
+        <translation>Eliminar datos do complemento?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Вы сапраўды жадаеце выдаліць выбраныя даныя плагіна?
-Гэта можа прывесці да няспраўнасці плагінаў.</translation>
+        <translation>Seguro que queres eliminar os datos do complemento escollidos?
+Isto pode causar cos complementos afectados deixen de funcionar correctamente.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Ключ</translation>
+        <translation>Chave</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Значэнне</translation>
+        <translation>Valor</translation>
     </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Клон</translation>
+        <translation>%1 - Clonar</translation>
     </message>
     <message>
         <source>Passkey</source>
-        <translation>Ключ доступу</translation>
+        <translation>Chave de acceso</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
-        <translation>Несапраўдны тып канвертацыі: %1</translation>
+        <translation>Tipo de conversión non válido: %1</translation>
     </message>
     <message>
         <source>Invalid conversion syntax: %1</source>
-        <translation>Несапраўдны сінтаксіс канвертацыі: %1</translation>
+        <translation>Sintaxe de conversión non válida: %1</translation>
     </message>
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation>Несапраўдны сінтаксіс рэгулярнага выраза %1
+        <translation>Sintaxe de expresión regular non válida %1
 %2</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Custom Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Atributos personalizados</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"/>
+        <translation>Icona</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>Cor</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>Caducidade</translation>
     </message>
     <message>
         <source>TOTP</source>
-        <translation type="unfinished"/>
+        <translation>TOTP</translation>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation type="unfinished"/>
+        <translation>Datos personalizados</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"/>
+        <translation>Anexos</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>escritura automática</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Etiquetas</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation>Немагчыма адкрыць файл «%1»</translation>
+        <translation>Non se pode abrir o ficheiro &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Памер</translation>
+        <translation>Tamaño</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Далучэнні</translation>
+        <translation>Anexos</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation>Дадаць новае далучэнне</translation>
+        <translation>Engadir novo anexo</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>Выдаліць выбранае далучэнне</translation>
+        <translation>Eliminar o anexo escollido</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation>Адкрыць выбранае далучэнне</translation>
+        <translation>Abrir o anexo escollido</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Адкрыць</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation>Захаваць выбранае далучэнне на дыск</translation>
+        <translation>Gardar o anexo escollido no disco</translation>
     </message>
     <message>
         <source>Select files</source>
-        <translation>Выбраць файлы</translation>
+        <translation>Escoller ficheiros</translation>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation>Пацвердзіць выдаленне</translation>
+        <translation>Confirmar eliminación</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Вы ўпэўнены, што хочаце выдаліць %n далучэнне?</numerusform><numerusform>Вы ўпэўнены, што хочаце выдаліць %n далучэнні?</numerusform><numerusform>Вы ўпэўнены, што хочаце выдаліць %n далучэнняў?</numerusform><numerusform>Вы ўпэўнены, што хочаце выдаліць %n далучэнняў?</numerusform></translation>
+        <translation><numerusform>Seguro que queres eliminar %n anexo(s)?</numerusform><numerusform>Seguro que queres eliminar %n anexo(s)?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>Захаваць далучэнні</translation>
+        <translation>Gardar anexos</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>Немагчыма стварыць каталог:
+        <translation>Non se puido crear o directorio:
 %1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Вы ўпэўнены, што хочаце перазапісаць існуючы файл «%1» далучаным файлам?</translation>
+        <translation>Seguro que queres sobrescribir o ficheiro existente &quot;%1&quot; co anexo?
+Confirmar sobrescritura</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation>Пацвердзіць перазапіс</translation>
+        <translation>Confirmar sobrescritura</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>Немагчыма захаваць далучэнні:
+        <translation>Non se puideron gardar os anexos:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>Не ўдалося адкрыць далучаны файл:
+        <translation>Non se puido abrir o anexo:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Не ўдалося адкрыць далучаныя файлы:
+        <translation>Non se puideron abrir os anexos:
 %1</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>Не ўдалося адкрыць файл: %1</numerusform><numerusform>Не ўдалося адкрыць файлы: %1</numerusform><numerusform>Не ўдалося адкрыць файлы: %1</numerusform><numerusform>Не ўдалося адкрыць файлы: %1</numerusform></translation>
+        <translation><numerusform>Non se puideron abrir o ficheiro(s):
+%1</numerusform><numerusform>Non se puideron abrir os ficheiro(s):
+%1</numerusform></translation>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
-        <translation>Пацвердзіць замену далучанага файла</translation>
+        <translation>Confirmar sobrescritura de anexo</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
-        <translation>Пацвердзіць далучаны файл</translation>
+        <translation>Confirmar anexo</translation>
     </message>
     <message>
         <source>%1 is a big file (%2 MB).
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 — вялікі файл (%2 МБ).
-Ваша база даных можа стаць вельмі вялікай, што пагоршыць прадукцыйнасць.
+        <translation>%1 é un ficheiro grande (%2 MB).
+A túa base de datos pode volverse moi grande e reducir o rendemento.
 
-Вы сапраўды хочаце дадаць гэты файл?</translation>
+Seguro que queres engadir este ficheiro?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation>Далучаны файл зменены</translation>
+        <translation>Anexo modificado</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation>Далучаны файл «%1» зменены.
-Вы хочаце захаваць змены ў базе даных?</translation>
+        <translation>O anexo &apos;%1&apos; foi modificado.
+Queres gardar os trocos na túa base de datos?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation>Не ўдалося захаваць далучаны файл</translation>
+        <translation>Fallou ao gardar o anexo</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation>Не ўдалося захаваць зменены далучаны файл.
-Памылка: %1</translation>
+        <translation>Fallou ao gardar o anexo actualizado.
+Erro: %1</translation>
     </message>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
-        <translation>Далучаны файл «%1» ужо існуе.
-Ці жадаеце вы замяніць існы далучаны файл?</translation>
+        <translation>O anexo &quot;%1&quot; xa existe.
+Queres sobrescribir o anexo existente?</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Папярэдні прагляд</translation>
+        <translation>Vista previa</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Рэдагаваць</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <source>New Text Document</source>
-        <translation>Новы тэкставы дакумент</translation>
+        <translation>Novo documento de texto</translation>
     </message>
     <message>
         <source>Add file…</source>
-        <translation>Дадаць файл…</translation>
+        <translation>Engadir ficheiro…</translation>
     </message>
     <message>
         <source>Load from Disk…</source>
-        <translation>Загрузіць з дыска…</translation>
+        <translation>Cargar dende o disco…</translation>
     </message>
     <message>
         <source>Save…</source>
-        <translation>Захаваць…</translation>
+        <translation>Gardar...</translation>
     </message>
     <message>
         <source>New Attachment</source>
-        <translation type="unfinished"/>
+        <translation>Novo anexo</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nome</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Current (%1)</source>
-        <translation>Цяперашняя (%1)</translation>
+        <translation>Actual (%1)</translation>
     </message>
     <message>
         <source>Last modified</source>
-        <translation>Апошняя змена</translation>
+        <translation>Derradeira modificación</translation>
     </message>
     <message>
         <source>Age</source>
-        <translation>Узрост</translation>
+        <translation>Antigüidade</translation>
     </message>
     <message>
         <source>Difference</source>
-        <translation>Адрозненне</translation>
+        <translation>Diferenza</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Памер</translation>
+        <translation>Tamaño</translation>
     </message>
 </context>
 <context>
@@ -4352,27 +4341,27 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Спасылка:</translation>
+        <translation>Ref: </translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Ніколі</translation>
+        <translation>Xamais</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Імя карыстальніка</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>URL</source>
@@ -4380,98 +4369,98 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Нататкі</translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Тэрмін дзеяння</translation>
+        <translation>Caduca</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Створана</translation>
+        <translation>Creado</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Зменена</translation>
+        <translation>Modificado</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Далучаныя файлы</translation>
+        <translation>Anexos</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Памер</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation>Назва групы</translation>
+        <translation>Nome do grupo</translation>
     </message>
     <message>
         <source>Entry title</source>
-        <translation>Назва запісу</translation>
+        <translation>Título da entrada</translation>
     </message>
     <message>
         <source>Password Strength</source>
-        <translation>Моцнасць пароля</translation>
+        <translation>Fortaleza do contrasinal</translation>
     </message>
     <message>
         <source>Entry notes</source>
-        <translation>Нататкі запісу</translation>
+        <translation>Notas da entrada</translation>
     </message>
     <message>
         <source>Entry expires at</source>
-        <translation>Запіс дзейнічае да</translation>
+        <translation>A entrada caduca en</translation>
     </message>
     <message>
         <source>Creation date</source>
-        <translation>Дата стварэння</translation>
+        <translation>Data de creación</translation>
     </message>
     <message>
         <source>Last modification date</source>
-        <translation>Дата апошняй змены</translation>
+        <translation>Data da derradeira modificación</translation>
     </message>
     <message>
         <source>Attached files</source>
-        <translation>Далучаныя файлы</translation>
+        <translation>Ficheiros anexos</translation>
     </message>
     <message>
         <source>Entry size</source>
-        <translation>Памер запісу</translation>
+        <translation>Tamaño da entrada</translation>
     </message>
     <message>
         <source>Has attachments</source>
-        <translation>Ёсць далучаныя файлы</translation>
+        <translation>Ten anexos</translation>
     </message>
     <message>
         <source>Has TOTP</source>
-        <translation>Ёсць TOTP</translation>
+        <translation>Ten TOTP</translation>
     </message>
     <message>
         <source>Background Color</source>
-        <translation>Колер фону</translation>
+        <translation>Cor de fondo</translation>
     </message>
     <message>
         <source>Group Path</source>
-        <translation>Шлях да групы</translation>
+        <translation>Ruta do grupo</translation>
     </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
     <message>
         <source>Display current TOTP value</source>
-        <translation>Паказаць бягучае значэнне TOTP</translation>
+        <translation>Amosar o valor actual de TOTP</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Зачыніць</translation>
+        <translation>Pechar</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Агульныя</translation>
+        <translation>Xerak</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>URL</source>
@@ -4479,221 +4468,220 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Тэрмін дзеяння</translation>
+        <translation>Caducidade</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Цэтлікі</translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>Спіс цэтлікаў</translation>
+        <translation>Lista de etiquetas</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Імя карыстальніка</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Нататкі</translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Пашыраныя</translation>
+        <translation>Avanzado</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Далучаныя файлы</translation>
+        <translation>Anexos</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Атрыбуты</translation>
+        <translation>Atributos</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Аўтаматычны ўвод</translation>
+        <translation>Autocompletar</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation>Парадак па змаўчанні</translation>
+        <translation>Secuencia predeterminada</translation>
     </message>
     <message>
         <source>Window</source>
-        <translation>Акно</translation>
+        <translation>Xanela</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Парадак</translation>
+        <translation>Secuencia</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation>Пошук</translation>
+        <translation>Buscando</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Абагуліць</translation>
+        <translation>Compartir</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Шукаць</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Ачысціць</translation>
+        <translation>Limpar</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Ніколі</translation>
+        <translation>Xamais</translation>
     </message>
     <message>
         <source>Double click to copy value</source>
-        <translation>Двойчы пстрыкніце, каб скапіяваць значэнне</translation>
+        <translation>Dobre clic para copiar o valor</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Уключана</translation>
+        <translation>Activado</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Выключана</translation>
+        <translation>Desactivado</translation>
     </message>
     <message>
         <source>Double click to copy to clipboard</source>
-        <translation>Двойчы пстрыкніце, каб скапіяваць у буфер абмену</translation>
+        <translation>Dobre clic para copiar ao portapapeis</translation>
     </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
-        <translation>Няправільны URL</translation>
+        <translation>URL non válida</translation>
     </message>
     <message>
         <source>Duplicate URL</source>
-        <translation>Паўторны URL</translation>
+        <translation>URL duplicada</translation>
     </message>
 </context>
 <context>
     <name>EntryView</name>
     <message>
         <source>Fit to window</source>
-        <translation>Па памеры акна</translation>
+        <translation>Axustar á xanela</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Па памеры змесціва</translation>
+        <translation>Axustar ao contido</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Скінуць да змаўчання</translation>
+        <translation>Restablecer por defecto</translation>
     </message>
     <message numerus="yes">
         <source>+ %1 entry(s)...</source>
-        <translation><numerusform>+ %1 запіс...</numerusform><numerusform>+ %1 запісы...</numerusform><numerusform>+ %1 запісаў...</numerusform><numerusform>+ %1 запісаў...</numerusform></translation>
+        <translation><numerusform>%1 entrada(s)...</numerusform><numerusform>%1 entrada(s)...</numerusform></translation>
     </message>
 </context>
 <context>
     <name>ExportDialog</name>
     <message>
         <source>Export options</source>
-        <translation>Параметры экспарту</translation>
+        <translation>Opcións de exportación</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Сартаваць запісы па...</translation>
+        <translation>Ordenar entradas por...</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>Вы збіраецеся экспартаваць базу даных у незашыфраваны файл.
-Гэта зробіць вашы паролі і канфідэнцыйную інфармацыю ўразлівымі!
-</translation>
+        <translation>Estás a piques de exportar a túa base de datos a un ficheiro sen cifrar.
+Isto deixará os teus contrasinais e información sensible vulnerables!</translation>
     </message>
     <message>
         <source>database order</source>
-        <translation>парадак у базе даных</translation>
+        <translation>Orde da base de datos</translation>
     </message>
     <message>
         <source>name (ascending)</source>
-        <translation>імя (па ўзрастанні)</translation>
+        <translation>Nome (ascendente)</translation>
     </message>
     <message>
         <source>name (descending)</source>
-        <translation>імя (па змяншэнні)</translation>
+        <translation>Nome (descendente)</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>Экспартаваць базу даных у HTML-файл</translation>
+        <translation>Exportar base de datos a ficheiro HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation>HTML-файл</translation>
+        <translation>Ficheiro HTML</translation>
     </message>
     <message>
         <source>invalid sort order</source>
-        <translation type="unfinished"/>
+        <translation>Orde de clasificación non válida</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::DBusMgr</name>
     <message>
         <source>Failed to deliver message</source>
-        <translation>Не ўдалося даставіць паведамленне</translation>
+        <translation>Fallou ao entregar a mensaxe</translation>
     </message>
     <message>
         <source>Failed to send reply on DBus</source>
-        <translation>Не ўдалося адправіць адказ праз DBus</translation>
+        <translation>Fallou ao enviar a resposta en DBus</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown PID</comment>
-        <translation>Невядома</translation>
+        <translation>Descoñecido</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown executable path</comment>
-        <translation>Невядома</translation>
+        <translation>Descoñecido</translation>
     </message>
     <message>
         <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
         <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation>&lt;i&gt;PID: %1, Выканаўчы файл: %2&lt;/i&gt;</translation>
+        <translation>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</translation>
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Працуе іншая служба сакрэтаў (%1).&lt;br/&gt;Калі ласка, спыніце/выдаліце яе, перш чым паўторна ўключыць інтэграцыю службы сакрэтаў.</translation>
+        <translation>Outro servizo secreto está en execución (%1).&lt;br/&gt; Deteno/elímao antes de volver activar a integración de Secret Service.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Не ўдалося зарэгістраваць службу DBus па адрасе %1.&lt;br/&gt;</translation>
+        <translation>Fallou ao rexistrar o servizo DBus en %1.&lt;br/&gt;</translation>
     </message>
     <message>
         <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation>Не ўдалося зарэгістраваць службу ў DBus па шляху «%1»</translation>
+        <translation>Fallou ao rexistrar o servizo en DBus no camiño &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
-        <translation>Не ўдалося зарэгістраваць базу даных у DBus пад імем «%1»</translation>
+        <translation>Fallou ao rexistrar a base de datos en DBus co nome &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register session on DBus at path &apos;%1&apos;</source>
-        <translation>Не ўдалося зарэгістраваць сесію ў DBus па шляху «%1»</translation>
+        <translation>Fallou ao rexistrar a sesión en DBus no camiño &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register item on DBus at path &apos;%1&apos;</source>
-        <translation>Не ўдалося зарэгістраваць элемент у DBus па шляху «%1»</translation>
+        <translation>Fallou ao rexistrar o elemento en DBus no camiño &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation>Не ўдалося зарэгістраваць аб&apos;ект запыту ў DBus па шляху «%1»</translation>
+        <translation>Fallou ao rexistrar o elemento en DBus no camiño &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Запіс «%1» з базы даных «%2» быў выкарыстаны %3</translation>
+        <translation>A entrada &quot;%1&quot; da base de datos &quot;%2&quot; foi usada por %3</translation>
     </message>
 </context>
 <context>
@@ -4701,29 +4689,30 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n запіс быў выкарыстаны %1</numerusform><numerusform>%n запісы былі выкарыстаны %1</numerusform><numerusform>%n запісаў было выкарыстана %1</numerusform><numerusform>%n запісаў было выкарыстана %1</numerusform></translation>
+        <translation><numerusform>%n entrada(s) foi/foron usada(s) por %1</numerusform><numerusform>%n entrada(s) foi/foron usada(s) por %1</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsClientModel</name>
     <message>
         <source>Unknown</source>
-        <translation>Невядома</translation>
+        <translation>Descoñecido</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Няма існуючага/недаступнага шляху да выканаўчага файла. Калі ласка, пераправерце, ці кліент легітымны.</translation>
+        <translation>O camiño non existe ou non é accesible.
+Por favor, revise se o cliente é lexítimo.</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
     <message>
         <source>Unlock to show</source>
-        <translation>Разблакіраваць, каб паказаць</translation>
+        <translation>Desbloquear para amosar</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Ніводнага</translation>
+        <translation>Ningún</translation>
     </message>
 </context>
 <context>
@@ -4737,26 +4726,26 @@ This will leave your passwords and sensitive information vulnerable!
     <name>FdoSecretsPlugin</name>
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
-        <translation>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</translation>
+        <translation>&lt;b&gt;Fdo Secret Service: &lt;/b&gt; %1</translation>
     </message>
 </context>
 <context>
     <name>GlobalShortcutsPortal</name>
     <message>
         <source>KeePassXC - Global Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Atallos Globais</translation>
     </message>
     <message>
         <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
-        <translation type="unfinished"/>
+        <translation>O Portal de Escritorio XDG para atallos globais non está dispoñible neste sistema</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
-        <translation type="unfinished"/>
+        <translation>O atallo global de Auto-tecleo xa está configurado. Para cambialo, abre a túa configuración de sistema e vai á sección de atallos de teclado ou aplicacións</translation>
     </message>
     <message>
         <source>Trigger global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Disparador global de Auto-Tecleo</translation>
     </message>
 </context>
 <context>
@@ -4764,39 +4753,39 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation>[пуста]</translation>
+        <translation>[baleiro]</translation>
     </message>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Клон</translation>
+        <translation>%1 - Clonar</translation>
     </message>
 </context>
 <context>
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation>Збой анлайн-праверкі пароля</translation>
+        <translation>Fallou a validación en liña do contrasinal</translation>
     </message>
 </context>
 <context>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Спампаваць значкі сайтаў</translation>
+        <translation>Descargar favicons</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation>Праблемы са спампоўкай значкоў?
-Вы можаце ўключыць службу значкоў вэб-сайтаў DuckDuckGo ў раздзеле бяспекі налад праграмы.</translation>
+        <translation>Tes problemas descargando iconas?
+Podes activar o servizo de iconas web de DuckDuckGo na sección de seguridade dos axustes da aplicación.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Зачыніць</translation>
+        <translation>Pechar</translation>
     </message>
     <message>
         <source>URL</source>
@@ -4804,143 +4793,143 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Status</source>
-        <translation>Статус</translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation>Калі ласка, пачакайце, апрацоўваецца спіс запісаў…</translation>
+        <translation>Agarda, procesando lista de entradas…</translation>
     </message>
     <message>
         <source>Downloading…</source>
-        <translation>Спампоўваецца…</translation>
+        <translation>Descargando…</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>ОК</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Already Exists</source>
-        <translation>Ужо існуе</translation>
+        <translation>Xa existe</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation>Збой спампоўвання</translation>
+        <translation>Descarga fallida</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
-        <translation>Спампоўка значкоў (%1/%2)…</translation>
+        <translation>Descargando favicons (%1/%2)…</translation>
     </message>
 </context>
 <context>
     <name>ImageAttachmentsWidget</name>
     <message>
         <source>Zoom:</source>
-        <translation>Маштаб:</translation>
+        <translation>Zoom:</translation>
     </message>
     <message>
         <source>Fit</source>
-        <translation type="unfinished"/>
+        <translation>Axustar</translation>
     </message>
 </context>
 <context>
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation>Майстар імпарту</translation>
+        <translation>Asistente de importación</translation>
     </message>
 </context>
 <context>
     <name>ImportWizardPageReview</name>
     <message>
         <source>WizardPage</source>
-        <translation>Старонка майстра</translation>
+        <translation>Páxina do asistente</translation>
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation>Колькасць запісаў: %1</translation>
+        <translation>Número de entradas: %1</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Імя карыстальніка</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>Url</source>
-        <translation>URL</translation>
+        <translation>Url</translation>
     </message>
     <message>
         <source>Could not load key file.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido cargar o ficheiro de chave.</translation>
     </message>
     <message>
         <source>Could not open remote database. Password or key file may be incorrect.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido abrir a base de datos remota. O contrasinal ou o ficheiro de chave poden ser incorrectos.</translation>
     </message>
 </context>
 <context>
     <name>ImportWizardPageSelect</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation>Выбар файла для імпарту</translation>
+        <translation>Escolla de ficheiro de importación</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation>Contrasinal:</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Файл-ключ:</translation>
+        <translation>Ficheiro de chave:</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Агляд…</translation>
+        <translation>Examinar…</translation>
     </message>
     <message>
         <source>Import Into:</source>
-        <translation>Імпартаваць у:</translation>
+        <translation>Importar en:</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Новая база даных</translation>
+        <translation>Nova base de datos</translation>
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation>Няма даступных разблакіраваных баз даных</translation>
+        <translation>Non hai bases de datos desbloqueadas dispoñibles</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation>Існая база даных:</translation>
+        <translation>Base de datos existente:</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation>Файл для імпарту:</translation>
+        <translation>Ficheiro de importación:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation>Значэнні, падзеленыя коскамі (.csv)</translation>
+        <translation>Valores separados por comas (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation>Экспарт 1Password (.1pux)</translation>
+        <translation>Exportación de 1Password (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation>Сховішча 1Password (.opvault)</translation>
+        <translation>Cofre de 1Password (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
@@ -4948,47 +4937,47 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation>База даных KeePass 1 (.kdb)</translation>
+        <translation>Base de datos KeePass 1 (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
-        <translation>Адкрыць OPVault</translation>
+        <translation>Abrir OPVault</translation>
     </message>
     <message>
         <source>Select import file</source>
-        <translation>Выбраць файл для імпарту</translation>
+        <translation>Escoller ficheiro de importación</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Файлы-ключы</translation>
+        <translation>Ficheiros de chave</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Выбраць файл-ключ</translation>
+        <translation>Escoller ficheiro de chave</translation>
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation>Значэнні, падзеленыя коскамі</translation>
+        <translation>Valores separados por comas</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation>Экспарт 1Password</translation>
+        <translation>No entry uuid found</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation>Экспарт Bitwarden JSON</translation>
+        <translation>Exportación JSON de Bitwarden</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation>Сховішча 1Password</translation>
+        <translation>Cofre de 1Password</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation>База даных KeePass1</translation>
+        <translation>Base de datos KeePass1</translation>
     </message>
     <message>
         <source>Proton Pass (.json)</source>
@@ -4996,23 +4985,23 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Proton Pass JSON Export</source>
-        <translation>Экспарт Proton Pass JSON</translation>
+        <translation>Exportación JSON de Proton Pass</translation>
     </message>
     <message>
         <source>Temporary Database</source>
-        <translation type="unfinished"/>
+        <translation>Base de datos temporal</translation>
     </message>
     <message>
         <source>Command:</source>
-        <translation type="unfinished"/>
+        <translation>Comando:</translation>
     </message>
     <message>
         <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
-        <translation type="unfinished"/>
+        <translation>p.ex.: &quot;sftp user@hostname&quot; ou &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
     </message>
     <message>
         <source>Input:</source>
-        <translation type="unfinished"/>
+        <translation>Entrada:</translation>
     </message>
     <message>
         <source>e.g.:
@@ -5022,59 +5011,65 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last commend `exit` has to be sent
          </source>
-        <translation type="unfinished"/>
+        <translation>p.ex.:
+obter DatabaseOnRemote.kdbx {TEMP_DATABASE}
+saír
+---
+{TEMP_DATABASE} úsase como marcador para almacenar a base de datos nunha localización temporal
+O comando ten que rematar. No caso de `sftp` como derradeiro comando debe enviarse `exit`
+ </translation>
     </message>
     <message>
         <source>Remote Database (.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>Base de datos remota (.kdbx)</translation>
     </message>
 </context>
 <context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Зачыніць</translation>
+        <translation>&amp;Pechar</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation>Зачыніць паведамленне</translation>
+        <translation>Pechar mensaxe</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation>Адсутнічаюць загалоўкі базы даных</translation>
+        <translation>Faltan cabeceiras da base de datos</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>Не ўдалося разлічыць ключ базы даных</translation>
+        <translation>Non se pode calcular a chave da base de datos</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Не ўдалося выдаць запыт-адказ: %1</translation>
+        <translation>Non se pode emitir desafío-resposta: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Былі пададзены няправільныя ўліковыя даныя, паспрабуйце яшчэ раз.
-Калі гэта паўторыцца, магчыма, ваш файл базы даных пашкоджаны.</translation>
+        <translation>Credenciais non válidas; téntao de novo.
+Se isto se repite, o ficheiro da base de datos pode estar corrompido.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation>Загаловак не супадае з хэшам</translation>
+        <translation>A cabeceira non coincide co hash</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Няправільны памер ідэнтыфікатара загалоўка</translation>
+        <translation>Tamaño de ID de cabeceira non válido</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Няправільная даўжыня поля загалоўка: поле %1</translation>
+        <translation>Lonxitude de campo de cabeceira non válida: campo %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Няправільная даўжыня даных загалоўка: поле %1, чакалася %2, знойдзена %3</translation>
+        <translation>Lonxitude de datos de cabeceira non válida: campo %1, esperábanse %2, atopáronse %3</translation>
     </message>
 </context>
 <context>
@@ -5082,758 +5077,758 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Няправільны памер вектара ініцыялізацыі сіметрычнага шыфра.</translation>
+        <translation>Tamaño de IV do cifrado simétrico non válido</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Не ўдалося выдаць запыт-адказ: %1</translation>
+        <translation>Non se pode emitir desafío-resposta: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>Не ўдалося разлічыць ключ базы даных</translation>
+        <translation>Non se pode calcular a chave da base de datos</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>адсутнічаюць загалоўкі базы даных</translation>
+        <translation>Faltan cabeceiras da base de datos</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Не ўдалося разлічыць ключ базы даных: %1</translation>
+        <translation>Non se pode calcular a chave da base de datos: %1</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Няправільны памер кантрольнай сумы загалоўка</translation>
+        <translation>Tamaño de suma de verificación de cabeceira non válido</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>Несупадзенне SHA256 загалоўка</translation>
+        <translation>Incompatibilidade de SHA256 da cabeceira</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Былі пададзены няправільныя ўліковыя даныя, паспрабуйце яшчэ раз.
-Калі гэта паўторыцца, магчыма, ваш файл базы даных пашкоджаны.</translation>
+        <translation>Credenciais non válidas; téntao de novo.
+Se isto se repite, o ficheiro da base de datos pode estar corrompido.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation>(несупадзенне HMAC)</translation>
+        <translation>(Incompatibilidade HMAC)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>Невядомы шыфр</translation>
+        <translation>Cifrado descoñecido</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Няправільны памер ідэнтыфікатара загалоўка</translation>
+        <translation>Tamaño de ID de cabeceira non válido</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Няправільная даўжыня поля загалоўка: поле %1</translation>
+        <translation>Lonxitude de campo de cabeceira non válida: campo %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Няправільная даўжыня даных загалоўка: поле %1, чакалася %2, знойдзена %3</translation>
+        <translation>Lonxitude de datos de cabeceira non válida: campo %1, esperábanse %2, atopáronse %3</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Не ўдалося адкрыць буфер для параметраў KDF у загалоўку</translation>
+        <translation>Fallo ao abrir o búfer para os parámetros KDF na cabeceira</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Непадтрымліваемая функцыя вывядзення ключа (KDF) або няправільныя параметры</translation>
+        <translation>Función de derivación de chave (KDF) non soportada ou parámetros non válidos</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>У файле KDBX4 знойдзены састарэлыя палі загалоўка.</translation>
+        <translation>Atopáronse campos de cabeceira antigos nun ficheiro KDBX4</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Няправільны памер ідэнтыфікатара ўнутранага загалоўка</translation>
+        <translation>Tamaño de ID da cabeceira interna non válido</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation>Няправільная даўжыня поля ўнутранага загалоўка: поле %1</translation>
+        <translation>Lonxitude de campo da cabeceira interna non válida: campo %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation>Няправільная даўжыня даных унутранага загалоўка: поле %1, чакалася %2, знойдзена %3</translation>
+        <translation>Lonxitude de datos da cabeceira interna non válida: campo %1, esperábanse %2, atopáronse %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Няправільны памер унутраных двайковых даных загалоўка</translation>
+        <translation>Tamaño binario da cabeceira interna non válido</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Непадтрымліваемая версія карты варыянтаў KeePass.</translation>
+        <translation>Versión do mapa de variantes de KeePass non soportada</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня імя запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do nome da entrada do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільныя даныя імя запісу ў карце варыянтаў</translation>
+        <translation>Datos do nome da entrada do mapa de variantes non válidos</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня значэння запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do valor da entrada do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільныя даныя значэння запісу ў карце варыянтаў</translation>
+        <translation>Datos do valor da entrada do mapa de variantes non válidos</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня значэння Bool-запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do valor da entrada Bool do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня значэння Int32-запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do valor da entrada Int32 do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня значэння UInt32-запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do valor da entrada UInt32 do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня значэння Int64-запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do valor da entrada Int64 do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільная даўжыня значэння UInt64-запісу ў карце варыянтаў</translation>
+        <translation>Lonxitude do valor da entrada UInt64 do mapa de variantes non válida</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільны тып запісу ў карце варыянтаў</translation>
+        <translation>Tipo de entrada do mapa de variantes non válido</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Няправільны памер тыпу поля ў карце варыянтаў</translation>
+        <translation>Tamaño do tipo de campo do mapa de variantes non válido</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation>Няправільны алгарытм сіметрычнага шыфра.</translation>
+        <translation>Algoritmo de cifrado simétrico non válido</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Няправільны памер вектара ініцыялізацыі сіметрычнага шыфра.</translation>
+        <translation>Tamaño de IV do cifrado simétrico non válido</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Не ўдалося разлічыць ключ базы даных: %1</translation>
+        <translation>Non se pode calcular a chave da base de datos: %1</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Не ўдалося серыялізаваць карту варыянтаў параметраў KDF</translation>
+        <translation>Fallo ao serializar o mapa de variantes dos parámetros KDF</translation>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation>Няправільная даўжыня UUID шыфра: %1 (даўжыня=%2)</translation>
+        <translation>Lonxitude de UUID de cifrado non válida: %1 (lonxitude=%2)</translation>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
-        <translation>Не ўдалося разабраць UUID: %1</translation>
+        <translation>Non se pode analizar o UUID: %1</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Непадтрымліваемы шыфр</translation>
+        <translation>Cifrado non soportado</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Няправільная даўжыня флагаў сціскання</translation>
+        <translation>Lonxitude das bandeiras de compresión non válida</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation>Непадтрымліваемы алгарытм сціскання</translation>
+        <translation>Algoritmo de compresión non soportado</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>Няправільны памер асноўнага зярня</translation>
+        <translation>Tamaño da semente mestra non válido</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Няправільны памер зярня пераўтварэння</translation>
+        <translation>Tamaño da semente de transformación non válido</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>Няправільны памер раўндаў пераўтварэння</translation>
+        <translation>Tamaño das roldas de transformación non válido</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>Няправільны памер пачатковых байтаў</translation>
+        <translation>Tamaño dos bytes iniciais non válido</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Няправільны памер ідэнтыфікатара выпадковага патоку</translation>
+        <translation>Tamaño do ID do fluxo aleatorio non válido</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>Няправільны ўнутраны шыфр выпадковага патоку</translation>
+        <translation>Cifrado interno do fluxo aleatorio non válido</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation>Не ўдалося прачытаць файл базы даных.</translation>
+        <translation>Fallo ao ler o ficheiro da base de datos</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Выбраны файл — гэта старая база даных KeePass 1 (.kdb).
+        <translation>O ficheiro escollido é unha base de datos antiga de KeePass 1 (.kdb).
 
-Вы можаце імпартаваць яго, націснуўшы «База даных» &gt; «Імпартаваць базу даных KeePass 1…».
-Гэта аднабаковая міграцыя. Вы не зможаце адкрыць імпартаваную базу даных старой версіяй KeePassX 0.4.</translation>
+Pode importalo facendo clic en Base de datos &gt; «Importar base de datos KeePass 1…».
+Esta é unha migración nun só sentido. Non poderá abrir a base de datos importada coa versión antiga KeePassX 0.4.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Не з&apos;яўляецца базай даных KeePass.</translation>
+        <translation>Non é unha base de datos KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Непадтрымліваемая версія базы даных KeePass 2.</translation>
+        <translation>Versión de base de datos KeePass 2 non soportada</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation>Збой аналізу XML: %1</translation>
+        <translation>Fallo na análise XML: %1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation>Няма каранёвай групы</translation>
+        <translation>Sen grupo raíz</translation>
     </message>
     <message>
         <source>XML error:
 %1
 Line %2, column %3</source>
-        <translation>Памылка XML:
+        <translation>Erro XML:
 %1
-Радок %2, слупок %3</translation>
+Liña %2, columna %3</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>Адсутнічае UUID або даныя значка</translation>
+        <translation>Falta o UUID da icona ou os datos</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation>Адсутнічае ключ або значэнне ўласных даных</translation>
+        <translation>Falta a chave ou o valor dos datos personalizados</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation>Некалькі элементаў групы</translation>
+        <translation>Múltiples elementos de grupo</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>Нулявы UUID групы</translation>
+        <translation>UUID de grupo nulo</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Няправільны нумар значка групы</translation>
+        <translation>Número de icona de grupo non válido</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation>Няправільнае значэнне EnableAutoType</translation>
+        <translation>Valor EnableAutoType non válido</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation>Няправільнае значэнне EnableSearching</translation>
+        <translation>Valor EnableSearching non válido</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>UUID групы не знойдзены</translation>
+        <translation>Non se atopou o UUID do grupo</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation>Нулявы UUID DeleteObject</translation>
+        <translation>UUID de DeleteObject nulo</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation>Адсутнічае UUID або час DeletedObject</translation>
+        <translation>Falta o UUID ou o tempo de DeletedObject</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>Нулявы UUID запісу</translation>
+        <translation>UUID de entrada nulo</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Няправільны нумар значка запісу</translation>
+        <translation>Número de icona de entrada non válido</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>Элемент History у запісе гісторыі</translation>
+        <translation>Elemento History nunha entrada de historial</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>UUID запісу не знойдзены</translation>
+        <translation>Non se atopou o UUID da entrada</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>Элемент History з іншым UUID</translation>
+        <translation>Elemento History cun UUID diferente</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>Знойдзены паўторны ўласны атрыбут</translation>
+        <translation>Atopouse un atributo personalizado duplicado</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Адсутнічае ключ або значэнне радка запісу</translation>
+        <translation>Falta a chave ou o valor da cadea da entrada</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>Адсутнічае ключ або значэнне двайковага файла запісу</translation>
+        <translation>Falta a chave ou o valor binario da entrada</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Адсутнічае акно або паслядоўнасць асацыяцыі аўтаматычнага ўводу</translation>
+        <translation>Falta a xanela ou a secuencia de asociación de escritura automática</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation>Няправільнае лагічнае значэнне</translation>
+        <translation>Valor booleano non válido</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation>Няправільнае значэнне даты/часу</translation>
+        <translation>Valor de data e hora non válido</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation>Няправільнае значэнне колеру</translation>
+        <translation>Valor de cor non válido</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>Няправільная частка RGB колеру</translation>
+        <translation>Parte RGB da cor non válida</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation>Няправільнае лікавае значэнне</translation>
+        <translation>Valor numérico non válido</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>Няправільнае значэнне UUID</translation>
+        <translation>Valor UUID non válido</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>Не ўдалося распакаваць двайковы файл</translation>
+        <translation>Non se pode descomprimir o binario</translation>
     </message>
 </context>
 <context>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation>Няправільная структура файла налад KeeAgent.</translation>
+        <translation>Estrutura do ficheiro de configuración de KeeAgent non válida</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation>Прыватны ключ з&apos;яўляецца далучаным файлам, але не быў прадастаўлены ніводны далучаны файл.</translation>
+        <translation>A chave privada é un anexo pero non se proporcionaron anexos</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>Прыватны ключ пусты</translation>
+        <translation>A chave privada está baleira</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>Файл занадта вялікі, каб быць прыватным ключом</translation>
+        <translation>O ficheiro é demasiado grande para ser unha chave privada</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Не ўдалося адкрыць прыватны ключ</translation>
+        <translation>Fallo ao abrir a chave privada</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Не ўдалося прачытаць файл-ключ.</translation>
+        <translation>Non se pode ler o ficheiro de chave.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Не з&apos;яўляецца базай даных KeePass.</translation>
+        <translation>Non é unha base de datos KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Непадтрымліваемы алгарытм шыфравання.</translation>
+        <translation>Algoritmo de cifrado non soportado.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Непадтрымліваемая версія базы даных KeePass.</translation>
+        <translation>Versión de base de datos KeePass non soportada.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Не ўдалося прачытаць IV шыфравання</translation>
+        <translation>Non se pode ler o IV de cifrado</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>Няправільная колькасць груп</translation>
+        <translation>Número de grupos non válido</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>Няправільная колькасць запісаў</translation>
+        <translation>Número de entradas non válido</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>Няправільны памер хэша змесціва</translation>
+        <translation>Tamaño do hash de contido non válido</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Няправільны памер зярня пераўтварэння</translation>
+        <translation>Tamaño da semente de transformación non válido</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>Няправільная колькасць раўндаў пераўтварэння</translation>
+        <translation>Tamaño da semente de transformación non válido</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>Не ўдалося стварыць дрэва груп</translation>
+        <translation>Non se pode construír a árbore de grupos</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Корань</translation>
+        <translation>Raíz</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>Не ўдалося разлічыць ключ базы даных</translation>
+        <translation>Non se pode calcular a chave da base de datos</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation>не ўдалося перайсці да пазіцыі змесціва</translation>
+        <translation>Non se pode desprazar á posición do contido</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Былі пададзены няправільныя ўліковыя даныя, паспрабуйце яшчэ раз.
-Калі гэта паўторыцца, магчыма, ваш файл базы даных пашкоджаны.</translation>
+        <translation>Credenciais non válidas; téntao de novo.
+Se isto se repite, o ficheiro da base de datos pode estar corrompido.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>Збой пераўтварэння ключа</translation>
+        <translation>Fallo na transformación da chave</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Няправільны нумар тыпу поля групы</translation>
+        <translation>Número de tipo de campo de grupo non válido</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>Няправільны памер поля групы</translation>
+        <translation>Tamaño de campo de grupo non válido</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation>Прачытаныя даныя поля групы не супадаюць з памерам</translation>
+        <translation>Os datos lidos do campo de grupo non coinciden co tamaño</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>Няправільны памер поля ідэнтыфікатара групы</translation>
+        <translation>Tamaño do campo ID de grupo incorrecto</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Няправільны памер поля часу стварэння групы</translation>
+        <translation>Tamaño do campo de creación de grupo incorrecto</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>Няправільны памер поля часу змянення групы</translation>
+        <translation>Tamaño do campo de modificación de grupo incorrecto</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>Няправільны памер поля часу доступу да групы</translation>
+        <translation>Tamaño do campo de acceso de grupo incorrecto</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>Няправільны памер поля часу заканчэння тэрміну дзеяння групы</translation>
+        <translation>Tamaño do campo de caducidade de grupo incorrecto</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Няправільны памер поля значка групы</translation>
+        <translation>Tamaño do campo de icona de grupo incorrecto</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>Няправільны памер поля ўзроўню групы</translation>
+        <translation>Tamaño do campo de nivel de grupo incorrecto</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>Няправільны тып поля групы</translation>
+        <translation>Tipo de campo de grupo non válido</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation>Адсутнічае ідэнтыфікатар або ўзровень групы</translation>
+        <translation>Falta o ID ou o nivel do grupo</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Адсутнічае нумар тыпу поля запісу</translation>
+        <translation>Falta o número de tipo de campo de entrada</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Няправільны памер поля запісу</translation>
+        <translation>Tamaño de campo de entrada non válido</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>Прачытаныя даныя поля запісу не супадаюць з памерам</translation>
+        <translation>Os datos lidos do campo de entrada non coinciden co tamaño</translation>
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
-        <translation>Няправільны памер поля UUID запісу</translation>
+        <translation>Tamaño do campo UUID de entrada non válido</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Няправільны памер поля ідэнтыфікатара групы запісу</translation>
+        <translation>Tamaño do campo ID de grupo da entrada non válido</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Няправільны памер поля значка запісу</translation>
+        <translation>Tamaño do campo de icona da entrada non válido</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Няправільны памер поля часу стварэння запісу</translation>
+        <translation>Tamaño do campo de creación da entrada non válido</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Няправільны памер поля часу змянення запісу</translation>
+        <translation>Tamaño do campo de modificación da entrada non válido</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Няправільны памер поля часу заканчэння тэрміну дзеяння запісу</translation>
+        <translation>Tamaño do campo de caducidade da entrada non válido</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Няправільны тып поля запісу</translation>
+        <translation>Tipo de campo de entrada non válido</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation>Няправільная спасылка для абагульвання</translation>
+        <translation>Referencia de compartición non válida</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation>Неактыўнае абагульванне %1</translation>
+        <translation>Compartición inactiva %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Імпартавана з %1</translation>
+        <translation>Importado dende %1</translation>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation>Экспартавана ў %1</translation>
+        <translation>Exportado a %1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation>Сінхранізавана з %1</translation>
+        <translation>Sincronizado con %1</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation>Імпарт адключаны ў наладах</translation>
+        <translation>A importación está desactivada na configuración</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation>Экспарт адключаны ў наладах</translation>
+        <translation>A exportación está desactivada na configuración</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation>Неактыўнае абагульванне</translation>
+        <translation>Compartición inactiva</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation>Імпартавана з</translation>
+        <translation>Importado desde</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation>Экспартавана ў</translation>
+        <translation>Exportado a</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation>Сінхранізавана з</translation>
+        <translation>Sincronizado con</translation>
     </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
     <message>
         <source>Key Component</source>
-        <translation>Ключавы кампанент</translation>
+        <translation>Compoñente de chave</translation>
     </message>
     <message>
         <source>Key Component Description</source>
-        <translation>Апісанне ключавога кампанента</translation>
+        <translation>Descrición do compoñente de chave</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation>Ключавы кампанент усталяваны, націсніце, каб змяніць або выдаліць</translation>
+        <translation>Compoñente de chave configurado; fai clic para trocar ou eliminar</translation>
     </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate a new key file</source>
-        <translation>Стварыць новы файл-ключ</translation>
+        <translation>Xerar un novo ficheiro de chave</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Стварыць</translation>
+        <translation>Xerar</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation>Стварыце новы файл-ключ або выберыце існуючы, каб абараніць вашу базу даных.</translation>
+        <translation>Xerar un novo ficheiro de chave ou escoller un existente para protexer a túa base de datos.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>Заўвага: НЕ выкарыстоўвайце файл, які можа змяняцца, бо гэта перашкодзіць вам разблакіраваць базу даных.</translation>
+        <translation>Nota: NON uses un ficheiro que poida trocar, xa que iso impedirá desbloquear a túa base de datos.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Агляд файла-ключа</translation>
+        <translation>Buscar ficheiro de chave</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Агляд…</translation>
+        <translation>Examinar…</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Стары фармат файла-ключа</translation>
+        <translation>Formato antigo de ficheiro de chave</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>Вы выбралі файл-ключ у старым фармаце, які KeePassXC&lt;br&gt;можа спыніць падтрымліваць у будучыні.&lt;br&gt;&lt;br&gt;Калі ласка, разгледзьце магчымасць стварэння новага файла-ключа.</translation>
+        <translation>Escolliches un ficheiro de chave nun formato antigo que KeePassXC&lt;br&gt; pode deixar de soportar no futuro.&lt;br&gt;&lt;br&gt; Considera xerar un novo ficheiro de chave.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>Памылка пры загрузцы файла-ключа «%1»
-Паведамленне: %2</translation>
+        <translation>Erro ao cargar o ficheiro de chave &apos;%1&apos;
+Mensaxe: %2</translation>
     </message>
     <message>
         <source>Key File</source>
-        <translation>Файл-ключ</translation>
+        <translation>Ficheiro de chave</translation>
     </message>
     <message>
         <source>Add Key File</source>
-        <translation>Дадаць файл-ключ</translation>
+        <translation>Engadir ficheiro de chave</translation>
     </message>
     <message>
         <source>Change Key File</source>
-        <translation>Змяніць файл-ключ</translation>
+        <translation>Trocar ficheiro de chave</translation>
     </message>
     <message>
         <source>Remove Key File</source>
-        <translation>Выдаліць файл-ключ</translation>
+        <translation>Eliminar ficheiro de chave</translation>
     </message>
     <message>
         <source>Key File set, click to change or remove</source>
-        <translation>Файл-ключ усталяваны, націсніце, каб змяніць або выдаліць</translation>
+        <translation>Ficheiro de chave configurado; fai clic para trocar ou eliminar</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Вы можаце дадаць файл-ключ, які змяшчае выпадковыя байты, для дадатковай бяспекі.&lt;/p&gt;&lt;p&gt;Вы павінны захоўваць яго ў сакрэце і ніколі не губляць, інакш вы страціце доступ.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Podes engadir un ficheiro de chave con bytes ao chou para maior seguridade. &lt;/p&gt;&lt;p&gt;Debes mantelo en segredo e non perdelo xamais ou quedarás sen acceso.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Файлы-ключы</translation>
+        <translation>Ficheiros de chave</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Create Key File…</source>
-        <translation>Стварыць файл-ключ…</translation>
+        <translation>Crear ficheiro de chave…</translation>
     </message>
     <message>
         <source>Error creating key file</source>
-        <translation>Памылка стварэння файла-ключа</translation>
+        <translation>Erro ao crear o ficheiro de chave</translation>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation>Не ўдалося стварыць файл-ключ: %1</translation>
+        <translation>Non se pode crear o ficheiro de chave: %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Выбраць файл-ключ</translation>
+        <translation>Escoller un ficheiro de chave</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation>Няправільны файл-ключ</translation>
+        <translation>Ficheiro de chave non válido</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>Вы не можаце выкарыстоўваць бягучую базу даных як файл-ключ для самой сябе. Калі ласка, выберыце іншы файл або стварыце новы файл-ключ.</translation>
+        <translation>Non podes usar a base de datos actual como o teu propio ficheiro de chave. Escolle outro ficheiro ou xera un novo.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation>Падазроны файл-ключ</translation>
+        <translation>Ficheiro de chave sospeitoso</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>Выбраны файл-ключ падобны на файл базы даных пароляў. Файл-ключ павінен быць статычным файлам, які ніколі не змяняецца, інакш вы назаўсёды страціце доступ да сваёй базы даных.
-Вы ўпэўнены, што хочаце працягнуць з гэтым файлам?</translation>
+        <translation>O ficheiro de chave escollido semella ser unha base de datos de contrasinais. Un ficheiro de chave debe ser estático e non trocar xamais ou perderás o acceso para sempre
+Estás certo de que queres continuar con este ficheiro?</translation>
     </message>
 </context>
 <context>
     <name>MacUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Няправільны код клавішы</translation>
+        <translation>Código de chave non válido</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Глабальная хуткая клавіша ўжо зарэгістраваная для %1</translation>
+        <translation>Atallo global xa rexistrado para %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Не ўдалося зарэгістраваць глабальную хуткую клавішу</translation>
+        <translation>Non se puido rexistrar o atallo global</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>&amp;База даных</translation>
+        <translation>&amp;Base de datos</translation>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation>&amp;Апошнія базы даных</translation>
+        <translation>Bases de datos &amp;recentes</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;Экспарт</translation>
+        <translation>&amp;Exportar</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Дапамога</translation>
+        <translation>A&amp;xuda</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
-        <translation>&amp;Запісы</translation>
+        <translation>&amp;Entradas</translation>
     </message>
     <message>
         <source>Copy Att&amp;ribute</source>
-        <translation>Скапіраваць атры&amp;бут</translation>
+        <translation>Copiar at&amp;ributo</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -5841,367 +5836,367 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Тэгі</translation>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>&amp;Групы</translation>
+        <translation>&amp;Grupos</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Інструменты</translation>
+        <translation>&amp;Ferramentas</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Выгляд</translation>
+        <translation>Vista</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>Тэма</translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Выйсці</translation>
+        <translation>&amp;Saír</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Пра праграму</translation>
+        <translation>S&amp;obre</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
-        <translation>&amp;Праверыць наяўнасць абнаўленняў</translation>
+        <translation>&amp;Comprobar se hai actualizacións</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Адкрыць базу даных…</translation>
+        <translation>&amp;Abrir base de datos…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
-        <translation>&amp;Захаваць базу даных</translation>
+        <translation>&amp;Gardar a base de datos</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
-        <translation>&amp;Закрыць базу даных</translation>
+        <translation>&amp;Pechar a base de datos</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Новая база даных…</translation>
+        <translation>&amp;Nova base de datos...</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>&amp;Аб’яднаць з базы даных…</translation>
+        <translation>&amp;Fusionar dende a base de datos…</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Новы запіс…</translation>
+        <translation>&amp;Nova entrada…</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Змяніць запіс…</translation>
+        <translation>&amp;Editar entrada…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Новая група…</translation>
+        <translation>&amp;Novo grupo…</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Змяніць групу…</translation>
+        <translation>&amp;Editar grupo...</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Выдаліць групу…</translation>
+        <translation>E&amp;liminar grupo…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Спампаваць усе &amp;фавіконы…</translation>
+        <translation>Descargar tódalos &amp;favicons…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>Сартаваць &amp;А-Я</translation>
+        <translation>Ordenar &amp;A - Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>Сартаваць &amp;Я-А</translation>
+        <translation>Ordenar &amp;Z - A</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Захава&amp;ць базу даных як…</translation>
+        <translation>Gar&amp;dar a base de datos como…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Бяспека базы даных…</translation>
+        <translation>&amp;Seguridade da base de datos…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>&amp;Справаздачы базы даных…</translation>
+        <translation>Base de datos &amp;informes…</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>&amp;Налады базы даных…</translation>
+        <translation>Configuración da &amp;base de datos…</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>&amp;Кланіраваць запіс…</translation>
+        <translation>&amp;Clonar entrada…</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation>Перасунуць у&amp;верх</translation>
+        <translation>Mover cara a&amp;rriba</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
-        <translation>Перасунуць &amp;уніз</translation>
+        <translation>Mover cara abai&amp;xo</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation>Скапіраваць імя &amp;карыстальніка</translation>
+        <translation>Copiar nome de &amp;usuario</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
-        <translation>Скапіраваць &amp;пароль</translation>
+        <translation>Copiar &amp;contrasinal</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Налады</translation>
+        <translation>&amp;Axustes</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>&amp;Генератар пароляў</translation>
+        <translation>Xerador de &amp;contrasinais</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Выканаць &amp;аўтаматычны ўвод</translation>
+        <translation>Executar escritura &amp;automática</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>Спампаваць &amp;фавікон</translation>
+        <translation>Descargar &amp;favicon</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>Адкрыць &amp;URL</translation>
+        <translation>Abrir &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Lock Database</source>
-        <translation>&amp;Заблакіраваць базу даных</translation>
+        <translation>B&amp;loquear base de datos</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation>Заблакіраваць &amp;усе базы даных</translation>
+        <translation>Bloquear &amp;todas as bases de datos</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>&amp;Назва</translation>
+        <translation>&amp;Título</translation>
     </message>
     <message>
         <source>Copy &amp;URL</source>
-        <translation>Скапіраваць &amp;URL</translation>
+        <translation>Copiar &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;Нататкі</translation>
+        <translation>&amp;Notas</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;CSV-файл…</translation>
+        <translation>Ficheiro &amp;CSV...</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>&amp;HTML-файл…</translation>
+        <translation>Ficheiro &amp;HTML</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>База даных KeePass 1…</translation>
+        <translation>Base de datos KeePass 1…</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>Сховішча 1Password…</translation>
+        <translation>Cofre de 1Password…</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>CSV-файл…</translation>
+        <translation>Ficheiro CSV...</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>Паказаць TOTP</translation>
+        <translation>Amosar TOTP</translation>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation>Паказаць QR-код</translation>
+        <translation>Amosar código QR</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>Наладзіць TOTP…</translation>
+        <translation>Configurar TOTP…</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>Скапіраваць &amp;TOTP</translation>
+        <translation>Copiar &amp;TOTP</translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
-        <translation>Скапіраваць пароль і TOTP</translation>
+        <translation>Copiar contrasinal e TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>А&amp;чысціць сметніцу</translation>
+        <translation>B&amp;aleirar papeleira</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>&amp;Ахвяраваць</translation>
+        <translation>&amp;Doar</translation>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation>Паведаміць пра &amp;памылку</translation>
+        <translation>Informar dun &amp;erro</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation>&amp;Пачатковы дапаможнік</translation>
+        <translation>&amp;Primeiros pasos</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation>Адкрыць кіраўніцтва па пачатку працы</translation>
+        <translation>Abrir guía de primeiros pasos</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>&amp;Анлайн-дапамога</translation>
+        <translation>Axuda &amp;en liña</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation>&amp;Кіраўніцтва карыстальніка</translation>
+        <translation>Guía de &amp;usuario</translation>
     </message>
     <message>
         <source>Open User Guide</source>
-        <translation>Адкрыць кіраўніцтва карыстальніка</translation>
+        <translation>Abrir guía de usuario</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>&amp;Спалучэнні клавіш</translation>
+        <translation>Atallos de &amp;teclado</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation>Захаваць рэзервовую копію базы даных…</translation>
+        <translation>Gardar copia de seguridade da base de datos…</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
-        <translation>Дадаць ключ у SSH-агент</translation>
+        <translation>Engadir chave ao axente SSH</translation>
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
-        <translation>Выдаліць ключ з SSH-агента</translation>
+        <translation>Eliminar chave do axente SSH</translation>
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation>Кампактны рэжым</translation>
+        <translation>Modo compacto</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Аўтаматычна</translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>Светлая</translation>
+        <translation>Claro</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Цёмная</translation>
+        <translation>Escuro</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Класічная (родная для платформы)</translation>
+        <translation>Clásico (nativo da plataforma)</translation>
     </message>
     <message>
         <source>Show Menubar</source>
-        <translation>Паказаць радок меню</translation>
+        <translation>Amosar barra de menú</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>Паказаць панэль інструментаў</translation>
+        <translation>Amosar barra de ferramentas</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Паказаць панэль папярэдняга прагляду</translation>
+        <translation>Amosar panel de vista previa</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation>Заўсёды зверху</translation>
+        <translation>Sempre en primeiro plano</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Схаваць імёны карыстальнікаў</translation>
+        <translation>Ocultar nomes de usuario</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Схаваць паролі</translation>
+        <translation>Ocultar contrasinais</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation>Кланіраваць групу...</translation>
+        <translation>Clonar grupo...</translation>
     </message>
     <message>
         <source>&amp;XML File…</source>
-        <translation>&amp;XML-файл…</translation>
+        <translation>Ficheiro &amp;XML…</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>Ачысціць гісторыю</translation>
+        <translation>Borrar historial</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Памылка доступу да файла канфігурацыі %1</translation>
+        <translation>Erro de acceso ó ficheiro de configuración %1</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Не паказваць больш для гэтай версіі</translation>
+        <translation>Non mostrar de novo para esta versión</translation>
     </message>
     <message>
         <source>No Tags</source>
-        <translation>Без тэгаў</translation>
+        <translation>Sen etiquetas</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation><numerusform>Аднавіць запіс</numerusform><numerusform>Аднавіць запісы</numerusform><numerusform>Аднавіць запісы</numerusform><numerusform>Аднавіць запісы</numerusform></translation>
+        <translation><numerusform>Restaurar entrada(s)</numerusform><numerusform>Restaurar entrada(s)</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Налады</translation>
+        <translation>Axustes</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>Правяраць наяўнасць абнаўленняў пры запуску?</translation>
+        <translation>Comprobar actualizacións ao iniciar?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Хочаце, каб KeePassXC правяраў наяўнасць абнаўленняў пры запуску?</translation>
+        <translation>Gustaríache que KeePassXC comprobe actualizacións ao iniciar?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation>Вы заўсёды можаце праверыць наяўнасць абнаўленняў уручную ў меню праграмы.</translation>
+        <translation>Sempre podes comprobar actualizacións manualmente dende o menú da aplicación</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Пераключыць акно</translation>
+        <translation>Alternar xanela</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>Выйсці з KeePassXC</translation>
+        <translation>Salir de KeePassXC</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 запіс</numerusform><numerusform>%1 запісы</numerusform><numerusform>%1 запісаў</numerusform><numerusform>%1 запісаў</numerusform></translation>
+        <translation><numerusform>%1 entrada(s)</numerusform><numerusform>%1 entrada(s)</numerusform></translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Калі ласка, падключыце або дакраніцеся да вашага YubiKey, каб працягнуць…</translation>
+        <translation>Presenta ou toca a túa YubiKey para continuar…</translation>
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Перазапусціць праграму?</translation>
+        <translation>Reiniciar a aplicación?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Вы павінны перазапусціць праграму, каб прымяніць гэтую наладу. Вы хочаце перазапусціць зараз?</translation>
+        <translation>Debes reiniciar a aplicación para aplicar esta configuración. Queres reiniciar agora?</translation>
     </message>
     <message>
         <source>Allow Screen Capture</source>
-        <translation>Дазволіць захоп экрана</translation>
+        <translation>Permitir captura de pantalla</translation>
     </message>
     <message>
         <source>1Password 1PUX...</source>
@@ -6209,791 +6204,793 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation>Імпартаваць файл 1Password 1PUX</translation>
+        <translation>Importar un ficheiro 1Password 1PUX</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation>Імпартаваць…</translation>
+        <translation>Importar...</translation>
     </message>
     <message>
         <source>Passkeys…</source>
-        <translation>Ключы доступу…</translation>
+        <translation>Chaves de acceso...</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation>Імпартаваць ключ доступу</translation>
+        <translation>Importar chave de acceso</translation>
     </message>
     <message>
         <source>Remote S&amp;ync…</source>
-        <translation type="unfinished"/>
+        <translation>S&amp;incronización remota…</translation>
     </message>
     <message>
         <source>Quit Application</source>
-        <translation type="unfinished"/>
+        <translation>Saír da aplicación</translation>
     </message>
     <message>
         <source>Open About Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Abrir diálogo “sobre”</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation>Адкрыць базу даных</translation>
+        <translation>Abrir base de datos</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation>Стварыць базу даных</translation>
+        <translation>Crear base de datos</translation>
     </message>
     <message>
         <source>Merge From Database</source>
-        <translation type="unfinished"/>
+        <translation>Fusionar dende base de datos</translation>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Editar entrada</translation>
     </message>
     <message>
         <source>Delete Entry</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar entrada</translation>
     </message>
     <message>
         <source>Create Group</source>
-        <translation type="unfinished"/>
+        <translation>Crear grupo</translation>
     </message>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished"/>
+        <translation>Editar grupo</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar grupo</translation>
     </message>
     <message>
         <source>Download All Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Descargar tódolos favicons…</translation>
     </message>
     <message>
         <source>Sort Groups A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Ordenar grupos A-Z</translation>
     </message>
     <message>
         <source>Sort Groups Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Ordenar grupos Z-A</translation>
     </message>
     <message>
         <source>Save Database As</source>
-        <translation type="unfinished"/>
+        <translation>Gardar a base de datos como</translation>
     </message>
     <message>
         <source>Show Database Security</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar seguridade da base de datos</translation>
     </message>
     <message>
         <source>Show Database Reports</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar informes da base de datos</translation>
     </message>
     <message>
         <source>Show Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar configuración da base de datos</translation>
     </message>
     <message>
         <source>Show Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Amosar chaves de acceso</translation>
     </message>
     <message>
         <source>Clone Entry</source>
-        <translation type="unfinished"/>
+        <translation>Clonar entrada</translation>
     </message>
     <message>
         <source>Move Entry Up</source>
-        <translation type="unfinished"/>
+        <translation>Mover entrada cara arriba</translation>
     </message>
     <message>
         <source>Move Entry Down</source>
-        <translation type="unfinished"/>
+        <translation>Mover entrada cara abaixo</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation type="unfinished"/>
+        <translation>Copiar nome de usuario</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation type="unfinished"/>
+        <translation>Copiar contrasinal</translation>
     </message>
     <message>
         <source>Show Application Settings</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar configuración da aplicación</translation>
     </message>
     <message>
         <source>Show Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar xerador de contrasinais</translation>
     </message>
     <message>
         <source>Remove Passkey From Entry</source>
-        <translation>Выдаліць ключ доступу з запісу</translation>
+        <translation>Eliminar chave de acceso da entrada</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>Executar escritura automática: {USERNAME}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>Executar escritura automática: {USERNAME}{ENTER}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>Executar escritura automática: {PASSWORD}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>Executar escritura automática: {PASSWORD}{ENTER}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {TOTP}</source>
-        <translation type="unfinished"/>
+        <translation>Executar escritura automática: {TOTP}</translation>
     </message>
     <message>
         <source>Copy Title</source>
-        <translation type="unfinished"/>
+        <translation>Copiar título</translation>
     </message>
     <message>
         <source>Copy URL</source>
-        <translation type="unfinished"/>
+        <translation>Copiar URL</translation>
     </message>
     <message>
         <source>Copy Notes</source>
-        <translation type="unfinished"/>
+        <translation>Copiar notas</translation>
     </message>
     <message>
         <source>Export to CSV</source>
-        <translation type="unfinished"/>
+        <translation>Exportar a CSV</translation>
     </message>
     <message>
         <source>Export to HTML</source>
-        <translation type="unfinished"/>
+        <translation>Exportar a HTML</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Importar base de datos KeePass1</translation>
     </message>
     <message>
         <source>Import 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Importar cofre de 1Password</translation>
     </message>
     <message>
         <source>Import CSV File</source>
-        <translation type="unfinished"/>
+        <translation>Importar ficheiro CSV</translation>
     </message>
     <message>
         <source>Show TOTP QR Code</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar código QR de TOTP</translation>
     </message>
     <message>
         <source>Set up TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Configurar TOTP</translation>
     </message>
     <message>
         <source>Empty Recycle Bin</source>
-        <translation>Ачысціць сметніцу</translation>
+        <translation>Baleirar papeleira</translation>
     </message>
     <message>
         <source>Open Donation Website</source>
-        <translation type="unfinished"/>
+        <translation>Abrir páxina de doazóns</translation>
     </message>
     <message>
         <source>Open Bug Report</source>
-        <translation type="unfinished"/>
+        <translation>Abrir informe de erro</translation>
     </message>
     <message>
         <source>Open Online Documentation</source>
-        <translation type="unfinished"/>
+        <translation>Abrir documentación en liña</translation>
     </message>
     <message>
         <source>Open Keyboard Shortcuts Guide</source>
-        <translation type="unfinished"/>
+        <translation>Abrir guía de atallos de teclado</translation>
     </message>
     <message>
         <source>Save Database Backup</source>
-        <translation type="unfinished"/>
+        <translation>Gardar copia de seguridade da base de datos</translation>
     </message>
     <message>
         <source>SSH Agent: Add Key</source>
-        <translation type="unfinished"/>
+        <translation>Axente SSH: Engadir chave</translation>
     </message>
     <message>
         <source>SSH Agent: Remove Key</source>
-        <translation type="unfinished"/>
+        <translation>Axente SSH: Eliminar chave</translation>
     </message>
     <message>
         <source>Toggle Compact Mode</source>
-        <translation type="unfinished"/>
+        <translation>Alternar modo compacto</translation>
     </message>
     <message>
         <source>Set Theme: Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Establecer tema: Automático</translation>
     </message>
     <message>
         <source>Set Theme: Light</source>
-        <translation type="unfinished"/>
+        <translation>Establecer tema: Claro</translation>
     </message>
     <message>
         <source>Set Theme: Dark</source>
-        <translation type="unfinished"/>
+        <translation>Establecer tema: Escuro</translation>
     </message>
     <message>
         <source>Set Theme: Classic</source>
-        <translation type="unfinished"/>
+        <translation>Establecer tema: Clásico</translation>
     </message>
     <message>
         <source>Toggle Show Menubar</source>
-        <translation>Пераключыць паказ радка меню</translation>
+        <translation>Alternar amosar barra de menú</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Alternar amosar barra de ferramentas</translation>
     </message>
     <message>
         <source>Toggle Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Alternar amosar panel de vista previa</translation>
     </message>
     <message>
         <source>Toggle Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Alternar sempre en primeiro plano</translation>
     </message>
     <message>
         <source>Toggle Hide Usernames</source>
-        <translation type="unfinished"/>
+        <translation>Alternar ocultar nomes de usuario</translation>
     </message>
     <message>
         <source>Toggle Hide Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Alternar ocultar contrasinais</translation>
     </message>
     <message>
         <source>Export to XML</source>
-        <translation type="unfinished"/>
+        <translation>Exportar a XML</translation>
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
-        <translation type="unfinished"/>
+        <translation>Alternar permitir captura de pantalla</translation>
     </message>
     <message>
         <source>Show Group Panel</source>
-        <translation>Паказаць панэль груп</translation>
+        <translation>Amosar panel de grupos</translation>
     </message>
     <message>
         <source>Toggle Show Group Panel</source>
-        <translation>Пераключыць паказ панэлі груп</translation>
+        <translation>Alternar amosar panel de grupos</translation>
     </message>
     <message>
         <source>Setup Remote Sync…</source>
-        <translation type="unfinished"/>
+        <translation>Configurar sincronización remota…</translation>
     </message>
     <message>
         <source>WARNING: You are using a development snapshot build of KeePassXC.
 Maintain a backup of your databases in the event of unknown bugs.
 This version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>AVISO: Estás a usar unha versión de desenvolvemento snapshot de KeePassXC.
+Mantén unha copia de seguridade das túas bases de datos no caso de erros descoñecidos.
+Esta versión non está pensada para uso en produción.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
-        <translation>Ачысціць SSH-агент</translation>
+        <translation>Limpar axente SSH</translation>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
-        <translation>Ачысціць усе ідэнтыфікатары ў ssh-agent</translation>
+        <translation>Limpar tódalas identidades no ssh-agent</translation>
     </message>
     <message>
         <source>New Entry</source>
-        <translation type="unfinished"/>
+        <translation>Nova entrada</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Генератар пароляў</translation>
+        <translation>Xerador de contrasinais</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation type="unfinished"/>
+        <translation>Editar entrada…</translation>
     </message>
     <message>
         <source>E&amp;xpire Entry</source>
-        <translation type="unfinished"/>
+        <translation>Ca&amp;ducar entrada</translation>
     </message>
     <message>
         <source>Expire Entry</source>
-        <translation type="unfinished"/>
+        <translation>Caducar entrada</translation>
     </message>
     <message>
         <source>&amp;Delete Entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Eliminar entrada</translation>
     </message>
     <message numerus="yes">
         <source>Move selected entry(s) to the recycle bin</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Mover a(s) entrada(s) escollida(s) ao lixo</numerusform><numerusform>Mover a(s) entrada(s) escollida(s) a papeleira</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Permanently delete the selected entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Eliminar permanentemente a(s) entrada(s) escollida(s)</numerusform><numerusform>Eliminar permanentemente a(s) entrada(s) escollida(s)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>ManageDatabase</name>
     <message>
         <source>Database settings</source>
-        <translation>Налады базы даных</translation>
+        <translation>Configuración da base de datos</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>Змяніць налады базы даных</translation>
+        <translation>Editar a configuración da base de datos</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>Разблакіраваць базу даных</translation>
+        <translation>Desbloquear base de datos</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Разблакіруйце базу даных, каб паказаць больш інфармацыі</translation>
+        <translation>Desbloquear a base de datos para amosar máis información</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Заблакіраваць базу даных</translation>
+        <translation>Bloquear base de datos</translation>
     </message>
 </context>
 <context>
     <name>ManageSession</name>
     <message>
         <source>Disconnect</source>
-        <translation>Адключыць</translation>
+        <translation>Desconectar</translation>
     </message>
     <message>
         <source>Disconnect this application</source>
-        <translation>Адключыць гэтую праграму</translation>
+        <translation>Desconectar esta aplicación</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Скінуць</translation>
+        <translation>Restablecer</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation>Скінуць усе запомненыя рашэнні для гэтай праграмы</translation>
+        <translation>Restablecer calquera decisión lembrada para esta aplicación</translation>
     </message>
 </context>
 <context>
     <name>MergeDialog</name>
     <message>
         <source>Database Merge Confirmation</source>
-        <translation type="unfinished"/>
+        <translation>Confirmación de fusión de bases de datos</translation>
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Fusionar</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation type="unfinished"/>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <source>UUID</source>
-        <translation type="unfinished"/>
+        <translation>UUID</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished"/>
+        <translation>Detalles</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"/>
+        <translation>Trocar</translation>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Changed deleted objects</source>
-        <translation>Змененыя выдаленыя аб&apos;екты</translation>
+        <translation>Obxectos eliminados modificados</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation>Выдаленыя карыстальніцкія даныя %1 [%2]</translation>
+        <translation>Eliminando datos personalizados %1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation>Даданне карыстальніцкіх даных %1 [%2]</translation>
+        <translation>Engadindo datos personalizados %1 [%2]</translation>
     </message>
     <message>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Engadido</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modificado</translation>
     </message>
     <message>
         <source>Moved</source>
-        <translation type="unfinished"/>
+        <translation>Movido</translation>
     </message>
     <message>
         <source>Deleted</source>
-        <translation type="unfinished"/>
+        <translation>Eliminado</translation>
     </message>
     <message>
         <source>Previous location: %1</source>
-        <translation type="unfinished"/>
+        <translation>Localización anterior: %1</translation>
     </message>
     <message>
         <source>Number of entries in group: %1</source>
-        <translation type="unfinished"/>
+        <translation>Número de entradas no grupo: %1</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation type="unfinished"/>
+        <translation>Nome do grupo</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Icon (UUID)</source>
-        <translation type="unfinished"/>
+        <translation>Icona (UUID)</translation>
     </message>
     <message>
         <source>Icon (Number)</source>
-        <translation type="unfinished"/>
+        <translation>Icona (Número)</translation>
     </message>
     <message>
         <source>Expiry time</source>
-        <translation type="unfinished"/>
+        <translation>Hora de caducidade</translation>
     </message>
     <message>
         <source>Modification time</source>
-        <translation type="unfinished"/>
+        <translation>Hora de modificación</translation>
     </message>
     <message>
         <source>%1 (Add local modifications to new entry)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Engadir modificacións locais á nova entrada)</translation>
     </message>
     <message>
         <source>%1 (Add new modifications to existing entry)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Engadir novas modificacións á entrada existente)</translation>
     </message>
     <message>
         <source>Explicit deletion</source>
-        <translation type="unfinished"/>
+        <translation>Eliminación explícita</translation>
     </message>
     <message>
         <source>Implicit deletion (e.g. removal of parent group)</source>
-        <translation type="unfinished"/>
+        <translation>Eliminación implícita (p.ex. eliminación do grupo pai)</translation>
     </message>
     <message>
         <source>Adding new icon %1</source>
-        <translation type="unfinished"/>
+        <translation>Engadindo nova icona %1</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database…</source>
-        <translation>Стварыць новую базу даных KeePassXC…</translation>
+        <translation>Crear unha nova base de datos KeePassXC…</translation>
     </message>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>Корань</translation>
+        <translation>Raíz</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation>Старонка майстра</translation>
+        <translation>Páxina do asistente</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Налады шыфравання</translation>
+        <translation>Configuración de cifrado</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Тут вы можаце наладзіць параметры шыфравання базы даных. Не хвалюйцеся, вы можаце змяніць іх пазней у наладах базы даных.</translation>
+        <translation>Aquí podes axustar a configuración de cifrado da base de datos. Non te preocupes, poderás trocala máis tarde na configuración da base de datos.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation>Уліковыя даныя базы даных</translation>
+        <translation>Credenciais da base de datos</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Набор уліковых даных, вядомых толькі вам, якія абараняюць вашу базу даных.</translation>
+        <translation>Un conxunto de credenciais coñecidas só por ti que protexen a túa base de datos.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>Налады шыфравання</translation>
+        <translation>Configuración de cifrado</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Тут вы можаце наладзіць параметры шыфравання базы даных. Не хвалюйцеся, вы можаце змяніць іх пазней у наладах базы даных.</translation>
+        <translation>Aquí podes axustar a configuración de cifrado da base de datos. Non te preocupes, poderás trocala máis tarde na configuración da base de datos.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>Агульная інфармацыя аб базе даных</translation>
+        <translation>Información xeral da base de datos</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Калі ласка, увядзіце імя і неабавязковае апісанне для вашай новай базы даных:</translation>
+        <translation>Enche o nome para amosar e unha descrición opcional para a túa nova base de datos:</translation>
     </message>
 </context>
 <context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
-        <translation>Менеджар пароляў</translation>
+        <translation>Xestor de contrasinais</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Глабальная хуткая клавіша ўжо зарэгістраваная для %1</translation>
+        <translation>Atallo global xa rexistrado para %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Не ўдалося зарэгістраваць глабальную хуткую клавішу</translation>
+        <translation>Non se puido rexistrar o atallo global</translation>
     </message>
 </context>
 <context>
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation>Няправільны OpData01, не змяшчае загалоўка</translation>
+        <translation>OpData01 non válido, non contén cabeceira</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation>Не ўдалося прачытаць усе байты IV, патрабавалася 16, але атрымана %1</translation>
+        <translation>Non se poden ler todos os bytes do IV; esperábanse 16 pero obtivéronse %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation>Не ўдалося ініцыялізаваць шыфр для opdata01: %1</translation>
+        <translation>Non se pode inicializar o cifrado para opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation>Не ўдалося прачытаць усе байты подпісу HMAC</translation>
+        <translation>Non se poden ler todos os bytes da sinatura HMAC</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation>Няправільна сфарміраваны OpData01 з-за збою HMAC</translation>
+        <translation>OpData01 malformado debido a un fallo de HMAC</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>Не ўдалося апрацаваць clearText на месцы</translation>
+        <translation>Non se pode procesar o texto en claro no lugar</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation>Чакалася %1 байтаў адкрытага тэксту, знойдзена %2</translation>
+        <translation>Esperábanse %1 bytes de texto en claro; atopáronse %2</translation>
     </message>
 </context>
 <context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation>Каталог .opvault павінен існаваць</translation>
+        <translation>O directorio .opvault debe existir</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation>Каталог .opvault павінен быць даступным для чытання</translation>
+        <translation>O directorio .opvault debe ser lexible</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation>Каталог .opvault/default павінен існаваць</translation>
+        <translation>O directorio .opvault/default debe existir</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation>Каталог .opvault/default павінен быць даступным для чытання</translation>
+        <translation>O directorio .opvault/default debe ser lexible</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation>Не ўдалося дэкадаваць masterKey: %1</translation>
+        <translation>Non se pode decodificar chave mestra: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation>Не ўдалося вывесці галоўны ключ: %1</translation>
+        <translation>Non se pode derivar a chave mestra: %1</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Няправільны файл-ключ, чакаецца ключ OpenSSH</translation>
+        <translation>Ficheiro de chave non válido; espérase unha chave OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>Несупадзенне мяжы PEM</translation>
+        <translation>Incompatibilidade de delimitadores PEM</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation>Збой дэкадавання Base64</translation>
+        <translation>Fallo na decodificación Base64</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>Файл-ключ занадта маленькі.</translation>
+        <translation>O ficheiro de chave é moi pequeno.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Няправільны магічны загаловак файла-ключа</translation>
+        <translation>ID da cabeceira máxica do ficheiro de chave non válido</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation>Знойдзена нуль ключоў</translation>
+        <translation>Non se atoparon chaves</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Пашкоджаны файл-ключ, чытанне прыватнага ключа не ўдалося</translation>
+        <translation>Ficheiro de chave corrompido; fallou a lectura da chave privada</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation>Непадтрымліваемы тып ключа: %1</translation>
+        <translation>Tipo de chave non soportado: %1</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>Няма прыватнага ключа для расшыфроўкі</translation>
+        <translation>Non hai carga de chave privada para descifrar</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>Невядомы шыфр: %1</translation>
+        <translation>Cifrado descoñecido: %1</translation>
     </message>
     <message>
         <source>AES-256/GCM is currently not supported</source>
-        <translation>AES-256/GCM у цяперашні час не падтрымліваецца</translation>
+        <translation>AES-256/GCM non está soportado actualmente</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>Для расшыфроўкі гэтага ключа патрабуецца парольная фраза</translation>
+        <translation>Requírese unha frase de paso para descifrar esta chave</translation>
     </message>
     <message>
         <source>Key derivation failed: %1</source>
-        <translation>Збой вывядзення ключа: %1</translation>
+        <translation>Fallo na derivación de chave: %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>IV шыфра занадта кароткі для MD5 kdf</translation>
+        <translation>O IV do cifrado é demasiado curto para o KDF MD5</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation>Невядомы KDF: %1</translation>
+        <translation>KDF descoñecido: %1</translation>
     </message>
     <message>
         <source>Failed to initialize cipher: %1</source>
-        <translation>Не ўдалося ініцыялізаваць шыфр: %1</translation>
+        <translation>Fallo ao inicializar o cifrado: %1</translation>
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation>Збой расшыфроўкі: %1</translation>
+        <translation>Fallo na descifración: %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Збой расшыфроўкі, няправільная парольная фраза?</translation>
+        <translation>Fallo na descifración; frase de paso incorrecta?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
-        <translation>Нечаканы канец файла пры чытанні ключа</translation>
+        <translation>EOF inesperado ao ler a chave</translation>
     </message>
     <message>
         <source>Unsupported key part</source>
-        <translation>Непадтрымліваемая частка ключа</translation>
+        <translation>Parte de chave non soportada</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation>Нечаканы канец файла пры чытанні адкрытага ключа</translation>
+        <translation>EOF inesperado ao ler a chave pública</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>Невядомы тып ключа: %1</translation>
+        <translation>Tipo de chave descoñecido: %1</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>Нечаканы канец файла пры чытанні прыватнага ключа</translation>
+        <translation>EOF inesperado ao ler a chave privada</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation>Немагчыма запісаць адкрыты ключ, бо ён пусты</translation>
+        <translation>Non se pode escribir a chave pública porque está baleira</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation>Нечаканы канец файла пры запісе адкрытага ключа</translation>
+        <translation>EOF inesperado ao escribir a chave pública</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Немагчыма запісаць прыватны ключ, бо ён пусты</translation>
+        <translation>Non se pode escribir a chave privada porque está baleira</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>Нечаканы канец файла пры запісе прыватнага ключа</translation>
+        <translation>EOF inesperado ao escribir a chave privada</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(зашыфравана)</translation>
+        <translation>(cifrado)</translation>
     </message>
     <message>
         <source>Failed to read key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao ler o ficheiro de chave: %1</translation>
     </message>
     <message>
         <source>Failed to read public key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao ler a chave pública: %1</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
     <message>
         <source>SSH Key Generator</source>
-        <translation type="unfinished"/>
+        <translation>Xerador de chaves SSH</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Bits</source>
-        <translation type="unfinished"/>
+        <translation>Bits</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>Comentario</translation>
     </message>
 </context>
 <context>
     <name>PasskeyExportDialog</name>
     <message>
         <source>KeePassXC - Passkey Export</source>
-        <translation>KeePassXC - Экспарт ключоў доступу</translation>
+        <translation>KeePassXC - Exportación de chave de acceso</translation>
     </message>
     <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
-        <translation>Імёны файлаў будуць стварацца з загалоўкам і пашырэннем файла .passkey.</translation>
+        <translation>Os nomes de ficheiro xeraranse co título e a extensión .passkey</translation>
     </message>
     <message>
         <source>Export entries</source>
-        <translation>Экспартаваць запісы</translation>
+        <translation>Exportar entradas</translation>
     </message>
     <message>
         <source>Export Selected</source>
-        <translation>Экспартаваць выбранае</translation>
+        <translation>Exportar escollidas</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Export to folder</source>
-        <translation>Экспартаваць у тэчку</translation>
+        <translation>Exportar a cartafol</translation>
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation>Экспартаваць наступныя запісы ключоў доступу.</translation>
+        <translation>Exportar as seguintes entradas de chave de acceso.</translation>
     </message>
 </context>
 <context>
@@ -7002,189 +6999,190 @@ This version is not meant for production use.</source>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
-        <translation>Файл &quot;%1.passkey&quot; ужо існуе.
-Хочаце яго перазапісаць?</translation>
+        <translation>O ficheiro &quot;%1.passkey&quot; xa existe.
+Queres sobrescribilo?
+</translation>
     </message>
     <message>
         <source>Cannot open file</source>
-        <translation>Немагчыма адкрыць файл</translation>
+        <translation>Non se pode abrir o ficheiro</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for writing.</source>
-        <translation>Немагчыма адкрыць файл &quot;%1&quot; для запісу.</translation>
+        <translation>Non se pode abrir o ficheiro &quot;%1&quot; para escritura.</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation>Немагчыма запісаць у файл</translation>
+        <translation>Non se pode escribir no ficheiro</translation>
     </message>
     <message>
         <source>Overwrite Existing File?</source>
-        <translation type="unfinished"/>
+        <translation>Sobrescribir ficheiro existente?</translation>
     </message>
 </context>
 <context>
     <name>PasskeyImportDialog</name>
     <message>
         <source>KeePassXC - Passkey Import</source>
-        <translation>KeePassXC - Імпарт ключоў доступу</translation>
+        <translation>KeePassXC - Importación de chave de acceso</translation>
     </message>
     <message>
         <source>Username: %1</source>
-        <translation>Імя карыстальніка: %1</translation>
+        <translation>Nome de usuario: %1</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Database</source>
-        <translation>База даных</translation>
+        <translation>Base de datos</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation>Імпартаваць ключ доступу</translation>
+        <translation>Importar chave de acceso</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Імпартаваць</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Скасаваць</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Entry</source>
-        <translation>Запіс</translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <source>Create new entry</source>
-        <translation>Стварыць новы запіс</translation>
+        <translation>Crear nova entrada</translation>
     </message>
     <message>
         <source>Relying Party: %1</source>
-        <translation>Давяраючы бок: %1</translation>
+        <translation>Parte de confianza: %1</translation>
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation>Імпартаваць наступны ключ доступу:</translation>
+        <translation>Importar a seguinte chave de acceso:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation>Імпартаваць наступны ключ доступу ў гэты запіс:</translation>
+        <translation>Importar a seguinte chave de acceso nesta entrada:</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation>Група ключоў доступу па змаўчанні (Імпартаваныя ключы доступу)</translation>
+        <translation>Grupo de chaves de acceso predeterminado (chaves de acceso importadas)</translation>
     </message>
 </context>
 <context>
     <name>PasskeyImporter</name>
     <message>
         <source>Passkey file</source>
-        <translation>Файл ключа доступу</translation>
+        <translation>Ficheiro de chave de acceso</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Cannot open file</source>
-        <translation>Немагчыма адкрыць файл</translation>
+        <translation>Non se pode abrir o ficheiro</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for reading.</source>
-        <translation>Немагчыма адкрыць файл &quot;%1&quot; для чытання.</translation>
+        <translation>Non se pode abrir o ficheiro “%1” para lectura.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Немагчыма імпартаваць файл ключа доступу &quot;%1&quot;. Адсутнічаюць даныя.</translation>
+        <translation>Non se pode importar o ficheiro de chave de acceso “%1”. Faltan datos.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Немагчыма імпартаваць файл ключа доступу &quot;%1&quot;.
-Адсутнічаюць наступныя даныя:
+        <translation>Non se pode importar o ficheiro de chave de acceso “%1”.
+Faltan os seguintes datos:
 %2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Немагчыма імпартаваць файл ключа доступу &quot;%1&quot;. Прыватны ключ адсутнічае або мае няправільны фармат.</translation>
+        <translation>Non se pode importar o ficheiro de chave de acceso “%1”. A chave privada falta ou está mal formada.</translation>
     </message>
     <message>
         <source>Open Passkey File</source>
-        <translation type="unfinished"/>
+        <translation>Abrir ficheiro de chave de acceso</translation>
     </message>
     <message>
         <source>Passkey Import Failed</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao importar a chave de acceso</translation>
     </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
-        <translation>Увядзіце пароль:</translation>
+        <translation>Introducir contrasinal:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Поле пароля</translation>
+        <translation>Campo de contrasinal</translation>
     </message>
     <message>
         <source>Confirm password:</source>
-        <translation>Пацвердзіце пароль:</translation>
+        <translation>Confirmar contrasinal:</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation>Паўторнае поле пароля</translation>
+        <translation>Campo de repetir contrasinal</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>Add Password</source>
-        <translation>Дадаць пароль</translation>
+        <translation>Engadir contrasinal</translation>
     </message>
     <message>
         <source>Change Password</source>
-        <translation>Змяніць пароль</translation>
+        <translation>Trocar contrasinal</translation>
     </message>
     <message>
         <source>Remove Password</source>
-        <translation>Выдаліць пароль</translation>
+        <translation>Eliminar contrasinal</translation>
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation>Пароль усталяваны, націсніце, каб змяніць або выдаліць</translation>
+        <translation>Contrasinal establecido, preme para trocalo ou eliminalo</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Пароль — гэта асноўны метад абароны вашай базы даных.&lt;/p&gt;&lt;p&gt;Добрыя паролі доўгія і ўнікальныя. KeePassXC можа згенераваць такі для вас.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Un contrasinal é o método principal para asegurar a súa base de datos.&lt;/p&gt;&lt;p&gt; Os bos contrasinais son longos e únicos. KeePassXC pode xerar un para ti.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
-        <translation>Паролі не супадаюць.</translation>
+        <translation>Os contrasinais non coinciden.</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Generate Password</source>
-        <translation>Згенераваць пароль</translation>
+        <translation>Xerar contrasinal</translation>
     </message>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation>трываласць</translation>
+        <translation>fortaleza</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation>энтрапія</translation>
+        <translation>entropía</translation>
     </message>
     <message>
         <source>Generated password</source>
-        <translation>Згенераваны пароль</translation>
+        <translation>Rexenerar contrasinal</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -7192,151 +7190,151 @@ The following data is missing:
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation>Згенераваць пароль нанова</translation>
+        <translation>Rexenerar contrasinal</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Скапіраваць пароль</translation>
+        <translation>Copiar contrasinal</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>&amp;Даўжыня:</translation>
+        <translation>&amp;Lonxitude:</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation>Даўжыня пароля</translation>
+        <translation>Lonxitude do contrasinal</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>Перайсці ў пашыраны рэжым</translation>
+        <translation>Trocar ao modo avanzado</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Пашыраны</translation>
+        <translation>Avanzado</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Тыпы сімвалаў</translation>
+        <translation>Tipos de caracteres</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation>Спецыяльныя сімвалы</translation>
+        <translation>Caracteres especiais</translation>
     </message>
     <message>
         <source>Quotes</source>
-        <translation>Дужкі</translation>
+        <translation>Comiñas</translation>
     </message>
     <message>
         <source>Punctuation</source>
-        <translation>Пунктуацыя</translation>
+        <translation>Signos de puntuación</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation>Працяжнікі і касыя рысы</translation>
+        <translation>Guións e barras</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation>Вялікія літары</translation>
+        <translation>Letras maiúsculas</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Лічбы</translation>
+        <translation>Números</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation>Маленькія літары</translation>
+        <translation>Letras minúsculas</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation>Матэматычныя сімвалы</translation>
+        <translation>Símbolos matemáticos</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>Пашыраны ASCII</translation>
+        <translation>ASCII estendido</translation>
     </message>
     <message>
         <source>Braces</source>
-        <translation>Фігурныя дужкі</translation>
+        <translation>Chaves</translation>
     </message>
     <message>
         <source>Do not include:</source>
-        <translation>Не ўключаць:</translation>
+        <translation>Non incluír:</translation>
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation>Дадатковыя сімвалы, якія выкарыстоўваюцца для згенераванага пароля</translation>
+        <translation>Caracteres adicionais a usar para o contrasinal xerado</translation>
     </message>
     <message>
         <source>Additional characters</source>
-        <translation>Дадатковыя сімвалы</translation>
+        <translation>Caracteres adicionais</translation>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Дадаць літары, не звязаныя з шаснаццатковай сістэмай, у спіс &quot;не ўключаць&quot;</translation>
+        <translation>Engadir letras non hexadecimais á lista de “non incluír”</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation>Шаснаццатковыя паролі</translation>
+        <translation>Contrasinais hexadecimais</translation>
     </message>
     <message>
         <source>Hex</source>
-        <translation>Шаснаццатковы</translation>
+        <translation>Hexadecimal</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
-        <translation>Набор сімвалаў, якія трэба выключыць з згенераванага пароля</translation>
+        <translation>Conxunto de caracteres a excluír do contrasinal xerado</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation>Выключаныя сімвалы</translation>
+        <translation>Caracteres excluídos</translation>
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation>Таксама выбірайце з:</translation>
+        <translation>Escoller tamén de:</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Выключыць падобныя сімвалы</translation>
+        <translation>Excluír caracteres semellantes</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>Выбраць сімвалы з кожнай групы</translation>
+        <translation>Escoller caracteres de cada grupo</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Парольная фраза</translation>
+        <translation>Frase de paso</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Раздзяляльнік слоў:</translation>
+        <translation>Separador de palabras:</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Спіс слоў:</translation>
+        <translation>Lista de palabras:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>Колькасць слоў:</translation>
+        <translation>Número de palabras:</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation>Рэгістр слоў:</translation>
+        <translation>Maiúsculas/minúsculas das palabras:</translation>
     </message>
     <message>
         <source>Delete selected wordlist</source>
-        <translation>Выдаліць выбраны спіс слоў</translation>
+        <translation>Eliminar lista de palabras escollida</translation>
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation>Дадаць карыстальніцкі спіс слоў</translation>
+        <translation>Engadir lista de palabras personalizada</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Зачыніць</translation>
+        <translation>Pechar</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -7344,2855 +7342,2866 @@ The following data is missing:
     </message>
     <message>
         <source>Apply Password</source>
-        <translation>Прымяніць пароль</translation>
+        <translation>Aplicar contrasinal</translation>
     </message>
     <message>
         <source>Regenerate password (%1)</source>
-        <translation>Згенераваць пароль нанова (%1)</translation>
+        <translation>Rexenerar contrasinal (%1)</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation>маленькія літары</translation>
+        <translation>minúsculas</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation>ВЯЛІКІЯ ЛІТАРЫ</translation>
+        <translation>MAIÚSCULAS</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation>З вялікай літары</translation>
+        <translation>Tipo Título</translation>
     </message>
     <message>
         <source>(SYSTEM)</source>
-        <translation>(СІСТЭМА)</translation>
+        <translation>(SISTEMA)</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Энтрапія: %1 біт</translation>
+        <translation>Entropía: %1 bits</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Якасць пароля: %1</translation>
+        <translation>Calidade do contrasinal: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Дрэнна</translation>
+        <translation>Ruín</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Слаба</translation>
+        <translation>Débil</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Добра</translation>
+        <translation>Boa</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Выдатна</translation>
+        <translation>Excelente</translation>
     </message>
     <message>
         <source>Failed to delete wordlist</source>
-        <translation>Не ўдалося выдаліць спіс слоў</translation>
+        <translation>Fallo ao eliminar a lista de palabras</translation>
     </message>
     <message>
         <source>Wordlists</source>
-        <translation>Спісы слоў</translation>
+        <translation>Listas de palabras</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Усе файлы</translation>
+        <translation>Tódolos ficheiros</translation>
     </message>
     <message>
         <source>Select Custom Wordlist</source>
-        <translation>Выбраць карыстальніцкі спіс слоў</translation>
+        <translation>Escoller lista de palabras personalizada</translation>
     </message>
     <message>
         <source>Overwrite Wordlist?</source>
-        <translation>Перазапісаць спіс слоў?</translation>
+        <translation>Sobrescribir lista de palabras?</translation>
     </message>
     <message>
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
 Do you want to overwrite it?</source>
-        <translation>Спіс слоў &quot;%1&quot; ужо існуе як карыстальніцкі.
-Ці хочаце вы яго перазапісаць?</translation>
+        <translation>A lista de palabras “%1” xa existe como lista personalizada.
+¿Queres sobrescribila?</translation>
     </message>
     <message>
         <source>Failed to add wordlist</source>
-        <translation>Не ўдалося дадаць спіс слоў</translation>
+        <translation>Fallo ao engadir a lista de palabras</translation>
     </message>
     <message>
         <source>Logograms</source>
-        <translation>Лагаграмы</translation>
+        <translation>Logogramas</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Спецыяльныя сімвалы</translation>
+        <translation>Caracteres especiais</translation>
     </message>
     <message>
         <source>passwordLength</source>
-        <translation>даўжыняПароля</translation>
+        <translation>Lonxitude do contrasinal</translation>
     </message>
     <message>
         <source>Characters: %1</source>
-        <translation>Сімвалаў: %1</translation>
+        <translation>Caracteres: %1</translation>
     </message>
     <message>
         <source>MIXED case</source>
-        <translation>ЗМЕШАНЫ рэгістр</translation>
+        <translation>MAIÚSCULAS e minúsculas</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
-        <translation>Выключаныя сімвалы: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
+        <translation>Caracteres excluídos: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
-        <translation>Папярэджанне: выбраны спіс слоў меншы за мінімальны рэкамендаваны памер!</translation>
+        <translation>Aviso: a lista de palabras escollida é máis pequena do tamaño mínimo recomendado!</translation>
     </message>
     <message>
         <source>Confirm Remove Wordlist</source>
-        <translation>Пацвердзіць выдаленне спісу слоў</translation>
+        <translation>Confirmar eliminación da lista de palabras</translation>
     </message>
     <message>
         <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
-        <translation>Ці сапраўды вы хочаце выдаліць спіс слоў &quot;%1&quot;?</translation>
+        <translation>Queres realmente eliminar a lista de palabras “%1”?</translation>
     </message>
 </context>
 <context>
     <name>PasswordWidget</name>
     <message>
         <source>Passwords do not match</source>
-        <translation>Паролі не супадаюць</translation>
+        <translation>Os contrasinais non coinciden</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation>Паролі пакуль супадаюць</translation>
+        <translation>Os contrasinais coinciden ata agora</translation>
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation>Пераключыць пароль (%1)</translation>
+        <translation>Alternar contrasinal (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation>Згенераваць пароль (%1)</translation>
+        <translation>Xerar contrasinal (%1)</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation>Папярэджанне: уключаны Caps Lock!</translation>
+        <translation>Aviso: Bloq Maiús activado!</translation>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation>Якасць: %1</translation>
+        <translation>Calidade: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Дрэнна</translation>
+        <translation>Ruín</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Слаба</translation>
+        <translation>Feble</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Добра</translation>
+        <translation>Boa</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Выдатна</translation>
+        <translation>Excelente</translation>
     </message>
     <message>
         <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
-        <translation type="unfinished"/>
+        <translation>Alternar a visibilidade do contrasinal usando Control + H. Abrir o xerador de contrasinais usando Control + G.</translation>
     </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
     <message>
         <source>KeePassXC - Pick Characters</source>
-        <translation>KeePassXC - Выбар сімвалаў</translation>
+        <translation>KeePassXC - Escoller caracteres</translation>
     </message>
     <message>
         <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation>Выберыце сімвалы для ўводу, перамяшчайцеся стрэлкамі, Ctrl + S для адпраўкі.</translation>
+        <translation>Escolla os caracteres para escribir, navega coas teclas de frecha, Ctrl + S para enviar.</translation>
     </message>
     <message>
         <source>Press &amp;Tab between characters</source>
-        <translation>Націскайце &amp;Tab паміж сімваламі</translation>
+        <translation>Preme &amp;Tab para cambiar entre caracteres</translation>
     </message>
 </context>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <source>Preview: %1</source>
-        <translation>Папярэдні прагляд: %1</translation>
+        <translation>Vista previa: %1</translation>
     </message>
     <message>
         <source>Save…</source>
-        <translation>Захаваць…</translation>
+        <translation>Gardar...</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation>Перазапісаць</translation>
+        <translation>Sobrescribir</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Перанесці</translation>
+        <translation>Mover</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Ачысціць</translation>
+        <translation>Baleiro</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Выдаліць</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>Прапусціць</translation>
+        <translation>Omitir</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Адключыць</translation>
+        <translation>Desactivar</translation>
     </message>
     <message>
         <source>Merge</source>
-        <translation>Аб&apos;яднаць</translation>
+        <translation>Fusionar</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Працягнуць</translation>
+        <translation>Continuar</translation>
     </message>
     <message>
         <source>Continue with weak password</source>
-        <translation>Працягнуць са слабым паролем</translation>
+        <translation>Continuar con contrasinal feble</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation>База даных не адкрыта</translation>
+        <translation>Base de datos non aberta</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>Хэш базы даных недаступны</translation>
+        <translation>Hash da base de datos non dispoñible</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation type="unfinished"/>
+        <translation>Chave pública do cliente non recibida</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation>Немагчыма расшыфраваць паведамленне</translation>
+        <translation>Non se pode descifrar a mensaxe</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation>Дзеянне скасавана або забаронена</translation>
+        <translation>Acción cancelada ou denegada</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o cifrado da mensaxe</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a asociación con KeePassXC, ténteo de novo</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation type="unfinished"/>
+        <translation>A chave de cifrado non é recoñecida</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>Acción incorrecta</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation type="unfinished"/>
+        <translation>Recibiuse unha mensaxe baleira</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation type="unfinished"/>
+        <translation>Non se forneceu URL</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation type="unfinished"/>
+        <translation>Non se atoparon inicios de sesión</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>Non se atoparon grupos</translation>
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode crear un novo grupo</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation type="unfinished"/>
+        <translation>Non se forneceu un UUID válido</translation>
     </message>
     <message>
         <source>Username or password cannot contain references</source>
-        <translation type="unfinished"/>
+        <translation>O nome de usuario ou contrasinal non poden conter referencias</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Невядомая памылка</translation>
+        <translation>Erro descoñecido</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>Integración co navegador</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation type="unfinished"/>
+        <translation>Fallo do complemento do navegador</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido gardar o ficheiro de script de mensaxería nativa para %1.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Nome de usuario para a entrada.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"/>
+        <translation>nome de usuario</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>URL para a entrada.</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Notas para a entrada.</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Нататкі</translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation type="unfinished"/>
+        <translation>Solicitar o contrasinal da entrada.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Xerar un contrasinal para a entrada.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Engadir unha nova entrada á base de datos.</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada a engadir.</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode xerar un contrasinal e solicitar ao mesmo tempo.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido crear a entrada coa ruta %1.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation type="unfinished"/>
+        <translation>Introduce o contrasinal para a nova entrada:</translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a escritura da base de datos %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Engadiuse correctamente a entrada %1.</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Engade un novo grupo á base de datos.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta do grupo a engadir.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation type="unfinished"/>
+        <translation>O grupo %1 xa existe!</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Grupo %1 non atopado.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Engadiuse correctamente o grupo %1.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Comprobe se algún contrasinal foi filtrado publicamente. FILENAME debe ser a ruta dun ficheiro que liste hashes SHA-1 de contrasinais filtrados no formato HIBP, como os dispoñibles en https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation type="unfinished"/>
+        <translation>NOME DO FICHEIRO</translation>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
-        <translation type="unfinished"/>
+        <translation>Ruta a okon-cli para buscar un ficheiro HIBP con formato</translation>
     </message>
     <message>
         <source>okon-cli</source>
-        <translation type="unfinished"/>
+        <translation>okon-cli</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
+        <translation>Analizar contrasinais para detectar debilidades e problemas.</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode atopar o ficheiro HIBP: %1</translation>
     </message>
     <message>
         <source>Evaluating database entries using okon…</source>
-        <translation type="unfinished"/>
+        <translation>Avaliando as entradas da base de datos usando okon…</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao abrir o ficheiro HIBP %1: %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation type="unfinished"/>
+        <translation>Avaliando as entradas da base de datos fronte ao ficheiro HIBP, isto levará un tempo…</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>O contrasinal de “%1” foi filtrado %2 vez(es)!</numerusform><numerusform>O contrasinal de “%1” foi filtrado %2 vez(es)!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation type="unfinished"/>
+        <translation>O contrasinal de “%1” foi filtrado!</translation>
     </message>
     <message>
         <source>Export an attachment of an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Exportar un anexo dunha entrada.</translation>
     </message>
     <message>
         <source>Path of the entry with the target attachment.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada co anexo de destino.</translation>
     </message>
     <message>
         <source>Name of the attachment to be exported.</source>
-        <translation type="unfinished"/>
+        <translation>Nome do anexo a exportar.</translation>
     </message>
     <message>
         <source>Path to which the attachment should be exported.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta onde se exportará o anexo.</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido atopar a entrada coa ruta %1.</translation>
     </message>
     <message>
         <source>Could not find attachment with name %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido atopar o anexo co nome %1.</translation>
     </message>
     <message>
         <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Non se indicou destino de exportación. Usa &apos;--stdout&apos; ou especifica un &apos;export-file&apos;.</translation>
     </message>
     <message>
         <source>Could not open output file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido abrir o ficheiro de saída %1.</translation>
     </message>
     <message>
         <source>Successfully exported attachment %1 of entry %2 to %3.</source>
-        <translation type="unfinished"/>
+        <translation>Exportouse correctamente o anexo %1 da entrada %2 a %3.</translation>
     </message>
     <message>
         <source>Overwrite existing attachments.</source>
-        <translation type="unfinished"/>
+        <translation>Sobrescribir anexos existentes.</translation>
     </message>
     <message>
         <source>Imports an attachment to an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Importa un anexo a unha entrada.</translation>
     </message>
     <message>
         <source>Path of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada.</translation>
     </message>
     <message>
         <source>Name of the attachment to be added.</source>
-        <translation type="unfinished"/>
+        <translation>Nome do anexo a engadir.</translation>
     </message>
     <message>
         <source>Path of the attachment to be imported.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta do anexo a importar.</translation>
     </message>
     <message>
         <source>Attachment %1 already exists for entry %2.</source>
-        <translation type="unfinished"/>
+        <translation>O anexo %1 xa existe para a entrada %2.</translation>
     </message>
     <message>
         <source>Could not open attachment file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido abrir o ficheiro do anexo %1.</translation>
     </message>
     <message>
         <source>Successfully imported attachment %1 as %2 to entry %3.</source>
-        <translation type="unfinished"/>
+        <translation>Importouse correctamente o anexo %1 como %2 á entrada %3.</translation>
     </message>
     <message>
         <source>Remove an attachment of an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar un anexo dunha entrada.</translation>
     </message>
     <message>
         <source>Name of the attachment to be removed.</source>
-        <translation type="unfinished"/>
+        <translation>Nome do anexo a eliminar.</translation>
     </message>
     <message>
         <source>Successfully removed attachment %1 from entry %2.</source>
-        <translation type="unfinished"/>
+        <translation>Eliminouse correctamente o anexo %1 da entrada %2.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
         <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
-        <translation type="unfinished"/>
+        <translation>Copiar o atributo indicado ao portapapeis. Por defecto é “password” se non se especifica.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation type="unfinished"/>
+        <translation>Copiar o TOTP actual ao portapapeis (equivalente a &quot;-a totp&quot;).</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation type="unfinished"/>
+        <translation>Debe coincidir cunha única entrada, doutro xeito amósase unha lista de coincidencias posibles.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Copiar un atributo dunha entrada ao portapapeis.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada para copiar.</translation>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation type="unfinished"/>
+        <translation>Tempo de espera antes de limpar o portapapeis (por defecto %1 segundos, 0 para ilimitado).</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
-        <translation type="unfinished"/>
+        <translation>Valor de tempo de espera non válido %1.</translation>
     </message>
     <message>
         <source>Multiple entries matching:</source>
-        <translation type="unfinished"/>
+        <translation>Múltiples entradas coincidentes:</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation type="unfinished"/>
+        <translation>Usando a entrada coincidente: %1</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Entrada %1 non atopada.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
+        <translation>ERRO: Especifica só unha opción entre --attribute ou --totp, non ambas.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation type="unfinished"/>
+        <translation>A entrada coa ruta %1 non ten TOTP configurado.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
+        <translation>ERRO: o atributo %1 é ambiguo, coincide con %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation type="unfinished"/>
+        <translation>Atributo “%1” non atopado.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>O atributo “%1” da entrada copiouse ao portapapeis!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Limpando o portapapeis en %1 segundo(s)...</numerusform><numerusform>Limpando o portapapeis en %1 segundo(s)...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
-        <translation type="unfinished"/>
+        <translation>Portapapeis limpo!</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation type="unfinished"/>
+        <translation>Pechar a base de datos actualmente aberta.</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar esta axuda.</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation type="unfinished"/>
+        <translation>Silenciar a solicitude de contrasinal e outras saídas secundarias.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Ficheiro de chave da base de datos.</translation>
     </message>
     <message>
         <source>path</source>
-        <translation type="unfinished"/>
+        <translation>ruta</translation>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Desactivar a chave de contrasinal para a base de datos.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation type="unfinished"/>
+        <translation>Espazo de YubiKey e número de serie opcional usado para acceder á base de datos (p.ex., 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
-        <translation type="unfinished"/>
+        <translation>espazo[:serie]</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation type="unfinished"/>
+        <translation>Faltan argumentos posicionais.</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation type="unfinished"/>
+        <translation>Foron fornecidos demasiados argumentos.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da base de datos.</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Tempo obxectivo de descifrado en ms para a base de datos.</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"/>
+        <translation>tempo</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Establecer o ficheiro de chave para a base de datos.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Establecer un contrasinal para a base de datos.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Crear unha nova base de datos.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tempo de descifrado non válido %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation type="unfinished"/>
+        <translation>O tempo de descifrado debe estar entre %1 e %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao establecer o contrasinal da base de datos.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a carga do ficheiro de chave</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>Non hai ningunha chave establecida. Abortando a creación da base de datos.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation type="unfinished"/>
+        <translation>Medindo a función de derivación de chave para un atraso de %1 ms.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation type="unfinished"/>
+        <translation>Establecendo %1 roldas para a función de derivación de chave.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation type="unfinished"/>
+        <translation>erro ao establecer a configuración de derivación de chave da base de datos.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>O ficheiro %1 xa existe.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao gardar a base de datos: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>Creouse correctamente unha nova base de datos.</translation>
     </message>
     <message>
         <source>Unset the password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar o contrasinal da base de datos.</translation>
     </message>
     <message>
         <source>Unset the key file for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar o ficheiro de chave da base de datos.</translation>
     </message>
     <message>
         <source>Edit a database.</source>
-        <translation type="unfinished"/>
+        <translation>Editar unha base de datos.</translation>
     </message>
     <message>
         <source>Cannot use %1 and %2 at the same time.</source>
-        <translation type="unfinished"/>
+        <translation>Non se poden usar %1 e %2 ao mesmo tempo.</translation>
     </message>
     <message>
         <source>Could not change the database key.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido trocar a chave da base de datos.</translation>
     </message>
     <message>
         <source>Database was not modified.</source>
-        <translation type="unfinished"/>
+        <translation>A base de datos non foi modificada.</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao escribir a base de datos: %1</translation>
     </message>
     <message>
         <source>Successfully edited the database.</source>
-        <translation type="unfinished"/>
+        <translation>Editouse correctamente a base de datos.</translation>
     </message>
     <message>
         <source>Cannot remove password: The database does not have a password.</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode eliminar o contrasinal: a base de datos non ten contrasinal.</translation>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode eliminar o ficheiro de chave: a base de datos non ten ficheiro de chave.</translation>
     </message>
     <message>
         <source>Loading the new key file failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a carga do novo ficheiro de chave: %1</translation>
     </message>
     <message>
         <source>Found unexpected Key type %1</source>
-        <translation type="unfinished"/>
+        <translation>Atopouse un tipo de chave inesperado %1</translation>
     </message>
     <message>
         <source>Cannot remove all the keys from a database.</source>
-        <translation type="unfinished"/>
+        <translation>Non se poden eliminar tódalas chaves dunha base de datos.</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar información da base de datos.</translation>
     </message>
     <message>
         <source>UUID: </source>
-        <translation type="unfinished"/>
+        <translation>UUID: </translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"/>
+        <translation>Nome:</translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation type="unfinished"/>
+        <translation>Descrición:</translation>
     </message>
     <message>
         <source>Cipher: </source>
-        <translation type="unfinished"/>
+        <translation>Cifrado:</translation>
     </message>
     <message>
         <source>KDF: </source>
-        <translation type="unfinished"/>
+        <translation>KDF: </translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>A papeleira está activada.</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation type="unfinished"/>
+        <translation>A papeleira non está activada.</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation>Localización</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation type="unfinished"/>
+        <translation>Base de datos creada</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>Gardada por última vez</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>Trocos sen gardar</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>Si</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>non</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>Número de grupos</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>Número de entradas</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Número de entradas expiradas</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinais únicos</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinais non únicos</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>Máximo de reutilización de contrasinais</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation type="unfinished"/>
+        <translation>Número de contrasinais curtos</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>Número de contrasinais febles</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>Entradas excluídas dos informes</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation type="unfinished"/>
+        <translation>Lonxitude media do contrasinal</translation>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Número de chaves de acceso</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Entradas con TOTP configurado</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>Número de palabras para a frase de paso diceware.</translation>
     </message>
     <message>
         <source>count</source>
         <comment>CLI parameter</comment>
-        <translation type="unfinished"/>
+        <translation>conta</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation type="unfinished"/>
+        <translation>Lista de palabras para o xerador diceware.
+[Predeterminado: EFF English]</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>Xerar unha nova frase de paso diceware aleatoria.</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation type="unfinished"/>
+        <translation>Número de palabras non válido %1</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Título para a entrada.</translation>
     </message>
     <message>
         <source>title</source>
-        <translation type="unfinished"/>
+        <translation>título</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Editar unha entrada.</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada a editar.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se trocia ningún campo para a entrada %1.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation type="unfinished"/>
+        <translation>Introduce o novo contrasinal para a entrada:</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Editouse correctamente a entrada %1.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
+        <translation>Realizar análise avanzada do contrasinal.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal para o que estimar a entropía.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
+        <translation>Estimar a entropía dun contrasinal.</translation>
     </message>
     <message>
         <source>Length %1</source>
-        <translation type="unfinished"/>
+        <translation>Lonxitude %1</translation>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation type="unfinished"/>
+        <translation>Entropía %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
-        <translation type="unfinished"/>
+        <translation>Log10 %1</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation type="unfinished"/>
+        <translation>Bits extra por múltiples palabras %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: forza bruta</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: dicionario</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: dicionario + leet</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: palabras do usuario</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: usuario + leet</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: repetido</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: secuencia</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: espacial</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: data</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: forza bruta (rep)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: dicionario (rep)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: dicionario + leet (rep)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: palabras do usuario (rep)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: usuario + leet (rep)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: repetido (rep)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: secuencia (rep)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: espacial (rep)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: data (rep)</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: descoñecido (%1)</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Entropía %1 (%2)</translation>
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation type="unfinished"/>
+        <translation>*** A lonxitude do contrasinal (%1) non coincide coa suma das partes (%2) ***</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>Saír do modo interactivo.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation type="unfinished"/>
+        <translation>Exporta o contido dunha base de datos á saída estándar no formato especificado.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode exportar a base de datos a XML: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
+        <translation>Formato non soportado %1</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation type="unfinished"/>
+        <translation>Lonxitude do contrasinal xerado</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation>lonxitude</translation>
     </message>
     <message>
         <source>Use lowercase characters</source>
-        <translation type="unfinished"/>
+        <translation>Usar caracteres en minúscula</translation>
     </message>
     <message>
         <source>Use uppercase characters</source>
-        <translation type="unfinished"/>
+        <translation>Usar caracteres en maiúscula</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>Usar números</translation>
     </message>
     <message>
         <source>Use special characters</source>
-        <translation type="unfinished"/>
+        <translation>Usar caracteres especiais</translation>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation type="unfinished"/>
+        <translation>Usar ASCII estendido</translation>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation type="unfinished"/>
+        <translation>Excluír conxunto de caracteres</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation type="unfinished"/>
+        <translation>chars</translation>
     </message>
     <message>
         <source>Use custom character set</source>
-        <translation type="unfinished"/>
+        <translation>Usar conxunto de caracteres personalizado</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation type="unfinished"/>
+        <translation>Excluír caracteres de aspecto semellante</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation type="unfinished"/>
+        <translation>Incluír caracteres de cada grupo escollido</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation type="unfinished"/>
+        <translation>Xerar un novo contrasinal aleatorio.</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation type="unfinished"/>
+        <translation>Lonxitude de contrasinal non válida %1</translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>Xerador de contrasinais non válido tras aplicar todas as opcións</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar a axuda do comando.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"/>
+        <translation>Comandos dispoñibles:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation type="unfinished"/>
+        <translation>Importar o contido dunha base de datos XML.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da exportación da base de datos XML.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da nova base de datos.</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode importar a base de datos XML: %1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>Base de datos importada correctamente.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation type="unfinished"/>
+        <translation>Comando descoñecido %1</translation>
     </message>
     <message>
         <source>
 
 Available commands:
 </source>
-        <translation type="unfinished"/>
+        <translation>
+
+Comandos dispoñibles:
+</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation type="unfinished"/>
+        <translation>Nome do comando a executar.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>Amosa información de depuración.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
-        <translation type="unfinished"/>
+        <translation>Comando non válido %1.</translation>
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation type="unfinished"/>
+        <translation>Listar recursivamente os elementos do grupo.</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>Aplana a saída a liñas únicas.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation type="unfinished"/>
+        <translation>Listar entradas da base de datos.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation type="unfinished"/>
+        <translation>Ruta do grupo a listar. Por defecto é /</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode atopar o grupo %1.</translation>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>Usar as mesmas credenciais para ambas bases de datos.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Ficheiro de chave da base de datos da que fusionar.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Desactivar a chave de contrasinal para a base de datos de onde se vai fusionar.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>Imprimir só os trocos detectados pola operación de fusión.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>Espazo de YubiKey para a segunda base de datos.</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>espazo</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation type="unfinished"/>
+        <translation>Fusionar dúas bases de datos</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da base de datos dende a que se vai fusionar.</translation>
     </message>
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao ler o ficheiro de fusión:
+%1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode gardar a base de datos no ficheiro: %1</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation type="unfinished"/>
+        <translation>Fusionouse correctamente %1 en %2</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>A base de datos non foi modificada pola operación de fusión.</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>Mover unha entrada a un novo grupo.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada a mover.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta do grupo de destino.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido atopar o grupo coa ruta %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation type="unfinished"/>
+        <translation>A entrada xa está no grupo %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>Moveuse correctamente a entrada %1 ao grupo %2.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation type="unfinished"/>
+        <translation>Abrir unha base de datos.</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta da entrada a eliminar.</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode gardar a base de datos no ficheiro: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>A entrada %1 enviouse correctamente á papeleira.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>A entrada %1 eliminouse correctamente.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Ruta do grupo a eliminar.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode eliminar o grupo raíz da base de datos.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>O grupo %1 enviouse correctamente á papeleira.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>O grupo %1 eliminouse correctamente.</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation type="unfinished"/>
+        <translation>Buscar entradas rapidamente</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>Termo de busca.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar o TOTP actual da entrada.</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar os atributos protexidos en texto claro.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar tódolos atributos da entrada.</translation>
     </message>
     <message>
         <source>Show the attachments of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar os anexos da entrada.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation type="unfinished"/>
+        <translation>Nomes dos atributos a amosar. Esta opción pode especificarse máis dunha vez, amosando cada atributo nunha liña na orde indicada. Se non se especifican atributos, amósanse un resumo dos atributos predeterminados</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation type="unfinished"/>
+        <translation>Atributo</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation type="unfinished"/>
+        <translation>Amosar información dunha entrada.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation type="unfinished"/>
+        <translation>Nome da entrada a amosar.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation type="unfinished"/>
+        <translation>ERRO: atributo descoñecido %1.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
-        <translation type="unfinished"/>
+        <translation>Non hai anexos presentes.</translation>
     </message>
     <message>
         <source>Attachments:</source>
-        <translation type="unfinished"/>
+        <translation>Anexos:</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao abrir o ficheiro da base de datos %1: non atopado</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao abrir o ficheiro da base de datos %1: non é un ficheiro normal</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao abrir o ficheiro da base de datos %1: non é lexible</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>Introduce o contrasinal para desbloquear %1:</translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Fallo ao cargar o ficheiro de chave %1: %2</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>AVISO: Está a usar un formato de ficheiro de chave antigo que KeePassXC pode deixar de soportar no futuro.
+
+Considere xerar un novo ficheiro de chave.</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
+        <translation>Slot de YubiKey non válido %1</translation>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation type="unfinished"/>
+        <translation>Número de serie de YubiKey non válido %1</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation type="unfinished"/>
+        <translation>Presenta ou toca a túa YubiKey para continuar.</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>Introduce o contrasinal para cifrar a base de datos (opcional):</translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation type="unfinished"/>
+        <translation>Queres crear unha base de datos cun contrasinal baleiro? [s/N]:</translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation type="unfinished"/>
+        <translation>Repite o contrasinal:</translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation type="unfinished"/>
+        <translation>Erro: os contrasinais non coinciden.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation type="unfinished"/>
+        <translation>Non hai ningún programa definido para manipular o portapapeis</translation>
     </message>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Fallaron tódolos programas de portapapeis. Probados: %1
+</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>A creación do ficheiro de chave %1 fallou: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>A carga do ficheiro de chave %1 fallou: %2</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation type="unfinished"/>
+        <translation>Ficheiro HIBP, liña %1: erro de análise</translation>
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation type="unfinished"/>
+        <translation>Para usar okon, debes fornecer un ficheiro posprocesado (p.ex. file.okon)</translation>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido iniciar o proceso okon: %1</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
-        <translation type="unfinished"/>
+        <translation>Erro: o proceso okon non finalizou</translation>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a carga da base de datos procesada por okon: %1</translation>
     </message>
     <message>
         <source>Very weak password</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal moi feble</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
-        <translation type="unfinished"/>
+        <translation>A entropía do contrasinal é de %1 bits</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal feble</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Usado en %1/%2</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>O contrasinal úsase %1 vez(es)</numerusform><numerusform>O contrasinal úsase %1 vez(es)</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation type="unfinished"/>
+        <translation>O contrasinal caducou</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation type="unfinished"/>
+        <translation>A caducidade do contrasinal foi o %1</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation type="unfinished"/>
+        <translation>O contrasinal caduca o %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation type="unfinished"/>
+        <translation>O contrasinal está a piques de caducar</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>O contrasinal caduca en %1 día(s)</numerusform><numerusform>O contrasinal caduca en %1 día(s)</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation type="unfinished"/>
+        <translation>O contrasinal caducará pronto</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation type="unfinished"/>
+        <translation>Versión %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tipo de compilación: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation type="unfinished"/>
+        <translation>Revisión: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation type="unfinished"/>
+        <translation>Distribución: %1</translation>
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>O modo de depuración está desactivado.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>O modo de depuración está activado.</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation type="unfinished"/>
+        <translation>Sistema operativo: %1
+Arquitectura da CPU: %2
+Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Escrita automática</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>Axente SSH</translation>
     </message>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>Desbloqueo rápido</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
+        <translation>Integración con Secret Service</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation type="unfinished"/>
+        <translation>Extensións activadas:</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>máis de %1 ano(s)</numerusform><numerusform>máis de %1 ano(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>arredor de %1 mes(es)</numerusform><numerusform>arredor de %1 mes(es)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 semana(s)</numerusform><numerusform>%1 semana(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 día(s)</numerusform><numerusform>%1 día(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 hora(s)</numerusform><numerusform>%1 hora(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 minuto(s)</numerusform><numerusform>%1 minuto(s)</numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least %1, found %2.%3.%4</source>
-        <translation type="unfinished"/>
+        <translation>A biblioteca Botan debe ser polo menos %1, atopouse %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
+        <translation>Bibliotecas criptográficas:</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation type="unfinished"/>
+        <translation>AES (%1 roldas)</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2%1 (%2 roldas, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
-        <translation type="unfinished"/>
+        <translation>SymmetricCipher::init: modo de cifrado non válido</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation type="unfinished"/>
+        <translation>SymmetricCipher::init: tamaño de IV non válido de %1 para %2</translation>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
-        <translation type="unfinished"/>
+        <translation>O cifrador non foi inicializado antes do uso</translation>
     </message>
     <message>
         <source>Cannot process 0 length data.</source>
-        <translation type="unfinished"/>
+        <translation>Non se poden procesar datos de lonxitude 0.</translation>
     </message>
     <message>
         <source>unknown executable (DBus address %1)</source>
-        <translation type="unfinished"/>
+        <translation>executable descoñecido (enderezo DBus %1)</translation>
     </message>
     <message>
         <source>%1 (invalid executable path)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (ruta de executable non válida)</translation>
     </message>
     <message>
         <source>NULL device</source>
-        <translation type="unfinished"/>
+        <translation>dispositivo NULL</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>erro ao ler do dispositivo</translation>
     </message>
     <message>
         <source>file empty</source>
-        <translation type="unfinished"/>
+        <translation>ficheiro baleiro</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>AES 256-bit</translation>
     </message>
     <message>
         <source>Twofish 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish 256-bit</translation>
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2d (KDBX 4 – recomendado)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>Argon2id (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 4)</translation>
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>O ficheiro de bloqueo de instancia única existente non é válido. Iniciando unha nova instancia.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido crear o ficheiro de bloqueo. O modo de instancia única está desactivado.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Limpando o portapapeis en %1 segundo(s)…</numerusform><numerusform>Limpando o portapapeis en %1 segundo(s)…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
-        <translation type="unfinished"/>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal</translation>
     </message>
     <message>
         <source>TOTP</source>
-        <translation type="unfinished"/>
+        <translation>TOTP</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"/>
+        <translation>Icona</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Derradeira modificación</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creado</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation type="unfinished"/>
+        <translation>Medición de %1 de atraso</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Queres realmente mover a entrada “%1” á papeleira?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Queres realmente mover %n entrada(s) á papeleira?</numerusform><numerusform>Queres realmente mover %n entrada(s) á papeleira?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A entrada “%1” ten %2 referencia(s). Queres sobrescribir as referencias con valores, omitir esta entrada ou eliminala igualmente?</numerusform><numerusform>A entrada “%1” ten %2 referencia(s). Queres sobrescribir as referencias con valores, omitir esta entrada ou eliminala igualmente?</numerusform></translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="unfinished"/>
+        <translation>Nome de usuario</translation>
     </message>
     <message>
         <source>Browser Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Estatísticas do navegador</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation type="unfinished"/>
+        <translation>Comprobación de saúde</translation>
     </message>
     <message>
         <source>HIBP</source>
-        <translation type="unfinished"/>
+        <translation>HIBP</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Estatísticas</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Versión de ficheiro de chave non soportada: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Non coincide a suma de verificación! O ficheiro de chave pode estar corrupto.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Datos inesperados no ficheiro de chave! Pode estar corompido.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - xestor de contrasinais multiplataforma</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>nomes de ficheiros das bases de datos de contrasinais a abrir (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation type="unfinished"/>
+        <translation>ruta a un ficheiro de configuración personalizado</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation type="unfinished"/>
+        <translation>ruta a un ficheiro de configuración local personalizado</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation type="unfinished"/>
+        <translation>bloquear todas as bases de datos abertas</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation type="unfinished"/>
+        <translation>ficheiro de chave da base de datos</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation type="unfinished"/>
+        <translation>ler o contrasinal da base de datos desde stdin</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation type="unfinished"/>
+        <translation>ler o contrasinal da base de datos dende stdin</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation type="unfinished"/>
+        <translation>Xa hai outra instancia de KeePassXC en execución.</translation>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC non está en execución. Non hai ningunha base de datos aberta para bloquear</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation type="unfinished"/>
+        <translation>Erro fatal ao probar as funcións criptográficas.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Erro</translation>
     </message>
     <message>
         <source>Database password: </source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal da base de datos:</translation>
     </message>
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Configuración non válida</translation>
     </message>
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Chave non válida</translation>
     </message>
     <message>
         <source>Failed to create Windows Hello credential.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a creación da credencial de Windows Hello</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a sinatura do desafío usando Windows Hello</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
-        <translation type="unfinished"/>
+        <translation>Aviso: fallou o bloqueo da captura de pantalla nunha xanela de nivel superior.</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
-        <translation type="unfinished"/>
+        <translation>Cifrado non válido</translation>
     </message>
     <message>
         <source>Invalid KDF</source>
-        <translation type="unfinished"/>
+        <translation>KDF non válido</translation>
     </message>
     <message>
         <source>Access to all entries is denied</source>
-        <translation type="unfinished"/>
+        <translation>Acceso a tódalas entradas denegado</translation>
     </message>
     <message>
         <source>allow screenshots and app recording (Windows/macOS)</source>
-        <translation type="unfinished"/>
+        <translation>Permitir capturas de pantalla e gravación da aplicación (Windows/macOS)</translation>
     </message>
     <message>
         <source>Set the key file for the database.
 This option is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Establecer o ficheiro de chave para a base de datos
+Esta opción está obsoleta, use --set-key-file no seu lugar.</translation>
     </message>
     <message>
         <source>Databases have been locked.</source>
-        <translation type="unfinished"/>
+        <translation>As bases de datos foron bloqueadas.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
-        <translation type="unfinished"/>
+        <translation>A atestación non é compatible</translation>
     </message>
     <message>
         <source>Credential is excluded</source>
-        <translation type="unfinished"/>
+        <translation>A credencial está excluída</translation>
     </message>
     <message>
         <source>Passkeys request canceled</source>
-        <translation type="unfinished"/>
+        <translation>Solicitude de chave de acceso cancelada</translation>
     </message>
     <message>
         <source>Invalid user verification</source>
-        <translation type="unfinished"/>
+        <translation>Verificación de usuario non válida</translation>
     </message>
     <message>
         <source>Empty public key</source>
-        <translation type="unfinished"/>
+        <translation>Chave pública baleira</translation>
     </message>
     <message>
         <source>Invalid URL provided</source>
-        <translation type="unfinished"/>
+        <translation>URL proporcionado non válido</translation>
     </message>
     <message>
         <source>Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Chaves de acceso</translation>
     </message>
     <message>
         <source>AES initialization failed</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a inicialización de AES</translation>
     </message>
     <message>
         <source>AES encrypt failed</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o cifrado AES</translation>
     </message>
     <message>
         <source>Failed to store in Linux Keyring</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o almacenamento no chaveiro de Linux</translation>
     </message>
     <message>
         <source>Polkit returned an error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Polkit devolveu un erro: %1</translation>
     </message>
     <message>
         <source>Could not locate key in keyring</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido localizar a chave no chaveiro</translation>
     </message>
     <message>
         <source>Could not read key in keyring</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido ler a chave no chaveiro</translation>
     </message>
     <message>
         <source>AES decrypt failed</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o descifrado AES</translation>
     </message>
     <message>
         <source>No Polkit authentication agent was available</source>
-        <translation type="unfinished"/>
+        <translation>Non hai dispoñible un axente de autenticación Polkit</translation>
     </message>
     <message>
         <source>Polkit authorization failed</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a autorización de Polkit</translation>
     </message>
     <message>
         <source>No Quick Unlock provider is available</source>
-        <translation type="unfinished"/>
+        <translation>Non hai dispoñible un provedor de desbloqueo rápido</translation>
     </message>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a inicialización da criptografía de KeePassXC.</translation>
     </message>
     <message>
         <source>Failed to encrypt key data.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o cifrado dos datos da chave.</translation>
     </message>
     <message>
         <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a obtención da credencial de Windows Hello.</translation>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o descifrado dos datos da chave.</translation>
     </message>
     <message>
         <source>Origin is empty or not allowed</source>
-        <translation type="unfinished"/>
+        <translation>A orixe está baleira ou non está permitida</translation>
     </message>
     <message>
         <source>Effective domain is not a valid domain</source>
-        <translation type="unfinished"/>
+        <translation>O dominio efectivo non é un dominio válido</translation>
     </message>
     <message>
         <source>Origin and RP ID do not match</source>
-        <translation type="unfinished"/>
+        <translation>A orixe e o RP ID non coinciden</translation>
     </message>
     <message>
         <source>No supported algorithms were provided</source>
-        <translation type="unfinished"/>
+        <translation>Non se proporcionaron algoritmos compatibles</translation>
     </message>
     <message>
         <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
+        <translation>Agarde a que remate o temporizador</translation>
     </message>
     <message>
         <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
+        <translation>O desafío é máis curto do mínimo requirido</translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
-        <translation type="unfinished"/>
+        <translation>user.id non cumpre a lonxitude requirida</translation>
     </message>
     <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
+        <translation>Favorito</translation>
     </message>
     <message>
         <source>File does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>O ficheiro non existe.</translation>
     </message>
     <message>
         <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode abrir o ficheiro: %1</translation>
     </message>
     <message>
         <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode analizar o ficheiro: %1 na posición %2</translation>
     </message>
     <message>
         <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallou o descifrado do ficheiro json: %1</translation>
     </message>
     <message>
         <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
+        <translation>Campo encKeyValidation non válido</translation>
     </message>
     <message>
         <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
+        <translation>Lista de cifrados non válida dentro do campo encKeyValidation</translation>
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished"/>
+        <translation>Contrasinal incorrecto</translation>
     </message>
     <message>
         <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
+        <translation>Campo de datos cifrados non válido</translation>
     </message>
     <message>
         <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
+        <translation>Lista de cifrados non válida dentro do campo de datos cifrados</translation>
     </message>
     <message>
         <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
+        <translation>Non se pode inicializar o cifrado</translation>
     </message>
     <message>
         <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
+        <translation>Non se poden descifrar os datos</translation>
     </message>
     <message>
         <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
+        <translation>Importación de Bitwarden</translation>
     </message>
     <message>
         <source>Archived</source>
         <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
+        <translation>Arquivado</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
+        <translation>Formato de ficheiro 1PUX non válido: non é un ficheiro ZIP válido.</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
+        <translation>Formato de ficheiro 1PUX non válido: falta export.data</translation>
     </message>
     <message>
         <source>1Password Import</source>
-        <translation type="unfinished"/>
+        <translation>Importación de 1Password</translation>
     </message>
     <message>
         <source>Enter Shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Introducir atallo</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Acción</translation>
     </message>
     <message>
         <source>Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Atallos</translation>
     </message>
     <message>
         <source>Unknown passkeys error</source>
-        <translation type="unfinished"/>
+        <translation>Erro descoñecido de chaves de acceso</translation>
     </message>
     <message>
         <source>Invalid KDF iterations, cannot decrypt json file</source>
-        <translation type="unfinished"/>
+        <translation>Iteracións KDF inválidas, non se pode descifrar o ficheiro json</translation>
     </message>
     <message>
         <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
-        <translation type="unfinished"/>
+        <translation>Formato non compatible, asegúrese de que a exportación de Bitwarden está protexida con contrasinal</translation>
     </message>
     <message>
         <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
-        <translation type="unfinished"/>
+        <translation>Só se admiten PBKDF e Argon2, non se pode descifrar o ficheiro json</translation>
     </message>
     <message>
         <source>Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>Chaves de soporte físico</translation>
     </message>
     <message>
         <source>Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Chave de acceso</translation>
     </message>
     <message>
         <source>Reset Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Restablecer atallos</translation>
     </message>
     <message>
         <source>Double click an action to change its shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Faga dobre clic nunha acción para trocar o seu atallo</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Filtrar...</translation>
     </message>
     <message>
         <source>Shortcut Conflict</source>
-        <translation type="unfinished"/>
+        <translation>Conflito de atallos</translation>
     </message>
     <message>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
-        <translation type="unfinished"/>
+        <translation>O atallo %1 entra en conflito con &apos;%2&apos;. Sobrescribir o atallo?</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Formato a usar na exportación. Opcións dispoñibles: &apos;xml&apos;, &apos;csv&apos; ou &apos;html&apos;. Por defecto &apos;xml&apos;</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
-        <translation type="unfinished"/>
+        <translation>Cadea mal formada, posible delimitador sen escapar</translation>
     </message>
     <message>
         <source>missing closing delimiter</source>
-        <translation type="unfinished"/>
+        <translation>Falta delimitador de peche</translation>
     </message>
     <message>
         <source>%1, row: %2, column: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1, fila: %2, columna: %3</translation>
     </message>
     <message>
         <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Non se admiten ficheiros cifrados.</translation>
     </message>
     <message>
         <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
+        <translation>Importación de Proton Pass</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Etiquetas</translation>
     </message>
     <message>
         <source>start minimized to the system tray</source>
-        <translation type="unfinished"/>
+        <translation>iniciar minimizado na bandexa do sistema</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
-        <translation type="unfinished"/>
+        <translation>Aviso: a lista de palabras escollida é menor co tamaño mínimo recomendado</translation>
     </message>
     <message>
         <source>Invalid Step</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Paso inválido</translation>
     </message>
     <message>
         <source>Invalid Digits</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Díxitos inválidos</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 carácter(es)</numerusform><numerusform>%1 carácter(es)</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
+        <translation>Quere realmente eliminar permanentemente a entrada &quot;%1&quot;?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to permanently delete %n entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Quere realmente eliminar permanentemente %n entrada(s)?</numerusform><numerusform>Quere realmente eliminar permanentemente %n entrada(s)?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Confirm Delete Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Confirmar eliminación de entrada(s)</numerusform><numerusform>Confirmar eliminación de entrada(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Confirm Recycle Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Confirmar reciclaxe de entrada(s)</numerusform><numerusform>Confirmar reciclaxe de entrada(s)</numerusform></translation>
     </message>
     <message>
         <source>Confirm Delete Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar eliminación de datos do complemento</translation>
     </message>
     <message numerus="yes">
         <source>Delete plugin data from the selected entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Eliminar datos do complemento da(s) entrada(s) escollida(s)?</numerusform><numerusform>Eliminar datos do complemento da(s) entrada(s) escollida(s)?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar substitución de referencias de entrada</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Унутраная памылка zlib пры сцісканні: </translation>
+        <translation>Erro interno de zlib ao comprimir:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Памылка запісу на базавую прыладу: </translation>
+        <translation>Erro ao escribir no dispositivo subxacente:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Памылка адкрыцця базавай прылады: </translation>
+        <translation>Erro ao abrir o dispositivo subxacente:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Памылка чытання даных з базавай прылады: </translation>
+        <translation>Erro ao ler datos do dispositivo subxacente:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Унутраная памылка zlib пры распакаванні: </translation>
+        <translation>Erro interno de zlib ao descomprimir:</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Фармат gzip не падтрымліваецца ў гэтай версіі zlib.</translation>
+        <translation>O formato gzip non é compatible nesta versión de zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Унутраная памылка zlib: </translation>
+        <translation>Erro interno de zlib:</translation>
     </message>
 </context>
 <context>
     <name>RemoteDesktopPortal</name>
     <message>
         <source>Remote desktop session is not active</source>
-        <translation type="unfinished"/>
+        <translation>A sesión de escritorio remoto non está activa</translation>
     </message>
     <message>
         <source>Session closed</source>
-        <translation type="unfinished"/>
+        <translation>Sesión pechada</translation>
     </message>
     <message>
         <source>User cancelled the interaction</source>
-        <translation type="unfinished"/>
+        <translation>O usuario cancelou a interacción</translation>
     </message>
     <message>
         <source>User interaction was canceled for unknown reason</source>
-        <translation type="unfinished"/>
+        <translation>A interacción do usuario foi cancelada por razón descoñecida</translation>
     </message>
     <message>
         <source>Remote desktop session handle does not match expected path</source>
-        <translation type="unfinished"/>
+        <translation>A xestión da sesión de escritorio remote non coincide coa ruta esperada</translation>
     </message>
 </context>
 <context>
     <name>RemoteHandler</name>
     <message>
         <source>Command `%1` did not finish in time. Process was killed.</source>
-        <translation type="unfinished"/>
+        <translation>O comando %1 non rematou a tempo. O proceso foi terminado.</translation>
     </message>
     <message>
         <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a subida da base de datos fusionada. O comando %1 non rematou a tempo. O proceso foi detido.</translation>
     </message>
     <message>
         <source>Invalid download parameters provided.</source>
-        <translation type="unfinished"/>
+        <translation>Parámetros de descarga non válidos proporcionados.</translation>
     </message>
     <message>
         <source>Command `%1` failed to download database.</source>
-        <translation type="unfinished"/>
+        <translation>O comando %1 fallou ao descargar a base de datos.</translation>
     </message>
     <message>
         <source>Invalid database pointer or upload parameters provided.</source>
-        <translation type="unfinished"/>
+        <translation>Parámetro de base de datos ou subida non válido.</translation>
     </message>
     <message>
         <source>Command `%1` exited with status code: %2</source>
-        <translation type="unfinished"/>
+        <translation>O comando %1 rematou co código de estado: %2</translation>
     </message>
     <message>
         <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
-        <translation type="unfinished"/>
+        <translation>Fallou a subida da base de datos fusionada. O comando %1 rematou co código de estado: %2</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
         <source>Double-click entries to edit.</source>
-        <translation>Двойчы націсніце на запісы, каб іх адрэдагаваць.</translation>
+        <translation>Faga dobre clic nas entradas para editalas.</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>Спіс URL-адрасоў запісаў</translation>
+        <translation>Lista de URLs da entrada</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
-        <translation>У запісе не ўстаноўлены URL-адрасы</translation>
+        <translation>A entrada non ten URLs configurados</translation>
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation>Дазволеныя URL-адрасы</translation>
+        <translation>URLs permitidos</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
-        <translation>У запісе няма налад інтэграцыі з браўзэрам</translation>
+        <translation>A entrada non ten configuración de integración co navegador</translation>
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation>Забароненыя URL-адрасы</translation>
+        <translation>URLs denegados</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation> (Выключаны)</translation>
+        <translation>(Excluído)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Гэты запіс выключаны з справаздач</translation>
+        <translation>Esta entrada está excluída dos informes</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation>Калі ласка, пачакайце, разлічваецца статыстыка браўзэра...</translation>
+        <translation>Agarde, estanse calculando as estatísticas do navegador…</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
-        <translation>Няма запісаў з URL-адрасам, або не захаваны налады пашырэння браўзэра.</translation>
+        <translation>Non hai entradas cun URL ou ningunha ten configuración da extensión do navegador gardada.</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Шлях</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URL-адрасы</translation>
+        <translation>URLs</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Рэдагаваць запіс...</translation>
+        <translation>Editar entrada…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Выдаліць запіс...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запіс(ы)...</numerusform></translation>
+        <translation><numerusform>Eliminar entrada(s)…</numerusform><numerusform>Eliminar entrada(s)…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Выключыць са справаздач</translation>
+        <translation>Excluir dos informes</translation>
     </message>
     <message numerus="yes">
         <source>Expire Entry(s)…</source>
-        <translation><numerusform>Тэрмін запісу мінае...</numerusform><numerusform>Тэрмін запісаў мінае...</numerusform><numerusform>Тэрмін запісаў мінае...</numerusform><numerusform>Тэрмін запісу(аў) мінае...</numerusform></translation>
+        <translation><numerusform>Facer caducar entrada(s)…</numerusform><numerusform>Facer caducar entrada(s)…</numerusform></translation>
     </message>
     <message>
         <source>Only show entries that have a URL</source>
-        <translation>Паказваць толькі запісы, якія маюць URL</translation>
+        <translation>Amosar só entradas que teñan un URL</translation>
     </message>
     <message>
         <source>Only show entries that have been explicitly allowed or denied</source>
-        <translation>Паказваць толькі запісы, якія былі яўна дазволены або забаронены</translation>
+        <translation>Amosar só entradas explicitamente permitidas ou denegadas</translation>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation>Паказаць запісы, тэрмін дзеяння якіх скончыўся</translation>
+        <translation>Amosar entradas caducadas</translation>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation> (Тэрмін дзеяння скончыўся)</translation>
+        <translation>(Caducada)</translation>
     </message>
     <message numerus="yes">
         <source>Delete plugin data from Entry(s)…</source>
-        <translation><numerusform>Выдаліць даныя плагіна з запісу...</numerusform><numerusform>Выдаліць даныя плагіна з запісаў...</numerusform><numerusform>Выдаліць даныя плагіна з запісаў...</numerusform><numerusform>Выдаліць даныя плагіна з запісу(аў)...</numerusform></translation>
+        <translation><numerusform>Eliminar datos do complemento da(s) entrada(s)…</numerusform><numerusform>Eliminar datos do complemento da(s) entrada(s)…</numerusform></translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Show expired entries</source>
-        <translation>Паказаць запісы, тэрмін дзеяння якіх скончыўся</translation>
+        <translation>Amosar entradas caducadas</translation>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation> (Тэрмін дзеяння скончыўся)</translation>
+        <translation>(Caducada)</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Навядзіце курсор на прычыну, каб паказаць дадатковыя дэталі. Двойчы націсніце на запісы, каб іх адрэдагаваць.</translation>
+        <translation>Pasa o rato por riba do motivo para ver detalles adicionais. Fai dobre clic nas entradas para editalas.</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation>Дрэнны — пароль трэба змяніць</translation>
+        <translation>Malo — o contrasinal debe ser trocado</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation>Кепскі — варта змяніць пароль</translation>
+        <translation>Ruín — o contrasinal debería ser trocado</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation>Слабы — варта разгледзець магчымасць змены пароля</translation>
+        <translation>Feble — considere trocar o contrasinal</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation> (Выключаны)</translation>
+        <translation>(Excluído)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Гэты запіс выключаны з справаздач</translation>
+        <translation>Esta entrada está excluída dos informes</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation>Калі ласка, пачакайце, разлічваюцца даныя аб спраўнасці...</translation>
+        <translation>Agarde, estanse calculando os datos de saúde…</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation>Віншуем, усё ў парадку!</translation>
+        <translation>Parabéns, todo está en bo estado!</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Шлях</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Score</source>
-        <translation>Ацэнка</translation>
+        <translation>Puntuación</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation>Прычына</translation>
+        <translation>Motivo</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Рэдагаваць запіс...</translation>
+        <translation>Editar entrada…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Выдаліць запіс...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запіс(ы)...</numerusform></translation>
+        <translation><numerusform>Eliminar entrada(s)…</numerusform><numerusform>Eliminar entrada(s)…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Выключыць са справаздач</translation>
+        <translation>Excluir dos informes</translation>
     </message>
     <message numerus="yes">
         <source>Expire Entry(s)…</source>
-        <translation><numerusform>Тэрмін запісу мінае...</numerusform><numerusform>Тэрмін запісаў мінае...</numerusform><numerusform>Тэрмін запісаў мінае...</numerusform><numerusform>Тэрмін запісу(аў) мінае...</numerusform></translation>
+        <translation><numerusform>Facer caducar entrada(s)…</numerusform><numerusform>Facer caducar entrada(s)…</numerusform></translation>
     </message>
     <message>
         <source>Show entries that have been excluded from reports</source>
-        <translation>Паказаць запісы, якія былі выключаны са справаздач</translation>
+        <translation>Amosar entradas que foron excluídas dos informes</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>УВАГА: Гэты справаздача патрабуе адпраўкі інфармацыі ў інтэрнэт-сэрвіс Have I Been Pwned (https://haveibeenpwned.com). Калі вы працягнеце, паролі вашай базы даных будуць крыптаграфічна хэшыраваны, і першыя пяць сімвалаў гэтых хэшаў будуць бяспечна адпраўлены ў гэты сэрвіс. Ваша база даных застаецца абароненай і не можа быць адноўлена з гэтай інфармацыі. Аднак колькасць пароляў, якія вы адпраўляеце, і ваш IP-адрас будуць раскрыты для гэтага сэрвісу.</translation>
+        <translation>PRECAUCIÓN: Este informe require enviar información ao servizo en liña Have I Been Pwned (https://haveibeenpwned.com). Se continúa, os contrasinais da súa base de datos serán sometidos a hash criptográfico e os primeiros cinco caracteres deses hashes enviaranse de forma segura a este servizo. A súa base de datos permanece segura e non pode ser reconstruída a partir desta información. Porén, o número de contrasinais enviados e o seu enderezo IP serán expostos a este servizo.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Выканаць анлайн-аналіз</translation>
+        <translation>Realizar análise en liña</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>Таксама паказаць запісы, якія былі выключаны са справаздач</translation>
+        <translation>Amosar tamén as entradas que foron excluídas dos informes</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Гэтая зборка KeePassXC не мае сеткавых функцый. Сетка неабходная для праверкі вашых пароляў у базах даных Have I Been Pwned.</translation>
+        <translation>Esta compilación de KeePassXC non ten funcións de rede. A rede é precisa para comprobar os seus contrasinais contra as bases de datos de Have I Been Pwned.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation>Віншуем, няма раскрытых пароляў!</translation>
+        <translation>Parabéns, non hai contrasinais expostos!</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Шлях</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Пароль раскрыты...</translation>
+        <translation>Contrasinal exposto…</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation> (Выключаны)</translation>
+        <translation>(Excluído)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Гэты запіс выключаны з справаздач</translation>
+        <translation>Esta entrada está excluída dos informes</translation>
     </message>
     <message>
         <source>once</source>
         <comment>Password exposure amount</comment>
-        <translation>адзін раз</translation>
+        <translation>unha vez</translation>
     </message>
     <message>
         <source>up to 10 times</source>
         <comment>Password exposure amount</comment>
-        <translation>да 10 разоў</translation>
+        <translation>ata 10 veces</translation>
     </message>
     <message>
         <source>up to 100 times</source>
         <comment>Password exposure amount</comment>
-        <translation>да 100 разоў</translation>
+        <translation>ata 100 veces</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>да 1000 разоў</translation>
+        <translation>ata 1000 veces</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>да 10 000 разоў</translation>
+        <translation>ata 10.000 veces</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>да 100 000 разоў</translation>
+        <translation>ata 100.000 veces</translation>
     </message>
     <message>
         <source>up to a million times</source>
         <comment>Password exposure amount</comment>
-        <translation>да мільёна разоў</translation>
+        <translation>ata un millón de veces</translation>
     </message>
     <message>
         <source>millions of times</source>
         <comment>Password exposure amount</comment>
-        <translation>мільёны разоў</translation>
+        <translation>millóns de veces</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Рэдагаваць запіс...</translation>
+        <translation>Editar entrada…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Выдаліць запіс...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запіс(ы)...</numerusform></translation>
+        <translation><numerusform>Eliminar entrada(s)…</numerusform><numerusform>Eliminar entrada(s)…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Выключыць са справаздач</translation>
+        <translation>Excluír dos informes</translation>
     </message>
     <message numerus="yes">
         <source>Expire Entry(s)…</source>
-        <translation><numerusform>Тэрмін запісу мінае...</numerusform><numerusform>Тэрмін запісаў мінае...</numerusform><numerusform>Тэрмін запісаў мінае...</numerusform><numerusform>Тэрмін запісу(аў) мінае...</numerusform></translation>
+        <translation><numerusform>Facer caducar entrada(s)…</numerusform><numerusform>Facer caducar entrada(s)…</numerusform></translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetPasskeys</name>
     <message>
         <source>Export</source>
-        <translation>Экспарт</translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Імпарт</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>Спіс URL-адрасоў запісаў</translation>
+        <translation>Lista de URLs da entrada</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Назва</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Шлях</translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Імя карыстальніка</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URL-адрасы</translation>
+        <translation>URLs</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Рэдагаваць запіс...</translation>
+        <translation>Editar entrada…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Выдаліць запіс...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запісы...</numerusform><numerusform>Выдаліць запіс(ы)...</numerusform></translation>
+        <translation><numerusform>Eliminar entrada(s)…</numerusform><numerusform>Eliminar entrada(s)…</numerusform></translation>
     </message>
     <message>
         <source>Relying Party</source>
-        <translation>Бак, што давярае</translation>
+        <translation>Parte confiable</translation>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation>Паказаць запісы, тэрмін дзеяння якіх скончыўся</translation>
+        <translation>Amosar entradas caducadas</translation>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation> (Тэрмін дзеяння скончыўся)</translation>
+        <translation>(Caducada)</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>Пацверджанне экспарту</translation>
+        <translation>Confirmación de exportación</translation>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation>Файл ключа доступу будзе ўразлівы для крадзяжу і несанкцыянаванага выкарыстання, калі яго не абараніць. Вы ўпэўнены, што хочаце працягнуць?</translation>
+        <translation>O ficheiro de chaves de acceso será vulnerable a roubo e uso non autorizado se non se mantén seguro. Está certo de que quere continuar?</translation>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation>Калі ласка, пачакайце, спіс запісаў з ключамі доступу абнаўляецца...</translation>
+        <translation>Agarde, estase actualizando a lista de entradas con chaves de acceso…</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation>Няма запісаў з ключамі доступу.</translation>
+        <translation>Non hai entradas con chaves de acceso</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation>Навядзіце курсор на радкі са значкамі памылак для атрымання дадатковай інфармацыі.</translation>
+        <translation>Pasa o rato por riba das liñas con iconas de erro para obter máis información.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Імя</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Значэнне</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation>Калі ласка, пачакайце, разлічваецца статыстыка базы даных...</translation>
+        <translation>Agarde, estanse calculando as estatísticas da base de datos…</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation>Імя базы даных</translation>
+        <translation>Nome da base de datos</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Апісанне</translation>
+        <translation>Descrición</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Размяшчэнне</translation>
+        <translation>Localización</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>База даных створана</translation>
+        <translation>Base de datos creada</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>Апошняе захаванне</translation>
+        <translation>Gardada por última vez</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>Незахаваныя змены</translation>
+        <translation>Trocos sen gardar</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>так</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>не</translation>
+        <translation>non</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>База даных была зменена, але змены яшчэ не былі захаваны на дыск.</translation>
+        <translation>A base de datos foi modificada, pero os trocos aínda non foron gardados no disco.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>Колькасць груп</translation>
+        <translation>Número de grupos</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation>Колькасць запісаў</translation>
+        <translation>Número de entradas</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Колькасць запісаў, тэрмін дзеяння якіх скончыўся</translation>
+        <translation>Número de entradas expiradas</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>База даных змяшчае запісы, тэрмін дзеяння якіх скончыўся.</translation>
+        <translation>A base de datos contén entradas caducadas.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>Унікальныя паролі</translation>
+        <translation>Contrasinais únicos</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Неўнікальныя паролі</translation>
+        <translation>Contrasinais non únicos</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Больш за 10% пароляў выкарыстоўваюцца паўторна. Па магчымасці выкарыстоўвайце ўнікальныя паролі.</translation>
+        <translation>Máis do 10% dos contrasinais están reutilizados. Use contrasinais únicos sempre que sexa posible.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>Максімальнае паўторнае выкарыстанне пароля</translation>
+        <translation>Máximo de reutilización de contrasinais</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Некаторыя паролі выкарыстоўваюцца больш за тры разы. Па магчымасці выкарыстоўвайце ўнікальныя паролі.</translation>
+        <translation>Algúns contrasinais úsanse máis de tres veces. Use contrasinais únicos sempre que sexa posible.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>Колькасць кароткіх пароляў</translation>
+        <translation>Número de contrasinais curtos</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation>Рэкамендаваная мінімальная даўжыня пароля складае не менш за 8 сімвалаў.</translation>
+        <translation>A lonxitude mínima recomendada do contrasinal é de polo menos 8 caracteres.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>Колькасць слабых пароляў</translation>
+        <translation>Número de contrasinais febles</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation>Рэкамендуецца выкарыстоўваць доўгія, выпадковыя паролі з ацэнкай «добра» або «выдатна».</translation>
+        <translation>Recoméndase usar contrasinais longos e aleatorios cunha cualificación de «bo» ou «excelente»</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>Запісы, выключаныя з справаздач</translation>
+        <translation>Entradas excluídas dos informes</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation>Выключэнне запісаў з справаздач, напрыклад, таму што яны маюць дрэнны пароль, не абавязкова з&apos;яўляецца праблемай, але за імі варта сачыць.</translation>
+        <translation>Excluír entradas dos informes, por exemplo porque sábese que teñen un contrasinal ruín, non é necesariamente un problema, pero debería vixialas.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation>Сярэдняя даўжыня пароля</translation>
+        <translation>Lonxitude media do contrasinal</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation>Сярэдняя даўжыня пароля меншая за дзесяць сімвалаў. Больш доўгія паролі забяспечваюць большую бяспеку.</translation>
+        <translation>A lonxitude media dos contrasinais é inferior a dez caracteres. Os contrasinais máis longos proporcionan maior seguridade.</translation>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Número de chaves de acceso</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Entradas con TOTP configurado</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 carácter(es)</numerusform><numerusform>%1 carácter(es)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation>Падключэнне да агента не атрымалася.</translation>
+        <translation>Fallou a conexión co axente.</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
-        <translation>Памылка пратакола агента.</translation>
+        <translation>Erro de protocolo do axente.</translation>
     </message>
     <message>
         <source>No agent running, cannot add identity.</source>
-        <translation>Агент не працуе, немагчыма дадаць ідэнтычнасць.</translation>
+        <translation>Non hai ningún axente en execución, non se pode engadir a identidade.</translation>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation>Канфлікт уласнасці ідэнтычнасці ключа. Даданне адхілена.</translation>
+        <translation>Conflito de propiedade da identidade da chave. Rexeitando engadir.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>Агент адмовіў у ідэнтычнасці. Магчымыя прычыны:</translation>
+        <translation>O axente rexeitou esta identidade. Posibles razóns inclúen:</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
-        <translation>Ключ ужо дададзены.</translation>
+        <translation>A chave xa foi engadida.</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation>Абмежаваны тэрмін службы не падтрымліваецца агентам (праверце налады).</translation>
+        <translation>A duración limitada non é compatible co axente (revise as opcións).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation>Запыт на пацверджанне не падтрымліваецца агентам (праверце налады).</translation>
+        <translation>A solicitude de confirmación non é compatible co axente (revise as opcións).</translation>
     </message>
     <message>
         <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
-        <translation>Ключы бяспекі не падтрымліваюцца агентам або пастаўшчык ключоў бяспекі недаступны.</translation>
+        <translation>As chaves de seguridade non son compatibles co axente ou o provedor de chaves de seguridade non está dispoñible.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation>Агент не працуе, немагчыма выдаліць ідэнтычнасць.</translation>
+        <translation>Non hai ningún axente en execución, non se pode eliminar a identidade.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Агент не працуе, немагчыма паказаць спіс ідэнтычнасцей.</translation>
+        <translation>Non hai ningún axente en execución, non se poden listar as identidades.</translation>
     </message>
     <message>
         <source>Failed to remove all SSH identities from agent.</source>
-        <translation>Не ўдалося выдаліць усе ідэнтычнасці SSH з агента.</translation>
+        <translation>Fallou a eliminación de tódalas identidades SSH do axente.</translation>
     </message>
     <message>
         <source>All SSH identities removed from agent.</source>
-        <translation>Усе ідэнтычнасці SSH выдалены з агента.</translation>
+        <translation>Elimináronse tódalas identidades SSH do axente.</translation>
     </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation>Дапамога па пошуку</translation>
+        <translation>Axuda de busca</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation>Параметры пошуку: [мадыфікатары][поле:][&quot;]тэрмін[&quot;]</translation>
+        <translation>Os termos de busca son os seguintes: [modificadores][campo:][&quot;]termo[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation>Кожны пошукавы тэрмін павінен супадаць (г.зн. лагічнае І)</translation>
+        <translation>Cada termo de busca debe coincidir (é dicir, AND lóxico)</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation>Мадыфікатары</translation>
+        <translation>Modificadores</translation>
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation>выключыць тэрмін з вынікаў</translation>
+        <translation>excluír termo dos resultados</translation>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>дакладнае супадзенне тэрміна</translation>
+        <translation>coincidir exactamente co termo</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>выкарыстоўваць рэгулярныя выразы ў тэрміне</translation>
+        <translation>usar expresión regular no termo</translation>
     </message>
     <message>
         <source>Fields</source>
-        <translation>Палі</translation>
+        <translation>Campos</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation>Тэрміны з падстаноўкай</translation>
+        <translation>Comodíns de termo</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation>супадае з усім</translation>
+        <translation>coincidir con calquera cousa</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation>супадае з адным</translation>
+        <translation>oincidir cun só carácter</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation>лагічнае АБО</translation>
+        <translation>OR lóxico</translation>
     </message>
     <message>
         <source>Examples</source>
-        <translation>Прыклады</translation>
+        <translation>Exemplos</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation>Пошук</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <source>Search Help</source>
-        <translation>Дапамога па пошуку</translation>
+        <translation>Axuda de busca</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation>Захаваць пошук</translation>
+        <translation>Gardar busca</translation>
     </message>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Пошук (%1)...</translation>
+        <translation>Buscar (%1)…</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>З улікам рэгістра</translation>
+        <translation>Sensible a maiúsculas e minúsculas</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>Абмежаваць пошук абранай групай</translation>
+        <translation>Limitar a busca ao grupo escollido</translation>
     </message>
     <message>
         <source>Press Enter to search</source>
-        <translation type="unfinished"/>
+        <translation>Prema Intro para buscar</translation>
     </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
     <message>
         <source>Application</source>
-        <translation>Прыкладанне</translation>
+        <translation>Aplicación</translation>
     </message>
     <message>
         <source>PID</source>
@@ -10200,550 +10209,550 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>DBus Address</source>
-        <translation>Адрас DBus</translation>
+        <translation>Enderezo DBus</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Кіраваць</translation>
+        <translation>Xestionar</translation>
     </message>
 </context>
 <context>
     <name>SettingsDatabaseModel</name>
     <message>
         <source>File Name</source>
-        <translation>Імя файла</translation>
+        <translation>Nome do ficheiro</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation>Grupo</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Кіраваць</translation>
+        <translation>Xestionar</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation>Параметры</translation>
+        <translation>Opcións</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation>Уключыць інтэграцыю KeePassXC з Freedesktop.org Secret Service</translation>
+        <translation>Activar a integración de KeePassXC co Secret Service de Freedesktop.org</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Агульныя</translation>
+        <translation>Xerak</translation>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
-        <translation>Паказваць апавяшчэнне, калі кліенты атрымліваюць паролі</translation>
+        <translation>Amosar notificación cando os clientes recuperen contrasinais</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Калі ўключана, любая спроба прачытаць пароль павінна быць пацверджана. У адваротным выпадку кліенты могуць чытаць паролі без пацверджання, калі база даных разблакіравана.&lt;/p&gt;&lt;p&gt;Гэты параметр распаўсюджваецца толькі на доступ да пароля запісу. Кліенты заўсёды могуць пералічыць элементы адкрытых баз даных і запытаць іх атрыбуты.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se está activado, calquera intento de ler un contrasinal debe ser confirmado. En caso contrario, os clientes poden ler contrasinais sen confirmación cando a base de datos está desbloqueada.&lt;/p&gt;&lt;p&gt; Esta opción só cobre o acceso ao contrasinal dunha entrada. Os clientes sempre poden enumerar os elementos das bases de datos expostas e consultar os seus atributos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
-        <translation>Пацвярджаць, калі кліенты атрымліваюць паролі</translation>
+        <translation>Confirmar cando os clientes recuperen contrasinais</translation>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation>Пацвярджаць, калі кліенты запытваюць выдаленне запісу</translation>
+        <translation>Confirmar cando os clientes soliciten eliminar entradas</translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
-        <translation>Запытваць разблакіроўку базы даных перад пошукам</translation>
+        <translation>Solicitar desbloquear a base de datos antes de buscar</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation>Адкрытыя групы баз даных:</translation>
+        <translation>Grupos de base de datos expostos:</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation>Аўтарызацыя</translation>
+        <translation>Autorización</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation>Гэтыя праграмы падключаны зараз:</translation>
+        <translation>Estas aplicacións están conectadas actualmente:</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Папярэджанне:&lt;/b&gt; </translation>
+        <translation>&lt;b&gt;Aviso:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Захаваць бягучыя змены, каб актываваць плагін і дазволіць рэдагаванне гэтага раздзела.</translation>
+        <translation>Garda os trocos actuais para activar o complemento e permitir a edición desta sección.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Гэты параметр не адмяняе адключэнне запытаў смеццевага кошыка &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta configuración non anula a desactivación dos avisos da papeleira&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Гэта паляпшае сумяшчальнасць з некаторымі праграмамі, якія шукаюць пароль, не разблакіраваўшы спачатку базу даных.&lt;/p&gt;&lt;p&gt;Але ўключэнне гэтага таксама можа прывесці да збою кліента, калі базу даных не атрымаецца разблакіраваць на працягу пэўнага часу чакання. (Звычайна 25 с, але можа быць іншае значэнне, устаноўленае ў праграмах.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Isto mellora a compatibilidade con certas aplicacións que buscan contrasinais sen desbloquear primeiro a base de datos.&lt;/p&gt;&lt;p&gt; Pero activalo tamén pode facer fallar o cliente se a base de datos non se pode desbloquear dentro dun tempo límite (normalmente 25 s, pero pode variar segundo a aplicación.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>Актыўны</translation>
+        <translation>Activo</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Дазволіць імпарт KeeShare</translation>
+        <translation>Permitir importacións de KeeShare</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Дазволіць імпарт</translation>
+        <translation>Permitir importar</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Дазволіць экспарт KeeShare</translation>
+        <translation>Permitir exportacións de KeeShare</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Дазволіць экспарт</translation>
+        <translation>Permitir exportar</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation>Паказваць толькі папярэджанні і памылкі</translation>
+        <translation>Amosar só avisos e erros</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation>Уласны сертыфікат</translation>
+        <translation>Certificado propio</translation>
     </message>
     <message>
         <source>Signer:</source>
-        <translation>Падпісант:</translation>
+        <translation>Asinante:</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation>Стварыць новы сертыфікат</translation>
+        <translation>Xerar novo certificado</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Стварыць</translation>
+        <translation>Xerar</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation>Адбітак:</translation>
+        <translation>Pegada dixital:</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation>Поле імя падпісанта</translation>
+        <translation>Campo do nome do asinante</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Адбітак</translation>
+        <translation>Pegada dixital</translation>
     </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Не ўдалося запісаць кантэйнер экспарту.</translation>
+        <translation>Non se puido escribir o contedor de exportación.</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Successful import</source>
-        <translation>Паспяховы імпарт</translation>
+        <translation>Importación correcta</translation>
     </message>
 </context>
 <context>
     <name>ShareObserver</name>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation>Імпарт з %1 не атрымаўся (%2)</translation>
+        <translation>A importación dende %1 fallou (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation>Імпарт з %1 паспяховы (%2)</translation>
+        <translation>A importación dende %1 foi correcta (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Імпартавана з %1</translation>
+        <translation>Importado dende %1</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation>Некалькі шляхоў крыніцы імпарту да %1 у %2</translation>
+        <translation>Múltiples rutas de orixe de importación a %1 en %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Канфлікт шляху мэтавага экспарту %1 у %2</translation>
+        <translation>Ruta de destino de exportación en conflito %1 en %2</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation>Экспарт у %1 не атрымаўся (%2)</translation>
+        <translation>A exportación a %1 fallou (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation>Экспарт у %1 паспяховы (%2)</translation>
+        <translation>A exportación a %1 foi correcta (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation>Экспарт у %1</translation>
+        <translation>Exportar a %1</translation>
     </message>
 </context>
 <context>
     <name>TagModel</name>
     <message>
         <source>Clear Search</source>
-        <translation>Ачысціць пошук</translation>
+        <translation>Limpar busca</translation>
     </message>
     <message>
         <source>All Entries</source>
-        <translation>Усе запісы</translation>
+        <translation>Tódalas entradas</translation>
     </message>
     <message>
         <source>Expired</source>
-        <translation>Тэрмін дзеяння скончыўся</translation>
+        <translation>Caducadas</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
-        <translation>Слабыя паролі</translation>
+        <translation>Contrasinais febles</translation>
     </message>
     <message>
         <source>TOTP Entries</source>
-        <translation>TOTP запісы</translation>
+        <translation>Entradas TOTP</translation>
     </message>
 </context>
 <context>
     <name>TagView</name>
     <message>
         <source>Remove Search</source>
-        <translation>Выдаліць пошук</translation>
+        <translation>Eliminar busca</translation>
     </message>
     <message>
         <source>Remove Tag</source>
-        <translation>Выдаліць тэг</translation>
+        <translation>Eliminar etiqueta</translation>
     </message>
     <message>
         <source>Confirm Remove Tag</source>
-        <translation>Пацвердзіць выдаленне тэга</translation>
+        <translation>Confirmar eliminación de etiqueta</translation>
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation>Выдаліць тэг «%1» з усіх запісаў у гэтай базе даных?</translation>
+        <translation>Eliminar a etiqueta &quot;%1&quot; de tódalas entradas desta base de datos?</translation>
     </message>
 </context>
 <context>
     <name>TextAttachmentsEditWidget</name>
     <message>
         <source>Preview</source>
-        <translation>Папярэдні прагляд</translation>
+        <translation>Vista previa</translation>
     </message>
 </context>
 <context>
     <name>TextAttachmentsPreviewWidget</name>
     <message>
         <source>Form</source>
-        <translation>Форма</translation>
+        <translation>Formulario</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Тып:</translation>
+        <translation>Tipo:</translation>
     </message>
 </context>
 <context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Часовы пароль</translation>
+        <translation>Contrasinal temporizado</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Скапіяваць</translation>
+        <translation>Copiar</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Скончыцца праз &lt;b&gt;%n&lt;/b&gt; секунду</numerusform><numerusform>Скончыцца праз &lt;b&gt;%n&lt;/b&gt; секунды</numerusform><numerusform>Скончыцца праз &lt;b&gt;%n&lt;/b&gt; секунд</numerusform><numerusform>Скончыцца праз &lt;b&gt;%n&lt;/b&gt; секунду(ы)</numerusform></translation>
+        <translation><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segundo(s)</numerusform><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segundo(s)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>TotpExportSettingsDialog</name>
     <message>
         <source>Copy</source>
-        <translation>Скапіяваць</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>УВАГА: Гэтыя налады TOTP з&apos;яўляюцца карыстальніцкімі і могуць не працаваць з іншымі аўтэнтыфікатарамі.</translation>
+        <translation>NOTA: Esta configuración de TOTP é personalizada e pode non funcionar con outros autenticadores.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation>Адбылася памылка пры стварэнні QR-кода.</translation>
+        <translation>Produciuse un erro ao crear o código QR.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>Закрыццё праз %1 секунд.</translation>
+        <translation>Pechando en %1 segundos.</translation>
     </message>
 </context>
 <context>
     <name>TotpSetupDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>Наладзіць TOTP</translation>
+        <translation>Configurar TOTP</translation>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation>Сакрэтны ключ:</translation>
+        <translation>Chave secreta:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation>Сакрэтны ключ павінен быць у фармаце Base32</translation>
+        <translation>A chave secreta debe estar en formato Base32</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation>Поле сакрэтнага ключа</translation>
+        <translation>Campo da chave secreta</translation>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
-        <translation>Налады па змаўчанні (RFC 6238)</translation>
+        <translation>Configuración predeterminada (RFC 6238)</translation>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation>Налады Steam®</translation>
+        <translation>Configuración de Steam®</translation>
     </message>
     <message>
         <source>Custom settings:</source>
-        <translation>Карыстальніцкія налады:</translation>
+        <translation>Configuración personalizada:</translation>
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation>Карыстальніцкія налады</translation>
+        <translation>Configuración personalizada</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>Алгарытм:</translation>
+        <translation>Algoritmo:</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Часавы крок:</translation>
+        <translation>Paso de tempo:</translation>
     </message>
     <message>
         <source>Time step field</source>
-        <translation>Поле часавага кроку</translation>
+        <translation>Campo do paso de tempo</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> сек</translation>
+        <translation>seg</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Памер кода:</translation>
+        <translation>Tamaño do código:</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation> лічбы</translation>
+        <translation>díxitos</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation>Няправільны сакрэтны ключ TOTP</translation>
+        <translation>Segredo TOTP non válido</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation>Вы ўвялі няправільны сакрэтны ключ. Ключ павінен быць у фармаце Base32.
-Прыклад: JBSWY3DPEHPK3PXP</translation>
+        <translation>Introduciu unha chave secreta non válida. A chave debe estar en formato Base32.
+Exemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>Пацвердзіць выдаленне налад TOTP</translation>
+        <translation>Confirmar eliminación da configuración TOTP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Вы ўпэўнены, што хочаце выдаліць налады TOTP для гэтага запісу?</translation>
+        <translation>Está certo de que quere eliminar a configuración TOTP desta entrada?</translation>
     </message>
     <message>
         <source>Error: secret key is invalid</source>
-        <translation>Памылка: сакрэтны ключ несапраўдны</translation>
+        <translation>Erro: a chave secreta non é válida</translation>
     </message>
 </context>
 <context>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
-        <translation>Няправільны URL</translation>
+        <translation>URL non válida</translation>
     </message>
 </context>
 <context>
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation>Правяраю абнаўленні</translation>
+        <translation>Comprobando actualizacións</translation>
     </message>
     <message>
         <source>Checking for updates…</source>
-        <translation>Правяраю абнаўленні...</translation>
+        <translation>Comprobando actualizacións...</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрыць</translation>
+        <translation>Pechar</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation>Абнаўленне праграмнага забеспячэння</translation>
+        <translation>Actualización de software</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation>Адбылася памылка пры спробе атрымаць інфармацыю аб абнаўленні, паўтарыце спробу пазней.</translation>
+        <translation>Produciuse un erro ao tentar obter información de actualizacións, ténteo máis tarde.</translation>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
-        <translation>&lt;strong&gt;Даступна новая версія.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 можна &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;спампаваць тут&lt;/a&gt;.</translation>
+        <translation>Hai unha nova versión dispoñible.&lt;strong&gt;&lt;br/&gt;KeePassXC %1 pode &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;descargarse aquí&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>У вас апошняя версія KeePassXC</translation>
+        <translation>Ten a derradeira versión de KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Пачніце бяспечна захоўваць свае паролі ў базе даных KeePassXC</translation>
+        <translation>Comece a gardar os seus contrasinais de forma segura nunha base de datos de KeePassXC</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Апошнія базы даных</translation>
+        <translation>Bases de datos recentes</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>Адкрыць апошнюю базу даных</translation>
+        <translation>Abrir unha base de datos recente</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>Вітаем у KeePassXC %1</translation>
+        <translation>Benvido a KeePassXC %1</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation>Стварыць базу даных</translation>
+        <translation>Crear base de datos</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation>Адкрыць базу даных</translation>
+        <translation>Abrir base de datos</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation>Імпартаваць файл</translation>
+        <translation>Importar ficheiro</translation>
     </message>
 </context>
 <context>
     <name>WinUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Няправільны код ключа</translation>
+        <translation>Código de chave non válido</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Глабальная хуткая клавіша ўжо зарэгістравана для %1</translation>
+        <translation>Atallo global xa rexistrado para %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Не ўдалося зарэгістраваць глабальную хуткую клавішу</translation>
+        <translation>Non se puido rexistrar o atallo global</translation>
     </message>
 </context>
 <context>
     <name>YubiKey</name>
     <message>
         <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
-        <translation type="unfinished"/>
+        <translation>Non se puido atopar a chave de soporte físico co número de serie %1. Conéctea para continuar.</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Выбар слота апаратнага ключа</translation>
+        <translation>Escolla de rañura de chave de soporte físico</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation>Не ўдалося знайсці ніводнага апаратнага ключа!</translation>
+        <translation>Non se puido atopar ningunha chave de soporte físico!</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Абраны слот апаратнага ключа не падтрымлівае выклік-адказ!</translation>
+        <translation>O espazo escollido da chave de soporte físico non admite desafío-resposta!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
-        <translation>Выклік-адказ</translation>
+        <translation>Desafío-resposta</translation>
     </message>
     <message>
         <source>Add Challenge-Response</source>
-        <translation>Дадаць выклік-адказ</translation>
+        <translation>Engadir desafío-resposta</translation>
     </message>
     <message>
         <source>Change Challenge-Response</source>
-        <translation>Змяніць выклік-адказ</translation>
+        <translation>Trocar desafío-resposta</translation>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation>Выдаліць выклік-адказ</translation>
+        <translation>Eliminar desafío-resposta</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>Набор «выклік-адказ», націсніце, каб змяніць або выдаліць</translation>
+        <translation>Desafío-resposta configurado, prema para trocar ou eliminar</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Выяўленне апаратных ключоў...</translation>
+        <translation>Detectando chaves de soporte físico…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Апаратныя ключы не выяўлены</translation>
+        <translation>Non se detectaron chaves de soporte físico</translation>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation>Абнавіць апаратныя ключы</translation>
+        <translation>Actualizar chaves de soporte físico</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed with &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Калі ў вас ёсць &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; або &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, вы можаце выкарыстоўваць яго для дадатковай бяспекі.&lt;/p&gt;&lt;p&gt;Ключ патрабуе, каб адзін з яго слотаў быў запраграмаваны з дапамогай &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Выклік-адказ&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Se tes unha &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; ou &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, pode usala para seguridade adicional.&lt;/p&gt;&lt;p&gt; A chave require que un dos seus espazos estea programado con &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Desafío-resposta&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware keys found, but no slots are configured</source>
-        <translation>Апаратныя ключы знойдзены, але слоты не наладжаны</translation>
+        <translation>Atopáronse chaves de soporte físico, pero non hai espazos configurados</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
-        <translation>Апаратны ключ заблакаваны або скончыўся час чакання. Разблакіруйце або прад&apos;явіце яго зноў, каб працягнуць.</translation>
+        <translation>A chave de soporte físico está bloqueada ou expirou o tempo. Desbloquéaa ou volva presentala para continuar.</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>
-        <translation>Апаратны ключ не знойдзены або не настроены.</translation>
+        <translation>A chave de soporte físico non se atopou ou non está configurada.</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation>(NFC) %1 [%2] - Слот %3, %4</translation>
+        <translation>(NFC) %1 [%2] - Slot %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
-        <translation>Націсніце</translation>
+        <translation>Preme</translation>
     </message>
     <message>
         <source>Passive</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
-        <translation>Пасіўны</translation>
+        <translation>Pasivo</translation>
     </message>
     <message>
         <source>The YubiKey PC/SC interface has not been initialized.</source>
-        <translation type="unfinished"/>
+        <translation>A interface PC/SC de YubiKey non foi inicializada.</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fallou completar un desafío-resposta, o código de erro PC/SC foi: %1</translation>
     </message>
 </context>
 <context>
@@ -10751,47 +10760,47 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
-        <translation>Націсніце</translation>
+        <translation>Preme</translation>
     </message>
     <message>
         <source>Passive</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
-        <translation>Пасіўны</translation>
+        <translation>Pasivo</translation>
     </message>
     <message>
         <source>The YubiKey USB interface has not been initialized.</source>
-        <translation>Інтэрфейс YubiKey USB не быў ініцыялізаваны.</translation>
+        <translation>A interface USB de YubiKey non foi inicializada</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>Не ўдалося знайсці апаратны ключ з серыйным нумарам %1. Калі ласка, падключыце яго, каб працягнуць.</translation>
+        <translation>Non se puido atopar a chave de soporte físico co número de serie %1. Conéctea para continuar</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation>Час чакання апаратнага ключа скончыўся, ён чакае ўзаемадзеяння з карыстальнікам.</translation>
+        <translation>A chave de soporte físico esgotou o tempo de espera pola interacción do usuario.</translation>
     </message>
     <message>
         <source>A USB error occurred when accessing the hardware key: %1</source>
-        <translation>Адбылася памылка USB пры доступе да апаратнага ключа: %1</translation>
+        <translation>Produciuse un erro USB ao acceder á chave de soporte físico: %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation>Не ўдалося выканаць выклік-адказ, канкрэтная памылка: %1</translation>
+        <translation>Fallou completar un desafío-resposta, o erro específico foi: %1</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation>%1 [%2] - Слот %3</translation>
+        <translation>%1 [%2] - Slot %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation>%1 [%2] - Слот %3, %4</translation>
+        <translation>%1 [%2] - Espazo %3, %4</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown hardware key name</comment>
-        <translation type="unfinished"/>
+        <translation>Descoñecido</translation>
     </message>
 </context>
 </TS>

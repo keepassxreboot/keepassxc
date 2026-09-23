@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -160,7 +160,8 @@ private:
     {
         Normal,
         Minimized,
-        Hidden
+        Hidden,
+        HiddenInSystemTray
     };
 
     QList<Entry*> searchEntries(const QSharedPointer<Database>& db,

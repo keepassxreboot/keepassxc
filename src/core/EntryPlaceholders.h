@@ -23,6 +23,8 @@
 
 namespace EntryPlaceholders
 {
+    const int ResolveMaximumDepth = 10;
+
     enum class PlaceholderType
     {
         NotPlaceholder,
@@ -65,11 +67,12 @@ namespace EntryPlaceholders
         Regex
     };
 
-    PlaceholderType placeholderType(const QString& placeholder);
+    PlaceholderType placeholderType(const QString& placeholder, int maxDepth = ResolveMaximumDepth);
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType);
     QString resolveDateTimePlaceholder(PlaceholderType placeholderType);
     QString maskPasswordPlaceholders(const QString& str);
     QRegularExpressionMatchIterator placeholderMatches(const QString& str);
+    QRegularExpressionMatch matchReference(const QString& text);
     bool containsPlaceholder(const QString& str);
 } // namespace EntryPlaceholders
 

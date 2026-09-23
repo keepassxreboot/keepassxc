@@ -21,6 +21,7 @@
 #include <QUrl>
 
 #include "core/Entry.h"
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 
 BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
@@ -44,6 +45,12 @@ BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
 
 BrowserAccessControlDialog::~BrowserAccessControlDialog()
 {
+}
+
+void BrowserAccessControlDialog::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    GuiTools::centerWidgetOnActiveScreen(this);
 }
 
 void BrowserAccessControlDialog::setEntries(const QList<Entry*>& entriesToConfirm,

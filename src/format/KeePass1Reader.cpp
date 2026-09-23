@@ -823,7 +823,8 @@ bool KeePass1Reader::parseGroupTreeState(const QByteArray& data)
     auto num = Endian::bytesToSizedInt<quint32>(data.mid(pos, 4), KeePass1::BYTEORDER);
     pos += 4;
 
-    if (static_cast<quint32>(data.size() - 4) != (num * 5)) {
+    constexpr quint64 recordSize = 5;
+    if (static_cast<quint64>(data.size()) - 4 != static_cast<quint64>(num) * recordSize) {
         return false;
     }
 

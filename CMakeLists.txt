@@ -16,9 +16,6 @@
 
 cmake_minimum_required(VERSION 3.16.0)
 
-project(KeePassXC)
-set(APP_ID "org.keepassxc.${PROJECT_NAME}")
-
 # Version Number
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "8")
@@ -49,6 +46,7 @@ option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 option(WITH_CCACHE "Use ccache for build" OFF)
 option(WITH_X11 "Enable building with X11 dependencies" ON)
+option(WITH_BUILD_QT "Build Qt6 as a dependency" OFF)
 
 # Advanced Features Control
 option(KPXC_MINIMAL "Build KeePassXC with the minimal feature set required for basic usage" OFF)
@@ -89,6 +87,16 @@ add_feature_info("Networking" KPXC_FEATURE_NETWORK "Code that can reach out to e
 add_feature_info("Update Checks" KPXC_FEATURE_UPDATES "Periodic update checks can be performed")
 add_feature_info("Documentation" KPXC_FEATURE_DOCS "Offline documentation")
 
+# VCPKG features (must come before project())
+if(WITH_BUILD_QT)
+    list(APPEND VCPKG_MANIFEST_FEATURES qt)
+    unset(ENV{Qt6_DIR})
+endif()
+
+# Initialize project
+project(KeePassXC)
+set(APP_ID "org.keepassxc.${PROJECT_NAME}")
+
 # Retrieve git HEAD revision hash
 set(GIT_HEAD_OVERRIDE "" CACHE STRING "Manually set the Git HEAD hash when missing (eg, when no .git folder exists)")
 execute_process(COMMAND git rev-parse --short=7 HEAD
@@ -125,17 +133,19 @@ string(REGEX REPLACE "(\r?\n)+" "" OVERRIDE_VERSION "${OVERRIDE_VERSION}")
 if(OVERRIDE_VERSION)
     if(OVERRIDE_VERSION MATCHES "^[\\.0-9]+$")
         set(KEEPASSXC_BUILD_TYPE "Release")
-        set(KEEPASSXC_VERSION ${OVERRIDE_VERSION})
     else()
         set(KEEPASSXC_BUILD_TYPE "Snapshot")
     endif()
+    set(KEEPASSXC_VERSION ${OVERRIDE_VERSION})
 endif()
 
 if(KEEPASSXC_BUILD_TYPE STREQUAL "Release")
     set(KEEPASSXC_BUILD_TYPE_RELEASE ON)
 else()
     set(KEEPASSXC_BUILD_TYPE_SNAPSHOT ON)
-    set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-snapshot")
+    if(NOT OVERRIDE_VERSION)
+        set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-snapshot")
+    endif()
 endif()
 
 message(STATUS "Setting up build for KeePassXC v${KEEPASSXC_VERSION}\n")
@@ -189,9 +199,15 @@ if(UNIX)
     int main() { return 0; }"
             HAVE_MALLOC_H)
 
-    check_cxx_source_compiles("#include <malloc.h>
-    int main() { malloc_usable_size(NULL); return 0; }"
-            HAVE_MALLOC_USABLE_SIZE)
+    if(CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+        check_cxx_source_compiles("#include <malloc_np.h>
+        int main() { malloc_usable_size(nullptr); return 0; }"
+                HAVE_MALLOC_USABLE_SIZE)
+    else()
+        check_cxx_source_compiles("#include <malloc.h>
+        int main() { malloc_usable_size(nullptr); return 0; }"
+                HAVE_MALLOC_USABLE_SIZE)
+    endif()
 
     check_cxx_source_compiles("#include <sys/resource.h>
     int main() {
@@ -456,22 +472,60 @@ if(NOT CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif()
 
-get_filename_component(Qt6_PREFIX ${Qt6_DIR}/../../.. REALPATH)
-
 if(APPLE)
+    set(_deployqt_exe_name macdeployqt)
     set(CMAKE_MACOSX_RPATH TRUE)
-    find_program(MACDEPLOYQT_EXE macdeployqt HINTS ${Qt6_PREFIX}/bin ${Qt6_PREFIX}/tools/qt/bin ENV PATH)
-    if(NOT MACDEPLOYQT_EXE)
-        message(FATAL_ERROR "macdeployqt is required to build on macOS")
-    endif()
-    message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
-    set(MACDEPLOYQT_EXTRA_BINARIES "")
+    list(APPEND CMAKE_INSTALL_RPATH "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
 elseif(WIN32)
-    find_program(WINDEPLOYQT_EXE windeployqt HINTS ${Qt6_PREFIX}/bin ${Qt6_PREFIX}/tools/qt/bin ENV PATH)
-    if(NOT WINDEPLOYQT_EXE)
-        message(FATAL_ERROR "windeployqt is required to build on Windows")
+    set(_deployqt_exe_name windeployqt.exe)
+endif()
+
+if(WITH_BUILD_QT)
+    get_filename_component(Qt6_PREFIX "${Qt6_DIR}/../.." REALPATH)
+    set(Qt6_TOOLS_PREFIX "${Qt6_PREFIX}/tools/Qt6")
+
+    if(_deployqt_exe_name)
+        # vcpkg installs *deployqt to the host triplet install dir, which prevents it from
+        # finding the Qt libraries and plugins from the target triplet install dir.
+        # Here, we copy it to the target dir to fix that. A qt.conf exists there already.
+        if(WIN32)
+            # On Windows, VCPKG_TARGET_TRIPLET may be cross-compiled (e.g. arm64-windows),
+            # so the host triplet must come from vcpkg's own VCPKG_HOST_TRIPLET rather than
+            # being re-derived from CMAKE_HOST_SYSTEM_PROCESSOR/NAME (which does not match
+            # vcpkg's triplet naming, e.g. "AMD64" vs. "x64").
+            include(cmake/KPXCWindowsDeployQt.cmake)
+            kpxc_resolve_windows_deployqt_host_triplet(_host_triplet)
+            set(KPXC_VCPKG_EXECUTABLE "${Z_VCPKG_EXECUTABLE}")
+            if(NOT KPXC_VCPKG_EXECUTABLE)
+                find_program(KPXC_VCPKG_EXECUTABLE vcpkg
+                        HINTS "$ENV{VCPKG_ROOT}" "$ENV{VCPKG_INSTALLATION_ROOT}")
+            endif()
+            if(NOT KPXC_VCPKG_EXECUTABLE)
+                message(FATAL_ERROR "vcpkg executable is required for Windows runtime deployment.")
+            endif()
+        else()
+            set(_host_triplet "${CMAKE_HOST_SYSTEM_PROCESSOR}-${CMAKE_HOST_SYSTEM_NAME}")
+            string(TOLOWER "${_host_triplet}" _host_triplet)
+            string(REPLACE "darwin" "osx" _host_triplet "${_host_triplet}")
+        endif()
+        if(NOT _host_triplet STREQUAL VCPKG_TARGET_TRIPLET)
+            configure_file(
+                    "${VCPKG_INSTALLED_DIR}/${_host_triplet}/tools/Qt6/bin/${_deployqt_exe_name}"
+                    "${Qt6_PREFIX}/tools/Qt6/bin/${_deployqt_exe_name}"
+                    COPYONLY)
+        endif()
     endif()
-    message(STATUS "Using windeployqt: ${WINDEPLOYQT_EXE}")
+else()
+    get_filename_component(Qt6_PREFIX "${Qt6_DIR}/../../.." REALPATH)
+    set(Qt6_TOOLS_PREFIX "${Qt6_PREFIX}")
+endif()
+
+if(_deployqt_exe_name)
+    find_program(DEPLOYQT_EXE "${_deployqt_exe_name}" HINTS ${Qt6_TOOLS_PREFIX}/bin ${Qt6_TOOLS_PREFIX}/tools/qt/bin ENV PATH)
+    if(NOT DEPLOYQT_EXE)
+        message(FATAL_ERROR "Failed to find ${_deployqt_exe_name}.")
+    endif()
+    message(STATUS "Using ${_deployqt_exe_name}: ${DEPLOYQT_EXE}")
 endif()
 
 # Find Botan

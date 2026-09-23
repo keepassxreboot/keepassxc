@@ -321,6 +321,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         const bool emptyFieldValue = term.word.isEmpty() && hasField;
         if (mods.contains("+") || emptyFieldValue) {
             opts |= Tools::RegexConvertOpts::EXACT_MATCH;
+            opts |= Tools::RegexConvertOpts::CASE_SENSITIVE;
         }
         term.regex = Tools::convertToRegex(term.word, opts);
 

@@ -41,6 +41,9 @@ public:
     int setItems(QList<DatabaseWidget*>& databaseWidgets, DatabaseWidget* currentWidget) const;
     QList<QListWidgetItem*> getSelected() const;
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 private:
     QScopedPointer<Ui::BrowserEntrySaveDialog> m_ui;
 };

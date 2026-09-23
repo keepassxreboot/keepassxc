@@ -18,9 +18,17 @@
 #ifndef KEEPASSXC_BROWSERMESSAGEBUILDER_H
 #define KEEPASSXC_BROWSERMESSAGEBUILDER_H
 
+#include "BrowserShared.h"
+
 #include <QPair>
 #include <QString>
 #include <QVariant>
+
+#include <botan/sodium.h>
+
+using namespace Botan::Sodium;
+
+constexpr auto MacBytes = static_cast<qsizetype>(crypto_box_MACBYTES);
 
 class QJsonObject;
 
@@ -86,12 +94,27 @@ public:
     QString encryptMessage(const QJsonObject& message,
                            const QString& nonce,
                            const QString& publicKey,
-                           const QString& secretKey);
-    QJsonObject
-    decryptMessage(const QString& message, const QString& nonce, const QString& publicKey, const QString& secretKey);
-    QString encrypt(const QString& plaintext, const QString& nonce, const QString& publicKey, const QString& secretKey);
-    QByteArray
-    decrypt(const QString& encrypted, const QString& nonce, const QString& publicKey, const QString& secretKey);
+                           const QString& secretKey,
+                           const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH,
+                           const qsizetype macBytes = MacBytes);
+    QJsonObject decryptMessage(const QString& message,
+                               const QString& nonce,
+                               const QString& publicKey,
+                               const QString& secretKey,
+                               const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH,
+                               const qsizetype macBytes = MacBytes);
+    QString encrypt(const QString& plaintext,
+                    const QString& nonce,
+                    const QString& publicKey,
+                    const QString& secretKey,
+                    const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH,
+                    const qsizetype macBytes = MacBytes);
+    QByteArray decrypt(const QString& encrypted,
+                       const QString& nonce,
+                       const QString& publicKey,
+                       const QString& secretKey,
+                       const qsizetype maxLength = BrowserShared::NATIVEMSG_MAX_LENGTH,
+                       const qsizetype macBytes = MacBytes);
 
     QString getBase64FromKey(const uchar* array, const uint len);
     QByteArray getQByteArray(const uchar* array, const uint len) const;

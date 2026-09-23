@@ -1025,6 +1025,8 @@ void TestCli::testInfo()
     QCOMPARE(m_stdout->readLine(), QByteArray("Number of weak passwords: 2\n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Entries excluded from reports: 0\n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Average password length: 11 character(s)\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Number of passkeys: 0\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entries with TOTP setup: 1\n"));
 
     // Test with quiet option.
     setInput("a");

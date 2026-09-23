@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>Odmietnuť všetko &amp;&amp; Budúce</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť všetko &amp;&amp; Budúce</translation>
     </message>
 </context>
 <context>
@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>Use both agents</source>
-        <translation type="unfinished"/>
+        <translation>Použiť oboch agentov</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
@@ -140,11 +140,11 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation type="unfinished"/>
+        <translation>Hodnota SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation type="unfinished"/>
+        <translation>Prepísanie SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
@@ -153,6 +153,25 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>Spojenie Agenta SSH funkčné!</translation>
+    </message>
+</context>
+<context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>Okno</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>Minimalizovať</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>Priblíženie</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>Preniesť všetko do popredia</translation>
     </message>
 </context>
 <context>
@@ -171,7 +190,7 @@
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Toto nastavenie nemožno zapnúť, keď je zapnuté minimalizovať pri odomknutí.</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -223,15 +242,15 @@
     </message>
     <message>
         <source>Confirm Reset</source>
-        <translation type="unfinished"/>
+        <translation>Potvrdiť Reset</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Ste si istý, že chcete resetovať všetky nastavenia na pôvodné?</translation>
     </message>
     <message>
         <source>Import KeePassXC Settings</source>
-        <translation type="unfinished"/>
+        <translation>Importovať nastavenia KeepassXC</translation>
     </message>
     <message>
         <source>Failed to import settings from %1, not a valid settings file.</source>
@@ -243,22 +262,30 @@
     </message>
     <message>
         <source>Small</source>
-        <translation type="unfinished"/>
+        <translation>Malé</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="unfinished"/>
+        <translation>Normálne</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation type="unfinished"/>
+        <translation>Stredné</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation type="unfinished"/>
+        <translation>Veľké</translation>
     </message>
     <message>
         <source>Custom</source>
+        <translation>Vlastné</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -338,7 +365,7 @@
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
-        <translation type="unfinished"/>
+        <translation>{MENO_SÚBORU_DB}.old.kdbx</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
@@ -560,10 +587,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation type="unfinished"/>
     </message>
@@ -576,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -771,6 +854,17 @@
     <message>
         <source>Sequence</source>
         <translation>Postupnosť</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1753,15 +1847,15 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3690,6 +3784,14 @@ Podporované rozšírenia sú: %1.</translation>
         <source>Select import/export file</source>
         <translation>Vyberte súbor importu/exportu</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -4593,6 +4695,25 @@ This will leave your passwords and sensitive information vulnerable!
     <name>FdoSecretsPlugin</name>
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5990,20 +6111,6 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
         <translation>Nezobrazovať znova v tejto verzii</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>UPOZORNENIE: Používate nestabilné zostavenie KeePassXC!
-Existuje veľké riziko poškodenia, zálohujte svoje dtabázy.
-Táto verzia nie je určená na produkčné použitie.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>UPOZORNENIE: Používate predbežnú verziu KeePassXC.
-Očakávajte chyby a menšie problémy, tato verzia je určená pre testovacie účely.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation type="unfinished"/>
     </message>
@@ -6340,8 +6447,10 @@ Očakávajte chyby a menšie problémy, tato verzia je určená pre testovacie �
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Generátor hesla</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6354,6 +6463,10 @@ Očakávajte chyby a menšie problémy, tato verzia je určená pre testovacie �
     <message>
         <source>New Entry</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Generátor hesla</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -7490,6 +7603,10 @@ Do you want to overwrite it?</source>
         <translation>Nebol zadaný platný UUID</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Neznáma chyba</translation>
     </message>
@@ -8034,6 +8151,14 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>Priemerná dĺžka hesla</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8694,20 +8819,12 @@ Jadro: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Integrácia Tajnej služby</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Žiadny</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9229,6 +9346,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"/>
     </message>
@@ -9249,23 +9374,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9281,7 +9390,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9363,6 +9484,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Interná chyba zlib:</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9456,7 +9600,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Odstrániť položku…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Odstrániť položky…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -9853,6 +9997,14 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Priemerná dĺžka hesla je menšia ako desať znakov. Dlhšie heslá poskytujú vyššiu bezpečnosť.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10466,11 +10618,7 @@ Napríklad: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -10531,10 +10679,6 @@ Napríklad: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation type="unfinished"/>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation type="unfinished"/>

@@ -22,7 +22,8 @@
 
 namespace BrowserShared
 {
-    constexpr int NATIVEMSG_MAX_LENGTH = 1024 * 1024;
+    constexpr int SOCKET_BUFFER_SIZE = 1024 * 1024;
+    constexpr int NATIVEMSG_MAX_LENGTH = SOCKET_BUFFER_SIZE / 1.6; // 655 360
 
     enum SupportedBrowsers : int
     {

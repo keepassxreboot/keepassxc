@@ -25,7 +25,6 @@
 
 #include "core/Entry.h"
 #include "core/Global.h"
-#include "core/Tools.h"
 #include "gui/Icons.h"
 
 #include <QWindow>
@@ -158,9 +157,9 @@ void AccessControlDialog::setupDetails(const FdoSecrets::PeerInfo& info)
     m_ui->detailsContainer->hide();
 }
 
-void AccessControlDialog::denyEntryClicked(Entry* entry, const QModelIndex& index)
+void AccessControlDialog::denyEntryClicked(const QUuid& uuid, const QModelIndex& index)
 {
-    m_decisions.insert(entry, AuthDecision::Denied);
+    m_decisions.insert(uuid, AuthDecision::Denied);
     m_model->removeRow(index.row());
     if (m_model->rowCount({}) == 0) {
         reject();
@@ -189,32 +188,35 @@ void AccessControlDialog::dialogFinished(int result)
     }
 
     for (int row = 0; row != m_model->rowCount({}); ++row) {
-        auto entry = m_model->data(m_model->index(row, 2), Qt::EditRole).value<Entry*>();
+        auto uuid = m_model->data(m_model->index(row, 2), Qt::EditRole).value<QUuid>();
         auto selected = m_model->data(m_model->index(row, 0), Qt::CheckStateRole).value<Qt::CheckState>();
-        Q_ASSERT(entry);
+        Q_ASSERT(!uuid.isNull());
 
         auto undecided = result == AllowSelected && !selected;
-        m_decisions.insert(entry, undecided ? AuthDecision::Undecided : decision);
+        m_decisions.insert(uuid, undecided ? AuthDecision::Undecided : decision);
     }
 
     emit finished(m_decisions, futureDecision);
 }
 
-QHash<Entry*, AuthDecision> AccessControlDialog::decisions() const
+QHash<QUuid, AuthDecision> AccessControlDialog::decisions() const
 {
     return m_decisions;
 }
 
-AccessControlDialog::EntryModel::EntryModel(QList<Entry*> entries, QObject* parent)
+AccessControlDialog::EntryModel::EntryModel(const QList<Entry*>& entries, QObject* parent)
     : QAbstractTableModel(parent)
-    , m_entries(std::move(entries))
-    , m_selected(Tools::asSet(m_entries))
 {
+    m_entryDataList.reserve(entries.size());
+    for (const auto& entry : entries) {
+        m_entryDataList.append({entry->uuid(), entry->title(), entry->username(), Icons::entryIconPixmap(entry)});
+        m_selected.insert(entry->uuid());
+    }
 }
 
 int AccessControlDialog::EntryModel::rowCount(const QModelIndex& parent) const
 {
-    return isValid(parent) ? 0 : m_entries.count();
+    return isValid(parent) ? 0 : m_entryDataList.count();
 }
 
 int AccessControlDialog::EntryModel::columnCount(const QModelIndex& parent) const
@@ -232,11 +234,11 @@ void AccessControlDialog::EntryModel::toggleCheckState(const QModelIndex& index)
     if (!isValid(index)) {
         return;
     }
-    auto entry = m_entries.at(index.row());
+    const auto& entry = m_entryDataList.at(index.row());
     // click anywhere in the row to check/uncheck the item
-    auto it = m_selected.find(entry);
+    auto it = m_selected.find(entry.uuid);
     if (it == m_selected.end()) {
-        m_selected.insert(entry);
+        m_selected.insert(entry.uuid);
     } else {
         m_selected.erase(it);
     }
@@ -249,31 +251,31 @@ QVariant AccessControlDialog::EntryModel::data(const QModelIndex& index, int rol
     if (!isValid(index)) {
         return {};
     }
-    auto entry = m_entries.at(index.row());
+    const auto& entry = m_entryDataList.at(index.row());
 
     switch (index.column()) {
     case 0:
         switch (role) {
         case Qt::DisplayRole:
-            return entry->title();
+            return entry.title;
         case Qt::DecorationRole:
-            return Icons::entryIconPixmap(entry);
+            return entry.icon;
         case Qt::CheckStateRole:
-            return QVariant::fromValue(m_selected.contains(entry) ? Qt::Checked : Qt::Unchecked);
+            return QVariant::fromValue(m_selected.contains(entry.uuid) ? Qt::Checked : Qt::Unchecked);
         default:
             return {};
         }
     case 1:
         switch (role) {
         case Qt::DisplayRole:
-            return entry->username();
+            return entry.username;
         default:
             return {};
         }
     case 2:
         switch (role) {
         case Qt::EditRole:
-            return QVariant::fromValue(entry);
+            return QVariant::fromValue(entry.uuid);
         default:
             return {};
         }
@@ -286,7 +288,7 @@ bool AccessControlDialog::EntryModel::removeRows(int row, int count, const QMode
 {
     beginRemoveRows(parent, row, row + count - 1);
     while (count--) {
-        m_entries.removeAt(row);
+        m_entryDataList.removeAt(row);
     }
     endRemoveRows();
     return true;
@@ -295,18 +297,18 @@ bool AccessControlDialog::EntryModel::removeRows(int row, int count, const QMode
 AccessControlDialog::DenyButton::DenyButton(QWidget* p, const QModelIndex& idx)
     : QPushButton(p)
     , m_index(idx)
-    , m_entry()
+    , m_uuid()
 {
     setText(tr("Deny for this program"));
-    connect(this, &QPushButton::clicked, [this]() { emit clicked(entry(), m_index); });
+    connect(this, &QPushButton::clicked, [this]() { emit clicked(uuid(), m_index); });
 }
 
-void AccessControlDialog::DenyButton::setEntry(Entry* e)
+void AccessControlDialog::DenyButton::setUuid(const QUuid& uuid)
 {
-    m_entry = e;
+    m_uuid = uuid;
 }
 
-Entry* AccessControlDialog::DenyButton::entry() const
+QUuid AccessControlDialog::DenyButton::uuid() const
 {
-    return m_entry;
+    return m_uuid;
 }

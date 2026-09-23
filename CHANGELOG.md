@@ -1,7 +1,72 @@
 # Changelog
 
-## 2.8.0 (Pending)
-* Placeholder for future release notes
+## 2.8.0-beta1 (2026-09-23)
+
+### New Features
+- Add remote database synchronization and import using external tools [#7222, #10896, #11271]
+- Allow configuring keyboard shortcuts [#9643]
+- SSH Agent: Add support for generating RSA, ECDSA, and Ed25519 keys [#7215]
+- Linux: Add Wayland Auto-Type support using XDG Desktop Portals [#13359, #13449, #13579]
+- Linux: Add Quick Unlock using Polkit [#8983]
+- macOS: Allow Quick Unlock using the device password when Touch ID is unavailable [#11410]
+- Windows: Add native Arm64 builds [#13678]
+
+### Major Changes
+- Migrate to Qt 6 [#11651, #7783, #13456, #13473, #13684]
+- Linux: Store application state in XDG_STATE_HOME instead of XDG_CACHE_HOME [#9755]
+- Build: Bundle build features under a single KPXC_MINIMAL CMake option [#11003]
+
+### Security Fixes
+- Fix use-after-free when importing crafted KDB files (CVE-2026-69150; Credits: A. Ramos (@aramosf)) [#13500]
+- Browser: Prevent entry reference injection when creating or updating entries via browser extension (CVE-PENDING; Credits: Davonte (@BadPingHere)) [#13580, #13670, #13688]
+- Browser: Fix out-of-bounds writes when encrypting and decrypting native messaging messages (CVE-PENDING; Credits: @sigure21) [#13679]
+- Windows: Randomize shared memory mapping names when sending SSH keys to Pageant (CVE-PENDING; Credits: NATO Cyber Security Centre (NCSC), Viktor Markopoulos NCIA/NCSC) [#13680]
+- Fix integer overflow and out-of-bounds read in legacy KDB importer (CVE-PENDING; Credits: NATO Cyber Security Centre (NCSC), Viktor Markopoulos NCIA/NCSC) [#13682]
+- Secret Service: Exclude protected attributes from attribute listings (Credits: Koda Reef (@kodareef5)) [#13674]
+- Windows: Fix clipboard exclusion format name (Credits: @ByeWhiteLists) [#13352]
+- Improve clearing of decrypted database fragments from memory used by zlib [#13677]
+
+### Changes
+- Change Clone Entry shortcut to Ctrl+D [#10903]
+- Show suggestions when adding or renaming additional attributes [#13633]
+- Add passkey and TOTP entry counts to database statistics in GUI and CLI [#13632]
+- Remove legacy KeePassHTTP attribute conversion [#8007]
+- Browser: Support get-database-entries request to list entry titles, URLs, and UUIDs [#7292]
+- CLI: Reduce GUI library dependencies and simplify line reader code [#9701, #13330]
+- Proton Pass Importer: Support Wi-Fi, SSH keys, and unknown entry types [#13148]
+- Update translations and clean up code [#9702, #12611, #13258, #8008, #7999, #7998]
+
+### Fixes
+- Fix application lockups on systems with one or two CPU cores [#13296]
+- Preserve entry custom data in newly created history items [#13573]
+- Fix password strength evaluation for referenced passwords [#13479]
+- Respect password generator settings when auto-generating passwords for new entries [#13277]
+- Fix case-sensitive search with the + prefix modifier [#13493]
+- Fix directory creation error handling [#13508]
+- Fix favicon download redirect limit being ignored [#13663]
+- Fix showing challenge-response credentials without a password [#13615]
+- Fix key file selection link not being clickable when translated incorrectly [#13396]
+- Prevent database unlock controls from shrinking vertically [#13428]
+- Prevent mouse wheel scrolling from changing the unfocused alternative save method setting [#13358]
+- Fix password font size not following application font size [#13658]
+- Fix typos and documentation links [#10124, #10893, #9993]
+- Fix null pointer dereference in Secret Service integration [#13655]
+- Auto-Type: Support {PGDN} placeholder [#13463]
+- Auto-Type: Refactor Auto-Type plugins to integrate them into the main binary [#13469]
+- Browser: Fix showing and closing the password generator [#9984, #9743]
+- CSV Import: Fix automatic column mapping for English headers with non-English UI languages [#13531]
+- Secret Service: Fix crash when a database locks while the item access dialog is open [#13598, #13602]
+- SSH Agent: Prevent recursive updates when changing entry settings and attachments [#13068]
+- Linux: Improve AppImage desktop integration [#13470, #13476]
+- Linux: Include keyutils in Snap builds [#10687]
+- Linux: Fix race condition in dark mode detection at startup [#13366]
+- macOS: Improve window tray hide and restore behaviour [#13645]
+- macOS: Use the native temporary directory for the browser integration socket [#13484]
+- macOS: Prevent deleting entries and groups while a modal dialog is open [#13383]
+- macOS: Prevent hiding the menu bar [#13147]
+- macOS: Fix application icon installation for IDE builds [#12679]
+- Windows: Fix SSH Agent builds with MSYS2 [#8708]
+- Build: Fix build-system-related issues [#13278, #13275]
 
 ## 2.7.12 (2026-03-10)
 

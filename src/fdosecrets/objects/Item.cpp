@@ -121,6 +121,9 @@ namespace FdoSecrets
         // add custom attributes
         const auto customKeys = entryAttrs->customKeys();
         for (const auto& attr : customKeys) {
+            if (entryAttrs->isProtected(attr)) {
+                continue;
+            }
             attrs[attr] = entryAttrs->value(attr);
         }
 
@@ -156,7 +159,7 @@ namespace FdoSecrets
                 return QDBusError::InvalidArgs;
             }
 
-            if (EntryAttributes::matchReference(it.value()).hasMatch()) {
+            if (EntryPlaceholders::matchReference(it.value()).hasMatch()) {
                 return QDBusError::InvalidArgs;
             }
 
@@ -195,7 +198,7 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (EntryAttributes::matchReference(label).hasMatch()) {
+        if (EntryPlaceholders::matchReference(label).hasMatch()) {
             return QDBusError::InvalidArgs;
         }
 
@@ -306,7 +309,7 @@ namespace FdoSecrets
         auto decoded = secret.session->decode(secret);
 
         // block references
-        if (EntryAttributes::matchReference(decoded.value).hasMatch()) {
+        if (EntryPlaceholders::matchReference(decoded.value).hasMatch()) {
             return QDBusError::InvalidArgs;
         }
 
@@ -428,7 +431,7 @@ namespace FdoSecrets
         }
 
         if (!mimeType.isValid() || !mimeType.inherits(QStringLiteral("text/plain"))) {
-            if (EntryAttributes::matchReference(contentType).hasMatch()) {
+            if (EntryPlaceholders::matchReference(contentType).hasMatch()) {
                 return QDBusError::InvalidArgs;
             }
             // we can't handle this content type, save the data as attachment, and clear the password field
@@ -437,7 +440,7 @@ namespace FdoSecrets
             entry->attributes()->set(FDO_SECRETS_CONTENT_TYPE, contentType);
         } else {
             auto password = decoder.decode(data);
-            if (EntryAttributes::matchReference(password).hasMatch()) {
+            if (EntryPlaceholders::matchReference(password).hasMatch()) {
                 return QDBusError::InvalidArgs;
             }
             // save the data to password field
