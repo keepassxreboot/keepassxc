@@ -1671,6 +1671,10 @@ Backup database located at %2</source>
         <source>No file path was provided.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Could not rename original database file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>

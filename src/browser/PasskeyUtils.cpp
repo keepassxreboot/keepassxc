@@ -365,13 +365,27 @@ QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QS
         for (QChar ch : in) {
             ushort u = ch.unicode();
             switch (u) {
-            case '\\': out.append(QStringLiteral("\\\\")); break;
-            case '"':  out.append(QStringLiteral("\\\"")); break;
-            case '\b': out.append(QStringLiteral("\\b")); break;
-            case '\f': out.append(QStringLiteral("\\f")); break;
-            case '\n': out.append(QStringLiteral("\\n")); break;
-            case '\r': out.append(QStringLiteral("\\r")); break;
-            case '\t': out.append(QStringLiteral("\\t")); break;
+            case '\\':
+                out.append(QStringLiteral("\\\\"));
+                break;
+            case '"':
+                out.append(QStringLiteral("\\\""));
+                break;
+            case '\b':
+                out.append(QStringLiteral("\\b"));
+                break;
+            case '\f':
+                out.append(QStringLiteral("\\f"));
+                break;
+            case '\n':
+                out.append(QStringLiteral("\\n"));
+                break;
+            case '\r':
+                out.append(QStringLiteral("\\r"));
+                break;
+            case '\t':
+                out.append(QStringLiteral("\\t"));
+                break;
             default:
                 if (u < 0x20) {
                     out.append(QString::asprintf("\\u%04x", u));
