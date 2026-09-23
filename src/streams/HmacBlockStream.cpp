@@ -17,9 +17,9 @@
 
 #include "HmacBlockStream.h"
 
-#include "streams/HashedBlockStream.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
+#include "streams/HashedBlockStream.h"
 
 const QSysInfo::Endian HmacBlockStream::ByteOrder = QSysInfo::LittleEndian;
 

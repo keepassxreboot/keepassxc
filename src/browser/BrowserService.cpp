@@ -1549,8 +1549,7 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     // Anchor on label boundary
-    if (siteQUrl.host() == entryQUrl.host()
-        || siteQUrl.host().endsWith(QStringLiteral(".") + entryQUrl.host())) {
+    if (siteQUrl.host() == entryQUrl.host() || siteQUrl.host().endsWith(QStringLiteral(".") + entryQUrl.host())) {
         return true;
     }
 
