@@ -39,6 +39,7 @@ private slots:
     void testKeyGenRSA();
     void testKeyGenECDSA();
     void testKeyGenEd25519();
+    void testKeyGenMLDSA44Ed25519();
     void cleanupTestCase();
 
 private:
