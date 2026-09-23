@@ -100,16 +100,19 @@ void TestEntrySearcher::testSearch()
     e2111b->setNotes("test search test");
     e2111b->setUsername("user123");
     e2111b->setPassword("testpass");
+    e2111b->attributes()->set("attr1", "attr1bute");
     e2111b->setGroup(group2111);
 
     auto e3 = new Entry();
     e3->setUrl("test search term test");
+    e3->attributes()->set("attr1", "attr33bute");
     e3->setGroup(group3);
 
     auto e3b = new Entry();
     e3b->setTitle("test search test 123");
     e3b->setUsername("test@email.com");
     e3b->setPassword("realpass");
+    e3b->attributes()->set("attr2", "attr2bute");
     e3b->setGroup(group3);
 
     // Simple search term testing
@@ -132,11 +135,17 @@ void TestEntrySearcher::testSearch()
     m_searchResult = m_entrySearcher.search("t:123", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
 
+    m_searchResult = m_entrySearcher.search("url:test", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
     m_searchResult = m_entrySearcher.search("password:testpass", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
 
     m_searchResult = m_entrySearcher.search("pw:testpass", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("test !email.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 5);
 
     m_searchResult = m_entrySearcher.search("!user:email.com", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 5);
@@ -144,11 +153,21 @@ void TestEntrySearcher::testSearch()
     m_searchResult = m_entrySearcher.search("!u:email.com", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 5);
 
-    m_searchResult = m_entrySearcher.search("*user:\".*@.*\\.com\"", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 1);
+    m_searchResult = m_entrySearcher.search("attr*bute", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+
+    m_searchResult = m_entrySearcher.search("attr?bute", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
 
     m_searchResult = m_entrySearcher.search("+user:email", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 0);
+
+    // * matches all entries
+    m_searchResult = m_entrySearcher.search("*", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 6);
+
+    m_searchResult = m_entrySearcher.search("user:user123|test@email.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
 
     // Test that + modifier enforces case sensitivity
     m_searchResult = m_entrySearcher.search("+password:testpass", m_rootGroup);
@@ -167,6 +186,29 @@ void TestEntrySearcher::testSearch()
     // Parent group has search disabled
     m_searchResult = m_entrySearcher.search("search term", group11);
     QCOMPARE(m_searchResult.count(), 0);
+
+    // Empty field value
+    m_searchResult = m_entrySearcher.search("u:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 4);
+
+    m_searchResult = m_entrySearcher.search("u:\"\"", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 4);
+
+    m_searchResult = m_entrySearcher.search("!u:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    m_searchResult = m_entrySearcher.search("search u:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+
+    // All entries with non-empty username
+    m_searchResult = m_entrySearcher.search("!u:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    // Test regex
+    m_entrySearcher.setRegularExpr(true);
+    m_searchResult = m_entrySearcher.search("attr[\\d]bute", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    m_entrySearcher.setRegularExpr(false);
 }
 
 void TestEntrySearcher::testAndConcatenationInSearch()
@@ -176,8 +218,9 @@ void TestEntrySearcher::testAndConcatenationInSearch()
     entry->setTitle("jkl");
     entry->setGroup(m_rootGroup);
 
+    // Entry must match all search terms (connected by logical AND)
     m_searchResult = m_entrySearcher.search("", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 1);
+    QCOMPARE(m_searchResult.count(), 0);
 
     m_searchResult = m_entrySearcher.search("def", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
@@ -204,10 +247,19 @@ void TestEntrySearcher::testAllAttributesAreSearched()
     entry->setUsername("testUsername");
     entry->setUrl("testUrl");
     entry->setNotes("testNote");
+    entry->attributes()->set("testAttribute", "testAttributeValue");
+    entry->attributes()->set("testProtected", "testAttributeProtectedValue", true);
 
     // Default is to AND all terms together
-    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote testAttribute testAttributeValue", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
+
+    // Protected values are skipped for the default search
+    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote testAttributeProtectedValue", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search("nothing", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
 }
 
 void TestEntrySearcher::testSearchTermParser()
@@ -235,17 +287,44 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms[4].field, EntrySearcher::Field::Undefined);
     QCOMPARE(terms[4].word, QString("noquote"));
 
-    // Test wildcard and regex search terms
-    m_entrySearcher.parseSearchTerms("+url:*.google.com *user:\\d+\\w{2}");
+    // Test wildcard search terms
+    m_entrySearcher.parseSearchTerms("+url:*.google.com");
     terms = m_entrySearcher.m_searchTerms;
 
-    QCOMPARE(terms.length(), 2);
+    QCOMPARE(terms.length(), 1);
 
     QCOMPARE(terms[0].field, EntrySearcher::Field::Url);
     QCOMPARE(terms[0].regex.pattern(), QString("^(?:.*\\.google\\.com)$"));
 
-    QCOMPARE(terms[1].field, EntrySearcher::Field::Username);
-    QCOMPARE(terms[1].regex.pattern(), QString("\\d+\\w{2}"));
+    // * (wildcard) only
+    m_entrySearcher.parseSearchTerms("*");
+    terms = m_entrySearcher.m_searchTerms;
+
+    QCOMPARE(terms.length(), 1);
+
+    QCOMPARE(terms[0].field, EntrySearcher::Field::Undefined);
+    QCOMPARE(terms[0].word, QString("*"));
+    QCOMPARE(terms[0].exclude, false);
+
+    // Logical OR
+    m_entrySearcher.parseSearchTerms("user:jack|adam");
+    terms = m_entrySearcher.m_searchTerms;
+
+    QCOMPARE(terms.length(), 1);
+
+    QCOMPARE(terms[0].field, EntrySearcher::Field::Username);
+    QCOMPARE(terms[0].word, QString("jack|adam"));
+
+    // Test regex search terms
+    m_entrySearcher.setRegularExpr(true);
+    m_entrySearcher.parseSearchTerms("user:\\d+\\w{2}");
+    terms = m_entrySearcher.m_searchTerms;
+
+    QCOMPARE(terms.length(), 1);
+
+    QCOMPARE(terms[0].field, EntrySearcher::Field::Username);
+    QCOMPARE(terms[0].regex.pattern(), QString("\\d+\\w{2}"));
+    m_entrySearcher.setRegularExpr(false);
 
     // Test custom attribute search terms
     m_entrySearcher.parseSearchTerms("+_abc:efg _def:\"ddd\"");
@@ -260,29 +339,66 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms[1].field, EntrySearcher::Field::AttributeValue);
     QCOMPARE(terms[1].word, QString("def"));
     QCOMPARE(terms[1].regex.pattern(), QString("ddd"));
+
+    // Test explicit empty-value field search terms
+    m_entrySearcher.parseSearchTerms("u: title:\"\" test");
+    terms = m_entrySearcher.m_searchTerms;
+
+    QCOMPARE(terms.length(), 3);
+
+    QCOMPARE(terms[0].field, EntrySearcher::Field::Username);
+    QCOMPARE(terms[0].word, QString(""));
+    QCOMPARE(terms[0].regex.pattern(), QString("^(?:)$"));
+
+    QCOMPARE(terms[1].field, EntrySearcher::Field::Title);
+    QCOMPARE(terms[1].word, QString(""));
+    QCOMPARE(terms[1].regex.pattern(), QString("^(?:)$"));
+
+    QCOMPARE(terms[2].field, EntrySearcher::Field::Undefined);
+    QCOMPARE(terms[2].word, QString("test"));
 }
 
 void TestEntrySearcher::testCustomAttributesAreSearched()
 {
-    QScopedPointer<Entry> e1(new Entry());
+    auto e1 = new Entry();
     e1->setGroup(m_rootGroup);
 
     e1->attributes()->set("testAttribute", "testE1");
     e1->attributes()->set("testProtected", "testP", true);
+    e1->attributes()->set("emptyAttr", "");
+    e1->attributes()->set("mystring123", "someValue");
 
-    QScopedPointer<Entry> e2(new Entry());
+    auto e2 = new Entry();
     e2->setGroup(m_rootGroup);
     e2->attributes()->set("testAttribute", "testE2");
     e2->attributes()->set("testProtected", "testP2", true);
+    e2->attributes()->set("someName", "mystring123");
+    e2->attributes()->set("mystring1234", "someValue");
 
-    // search for custom entries
+    // Search for custom entries
     m_searchResult = m_entrySearcher.search("_testAttribute:test", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
-
-    // protected attributes are ignored
-    m_entrySearcher = EntrySearcher(false, true);
-    m_searchResult = m_entrySearcher.search("_testAttribute:test _testProtected:testP2", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("test", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
+
+    // Match either key or value
+    m_searchResult = m_entrySearcher.search("attr:mystring123", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    // Exact match
+    m_searchResult = m_entrySearcher.search("+attr:mystring123", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    // Protected attributes are ignored
+    m_entrySearcher = EntrySearcher(false, false, false);
+    m_searchResult = m_entrySearcher.search("_testProtected:testP2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+    m_searchResult = m_entrySearcher.search("testP2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    // Empty attribute value
+    m_searchResult = m_entrySearcher.search("_emptyAttr:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
 }
 
 void TestEntrySearcher::testGroup()
@@ -342,11 +458,11 @@ void TestEntrySearcher::testGroup()
     QCOMPARE(m_searchResult.count(), 1);
 }
 
-void TestEntrySearcher::testSkipProtected()
+void TestEntrySearcher::testIncludeProtected()
 {
     QScopedPointer<Entry> e1(new Entry());
     e1->setGroup(m_rootGroup);
-
+    e1->setPassword("password");
     e1->attributes()->set("testAttribute", "testE1");
     e1->attributes()->set("testProtected", "apple", true);
 
@@ -359,36 +475,85 @@ void TestEntrySearcher::testSkipProtected()
     const QList<Entry*> expectE2{e2.data()};
     const QList<Entry*> expectBoth{e1.data(), e2.data()};
 
-    // when not skipping protected, empty term matches everything
-    m_searchResult = m_entrySearcher.search("", m_rootGroup);
-    QCOMPARE(m_searchResult, expectBoth);
 
-    // now test the searcher with skipProtected = true
-    m_entrySearcher = EntrySearcher(false, true);
-
-    // when skipping protected, empty term matches nothing
+    // Exclude protected
+    m_entrySearcher = EntrySearcher(false, false, false);
     m_searchResult = m_entrySearcher.search("", m_rootGroup);
     QCOMPARE(m_searchResult, {});
-
-    // having a protected entry in terms should not affect the results in anyways
+    m_searchResult = m_entrySearcher.search("password", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+    m_searchResult = m_entrySearcher.search("p:password", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult = m_entrySearcher.search("attr:apple", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
     m_searchResult = m_entrySearcher.search("_testProtected:apple", m_rootGroup);
     QCOMPARE(m_searchResult, {});
-    m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE2", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE2", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE2);
+    m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE1", m_rootGroup);
+    QCOMPARE(m_searchResult, {}); // Nothing found since protected fields are not included
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE1 _testAttribute:testE2", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+
+    // Now include protected fields in search
+    m_entrySearcher = EntrySearcher(false, true, false);
+    m_searchResult = m_entrySearcher.search("", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+    m_searchResult = m_entrySearcher.search("password", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult = m_entrySearcher.search("p:password", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult = m_entrySearcher.search("attr:apple", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE2", m_rootGroup);
     QCOMPARE(m_searchResult, expectE2);
     m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE1", m_rootGroup);
     QCOMPARE(m_searchResult, expectE1);
-    m_searchResult =
-        m_entrySearcher.search("_testProtected:apple _testAttribute:testE1 _testAttribute:testE2", m_rootGroup);
-    QCOMPARE(m_searchResult, {});
-
-    // also move the protected term around to exercise the short-circuit logic
-    m_searchResult = m_entrySearcher.search("_testAttribute:testE2 _testProtected:apple", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("testProtected:banana", m_rootGroup);
     QCOMPARE(m_searchResult, expectE2);
-    m_searchResult = m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple", m_rootGroup);
-    QCOMPARE(m_searchResult, expectE1);
-    m_searchResult =
-        m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple _testAttribute:testE2", m_rootGroup);
+}
+
+void TestEntrySearcher::testCaseSensitivity()
+{
+    QScopedPointer<Entry> e1(new Entry());
+    e1->setGroup(m_rootGroup);
+    e1->setUsername("user1");
+    e1->setPassword("PassWord");
+    e1->attributes()->set("testAttribute", "testE1");
+
+    QScopedPointer<Entry> e2(new Entry());
+    e2->setGroup(m_rootGroup);
+    e2->setUsername("User2");
+    e2->setPassword("password");
+    e2->attributes()->set("testAttribute", "testE2");
+
+    const QList<Entry*> expectE1{e1.data()};
+    const QList<Entry*> expectE2{e2.data()};
+    const QList<Entry*> expectBoth{e1.data(), e2.data()};
+
+
+    // Case-insensitive
+    m_entrySearcher = EntrySearcher(false, false, false);
+    m_searchResult = m_entrySearcher.search("user2", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE2);
+    m_searchResult = m_entrySearcher.search("user testE", m_rootGroup);
+    QCOMPARE(m_searchResult, expectBoth);
+    m_searchResult = m_entrySearcher.search("p:PassWord", m_rootGroup);
+    QCOMPARE(m_searchResult, expectBoth);
+
+    // Case-sensitive
+    m_entrySearcher = EntrySearcher(true, false, false);
+    m_searchResult = m_entrySearcher.search("user2", m_rootGroup);
     QCOMPARE(m_searchResult, {});
+    m_searchResult = m_entrySearcher.search("user testE", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult = m_entrySearcher.search("p:PassWord", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+
+    // Case-sensitive and protected fields included
+    m_entrySearcher = EntrySearcher(true, true, false);
+    m_searchResult = m_entrySearcher.search("PassWord", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
 }
 
 void TestEntrySearcher::testUUIDSearch()
@@ -405,7 +570,7 @@ void TestEntrySearcher::testUUIDSearch()
     auto uuid2 = QUuid::createUuid();
     entry2->setUuid(uuid2);
 
-    m_searchResult = m_entrySearcher.search("uuid:", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("uuid:*", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
 
     m_searchResult = m_entrySearcher.search("uuid:" + Tools::uuidToHex(uuid1), m_rootGroup);
