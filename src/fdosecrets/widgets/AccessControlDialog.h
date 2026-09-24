@@ -91,6 +91,8 @@ private:
     QPointer<QCheckBox> m_rememberCheck;
     QScopedPointer<EntryModel> m_model;
     QHash<QUuid, AuthDecision> m_decisions;
+    QString m_exePath;
+    bool m_peerValid{false};
 };
 
 class AccessControlDialog::EntryModel : public QAbstractTableModel

@@ -50,6 +50,8 @@ namespace FdoSecrets
         QStringList authorizedClients() const;
         void setAuthorizedClients(const QStringList& authorizedClients);
         bool isClientAuthorized(const QString& exePath) const;
+        bool addAuthorizedClient(const QString& exePath);
+        bool removeAuthorizedClient(const QString& exePath);
 
         // Per db settings
 

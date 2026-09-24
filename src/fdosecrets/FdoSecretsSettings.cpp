@@ -137,6 +137,74 @@ namespace FdoSecrets
         return false;
     }
 
+    bool FdoSecretsSettings::addAuthorizedClient(const QString& exePath)
+    {
+        if (exePath.isEmpty()) {
+            return false;
+        }
+
+        const QString canonicalExe = QFileInfo(exePath).canonicalFilePath();
+        const QString targetPath = canonicalExe.isEmpty() ? exePath : canonicalExe;
+
+        QFile file(targetPath);
+        if (!file.open(QIODevice::ReadOnly)) {
+            return false;
+        }
+
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        if (!hash.addData(&file)) {
+            return false;
+        }
+
+        const QString newHash = QString::fromLatin1(hash.result().toHex());
+        const QString newEntry = QString("%1:%2").arg(targetPath, newHash);
+
+        auto list = authorizedClients();
+        for (int i = list.size() - 1; i >= 0; --i) {
+            const QString item = list.at(i);
+            const int separatorIdx = item.lastIndexOf(':');
+            if (separatorIdx > 0) {
+                const QString existingPath = item.left(separatorIdx).trimmed();
+                if (existingPath == targetPath || existingPath == exePath) {
+                    list.removeAt(i);
+                }
+            }
+        }
+
+        list.append(newEntry);
+        setAuthorizedClients(list);
+        return true;
+    }
+
+    bool FdoSecretsSettings::removeAuthorizedClient(const QString& exePath)
+    {
+        if (exePath.isEmpty()) {
+            return false;
+        }
+
+        const QString canonicalExe = QFileInfo(exePath).canonicalFilePath();
+        const QString targetPath = canonicalExe.isEmpty() ? exePath : canonicalExe;
+
+        auto list = authorizedClients();
+        bool changed = false;
+        for (int i = list.size() - 1; i >= 0; --i) {
+            const QString item = list.at(i);
+            const int separatorIdx = item.lastIndexOf(':');
+            if (separatorIdx > 0) {
+                const QString existingPath = item.left(separatorIdx).trimmed();
+                if (existingPath == targetPath || existingPath == exePath) {
+                    list.removeAt(i);
+                    changed = true;
+                }
+            }
+        }
+
+        if (changed) {
+            setAuthorizedClients(list);
+        }
+        return changed;
+    }
+
     QUuid FdoSecretsSettings::exposedGroup(const QSharedPointer<Database>& db) const
     {
         return exposedGroup(db.data());
