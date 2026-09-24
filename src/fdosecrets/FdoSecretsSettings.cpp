@@ -22,6 +22,10 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 
+#include <QCryptographicHash>
+#include <QFile>
+#include <QFileInfo>
+
 namespace FdoSecrets
 {
 
@@ -83,6 +87,54 @@ namespace FdoSecrets
     void FdoSecretsSettings::setUnlockBeforeSearch(bool unlockBeforeSearch)
     {
         config()->set(Config::FdoSecrets_UnlockBeforeSearch, unlockBeforeSearch);
+    }
+
+    QStringList FdoSecretsSettings::authorizedClients() const
+    {
+        return config()->get(Config::FdoSecrets_AuthorizedClients).toStringList();
+    }
+
+    void FdoSecretsSettings::setAuthorizedClients(const QStringList& authorizedClients)
+    {
+        config()->set(Config::FdoSecrets_AuthorizedClients, authorizedClients);
+    }
+
+    bool FdoSecretsSettings::isClientAuthorized(const QString& exePath) const
+    {
+        const auto list = authorizedClients();
+        if (list.isEmpty() || exePath.isEmpty()) {
+            return false;
+        }
+
+        const QString canonicalExe = QFileInfo(exePath).canonicalFilePath();
+
+        for (const auto& item : list) {
+            const int separatorIdx = item.lastIndexOf(':');
+            if (separatorIdx <= 0) {
+                continue;
+            }
+
+            const QString allowedPath = item.left(separatorIdx).trimmed();
+            const QString expectedHash = item.mid(separatorIdx + 1).trimmed();
+
+            if (allowedPath == exePath || (!canonicalExe.isEmpty() && allowedPath == canonicalExe)) {
+                QFile file(canonicalExe.isEmpty() ? exePath : canonicalExe);
+                if (!file.open(QIODevice::ReadOnly)) {
+                    continue;
+                }
+
+                QCryptographicHash hash(QCryptographicHash::Sha256);
+                if (!hash.addData(&file)) {
+                    continue;
+                }
+
+                const QString computedHash = QString::fromLatin1(hash.result().toHex());
+                if (expectedHash.compare(computedHash, Qt::CaseInsensitive) == 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     QUuid FdoSecretsSettings::exposedGroup(const QSharedPointer<Database>& db) const
