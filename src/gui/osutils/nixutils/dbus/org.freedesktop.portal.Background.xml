@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+ SPDX-License-Identifier: LGPL-2.1-or-later
+ SPDX-FileCopyrightText: Copyright © the xdg-desktop-portal contributors
+-->
+
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <!--
+      org.freedesktop.portal.Background:
+      @short_description: Portal for requesting autostart and background activity
+
+      This simple interface lets sandboxed applications request that
+      the application is allowed to run in the background or started
+      automatically when the user logs in.
+
+      This documentation describes version 2 of this interface.
+  -->
+  <interface name="org.freedesktop.portal.Background">
+    <!--
+        RequestBackground:
+        @parent_window: Identifier for the application window, see :doc:`window-identifiers`
+        @options: Vardict with optional further information
+        @handle: Object path for the :ref:`org.freedesktop.portal.Request` object representing this call
+
+        Requests that the application is allowed to run in the background.
+
+        Supported keys in the @options vardict include:
+
+        * ``handle_token`` (``s``)
+
+          A string that will be used as the last element of the @handle.
+          Must be a valid object path element. See the
+          :ref:`org.freedesktop.portal.Request` documentation for more
+          information about the @handle.
+
+        * ``reason`` (``s``)
+
+          User-visible reason for the request.
+
+        * ``autostart`` (``b``)
+
+          true if the app also wants to be started automatically at login.
+
+        * ``commandline`` (``as``)
+
+          Commandline to use add when autostarting at login. If this is not
+          specified, the ``Exec`` key from the desktop file will be used.
+
+        * ``dbus-activatable`` (``b``)
+
+          true to use D-Bus activation for autostart.
+
+
+        The following results get returned via the :ref:`org.freedesktop.portal.Request::Response` signal:
+
+        * ``background`` (``b``)
+
+          true if the application is allowed to run in the background.
+
+        * ``autostart`` (``b``)
+
+          true if the application will be autostarted.
+    -->
+    <method name="RequestBackground">
+      <arg type="s" name="parent_window" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+      <arg type="o" name="handle" direction="out"/>
+    </method>
+
+    <!--
+      SetStatus:
+      @options: Vardict with optional further information
+
+      This method was added in version 2 of this interface.
+
+      Sets the status of the application running in background.
+
+      Supported keys in the @options vardict include:
+
+      * ``message`` (``s``)
+
+        A string that will be used as the status message of the application.
+        This should be a single line that can be presented to the user in a
+        list, not a full sentence or paragraph. Must be shorter than 96
+        characters.
+    -->
+    <method name="SetStatus">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+    </method>
+
+    <property name="version" type="u" access="read"/>
+  </interface>
+</node>

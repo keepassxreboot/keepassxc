@@ -18,6 +18,7 @@
 #include "NixUtils.h"
 
 #include "autotype/AutoType.h"
+#include "gui/osutils/nixutils/BackgroundPortal.h"
 #include "gui/osutils/nixutils/GlobalShortcutsPortal.h"
 #include "gui/osutils/nixutils/RemoteDesktopPortal.h"
 
@@ -34,7 +35,6 @@
 #include <QMimeData>
 #include <QPointer>
 #include <QProcess>
-#include <QRandomGenerator>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
@@ -134,18 +134,24 @@ QString NixUtils::getAutostartDesktopFilename(bool createDirs) const
         .fileName();
 }
 
-bool NixUtils::isLaunchAtStartupEnabled() const
+bool NixUtils::isLaunchAtStartupEnabled()
 {
-#ifndef KEEPASSXC_DIST_FLATPAK
+    if (backgroundPortal()->isAvailable()) {
+        return config()->get(Config::GUI_LaunchAtStartup).toBool();
+    }
     return QFile::exists(getAutostartDesktopFilename());
-#else
-    return config()->get(Config::GUI_LaunchAtStartup).toBool();
-#endif
 }
 
 void NixUtils::setLaunchAtStartup(bool enable)
 {
-#ifndef KEEPASSXC_DIST_FLATPAK
+    config()->set(Config::GUI_LaunchAtStartup, enable);
+
+    if (backgroundPortal()->isAvailable()) {
+        backgroundPortal()->requestBackground(enable);
+        return;
+    }
+
+    // Fallback: manage autostart via desktop file
     if (enable) {
         QFile desktopFile(getAutostartDesktopFilename(true));
         if (!desktopFile.open(QIODevice::WriteOnly)) {
@@ -176,49 +182,9 @@ void NixUtils::setLaunchAtStartup(bool enable)
                << QStringLiteral("X-KDE-autostart-after=panel") << '\n'
                << QStringLiteral("X-LXQt-Need-Tray=true") << Qt::endl;
         desktopFile.close();
-    } else if (isLaunchAtStartupEnabled()) {
+    } else {
         QFile::remove(getAutostartDesktopFilename());
     }
-#else
-    QDBusConnection sessionBus = QDBusConnection::sessionBus();
-    QDBusMessage msg = QDBusMessage::createMethodCall("org.freedesktop.portal.Desktop",
-                                                      "/org/freedesktop/portal/desktop",
-                                                      "org.freedesktop.portal.Background",
-                                                      "RequestBackground");
-
-    QMap<QString, QVariant> options;
-    options["autostart"] = QVariant(enable);
-    options["reason"] = QVariant("Launch KeePassXC at startup");
-    int token = QRandomGenerator::global()->bounded(1000, 9999);
-    options["handle_token"] = QVariant(QString("org/keepassxc/KeePassXC/%1").arg(token));
-
-    msg << "" << options;
-
-    QDBusMessage response = sessionBus.call(msg);
-
-    QDBusObjectPath handle = response.arguments().at(0).value<QDBusObjectPath>();
-
-    bool res = sessionBus.connect("org.freedesktop.portal.Desktop",
-                                  handle.path(),
-                                  "org.freedesktop.portal.Request",
-                                  "Response",
-                                  this,
-                                  SLOT(launchAtStartupRequested(uint, QVariantMap)));
-
-    if (!res) {
-        qDebug() << "DBus Error: could not connect to org.freedesktop.portal.Request";
-    }
-#endif
-}
-
-void NixUtils::launchAtStartupRequested(uint response, const QVariantMap& results)
-{
-    if (response > 0) {
-        qDebug() << "DBus Error: the request to autostart was cancelled.";
-        return;
-    }
-
-    config()->set(Config::GUI_LaunchAtStartup, results["autostart"].value<bool>());
 }
 
 bool NixUtils::isCapslockEnabled()
@@ -507,6 +473,15 @@ bool NixUtils::externalGlobalShortcutsConfigurator()
 bool NixUtils::isWayland() const
 {
     return QApplication::platformName() == QLatin1String("wayland");
+}
+
+BackgroundPortal* NixUtils::backgroundPortal()
+{
+    if (!m_backgroundPortal) {
+        m_backgroundPortal = new BackgroundPortal(this);
+    }
+
+    return m_backgroundPortal;
 }
 
 GlobalShortcutsPortal* NixUtils::globalShortcutsPortal()

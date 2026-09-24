@@ -44,7 +44,7 @@ public:
     /**
      * @return KeePassXC set to launch at system startup (autostart).
      */
-    virtual bool isLaunchAtStartupEnabled() const = 0;
+    virtual bool isLaunchAtStartupEnabled() = 0;
 
     /**
      * @param enable Add or remove KeePassXC from system autostart.
