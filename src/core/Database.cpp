@@ -395,7 +395,9 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
         break;
     }
     case TempFile: {
-        QTemporaryFile tempFile;
+        // Keep the temp file next to the target so the final rename stays on one file system
+        QFileInfo targetInfo(filePath);
+        QTemporaryFile tempFile(targetInfo.absolutePath() + "/." + targetInfo.fileName() + ".XXXXXX.tmp");
         if (tempFile.open()) {
             HashingStream hashingStream(&tempFile, QCryptographicHash::Md5, kFileBlockToHashSizeBytes);
             if (!hashingStream.open(QIODevice::WriteOnly)) {
@@ -407,9 +409,17 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
             }
             tempFile.close(); // flush to disk
 
-            // Delete the original db and move the temp file in place
+            // Move the original aside instead of deleting it so it can be restored on failure
             auto perms = QFile::permissions(filePath);
-            QFile::remove(filePath);
+            // Derive from the unique temp name so an existing user file is never overwritten
+            const QString sidelinedPath = tempFile.fileName() + ".orig";
+            const bool hadOriginal = QFile::exists(filePath);
+            if (hadOriginal && !QFile::rename(filePath, sidelinedPath)) {
+                if (error) {
+                    *error = tr("Could not rename original database file");
+                }
+                return false;
+            }
 
             // Note: call into the QFile rename instead of QTemporaryFile
             // due to an undocumented difference in how the function handles
@@ -417,15 +427,27 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
             if (tempFile.QFile::rename(filePath)) {
                 // successfully saved the database
                 tempFile.setAutoRemove(false);
-                QFile::setPermissions(filePath, perms);
+                if (hadOriginal) {
+                    QFile::remove(sidelinedPath);
+                    QFile::setPermissions(filePath, perms);
+                }
                 // Retain original creation time
                 tempFile.setFileTime(createTime, QFile::FileBirthTime);
                 // store the new hash
                 m_fileBlockHash = hashingStream.hashingResult();
                 return true;
-            } else if (backupFilePath.isEmpty() || !restoreDatabase(filePath, backupFilePath)) {
-                // Failed to copy new database in place, and
-                // failed to restore from backup or backups disabled
+            }
+
+            // Saving failed, put the original database back in place
+            if (hadOriginal && QFile::rename(sidelinedPath, filePath)) {
+                if (error) {
+                    *error = tempFile.errorString();
+                }
+                return false;
+            }
+
+            // No original to restore, or restoring it failed, fall back to the backup
+            if (backupFilePath.isEmpty() || !restoreDatabase(filePath, backupFilePath)) {
                 tempFile.setAutoRemove(false);
                 if (error) {
                     *error = tr("%1\nBackup database located at %2").arg(tempFile.errorString(), tempFile.fileName());

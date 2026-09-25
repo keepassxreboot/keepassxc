@@ -34,6 +34,9 @@ public:
     bool reset() override;
     void close() override;
 
+    // Upper bound on a single block, used to reject malformed input
+    static constexpr qint32 MaxBlockSize = 64 * 1024 * 1024;
+
     bool atEnd() const override;
 
 protected:

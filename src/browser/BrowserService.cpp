@@ -1548,8 +1548,8 @@ bool BrowserService::handleURL(const QString& entryUrl,
         return false;
     }
 
-    // Match the subdomains with the limited wildcard
-    if (siteQUrl.host().endsWith(entryQUrl.host())) {
+    // Match on a label boundary so siblings like notbad.example.com do not match bad.example.com
+    if (siteQUrl.host() == entryQUrl.host() || siteQUrl.host().endsWith(QStringLiteral(".") + entryQUrl.host())) {
         return true;
     }
 
