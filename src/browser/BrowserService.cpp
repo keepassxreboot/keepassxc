@@ -1548,7 +1548,7 @@ bool BrowserService::handleURL(const QString& entryUrl,
         return false;
     }
 
-    // Anchor on label boundary
+    // Match on a label boundary so siblings like notbad.example.com do not match bad.example.com
     if (siteQUrl.host() == entryQUrl.host() || siteQUrl.host().endsWith(QStringLiteral(".") + entryQUrl.host())) {
         return true;
     }
