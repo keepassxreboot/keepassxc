@@ -18,12 +18,14 @@
 #include "TestSSHAgent.h"
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
+#include "core/Database.h"
 #include "crypto/Crypto.h"
 #include "sshagent/KeeAgentSettings.h"
 #include "sshagent/OpenSSHKeyGen.h"
 #include "sshagent/SSHAgent.h"
 
 #include <QElapsedTimer>
+#include <QScopeGuard>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestSSHAgent)
@@ -162,6 +164,60 @@ void TestSSHAgent::testRemoveOnClose()
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
     agent.setEnabled(false);
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && !keyInAgent);
+}
+
+// A reload from disk (DatabaseWidget::reloadDatabaseFile -> replaceDatabase)
+// swaps in a new Database object, and every Database gets a fresh uuid. Keys
+// added while the old object was current must still leave the agent when the
+// reloaded database is locked.
+void TestSSHAgent::testRemoveOnLockAfterReload()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+    auto cleanup = qScopeGuard([&] { agent.removeIdentity(m_key); });
+
+    KeeAgentSettings settings;
+    settings.setRemoveAtDatabaseClose(true);
+    bool keyInAgent;
+
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(agent.addIdentity(m_key, settings, db->uuid()));
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
+
+    // The file changed on disk and was reloaded.
+    auto reloaded = QSharedPointer<Database>::create();
+    agent.databaseReplaced(db, reloaded);
+    db.reset();
+
+    agent.databaseLocked(reloaded);
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent));
+    QVERIFY2(!keyInAgent, "key stayed in the agent after locking a reloaded database");
+}
+
+// The same reload must not stop the key from being added on the next unlock.
+void TestSSHAgent::testReaddOnUnlockAfterReload()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+    auto cleanup = qScopeGuard([&] { agent.removeIdentity(m_key); });
+
+    KeeAgentSettings settings;
+    settings.setRemoveAtDatabaseClose(true);
+
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(agent.addIdentity(m_key, settings, db->uuid()));
+
+    auto reloaded = QSharedPointer<Database>::create();
+    agent.databaseReplaced(db, reloaded);
+    db.reset();
+    agent.databaseLocked(reloaded);
+
+    // Unlocking the reloaded database adds its keys again.
+    QVERIFY2(agent.addIdentity(m_key, settings, reloaded->uuid()), qPrintable(agent.errorString()));
 }
 
 void TestSSHAgent::testLifetimeConstraint()
