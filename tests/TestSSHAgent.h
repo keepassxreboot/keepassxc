@@ -33,6 +33,8 @@ private slots:
     void testConfiguration();
     void testIdentity();
     void testRemoveOnClose();
+    void testRemoveOnLockAfterReload();
+    void testReaddOnUnlockAfterReload();
     void testLifetimeConstraint();
     void testConfirmConstraint();
     void testToOpenSSHKey();

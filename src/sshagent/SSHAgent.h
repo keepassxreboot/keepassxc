@@ -66,6 +66,7 @@ signals:
 public slots:
     void databaseLocked(const QSharedPointer<Database>& db);
     void databaseUnlocked(const QSharedPointer<Database>& db);
+    void databaseReplaced(const QSharedPointer<Database>& oldDb, const QSharedPointer<Database>& newDb);
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;

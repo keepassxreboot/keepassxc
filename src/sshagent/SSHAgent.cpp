@@ -549,6 +549,27 @@ void SSHAgent::databaseLocked(const QSharedPointer<Database>& db)
     }
 }
 
+/**
+ * Hand keys added on behalf of one database object over to its replacement.
+ *
+ * Reloading a database from disk swaps in a new Database object, and every
+ * Database has its own uuid. Without this, keys stay owned by the old uuid:
+ * locking the reloaded database no longer removes them, and unlocking it again
+ * is refused as an ownership conflict.
+ */
+void SSHAgent::databaseReplaced(const QSharedPointer<Database>& oldDb, const QSharedPointer<Database>& newDb)
+{
+    if (!oldDb || !newDb || oldDb->uuid() == newDb->uuid()) {
+        return;
+    }
+
+    for (auto& owner : m_addedKeys) {
+        if (owner.first == oldDb->uuid()) {
+            owner.first = newDb->uuid();
+        }
+    }
+}
+
 void SSHAgent::databaseUnlocked(const QSharedPointer<Database>& db)
 {
     if (!db || !isEnabled()) {
