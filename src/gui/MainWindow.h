@@ -22,6 +22,7 @@
 #include <QActionGroup>
 #include <QLabel>
 #include <QMainWindow>
+#include <QMenu>
 #include <QProgressBar>
 #include <QSystemTrayIcon>
 #include <QTimer>
@@ -152,6 +153,7 @@ private slots:
     void updateEntryCountLabel();
     void focusSearchWidget();
     void clearSSHAgent();
+    void retryTrayIconRegistration();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -162,6 +164,7 @@ private:
     void restoreWindowInformation();
     bool saveLastDatabases();
     bool isTrayIconEnabled() const;
+    bool isTrayIconRegisteredWithWatcher() const;
     void customOpenUrl(QString url);
 
     static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
@@ -183,8 +186,10 @@ private:
     QPointer<InactivityTimer> m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
     QPointer<QSystemTrayIcon> m_trayIcon;
+    QPointer<QMenu> m_trayIconMenu;
     QPointer<ScreenLockListener> m_screenLockListener;
     QPointer<SearchWidget> m_searchWidget;
+    QTimer m_trayIconRetryTimer;
     QPointer<QProgressBar> m_progressBar;
     QPointer<QLabel> m_progressBarLabel;
     QPointer<QLabel> m_statusBarLabel;

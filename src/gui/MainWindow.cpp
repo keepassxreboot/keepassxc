@@ -74,6 +74,11 @@
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "mainwindowadaptor.h"
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusMessage>
+#include <QDBusServiceWatcher>
+#include <QDBusVariant>
 #endif
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
@@ -656,6 +661,26 @@ MainWindow::MainWindow()
     m_trayIconTriggerReason = QSystemTrayIcon::Unknown;
     m_trayIconTriggerTimer.setSingleShot(true);
     connect(&m_trayIconTriggerTimer, SIGNAL(timeout()), SLOT(processTrayIconTrigger()));
+
+    // KeePassXC can be started before the StatusNotifierWatcher (system tray host) is
+    // available (e.g. right after login). In that case Qt fails to register a
+    // StatusNotifierItem at startup and never exports the tray icon object, so a plain
+    // show() retry is not enough. Keep retrying by recreating the QSystemTrayIcon until
+    // it is actually registered with the watcher.
+    m_trayIconRetryTimer.setInterval(5000);
+    connect(&m_trayIconRetryTimer, &QTimer::timeout, this, &MainWindow::retryTrayIconRegistration);
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
+    // Re-register the tray icon as soon as the StatusNotifierWatcher appears on the
+    // session bus, even when KeePassXC started long before it (first boot race, or the
+    // shell/tray host restarting mid-session).
+    QDBusServiceWatcher* trayWatcher = new QDBusServiceWatcher(
+        QStringLiteral("org.kde.StatusNotifierWatcher"),
+        QDBusConnection::sessionBus(),
+        QDBusServiceWatcher::WatchForOwnerChange,
+        this);
+    connect(trayWatcher, &QDBusServiceWatcher::serviceRegistered, this, &MainWindow::retryTrayIconRegistration);
+#endif
 
     if (config()->hasAccessError()) {
         m_ui->globalMessageWidget->showMessage(tr("Access error for config file %1").arg(config()->getFileName()),
@@ -1567,27 +1592,68 @@ bool MainWindow::saveLastDatabases()
     return m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
+// Returns true if a StatusNotifierWatcher (a system tray host, e.g. a shell that
+// implements org.kde.StatusNotifierWatcher) is currently registered on the session
+// bus. On Wayland/SNI setups the Qt platform theme decides ONCE per process whether
+// a D-Bus tray is available (static cache in QGenericUnixTheme::isDBusTrayAvailable),
+// so the first QSystemTrayIcon of the process must be created while a watcher is
+// present, otherwise a real QDBusTrayIcon is never created and the
+// StatusNotifierItem is never exported.
+static bool isStatusNotifierWatcherPresent()
+{
+    const QDBusConnection bus = QDBusConnection::sessionBus();
+    return bus.isConnected() && bus.interface()
+           && bus.interface()->isServiceRegistered(QStringLiteral("org.kde.StatusNotifierWatcher"));
+}
+#endif
+
 void MainWindow::updateTrayIcon()
 {
     if (config()->get(Config::GUI_ShowTrayIcon).toBool()) {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
+        if (!m_trayIcon && !isStatusNotifierWatcherPresent()) {
+            // The tray host is not on the bus yet (KeePassXC can start before the
+            // shell). Qt only evaluates "is a D-Bus tray available" once per
+            // process, so creating the icon now would permanently prevent the
+            // StatusNotifierItem from ever being exported, even after the watcher
+            // appears. Defer icon creation until the watcher is up; the retry
+            // timer (and the QDBusServiceWatcher::serviceRegistered signal) will
+            // re-enter this function as soon as the host is available.
+            if (!m_trayIconRetryTimer.isActive()) {
+                m_trayIconRetryTimer.start();
+            }
+            // No icon exists yet, so treat the tray as disabled: closing the last
+            // window quits the app instead of leaving an invisible orphan when there
+            // is no tray host to show the icon.
+            QApplication::setQuitOnLastWindowClosed(!isTrayIconEnabled());
+            return;
+        }
+#endif
         if (!m_trayIcon) {
-            m_trayIcon = new QSystemTrayIcon(this);
-            auto* menu = new QMenu(this);
+            // Delete a leftover menu from a previous icon incarnation (e.g. after a
+            // failed registration retry) before creating a fresh QSystemTrayIcon.
+            if (m_trayIconMenu) {
+                delete m_trayIconMenu;
+            }
 
-            auto* actionToggle = new QAction(tr("Toggle window"), menu);
-            menu->addAction(actionToggle);
+            m_trayIcon = new QSystemTrayIcon(this);
+            m_trayIconMenu = new QMenu(this);
+
+            auto* actionToggle = new QAction(tr("Toggle window"), m_trayIconMenu);
+            m_trayIconMenu->addAction(actionToggle);
             actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
 
-            menu->addAction(m_ui->actionLockAllDatabases);
+            m_trayIconMenu->addAction(m_ui->actionLockAllDatabases);
 
 #ifdef Q_OS_MACOS
-            auto actionQuit = new QAction(tr("Quit KeePassXC"), menu);
+            auto actionQuit = new QAction(tr("Quit KeePassXC"), m_trayIconMenu);
             connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
-            menu->addAction(actionQuit);
+            m_trayIconMenu->addAction(actionQuit);
 #else
-            menu->addAction(m_ui->actionQuit);
+            m_trayIconMenu->addAction(m_ui->actionQuit);
 #endif
-            m_trayIcon->setContextMenu(menu);
+            m_trayIcon->setContextMenu(m_trayIconMenu);
 
             connect(m_trayIcon,
                     SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
@@ -1600,23 +1666,141 @@ void MainWindow::updateTrayIcon()
         m_trayIcon->setToolTip(windowTitle().replace("[*]", isWindowModified() ? "*" : ""));
         m_trayIcon->show();
 
-        if (!isTrayIconEnabled() || !QSystemTrayIcon::isSystemTrayAvailable()) {
-            // Try to show tray icon after 5 seconds, try 5 times
-            // This can happen if KeePassXC starts before the system tray is available
-            static int trayIconAttempts = 0;
-            if (trayIconAttempts < 5) {
-                QTimer::singleShot(5000, this, &MainWindow::updateTrayIcon);
-                ++trayIconAttempts;
+        if (!isTrayIconRegisteredWithWatcher()) {
+            // The tray host (StatusNotifierWatcher) may not be available yet when
+            // KeePassXC starts (e.g. right after login, before the shell is up).
+            // Keep retrying: the icon is (re)created only once the watcher is on
+            // the bus, because Qt decides once per process whether a D-Bus tray is
+            // available at all (see isStatusNotifierWatcherPresent()).
+            if (!m_trayIconRetryTimer.isActive()) {
+                m_trayIconRetryTimer.start();
             }
+        } else {
+            m_trayIconRetryTimer.stop();
         }
     } else {
         if (m_trayIcon) {
             m_trayIcon->hide();
             delete m_trayIcon;
         }
+        if (m_trayIconMenu) {
+            delete m_trayIconMenu;
+        }
+        m_trayIconRetryTimer.stop();
     }
 
     QApplication::setQuitOnLastWindowClosed(!isTrayIconEnabled());
+}
+
+void MainWindow::retryTrayIconRegistration()
+{
+    if (!config()->get(Config::GUI_ShowTrayIcon).toBool()) {
+        m_trayIconRetryTimer.stop();
+        return;
+    }
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
+    if (!isStatusNotifierWatcherPresent()) {
+        // No tray host on the bus right now. Recreating the icon would not help:
+        // Qt caches per-process whether a D-Bus tray is available. Wait for the
+        // QDBusServiceWatcher::serviceRegistered signal (and keep the timer
+        // running as a fallback) and recreate once the watcher is present.
+        if (!m_trayIconRetryTimer.isActive()) {
+            m_trayIconRetryTimer.start();
+        }
+        return;
+    }
+#endif
+
+    if (isTrayIconRegisteredWithWatcher()) {
+        m_trayIconRetryTimer.stop();
+        return;
+    }
+
+    // Recreate the tray icon from scratch. A plain show() on the existing icon does
+    // NOT re-attempt the SNI registration once it failed, and Qt only creates a
+    // real QDBusTrayIcon when a watcher is present at creation time.
+    if (m_trayIcon) {
+        m_trayIcon->hide();
+        delete m_trayIcon;
+    }
+    updateTrayIcon();
+
+    if (!m_trayIconRetryTimer.isActive()) {
+        m_trayIconRetryTimer.start();
+    }
+}
+
+bool MainWindow::isTrayIconRegisteredWithWatcher() const
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
+    // When the icon has not been created yet (deferred while no watcher was
+    // present), there is nothing to check: report "not registered" so the retry
+    // timer keeps running until the watcher appears and the icon is created.
+    if (!m_trayIcon || !m_trayIcon->isVisible()) {
+        return false;
+    }
+
+    QDBusConnection bus = QDBusConnection::sessionBus();
+    if (!bus.isConnected()) {
+        // No session bus: the tray (if any) uses XEmbed and there is no
+        // StatusNotifierWatcher to query; visibility is the best signal.
+        return true;
+    }
+
+    // No StatusNotifierWatcher (host) present right now: the icon cannot be
+    // registered with it. Return "true" so updateTrayIcon() stops the polling
+    // timer; the QDBusServiceWatcher::serviceRegistered signal will trigger a
+    // re-registration attempt as soon as a host appears.
+    if (!bus.interface() || !bus.interface()->isServiceRegistered(QStringLiteral("org.kde.StatusNotifierWatcher"))) {
+        return true;
+    }
+
+    // Ask the StatusNotifierWatcher whether our StatusNotifierItem is registered.
+    // Qt registers the item under the freedesktop-compatible service name
+    // "org.kde.StatusNotifierItem-<pid>-<n>" (KDEItemFormat) or
+    // "org.freedesktop.StatusNotifierItem-<pid>-<n>", or under the unique bus
+    // name "<unique>/StatusNotifierItem". Accept all forms.
+    QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.StatusNotifierWatcher"),
+                                                      QStringLiteral("/StatusNotifierWatcher"),
+                                                      QStringLiteral("org.freedesktop.DBus.Properties"),
+                                                      QStringLiteral("Get"));
+    msg << QStringLiteral("org.kde.StatusNotifierWatcher") << QStringLiteral("RegisteredStatusNotifierItems");
+    QDBusMessage reply = bus.call(msg);
+    if (reply.type() != QDBusMessage::ReplyMessage) {
+        return false;
+    }
+
+    const auto registeredItems = reply.arguments().value(0).value<QDBusVariant>().variant().toStringList();
+    const QString ourKdeItem =
+        QStringLiteral("org.kde.StatusNotifierItem-%1-").arg(QCoreApplication::applicationPid());
+    const QString ourFreedesktopItem =
+        QStringLiteral("org.freedesktop.StatusNotifierItem-%1-").arg(QCoreApplication::applicationPid());
+    for (const QString& item : registeredItems) {
+        // The watcher reports each item either as a well-known service name
+        // ("org.kde.StatusNotifierItem-<pid>-<n>/StatusNotifierItem") or by the
+        // unique name of the connection that registered it
+        // (":1.816/StatusNotifierItem"). Qt exports the StatusNotifierItem from a
+        // dedicated QDBusMenuConnection whose unique name is NOT the session bus'
+        // baseService(), so match by owner process instead of by name.
+        QString service = item;
+        if (service.endsWith(QStringLiteral("/StatusNotifierItem"))) {
+            service.chop(QStringLiteral("/StatusNotifierItem").length());
+        }
+        if (service.startsWith(ourKdeItem) || service.startsWith(ourFreedesktopItem)) {
+            return true;
+        }
+        const uint pid = bus.interface()->servicePid(service).value();
+        if (pid == static_cast<uint>(QCoreApplication::applicationPid())) {
+            return true;
+        }
+    }
+    return false;
+#else
+    // On platforms without StatusNotifierWatcher (macOS, Windows), icon visibility
+    // is the best available signal.
+    return m_trayIcon && m_trayIcon->isVisible();
+#endif
 }
 
 void MainWindow::updateProgressBar(int percentage, QString message)
