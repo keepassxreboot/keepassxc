@@ -191,11 +191,11 @@ void IconDownloaderDialog::updateProgressBar()
     m_ui->progressLabel->setText(
         tr("Downloading favicons (%1/%2)…").arg(QString::number(value), QString::number(total)));
 
-    // The progress text changes asynchronously while focus remains elsewhere.
-    // Explicitly notify accessibility clients so screen readers can announce the
-    // current download progress instead of requiring the user to revisit the label.
-    QAccessibleEvent event(m_ui->progressLabel, QAccessible::TextUpdated);
-    QAccessible::updateAccessibility(&event);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(
+        m_ui->progressLabel, m_ui->progressLabel->text());
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
 }
 
 void IconDownloaderDialog::updateCancelButton()
@@ -211,10 +211,7 @@ void IconDownloaderDialog::updateTable(const QString& url, const QString& messag
             statusItem->setText(message);
             statusItem->setData(message, Qt::AccessibleDescriptionRole);
 
-            // Download results arrive asynchronously while focus normally remains
-            // on Cancel or Close. Notify accessibility clients that the status
-            // cell changed so JAWS/NVDA can refresh the result when it is focused.
-            QAccessibleEvent event(m_ui->tableView, QAccessible::TextUpdated);
+            QAccessibleEvent event(m_ui->tableView, QAccessible::VisibleDataChanged);
             QAccessible::updateAccessibility(&event);
         }
     }

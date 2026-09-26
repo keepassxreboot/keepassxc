@@ -95,8 +95,6 @@ void TotpDialog::updateSeconds()
     m_ui->timerLabel->setText(tr("Expires in <b>%n</b> second(s)", "", remaining));
 
     if (remaining <= 10 && remaining >= 1) {
-        QAccessible::updateAccessibility(
-            new QAccessibleEvent(m_ui->timerLabel, QAccessible::TextUpdated));
 #if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
         QAccessibleAnnouncementEvent announcementEvent(
             m_ui->timerLabel, tr("TOTP code expires in %n second(s)", "", remaining));
