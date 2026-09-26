@@ -33,6 +33,11 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    // Keep the primary import-type selector at the start of the page tab order.
+    // Without an explicit relationship, Qt can place the dynamically populated list
+    // after the wizard buttons in the focus chain.
+    QWidget::setTabOrder(m_ui->importTypeList, m_ui->importFileEdit);
+
     new QListWidgetItem(icons()->icon("csv"), tr("Comma Separated Values (.csv)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("onepassword"), tr("1Password Export (.1pux)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("onepassword"), tr("1Password Vault (.opvault)"), m_ui->importTypeList);
