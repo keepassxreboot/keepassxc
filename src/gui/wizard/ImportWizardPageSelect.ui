@@ -31,6 +31,12 @@
    </property>
    <item>
     <widget class="QListWidget" name="importTypeList">
+     <property name="accessibleName">
+      <string>Import file type</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Select the type of database or file to import.</string>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
