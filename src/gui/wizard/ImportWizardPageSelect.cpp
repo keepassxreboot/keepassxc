@@ -33,10 +33,20 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    // Keep the primary import-type selector at the start of the page tab order.
-    // Without an explicit relationship, Qt can place the dynamically populated list
-    // after the wizard buttons in the focus chain.
+    // Keep the import controls in logical keyboard order. Hidden or disabled
+    // controls are skipped automatically as import types change.
     QWidget::setTabOrder(m_ui->importTypeList, m_ui->importFileEdit);
+    QWidget::setTabOrder(m_ui->importFileEdit, m_ui->importFileButton);
+    QWidget::setTabOrder(m_ui->importFileButton, m_ui->downloadCommand);
+    QWidget::setTabOrder(m_ui->downloadCommand, m_ui->downloadCommandHelpButton);
+    QWidget::setTabOrder(m_ui->downloadCommandHelpButton, m_ui->downloadCommandInput);
+    QWidget::setTabOrder(m_ui->downloadCommandInput, m_ui->passwordEdit);
+    QWidget::setTabOrder(m_ui->passwordEdit, m_ui->keyFileEdit);
+    QWidget::setTabOrder(m_ui->keyFileEdit, m_ui->keyFileButton);
+    QWidget::setTabOrder(m_ui->keyFileButton, m_ui->newDatabaseRadio);
+    QWidget::setTabOrder(m_ui->newDatabaseRadio, m_ui->existingDatabaseRadio);
+    QWidget::setTabOrder(m_ui->existingDatabaseRadio, m_ui->existingDatabaseChoice);
+    QWidget::setTabOrder(m_ui->existingDatabaseChoice, m_ui->temporaryDatabaseRadio);
 
     new QListWidgetItem(icons()->icon("csv"), tr("Comma Separated Values (.csv)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("onepassword"), tr("1Password Export (.1pux)"), m_ui->importTypeList);
