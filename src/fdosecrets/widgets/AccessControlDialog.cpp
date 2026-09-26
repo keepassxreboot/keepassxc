@@ -42,6 +42,7 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     , m_model(new EntryModel(entries))
     , m_decisions()
     , m_exePath(info.exePath())
+    , m_pid(info.pid)
     , m_peerValid(info.valid)
 {
     if (parent) {
@@ -210,7 +211,7 @@ void AccessControlDialog::dialogFinished(int result)
             }
         }
         if (allowedAny) {
-            FdoSecrets::settings()->addAuthorizedClient(m_exePath);
+            FdoSecrets::settings()->addAuthorizedClient(m_exePath, m_pid);
         } else if (result == DenyAll) {
             FdoSecrets::settings()->removeAuthorizedClient(m_exePath);
         }

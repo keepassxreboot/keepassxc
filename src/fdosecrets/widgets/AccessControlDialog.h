@@ -92,6 +92,7 @@ private:
     QScopedPointer<EntryModel> m_model;
     QHash<QUuid, AuthDecision> m_decisions;
     QString m_exePath;
+    uint m_pid{0};
     bool m_peerValid{false};
 };
 

@@ -99,7 +99,35 @@ namespace FdoSecrets
         config()->set(Config::FdoSecrets_AuthorizedClients, authorizedClients);
     }
 
-    bool FdoSecretsSettings::isClientAuthorized(const QString& exePath) const
+    QString FdoSecretsSettings::hashProcess(uint pid, const QString& fallbackExePath)
+    {
+#ifdef Q_OS_LINUX
+        if (pid > 0) {
+            QFile procFile(QStringLiteral("/proc/%1/exe").arg(pid));
+            if (procFile.open(QIODevice::ReadOnly)) {
+                QCryptographicHash hash(QCryptographicHash::Sha256);
+                if (hash.addData(&procFile)) {
+                    return QString::fromLatin1(hash.result().toHex());
+                }
+            }
+        }
+#endif
+
+        if (!fallbackExePath.isEmpty()) {
+            const QString canonical = QFileInfo(fallbackExePath).canonicalFilePath();
+            QFile file(canonical.isEmpty() ? fallbackExePath : canonical);
+            if (file.open(QIODevice::ReadOnly)) {
+                QCryptographicHash hash(QCryptographicHash::Sha256);
+                if (hash.addData(&file)) {
+                    return QString::fromLatin1(hash.result().toHex());
+                }
+            }
+        }
+
+        return {};
+    }
+
+    bool FdoSecretsSettings::isClientAuthorized(const QString& exePath, uint pid) const
     {
         const auto list = authorizedClients();
         if (list.isEmpty() || exePath.isEmpty()) {
@@ -118,18 +146,8 @@ namespace FdoSecrets
             const QString expectedHash = item.mid(separatorIdx + 1).trimmed();
 
             if (allowedPath == exePath || (!canonicalExe.isEmpty() && allowedPath == canonicalExe)) {
-                QFile file(canonicalExe.isEmpty() ? exePath : canonicalExe);
-                if (!file.open(QIODevice::ReadOnly)) {
-                    continue;
-                }
-
-                QCryptographicHash hash(QCryptographicHash::Sha256);
-                if (!hash.addData(&file)) {
-                    continue;
-                }
-
-                const QString computedHash = QString::fromLatin1(hash.result().toHex());
-                if (expectedHash.compare(computedHash, Qt::CaseInsensitive) == 0) {
+                const QString computedHash = hashProcess(pid, canonicalExe.isEmpty() ? exePath : canonicalExe);
+                if (!computedHash.isEmpty() && expectedHash.compare(computedHash, Qt::CaseInsensitive) == 0) {
                     return true;
                 }
             }
@@ -137,7 +155,7 @@ namespace FdoSecrets
         return false;
     }
 
-    bool FdoSecretsSettings::addAuthorizedClient(const QString& exePath)
+    bool FdoSecretsSettings::addAuthorizedClient(const QString& exePath, uint pid)
     {
         if (exePath.isEmpty()) {
             return false;
@@ -146,17 +164,11 @@ namespace FdoSecrets
         const QString canonicalExe = QFileInfo(exePath).canonicalFilePath();
         const QString targetPath = canonicalExe.isEmpty() ? exePath : canonicalExe;
 
-        QFile file(targetPath);
-        if (!file.open(QIODevice::ReadOnly)) {
+        const QString newHash = hashProcess(pid, targetPath);
+        if (newHash.isEmpty()) {
             return false;
         }
 
-        QCryptographicHash hash(QCryptographicHash::Sha256);
-        if (!hash.addData(&file)) {
-            return false;
-        }
-
-        const QString newHash = QString::fromLatin1(hash.result().toHex());
         const QString newEntry = QString("%1:%2").arg(targetPath, newHash);
 
         auto list = authorizedClients();

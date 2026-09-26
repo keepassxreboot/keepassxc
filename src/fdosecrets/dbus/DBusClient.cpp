@@ -52,7 +52,7 @@ namespace FdoSecrets
         : m_dbus(dbus)
         , m_process(std::move(process))
     {
-        if (m_process.valid && FdoSecrets::settings()->isClientAuthorized(m_process.exePath())) {
+        if (m_process.valid && FdoSecrets::settings()->isClientAuthorized(m_process.exePath(), m_process.pid)) {
             m_authorizedAll = AuthDecision::Allowed;
         }
     }
