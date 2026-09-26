@@ -32,6 +32,8 @@
 #include "gui/MessageBox.h"
 #include "keeshare/group/EditGroupPageKeeShare.h"
 
+#include <QApplication>
+
 class EditGroupWidget::ExtraPage
 {
 public:
@@ -76,6 +78,10 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
+    // QPlainTextEdit normally consumes Tab as a literal tab character.
+    // Let Tab and Shift+Tab move through the group editor controls instead.
+    m_mainUi->editNotes->setTabChangesFocus(true);
+
     addPage(tr("Group"), icons()->icon("document-edit"), m_editGroupWidgetMain);
     addPage(tr("Icon"), icons()->icon("preferences-desktop-icons"), m_editGroupWidgetIcons);
 #if defined(KPXC_FEATURE_BROWSER)
@@ -86,7 +92,12 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     addEditPage(new EditGroupPageKeeShare(this));
     addPage(tr("Properties"), icons()->icon("document-properties"), m_editWidgetProperties);
 
-    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->expireCheck, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled && m_mainUi->expireDatePicker->hasFocus()) {
+            m_mainUi->expireCheck->setFocus();
+        }
+        m_mainUi->expireDatePicker->setEnabled(enabled);
+    });
     connect(m_mainUi->autoTypeSequenceCustomRadio, &QRadioButton::toggled, this, [this](bool enabled) {
         if (!enabled && m_mainUi->autoTypeSequenceCustomEdit->hasFocus()) {
             m_mainUi->autoTypeSequenceCustomRadio->setFocus();
