@@ -279,7 +279,14 @@ QList<Entry*> ReportsWidgetPasskeys::getSelectedEntries()
 
 void ReportsWidgetPasskeys::selectionChanged()
 {
-    m_ui->exportButton->setEnabled(!m_ui->passkeysTableView->selectionModel()->selectedIndexes().isEmpty());
+    const bool hasSelection = !m_ui->passkeysTableView->selectionModel()->selectedIndexes().isEmpty();
+    const bool exportHasFocus = m_ui->exportButton->hasFocus();
+
+    if (exportHasFocus && !hasSelection) {
+        m_ui->passkeysTableView->setFocus();
+    }
+
+    m_ui->exportButton->setEnabled(hasSelection);
 }
 
 void ReportsWidgetPasskeys::importPasskey()
