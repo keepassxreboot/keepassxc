@@ -32,8 +32,6 @@
 #include "gui/MessageBox.h"
 #include "keeshare/group/EditGroupPageKeeShare.h"
 
-#include <QApplication>
-
 class EditGroupWidget::ExtraPage
 {
 public:
