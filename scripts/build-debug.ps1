@@ -1,3 +1,14 @@
+param(
+    $Repo,
+    $VcpkgRoot,
+    $RubyRoot,
+    $VsDevShell,
+    $VsWhere,
+    $WindowsSdkRoot,
+    $WindowsSdkVersion,
+    [switch]$Clean
+)
+
 $ScriptDir =
 if ($PSScriptRoot) { $PSScriptRoot }
 elseif ($PSCommandPath) { Split-Path -Parent $PSCommandPath }
@@ -208,8 +219,8 @@ Write-Host $WindowsSdkRoot
 
 if (-not $WindowsSdkVersion) {
 $DetectedSdkVersion = Get-ChildItem "$WindowsSdkRoot\bin" -Directory -ErrorAction SilentlyContinue |
-Where-Object { $*.Name -match '^\d+.\d+.\d+.\d+$' } |
-Sort-Object { [version]$*.Name } -Descending |
+Where-Object { $_.Name -match '^\d+.\d+.\d+.\d+$' } |
+Sort-Object { [version]$_.Name } -Descending |
 Select-Object -First 1
 
 if (-not $DetectedSdkVersion) {
@@ -227,8 +238,8 @@ Write-Host $WindowsSdkVersion
 $env:WindowsSdkDir = "$WindowsSdkRoot"
 $env:WindowsSDKVersion = "$WindowsSdkVersion"
 
-$SdkBin = "$WindowsSdkRoot\bin$WindowsSdkVersion\x64"
-$SdkLib = "$WindowsSdkRoot\Lib$WindowsSdkVersion\um\x64"
+$SdkBin = "$WindowsSdkRoot\bin\$WindowsSdkVersion\x64"
+$SdkLib = "$WindowsSdkRoot\Lib\$WindowsSdkVersion\um\x64"
 
 if (-not (Test-Path "$SdkBin\rc.exe")) {
 throw "rc.exe was not found: $SdkBin\rc.exe"
@@ -673,10 +684,13 @@ Write-Host $WinDeployQtDebug
 
 # provides the full test target set.
 
-cmake -S . -B build `    -G Ninja`
--DCMAKE_BUILD_TYPE=Debug `    -DCMAKE_TOOLCHAIN_FILE="$VcpkgToolchain"`
--DQt6_DIR="$QtDir" `    -DDEPLOYQT_EXE="$WinDeployQtDebug"`
--DWITH_TESTS=ON
+cmake -S . -B build `
+    -G Ninja `
+    -DCMAKE_BUILD_TYPE=Debug `
+    -DCMAKE_TOOLCHAIN_FILE="$VcpkgToolchain" `
+    -DQt6_DIR="$QtDir" `
+    -DDEPLOYQT_EXE="$WinDeployQtDebug" `
+    -DWITH_TESTS=ON
 
 if ($LASTEXITCODE -ne 0) {
 throw "CMake configuration failed."
@@ -725,10 +739,12 @@ Write-Host "============================================================"
 Write-Host "Build completed."
 Write-Host "============================================================"
 
-$KeePassXC = Get-ChildItem ".\build" `    -Recurse`
--Filter "keepassxc.exe" `    -File`
--ErrorAction SilentlyContinue |
-Select-Object -First 1
+$KeePassXC = Get-ChildItem ".\build" `
+    -Recurse `
+    -Filter "keepassxc.exe" `
+    -File `
+    -ErrorAction SilentlyContinue |
+    Select-Object -First 1
 
 if ($null -eq $KeePassXC) {
 throw "Could not find keepassxc.exe."
