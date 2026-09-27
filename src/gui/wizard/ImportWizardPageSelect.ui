@@ -55,9 +55,6 @@
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
-     <property name="tabKeyNavigation">
-      <bool>true</bool>
-     </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
@@ -298,6 +295,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QPlainTextEdit" name="downloadCommandInput">
+        <property name="tabChangesFocus">
+         <bool>true</bool>
+        </property>
         <property name="placeholderText">
          <string>e.g.:
 get DatabaseOnRemote.kdbx {TEMP_DATABASE}
