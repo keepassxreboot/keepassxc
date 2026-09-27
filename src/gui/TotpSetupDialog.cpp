@@ -15,6 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QAccessible>
+#include <QApplication>
+
 #include "TotpSetupDialog.h"
 #include "ui_TotpSetupDialog.h"
 
@@ -35,11 +38,50 @@ TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveSettings()));
     connect(m_ui->radioCustom, SIGNAL(toggled(bool)), SLOT(toggleCustom(bool)));
+    connect(m_ui->algorithmComboBox, SIGNAL(currentIndexChanged(int)), SLOT(algorithmChanged(int)));
+    connect(m_ui->stepSpinBox, SIGNAL(valueChanged(int)), SLOT(stepChanged(int)));
+    connect(m_ui->digitsSpinBox, SIGNAL(valueChanged(int)), SLOT(digitsChanged(int)));
 
     init();
 }
 
 TotpSetupDialog::~TotpSetupDialog() = default;
+
+void TotpSetupDialog::algorithmChanged(int value)
+{
+    Q_UNUSED(value);
+
+    const auto text = m_ui->algorithmComboBox->currentText();
+    QAccessibleValueChangeEvent event(m_ui->algorithmComboBox, text);
+    QAccessible::updateAccessibility(&event);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->algorithmComboBox, text);
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
+}
+
+void TotpSetupDialog::stepChanged(int value)
+{
+    QAccessibleValueChangeEvent event(m_ui->stepSpinBox, value);
+    QAccessible::updateAccessibility(&event);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->stepSpinBox, QString::number(value));
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
+}
+
+void TotpSetupDialog::digitsChanged(int value)
+{
+    QAccessibleValueChangeEvent event(m_ui->digitsSpinBox, value);
+    QAccessible::updateAccessibility(&event);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->digitsSpinBox, QString::number(value));
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
+}
 
 void TotpSetupDialog::saveSettings()
 {
@@ -97,6 +139,9 @@ void TotpSetupDialog::saveSettings()
 
 void TotpSetupDialog::toggleCustom(bool status)
 {
+    if (!status && m_ui->customSettingsGroup->isAncestorOf(QApplication::focusWidget())) {
+        m_ui->radioCustom->setFocus(Qt::OtherFocusReason);
+    }
     m_ui->customSettingsGroup->setEnabled(status);
 }
 
@@ -130,6 +175,11 @@ void TotpSetupDialog::init()
         }
 
         auto error = Totp::checkValidSettings(settings);
-        m_ui->invalidKeyLabel->setVisible(!error.isEmpty());
+        const bool invalid = !error.isEmpty();
+        m_ui->invalidKeyLabel->setVisible(invalid);
+        m_ui->seedEdit->setAccessibleDescription(invalid ? tr("Error: secret key is invalid") : QString());
+        if (invalid) {
+            QAccessible::updateAccessibility(new QAccessibleEvent(m_ui->invalidKeyLabel, QAccessible::Alert));
+        }
     }
 }

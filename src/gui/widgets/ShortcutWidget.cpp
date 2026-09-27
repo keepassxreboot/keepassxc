@@ -56,6 +56,7 @@ void ShortcutWidget::resetShortcut()
     m_key = Qt::Key_unknown;
     m_modifiers = Qt::NoModifier;
     m_locked = false;
+    displayShortcut(Qt::Key_unknown, Qt::NoModifier);
     emit shortcutReset();
 }
 

@@ -25,6 +25,15 @@
    </property>
    <item>
     <widget class="QTableView" name="healthcheckTableView">
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+     <property name="accessibleName">
+      <string>Database health check results</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Use the arrow keys to review database health results. Double-click a row to edit the entry; use the context menu for entry actions.</string>
+     </property>
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -84,6 +93,7 @@
  </widget>
  <tabstops>
   <tabstop>healthcheckTableView</tabstop>
+  <tabstop>showExpired</tabstop>
   <tabstop>showExcluded</tabstop>
  </tabstops>
  <resources/>

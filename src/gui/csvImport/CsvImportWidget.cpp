@@ -74,7 +74,6 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     m_ui->tableViewFields->setSelectionMode(QAbstractItemView::NoSelection);
-    m_ui->tableViewFields->setFocusPolicy(Qt::NoFocus);
 
     m_columnHeader << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username") << QObject::tr("Password")
                    << QObject::tr("URL") << QObject::tr("Tags") << QObject::tr("Notes") << QObject::tr("TOTP")

@@ -23,10 +23,12 @@
 #include "gui/SquareSvgWidget.h"
 #include "qrcode/QrCode.h"
 
+#include <QAccessible>
 #include <QBoxLayout>
 #include <QBuffer>
 #include <QDialogButtonBox>
 #include <QLabel>
+#include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QShortcut>
@@ -40,14 +42,22 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
     , m_totpSvgWidget(new SquareSvgWidget(m_totpSvgContainerWidget))
     , m_countDown(new QLabel())
     , m_warningLabel(new QLabel())
+    , m_accessibilityText(new QLineEdit())
     , m_buttonBox(new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Ok))
 {
     setObjectName("entryQrCodeWidget");
     m_totpSvgContainerWidget->addWidget(m_totpSvgWidget);
+    m_totpSvgWidget->setAccessibleName(tr("TOTP QR code"));
+    m_totpSvgWidget->setFocusPolicy(Qt::StrongFocus);
 
     m_verticalLayout->addWidget(m_warningLabel);
     m_verticalLayout->addItem(new QSpacerItem(0, 0));
     m_verticalLayout->addWidget(m_totpSvgContainerWidget);
+    m_accessibilityText->setReadOnly(true);
+    m_accessibilityText->setFrame(false);
+    m_accessibilityText->setAccessibleName(tr("TOTP QR code instructions"));
+    m_accessibilityText->setText(tr("TOTP QR code. Scan this QR code with an authenticator app to configure TOTP."));
+    m_verticalLayout->addWidget(m_accessibilityText);
     m_verticalLayout->addWidget(m_countDown);
     m_verticalLayout->addWidget(m_buttonBox);
 
@@ -65,6 +75,9 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
     m_buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Copy"));
     m_buttonBox->setFocus();
     m_countDown->setAlignment(Qt::AlignCenter);
+    setTabOrder(m_totpSvgWidget, m_accessibilityText);
+    setTabOrder(m_accessibilityText, m_buttonBox->button(QDialogButtonBox::Cancel));
+    setTabOrder(m_buttonBox->button(QDialogButtonBox::Cancel), m_buttonBox->button(QDialogButtonBox::Ok));
 
     m_secTillClose = 45;
     autoClose();
@@ -87,6 +100,13 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
         QBuffer buffer;
         qrc.writeSvg(&buffer, logicalDpiX());
         m_totpSvgWidget->load(buffer.data());
+        m_totpSvgWidget->setAccessibleDescription(
+            tr("Scan this QR code with an authenticator app to configure TOTP."));
+        m_totpSvgWidget->setFocus(Qt::OtherFocusReason);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+        QAccessibleAnnouncementEvent announcementEvent(m_totpSvgWidget, tr("TOTP QR code"));
+        QAccessible::updateAccessibility(&announcementEvent);
+#endif
         const auto minsize = static_cast<int>(logicalDpiX() * 2.5);
         m_totpSvgWidget->setMinimumSize(minsize, minsize);
     } else {
@@ -115,7 +135,18 @@ void TotpExportSettingsDialog::copyToClipboard()
 void TotpExportSettingsDialog::autoClose()
 {
     if (--m_secTillClose > 0) {
-        m_countDown->setText(tr("Closing in %1 seconds.").arg(m_secTillClose));
+        const auto countdownText = tr("Closing in %1 seconds.").arg(m_secTillClose);
+        m_countDown->setText(countdownText);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+        // The dialog closes automatically. Announce the final countdown milestones
+        // so screen-reader users are not left unaware that the window is about to
+        // disappear while focus remains on another control.
+        if (m_secTillClose <= 5 || m_secTillClose == 10) {
+            QAccessibleAnnouncementEvent announcementEvent(m_countDown, countdownText);
+            announcementEvent.setPoliteness(QAccessible::AnnouncementPoliteness::Assertive);
+            QAccessible::updateAccessibility(&announcementEvent);
+        }
+#endif
     } else {
         m_timer->stop();
         close();

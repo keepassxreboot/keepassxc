@@ -15,7 +15,17 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTableWidget" name="changeTable"/>
+    <widget class="QTableWidget" name="changeTable">
+     <property name="accessibleName">
+      <string>Database merge changes</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Lists the changes that will be applied during the database merge.</string>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -26,6 +36,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>changeTable</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

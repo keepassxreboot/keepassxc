@@ -18,6 +18,7 @@
 #include "UpdateCheckDialog.h"
 #include "ui_UpdateCheckDialog.h"
 
+#include <QAccessible>
 #include <QPushButton>
 
 #include "config-keepassx.h"
@@ -58,6 +59,13 @@ void UpdateCheckDialog::showUpdateCheckResponse(bool hasUpdate, const QString& v
     } else {
         m_ui->statusLabel->setText(tr("You have the latest version of KeePassXC"));
     }
+
+    QAccessibleEvent statusChanged(m_ui->statusLabel, QAccessible::Alert);
+    QAccessible::updateAccessibility(&statusChanged);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->statusLabel, m_ui->statusLabel->text());
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
 }
 
 UpdateCheckDialog::~UpdateCheckDialog()

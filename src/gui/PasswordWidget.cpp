@@ -27,9 +27,12 @@
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
 
+#include <QAccessible>
+#include <QApplication>
 #include <QEvent>
 #include <QLineEdit>
 #include <QTimer>
+#include <QToolButton>
 #include <QToolTip>
 
 PasswordWidget::PasswordWidget(QWidget* parent)
@@ -39,6 +42,7 @@ PasswordWidget::PasswordWidget(QWidget* parent)
     m_ui->setupUi(this);
     setFocusProxy(m_ui->passwordEdit);
     m_ui->passwordEdit->installEventFilter(this);
+    m_defaultAccessibleDescription = m_ui->passwordEdit->accessibleDescription();
 
     const QIcon errorIcon = icons()->icon("dialog-error");
     m_errorAction = m_ui->passwordEdit->addAction(errorIcon, QLineEdit::TrailingPosition);
@@ -78,6 +82,37 @@ PasswordWidget::PasswordWidget(QWidget* parent)
     m_ui->passwordEdit->addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);
 
+    // QLineEdit::addAction() renders each action as an internal
+    // QLineEditIconButton (a QToolButton parented to the line edit), but that
+    // button defaults to Qt::NoFocus -- it responds to a mouse click but is
+    // skipped entirely by Tab and never receives keyboard focus. Confirmed
+    // live via UIA: every other checkbox in a dialog using this widget
+    // reports "focusable"; this action's button doesn't. That leaves the
+    // toggle/generate controls reachable only by already knowing their
+    // Ctrl+H / Ctrl+G shortcuts, which a keyboard-only or screen-reader user
+    // exploring the form by Tab has no way to discover. Qt::TabFocus (not
+    // StrongFocus) is enough here since mouse click-to-activate already
+    // works regardless of focus policy; this only adds Tab reachability.
+    for (QAction* action : {m_toggleVisibleAction.data(), m_passwordGeneratorAction.data()}) {
+        for (QToolButton* button : m_ui->passwordEdit->findChildren<QToolButton*>()) {
+            if (button->defaultAction() == action) {
+                button->setFocusPolicy(Qt::TabFocus);
+                if (action == m_toggleVisibleAction) {
+                    button->setAccessibleName(tr("Toggle password visibility"));
+                    button->setAccessibleDescription(
+                        tr("Shortcut: %1")
+                            .arg(QKeySequence(action->shortcut()).toString(QKeySequence::NativeText)));
+                } else if (action == m_passwordGeneratorAction) {
+                    button->setAccessibleName(tr("Generate password"));
+                    button->setAccessibleDescription(
+                        tr("Shortcut: %1")
+                            .arg(QKeySequence(action->shortcut()).toString(QKeySequence::NativeText)));
+                }
+                break;
+            }
+        }
+    }
+
     m_capslockAction =
         new QAction(icons()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
                     tr("Warning: Caps Lock enabled!"),
@@ -102,6 +137,19 @@ PasswordWidget::PasswordWidget(QWidget* parent)
 
 PasswordWidget::~PasswordWidget()
 {
+}
+
+void PasswordWidget::setAccessibleName(const QString& name)
+{
+    // Forward to the focus proxy: this is the widget a screen reader actually
+    // reports when the user tabs into this control.
+    m_ui->passwordEdit->setAccessibleName(name);
+    QWidget::setAccessibleName(name);
+}
+
+QString PasswordWidget::accessibleName() const
+{
+    return m_ui->passwordEdit->accessibleName();
 }
 
 void PasswordWidget::setQualityVisible(bool state)
@@ -155,6 +203,22 @@ void PasswordWidget::setRepeatPartner(PasswordWidget* repeatPartner)
 void PasswordWidget::setParentPasswordEdit(PasswordWidget* parent)
 {
     m_parentPasswordWidget = parent;
+
+    // These actions are keyboard-focusable. If either internal QLineEdit action
+    // button currently has focus, hiding it would remove the focused widget from
+    // the focus chain. Return focus to the password editor before hiding them.
+    if (auto* focusedWidget = QApplication::focusWidget();
+        focusedWidget && m_ui->passwordEdit->isAncestorOf(focusedWidget)) {
+        for (QToolButton* button : m_ui->passwordEdit->findChildren<QToolButton*>()) {
+            if (button == focusedWidget
+                && (button->defaultAction() == m_toggleVisibleAction
+                    || button->defaultAction() == m_passwordGeneratorAction)) {
+                m_ui->passwordEdit->setFocus(Qt::OtherFocusReason);
+                break;
+            }
+        }
+    }
+
     // Hide actions
     m_toggleVisibleAction->setVisible(false);
     m_passwordGeneratorAction->setVisible(false);
@@ -206,6 +270,7 @@ void PasswordWidget::updateRepeatStatus()
 
     const auto otherPassword = m_parentPasswordWidget->text();
     const auto password = text();
+    QString statusText;
     if (otherPassword != password) {
         bool isCorrect = false;
         StateColorPalette statePalette;
@@ -217,10 +282,36 @@ void PasswordWidget::updateRepeatStatus()
         setStyleSheet(stylesheetTemplate.arg(color.name()));
         m_correctAction->setVisible(isCorrect);
         m_errorAction->setVisible(!isCorrect);
+        statusText = isCorrect ? m_correctAction->toolTip() : m_errorAction->toolTip();
     } else {
         m_correctAction->setVisible(false);
         m_errorAction->setVisible(false);
         setStyleSheet("");
+        statusText = password.isEmpty() ? QString() : tr("Passwords match");
+    }
+
+    // The match state above is otherwise conveyed only by background color and a
+    // trailing icon (m_correctAction/m_errorAction) -- neither perceivable by a
+    // screen reader user typing in this field. accessibleDescription is set from
+    // the fixed strings above, never from password content, so this cannot leak
+    // what was typed. Set it on the focus proxy (m_ui->passwordEdit), since that's
+    // the object a screen reader actually reports on (see setAccessibleName()
+    // above), and fire Alert the same way MessageWidget::showMessage() does so the
+    // change is announced immediately without moving keyboard focus.
+    if (statusText != m_ui->passwordEdit->accessibleDescription()) {
+        m_ui->passwordEdit->setAccessibleDescription(statusText.isEmpty() ? m_defaultAccessibleDescription : statusText);
+        if (!statusText.isEmpty()) {
+            QAccessibleEvent alertEvent(m_ui->passwordEdit, QAccessible::Alert);
+            QAccessible::updateAccessibility(&alertEvent);
+            // Alert alone never reaches Windows UI Automation as an event
+            // (confirmed against qtbase's qwindowsuiaaccessibility.cpp --
+            // only a system sound). QAccessibleAnnouncementEvent (Qt 6.8+)
+            // is what actually raises a UIA notification.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+            QAccessibleAnnouncementEvent announcementEvent(m_ui->passwordEdit, statusText);
+            QAccessible::updateAccessibility(&announcementEvent);
+#endif
+        }
     }
 }
 
@@ -266,8 +357,19 @@ void PasswordWidget::checkCapslockState()
         if (newCapslockState) {
             QTimer::singleShot(
                 150, [this] { QToolTip::showText(mapToGlobal(rect().bottomLeft()), m_capslockAction->text()); });
-        } else if (QToolTip::isVisible()) {
-            QToolTip::hideText();
+            m_ui->passwordEdit->setAccessibleDescription(tr("Warning: Caps Lock enabled!"));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+            QAccessibleAnnouncementEvent announcementEvent(m_ui->passwordEdit, tr("Warning: Caps Lock enabled!"));
+            QAccessible::updateAccessibility(&announcementEvent);
+#endif
+        } else {
+            // The tooltip can disappear independently of the Caps Lock state.
+            // Keep the screen-reader state synchronized even when there is no
+            // tooltip left to hide.
+            m_ui->passwordEdit->setAccessibleDescription(m_defaultAccessibleDescription);
+            if (QToolTip::isVisible()) {
+                QToolTip::hideText();
+            }
         }
     }
 }
@@ -277,6 +379,7 @@ void PasswordWidget::updatePasswordStrength(const QString& password)
     if (password.isEmpty()) {
         m_ui->qualityProgressBar->setValue(0);
         m_ui->qualityProgressBar->setToolTip((tr("")));
+        m_ui->qualityProgressBar->setAccessibleDescription(tr("Password quality: Not available"));
         return;
     }
 
@@ -322,4 +425,23 @@ void PasswordWidget::updatePasswordStrength(const QString& password)
 
         break;
     }
+
+    QString qualityText;
+    switch (health.quality()) {
+    case PasswordHealth::Quality::Bad:
+    case PasswordHealth::Quality::Poor:
+        qualityText = tr("Poor", "Password quality");
+        break;
+    case PasswordHealth::Quality::Weak:
+        qualityText = tr("Weak", "Password quality");
+        break;
+    case PasswordHealth::Quality::Good:
+        qualityText = tr("Good", "Password quality");
+        break;
+    case PasswordHealth::Quality::Excellent:
+        qualityText = tr("Excellent", "Password quality");
+        break;
+    }
+    m_ui->qualityProgressBar->setAccessibleDescription(
+        tr("Password quality: %1.").arg(qualityText));
 }

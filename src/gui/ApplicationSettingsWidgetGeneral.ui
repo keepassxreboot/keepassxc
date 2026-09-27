@@ -126,6 +126,12 @@
                 </item>
                 <item>
                  <widget class="QSpinBox" name="rememberLastDatabasesSpinbox">
+                  <property name="accessibleName">
+                   <string>Number of recent databases to remember</string>
+                  </property>
+                  <property name="accessibleDescription">
+                   <string>Sets how many previously used database files are kept in the recent files list.</string>
+                  </property>
                   <property name="suffix">
                    <string> recent files</string>
                   </property>
@@ -492,6 +498,12 @@
                  <widget class="QComboBox" name="alternativeSaveComboBox">
                   <property name="enabled">
                    <bool>false</bool>
+                  </property>
+                  <property name="accessibleName">
+                   <string>Alternative saving method</string>
+                  </property>
+                  <property name="accessibleDescription">
+                   <string>Select how KeePassXC saves the database when the alternative saving method is enabled.</string>
                   </property>
                   <property name="focusPolicy">
                    <enum>Qt::FocusPolicy::StrongFocus</enum>

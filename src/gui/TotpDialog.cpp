@@ -24,6 +24,7 @@
 #include "gui/Clipboard.h"
 #include "gui/MainWindow.h"
 
+#include <QAccessible>
 #include <QPushButton>
 #include <QShortcut>
 
@@ -48,7 +49,13 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
 
     new QShortcut(QKeySequence(QKeySequence::Copy), this, SLOT(copyToClipboard()));
 
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Copy"));
+    auto* closeButton = m_ui->buttonBox->button(QDialogButtonBox::Cancel);
+    auto* copyButton = m_ui->buttonBox->button(QDialogButtonBox::Ok);
+    copyButton->setText(tr("Copy"));
+    setTabOrder(m_ui->totpLabel, closeButton);
+    setTabOrder(closeButton, copyButton);
+    m_ui->totpLabel->setFocusPolicy(Qt::StrongFocus);
+    m_ui->totpLabel->setFocus(Qt::OtherFocusReason);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
@@ -84,7 +91,16 @@ void TotpDialog::updateProgressBar()
 void TotpDialog::updateSeconds()
 {
     uint epoch = Clock::currentSecondsSinceEpoch() - 1;
-    m_ui->timerLabel->setText(tr("Expires in <b>%n</b> second(s)", "", m_step - (epoch % m_step)));
+    const auto remaining = m_step - (epoch % m_step);
+    m_ui->timerLabel->setText(tr("Expires in <b>%n</b> second(s)", "", remaining));
+
+    if (remaining <= 10 && remaining >= 1) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+        QAccessibleAnnouncementEvent announcementEvent(
+            m_ui->timerLabel, tr("TOTP code expires in %n second(s)", "", remaining));
+        QAccessible::updateAccessibility(&announcementEvent);
+#endif
+    }
 }
 
 void TotpDialog::updateTotp()
@@ -94,10 +110,18 @@ void TotpDialog::updateTotp()
     if (isValid) {
         totpCode.insert(totpCode.size() / 2, " ");
     }
-    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(isValid);
+
+    auto* copyButton = m_ui->buttonBox->button(QDialogButtonBox::Ok);
+    if (!isValid && copyButton->hasFocus()) {
+        m_ui->buttonBox->button(QDialogButtonBox::Cancel)->setFocus(Qt::OtherFocusReason);
+    }
+    copyButton->setEnabled(isValid);
     m_ui->progressBar->setVisible(isValid);
     m_ui->timerLabel->setVisible(isValid);
     m_ui->totpLabel->setText(totpCode);
+
+    // Keep the code available when the focused label is read, but do not
+    // announce the secret automatically through assistive technology.
 }
 
 void TotpDialog::resetCounter()

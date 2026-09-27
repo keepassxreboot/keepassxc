@@ -27,6 +27,7 @@
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
 
+#include <QAccessible>
 #include <QPushButton>
 
 const char* DatabaseSettingsWidgetEncryption::CD_DECRYPTION_TIME_PREFERENCE_KEY = "KPXC_DECRYPTION_TIME_PREFERENCE";
@@ -36,6 +37,18 @@ const char* DatabaseSettingsWidgetEncryption::CD_DECRYPTION_TIME_PREFERENCE_KEY 
 
 namespace
 {
+    void announceWarning(QMessageBox& warning)
+    {
+        warning.show();
+        QAccessibleEvent alertEvent(&warning, QAccessible::Alert);
+        QAccessible::updateAccessibility(&alertEvent);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+        QAccessibleAnnouncementEvent announcementEvent(&warning, warning.text());
+        announcementEvent.setPoliteness(QAccessible::AnnouncementPoliteness::Assertive);
+        QAccessible::updateAccessibility(&announcementEvent);
+#endif
+    }
+
     QString getTextualEncryptionTime(int millisecs)
     {
         if (millisecs < 1000) {
@@ -58,6 +71,7 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
 
     connect(m_ui->memorySpinBox, SIGNAL(valueChanged(int)), this, SLOT(memoryChanged(int)));
     connect(m_ui->parallelismSpinBox, SIGNAL(valueChanged(int)), this, SLOT(parallelismChanged(int)));
+    connect(m_ui->transformRoundsSpinBox, SIGNAL(valueChanged(int)), this, SLOT(transformRoundsChanged()));
 
     m_ui->compatibilitySelection->addItem(tr("KDBX 4 (recommended)"), KeePass2::KDF_ARGON2D);
     m_ui->compatibilitySelection->addItem(tr("KDBX 3"), KeePass2::KDF_AES_KDBX3);
@@ -383,6 +397,8 @@ void DatabaseSettingsWidgetEncryption::benchmarkTransformRounds(int millisecs)
     // Determine the number of rounds required to meet 1 second delay
     int rounds = AsyncTask::runAndWaitForFuture([&kdf, millisecs]() { return kdf->benchmark(millisecs); });
 
+    // setValue() triggers transformRoundsChanged() (if the value actually changed), which
+    // announces the new value -- no separate accessibility event needed here.
     m_ui->transformRoundsSpinBox->setValue(rounds);
     m_ui->transformBenchmarkButton->setEnabled(true);
     m_ui->transformRoundsSpinBox->setEnabled(true);
@@ -397,6 +413,14 @@ void DatabaseSettingsWidgetEncryption::benchmarkTransformRounds(int millisecs)
 void DatabaseSettingsWidgetEncryption::memoryChanged(int value)
 {
     m_ui->memorySpinBox->setSuffix(tr(" MiB", "Abbreviation for Mebibytes (KDF settings)", value));
+
+    QAccessibleValueChangeEvent event(m_ui->memorySpinBox, value);
+    QAccessible::updateAccessibility(&event);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->memorySpinBox, QString::number(value));
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
 }
 
 /**
@@ -405,6 +429,26 @@ void DatabaseSettingsWidgetEncryption::memoryChanged(int value)
 void DatabaseSettingsWidgetEncryption::parallelismChanged(int value)
 {
     m_ui->parallelismSpinBox->setSuffix(tr(" thread(s)", "Threads for parallel execution (KDF settings)", value));
+
+    QAccessibleValueChangeEvent event(m_ui->parallelismSpinBox, value);
+    QAccessible::updateAccessibility(&event);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->parallelismSpinBox, QString::number(value));
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
+}
+
+void DatabaseSettingsWidgetEncryption::transformRoundsChanged()
+{
+    const auto value = m_ui->transformRoundsSpinBox->value();
+    QAccessibleValueChangeEvent event(m_ui->transformRoundsSpinBox, value);
+    QAccessible::updateAccessibility(&event);
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_ui->transformRoundsSpinBox, QString::number(value));
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
 }
 
 bool DatabaseSettingsWidgetEncryption::isAdvancedMode()

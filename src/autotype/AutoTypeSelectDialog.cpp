@@ -68,6 +68,8 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     });
 
     m_ui->helpButton->setIcon(icons()->icon("system-help"));
+    m_ui->helpButton->setAccessibleName(tr("Show Auto-Type shortcuts"));
+    m_ui->helpButton->setFocusPolicy(Qt::TabFocus);
 
     m_ui->search->installEventFilter(this);
 

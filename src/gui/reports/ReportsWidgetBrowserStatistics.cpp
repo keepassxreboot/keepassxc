@@ -154,12 +154,17 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
     row << new QStandardItem(allowedUrlsList.join('\n'));
     row << new QStandardItem(deniedUrlsList.join('\n'));
 
-    // Set tooltips
+    // Set tooltips and accessible descriptions
     row[2]->setToolTip(urlToolTip);
+    row[2]->setData(urlToolTip, Qt::AccessibleDescriptionRole);
     row[3]->setToolTip(allowedUrlsToolTip);
+    row[3]->setData(allowedUrlsToolTip, Qt::AccessibleDescriptionRole);
     row[4]->setToolTip(deniedUrlsToolTip);
+    row[4]->setData(deniedUrlsToolTip, Qt::AccessibleDescriptionRole);
     if (excluded) {
-        row[0]->setToolTip(tr("This entry is being excluded from reports"));
+        const auto excludedDescription = tr("This entry is being excluded from reports");
+        row[0]->setToolTip(excludedDescription);
+        row[0]->setData(excludedDescription, Qt::AccessibleDescriptionRole);
     }
 
     // Store entry pointer per table row (used in double click handler)

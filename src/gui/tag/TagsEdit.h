@@ -73,7 +73,11 @@ protected:
 private:
     bool isAcceptableInput(QKeyEvent const* event) const;
 
+    QString tagsSummary() const;
+    void announceTagsState(const QString& message);
+
     struct Impl;
     std::unique_ptr<Impl> impl;
     bool m_readOnly;
+    bool m_usageHintAnnounced = false;
 };

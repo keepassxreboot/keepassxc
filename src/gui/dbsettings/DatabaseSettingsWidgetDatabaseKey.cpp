@@ -238,6 +238,16 @@ void DatabaseSettingsWidgetDatabaseKey::discard()
 void DatabaseSettingsWidgetDatabaseKey::showAdditionalKeyOptions()
 {
     setAdditionalKeyOptionsVisible(true);
+
+    if (m_keyFileEditWidget) {
+        for (auto* widget :
+             m_keyFileEditWidget->findChildren<QWidget*>(QString(), Qt::FindChildrenRecursively)) {
+            if (widget->isEnabled() && widget->isVisible() && widget->focusPolicy() != Qt::NoFocus) {
+                widget->setFocus(Qt::OtherFocusReason);
+                break;
+            }
+        }
+    }
 }
 
 void DatabaseSettingsWidgetDatabaseKey::setAdditionalKeyOptionsVisible(bool show)

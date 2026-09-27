@@ -18,14 +18,45 @@
 
 #include "MessageBox.h"
 
+#include <QAccessible>
 #include <QCheckBox>
 #include <QHash>
 #include <QLayout>
 #include <QMap>
 #include <QPushButton>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+#include <QTextDocument>
+#endif
 #include <QWindow>
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+namespace
+{
+    QString accessiblePlainText(const QString& richText)
+    {
+        QTextDocument doc;
+        doc.setHtml(richText);
+        return doc.toPlainText();
+    }
+} // namespace
+#endif
+
 QWindow* MessageBox::m_overrideParent(nullptr);
+
+void MessageBox::announce(QMessageBox& messageBox)
+{
+    messageBox.show();
+
+    QAccessibleEvent alertEvent(&messageBox, QAccessible::Alert);
+    QAccessible::updateAccessibility(&alertEvent);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(&messageBox, accessiblePlainText(messageBox.text()));
+    if (messageBox.icon() == QMessageBox::Warning || messageBox.icon() == QMessageBox::Critical) {
+        announcementEvent.setPoliteness(QAccessible::AnnouncementPoliteness::Assertive);
+    }
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
+}
 
 MessageBox::Button MessageBox::m_nextAnswer(MessageBox::NoButton);
 
@@ -132,6 +163,7 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
             msgBox.raise();
         }
         msgBox.layout()->setSizeConstraint(QLayout::SetMinimumSize);
+        announce(msgBox);
         msgBox.exec();
 
         Button returnButton = m_addedButtonLookup[msgBox.clickedButton()];

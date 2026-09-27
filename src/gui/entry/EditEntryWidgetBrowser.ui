@@ -91,6 +91,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout_1">
       <item>
        <widget class="QListView" name="additionalURLsView">
+        <property name="tabKeyNavigation">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>

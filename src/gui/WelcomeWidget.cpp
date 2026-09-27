@@ -18,6 +18,7 @@
 
 #include "WelcomeWidget.h"
 #include "ui_WelcomeWidget.h"
+#include <QEvent>
 #include <QKeyEvent>
 
 #include "config-keepassx.h"
@@ -53,6 +54,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
             SIGNAL(itemActivated(QListWidgetItem*)),
             this,
             SLOT(openDatabaseFromFile(QListWidgetItem*)));
+    m_ui->recentListWidget->installEventFilter(this);
 }
 
 WelcomeWidget::~WelcomeWidget() = default;
@@ -95,17 +97,17 @@ void WelcomeWidget::refreshLastDatabases()
     m_ui->recentLabel->setVisible(recent_visibility);
 }
 
-void WelcomeWidget::keyPressEvent(QKeyEvent* event)
+bool WelcomeWidget::eventFilter(QObject* watched, QEvent* event)
 {
-    if (m_ui->recentListWidget->hasFocus()) {
-        if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
-            openDatabaseFromFile(m_ui->recentListWidget->currentItem());
-        } else if (event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace) {
+    if (watched == m_ui->recentListWidget && event->type() == QEvent::KeyPress) {
+        auto* keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Delete || keyEvent->key() == Qt::Key_Backspace) {
             removeFromLastDatabases(m_ui->recentListWidget->currentItem());
+            return true;
         }
     }
 
-    QWidget::keyPressEvent(event);
+    return QWidget::eventFilter(watched, event);
 }
 
 void WelcomeWidget::showEvent(QShowEvent* event)

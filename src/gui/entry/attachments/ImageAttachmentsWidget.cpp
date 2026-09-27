@@ -23,6 +23,8 @@
 #include <cmath>
 #include <utility>
 
+#include <QAccessible>
+
 #include <QDebug>
 #include <QEvent>
 #include <QGraphicsScene>
@@ -167,6 +169,10 @@ void ImageAttachmentsWidget::openAttachment(attachments::Attachment attachment, 
 {
     m_attachment = std::move(attachment);
 
+    m_ui->imagesView->setAccessibleName(m_attachment.name.isEmpty()
+                                            ? tr("Attachment image")
+                                            : tr("Attachment image: %1").arg(m_attachment.name));
+
     if (mode == attachments::OpenMode::ReadWrite) {
         qWarning() << "Read-write mode is not supported for image attachments";
     }
@@ -180,10 +186,15 @@ void ImageAttachmentsWidget::loadImage()
     pixmap.loadFromData(m_attachment.data);
     if (pixmap.isNull()) {
         qWarning() << "Failed to load image from data";
+        m_scene->clear();
+        m_ui->imagesView->setAccessibleDescription(tr("Unable to display attachment image"));
+        QAccessibleEvent alertEvent(m_ui->imagesView, QAccessible::Alert);
+        QAccessible::updateAccessibility(&alertEvent);
         return;
     }
 
     m_scene->clear();
+    m_ui->imagesView->setAccessibleDescription({});
     m_scene->addPixmap(std::move(pixmap));
 }
 

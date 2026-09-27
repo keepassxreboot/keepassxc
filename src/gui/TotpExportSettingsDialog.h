@@ -26,6 +26,7 @@
 class QVBoxLayout;
 class SquareSvgWidget;
 class QLabel;
+class QLineEdit;
 class QDialogButtonBox;
 
 class TotpExportSettingsDialog : public QDialog
@@ -50,6 +51,7 @@ private:
     SquareSvgWidget* m_totpSvgWidget;
     QLabel* m_countDown;
     QLabel* m_warningLabel;
+    QLineEdit* m_accessibilityText;
     QDialogButtonBox* m_buttonBox;
 };
 

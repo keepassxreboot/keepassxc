@@ -19,6 +19,7 @@
 #include "DatabaseWidget.h"
 
 #include <QApplication>
+#include <QAccessible>
 #include <QBoxLayout>
 #include <QCheckBox>
 #include <QDesktopServices>
@@ -157,21 +158,25 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_previewSplitter->setChildrenCollapsible(true);
 
     m_groupView->setObjectName("groupView");
+    m_groupView->setAccessibleName(tr("Groups"));
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitGroupContextMenuRequested(QPoint)));
 
     m_entryView->setObjectName("entryView");
+    m_entryView->setAccessibleName(tr("Entries"));
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_entryView->displayGroup(m_db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
     m_searchingLabel->setObjectName("SearchBanner");
+    m_searchingLabel->setAccessibleName(tr("Search status"));
     m_searchingLabel->setText(tr("Searching…"));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
     m_searchingLabel->setVisible(false);
 
     m_shareLabel->setObjectName("KeeShareBanner");
+    m_shareLabel->setAccessibleName(tr("Shared group status"));
     m_shareLabel->setRawText(tr("Shared group…"));
     m_shareLabel->setAlignment(Qt::AlignCenter);
     m_shareLabel->setVisible(false);
@@ -415,8 +420,16 @@ void DatabaseWidget::setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>
 void DatabaseWidget::onConfigChanged(Config::ConfigKey key)
 {
     if (key == Config::GUI_HideGroupPanel) {
-        // Toggle the group splitter visibility and reset the size
-        m_groupSplitter->setVisible(!config()->get(Config::GUI_HideGroupPanel).toBool());
+        // Hiding the group panel can remove the focused group/tag view. Move
+        // focus to the entry view first so keyboard and screen-reader users
+        // are not left with focus on a hidden widget.
+        const bool hideGroupPanel = config()->get(Config::GUI_HideGroupPanel).toBool();
+        const auto focusWidget = QApplication::focusWidget();
+        if (hideGroupPanel && m_groupSplitter->isVisible() && focusWidget
+            && m_groupSplitter->isAncestorOf(focusWidget)) {
+            m_entryView->setFocus();
+        }
+        m_groupSplitter->setVisible(!hideGroupPanel);
         setSplitterSizes({{Config::GUI_SplitterState, QList<int>({})}});
     }
 }
@@ -1773,6 +1786,10 @@ void DatabaseWidget::search(const QString& searchtext)
     m_lastSearchText = searchtext;
 
     m_searchingLabel->setVisible(true);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(m_searchingLabel, m_searchingLabel->text());
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
     m_shareLabel->setVisible(false);
 
     emit searchModeActivated();

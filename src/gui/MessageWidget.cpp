@@ -18,9 +18,21 @@
 
 #include "MessageWidget.h"
 
+#include <QAccessible>
 #include <QDesktopServices>
+#include <QTextDocument>
 #include <QTimer>
 #include <QUrl>
+
+namespace
+{
+    QString accessiblePlainText(const QString& richText)
+    {
+        QTextDocument doc;
+        doc.setHtml(richText);
+        return doc.toPlainText();
+    }
+} // namespace
 
 const int MessageWidget::DefaultAutoHideTimeout = 6000;
 const int MessageWidget::LongAutoHideTimeout = 15000;
@@ -56,6 +68,10 @@ void MessageWidget::showMessage(const QString& text, KMessageWidget::MessageType
     setMessageType(type);
     setText(text);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 0)
+    setAccessibleName(accessiblePlainText(text));
+#endif
+
     emit showAnimationStarted();
     if (m_animate) {
         animatedShow();
@@ -63,6 +79,16 @@ void MessageWidget::showMessage(const QString& text, KMessageWidget::MessageType
         show();
         emit showAnimationFinished();
     }
+
+    QAccessibleEvent alertEvent(this, QAccessible::Alert);
+    QAccessible::updateAccessibility(&alertEvent);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(this, accessiblePlainText(text));
+    if (type == KMessageWidget::Error || type == KMessageWidget::Warning) {
+        announcementEvent.setPoliteness(QAccessible::AnnouncementPoliteness::Assertive);
+    }
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
 
     if (autoHideTimeout > 0) {
         m_autoHideTimer->start(autoHideTimeout);

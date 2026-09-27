@@ -25,6 +25,15 @@
    </property>
    <item>
     <widget class="QTableView" name="browserStatisticsTableView">
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+     <property name="accessibleName">
+      <string>Browser integration report entries</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Use the arrow keys to review browser integration report entries. Double-click a row to edit the entry; use the context menu for entry actions.</string>
+     </property>
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -96,6 +105,7 @@
   <tabstop>browserStatisticsTableView</tabstop>
   <tabstop>showEntriesWithUrlOnlyCheckBox</tabstop>
   <tabstop>showAllowDenyCheckBox</tabstop>
+  <tabstop>showExpired</tabstop>
  </tabstops>
  <resources/>
  <connections/>

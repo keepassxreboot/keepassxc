@@ -30,7 +30,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QListWidget" name="importTypeList">
+    <widget class="ImportTypeListWidget" name="importTypeList">
+     <property name="accessibleName">
+      <string>Import format</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Select the type of database or file to import.</string>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -50,7 +56,7 @@
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="tabKeyNavigation">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
@@ -174,6 +180,12 @@
       </item>
       <item row="7" column="1">
        <widget class="QGroupBox" name="importIntoGroupBox">
+        <property name="accessibleName">
+         <string>Import into</string>
+        </property>
+        <property name="accessibleDescription">
+         <string>Choose whether to import into a new database, an existing database, or a temporary database.</string>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
@@ -286,6 +298,12 @@
       </item>
       <item row="2" column="1">
        <widget class="QPlainTextEdit" name="downloadCommandInput">
+        <property name="accessibleName">
+         <string>Remote database download command input</string>
+        </property>
+        <property name="tabChangesFocus">
+         <bool>true</bool>
+        </property>
         <property name="placeholderText">
          <string>e.g.:
 get DatabaseOnRemote.kdbx {TEMP_DATABASE}
@@ -319,6 +337,11 @@ The command has to exit. In case of `sftp` as last commend `exit` has to be sent
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>ImportTypeListWidget</class>
+   <extends>QListWidget</extends>
+   <header>ImportTypeListWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>PasswordWidget</class>
    <extends>QWidget</extends>

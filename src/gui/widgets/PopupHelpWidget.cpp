@@ -18,6 +18,7 @@
 #include "PopupHelpWidget.h"
 
 #include <QApplication>
+#include <QKeyEvent>
 
 #include "gui/MainWindow.h"
 
@@ -30,6 +31,8 @@ PopupHelpWidget::PopupHelpWidget(QWidget* parent)
     Q_ASSERT(parent);
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    setFocusPolicy(Qt::StrongFocus);
+    setAccessibleName(tr("Search help"));
     hide();
 
     m_appWindow->installEventFilter(this);
@@ -68,6 +71,20 @@ bool PopupHelpWidget::eventFilter(QObject* obj, QEvent* event)
         }
     }
     return QFrame::eventFilter(obj, event);
+}
+
+void PopupHelpWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        hide();
+        if (parentWidget()) {
+            parentWidget()->setFocus(Qt::OtherFocusReason);
+        }
+        event->accept();
+        return;
+    }
+
+    QFrame::keyPressEvent(event);
 }
 
 void PopupHelpWidget::showEvent(QShowEvent* event)
