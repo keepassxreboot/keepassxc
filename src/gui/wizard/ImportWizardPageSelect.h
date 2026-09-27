@@ -43,6 +43,7 @@ public:
 
 private slots:
     void itemSelected(QListWidgetItem* current, QListWidgetItem* previous);
+    void advanceFocusFromTypeList();
     void chooseImportFile();
     void chooseKeyFile();
     void updateDatabaseChoices() const;
