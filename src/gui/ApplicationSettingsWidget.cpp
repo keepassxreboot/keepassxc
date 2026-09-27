@@ -663,18 +663,30 @@ void ApplicationSettingsWidget::autoSaveToggled(bool checked)
         m_generalUi->autoSaveOnExitCheckBox->setChecked(true);
         m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(true);
     }
+    if (checked
+        && (m_generalUi->autoSaveOnExitCheckBox->hasFocus() || m_generalUi->autoSaveNonDataChangesCheckBox->hasFocus())) {
+        m_generalUi->autoSaveAfterEveryChangeCheckBox->setFocus();
+    }
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
     m_generalUi->autoSaveNonDataChangesCheckBox->setEnabled(!checked);
 }
 
 void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
 {
+    if (!checked
+        && (m_generalUi->minimizeOnCopyRadioButton->hasFocus() || m_generalUi->dropToBackgroundOnCopyRadioButton->hasFocus())) {
+        m_generalUi->hideWindowOnCopyCheckBox->setFocus();
+    }
     m_generalUi->minimizeOnCopyRadioButton->setEnabled(checked);
     m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(checked);
 }
 
 void ApplicationSettingsWidget::systrayToggled(bool checked)
 {
+    if (!checked
+        && (m_generalUi->trayIconAppearance->hasFocus() || m_generalUi->systrayMinimizeToTrayCheckBox->hasFocus())) {
+        m_generalUi->systrayShowCheckBox->setFocus();
+    }
     m_generalUi->trayIconAppearance->setEnabled(checked);
     m_generalUi->trayIconAppearanceLabel->setEnabled(checked);
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
@@ -687,6 +699,11 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
         m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(false);
     }
 
+    if (!checked
+        && (m_generalUi->rememberLastDatabasesSpinbox->hasFocus() || m_generalUi->rememberLastKeyFilesCheckBox->hasFocus()
+            || m_generalUi->openPreviousDatabasesOnStartupCheckBox->hasFocus())) {
+        m_generalUi->rememberLastDatabasesCheckBox->setFocus();
+    }
     m_generalUi->rememberLastDatabasesSpinbox->setEnabled(checked);
     m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked);
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(checked);
@@ -694,16 +711,25 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
 
 void ApplicationSettingsWidget::checkUpdatesToggled(bool checked)
 {
+    if (!checked && m_generalUi->checkForUpdatesIncludeBetasCheckBox->hasFocus()) {
+        m_generalUi->checkForUpdatesOnStartupCheckBox->setFocus();
+    }
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(checked);
 }
 
 void ApplicationSettingsWidget::showExpiredEntriesOnDatabaseUnlockToggled(bool checked)
 {
+    if (!checked && m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->hasFocus()) {
+        m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->setFocus();
+    }
     m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setEnabled(checked);
 }
 
 void ApplicationSettingsWidget::autoTypeAskToggled(bool checked)
 {
+    if (!checked && m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox->hasFocus()) {
+        m_generalUi->autoTypeAskCheckBox->setFocus();
+    }
     m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox->setEnabled(checked);
 }
 
