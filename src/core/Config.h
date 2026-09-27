@@ -98,6 +98,7 @@ public:
         GUI_MinimizeToTray,
         GUI_MinimizeOnStartup,
         GUI_MinimizeOnClose,
+        GUI_HideFavicon,
         GUI_HideUsernames,
         GUI_HidePasswords,
         GUI_ColorPasswords,

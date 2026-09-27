@@ -281,7 +281,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             break;
         case Title:
-            return Icons::entryIconPixmap(entry);
+            if (!config()->get(Config::GUI_HideFavicon).toBool()) {
+                return Icons::entryIconPixmap(entry);
+            }
+            break;
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
                 return icons()->icon("paperclip");

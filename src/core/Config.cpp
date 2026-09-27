@@ -118,6 +118,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_MinimizeToTray, {QS("GUI/MinimizeToTray"), Roaming, false}},
     {Config::GUI_MinimizeOnStartup, {QS("GUI/MinimizeOnStartup"), Roaming, false}},
     {Config::GUI_MinimizeOnClose, {QS("GUI/MinimizeOnClose"), Roaming, false}},
+    {Config::GUI_HideFavicon, {QS("GUI/HideFavicon"), Roaming, false}},
     {Config::GUI_HideUsernames, {QS("GUI/HideUsernames"), Roaming, false}},
     {Config::GUI_HidePasswords, {QS("GUI/HidePasswords"), Roaming, true}},
     {Config::GUI_ColorPasswords, {QS("GUI/ColorPasswords"), Roaming, false}},

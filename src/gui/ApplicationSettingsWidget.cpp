@@ -343,6 +343,7 @@ void ApplicationSettingsWidget::loadSettings()
     systrayToggled(m_generalUi->systrayShowCheckBox->isChecked());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get(Config::GUI_MinimizeToTray).toBool());
     m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get(Config::GUI_MinimizeOnClose).toBool());
+    m_generalUi->hideFaviconInTitle->setChecked(config()->get(Config::GUI_HideFavicon).toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get(Config::GUI_MinimizeOnStartup).toBool());
     m_generalUi->checkForUpdatesOnStartupCheckBox->setChecked(config()->get(Config::GUI_CheckForUpdates).toBool());
     checkUpdatesToggled(m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
@@ -509,6 +510,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::GUI_TrayIconAppearance, m_generalUi->trayIconAppearance->currentData().toString());
     config()->set(Config::GUI_MinimizeToTray, m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set(Config::GUI_MinimizeOnClose, m_generalUi->minimizeOnCloseCheckBox->isChecked());
+    config()->set(Config::GUI_HideFavicon, m_generalUi->hideFaviconInTitle->isChecked());
     config()->set(Config::GUI_MinimizeOnStartup, m_generalUi->systrayMinimizeOnStartup->isChecked());
     config()->set(Config::GUI_CheckForUpdates, m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
     config()->set(Config::GUI_CheckForUpdatesIncludeBetas,

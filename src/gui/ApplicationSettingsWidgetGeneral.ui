@@ -956,6 +956,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QCheckBox" name="hideFaviconInTitle">
+                <property name="text">
+                 <string>Hide the Favicon in the title</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QCheckBox" name="systrayShowCheckBox">
                 <property name="text">
                  <string>Show a system tray icon</string>
@@ -1632,6 +1639,7 @@
   <tabstop>colorPasswordsCheckBox</tabstop>
   <tabstop>monospaceNotesCheckBox</tabstop>
   <tabstop>minimizeOnCloseCheckBox</tabstop>
+  <tabstop>hideFaviconInTitle</tabstop>
   <tabstop>systrayShowCheckBox</tabstop>
   <tabstop>trayIconAppearance</tabstop>
   <tabstop>systrayMinimizeToTrayCheckBox</tabstop>
