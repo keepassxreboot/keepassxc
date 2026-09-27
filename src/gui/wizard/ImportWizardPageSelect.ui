@@ -30,9 +30,9 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QListWidget" name="importTypeList">
+    <widget class="ImportTypeListWidget" name="importTypeList">
      <property name="accessibleName">
-      <string>Import file type</string>
+      <string>Import format</string>
      </property>
      <property name="accessibleDescription">
       <string>Select the type of database or file to import.</string>
@@ -54,6 +54,9 @@
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
@@ -295,6 +298,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QPlainTextEdit" name="downloadCommandInput">
+        <property name="accessibleName">
+         <string>Remote database download command input</string>
+        </property>
         <property name="tabChangesFocus">
          <bool>true</bool>
         </property>
@@ -331,6 +337,11 @@ The command has to exit. In case of `sftp` as last commend `exit` has to be sent
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>ImportTypeListWidget</class>
+   <extends>QListWidget</extends>
+   <header>ImportTypeListWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>PasswordWidget</class>
    <extends>QWidget</extends>
