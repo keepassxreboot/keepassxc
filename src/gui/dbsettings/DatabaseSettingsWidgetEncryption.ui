@@ -128,6 +128,12 @@
          <property name="text">
           <string>Encryption Settings:</string>
          </property>
+         <property name="accessibleName">
+          <string>Encryption Settings</string>
+         </property>
+         <property name="accessibleDescription">
+          <string>Configure the encryption algorithm, key derivation function, and decryption time.</string>
+         </property>
         </widget>
        </item>
        <item>
