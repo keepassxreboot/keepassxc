@@ -341,7 +341,7 @@
               <item>
                <widget class="QCheckBox" name="autoSaveOnExitCheckBox">
                 <property name="text">
-                 <string>Automatically save when locking database</string>
+                 <string>Keep non-data changes only on lock or save</string>
                 </property>
                </widget>
               </item>
