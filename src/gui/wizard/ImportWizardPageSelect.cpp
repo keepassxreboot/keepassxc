@@ -33,6 +33,15 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    // MacStyle only renders subTitle as a visible/accessible in-page label; title alone
+    // is not exposed as an in-page heading under this wizard style.
+    setSubTitle(tr("Choose a file to import and where to import it."));
+    setAccessibleDescription(tr("%1. %2").arg(title(), subTitle()));
+
+    m_ui->importTypeList->setAccessibleName(tr("Import type. %1").arg(subTitle()));
+    m_ui->downloadCommandInput->setTabChangesFocus(true);
+    m_ui->importTypeList->setTabKeyNavigation(false);
+
     // Keep the import controls in logical keyboard order. Hidden or disabled
     // controls are skipped automatically as import types change.
     QWidget::setTabOrder(m_ui->importTypeList, m_ui->importFileEdit);
@@ -65,11 +74,15 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     m_ui->importTypeList->item(6)->setData(Qt::UserRole, ImportWizard::IMPORT_KEEPASS1);
 
     connect(m_ui->importTypeList, &QListWidget::currentItemChanged, this, &ImportWizardPageSelect::itemSelected);
+    connect(m_ui->importTypeList, &QListWidget::itemActivated, this, &ImportWizardPageSelect::advanceFocusFromTypeList);
     m_ui->importTypeList->setCurrentRow(0);
 
     connect(m_ui->importFileButton, &QAbstractButton::clicked, this, &ImportWizardPageSelect::chooseImportFile);
     connect(m_ui->keyFileButton, &QAbstractButton::clicked, this, &ImportWizardPageSelect::chooseKeyFile);
     connect(m_ui->existingDatabaseRadio, &QRadioButton::toggled, this, [this](bool state) {
+        if (!state && m_ui->existingDatabaseChoice->hasFocus()) {
+            m_ui->newDatabaseRadio->setFocus();
+        }
         m_ui->existingDatabaseChoice->setEnabled(state);
     });
 
@@ -173,6 +186,15 @@ void ImportWizardPageSelect::itemSelected(QListWidgetItem* current, QListWidgetI
     }
 }
 
+void ImportWizardPageSelect::advanceFocusFromTypeList()
+{
+    if (m_ui->downloadCommand->isVisible()) {
+        m_ui->downloadCommand->setFocus();
+    } else {
+        m_ui->importFileEdit->setFocus();
+    }
+}
+
 void ImportWizardPageSelect::updateDatabaseChoices() const
 {
     m_ui->existingDatabaseChoice->clear();
@@ -222,6 +244,9 @@ void ImportWizardPageSelect::updateDatabaseChoices() const
     }
 
     if (m_ui->existingDatabaseChoice->count() == 0) {
+        if (m_ui->existingDatabaseRadio->hasFocus() || m_ui->existingDatabaseChoice->hasFocus()) {
+            m_ui->newDatabaseRadio->setFocus();
+        }
         m_ui->existingDatabaseRadio->setEnabled(false);
         m_ui->newDatabaseRadio->setChecked(true);
     }
@@ -257,6 +282,9 @@ void ImportWizardPageSelect::chooseKeyFile()
 
 void ImportWizardPageSelect::setCredentialState(bool passwordEnabled, bool keyFileEnable)
 {
+    const bool passwordHadFocus = m_ui->passwordEdit->hasFocus();
+    const bool keyFileHadFocus = m_ui->keyFileEdit->hasFocus();
+    const bool keyFileButtonHadFocus = m_ui->keyFileButton->hasFocus();
     bool passwordStateChanged = m_ui->passwordLabel->isVisible() != passwordEnabled;
     m_ui->passwordLabel->setVisible(passwordEnabled);
     m_ui->passwordEdit->setVisible(passwordEnabled);
@@ -265,6 +293,10 @@ void ImportWizardPageSelect::setCredentialState(bool passwordEnabled, bool keyFi
     m_ui->keyFileLabel->setVisible(keyFileEnable);
     m_ui->keyFileEdit->setVisible(keyFileEnable);
     m_ui->keyFileButton->setVisible(keyFileEnable);
+
+    if ((!passwordEnabled && passwordHadFocus) || (!keyFileEnable && (keyFileHadFocus || keyFileButtonHadFocus))) {
+        m_ui->importTypeList->setFocus(Qt::OtherFocusReason);
+    }
 
     // Workaround Qt bug where the wizard window is not updated when the internal layout changes
     if (window()) {
@@ -283,6 +315,12 @@ void ImportWizardPageSelect::setCredentialState(bool passwordEnabled, bool keyFi
 
 void ImportWizardPageSelect::setDownloadCommand(bool downloadCommandEnabled)
 {
+    const bool importFileHadFocus = m_ui->importFileEdit->hasFocus();
+    const bool importFileButtonHadFocus = m_ui->importFileButton->hasFocus();
+    const bool downloadCommandHadFocus = m_ui->downloadCommand->hasFocus();
+    const bool downloadInputHadFocus = m_ui->downloadCommandInput->hasFocus();
+    const bool downloadHelpButtonHadFocus = m_ui->downloadCommandHelpButton->hasFocus();
+    const bool temporaryDatabaseRadioHadFocus = m_ui->temporaryDatabaseRadio->hasFocus();
     bool downloadCommandStateChanged = m_ui->downloadCommandLabel->isVisible() != downloadCommandEnabled;
     m_ui->downloadCommandLabel->setVisible(downloadCommandEnabled);
     m_ui->downloadCommand->setVisible(downloadCommandEnabled);
@@ -295,6 +333,12 @@ void ImportWizardPageSelect::setDownloadCommand(bool downloadCommandEnabled)
     m_ui->importFileLabel->setVisible(!downloadCommandEnabled);
     m_ui->importFileEdit->setVisible(!downloadCommandEnabled);
     m_ui->importFileButton->setVisible(!downloadCommandEnabled);
+
+    if ((downloadCommandEnabled && (importFileHadFocus || importFileButtonHadFocus))
+        || (!downloadCommandEnabled
+            && (downloadCommandHadFocus || downloadInputHadFocus || downloadHelpButtonHadFocus || temporaryDatabaseRadioHadFocus))) {
+        m_ui->importTypeList->setFocus(Qt::OtherFocusReason);
+    }
 
     // Workaround Qt bug where the wizard window is not updated when the internal layout changes
     if (window()) {
