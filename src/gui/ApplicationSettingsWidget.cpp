@@ -152,25 +152,45 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->resetSettingsButton, SIGNAL(clicked()), SLOT(resetSettings()));
     connect(m_generalUi->importSettingsButton, SIGNAL(clicked()), SLOT(importSettings()));
     connect(m_generalUi->exportSettingsButton, SIGNAL(clicked()), SLOT(exportSettings()));
-    connect(m_generalUi->useAlternativeSaveCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->alternativeSaveComboBox, SLOT(setEnabled(bool)));
+    connect(m_generalUi->useAlternativeSaveCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled && m_generalUi->alternativeSaveComboBox->hasFocus()) {
+            m_generalUi->useAlternativeSaveCheckBox->setFocus();
+        }
+        m_generalUi->alternativeSaveComboBox->setEnabled(enabled);
+    });
 
-    connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->backupFilePath, SLOT(setEnabled(bool)));
-    connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->backupFilePathPicker, SLOT(setEnabled(bool)));
+    connect(m_generalUi->backupBeforeSaveCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled
+            && (m_generalUi->backupFilePath->hasFocus() || m_generalUi->backupFilePathPicker->hasFocus())) {
+            m_generalUi->backupBeforeSaveCheckBox->setFocus();
+        }
+        m_generalUi->backupFilePath->setEnabled(enabled);
+        m_generalUi->backupFilePathPicker->setEnabled(enabled);
+    });
     connect(m_generalUi->backupFilePathPicker, SIGNAL(pressed()), SLOT(selectBackupDirectory()));
     connect(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox, SIGNAL(toggled(bool)),
             SLOT(showExpiredEntriesOnDatabaseUnlockToggled(bool)));
     connect(m_generalUi->autoTypeAskCheckBox, SIGNAL(toggled(bool)),
             SLOT(autoTypeAskToggled(bool)));
 
-    connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
-    connect(m_secUi->clearSearchCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->clearSearchSpinBox, SLOT(setEnabled(bool)));
-    connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
+    connect(m_secUi->clearClipboardCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled && m_secUi->clearClipboardSpinBox->hasFocus()) {
+            m_secUi->clearClipboardCheckBox->setFocus();
+        }
+        m_secUi->clearClipboardSpinBox->setEnabled(enabled);
+    });
+    connect(m_secUi->clearSearchCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled && m_secUi->clearSearchSpinBox->hasFocus()) {
+            m_secUi->clearSearchCheckBox->setFocus();
+        }
+        m_secUi->clearSearchSpinBox->setEnabled(enabled);
+    });
+    connect(m_secUi->lockDatabaseIdleCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled && m_secUi->lockDatabaseIdleSpinBox->hasFocus()) {
+            m_secUi->lockDatabaseIdleCheckBox->setFocus();
+        }
+        m_secUi->lockDatabaseIdleSpinBox->setEnabled(enabled);
+    });
     // clang-format on
 
     connect(m_generalUi->minimizeAfterUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
@@ -179,6 +199,9 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         }
         m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
             state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
+        if (state && m_secUi->lockDatabaseMinimizeCheckBox->hasFocus()) {
+            m_secUi->lockDatabaseIdleCheckBox->setFocus();
+        }
         m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state);
     });
 
