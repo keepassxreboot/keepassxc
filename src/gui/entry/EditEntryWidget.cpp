@@ -1334,13 +1334,29 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 {
     QRegularExpression newLineRegex("(?:\r?\n|\r)");
 
+    auto password = m_mainUi->passwordEdit->text();
+    if (isModified() && (password.front() == ' ' || password.back() == ' ')) {
+        QMessageBox spacesMessageBox;
+        spacesMessageBox.setWindowTitle("Warning: Leading/Trailing Spaces in Password");
+        spacesMessageBox.setText("There are leading and/or trailing spaces in your password, would you like to remove them?");
+
+        auto remove = spacesMessageBox.addButton("Yes", QMessageBox::AcceptRole);
+        spacesMessageBox.addButton("No", QMessageBox::RejectRole);
+
+        spacesMessageBox.exec();
+        if (spacesMessageBox.clickedButton() == remove) {
+            password = password.trimmed();
+            m_mainUi->passwordEdit->setText(password);
+        }
+    }
+
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_attachments.data());
     entry->customData()->copyDataFrom(m_customData.data());
     entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
     entry->setUsername(m_mainUi->usernameComboBox->lineEdit()->text().replace(newLineRegex, " "));
     entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));
-    entry->setPassword(m_mainUi->passwordEdit->text());
+    entry->setPassword(password);
     entry->setExpires(m_mainUi->expireCheck->isChecked());
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
