@@ -886,7 +886,7 @@ void EditEntryWidget::addKeyToAgent()
     KeeAgentSettings settings;
     toKeeAgentSettings(settings);
 
-    if (!sshAgent()->addIdentity(key, settings, m_db->uuid())) {
+    if (!sshAgent()->addIdentity(key, settings, m_db->rootGroup()->uuid())) {
         showMessage(sshAgent()->errorString(), MessageWidget::Error);
         return;
     }
