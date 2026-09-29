@@ -1336,15 +1336,11 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     auto password = m_mainUi->passwordEdit->text();
     if (isModified() && (password.front() == ' ' || password.back() == ' ')) {
-        QMessageBox spacesMessageBox;
-        spacesMessageBox.setWindowTitle("Warning: Leading/Trailing Spaces in Password");
-        spacesMessageBox.setText("There are leading and/or trailing spaces in your password, would you like to remove them?");
+        auto spacesMessageBox = MessageBox::question(nullptr, "Warning: Leading/Trailing Spaces in Password",
+            "There are leading and/or trailing spaces in your password, would you like to remove them?",
+            MessageBox::Remove | MessageBox::Cancel, MessageBox::Remove);
 
-        auto remove = spacesMessageBox.addButton("Yes", QMessageBox::AcceptRole);
-        spacesMessageBox.addButton("No", QMessageBox::RejectRole);
-
-        spacesMessageBox.exec();
-        if (spacesMessageBox.clickedButton() == remove) {
+        if (spacesMessageBox == MessageBox::Remove) {
             password = password.trimmed();
             m_mainUi->passwordEdit->setText(password);
         }
