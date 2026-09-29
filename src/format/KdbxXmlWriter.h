@@ -86,6 +86,7 @@ private:
     const quint32 m_kdbxVersion;
 
     bool m_innerStreamProtectionDisabled = false;
+    bool m_inlineAttachments = false;
 
     QXmlStreamWriter m_xml;
     QPointer<const Database> m_db;

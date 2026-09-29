@@ -1333,6 +1333,59 @@ void TestCli::testExport()
     QCOMPARE(m_stderr->readLine(), QByteArray("Unsupported format yaml\n"));
 }
 
+void TestCli::testExportKdbx4Attachments()
+{
+    TemporaryFile kdbx4File;
+    kdbx4File.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/Format400.kdbx"));
+
+    auto sourceDb = readDatabase(kdbx4File.fileName(), "t");
+    QVERIFY(sourceDb);
+
+    auto* sourceEntry = sourceDb->rootGroup()->findEntryByPath("/Format400");
+    QVERIFY(sourceEntry);
+    sourceEntry->beginUpdate();
+    sourceEntry->attachments()->set("empty", {});
+    QVERIFY(sourceEntry->endUpdate());
+
+    auto* sharedGroup = new Group();
+    sharedGroup->setUuid(QUuid::createUuid());
+    sharedGroup->setName("Shared");
+    sharedGroup->customData()->set("KeeShare/Reference", "test");
+    sharedGroup->setParent(sourceDb->rootGroup());
+
+    auto* sharedEntry = new Entry();
+    sharedEntry->setUuid(QUuid::createUuid());
+    sharedEntry->setTitle("Shared entry");
+    sharedEntry->attachments()->set("shared", QByteArray("shared attachment"));
+    sharedEntry->setGroup(sharedGroup);
+
+    QVERIFY(sourceDb->saveAs(kdbx4File.fileName()));
+
+    Export exportCmd;
+    setInput("t");
+    execCmd(exportCmd, {"export", "-f", "xml", "-q", kdbx4File.fileName()});
+
+    TemporaryFile xmlOutput;
+    QVERIFY(xmlOutput.open(QIODevice::WriteOnly));
+    xmlOutput.write(m_stdout->readAll());
+    xmlOutput.close();
+
+    QScopedPointer<Database> db(new Database());
+    QVERIFY(db->import(xmlOutput.fileName()));
+
+    auto* entry = db->rootGroup()->findEntryByPath("/Format400");
+    QVERIFY(entry);
+    QCOMPARE(entry->attachments()->value("Format400"), QByteArray("Format400\n"));
+    QVERIFY(entry->attachments()->hasKey("empty"));
+    QVERIFY(entry->attachments()->value("empty").isEmpty());
+    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().at(0)->attachments()->value("Format400"), QByteArray("Format400\n"));
+
+    auto* importedSharedEntry = db->rootGroup()->findEntryByPath("/Shared/Shared entry");
+    QVERIFY(importedSharedEntry);
+    QCOMPARE(importedSharedEntry->attachments()->value("shared"), QByteArray("shared attachment"));
+}
+
 void TestCli::testGenerate_data()
 {
     QTest::addColumn<QStringList>("parameters");

@@ -31,10 +31,8 @@
  */
 KdbxXmlWriter::KdbxXmlWriter(quint32 version)
     : m_kdbxVersion(version)
+    , m_inlineAttachments(true)
 {
-    Q_ASSERT_X(m_kdbxVersion < KeePass2::FILE_VERSION_4,
-               "KDBX version",
-               "KDBX version >= 4 requires explicit binary index map.");
 }
 
 KdbxXmlWriter::KdbxXmlWriter(quint32 version, KdbxXmlWriter::BinaryIdxMap binaryIdxMap)
@@ -56,7 +54,7 @@ void KdbxXmlWriter::writeDatabase(QIODevice* device,
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab
 
-    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
+    if (m_inlineAttachments) {
         fillBinaryIdxMap();
     }
 
@@ -163,7 +161,7 @@ void KdbxXmlWriter::writeMetadata()
     if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeDateTime("SettingsChanged", m_meta->settingsChanged());
     }
-    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
+    if (m_inlineAttachments) {
         writeBinaries();
     }
     writeCustomData(m_meta->customData(), true);

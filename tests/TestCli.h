@@ -60,6 +60,7 @@ private slots:
     void testEstimate_data();
     void testEstimate();
     void testExport();
+    void testExportKdbx4Attachments();
     void testGenerate_data();
     void testGenerate();
     void testImport();
