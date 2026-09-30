@@ -327,9 +327,21 @@ def _capture_vs_env(arch='amd64'):
 
     logger.info('Using Visual Studio developer command script: %s', vs_cmd)
 
+    # Determine the host architecture for Visual Studio
+    host_arch = (os.environ.get('PROCESSOR_ARCHITECTURE') or platform.machine()).lower()
+    host_arch = {
+        'amd64': 'x64',
+        'x64': 'x64',
+        'x86_64': 'x64',
+        'aarch64': 'arm64',
+        'arm64': 'arm64',
+    }.get(host_arch)
+    if not host_arch:
+        raise Error('Unsupported Visual Studio host architecture: %s', platform.machine())
+
     # Use cmd.exe to run the batch file and then dump the environment with `set`
     try:
-        out = _run(f'cmd /c "{vs_cmd}" -arch={arch} -no_logo && set', cwd=None, text=True).stdout
+        out = _run(f'cmd /c "{vs_cmd}" -arch={arch} -host_arch={host_arch} -no_logo && set', cwd=None, text=True).stdout
     except subprocess.CalledProcessError as e:
         raise Error('Failed to run Visual Studio dev script: %s', e.output or str(e))
 
@@ -672,7 +684,7 @@ class Build(Command):
             parser.add_argument('--sign', help='Sign binaries prior to packaging.', action='store_true')
             parser.add_argument('--sign-identity', help='SHA1 fingerprint of the signing certificate.')
             parser.add_argument('--sign-timestamp-url', help='Timestamp URL for signing binaries.',
-                                default='http://timestamp.sectigo.com')
+                                default='http://timestamp.acs.microsoft.com')
             parser.set_defaults(cmake_generator='Ninja')
 
         parser.add_argument('-c', '--cmake-opts', nargs=argparse.REMAINDER,
