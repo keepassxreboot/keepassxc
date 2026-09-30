@@ -2084,6 +2084,7 @@ bool DatabaseWidget::lock()
                 QApplication::processEvents();
                 disconnect(connection);
                 if (reloadTriggered) {
+                    m_attemptingLock = false;
                     return false;
                 }
             }
