@@ -555,7 +555,13 @@ if(WIN32)
     endif()
     include(CPack)
 
-    
+    # Cross compile builds need to use a special qtpaths script to find the right binaries to install
+    find_program(_QTPATHS_BAT host-qtpaths.bat HINTS "${Qt6_PREFIX}/bin" ENV PATH)
+    if(_QTPATHS_BAT)
+        message(STATUS "Using qtpaths script: ${_QTPATHS_BAT}")
+        set(_QTPATHS "--qtpaths \"${_QTPATHS_BAT}\"")
+    endif()
+
     # Use windeployqt.exe to setup Qt dependencies
     install(CODE "
         if(\"\${CMAKE_INSTALL_CONFIG_NAME}\" STREQUAL \"Debug\")
@@ -564,7 +570,7 @@ if(WIN32)
             set(_wdqt_mode --release)
         endif()
         execute_process(
-            COMMAND ${DEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode}
+            COMMAND ${DEPLOYQT_EXE} \${_wdqt_mode} ${_QTPATHS} ${PROGNAME}.exe
             WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}
             OUTPUT_QUIET
             RESULT_VARIABLE _wdqt_result
