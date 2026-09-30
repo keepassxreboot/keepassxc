@@ -67,10 +67,6 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     install(FILES linux/${APP_ID}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
 
-if(WIN32)
-  install(FILES windows/qt.conf DESTINATION ${BIN_INSTALL_DIR})
-endif()
-
 install(FILES icons/application/256x256/apps/keepassxc.png DESTINATION ${DATA_INSTALL_DIR}/icons/application/256x256/apps)
 
 add_custom_target(icons)
