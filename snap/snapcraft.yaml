@@ -19,6 +19,10 @@ apps:
   proxy:
     command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
+  webproxy:
+    command: usr/bin/keepassxc-webproxy
+    extensions: [kde-neon]
+    plugs: [home, network, network-bind, removable-media, raw-usb]
 
 plugs:
   browser-native-messaging:

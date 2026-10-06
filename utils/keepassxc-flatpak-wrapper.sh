@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Flatpak Multiple Commands Wrapper
-# Copyright (C) 2022 KeePassXC team <https://keepassxc.org/>
+# Copyright (C) 2026 KeePassXC team <https://keepassxc.org/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ if [[ "$1" =~ "$arg1" || "$2" == "$arg2" ]]; then
     exec keepassxc-proxy "$@"
 elif [[ "$1" == "cli" ]]; then
     exec keepassxc-cli "${@:2}"
+elif [[ "$1" == "webproxy" ]]; then
+    exec keepassxc-webproxy "${@:2}"
 else
     # If no arguments are matched or browser integration is off, execute keepassxc
     exec keepassxc "$@"
