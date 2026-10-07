@@ -188,7 +188,7 @@ namespace OpenSSHKeyGen
         vectorToStream(pubVec2, privateStream);
         vectorToStream(privVec, privateStream);
 
-        key.setType("ssh-mldsa44-ed25519@openssh.com");
+        key.setType("ssh-mldsa44-ed25519");
         key.setCheck(randomGen()->randomUInt(std::numeric_limits<quint32>::max() - 1) + 1);
         key.setPublicData(publicData);
         key.setPrivateData(privateData);
