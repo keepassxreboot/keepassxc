@@ -76,7 +76,10 @@ NixUtils::NixUtils(QObject* parent)
 #ifdef WITH_X11
     if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
         dpy = native->display();
-        rootWindow = DefaultRootWindow(dpy);
+        // The offscreen platform has no X display
+        if (dpy) {
+            rootWindow = DefaultRootWindow(dpy);
+        }
     }
 #endif
 
