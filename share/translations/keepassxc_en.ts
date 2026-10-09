@@ -1439,6 +1439,17 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
 </context>
 <context>
+    <name>CategoryListWidget</name>
+    <message>
+        <source>Scroll categories up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll categories down</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
@@ -4526,6 +4537,30 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show notes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
