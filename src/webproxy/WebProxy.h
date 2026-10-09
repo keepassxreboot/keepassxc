@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_WEBPROXY_H
 #define KEEPASSXC_WEBPROXY_H
 
+#include <QHash>
 #include <QJsonObject>
 #include <QLocalSocket>
 #include <QObject>
@@ -54,11 +55,12 @@ private:
     void stopWebSocket();
     void setupLocalSocket();
     void sendToWebSocket(QWebSocket* socket, const QString& data);
+    QJsonObject parseMessage(const QString& message);
 
 private:
     QScopedPointer<QWebSocketServer> m_webSocketServer;
     QScopedPointer<QLocalSocket> m_localSocket;
-    QList<QWebSocket*> m_socketList;
+    QHash<QString, QWebSocket*> m_socketList;
 };
 
 #endif // KEEPASSXC_WEBPROXY_H

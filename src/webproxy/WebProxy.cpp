@@ -78,11 +78,26 @@ void WebProxy::setupLocalSocket()
 
 void WebProxy::readLocalSocketMessage()
 {
-    auto msg = m_localSocket->readAll();
-    if (!msg.isEmpty()) {
+    auto message = m_localSocket->readAll();
+    if (!message.isEmpty()) {
+        const auto jsonMessage = parseMessage(message);
+        if (jsonMessage.isEmpty()) {
+            return;
+        }
+
+        const auto clientID = jsonMessage["clientID"].toString();
+        if (!clientID.isEmpty()) {
+            // Send to specific clientID & socket
+            const auto socket = m_socketList.value(clientID);
+            if (socket) {
+                sendToWebSocket(socket, message);
+            }
+            return;
+        }
+
         // Broadcast to all WebSockets
-        for (const auto socket : m_socketList) {
-            sendToWebSocket(socket, msg);
+        for (const auto socket : m_socketList.values()) {
+            sendToWebSocket(socket, message);
         }
     }
 }
@@ -129,7 +144,6 @@ void WebProxy::webSocketConnected()
     auto socket = m_webSocketServer->nextPendingConnection();
     if (socket) {
         out << "New connection from WebSocket" << Qt::endl;
-        m_socketList.append(socket);
         connect(socket, &QWebSocket::textMessageReceived, this, &WebProxy::readWebSocketMessage);
         connect(socket, &QWebSocket::disconnected, this, &WebProxy::webSocketDisconnected);
     }
@@ -145,14 +159,24 @@ void WebProxy::readWebSocketMessage(QString message)
     socket->setReadBufferSize(BrowserShared::SOCKET_BUFFER_SIZE);
     socket->setOutgoingFrameSize(BrowserShared::SOCKET_BUFFER_SIZE);
 
-    QJsonParseError error;
-    auto json = QJsonDocument::fromJson(message.toUtf8(), &error);
-    if (json.isNull()) {
-        err << "Failed to read message: " << error.errorString() << Qt::endl;
+    const auto jsonMessage = parseMessage(message);
+    if (jsonMessage.isEmpty()) {
         return;
     }
 
-    emit webSocketMessageReceived(socket, json.object());
+    // If no socket is created for this clientID, store the clientID and socket to list
+    const auto storedKey = m_socketList.key(socket);
+    if (storedKey.isEmpty()) {
+        const auto clientID = jsonMessage["clientID"].toString();
+        if (!clientID.isEmpty()) {
+            out << "ClientID " << clientID << " connected" << Qt::endl;
+            m_socketList.insert(clientID, socket);
+        } else {
+            err << "No clientID provided in client." << Qt::endl;
+        }
+    }
+
+    emit webSocketMessageReceived(socket, jsonMessage);
 }
 
 void WebProxy::sendToWebSocket(QWebSocket* socket, const QString& data)
@@ -175,12 +199,26 @@ void WebProxy::sendToLocalSocket(QWebSocket* socket, const QJsonObject& json)
 
 void WebProxy::webSocketDisconnected()
 {
-    out << "WebSocket disconnected" << Qt::endl;
     const auto socket = qobject_cast<QWebSocket*>(QObject::sender());
-    m_socketList.removeOne(socket);
+    const auto clientID = m_socketList.key(socket);
+    out << "WebSocket disconnected with clientID " << clientID << Qt::endl;
+    if (!clientID.isEmpty()) {
+        m_socketList.remove(clientID);
+    }
 }
 
 void WebProxy::webSocketServerError(QWebSocketProtocol::CloseCode closeCode)
 {
     err << "WebSocket has an error: " << closeCode << m_webSocketServer->errorString() << Qt::endl;
+}
+
+QJsonObject WebProxy::parseMessage(const QString& message)
+{
+    QJsonParseError error;
+    const auto json = QJsonDocument::fromJson(message.toUtf8(), &error);
+    if (json.isNull()) {
+        err << "Failed to parse message as JSON: " << error.errorString() << Qt::endl;
+        return {};
+    }
+    return json.object();
 }

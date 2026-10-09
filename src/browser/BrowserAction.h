@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ struct BrowserRequest
     QString hash;
     QString nonce;
     QString incrementedNonce;
+    QString clientID;
     QJsonObject decrypted;
 
     inline bool isEmpty() const
@@ -69,26 +70,27 @@ public:
     QJsonObject processClientMessage(QLocalSocket* socket, const QJsonObject& json);
 
 private:
-    QJsonObject handleAction(QLocalSocket* socket, const QJsonObject& json);
-    QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
-    QJsonObject handleGetDatabaseHash(const QJsonObject& json, const QString& action);
-    QJsonObject handleAssociate(const QJsonObject& json, const QString& action);
-    QJsonObject handleTestAssociate(const QJsonObject& json, const QString& action);
-    QJsonObject handleGetLogins(const QJsonObject& json, const QString& action);
-    QJsonObject handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action);
-    QJsonObject handleSetLogin(const QJsonObject& json, const QString& action);
-    QJsonObject handleLockDatabase(const QJsonObject& json, const QString& action);
-    QJsonObject handleGetDatabaseGroups(const QJsonObject& json, const QString& action);
-    QJsonObject handleGetDatabaseEntries(const QJsonObject& json, const QString& action);
-    QJsonObject handleCreateNewGroup(const QJsonObject& json, const QString& action);
-    QJsonObject handleGetTotp(const QJsonObject& json, const QString& action);
-    QJsonObject handleDeleteEntry(const QJsonObject& json, const QString& action);
-    QJsonObject handleGlobalAutoType(const QJsonObject& json, const QString& action);
-    QJsonObject handlePasskeysGet(const QJsonObject& json, const QString& action);
-    QJsonObject handlePasskeysRegister(const QJsonObject& json, const QString& action);
+    QJsonObject handleAction(const QJsonObject& message, QLocalSocket* socket);
+    QJsonObject handleChangePublicKeys(const QJsonObject& message, const QString& action);
+    QJsonObject handleGetDatabaseHash(const BrowserRequest& browserRequest);
+    QJsonObject handleAssociate(const BrowserRequest& browserRequest);
+    QJsonObject handleTestAssociate(const BrowserRequest& browserRequest);
+    QJsonObject handleGetLogins(const BrowserRequest& browserRequest);
+    QJsonObject handleGeneratePassword(const BrowserRequest& browserRequest, QLocalSocket* socket);
+    QJsonObject handleSetLogin(const BrowserRequest& browserRequest);
+    QJsonObject handleLockDatabase(const BrowserRequest& browserRequest);
+    QJsonObject handleGetDatabaseGroups(const BrowserRequest& browserRequest);
+    QJsonObject handleGetDatabaseEntries(const BrowserRequest& browserRequest);
+    QJsonObject handleCreateNewGroup(const BrowserRequest& browserRequest);
+    QJsonObject handleGetTotp(const BrowserRequest& browserRequest);
+    QJsonObject handleDeleteEntry(const BrowserRequest& browserRequest);
+    QJsonObject handleGlobalAutoType(const BrowserRequest& browserRequest);
+    QJsonObject handlePasskeysGet(const BrowserRequest& browserRequest);
+    QJsonObject handlePasskeysRegister(const BrowserRequest& browserRequest);
 
-    QJsonObject buildResponse(const QString& action, const QString& nonce, const Parameters& params = {});
-    QJsonObject getErrorReply(const QString& action, const int errorCode) const;
+    QJsonObject buildResponse(const BrowserRequest& browserRequest, const Parameters& params = {});
+    QJsonObject buildErrorResponse(const int errorCode, const BrowserRequest& browserRequest) const;
+    QJsonObject buildErrorResponse(const int errorCode, const QString& action = {}, const QString& clientID = {}) const;
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
     BrowserRequest decodeRequest(const QJsonObject& json);
     StringPairList getConnectionKeys(const BrowserRequest& browserRequest);
