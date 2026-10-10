@@ -43,6 +43,9 @@ public:
 signals:
     void totpUpdated();
 
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 private slots:
     void toggleCustom(bool status);
     void saveSettings();

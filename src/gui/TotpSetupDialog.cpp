@@ -27,7 +27,9 @@
 #include <QClipboard>
 #include <QGuiApplication>
 #include <QImageReader>
+#include <QKeyEvent>
 #include <QMimeData>
+#include <QShortcut>
 #include <QSignalBlocker>
 
 TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
@@ -38,7 +40,20 @@ TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     m_ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+
+    // Make the QR code area a square as wide as the buttons below it, and as tall as needed
+    // to line up the buttons with the bottom of the settings column
+    const auto buttonsSize = m_ui->qrButtonsLayout->sizeHint();
+    const auto side =
+        qMax(buttonsSize.width(),
+             m_ui->settingsLayout->sizeHint().height() - buttonsSize.height() - m_ui->qrLayout->spacing());
+    m_ui->qrDropArea->setFixedSize(side, side);
     setFixedSize(sizeHint());
+
+    // Allow pasting an image of a QR code while the otpauth field has focus,
+    // and anywhere else in the dialog where Ctrl+V is not used for text
+    m_ui->otpauthEdit->installEventFilter(this);
+    new QShortcut(QKeySequence::Paste, this, this, &TotpSetupDialog::pasteQrImage);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveSettings()));
@@ -226,6 +241,21 @@ void TotpSetupDialog::openQrImage()
     }
 
     decodeQrImage(image);
+}
+
+bool TotpSetupDialog::eventFilter(QObject* watched, QEvent* event)
+{
+    if (watched == m_ui->otpauthEdit && event->type() == QEvent::KeyPress
+        && static_cast<QKeyEvent*>(event)->matches(QKeySequence::Paste)) {
+        // Text is pasted by the line edit itself, images are decoded as QR codes
+        const auto* mimeData = QGuiApplication::clipboard()->mimeData();
+        if (mimeData && !mimeData->hasText() && (mimeData->hasImage() || mimeData->hasUrls())) {
+            pasteQrImage();
+            return true;
+        }
+    }
+
+    return QDialog::eventFilter(watched, event);
 }
 
 void TotpSetupDialog::pasteQrImage()

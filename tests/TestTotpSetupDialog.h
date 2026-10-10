@@ -36,6 +36,8 @@ private slots:
     void testDropImageWithoutQrCode();
     void testPasteQrImage();
     void testPasteUri();
+    void testKeyboardPasteImageIntoUriField();
+    void testKeyboardPasteTextIntoUriField();
     void testSaveSettings();
 
 private:

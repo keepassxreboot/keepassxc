@@ -50,7 +50,7 @@
     <layout class="QHBoxLayout" name="mainLayout">
      <item>
       <layout class="QVBoxLayout" name="qrLayout">
-       <item alignment="Qt::AlignHCenter">
+       <item>
         <widget class="QrDropArea" name="qrDropArea"/>
        </item>
        <item>

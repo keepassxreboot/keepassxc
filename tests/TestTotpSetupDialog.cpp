@@ -217,6 +217,37 @@ void TestTotpSetupDialog::testPasteUri()
     QCOMPARE(dialog.findChild<QLineEdit*>("seedEdit")->text(), secret);
 }
 
+void TestTotpSetupDialog::testKeyboardPasteImageIntoUriField()
+{
+    Entry entry;
+    TotpSetupDialog dialog(nullptr, &entry);
+
+    const auto image = renderQrCode(customUri);
+    QVERIFY(!image.isNull());
+    QApplication::clipboard()->setImage(image);
+
+    auto* otpauthEdit = dialog.findChild<QLineEdit*>("otpauthEdit");
+    QTest::keyClick(otpauthEdit, Qt::Key_V, Qt::ControlModifier);
+
+    QCOMPARE(otpauthEdit->text(), customUri);
+    QCOMPARE(dialog.findChild<QLineEdit*>("seedEdit")->text(), secret);
+}
+
+void TestTotpSetupDialog::testKeyboardPasteTextIntoUriField()
+{
+    Entry entry;
+    TotpSetupDialog dialog(nullptr, &entry);
+
+    QApplication::clipboard()->setText(defaultUri);
+
+    auto* otpauthEdit = dialog.findChild<QLineEdit*>("otpauthEdit");
+    QTest::keyClick(otpauthEdit, Qt::Key_V, Qt::ControlModifier);
+
+    // Text is pasted by the line edit as usual
+    QCOMPARE(otpauthEdit->text(), defaultUri);
+    QCOMPARE(dialog.findChild<QLineEdit*>("seedEdit")->text(), secret);
+}
+
 void TestTotpSetupDialog::testSaveSettings()
 {
     Entry entry;
