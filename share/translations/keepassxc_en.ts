@@ -9514,6 +9514,54 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Confirm Replace Entry References</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Listen to WebSocket port &lt;port&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local socket connected to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local socket disconnected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local socket has an error: %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WebSocket listening to port %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New connection from WebSocket</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client ID %1 connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No clientID provided in message.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WebSocket disconnected with clientID %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WebSocket has an error: %1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to parse message as JSON: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

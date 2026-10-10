@@ -104,17 +104,19 @@ void WebProxy::readLocalSocketMessage()
 
 void WebProxy::localSocketConnected()
 {
-    out << "Local socket connected to " << LOCAL_SERVER_PATH << Qt::endl;
+    out << QObject::tr("Local socket connected to %1.").arg(LOCAL_SERVER_PATH) << Qt::endl;
 }
 
 void WebProxy::localSocketDisconnected()
 {
-    out << "Local socket disconnected" << Qt::endl;
+    out << QObject::tr("Local socket disconnected") << Qt::endl;
 }
 
 void WebProxy::localSocketErrored(QLocalSocket::LocalSocketError socketError)
 {
-    err << "Local socket has an error: " << socketError << m_localSocket->errorString() << Qt::endl;
+    err << QObject::tr("Local socket has an error: %1 %2")
+               .arg(QString::number(socketError), m_localSocket->errorString())
+        << Qt::endl;
 }
 
 void WebProxy::setupWebSocketServer(const QString& webSocketPort)
@@ -126,7 +128,7 @@ void WebProxy::setupWebSocketServer(const QString& webSocketPort)
 
     if (!m_webSocketServer->isListening()) {
         m_webSocketServer->listen(QHostAddress::LocalHost, socketPort);
-        out << "WebSocket listening to port " << socketPort << Qt::endl;
+        out << QObject::tr("WebSocket listening to port %1").arg(socketPort) << Qt::endl;
         connect(m_webSocketServer.data(), &QWebSocketServer::newConnection, this, &WebProxy::webSocketConnected);
         connect(m_webSocketServer.data(), &QWebSocketServer::closed, this, [&] { m_webSocketServer->deleteLater(); });
         connect(m_webSocketServer.data(), &QWebSocketServer::serverError, this, &WebProxy::webSocketServerError);
@@ -143,7 +145,7 @@ void WebProxy::webSocketConnected()
 {
     auto socket = m_webSocketServer->nextPendingConnection();
     if (socket) {
-        out << "New connection from WebSocket" << Qt::endl;
+        out << QObject::tr("New connection from WebSocket") << Qt::endl;
         connect(socket, &QWebSocket::textMessageReceived, this, &WebProxy::readWebSocketMessage);
         connect(socket, &QWebSocket::disconnected, this, &WebProxy::webSocketDisconnected);
     }
@@ -169,10 +171,10 @@ void WebProxy::readWebSocketMessage(QString message)
     if (storedKey.isEmpty()) {
         const auto clientID = jsonMessage["clientID"].toString();
         if (!clientID.isEmpty()) {
-            out << "ClientID " << clientID << " connected" << Qt::endl;
+            out << QObject::tr("Client ID %1 connected").arg(clientID) << Qt::endl;
             m_socketList.insert(clientID, socket);
         } else {
-            err << "No clientID provided in client." << Qt::endl;
+            err << QObject::tr("No clientID provided in message.") << Qt::endl;
         }
     }
 
@@ -201,7 +203,7 @@ void WebProxy::webSocketDisconnected()
 {
     const auto socket = qobject_cast<QWebSocket*>(QObject::sender());
     const auto clientID = m_socketList.key(socket);
-    out << "WebSocket disconnected with clientID " << clientID << Qt::endl;
+    out << QObject::tr("WebSocket disconnected with clientID %1").arg(clientID) << Qt::endl;
     if (!clientID.isEmpty()) {
         m_socketList.remove(clientID);
     }
@@ -209,7 +211,9 @@ void WebProxy::webSocketDisconnected()
 
 void WebProxy::webSocketServerError(QWebSocketProtocol::CloseCode closeCode)
 {
-    err << "WebSocket has an error: " << closeCode << m_webSocketServer->errorString() << Qt::endl;
+    err << QObject::tr("WebSocket has an error: %1 %2")
+               .arg(QString::number(closeCode), m_webSocketServer->errorString())
+        << Qt::endl;
 }
 
 QJsonObject WebProxy::parseMessage(const QString& message)
@@ -217,7 +221,7 @@ QJsonObject WebProxy::parseMessage(const QString& message)
     QJsonParseError error;
     const auto json = QJsonDocument::fromJson(message.toUtf8(), &error);
     if (json.isNull()) {
-        err << "Failed to parse message as JSON: " << error.errorString() << Qt::endl;
+        err << QObject::tr("Failed to parse message as JSON: %1").arg(error.errorString()) << Qt::endl;
         return {};
     }
     return json.object();
