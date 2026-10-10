@@ -294,6 +294,7 @@ endif()
 
 add_subdirectory(browser)
 add_subdirectory(proxy)
+add_subdirectory(webproxy)
 if(KPXC_FEATURE_BROWSER)
     set(browser_LIB browser)
     list(APPEND gui_SOURCES

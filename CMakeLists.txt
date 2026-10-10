@@ -390,6 +390,7 @@ if(WIN32)
     set(PROGNAME KeePassXC)
     set(CLI_INSTALL_DIR ".")
     set(PROXY_INSTALL_DIR ".")
+    set(WEBPROXY_INSTALL_DIR ".")
     set(BIN_INSTALL_DIR ".")
     set(PLUGIN_INSTALL_DIR ".")
     set(DATA_INSTALL_DIR "share")
@@ -399,6 +400,7 @@ elseif(APPLE AND WITH_APP_BUNDLE)
     set(CMAKE_INSTALL_MANDIR "${BUNDLE_INSTALL_DIR}/Resources/man")
     set(CLI_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
     set(PROXY_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
+    set(WEBPROXY_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
     set(BIN_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
     set(PLUGIN_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/PlugIns")
     set(DATA_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/Resources")
@@ -408,6 +410,7 @@ else()
     set(PROGNAME keepassxc)
     set(CLI_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
     set(PROXY_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
+    set(WEBPROXY_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
     set(BIN_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
     set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
     set(DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/keepassxc")
@@ -422,12 +425,14 @@ if(WITH_COVERAGE)
             "'^(.+/)?thirdparty/.*'"
             "'^(.+/)?main\\.cpp$$'"
             "'^(.+/)?cli/keepassxc-cli\\.cpp$$'"
-            "'^(.+/)?proxy/keepassxc-proxy\\.cpp$$'")
+            "'^(.+/)?proxy/keepassxc-proxy\\.cpp$$'"
+            "'^(.+/)?proxy/keepassxc-webproxy\\.cpp$$'")
     if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
         set(MAIN_BINARIES
                 "$<TARGET_FILE:${PROGNAME}>"
                 "$<TARGET_FILE:keepassxc-cli>"
-                "$<TARGET_FILE:keepassxc-proxy>")
+                "$<TARGET_FILE:keepassxc-proxy>"
+                "$<TARGET_FILE:keepassxc-webproxy>")
         setup_target_for_coverage_llvm(
                 NAME coverage
                 BINARY ${MAIN_BINARIES}
@@ -442,7 +447,7 @@ if(WITH_COVERAGE)
 endif()
 
 # Find Qt
-set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
+set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools WebSockets)
 if(UNIX AND NOT APPLE)
     find_package(Qt6 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
 elseif(APPLE)

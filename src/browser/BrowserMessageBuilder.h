@@ -85,10 +85,11 @@ public:
     QJsonObject buildMessage(const QString& nonce) const;
     QJsonObject buildResponse(const QString& action,
                               const QString& nonce,
+                              const QString& clientID,
                               const Parameters& params,
                               const QString& publicKey,
                               const QString& secretKey);
-    QJsonObject getErrorReply(const QString& action, const int errorCode) const;
+    QJsonObject getErrorReply(const QString& action, const QString& clientID, const int errorCode) const;
     QString getErrorMessage(const int errorCode) const;
 
     QString encryptMessage(const QJsonObject& message,

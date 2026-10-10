@@ -535,7 +535,7 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
                 [this, keyPairMessage] {
                     if (!m_passwordGenerator->isPasswordGenerated()) {
                         auto errorMessage = browserMessageBuilder()->getErrorReply(
-                            "generate-password", ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+                            "generate-password", keyPairMessage.clientID, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
                         m_browserHost->sendClientMessage(keyPairMessage.socket, errorMessage);
                     }
 
@@ -550,6 +550,7 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
                     m_browserHost->sendClientMessage(keyPairMessage.socket,
                                                      browserMessageBuilder()->buildResponse("generate-password",
                                                                                             keyPairMessage.nonce,
+                                                                                            keyPairMessage.clientID,
                                                                                             params,
                                                                                             keyPairMessage.publicKey,
                                                                                             keyPairMessage.secretKey));

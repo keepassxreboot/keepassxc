@@ -46,10 +46,12 @@ QPair<QString, QString> BrowserMessageBuilder::getKeyPair()
     return qMakePair(publicKey, secretKey);
 }
 
-QJsonObject BrowserMessageBuilder::getErrorReply(const QString& action, const int errorCode) const
+QJsonObject
+BrowserMessageBuilder::getErrorReply(const QString& action, const QString& clientID, const int errorCode) const
 {
     QJsonObject response;
     response["action"] = action;
+    response["clientID"] = clientID;
     response["errorCode"] = QString::number(errorCode);
     response["error"] = getErrorMessage(errorCode);
     return response;
@@ -66,6 +68,7 @@ QJsonObject BrowserMessageBuilder::buildMessage(const QString& nonce) const
 
 QJsonObject BrowserMessageBuilder::buildResponse(const QString& action,
                                                  const QString& nonce,
+                                                 const QString& clientID,
                                                  const Parameters& params,
                                                  const QString& publicKey,
                                                  const QString& secretKey)
@@ -79,11 +82,12 @@ QJsonObject BrowserMessageBuilder::buildResponse(const QString& action,
 
     const auto encryptedMessage = encryptMessage(message, nonce, publicKey, secretKey);
     if (encryptedMessage.isEmpty()) {
-        return getErrorReply(action, ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE);
+        return getErrorReply(action, clientID, ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE);
     }
 
     QJsonObject response;
     response["action"] = action;
+    response["clientID"] = clientID;
     response["message"] = encryptedMessage;
     response["nonce"] = nonce;
     return response;

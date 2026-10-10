@@ -5,6 +5,9 @@ export PATH="$(dirname $0)/usr/bin:${PATH}"
 if [ "$1" == "cli" ] || [ "$(basename "$ARGV0")" == "keepassxc-cli" ] || [ "$(basename "$ARGV0")" == "keepassxc-cli.AppImage" ]; then
     [ "$1" == "cli" ] && shift
     exec keepassxc-cli "$@"
+elif [ "$1" == "webproxy" ] || [ "$(basename "$ARGV0")" == "keepassxc-webproxy" ] || [ "$(basename "$ARGV0")" == "keepassxc-webproxy.AppImage" ]; then
+    [ "$1" == "webproxy" ] && shift
+        exec keepassxc-webproxy "$@"
 elif [ "$1" == "proxy" ] || [ "$(basename "$ARGV0")" == "keepassxc-proxy" ] || [ "$(basename "$ARGV0")" == "keepassxc-proxy.AppImage" ]; then
     [ "$1" == "proxy" ] && shift
     exec keepassxc-proxy "$@"

@@ -39,6 +39,7 @@ struct KeyPairMessage
 {
     QLocalSocket* socket;
     QString nonce;
+    QString clientID;
     QString publicKey;
     QString secretKey;
 };
