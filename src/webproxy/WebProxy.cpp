@@ -21,6 +21,7 @@
 #include <QJsonDocument>
 #include <QStandardPaths>
 #include <QTextStream>
+#include <QWebSocketCorsAuthenticator>
 #include <QtWebSockets/qwebsocket.h>
 #include <QtWebSockets/qwebsocketserver.h>
 
@@ -38,15 +39,21 @@
 #endif
 
 const static auto WEBSOCKET_SERVER_NAME = QStringLiteral("KeePassXC WebSocket server");
+const static auto ALLOWED_CLIENTS = QStringList{"chrome-extension://pdffhmdngciaglkoonimfcmckehcpafo",
+                                                "chrome-extension://oboonakemofpalcgghocfoadofidjkkk"};
 const static auto LOCAL_SERVER_PATH = BrowserShared::localServerPath();
 constexpr int DEFAULT_WEBSOCKET_PORT = 7580;
 
 static QTextStream out(stdout);
 static QTextStream err(stderr);
 
-WebProxy::WebProxy(const QString& webSocketPort, QObject* parent)
+WebProxy::WebProxy(const QString& webSocketPort, const QString& customExtensionId, QObject* parent)
     : QObject(parent)
 {
+    if (!customExtensionId.isEmpty()) {
+        m_customExtensionId = QString("chrome-extension://%1").arg(customExtensionId);
+    }
+
     setupLocalSocket();
     setupWebSocketServer(webSocketPort);
 }
@@ -132,6 +139,10 @@ void WebProxy::setupWebSocketServer(const QString& webSocketPort)
         connect(m_webSocketServer.data(), &QWebSocketServer::newConnection, this, &WebProxy::webSocketConnected);
         connect(m_webSocketServer.data(), &QWebSocketServer::closed, this, [&] { m_webSocketServer->deleteLater(); });
         connect(m_webSocketServer.data(), &QWebSocketServer::serverError, this, &WebProxy::webSocketServerError);
+        connect(m_webSocketServer.data(),
+                &QWebSocketServer::originAuthenticationRequired,
+                this,
+                &WebProxy::originAuthenticationRequired);
     }
 }
 
@@ -149,6 +160,19 @@ void WebProxy::webSocketConnected()
         connect(socket, &QWebSocket::textMessageReceived, this, &WebProxy::readWebSocketMessage);
         connect(socket, &QWebSocket::disconnected, this, &WebProxy::webSocketDisconnected);
     }
+}
+
+// Allow only certain clients to connect. This is not a real safeguard, but keeps dummy connections away.
+// Firefox has no static extension ID, so any client starting with "moz-extension://" must be accepted.
+void WebProxy::originAuthenticationRequired(QWebSocketCorsAuthenticator* authenticator)
+{
+    const auto origin = authenticator->origin();
+    const auto isClientAllowed =
+        origin == m_customExtensionId || origin.startsWith("moz-extension://") || ALLOWED_CLIENTS.contains(origin);
+    if (!isClientAllowed) {
+        err << QObject::tr("Client is not allowed: %1").arg(origin) << Qt::endl;
+    }
+    authenticator->setAllowed(isClientAllowed);
 }
 
 void WebProxy::readWebSocketMessage(QString message)

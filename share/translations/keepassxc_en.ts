@@ -9523,6 +9523,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Custom extension ID to accept &lt;extensionid&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>extensionid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Local socket connected to %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9540,6 +9548,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>New connection from WebSocket</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client is not allowed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

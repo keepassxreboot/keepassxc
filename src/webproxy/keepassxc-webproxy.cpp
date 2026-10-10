@@ -31,13 +31,18 @@ int main(int argc, char* argv[])
     parser.addHelpOption();
     parser.addVersionOption();
 
-    QCommandLineOption portOption(
+    const QCommandLineOption portOption(
         QStringList() << "p" << "port", QObject::tr("Listen to WebSocket port <port>."), QObject::tr("port"));
+    const QCommandLineOption customExtensionIdOption(QStringList() << "e" << "extensionid",
+                                                     QObject::tr("Custom extension ID to accept <extensionid>."),
+                                                     QObject::tr("extensionid"));
     parser.addOption(portOption);
+    parser.addOption(customExtensionIdOption);
     parser.process(application);
 
     const auto webSocketPort = parser.value(portOption);
-    WebProxy web_proxy(webSocketPort);
+    const auto customExtensionId = parser.value(customExtensionIdOption);
+    WebProxy web_proxy(webSocketPort, customExtensionId);
 
     return application.exec();
 }

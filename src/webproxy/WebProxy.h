@@ -32,7 +32,7 @@ class WebProxy : public QObject
     Q_OBJECT
 
 public:
-    explicit WebProxy(const QString& webSocketPort, QObject* parent = nullptr);
+    explicit WebProxy(const QString& webSocketPort, const QString& customExtensionId, QObject* parent = nullptr);
     ~WebProxy() override;
 
 signals:
@@ -49,6 +49,7 @@ private slots:
     void webSocketConnected();
     void webSocketDisconnected();
     void webSocketServerError(QWebSocketProtocol::CloseCode closeCode);
+    void originAuthenticationRequired(QWebSocketCorsAuthenticator* authenticator);
 
 private:
     void setupWebSocketServer(const QString& webSocketPort);
@@ -61,6 +62,7 @@ private:
     QScopedPointer<QWebSocketServer> m_webSocketServer;
     QScopedPointer<QLocalSocket> m_localSocket;
     QHash<QString, QWebSocket*> m_socketList;
+    QString m_customExtensionId;
 };
 
 #endif // KEEPASSXC_WEBPROXY_H
