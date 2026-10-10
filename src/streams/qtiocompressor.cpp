@@ -45,6 +45,8 @@
 ****************************************************************************/
 
 #include "qtiocompressor.h"
+#include <limits>
+#include <new>
 #include <zlib.h>
 
 typedef Bytef ZlibByte;
@@ -95,9 +97,16 @@ QtIOCompressorPrivate::QtIOCompressorPrivate(QtIOCompressor *q_ptr, QIODevice *d
 ,state(Closed)
 ,streamFormat(QtIOCompressor::ZlibFormat)
 {
-    // Use default zlib memory management.
-    zlibStream.zalloc = Z_NULL;
-    zlibStream.zfree = Z_NULL;
+    // Use C++ new/delete to force Zlib to use KeePassXC's delete memory scrubbing
+    zlibStream.zalloc = [](voidpf, uInt items, uInt size) -> voidpf {
+        if (size != 0 && items > std::numeric_limits<std::size_t>::max() / size) {
+            return nullptr;
+        }
+        return ::operator new(static_cast<std::size_t>(items) * size, std::nothrow);
+    };
+    zlibStream.zfree = [](voidpf, voidpf address) {
+        ::operator delete(address);
+    };
     zlibStream.opaque = Z_NULL;
 }
 

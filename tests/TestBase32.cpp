@@ -110,6 +110,25 @@ void TestBase32::testDecode()
     data = Base32::decode(encodedData);
     QVERIFY(data.isEmpty());
 
+    // error: pad count is not one of 1, 3, 4 or 6
+    encodedData = "MZXW6Y==";
+    data = Base32::decode(encodedData);
+    QVERIFY(data.isEmpty());
+
+    encodedData = "MZX=====";
+    data = Base32::decode(encodedData);
+    QVERIFY(data.isEmpty());
+
+    // error: whole final quantum is padding
+    encodedData = "MZXW6YTB========";
+    data = Base32::decode(encodedData);
+    QVERIFY(data.isEmpty());
+
+    // error: pad character outside the trailing padding
+    encodedData = "MZ=W6YQ=";
+    data = Base32::decode(encodedData);
+    QVERIFY(data.isEmpty());
+
     // RFC 4648 test vectors
     encodedData = "";
     data = Base32::decode(encodedData);

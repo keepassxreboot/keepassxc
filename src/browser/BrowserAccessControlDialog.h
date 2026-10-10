@@ -51,6 +51,9 @@ public:
 signals:
     void disableAccess(QTableWidgetItem* item);
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 private slots:
     void selectionChanged();
 

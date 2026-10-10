@@ -71,7 +71,7 @@ void DatabaseSettingsWidgetDatabaseKey::loadSettings(QSharedPointer<Database> db
 {
     DatabaseSettingsWidget::loadSettings(db);
 
-    if (!m_db->key() || m_db->key()->keys().isEmpty()) {
+    if (!m_db->key() || m_db->key()->isEmpty()) {
         // Database has no key, we are about to add a new one
         m_passwordEditWidget->changeVisiblePage(KeyComponentWidget::Page::Edit);
         // Focus won't work until the UI settles
@@ -121,7 +121,7 @@ bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
     m_isDirty |= (m_keyFileEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_yubiKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
 
-    if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
+    if (m_db->key() && !m_db->key()->isEmpty() && !m_isDirty) {
         // Key unchanged
         return true;
     }

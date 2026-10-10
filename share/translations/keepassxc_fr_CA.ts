@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>Fenêtre</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>Réduire</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>Zoom</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>Tout mettre au premier plan</translation>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -260,6 +279,14 @@
     <message>
         <source>Custom</source>
         <translation>Personnalisée</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>Redémarrez KeePassXC pour que la préférence de saisie automatique des portails du bureau soit prise en compte.</translation>
     </message>
 </context>
 <context>
@@ -560,10 +587,6 @@
         <translation>Exporter les paramètres…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Lors de la visualisation des entrées, ouvrir le navigateur en double-cliquant sur l’URL</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Taille de police :</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>Ignorer la confirmation des actions de saisie automatique de la fenêtre principale</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>Action du double-clic pour l’URL :</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>Champ d’action du double-clic pour l’URL</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>Modifier l’entrée</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>Ouvrir l’URL dans le navigateur</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>Copier l’URL de l’entrée dans le presse-papiers</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
         <translation>Générer automatiquement un mot de passe pour les nouvelles entrées</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>Maintenir la connexion au bureau à distance ouverte après la saisie automatique</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>Mode bureau à distance :</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>Ne jamais mémoriser la session</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>Mémoriser la session jusqu’à la fermeture</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>Mémoriser la session jusqu’à sa révocation par le bureau</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>Configurer…</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>Utiliser le bureau à distance pour accéder au presse-papiers</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>Expérimental : préférer les portails du bureau (implémentation Wayland)</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -771,6 +854,17 @@
     <message>
         <source>Sequence</source>
         <translation>Séquence</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>Aucun symbole n’a été trouvé pour la clé : &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>Aucun symbole n’a été trouvé pour le caractère : &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1189,7 +1283,7 @@ Remplacer la clé dans %1 – %2 ?</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Retourner que les identifiants qui correspondent le mieux</translation>
+        <translation>Ne retourner que les identifiants qui correspondent le mieux</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
@@ -1497,7 +1591,7 @@ Remplacer la clé dans %1 – %2 ?</translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation>Échec d’analyse du fichier CSV : %1</translation>
+        <translation>Échec d’analyse du fichier CSV : $1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
@@ -1774,16 +1868,16 @@ Confirmez-vous ?</translation>
         <translation>Cliquer pour ajouter un fichier clé.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;J’ai un fichier clé&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Des clés matérielles ont été trouvées, mais aucun emplacement n’est configuré.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>Appuyer sur Échap de nouveau pour fermer cette base de données</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>J’ai un fichier clé</translation>
     </message>
 </context>
 <context>
@@ -1813,7 +1907,9 @@ Confirmez-vous ?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Intégration aux navigateurs</translation>
+        <translation>Intégration
+aux
+navigateurs</translation>
     </message>
     <message>
         <source>Maintenance</source>
@@ -1825,7 +1921,7 @@ Confirmez-vous ?</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Intégration au « Secret Service »</translation>
+        <translation>Intégration à « Secret Service »</translation>
     </message>
     <message>
         <source>Remote Sync</source>
@@ -2627,7 +2723,7 @@ C’est très certainement un bogue, signalez-le aux développeurs.</translation
     </message>
     <message>
         <source>Export database to XML file</source>
-        <translation>Exporter la base de données dans un fichier XML</translation>
+        <translation>Exporter la base de données vers un fichier XML</translation>
     </message>
     <message>
         <source>XML file</source>
@@ -2945,7 +3041,9 @@ Désactiver les enregistrements sécurisés et réessayer ?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Intégration aux navigateurs</translation>
+        <translation>Intégration
+aux
+navigateurs</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
@@ -3543,7 +3641,9 @@ Voulez-vous la corriger ?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Intégration aux navigateurs</translation>
+        <translation>Intégration
+aux
+navigateurs</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -3562,7 +3662,7 @@ Voulez-vous la corriger ?</translation>
     <name>EditGroupWidgetBrowser</name>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
-        <translation>Ces paramètres affectent le comportement du groupe avec l’extension pour navigateurs.</translation>
+        <translation>Ces paramètres influencent le comportement du groupe avec l’extension pour navigateurs.</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
@@ -3720,6 +3820,14 @@ Supported extensions are: %1.</source>
     <message>
         <source>Select import/export file</source>
         <translation>Choisir le fichier d’importation ou d’exportation</translation>
+    </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>Converser la structure du groupe avec la base de données partagée</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>Converser la structure du groupe</translation>
     </message>
 </context>
 <context>
@@ -4546,7 +4654,7 @@ Cela rendra vos mots de passe et données sensibles vulnérables !</translatio
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Un autre secret service est en cours d’exécution (%1).&lt;br/&gt;Arrêtez ou supprimez-le avant de réactiver l’intégration au « Secret Service ».</translation>
+        <translation>Un autre secret service est en cours d’exécution (%1).&lt;br/&gt;Arrêtez ou supprimez-le avant de réactiver l’intégration à « Secret Service ».</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
@@ -4554,7 +4662,7 @@ Cela rendra vos mots de passe et données sensibles vulnérables !</translatio
     </message>
     <message>
         <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation>Échec d’inscription du service sur DBus sous le chemin « %1 »</translation>
+        <translation>Échec d’inscription de la session sur DBus sous le chemin « %1 »</translation>
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
@@ -4625,6 +4733,25 @@ Cela rendra vos mots de passe et données sensibles vulnérables !</translatio
     </message>
 </context>
 <context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC – Raccourcis globaux</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>Le portail XDG Desktop Portal pour les raccourcis globaux n’est pas proposé sur ce système.</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>Le raccourci Saisie automatique globale est déjà configuré. Pour le changer, ouvrez les paramètres système et accédez à la section Clavier ou Raccourcis des applications</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>Déclencher la saisie automatique globale</translation>
+    </message>
+</context>
+<context>
     <name>Group</name>
     <message>
         <source>[empty]</source>
@@ -4633,7 +4760,7 @@ Cela rendra vos mots de passe et données sensibles vulnérables !</translatio
     </message>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 – Clone</translation>
+        <translation>%1 – Cloner</translation>
     </message>
 </context>
 <context>
@@ -4853,7 +4980,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation>Base de données KeePass1</translation>
+        <translation>Base de données KeePass 1</translation>
     </message>
     <message>
         <source>Proton Pass (.json)</source>
@@ -5038,7 +5165,7 @@ Si le problème persiste, le fichier de la base de données pourrait être corro
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>La version de la mappe de variantes KeePass n’est pas prise en charge.</translation>
+        <translation>La version de la mappe de variantes KeePass n’est pas prise charge.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
@@ -5947,7 +6074,7 @@ Voulez-vous poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation>Enregistrer la sauvegarde de la base de données…</translation>
+        <translation>Sauvegarder la base de données…</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -6022,20 +6149,6 @@ Voulez-vous poursuivre avec ce fichier ?</translation>
         <translation>Ne plus afficher pour cette version</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>Avertissement : Vous utilisez une version instable de KeePassXC.
-Le risque de corruption est élevé. Conservez une sauvegarde de vos bases de données.
-Cette version ne devrait pas être utilisée en production.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>Note : Vous utilisez une préversion de KeePassXC.
-Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, seulement.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>Aucune étiquette</translation>
     </message>
@@ -6089,7 +6202,7 @@ Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, 
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation>1Password 1PUX…</translation>
+        <translation>1PUX 1Password…</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
@@ -6372,8 +6485,12 @@ Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, 
         <translation>Configurer la synchronisation à distance…</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Générateur de mots de passe</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>Avertissement : Vous utilisez une version de développement de KeePassXC.
+Conservez une sauvegarde de vos bases de données au cas où des bogues inattendus surviendraient.
+Cette version n’est pas destinée à une utilisation en production.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6386,6 +6503,10 @@ Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, 
     <message>
         <source>New Entry</source>
         <translation>Nouvelle entrée</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Générateur de mots de passe</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6451,7 +6572,7 @@ Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, 
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation>Réinitialiser toutes les décisions mémorisées pour cette application</translation>
+        <translation>Mémoriser toutes les décisions pour cette application</translation>
     </message>
 </context>
 <context>
@@ -6769,7 +6890,7 @@ Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, 
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation>Échec lors du déchiffrement : %1</translation>
+        <translation>Échec de déchiffrement : %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -6867,7 +6988,7 @@ Attendez-vous à des bogues et problèmes mineurs. C’est une version de test, 
     </message>
     <message>
         <source>Export to folder</source>
-        <translation>Exporter dans un dossier</translation>
+        <translation>Exporter vers un dossier</translation>
     </message>
     <message>
         <source>Export the following passkey entries.</source>
@@ -6944,7 +7065,7 @@ Le remplacer ?</translation>
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation>Importer la clé d’accès suivante :</translation>
+        <translation>Importer les clés d’accès suivantes :</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
@@ -7526,6 +7647,10 @@ Voulez-vous la remplacer ?</translation>
         <translation>Aucun UUID valide n’a été indiqué</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation>Le nom d’utilisateur et le mot de passe ne doivent pas comprendre de références</translation>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
@@ -7583,7 +7708,7 @@ Voulez-vous la remplacer ?</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation>Impossible de générer un mot de passe et de demander à le saisir en même temps.</translation>
+        <translation>Impossible de générer un mot de passe et inviter à le saisir en même temps.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
@@ -8013,7 +8138,7 @@ Voulez-vous la remplacer ?</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Base de données créé le</translation>
+        <translation>Création de la base de données</translation>
     </message>
     <message>
         <source>Last saved</source>
@@ -8070,6 +8195,14 @@ Voulez-vous la remplacer ?</translation>
     <message>
         <source>Average password length</source>
         <translation>Longueur moyenne des mots de passe</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Nombre de clés d&apos;accès</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Entrées avec TOTP configuré</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8730,20 +8863,12 @@ Noyau : %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Déverrouillage rapide</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Intégration au « Secret Service »</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
+        <translation>Intégration à « Secret Service »</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9161,11 +9286,11 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
     </message>
     <message>
         <source>Challenge is shorter than required minimum length</source>
-        <translation>La longueur de la question est inférieure au minimum requis </translation>
+        <translation>La longueur de la question est inférieure au minium requis </translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
-        <translation>user.id n’a pas la longueur requise</translation>
+        <translation>utilisateur.identifiant n’a pas la longueur requise</translation>
     </message>
     <message>
         <source>Favorite</source>
@@ -9266,6 +9391,14 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
         <translation>Seuls PBKDF et Argon2 sont pris en charge, impossible de déchiffrer le fichier JSON.</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>Clés matérielles</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Clé d’accès</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>Réinitialiser les raccourcis</translation>
     </message>
@@ -9286,24 +9419,8 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
         <translation>Le raccourci %1 est en conflit avec « %2 » : remplacer le raccourci ?</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>Les fichiers chiffrés ne sont pas pris en charge.</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Importation Proton Pass</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>Clé d’accès</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>Format d’exportation à utiliser : « xml », « csv » ou « html », « xml » par défaut.</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>démarrer réduit dans la zone de notification</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9318,8 +9435,20 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
         <translation>%1, ligne : %2, colonne : %3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Les fichiers chiffrés ne sont pas pris en charge.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Importation Proton Pass</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Étiquettes</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>démarrer réduit dans la zone de notification</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9400,6 +9529,29 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
     <message>
         <source>Internal zlib error: </source>
         <translation>Erreur interne zlib :</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>La session de bureau à distance n’est pas active</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>La session est fermée</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>L’utilisateur a annulé l’interaction</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>L’interaction de l’utilisateur a été annulée pour une raison inconnue</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>Le descripteur de la session de bureau à distance ne correspond pas au chemin d’accès attendu</translation>
     </message>
 </context>
 <context>
@@ -9865,7 +10017,7 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation>Il est recommandé d’utiliser des mots de passe d’au moins huit caractères.</translation>
+        <translation>Il est recommandé qu’un mot de passe comporte au moins huit caractères</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
@@ -9890,6 +10042,14 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>La longueur moyenne des mots de passe est inférieure à dix caractères. Des mots de passe plus longs offrent une meilleure sécurité.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Nombre de clés d&apos;accès</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Entrées avec TOTP configuré</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10080,7 +10240,7 @@ Cette option est déconseillée, utiliser plutôt --set-key-file.</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation>Activer l’intégration de KeePassXC au « Secret Service » de freedesktop.org </translation>
+        <translation>Activer l’intégration de KeePassXC à « Secret Service » de freedesktop.org </translation>
     </message>
     <message>
         <source>General</source>
@@ -10504,19 +10664,15 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Général :</translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Impossible de trouver une interface pour la clé matérielle dont le numéro de série est %1. Connectez-la pour poursuivre.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>Impossible de trouver la clé matérielle dont le numéro de série est %1. Connectez-la pour poursuivre.</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Choix de l’emplacement de la clé matérielle</translation>
+        <translation>Choiz de l’emplacement de la clé matérielle</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
@@ -10570,16 +10726,12 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Impossible de trouver la clé matérielle dont le numéro de série est %1 ou d’y accéder. Présentez-la pour poursuivre.</translation>
-    </message>
-    <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>La clé matérielle est verrouillée ou est arrivée au bout de son délai. Déverrouillez-la ou présentez-la de nouveau pour poursuivre.</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>
-        <translation>La clé matérielle est introuvable ou n’est pas configurée.</translation>
+        <translation>La clé matérielle est introuvable trouvée ou n’est pas configurée.</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>

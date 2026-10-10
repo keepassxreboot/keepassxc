@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Аб</translation>
+        <translation>Аб праграме</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Уключыць наступную інфармацыю, калі вы паведамляеце аб памылцы:</translation>
+        <translation>Уключыце наступную інфармацыю, калі вы паведамляеце аб памылцы:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Уключыць інтэграцыю SSH агента.</translation>
+        <translation>Уключыць інтэграцыю праз SSH агента.</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -128,11 +128,11 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK перазапісаць</translation>
+        <translation>Прадвызначыць SSH_AUTH_SOCK </translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>SSH_AUTH_SOCK значэнне</translation>
+        <translation>Значэнне SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation>SSH_SK_PROVIDER значэнне</translation>
+        <translation>Значэнне SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
@@ -153,6 +153,25 @@
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>Злучэнне праз SSH агент працуе!</translation>
+    </message>
+</context>
+<context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -261,6 +280,14 @@
         <source>Custom</source>
         <translation>Карыстальніцкі</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -298,7 +325,7 @@
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Загружайць раней адкрытыя базы даных пры запуску</translation>
+        <translation>Загружаць раней адкрытыя базы даных пры запуску</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
@@ -560,10 +587,6 @@
         <translation>Экспартаваць налады…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Адкрываць браўзер пры падвойным націску на поле URL у праглядзе запісу</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Памер шрыфта:</translation>
     </message>
@@ -576,7 +599,67 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -912,7 +1006,7 @@ Ctrl+Shift+4 - Капіяваць URL&lt;br/&gt;
     </message>
     <message>
         <source>Remember</source>
-        <translation>Помніць</translation>
+        <translation>Памятаць</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
@@ -920,7 +1014,7 @@ Ctrl+Shift+4 - Капіяваць URL&lt;br/&gt;
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Дазволіць абраным</translation>
+        <translation>Дазволіць выбраным</translation>
     </message>
     <message>
         <source>Deny All</source>
@@ -992,7 +1086,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
-        <translation>KeePassXC - Уліковыя даныя паскроля</translation>
+        <translation>KeePassXC - Уліковыя даныя ключоў доступу</translation>
     </message>
     <message>
         <source>Add to existing entry</source>
@@ -1001,20 +1095,20 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation>Знойдзены існуючы паскроль.
-Вы хочаце зарэгістраваць новы паскроль для:</translation>
+        <translation>Знойдзены існуючы ключ доступу.
+Вы хочаце зарэгістраваць новы ключ доступу для:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation>Выберыце існуючы паскроль і націсніце Абнавіць, каб замяніць яго.</translation>
+        <translation>Выберыце існуючы ключ доступу і націсніце Абнавіць, каб замяніць яго.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation>Аўтэнтыфікаваць уліковыя даныя паскроля для:</translation>
+        <translation>Аўтэнтыфікаваць уліковыя даныя ключа доступу для:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation>Вы хочаце зарэгістраваць паскроль для:</translation>
+        <translation>Вы хочаце зарэгістраваць ключ доступу для:</translation>
     </message>
 </context>
 <context>
@@ -1063,7 +1157,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>%1 (Passkey)</source>
-        <translation>%1 (Паскроль)</translation>
+        <translation>%1 (Ключ доступу)</translation>
     </message>
     <message>
         <source>KeePassXC - Create a new group</source>
@@ -1091,25 +1185,25 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Passkey</source>
-        <translation>Паскроль</translation>
+        <translation>Ключ доступу</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
-        <translation>KeePassXC - Уліковыя даныя паскроля</translation>
+        <translation>KeePassXC - Уліковыя даныя ключоў доступу</translation>
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation>Зарэгістраваць новы паскроль для гэтага запісу:</translation>
+        <translation>Зарэгістраваць новы ключ доступу для гэтага запісу:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation>KeePassXC - Абнавіць паскроль</translation>
+        <translation>KeePassXC - Абнавіць ключ доступу</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation>Запіс ужо мае паскроль.
-Вы хочаце перазапісаць паскроль у %1 - %2?</translation>
+        <translation>Запіс ужо мае ключ доступу.
+Вы хочаце перазапісаць ключ доступу ў %1 - %2?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1347,11 +1441,11 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation>Дазваляе выкарыстоўваць небяспечны http://localhost з паскролямі для мэт тэставання.</translation>
+        <translation>Дазваляе выкарыстоўваць небяспечны http://localhost з ключамі доступу для мэт тэставання.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
-        <translation>Дазволіць выкарыстанне localhost з паскролямі</translation>
+        <translation>Дазволіць выкарыстанне localhost з ключамі доступу</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
@@ -1777,16 +1871,16 @@ Are you sure you want to continue with this file?.</source>
         <translation>Націсніце, каб дадаць файл-ключ.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;У мяне ёсць файл-ключ&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Апаратныя ключы знойдзены, але слоты не настроены.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>Націсніце ESC яшчэ раз, каб закрыць гэтую базу даных</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3736,6 +3830,14 @@ Supported extensions are: %1.</source>
         <source>Select import/export file</source>
         <translation>Выбраць файл для імпарту/экспарту</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -3964,7 +4066,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Passkey</source>
-        <translation>Ключ-пароль</translation>
+        <translation>Ключ доступу</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
@@ -4636,6 +4738,25 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5932,7 +6053,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation>&amp;Пачатак працы</translation>
+        <translation>&amp;Пачатковы дапаможнік</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
@@ -5940,7 +6061,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>&amp;Онлайн-дапамога</translation>
+        <translation>&amp;Анлайн-дапамога</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -6031,20 +6152,6 @@ Are you sure you want to continue with this file?</source>
         <translation>Не паказваць больш для гэтай версіі</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>УВАГА: Вы выкарыстоўваеце нестабільную зборку KeePassXC.
-Існуе высокая рызыка пашкоджання, таму стварыце рэзервовую копію сваіх баз даных.
-Гэтая версія не прызначана для вытворчага выкарыстання.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>ЗАЎВАГА: Вы выкарыстоўваеце версію KeePassXC для папярэдняга выпуску.
-Магчымыя некаторыя памылкі і нязначныя праблемы, гэтая версія прызначана для тэсціравання.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>Без тэгаў</translation>
     </message>
@@ -6110,7 +6217,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Passkeys…</source>
-        <translation>Ключы доступу</translation>
+        <translation>Ключы доступу…</translation>
     </message>
     <message>
         <source>Import Passkey</source>
@@ -6381,8 +6488,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Генератар пароляў</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6395,6 +6504,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>New Entry</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Генератар пароляў</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -7535,6 +7648,10 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Невядомая памылка</translation>
     </message>
@@ -8078,6 +8195,14 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Average password length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8729,19 +8854,11 @@ Kernel: %3 %4</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>None</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9264,6 +9381,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation type="unfinished"/>
     </message>
@@ -9284,23 +9409,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9316,7 +9425,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9398,6 +9519,29 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Унутраная памылка zlib: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9775,7 +9919,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Імя</translation>
     </message>
     <message>
         <source>Value</source>
@@ -9888,6 +10032,14 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Сярэдняя даўжыня пароля меншая за дзесяць сімвалаў. Больш доўгія паролі забяспечваюць большую бяспеку.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10501,12 +10653,8 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Агульнае: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Не ўдалося знайсці інтэрфейс для апаратнага ключа з серыйным нумарам %1. Калі ласка, падключыце яго, каб працягнуць.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10566,10 +10714,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Не ўдалося знайсці або атрымаць доступ да апаратнага ключа з серыйным нумарам %1. Калі ласка, прад&apos;явіце яго, каб працягнуць.</translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Апаратны ключ заблакаваны або скончыўся час чакання. Разблакіруйце або прад&apos;явіце яго зноў, каб працягнуць.</translation>

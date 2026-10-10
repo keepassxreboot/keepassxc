@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>Aken</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>Minimeeri</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>Suum</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>Tõsta kõik esiplaanile</translation>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -260,6 +279,14 @@
     <message>
         <source>Custom</source>
         <translation>kohandatud</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Puudub</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>Käivita KeePassXC uuesti töölauaportaali eelistuste rakendamiseks automaatsisestuse kontekstis.</translation>
     </message>
 </context>
 <context>
@@ -560,10 +587,6 @@
         <translation>Ekspordi seaded…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Kirjevaates avab topeltklõps URL-il selle brauseris</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Fondi suurus:</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>Põhiaknas jäta automaatsisestuse järgsed kinnitused vahele</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>Võrguaadressi topeltklõpsamisel:</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>Võrguaadressi välja topeltklõpsamisel</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>Muuda kirjet</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>Ava kirjes leiduv võrguaadress veebibrauseris</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>Ava kirjes leiduv võrguaadress lõikelauale</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
-        <translation type="unfinished"/>
+        <translation>Loo salasõna uute kirjele jaoks automaatselt</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>Peale automaatsisestust jäta kaugtöölaua ühendus avatuks</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>Kaugtöölaua režiim:</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>Ära iialgi jäta sessiooni meelde</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>Jäta sessioon meelde kuni väljumiseni</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>Jäta sessioon meelde kuni töölauarakendus selle tühistab</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Puudub</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>Seadista...</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>Kasuta kaugtöölauda ligipääsuks lõikelauale</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>Katseline: EElista töölauaportaale (Waylandi-põhine)</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation>Näita kasutajanime ja muu teabe automaattäite soovitusi</translation>
     </message>
 </context>
 <context>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>Klahvile vastavat sümbolit ei leidunud: „%1“</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>Tähemärgile vastavat sümbolit ei leidunud: „%1“</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -889,11 +983,11 @@ Ctrl+Shift+4 - Kopeeri võrguaadress&lt;br/&gt;
     <name>BinaryStream</name>
     <message>
         <source>Failed to read string data: %1</source>
-        <translation type="unfinished"/>
+        <translation>Sõne andmete lugemine ei õnnestunud: %1</translation>
     </message>
     <message>
         <source>String length exceeds 10 MiB limit (requested %1)</source>
-        <translation type="unfinished"/>
+        <translation>Sõne pikkus ületab 10 MiB ülempiiri (päringus oli %1)</translation>
     </message>
 </context>
 <context>
@@ -1001,7 +1095,7 @@ Vali, millisesse neist tunnused salvestada tuleks.</translation>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation>Leidus olemasolev pääsuvõti.
+        <translation>Leiti olemasolev pääsuvõti.
 Vali kirje, millele uus pääsuvõti registreerida:</translation>
     </message>
     <message>
@@ -1777,16 +1871,16 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
         <translation>Klõpsa võtmefaili lisamiseks.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Mul on võtmefail&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Leiti riistvaraline võti, kuid ühtki pesa pole seadistatud.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>Selle andmebaasi sulgemiseks vajuta uuesti Esc-klahvi</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>Min on võtmefail</translation>
     </message>
 </context>
 <context>
@@ -3738,6 +3832,14 @@ Toetatud faililaiendid: %1</translation>
         <source>Select import/export file</source>
         <translation>Imporditava/eksporditava faili valimine</translation>
     </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>Säilita jagatud andmebaasis gruppide struktuur</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>Säilita gruppide struktuur</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -4176,7 +4278,7 @@ Kas soovid muudatused oma andmebaasi salvestada?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation>Kaasatud faili salvestamine ei õnnestunud</translation>
+        <translation>Kaasatud faili salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
@@ -4640,6 +4742,25 @@ See jätab su paroolid jm tundliku teabe kaitseta!
     <message>
         <source>&lt;b&gt;Fdo Secret Service:&lt;/b&gt; %1</source>
         <translation>&lt;b&gt;Fd.o saladuste teenus:&lt;/b&gt; %1</translation>
+    </message>
+</context>
+<context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC - Üldised kiirklahvid</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>Üldiste kiirklahvide seadistamiseks vajalik XDG töölauaportaal (XDG Desktop Portal) pole selles süsteemis saadaval.</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>Üldine automaatsisestuse kiirklahv on juba seadistatud. Selle muutmiseks ava süsteemi seadistused ning sealt kiirklahvide eelistused.</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>Üldise automaatsisestuse käivitamine</translation>
     </message>
 </context>
 <context>
@@ -6040,21 +6161,6 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
         <translation>Ära selle versiooni puhul rohkem näita</translation>
     </message>
     <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>HOIATUS: kasutad KeePassXC ebastabiilset versioon!
-Selle kasutamisega kaasneb suur risk oma parooliandmebaasid ära rikkuda,
-nii et vaata, et sul oleks neist varukoopiad.
-See versioon ei ole mõeldud töökeskkonnas kasutamiseks.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>NB: kasutad KeePassXC testversiooni.
-Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see versioon on mõeldud testimiseks, mitte töökeskkonnas kasutamiseks.</translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation>Silte pole</translation>
     </message>
@@ -6391,8 +6497,12 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
         <translation>Seadista sünkimine...</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Parooligeneraator</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>HOIATUS: kasutad KeePassXC-i arendusversiooni!
+Võimalikest teadmata vigadest johtuva andmekao vältimiseks palun kontrolli, et sul on alati varukoopia olemas.
+See versioon ei ole mõeldud tarbekasutuseks.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6405,6 +6515,10 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     <message>
         <source>New Entry</source>
         <translation>Uus kirje</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Parooligeneraator</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6836,11 +6950,11 @@ Eeldatavasti leidub selles programmivigu ja muid väiksemaid hädasid – see ve
     </message>
     <message>
         <source>Failed to read key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Võtmefaili lugemine ei õnnestunud: %1</translation>
     </message>
     <message>
         <source>Failed to read public key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Avaliku võtme lugemine ei õnnestunud: %1</translation>
     </message>
 </context>
 <context>
@@ -7314,7 +7428,7 @@ Järgmised andmed on puudu:
     <message>
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
 Do you want to overwrite it?</source>
-        <translation>Kohandatud sõnaloend „%1” on juba olemas.
+        <translation>Kohandatud sõnaloend „%1“ on juba olemas.
 Kas soovid selle üle kirjutada?</translation>
     </message>
     <message>
@@ -7543,6 +7657,10 @@ Kas soovid selle üle kirjutada?</translation>
     <message>
         <source>No valid UUID provided</source>
         <translation>Sobivat UUID-d ei antud</translation>
+    </message>
+    <message>
+        <source>Username or password cannot contain references</source>
+        <translation>Kasutajanimes ja salasõnas ei saa leiduda viiteid</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -8089,6 +8207,14 @@ Kas soovid selle üle kirjutada?</translation>
     <message>
         <source>Average password length</source>
         <translation>Paroolide keskmine pikkus</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Pääsuvõtmete arv</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Kirjeid, kus TOTP on seadistatud</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8750,20 +8876,12 @@ Kernel: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Kiiresti luku avamine</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Saladuste teenuse lõiming</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Puudub</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -9286,6 +9404,14 @@ See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
         <translation>Toetatud on ainult PBKDF ja Argon2, JSON-faili lahtikrüptimine pole võimalik</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>Riistvaralised klahvid</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Pääsuvõti</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>Lähtesta kiirklahvid</translation>
     </message>
@@ -9306,24 +9432,8 @@ See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
         <translation>Kiirklahviga %1 on juba seotud toiming „%2”. Kas soovid selle üle kirjutada?</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>Krüptitud faile ei toetata</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Proton Passist imporditud</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>Pääsuvõti</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>Eksportimisel kasutatav vorming. Valida on &quot;xml&quot;, &quot;csv&quot; või &quot;html&quot;. Vaikimisi &quot;xml&quot;.</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>Käivitamine süsteemisalve minimeerituna.</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9338,8 +9448,20 @@ See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
         <translation>%1, rida: %2, veerg: %3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Krüptitud faile ei toetata</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Proton Passist imporditud</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Sildid</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>Käivitamine süsteemisalve minimeerituna.</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9420,6 +9542,29 @@ See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
     <message>
         <source>Internal zlib error: </source>
         <translation>Sisemine zlib-i tõrge: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>Kaugtöölaua RDP-sessioon pole aktiivne</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>Sessioon on suletud</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>Kasutaja katkestas suhestumise</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>Kasutaja suhestumine katkes teadmata põhjusel</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>Kaugtöölaua sessioonitunnus ei vasta eeldatud asukohale</translation>
     </message>
 </context>
 <context>
@@ -9910,6 +10055,14 @@ See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Paroolide keskmine pikkus on alla kümne märgi. Pikemad paroolid on turvalisemad.</translation>
+    </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Pääsuvõtmete arv</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Kirjeid, kus TOTP on seadistatud</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10523,12 +10676,8 @@ Näide: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Üldine: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Riistvaralisele võtmele seerianumbriga %1 ei leitud sobivat liidest. Jätkamiseks tuleb see arvutiga ühendada.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>Riistvaralist võtit seerianumbriga %1 ei leidu. Jätkamiseks palun ühenda see arvutiga.</translation>
     </message>
 </context>
 <context>
@@ -10588,10 +10737,6 @@ Näide: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Riistvaralist võtit seerianumbriga %1 kas ei leitud või ei pääsetud sellele juurde. Jätkamiseks viipa võtit.</translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Riistvaraline võti on lukus või ei jõudnud vastust ära oodata. Jätkamiseks ava lukk või viipa võtit uuesti.</translation>

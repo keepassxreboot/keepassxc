@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -91,6 +91,7 @@ public slots:
     void minimizeOrHide();
     void toggleWindow();
     void bringToFront();
+    bool isMinimizedToSystemTray();
     void closeAllDatabases();
     void lockAllDatabases();
     void closeModalWindow();
@@ -199,6 +200,7 @@ private:
     bool m_contextMenuFocusLock = false;
     bool m_showToolbarSeparator = false;
     bool m_allowScreenCapture = false;
+    bool m_minimizedToSystemTray = false;
     qint64 m_lastFocusOutTime = 0;
     qint64 m_lastShowTime = 0;
     QTimer m_updateCheckTimer;

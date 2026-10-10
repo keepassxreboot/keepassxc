@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>AppKit</name>
+    <message>
+        <source>Window</source>
+        <translation>Okno</translation>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation>Minimalizuj</translation>
+    </message>
+    <message>
+        <source>Zoom</source>
+        <translation>Powiększenie</translation>
+    </message>
+    <message>
+        <source>Bring All to Front</source>
+        <translation>Przenieś wszystkie na przód</translation>
+    </message>
+</context>
+<context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
@@ -215,7 +234,7 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Musisz uruchomić ponownie aplikację, aby ustawić nowy język. Czy chcesz teraz to zrobić?</translation>
+        <translation>Musisz zrestartować aplikację, aby ustawić nowy język. Czy chcesz teraz zrestartować?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -260,6 +279,14 @@
     <message>
         <source>Custom</source>
         <translation>Niestandardowy</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Brak</translation>
+    </message>
+    <message>
+        <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>Uruchom ponownie KeePassXC, aby zastosować preferencje autowpisywania portalów pulpitu.</translation>
     </message>
 </context>
 <context>
@@ -318,7 +345,7 @@
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatycznie zapisz po każdej zmianie</translation>
+        <translation>Automatycznie zapisuj po każdej zmianie</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
@@ -330,11 +357,11 @@
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Automatycznie ładuj ponownie bazę danych, gdy zostanie zmodyfikowana zewnętrznie</translation>
+        <translation>Automatycznie przeładuj bazę danych, gdy zostanie zmodyfikowana zewnętrznie</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Utwórz kopię zapasową pliku bazy danych przed zapisaniem</translation>
+        <translation>Twórz kopię zapasową pliku bazy danych przed zapisaniem</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -560,10 +587,6 @@
         <translation>Eksportuj ustawienia…</translation>
     </message>
     <message>
-        <source>Open browser on double clicking URL field in entry view</source>
-        <translation>Otwórz przeglądarkę po dwukrotnym kliknięciu pola adresu URL w widoku wpisu</translation>
-    </message>
-    <message>
         <source>Font size:</source>
         <translation>Rozmiar czcionki:</translation>
     </message>
@@ -576,8 +599,68 @@
         <translation>Pomiń potwierdzenie czynności autowpisywania w oknie głównym</translation>
     </message>
     <message>
+        <source>Double-click action for URL:</source>
+        <translation>Czynność dwukrotnego kliknięcia adresu URL:</translation>
+    </message>
+    <message>
+        <source>Double-click action for URL field</source>
+        <translation>Czynność dwukrotnego kliknięcia pola adresu URL</translation>
+    </message>
+    <message>
+        <source>Edit entry</source>
+        <translation>Edytuj wpis</translation>
+    </message>
+    <message>
+        <source>Open entry URL in browser</source>
+        <translation>Otwórz adres URL wpisu w przeglądarce</translation>
+    </message>
+    <message>
+        <source>Copy entry URL to clipboard</source>
+        <translation>Skopiuj adres URL wpisu do schowka</translation>
+    </message>
+    <message>
         <source>Auto-generate password for new entries</source>
         <translation>Wygeneruj automatycznie hasło dla nowych wpisów</translation>
+    </message>
+    <message>
+        <source>Keep remote desktop connection open after performing Auto-Type</source>
+        <translation>Utrzymuj otwarte połączenie pulpitu zdalnego po wykonaniu autowpisywania</translation>
+    </message>
+    <message>
+        <source>Remote desktop mode:</source>
+        <translation>Tryb pulpitu zdalnego:</translation>
+    </message>
+    <message>
+        <source>Never remember session</source>
+        <translation>Nigdy nie zapamiętuj sesji</translation>
+    </message>
+    <message>
+        <source>Remember session until exit</source>
+        <translation>Zapamiętaj sesję do wyjścia</translation>
+    </message>
+    <message>
+        <source>Remember session until revoked by desktop</source>
+        <translation>Zapamiętaj sesję do odwołania przez pulpit</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Brak</translation>
+    </message>
+    <message>
+        <source>Configure...</source>
+        <translation>Konfiguruj...</translation>
+    </message>
+    <message>
+        <source>Use remote desktop for clipboard access</source>
+        <translation>Użyj pulpitu zdalnego do dostępu do schowka</translation>
+    </message>
+    <message>
+        <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
+        <translation>Eksperymentalne: preferuj portale pulpitu (implementacja Wayland)</translation>
+    </message>
+    <message>
+        <source>Show autocomplete suggestions for username and additional attributes</source>
+        <translation>Pokaż sugestie autouzupełniania dla nazwy użytkownika i dodatkowych atrybutów</translation>
     </message>
 </context>
 <context>
@@ -774,6 +857,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformWayland</name>
+    <message>
+        <source>No symbol found for key: &apos;%1&apos;</source>
+        <translation>Nie znaleziono symbolu dla klawisza: „%1”</translation>
+    </message>
+    <message>
+        <source>No symbol found for character: &apos;%1&apos;</source>
+        <translation>Nie znaleziono symbolu dla znaku: „%1”</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
@@ -928,7 +1022,7 @@ Ctrl+Shift+4 - Skopiuj adres URL&lt;br/&gt;
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Wyłącz dla tej witryny</translation>
+        <translation>Wyłącz w tej witrynie</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -1024,7 +1118,7 @@ Czy chcesz zarejestrować nowy klucz dostępu dla:</translation>
 Do you want to create this group?
 </source>
         <translation>Otrzymano żądanie utworzenia nowej grupy &quot;%1&quot;.
-Czy chcesz utworzyć tę grupę?
+Czy chcesz stworzyć tę grupę?
 </translation>
     </message>
     <message>
@@ -1266,7 +1360,7 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>Przeglądaj plik niestandardowego proxy</translation>
+        <translation>Przeglądarka pliku niestandardowego proxy</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -1331,7 +1425,7 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
-        <translation>&lt;b&gt;Ostrzeżenie:&lt;/b&gt; Dostosowuj te ustawienia tylko w razie potrzeby.</translation>
+        <translation>&lt;b&gt;Ostrzeżenie:&lt;/b&gt; dostosowuj te ustawienia tylko w razie potrzeby.</translation>
     </message>
     <message>
         <source>The custom proxy location does not exist.</source>
@@ -1339,11 +1433,11 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
-        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Lokalizacja niestandardowego proxy nie istnieje. Popraw to na karcie ustawień zaawansowanych.</translation>
+        <translation>&lt;b&gt;Błąd:&lt;/b&gt; lokalizacja niestandardowego proxy nie istnieje. Popraw to na karcie ustawień zaawansowanych.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
-        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Brak pliku wykonywalnego zainstalowanego proxy w oczekiwanej lokalizacji: %1&lt;br/&gt;Ustaw lokalizację niestandardowego proxy w ustawieniach zaawansowanych lub zainstaluj ponownie aplikację.</translation>
+        <translation>&lt;b&gt;Błąd:&lt;/b&gt; brak pliku wykonywalnego zainstalowanego proxy w oczekiwanej lokalizacji: %1&lt;br/&gt;Ustaw lokalizację niestandardowego proxy w ustawieniach zaawansowanych lub zainstaluj ponownie aplikację.</translation>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
@@ -1493,7 +1587,7 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n kolejny komunikat pominięto]</numerusform><numerusform>[%n kolejne komunikaty pominięto]</numerusform><numerusform>[%n kolejnych komunikatów pominięto]</numerusform><numerusform>[%n kolejnych komunikatów pominięto]</numerusform></translation>
+        <translation><numerusform> [%n więcej komunikat pominięto]</numerusform><numerusform> [%n więcej komunikatów pominięto]</numerusform><numerusform> [%n więcej komunikatów pominięto]</numerusform><numerusform> [%n więcej komunikatów pominięto]</numerusform></translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
@@ -1777,16 +1871,16 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
         <translation>Kliknij, aby dodać plik klucza.</translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Mam plik klucza&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Znaleziono klucze sprzętowe, ale nie skonfigurowano żadnych gniazd.</translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
         <translation>Naciśnij ponownie ESC, aby zamknąć tę bazę danych</translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
+        <translation>Mam plik klucza</translation>
     </message>
 </context>
 <context>
@@ -1980,7 +2074,7 @@ Jest to konieczne tylko wtedy, gdy baza danych jest kopią innej, a rozszerzenie
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>OSTRZEŻENIE! Nie ustawiłeś hasła. Używanie bazy danych bez hasła jest zdecydowanie odradzane!
+        <translation>OSTRZEŻENIE! Hasło nie zostało ustawione. Używanie bazy danych bez hasła jest zdecydowanie odradzane!
 
 Czy na pewno chcesz kontynuować bez hasła?</translation>
     </message>
@@ -2881,7 +2975,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes then save&lt;br&gt;Overwrite the changes on disk&lt;br&gt;Discard unsaved changes</source>
-        <translation>Plik bazy danych &quot;%1&quot; został zmodyfikowany zewnętrznie.&lt;br&gt;Jak chcesz kontynuować?&lt;br&gt;&lt;br&gt;Scal wszystkie zmiany, a następnie zapisz&lt;br&gt;Zastąp zmiany na dysku&lt;br&gt;Odrzuć niezapisane zmiany</translation>
+        <translation>Plik bazy danych &quot;%1&quot; został zmodyfikowany zewnętrznie.&lt;br&gt;Jak chcesz kontynuować?&lt;br&gt;&lt;br&gt;Scal wszystkie zmiany, a następnie zapisz&lt;br&gt;Nadpisz zmiany na dysku&lt;br&gt;Odrzuć niezapisane zmiany</translation>
     </message>
     <message>
         <source>Reload database</source>
@@ -2889,7 +2983,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Database file overwritten.</source>
-        <translation>Plik bazy danych został zastąpiony.</translation>
+        <translation>Plik bazy danych został nadpisany.</translation>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
@@ -3245,7 +3339,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>Użyj określonej sekwencji dla tego skojarzenia:</translation>
+        <translation>Użyj określonej sekwencji dla tego powiązania:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
@@ -3370,7 +3464,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Ustawienia</translation>
+        <translation>Presety</translation>
     </message>
     <message>
         <source>Url field</source>
@@ -3624,7 +3718,7 @@ Czy chcesz go poprawić?</translation>
     </message>
     <message>
         <source>Restrict matching to given browser key toggle for this and sub groups</source>
-        <translation>Ogranicz dopasowanie do danego przełącznika klucza przeglądarki dla tej i podgrup</translation>
+        <translation>Ogranicz dopasowanie do danego przełącznika klucza przeglądarki dla tej i podgrup</translation>
     </message>
 </context>
 <context>
@@ -3735,6 +3829,14 @@ Obsługiwane rozszerzenia to: %1.</translation>
     <message>
         <source>Select import/export file</source>
         <translation>Wybierz plik importu/eksportu</translation>
+    </message>
+    <message>
+        <source>Maintain group structure with shared database</source>
+        <translation>Utrzymaj strukturę grupy ze wspólną bazą danych</translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
+        <translation>Zachowaj strukturę grupy</translation>
     </message>
 </context>
 <context>
@@ -4176,7 +4278,7 @@ Czy chcesz zapisać zmiany w bazie danych?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation>Nie powiodło się zapisywanie załącznika</translation>
+        <translation>Zapisywanie załącznika nie powiodło się</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
@@ -4643,6 +4745,25 @@ To narazi Twoje hasła i poufne informacje na niebezpieczeństwo!
     </message>
 </context>
 <context>
+    <name>GlobalShortcutsPortal</name>
+    <message>
+        <source>KeePassXC - Global Shortcuts</source>
+        <translation>KeePassXC - Skróty globalne</translation>
+    </message>
+    <message>
+        <source>The XDG Desktop Portal for global shortcuts is not available on this system.</source>
+        <translation>XDG Desktop Portal dla globalnych skrótów nie jest dostępny w tym systemie.</translation>
+    </message>
+    <message>
+        <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
+        <translation>Skrót globalnego autowpisywania jest już skonfigurowany. Aby go zmienić, otwórz ustawienia systemu i przejdź do sekcji skrótów klawiaturowych lub programu.</translation>
+    </message>
+    <message>
+        <source>Trigger global Auto-Type</source>
+        <translation>Wyzwól globalne autowpisywanie</translation>
+    </message>
+</context>
+<context>
     <name>Group</name>
     <message>
         <source>[empty]</source>
@@ -4707,7 +4828,7 @@ Możesz włączyć usługę ikon witryn DuckDuckGo w sekcji bezpieczeństwa usta
     </message>
     <message>
         <source>Download Failed</source>
-        <translation>Nie powiodło się pobieranie</translation>
+        <translation>Pobieranie nie powiodło się</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
@@ -5048,7 +5169,7 @@ Jeśli wystąpi to ponownie, plik bazy danych może być uszkodzony.</translatio
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation>Nieprawidłowa długość pola wewnętrznego nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
+        <translation>Nieprawidłowa długość wewnętrznego pola nagłówka: pole %1, oczekiwano %2, znaleziono %3</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -5221,7 +5342,7 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
 Line %2, column %3</source>
         <translation>Błąd XML:
 %1
-Wiersz %2, kolumna %3</translation>
+wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
@@ -6038,21 +6159,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Nie pokazuj więcej dla tej wersji</translation>
-    </message>
-    <message>
-        <source>WARNING: You are using an unstable build of KeePassXC.
-There is a high risk of corruption, maintain a backup of your databases.
-This version is not meant for production use.</source>
-        <translation>OSTRZEŻENIE: Używasz niestabilnej kompilacji KeePassXC.
-Istnieje duże ryzyko uszkodzenia, utrzymuj kopie zapasowe baz danych.
-Ta wersja nie jest przeznaczona do użytku produkcyjnego.</translation>
-    </message>
-    <message>
-        <source>NOTE: You are using a pre-release version of KeePassXC.
-Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>UWAGA: Używasz wstępnej wersji KeePassXC.
-Spodziewaj się pewnych błędów i drobnych problemów, ta wersja jest przeznaczona do celów testowych.</translation>
+        <translation>Nie pokazuj więcej w tej wersji</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -6096,11 +6203,11 @@ Spodziewaj się pewnych błędów i drobnych problemów, ta wersja jest przeznac
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Uruchomić ponownie aplikację?</translation>
+        <translation>Zrestartować aplikację?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Musisz uruchomić ponownie aplikację, aby zastosować to ustawienie. Czy chcesz teraz to zrobić?</translation>
+        <translation>Musisz zrestartować aplikację, aby zastosować to ustawienie. Czy chcesz teraz zrestartować?</translation>
     </message>
     <message>
         <source>Allow Screen Capture</source>
@@ -6391,8 +6498,12 @@ Spodziewaj się pewnych błędów i drobnych problemów, ta wersja jest przeznac
         <translation>Skonfiguruj zdalną synchronizację…</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>Generator haseł</translation>
+        <source>WARNING: You are using a development snapshot build of KeePassXC.
+Maintain a backup of your databases in the event of unknown bugs.
+This version is not meant for production use.</source>
+        <translation>OSTRZEŻENIE: używasz wersji rozwojowej KeePassXC.
+Zachowaj kopię zapasową swoich baz danych na wypadek nieznanych błędów.
+Ta wersja nie jest przeznaczona do użytku produkcyjnego.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6405,6 +6516,10 @@ Spodziewaj się pewnych błędów i drobnych problemów, ta wersja jest przeznac
     <message>
         <source>New Entry</source>
         <translation>Nowy wpis</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Generator haseł</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -6732,7 +6847,7 @@ Spodziewaj się pewnych błędów i drobnych problemów, ta wersja jest przeznac
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation>Nie powiodło się dekodowanie Base64</translation>
+        <translation>Dekodowanie Base64 nie powiodło się</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
@@ -6900,8 +7015,7 @@ Spodziewaj się pewnych błędów i drobnych problemów, ta wersja jest przeznac
 Do you want to overwrite it?
 </source>
         <translation>Plik &quot;%1.passkey&quot; już istnieje.
-Czy chcesz go zastąpić?
-</translation>
+Czy chcesz go zastąpić?</translation>
     </message>
     <message>
         <source>Cannot open file</source>
@@ -7316,7 +7430,7 @@ Brakuje następujących danych:
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
 Do you want to overwrite it?</source>
         <translation>Lista słów &quot;%1&quot; już istnieje jako niestandardowa lista słów.
-Czy chcesz ją zastąpić?</translation>
+Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Failed to add wordlist</source>
@@ -7379,7 +7493,7 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation>Ostrzeżenie: Włączony Caps Lock!</translation>
+        <translation>Ostrzeżenie: włączony Caps Lock!</translation>
     </message>
     <message>
         <source>Quality: %1</source>
@@ -7546,6 +7660,10 @@ Czy chcesz ją zastąpić?</translation>
         <translation>Podano nieważny UUID</translation>
     </message>
     <message>
+        <source>Username or password cannot contain references</source>
+        <translation>Nazwa użytkownika i hasło nie mogą zawierać odniesień</translation>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
     </message>
@@ -7591,7 +7709,7 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Wygeneruj hasło do wpisu.</translation>
+        <translation>Wygeneruj hasło dla wpisu.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -7809,7 +7927,7 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation>BŁĄD: Określ jeden z --attribute lub --totp, a nie oba.</translation>
+        <translation>BŁĄD: określ jeden z --attribute lub --totp, a nie oba.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
@@ -7817,7 +7935,7 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation>BŁĄD: Atrybut %1 jest niejednoznaczny, jest zgodny z %2.</translation>
+        <translation>BŁĄD: atrybut %1 jest niejednoznaczny, jest zgodny z %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
@@ -7889,11 +8007,11 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>Ustaw plik klucza do bazy danych.</translation>
+        <translation>Ustaw plik klucza dla bazy danych.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Ustaw hasło do bazy danych.</translation>
+        <translation>Ustaw hasło bazy danych.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
@@ -7913,7 +8031,7 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation>Nie powiodło się ładowanie pliku klucza</translation>
+        <translation>Ładowanie pliku klucza nie powiodło się</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
@@ -8092,6 +8210,14 @@ Czy chcesz ją zastąpić?</translation>
         <translation>Średnia długość hasła</translation>
     </message>
     <message>
+        <source>Number of passkeys</source>
+        <translation>Liczba kluczy dostępu</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Wpisy ze skonfigurowanym TOTP</translation>
+    </message>
+    <message>
         <source>Word count for the diceware passphrase.</source>
         <translation>Liczba słów dla hasła diceware.</translation>
     </message>
@@ -8176,7 +8302,7 @@ Czy chcesz ją zastąpić?</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>Type: Słownikowy</translation>
+        <translation>Typ: Słownikowy</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
@@ -8556,7 +8682,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation>BŁĄD: Nieznany atrybut %1.</translation>
+        <translation>BŁĄD: nieznany atrybut %1.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
@@ -8591,7 +8717,7 @@ Dostępne polecenia:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>OSTRZEŻENIE: Używasz starego formatu pliku klucza, który może nie być
+        <translation>OSTRZEŻENIE: używasz starego formatu pliku klucza, który może nie być
 obsługiwany przez KeePassXC w przyszłości.
 
 Rozważ wygenerowanie nowego pliku klucza.</translation>
@@ -8622,7 +8748,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation>Błąd: Hasła nie są zgodne.</translation>
+        <translation>Błąd: hasła nie są zgodne.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
@@ -8656,7 +8782,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
-        <translation>Błąd: Proces okon się nie zakończył</translation>
+        <translation>Błąd: proces okon się nie zakończył</translation>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
@@ -8751,20 +8877,12 @@ Jądro: %3 %4</translation>
         <translation>KeeShare</translation>
     </message>
     <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
         <source>Quick Unlock</source>
         <translation>Szybkie odblokowanie</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
         <translation>Integracja z usługą sekretów</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Żaden</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -8808,7 +8926,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1 (%2 rundy, %3 KB)</translation>
+        <translation>Argon2%1 (%2 rund, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
@@ -9048,7 +9166,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
-        <translation>Ostrzeżenie: Nie udało się zablokować przechwytywania ekranu okna najwyższego poziomu.</translation>
+        <translation>Ostrzeżenie: nie udało się zablokować przechwytywania ekranu okna najwyższego poziomu.</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
@@ -9287,6 +9405,14 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
         <translation>Obsługiwane są tylko PBKDF i Argon2, nie można odszyfrować pliku JSON</translation>
     </message>
     <message>
+        <source>Hardware Keys</source>
+        <translation>Klucze sprzętowe</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Klucz dostępu</translation>
+    </message>
+    <message>
         <source>Reset Shortcuts</source>
         <translation>Zresetuj skróty</translation>
     </message>
@@ -9307,24 +9433,8 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
         <translation>Skrót %1 powoduje konflikt z &apos;%2&apos;. Zastąpić skrót?</translation>
     </message>
     <message>
-        <source>Encrypted files are not supported.</source>
-        <translation>Pliki zaszyfrowane nie są obsługiwane.</translation>
-    </message>
-    <message>
-        <source>Proton Pass Import</source>
-        <translation>Import Proton Pass</translation>
-    </message>
-    <message>
-        <source>Passkey</source>
-        <translation>Klucz dostępu</translation>
-    </message>
-    <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
         <translation>Format do użycia podczas eksportowania. Dostępne opcje to &apos;xml&apos;, &apos;csv&apos; lub &apos;html&apos;. Domyślnie &apos;xml&apos;.</translation>
-    </message>
-    <message>
-        <source>start minimized to the system tray</source>
-        <translation>uruchom zminimalizowany do zasobnika systemowego</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
@@ -9339,8 +9449,20 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
         <translation>%1, wiersz: %2, kolumna: %3</translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Pliki zaszyfrowane nie są obsługiwane.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Import Proton Pass</translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation>Tagi</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>uruchom zminimalizowany do zasobnika systemowego</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
@@ -9421,6 +9543,29 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     <message>
         <source>Internal zlib error: </source>
         <translation>Błąd wewnętrzny zlib: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteDesktopPortal</name>
+    <message>
+        <source>Remote desktop session is not active</source>
+        <translation>Sesja pulpitu zdalnego nie jest aktywna</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translation>Sesja zamknięta</translation>
+    </message>
+    <message>
+        <source>User cancelled the interaction</source>
+        <translation>Użytkownik anulował interakcję</translation>
+    </message>
+    <message>
+        <source>User interaction was canceled for unknown reason</source>
+        <translation>Interakcja użytkownika została anulowana z nieznanego powodu</translation>
+    </message>
+    <message>
+        <source>Remote desktop session handle does not match expected path</source>
+        <translation>Uchwyt sesji pulpitu zdalnego nie pasuje do oczekiwanej ścieżki</translation>
     </message>
 </context>
 <context>
@@ -9912,6 +10057,14 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Średnia długość hasła wynosi mniej niż dziesięć znaków. Dłuższe hasła zapewniają większe bezpieczeństwo.</translation>
     </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation>Liczba kluczy dostępu</translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation>Wpisy ze skonfigurowanym TOTP</translation>
+    </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
         <translation><numerusform>%1 znak</numerusform><numerusform>%1 znaki</numerusform><numerusform>%1 znaków</numerusform><numerusform>%1 znaków</numerusform></translation>
@@ -9921,7 +10074,7 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation>Nie udało się połączenie agenta.</translation>
+        <translation>Połączenie agenta nie powiodło się.</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
@@ -10153,7 +10306,7 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poprawia to kompatybilność z niektórymi aplikacjami, które szukają hasła bez uprzedniego odblokowania bazy danych.&lt;/p&gt;&lt;p&gt;Ale włączenie tego może również spowodować awarię klienta, jeśli bazy danych nie można odblokować w określonym czasie (zwykle 25 s, ale w aplikacjach może to być inna wartość). &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poprawia to kompatybilność z niektórymi aplikacjami, które szukają hasła bez uprzedniego odblokowania bazy danych.&lt;/p&gt;&lt;p&gt;Ale włączenie tego może również spowodować awarię klienta, jeśli bazy danych nie można odblokować w określonym czasie (zwykle 25 s, ale w aplikacjach może to być inna wartość). &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;      </translation>
     </message>
 </context>
 <context>
@@ -10344,7 +10497,7 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>UWAGA: Te ustawienia TOTP są niestandardowe i mogą nie działać z innymi autoryzatoram.</translation>
+        <translation>UWAGA: te ustawienia TOTP są niestandardowe i mogą nie działać z innymi autoryzatoram.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
@@ -10524,12 +10677,8 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>General: </source>
-        <translation>Ogólne: </translation>
-    </message>
-    <message>
-        <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Nie można znaleźć interfejsu dla klucza sprzętowego o numerze seryjnym %1. Podłącz go, aby kontynuować.</translation>
+        <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
+        <translation>Nie znaleziono klucza sprzętowego o numerze seryjnym %1. Podłącz go, aby kontynuować.</translation>
     </message>
 </context>
 <context>
@@ -10589,10 +10738,6 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Nie można znaleźć lub uzyskać dostępu do klucza sprzętowego o numerze seryjnym %1. Proszę go okazać, aby kontynuować. </translation>
-    </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
         <translation>Klucz sprzętowy jest zablokowany lub upłynął limit czasu. Odblokuj lub ponownie go okaż, aby kontynuować.</translation>

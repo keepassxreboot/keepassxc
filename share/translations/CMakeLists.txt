@@ -27,7 +27,8 @@ if(WIN32)
 elseif(APPLE OR KEEPASSXC_DIST_APPIMAGE)
     file(GLOB QTBASE_TRANSLATIONS
             /usr/share/qt/translations/qtbase_*.qm
-            ${Qt6_PREFIX}/translations/qtbase_*.qm)
+            ${Qt6_PREFIX}/translations/qtbase_*.qm
+            ${Qt6_PREFIX}/translations/Qt6/qtbase_*.qm)
 endif()
 set(QM_FILES ${QM_FILES} ${QTBASE_TRANSLATIONS})
 

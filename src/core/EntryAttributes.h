@@ -54,8 +54,6 @@ public:
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
 
-    static QRegularExpressionMatch matchReference(const QString& text);
-
     static const QString TitleKey;
     static const QString UserNameKey;
     static const QString PasswordKey;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -312,6 +312,10 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const auto groupUuid = browserRequest.getString("groupUuid");
     const auto downloadFavicon = browserRequest.getString("downloadFavicon");
     const QString realm;
+
+    if (EntryPlaceholders::containsPlaceholder(login) || EntryPlaceholders::containsPlaceholder(password)) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_USE_REFERENCES);
+    }
 
     EntryParameters entryParameters;
     entryParameters.dbid = id;

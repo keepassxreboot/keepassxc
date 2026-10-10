@@ -19,6 +19,7 @@
 #include "ui_BrowserPasskeysConfirmationDialog.h"
 
 #include "core/Entry.h"
+#include "gui/GuiTools.h"
 #include <QCloseEvent>
 #include <QUrl>
 
@@ -45,6 +46,12 @@ BrowserPasskeysConfirmationDialog::BrowserPasskeysConfirmationDialog(QWidget* pa
 
 BrowserPasskeysConfirmationDialog::~BrowserPasskeysConfirmationDialog()
 {
+}
+
+void BrowserPasskeysConfirmationDialog::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    GuiTools::centerWidgetOnActiveScreen(this);
 }
 
 void BrowserPasskeysConfirmationDialog::registerCredential(const QString& username,

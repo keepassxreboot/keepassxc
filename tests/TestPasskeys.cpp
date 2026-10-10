@@ -550,6 +550,9 @@ void TestPasskeys::testIsDomain()
     QVERIFY(!passkeyUtils()->isDomain("example.com."));
     QVERIFY(!passkeyUtils()->isDomain("127.0.0.1"));
     QVERIFY(!passkeyUtils()->isDomain("127.0.0.1."));
+
+    QVERIFY(passkeyUtils()->isDomain("xn--e1afmkfd.xn--p1ai"));
+    QVERIFY(passkeyUtils()->isDomain("xn--x-zfa.fi"));
 }
 
 // List from https://html.spec.whatwg.org/multipage/browsers.html#is-a-registrable-domain-suffix-of-or-is-equal-to

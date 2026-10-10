@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 #include "ShareExport.h"
+#include "core/EntryPlaceholders.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Random.h"
@@ -42,8 +43,8 @@ namespace
     {
         for (const auto& attribute : EntryAttributes::DefaultAttributes) {
             const auto standardValue = targetEntry->attributes()->value(attribute);
-            const auto type = targetEntry->placeholderType(standardValue);
-            if (type != Entry::PlaceholderType::Reference) {
+            const auto type = EntryPlaceholders::placeholderType(standardValue);
+            if (type != EntryPlaceholders::PlaceholderType::Reference) {
                 // No reference to resolve
                 continue;
             }

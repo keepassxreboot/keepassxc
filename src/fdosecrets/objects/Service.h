@@ -175,7 +175,16 @@ namespace FdoSecrets
         bool m_insideEnsureDefaultAlias{false};
         bool m_unlockingAnyDatabase{false};
         // list of db currently has unlock dialog shown
-        QHash<const DatabaseWidget*, QMetaObject::Connection> m_unlockingDb{};
+        struct UnlockingDbEntry
+        {
+            // oneshot connection on databaseUnlocked, delaying the done signal
+            // until the database has actually finished unlocking
+            QMetaObject::Connection unlockedConn;
+            // cleanup in case the widget is destroyed while its dialog is open,
+            // otherwise the stale entry would block unlock dialogs forever
+            QMetaObject::Connection destroyedConn;
+        };
+        QHash<const DatabaseWidget*, UnlockingDbEntry> m_unlockingDb{};
         QSet<const DatabaseWidget*> m_lockingDb{}; // list of db being locking
     };
 
