@@ -5,7 +5,6 @@
   "dependencies": [
     "botan",
     "minizip",
-    "libqrencode",
     "readline",
     "zlib",
     "nu-book-zxing-cpp",

@@ -23,7 +23,7 @@
 #include <QSvgRenderer>
 #include <QTest>
 
-#include "qrcode/QrCode.h"
+#include "gui/QrCode.h"
 #include "qrdecoder/QrDecoder.h"
 
 QTEST_GUILESS_MAIN(TestQrDecoder)
@@ -51,7 +51,7 @@ void TestQrDecoder::testDecodeTotpQrCode()
         "ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm="
         "SHA1&digits=6&period=30";
 
-    QrCode qrCode(secret, QrCode::Version::AUTO, QrCode::ErrorCorrectionLevel::MEDIUM);
+    QrCode qrCode(secret, QrCode::ErrorCorrectionLevel::MEDIUM);
 
     QVERIFY(qrCode.isValid());
 

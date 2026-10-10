@@ -56,7 +56,7 @@ parts:
       - libbotan-2-dev
       - libargon2-dev
       - zlib1g-dev
-      - libqrencode-dev
+      - libzxing-dev
       - libusb-1.0-0-dev
       - libreadline-dev
       - libpcsclite-dev
@@ -69,7 +69,7 @@ parts:
     stage-packages:
       - dbus
       - libbotan-2-19
-      - libqrencode4
+      - libzxing1
       - libusb-1.0-0
       - libreadline8
       - libpcsclite1

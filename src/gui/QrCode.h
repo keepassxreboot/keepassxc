@@ -20,10 +20,8 @@
 
 #include <QScopedPointer>
 
-class QImage;
 class QIODevice;
 class QString;
-class QByteArray;
 
 struct QrCodePrivate;
 
@@ -39,26 +37,7 @@ public:
         HIGH
     };
 
-    // See: http://www.qrcode.com/en/about/version.html
-    // clang-format off
-    enum class Version : int
-    {
-        AUTO = 0,
-        V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14, V15, V16, V17, V18, V19, V20,
-        V21, V22, V23, V24, V25, V26, V27, V28, V29, V30, V31, V32, V33, V34, V35, V36, V37, V38, V39, V40
-    };
-    // clang-format on
-
-    // Uses QRcode_encodeString (can't contain NUL characters)
-    explicit QrCode(const QString& data,
-                    const Version version = Version::AUTO,
-                    const ErrorCorrectionLevel ecl = ErrorCorrectionLevel::HIGH,
-                    const bool caseSensitive = true);
-
-    // Uses QRcode_encodeData (can contain NUL characters)
-    explicit QrCode(const QByteArray& data,
-                    const Version version = Version::AUTO,
-                    const ErrorCorrectionLevel ecl = ErrorCorrectionLevel::HIGH);
+    explicit QrCode(const QString& data, const ErrorCorrectionLevel ecl = ErrorCorrectionLevel::HIGH);
 
     QrCode();
     ~QrCode();
@@ -67,10 +46,6 @@ public:
     void writeSvg(QIODevice* outputDevice, const int dpi, const int margin = 4) const;
 
 private:
-    void init(const QString& data, const Version version, const ErrorCorrectionLevel ecl, const bool caseSensitive);
-
-    void init(const QByteArray& data, const Version version, const ErrorCorrectionLevel ecl);
-
     QScopedPointer<QrCodePrivate> d_ptr;
 };
 

@@ -27,6 +27,5 @@ if(KPXC_FEATURE_QRDECODER)
 
     add_library(qrdecoder STATIC ${qrdecoder_SOURCES})
 
-    find_package(ZXing CONFIG REQUIRED)
     target_link_libraries(qrdecoder Qt6::Core Qt6::Widgets ZXing::ZXing)
 endif()
