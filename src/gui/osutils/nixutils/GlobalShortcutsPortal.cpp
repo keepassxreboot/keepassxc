@@ -83,7 +83,7 @@ GlobalShortcutsPortal::GlobalShortcutsPortal(QObject* parent)
 
 bool GlobalShortcutsPortal::isAvailable() const
 {
-    return s_shortcutsInterface->isValid();
+    return s_shortcutsInterface->version() > 0;
 }
 
 void GlobalShortcutsPortal::configureShortcuts()
