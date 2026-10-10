@@ -130,6 +130,12 @@ add_unit_test(NAME testhibp SOURCES TestHibp.cpp
 add_unit_test(NAME testtotp SOURCES TestTotp.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testqrdecoder SOURCES TestQrDecoder.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testtotpsetupdialog SOURCES TestTotpSetupDialog.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testbase32 SOURCES TestBase32.cpp
         LIBS ${TEST_LIBRARIES})
 
@@ -196,15 +202,6 @@ if(KPXC_FEATURE_NETWORK)
 
     add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp 
         LIBS ${TEST_LIBRARIES})
-endif()
-
-if(KPXC_FEATURE_QRDECODER)
-    add_unit_test(NAME testqrdecoder SOURCES TestQrDecoder.cpp
-            LIBS qrdecoder testsupport ${TEST_LIBRARIES})
-    add_unit_test(NAME testqrtotpsetupdialog SOURCES TestQrTotpSetupDialog.cpp
-            LIBS qrdecoder testsupport ${TEST_LIBRARIES})
-    add_unit_test(NAME testqrtotpwidget SOURCES TestQrTotpWidget.cpp
-            LIBS qrdecoder testsupport ${TEST_LIBRARIES})
 endif()
 
 if(WITH_GUI_TESTS)

@@ -53,14 +53,12 @@ option(KPXC_MINIMAL "Build KeePassXC with the minimal feature set required for b
 option(KPXC_FEATURE_BROWSER "Browser integration and passkeys support" ON)
 option(KPXC_FEATURE_SSHAGENT "SSH Agent integration" ON)
 option(KPXC_FEATURE_FDOSECRETS "freedesktop.org Secret Service integration; replace system keyring" ON)
-option(KPXC_FEATURE_QRDECODER "Read TOTP configuration from QR codes" ON)
 
 if(KPXC_MINIMAL)
     # Disable advanced features in minimal mode
     set(KPXC_FEATURE_BROWSER OFF)
     set(KPXC_FEATURE_SSHAGENT OFF)
     set(KPXC_FEATURE_FDOSECRETS OFF)
-    set(KPXC_FEATURE_QRDECODER OFF)
 endif()
 
 # Minor Feature Flags
@@ -88,7 +86,6 @@ endif()
 add_feature_info("Networking" KPXC_FEATURE_NETWORK "Code that can reach out to external networks is included (e.g. downloading icons)")
 add_feature_info("Update Checks" KPXC_FEATURE_UPDATES "Periodic update checks can be performed")
 add_feature_info("Documentation" KPXC_FEATURE_DOCS "Offline documentation")
-add_feature_info("QR Decoder" KPXC_FEATURE_QRDECODER "Read TOTP configuration from QR codes")
 
 # VCPKG features (must come before project())
 if(WITH_BUILD_QT)

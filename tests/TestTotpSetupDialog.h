@@ -15,13 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTQRTOTPWIDGET_H
-#define KEEPASSXC_TESTQRTOTPWIDGET_H
+#ifndef KEEPASSXC_TESTTOTPSETUPDIALOG_H
+#define KEEPASSXC_TESTTOTPSETUPDIALOG_H
 
 #include <QObject>
-#include <QString>
 
-class TestQrTotpWidget : public QObject
+class TestTotpSetupDialog : public QObject
 {
     Q_OBJECT
 
@@ -30,14 +29,17 @@ private slots:
     void cleanup();
 
     void testInitialState();
-    void testApplyValidUri();
+    void testApplyDefaultUri();
+    void testApplyCustomUri();
     void testApplyInvalidUri();
-    void testPasteValidUri();
-    void testPasteInvalidText();
-    void testKeyboardPasteValidUri();
+    void testDropQrImage();
+    void testDropImageWithoutQrCode();
+    void testPasteQrImage();
+    void testPasteUri();
+    void testSaveSettings();
 
 private:
     QString m_clipboardText;
 };
 
-#endif // KEEPASSXC_TESTQRTOTPWIDGET_H
+#endif // KEEPASSXC_TESTTOTPSETUPDIALOG_H

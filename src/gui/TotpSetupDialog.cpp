@@ -20,7 +20,15 @@
 
 #include "core/Base32.h"
 #include "core/Totp.h"
+#include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "gui/QrDecoder.h"
+
+#include <QClipboard>
+#include <QGuiApplication>
+#include <QImageReader>
+#include <QMimeData>
+#include <QSignalBlocker>
 
 TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     : QDialog(parent)
@@ -35,6 +43,10 @@ TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(saveSettings()));
     connect(m_ui->radioCustom, SIGNAL(toggled(bool)), SLOT(toggleCustom(bool)));
+    connect(m_ui->otpauthEdit, &QLineEdit::textChanged, this, &TotpSetupDialog::applyOtpauthUri);
+    connect(m_ui->qrDropArea, &QrDropArea::imageDropped, this, &TotpSetupDialog::decodeQrImage);
+    connect(m_ui->openImageButton, &QPushButton::clicked, this, &TotpSetupDialog::openQrImage);
+    connect(m_ui->pasteImageButton, &QPushButton::clicked, this, &TotpSetupDialog::pasteQrImage);
 
     init();
 }
@@ -113,41 +125,130 @@ void TotpSetupDialog::init()
     // Read entry totp settings
     auto settings = m_entry->totpSettings();
     if (settings) {
-        auto key = settings->key;
-        m_ui->seedEdit->setText(key.remove("="));
-        m_ui->seedEdit->setCursorPosition(0);
-        m_ui->stepSpinBox->setValue(settings->step);
-
-        if (settings->encoder.shortName == Totp::STEAM_SHORTNAME) {
-            m_ui->radioSteam->setChecked(true);
-        } else if (Totp::hasCustomSettings(settings)) {
-            m_ui->radioCustom->setChecked(true);
-            m_ui->digitsSpinBox->setValue(settings->digits);
-            int index = m_ui->algorithmComboBox->findData(settings->algorithm);
-            if (index != -1) {
-                m_ui->algorithmComboBox->setCurrentIndex(index);
-            }
-        }
+        loadSettings(settings);
 
         auto error = Totp::checkValidSettings(settings);
         m_ui->invalidKeyLabel->setVisible(!error.isEmpty());
     }
 }
 
-void TotpSetupDialog::setSettings(const Totp::Settings& settings)
+void TotpSetupDialog::loadSettings(const QSharedPointer<Totp::Settings>& settings)
 {
-    m_ui->seedEdit->setText(settings.key);
+    auto key = settings->key;
+    m_ui->seedEdit->setText(key.remove("="));
+    m_ui->seedEdit->setCursorPosition(0);
+    m_ui->stepSpinBox->setValue(settings->step);
 
-    m_ui->radioCustom->setChecked(true);
-    m_ui->customSettingsGroup->setEnabled(true);
+    if (settings->encoder.shortName == Totp::STEAM_SHORTNAME) {
+        m_ui->radioSteam->setChecked(true);
+    } else if (Totp::hasCustomSettings(settings)) {
+        m_ui->radioCustom->setChecked(true);
+        m_ui->digitsSpinBox->setValue(settings->digits);
+        int index = m_ui->algorithmComboBox->findData(settings->algorithm);
+        if (index != -1) {
+            m_ui->algorithmComboBox->setCurrentIndex(index);
+        }
+    } else {
+        m_ui->radioDefault->setChecked(true);
+    }
+}
 
-    const auto algorithmIndex = m_ui->algorithmComboBox->findData(settings.algorithm);
-    if (algorithmIndex >= 0) {
-        m_ui->algorithmComboBox->setCurrentIndex(algorithmIndex);
+void TotpSetupDialog::showError(const QString& message)
+{
+    m_ui->invalidKeyLabel->setText(message);
+    m_ui->invalidKeyLabel->setVisible(!message.isEmpty());
+}
+
+void TotpSetupDialog::applyOtpauthUri(const QString& uri)
+{
+    const auto text = uri.trimmed();
+    if (text.isEmpty()) {
+        showError({});
+        return;
     }
 
-    m_ui->stepSpinBox->setValue(settings.step);
-    m_ui->digitsSpinBox->setValue(settings.digits);
+    QSharedPointer<Totp::Settings> settings;
+    if (text.startsWith("otpauth://", Qt::CaseInsensitive)) {
+        settings = Totp::parseSettings(text);
+    }
 
-    m_ui->seedEdit->setFocus();
+    if (!settings || settings->key.isEmpty() || !Totp::checkValidSettings(settings).isEmpty()) {
+        showError(tr("Error: invalid otpauth URI"));
+        return;
+    }
+
+    showError({});
+    loadSettings(settings);
+}
+
+void TotpSetupDialog::decodeQrImage(const QImage& image)
+{
+    m_ui->qrDropArea->setImage(image);
+
+    const auto text = QrDecoder::decode(image);
+    if (text.isEmpty()) {
+        showError(tr("Error: no QR code found in the image"));
+        return;
+    }
+
+    if (!text.startsWith("otpauth://", Qt::CaseInsensitive)) {
+        showError(tr("Error: the QR code does not contain a TOTP setup URI"));
+        return;
+    }
+
+    // Apply explicitly so the settings are reloaded even if the URI did not change
+    {
+        QSignalBlocker blocker(m_ui->otpauthEdit);
+        m_ui->otpauthEdit->setText(text);
+    }
+    applyOtpauthUri(text);
+}
+
+void TotpSetupDialog::openQrImage()
+{
+    QStringList formats;
+    for (const auto& format : QImageReader::supportedImageFormats()) {
+        formats << QString("*.%1").arg(QString::fromLatin1(format));
+    }
+    const auto filters = QString("%1 (%2);;%3 (*)").arg(tr("Images"), formats.join(' '), tr("All files"));
+
+    const auto fileName =
+        fileDialog()->getOpenFileName(this, tr("Open QR code image"), FileDialog::getLastDir("totpqrcode"), filters);
+    if (fileName.isEmpty()) {
+        return;
+    }
+    FileDialog::saveLastDir("totpqrcode", fileName, true);
+
+    QImage image(fileName);
+    if (image.isNull()) {
+        showError(tr("Error: unable to open the image"));
+        return;
+    }
+
+    decodeQrImage(image);
+}
+
+void TotpSetupDialog::pasteQrImage()
+{
+    const auto* mimeData = QGuiApplication::clipboard()->mimeData();
+    if (!mimeData) {
+        return;
+    }
+
+    // An otpauth URI copied as text is applied directly
+    if (mimeData->hasText() && !mimeData->hasImage()) {
+        const auto text = mimeData->text().trimmed();
+        if (text.startsWith("otpauth://", Qt::CaseInsensitive)) {
+            m_ui->otpauthEdit->setText(text);
+            return;
+        }
+    }
+
+    const auto image = QrDropArea::imageFromMimeData(mimeData);
+    if (image.isNull()) {
+        showError(tr("Error: the clipboard does not contain an image"));
+        return;
+    }
+
+    decodeQrImage(image);
 }

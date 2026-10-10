@@ -24,7 +24,7 @@
 #include <QTest>
 
 #include "gui/QrCode.h"
-#include "qrdecoder/QrDecoder.h"
+#include "gui/QrDecoder.h"
 
 QTEST_GUILESS_MAIN(TestQrDecoder)
 

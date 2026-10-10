@@ -15,44 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_QRTOTPWIDGET_H
-#define KEEPASSXC_QRTOTPWIDGET_H
-
-#include <QSharedPointer>
-#include <QWidget>
+#ifndef KEEPASSXC_QRDECODER_H
+#define KEEPASSXC_QRDECODER_H
 
 class QImage;
-class QLineEdit;
-
-namespace Totp
-{
-    struct Settings;
-}
+class QString;
 
 namespace QrDecoder
 {
+    QString decode(const QImage& image);
+}
 
-    class QrTotpWidget : public QWidget
-    {
-        Q_OBJECT
-
-    public:
-        explicit QrTotpWidget(QWidget* parent = nullptr);
-
-    signals:
-        void settingsReady(const QSharedPointer<Totp::Settings>& settings);
-
-    protected:
-        bool eventFilter(QObject* watched, QEvent* event) override;
-
-    private:
-        void pasteClipboard();
-        void pasteImage();
-        void decodeImage(const QImage& image);
-
-        QLineEdit* m_uriEdit = nullptr;
-    };
-
-} // namespace QrDecoder
-
-#endif // KEEPASSXC_QRTOTPWIDGET_H
+#endif // KEEPASSXC_QRDECODER_H

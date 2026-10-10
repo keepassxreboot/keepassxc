@@ -20,6 +20,7 @@
 #define KEEPASSX_SETUPTOTPDIALOG_H
 
 #include <QDialog>
+#include <QImage>
 
 #include "core/Database.h"
 #include "core/Totp.h"
@@ -38,7 +39,6 @@ public:
     explicit TotpSetupDialog(QWidget* parent = nullptr, Entry* entry = nullptr);
     ~TotpSetupDialog() override;
     void init();
-    void setSettings(const Totp::Settings& settings);
 
 signals:
     void totpUpdated();
@@ -46,8 +46,15 @@ signals:
 private slots:
     void toggleCustom(bool status);
     void saveSettings();
+    void applyOtpauthUri(const QString& uri);
+    void decodeQrImage(const QImage& image);
+    void openQrImage();
+    void pasteQrImage();
 
 private:
+    void loadSettings(const QSharedPointer<Totp::Settings>& settings);
+    void showError(const QString& message);
+
     QScopedPointer<Ui::TotpSetupDialog> m_ui;
     Entry* m_entry;
 };
