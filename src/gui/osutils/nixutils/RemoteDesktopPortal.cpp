@@ -57,7 +57,7 @@ RemoteDesktopPortal::RemoteDesktopPortal(QObject* parent)
 
 bool RemoteDesktopPortal::isAvailable() const
 {
-    if (!s_remoteDesktopInterface->isValid()) {
+    if (s_remoteDesktopInterface->version() == 0) {
         qWarning() << "XDG Remote Desktop portal is not available, Auto-Type disabled";
         return false;
     }
@@ -71,7 +71,7 @@ bool RemoteDesktopPortal::isAvailable() const
 bool RemoteDesktopPortal::isClipboardAvailable() const
 {
     if (!m_clipboardAvailable.has_value()) {
-        m_clipboardAvailable = s_clipboardInterface->isValid() && s_clipboardInterface->version() > 0;
+        m_clipboardAvailable = s_clipboardInterface->version() > 0;
     }
 
     return m_clipboardAvailable.value();
