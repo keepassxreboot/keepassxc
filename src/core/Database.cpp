@@ -63,9 +63,13 @@ Database::Database()
     connect(this, &Database::databaseOpened, this, [this]() {
         updateCommonUsernames();
         updateTagList();
+        updateCustomAttributeKeys();
     });
     connect(this, &Database::modified, this, [this] { updateTagList(); });
-    connect(this, &Database::databaseSaved, this, [this] { updateCommonUsernames(); });
+    connect(this, &Database::databaseSaved, this, [this] {
+        updateCommonUsernames();
+        updateCustomAttributeKeys();
+    });
     connect(m_fileWatcher, &FileWatcher::fileChanged, this, [this] { emit databaseFileChanged(false); });
 
     // static uuid map
@@ -575,6 +579,7 @@ void Database::releaseData()
     m_deletedObjects.clear();
     m_commonUsernames.clear();
     m_tagList.clear();
+    m_customAttributeKeys.clear();
 
     m_fileBlockHash.clear();
     m_ignoreFileChangesUntilSaved = false;
@@ -791,6 +796,11 @@ const QStringList& Database::commonUsernames() const
     return m_commonUsernames;
 }
 
+const QStringList& Database::customAttributeKeys() const
+{
+    return m_customAttributeKeys;
+}
+
 const QStringList& Database::tagList() const
 {
     return m_tagList;
@@ -800,6 +810,32 @@ void Database::updateCommonUsernames(int topN)
 {
     m_commonUsernames.clear();
     m_commonUsernames.append(rootGroup()->usernamesRecursive(topN));
+}
+
+void Database::updateCustomAttributeKeys()
+{
+    m_customAttributeKeys.clear();
+    if (!m_rootGroup) {
+        return;
+    }
+
+    // Search groups recursively looking for custom attribute keys
+    // Use a set to prevent adding duplicates
+    QSet<QString> customKeysSet;
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        if (!entry->isRecycled()) {
+            for (auto key : entry->attributes()->customKeys()) {
+                customKeysSet.insert(key);
+            }
+        }
+    }
+
+    m_customAttributeKeys = customKeysSet.values();
+
+    QCollator collator;
+    collator.setNumericMode(true);
+    collator.setCaseSensitivity(Qt::CaseInsensitive);
+    std::sort(m_customAttributeKeys.begin(), m_customAttributeKeys.end(), collator);
 }
 
 void Database::updateTagList()

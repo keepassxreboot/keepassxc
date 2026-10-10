@@ -303,6 +303,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         }
         if (mods.contains("+")) {
             opts |= Tools::RegexConvertOpts::EXACT_MATCH;
+            opts |= Tools::RegexConvertOpts::CASE_SENSITIVE;
         }
         term.regex = Tools::convertToRegex(term.word, opts);
 

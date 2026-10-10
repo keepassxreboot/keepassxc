@@ -672,6 +672,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
             browserPasskeys()->buildRegisterPublicKeyCredential(credentialCreationOptions);
         if (publicKeyCredentials.credentialId.isEmpty() || publicKeyCredentials.key.isEmpty()
             || publicKeyCredentials.response.isEmpty()) {
+            hideWindow();
             return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
         }
 
@@ -693,6 +694,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                                                                      tr("Register a new passkey to this entry:"),
                                                                      tr("Register"));
                 if (!result) {
+                    hideWindow();
                     return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
                 }
             } else {
@@ -1660,7 +1662,11 @@ void BrowserService::hideWindow() const
         if (m_prevWindowState == WindowState::Hidden) {
             macUtils()->hideOwnWindow();
         } else {
-            macUtils()->raiseLastActiveWindow();
+            if (m_prevWindowState == WindowState::HiddenInSystemTray) {
+                getMainWindow()->hideWindow();
+            } else {
+                macUtils()->raiseLastActiveWindow();
+            }
         }
 #else
         if (m_prevWindowState == WindowState::Hidden) {
@@ -1683,6 +1689,8 @@ void BrowserService::raiseWindow(const bool force)
 
     if (macUtils()->isHidden()) {
         m_prevWindowState = WindowState::Hidden;
+    } else if (getMainWindow()->isMinimizedToSystemTray()) {
+        m_prevWindowState = WindowState::HiddenInSystemTray;
     }
     macUtils()->raiseOwnWindow();
     Tools::wait(500);
@@ -1706,6 +1714,8 @@ void BrowserService::updateWindowState()
 #ifdef Q_OS_MACOS
     if (macUtils()->isHidden()) {
         m_prevWindowState = WindowState::Hidden;
+    } else if (getMainWindow()->isMinimizedToSystemTray()) {
+        m_prevWindowState = WindowState::HiddenInSystemTray;
     }
 #else
     if (getMainWindow()->isHidden()) {

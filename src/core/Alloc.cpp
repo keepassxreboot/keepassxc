@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config-keepassx.h"
 #include <QtGlobal>
 #include <botan/mem_ops.h>
 #include <cstdlib>
@@ -24,8 +25,6 @@
 #include <malloc_np.h>
 #elif defined(HAVE_MALLOC_H)
 #include <malloc.h>
-#else
-#include <cstdlib>
 #endif
 
 #if defined(NDEBUG) && !defined(__cpp_sized_deallocation)

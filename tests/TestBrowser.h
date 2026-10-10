@@ -52,6 +52,9 @@ private slots:
     void testBestMatchingWithAdditionalURLs();
     void testRestrictBrowserKey();
     void testHideEntry();
+    void testBrowserHostMessaging();
+    void testBrowserHostFragmentedMessaging();
+    void testBrowserHostCoalescedMessaging();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root, bool additionalUrl = false) const;

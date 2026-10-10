@@ -186,7 +186,8 @@ void IconDownloader::fetchFinished()
                 if (redirectTarget.isRelative()) {
                     redirectTarget = m_fetchUrl.resolved(redirectTarget);
                 }
-                m_urlsToTry.prepend(redirectTarget);
+                fetchFavicon(redirectTarget);
+                return;
             }
         } else {
             // No redirect, and we theoretically have some icon data now.

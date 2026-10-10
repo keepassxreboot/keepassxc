@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -46,6 +46,30 @@ void TestEntry::testHistoryItemDeletion()
     entry->removeHistoryItems(historyEntriesToRemove);
     QCOMPARE(entry->historyItems().size(), 0);
     QVERIFY(historyEntry.isNull());
+}
+
+void TestEntry::testHistoryItemCustomData()
+{
+    QScopedPointer<Entry> entry(new Entry());
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle("Original Title");
+    entry->customData()->set("CustomKey", "CustomValue");
+
+    entry->beginUpdate();
+    entry->setTitle("New Title");
+    entry->endUpdate();
+
+    // The history item must carry the custom data present before the update
+    QCOMPARE(entry->historyItems().size(), 1);
+    const Entry* historyItem = entry->historyItems().constFirst();
+    QCOMPARE(historyItem->customData()->value("CustomKey"), QString("CustomValue"));
+
+    // Restoring from the history item restores the custom data
+    entry->customData()->remove("CustomKey");
+    QVERIFY(entry->customData()->isEmpty());
+
+    entry->copyDataFrom(historyItem);
+    QCOMPARE(entry->customData()->value("CustomKey"), QString("CustomValue"));
 }
 
 void TestEntry::testCopyDataFrom()
@@ -476,6 +500,7 @@ void TestEntry::testResolveUuidPlaceholder()
 
     // Test advanced attribute with {REF:U@I:{UUID}} - should resolve to the entry's own username
     entry->attributes()->set("SelfReference", "{REF:U@I:{UUID}}");
+    // entry->attributes()->set("SelfReference", "{{{{{{{{{{{{{{REF:U@I:{UUID}}}}}}}}}}}}}}}");
     QString attributeValue = entry->attributes()->value("SelfReference");
     QString resolvedSelfRef = entry->resolveMultiplePlaceholders(attributeValue);
 
@@ -905,4 +930,55 @@ void TestEntry::testPreviousParentGroup()
     entry->setGroup(group2);
     QVERIFY(entry->previousParentGroupUuid() == group1->uuid());
     QVERIFY(entry->previousParentGroup() == group1);
+}
+
+void TestEntry::testContainsPlaceholder()
+{
+    // Dynamic placeholders
+    QVERIFY(!EntryPlaceholders::containsPlaceholder(""));
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("testString{REF:nothing")); // Placeholder is not finished
+    QVERIFY(EntryPlaceholders::containsPlaceholder("testString{REF:P@T:Other Entry}something"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("testString{ref:P@T:Other Entry}something")); // lowercase
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL:USERNAME}yes"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL:USERNAME}yes{REF:A@O:Attribute 1}"));
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("{NOTAREALPLACEHOLDER:USERNAME}yes")); // Unknown placeholder
+    QVERIFY(EntryPlaceholders::containsPlaceholder("yes{URL:PORT}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("yes{S:KPEX_PASSKEYS_USER_ID}no"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{T-REPLACE-RX:/{REF:U@I:%1}/0202$/2/}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{t-replace-rx:/{REF:U@I:%1}/0202$/2/}")); // lowercase
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{REF:U@A:https://url.com/ }")); // Space before }
+
+    // Escaped
+    QVERIFY(EntryPlaceholders::containsPlaceholder("url\\{REF:U@A:https://url.com/}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("\\{REF:U@A:https://url.com/}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("\\{URL:USERNAME\\}yes"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL:USERNAME\\}yes"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("\\{URL:USERNAME}yes"));
+
+    // Placeholder can be inside {} brackets, and must be identified
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{{REF:U@A:https://url.com/}}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{{{REF:U@A:https://url.com/}}}"));
+
+    // This kind of mixup is also a placeholder
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{[{REF:U@A:https://url.com/}]}"));
+
+    // Static placeholdersi
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{TITLE}"));
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("{TITLE2}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{USERNAME}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{PASSWORD}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{NOTES}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("inthe{NOTES}middle"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{TOTP}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{{TOTP}}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("after{{TOTP}}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("test\\{TOTP\\}"));
+
+    // Max depth (10), and max depth exceeded
+    for (auto i = 1; i <= EntryPlaceholders::ResolveMaximumDepth + 10; ++i) {
+        const auto placeholder =
+            QString("{").repeated(i) + QString("REF:U@A:https://url.com/") + QString("}").repeated(i);
+        QVERIFY(EntryPlaceholders::containsPlaceholder(placeholder));
+    }
 }

@@ -493,6 +493,9 @@
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
+                  </property>
                   <property name="sizeAdjustPolicy">
                    <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
@@ -532,6 +535,13 @@
               <string>Entry Management</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QCheckBox" name="autocompleteSuggestionsCheckBox">
+                <property name="text">
+                 <string>Show autocomplete suggestions for username and additional attributes</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QCheckBox" name="ConfirmMoveEntryToRecycleBinCheckBox">
                 <property name="text">

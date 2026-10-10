@@ -385,8 +385,27 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
         return false;
     }
 
+    // Closing may spin a nested event loop (e.g. save-on-close waits for the worker
+    // thread in AsyncTask), from which this method can be re-entered for the same
+    // widget. QWidget::close() would then report success right away without
+    // delivering another close event, and deleting the widget here would leave the
+    // outer invocation operating on a destroyed widget. Let only the outermost
+    // invocation remove the tab and schedule deletion.
+    if (m_widgetsPendingClose.contains(dbWidget)) {
+        return false;
+    }
+
     QString filePath = dbWidget->database()->filePath();
-    if (!dbWidget->close()) {
+    m_widgetsPendingClose.insert(dbWidget);
+    bool closed = dbWidget->close();
+    m_widgetsPendingClose.remove(dbWidget);
+    if (!closed) {
+        return false;
+    }
+
+    // the tab layout may have shifted while nested event loops ran during close
+    tabIndex = indexOf(dbWidget);
+    if (tabIndex < 0) {
         return false;
     }
 

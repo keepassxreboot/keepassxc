@@ -23,9 +23,11 @@
 #include <QAbstractTableModel>
 #include <QCheckBox>
 #include <QDialog>
+#include <QPixmap>
 #include <QPointer>
 #include <QPushButton>
 #include <QSet>
+#include <QUuid>
 
 #include "core/Global.h"
 
@@ -70,13 +72,13 @@ public:
         DenyAll,
     };
 
-    QHash<Entry*, AuthDecision> decisions() const;
+    QHash<QUuid, AuthDecision> decisions() const;
 
 signals:
-    void finished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
+    void finished(const QHash<QUuid, AuthDecision>& results, AuthDecision forFutureEntries);
 
 private slots:
-    void denyEntryClicked(Entry* entry, const QModelIndex& index);
+    void denyEntryClicked(const QUuid& uuid, const QModelIndex& index);
     void dialogFinished(int result);
 
 private:
@@ -88,14 +90,14 @@ private:
     QScopedPointer<Ui::AccessControlDialog> m_ui;
     QPointer<QCheckBox> m_rememberCheck;
     QScopedPointer<EntryModel> m_model;
-    QHash<Entry*, AuthDecision> m_decisions;
+    QHash<QUuid, AuthDecision> m_decisions;
 };
 
 class AccessControlDialog::EntryModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit EntryModel(QList<Entry*> entries, QObject* parent = nullptr);
+    explicit EntryModel(const QList<Entry*>& entries, QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& parent) const override;
@@ -106,29 +108,40 @@ public slots:
     void toggleCheckState(const QModelIndex& index);
 
 private:
+    // A snapshot of everything shown about an entry, taken at construction.
+    // The dialog must not keep Entry pointers: the entries are destroyed if
+    // the database locks or closes while the dialog is open.
+    struct EntryData
+    {
+        QUuid uuid;
+        QString title;
+        QString username;
+        QPixmap icon;
+    };
+
     bool isValid(const QModelIndex& index) const;
 
-    QList<Entry*> m_entries;
-    QSet<Entry*> m_selected;
+    QList<EntryData> m_entryDataList;
+    QSet<QUuid> m_selected;
 };
 
 class AccessControlDialog::DenyButton : public QPushButton
 {
     Q_OBJECT
 
-    Q_PROPERTY(Entry* entry READ entry WRITE setEntry USER true)
+    Q_PROPERTY(QUuid uuid READ uuid WRITE setUuid USER true)
 
     QPersistentModelIndex m_index;
-    QPointer<Entry> m_entry;
+    QUuid m_uuid;
 
 public:
     explicit DenyButton(QWidget* p, const QModelIndex& idx);
 
-    void setEntry(Entry* e);
-    Entry* entry() const;
+    void setUuid(const QUuid& uuid);
+    QUuid uuid() const;
 
 signals:
-    void clicked(Entry*, const QModelIndex& idx);
+    void clicked(const QUuid& uuid, const QModelIndex& idx);
 };
 
 #endif // KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H

@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -29,6 +30,7 @@ class TestEntry : public QObject
 private slots:
     void initTestCase();
     void testHistoryItemDeletion();
+    void testHistoryItemCustomData();
     void testCopyDataFrom();
     void testClone();
     void testResolveUrl();
@@ -43,6 +45,7 @@ private slots:
     void testIsRecycled();
     void testMoveUpDown();
     void testPreviousParentGroup();
+    void testContainsPlaceholder();
 };
 
 #endif // KEEPASSX_TESTENTRY_H

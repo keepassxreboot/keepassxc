@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@
 #include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
+#include "core/EntryPlaceholders.h"
 #include "core/Global.h"
 #include "core/TimeInfo.h"
 
@@ -200,48 +201,6 @@ public:
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
-    enum class PlaceholderType
-    {
-        NotPlaceholder,
-        Unknown,
-        Title,
-        UserName,
-        Password,
-        Notes,
-        Totp,
-        Url,
-        Uuid,
-        UrlWithoutScheme,
-        UrlScheme,
-        UrlHost,
-        UrlPort,
-        UrlPath,
-        UrlQuery,
-        UrlFragment,
-        UrlUserInfo,
-        UrlUserName,
-        UrlPassword,
-        Reference,
-        CustomAttribute,
-        DateTimeSimple,
-        DateTimeYear,
-        DateTimeMonth,
-        DateTimeDay,
-        DateTimeHour,
-        DateTimeMinute,
-        DateTimeSecond,
-        DateTimeUtcSimple,
-        DateTimeUtcYear,
-        DateTimeUtcMonth,
-        DateTimeUtcDay,
-        DateTimeUtcHour,
-        DateTimeUtcMinute,
-        DateTimeUtcSecond,
-        DbDir,
-        Conversion,
-        Regex
-    };
-
     static const int DefaultIconNumber;
 
     /**
@@ -252,15 +211,11 @@ public:
      */
     Entry* clone(CloneFlags flags = CloneDefault) const;
     void copyDataFrom(const Entry* other);
-    QString maskPasswordPlaceholders(const QString& str) const;
     Entry* resolveReference(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
-    QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
-    QString resolveDateTimePlaceholder(PlaceholderType placeholderType) const;
     QString resolveConversionPlaceholder(const QString& str, QString* error = nullptr) const;
     QString resolveRegexPlaceholder(const QString& str, QString* error = nullptr) const;
-    PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
     /**

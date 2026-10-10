@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,10 +15,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NATIVEMESSAGINGHOST_H
-#define KEEPASSXC_NATIVEMESSAGINGHOST_H
+#ifndef KEEPASSXC_BROWSERHOST_H
+#define KEEPASSXC_BROWSERHOST_H
+
+#include "BrowserShared.h"
 
 #include <QJsonObject>
+#include <QMap>
 #include <QObject>
 #include <QPointer>
 
@@ -50,10 +53,22 @@ private slots:
 
 private:
     void sendClientData(QLocalSocket* socket, const QString& data);
+    QList<QJsonObject> parseSocketData(const QByteArray& socketData,
+                                       const int socketDesc,
+                                       const qsizetype maxLength = BrowserShared::SOCKET_BUFFER_SIZE);
+    QJsonObject parseMessage(const QByteArray& socketData,
+                             const int socketDesc,
+                             const qsizetype maxLength = BrowserShared::SOCKET_BUFFER_SIZE);
+    QJsonObject parseFragmentedMessage(const QByteArray& message,
+                                       const int socketDesc,
+                                       const qsizetype maxLength = BrowserShared::SOCKET_BUFFER_SIZE);
 
 private:
     QPointer<QLocalServer> m_localServer;
     QList<QLocalSocket*> m_socketList;
+    QMap<int, QByteArray> m_messageBuffer;
+
+    friend class TestBrowser;
 };
 
-#endif // KEEPASSXC_NATIVEMESSAGINGHOST_H
+#endif // KEEPASSXC_BROWSERHOST_H

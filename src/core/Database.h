@@ -143,6 +143,7 @@ public:
     void setDeletedObjects(const QList<DeletedObject>& delObjs);
 
     const QStringList& commonUsernames() const;
+    const QStringList& customAttributeKeys() const;
     const QStringList& tagList() const;
     void removeTag(const QString& tag);
 
@@ -173,6 +174,7 @@ public slots:
     void markAsModified();
     void markAsClean();
     void updateCommonUsernames(int topN = 10);
+    void updateCustomAttributeKeys();
     void updateTagList();
     void markNonDataChange();
 
@@ -256,6 +258,7 @@ private:
 
     QStringList m_commonUsernames;
     QStringList m_tagList;
+    QStringList m_customAttributeKeys;
 
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;

@@ -60,6 +60,9 @@ public slots:
     void setEchoMode(QLineEdit::EchoMode mode);
     void setClearButtonEnabled(bool enabled);
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 private slots:
     void popupPasswordGenerator();
     void updateRepeatStatus();

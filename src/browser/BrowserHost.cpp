@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,31 +69,29 @@ void BrowserHost::proxyConnected()
 
 void BrowserHost::readProxyMessage()
 {
-    QLocalSocket* socket = qobject_cast<QLocalSocket*>(QObject::sender());
+    auto* socket = qobject_cast<QLocalSocket*>(QObject::sender());
     if (!socket || socket->bytesAvailable() <= 0) {
         return;
     }
 
-    socket->setReadBufferSize(BrowserShared::NATIVEMSG_MAX_LENGTH);
+    socket->setReadBufferSize(BrowserShared::SOCKET_BUFFER_SIZE);
     int socketDesc = socket->socketDescriptor();
     if (socketDesc) {
-        int max = BrowserShared::NATIVEMSG_MAX_LENGTH;
+        int max = BrowserShared::SOCKET_BUFFER_SIZE;
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
-    QJsonParseError error;
-    auto json = QJsonDocument::fromJson(socket->readAll(), &error);
-    if (json.isNull()) {
-        qWarning() << "Failed to read proxy message: " << error.errorString();
-        return;
+    const auto messages = parseSocketData(socket->readAll(), socketDesc);
+    for (const auto& message : messages) {
+        if (!message.isEmpty()) {
+            emit clientMessageReceived(socket, message);
+        }
     }
-
-    emit clientMessageReceived(socket, json.object());
 }
 
 void BrowserHost::broadcastClientMessage(const QJsonObject& json)
 {
-    QString reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
+    const auto reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
     for (const auto socket : m_socketList) {
         sendClientData(socket, reply);
     }
@@ -101,17 +99,120 @@ void BrowserHost::broadcastClientMessage(const QJsonObject& json)
 
 void BrowserHost::sendClientMessage(QLocalSocket* socket, const QJsonObject& json)
 {
-    QString reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
+    const auto reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
     sendClientData(socket, reply);
 }
 
 void BrowserHost::sendClientData(QLocalSocket* socket, const QString& data)
 {
     if (socket && socket->isValid() && socket->state() == QLocalSocket::ConnectedState) {
-        QByteArray arr = data.toUtf8();
+        const auto arr = data.toUtf8();
         socket->write(arr.constData(), arr.length());
         socket->flush();
     }
+}
+
+// Parses coalesced messages
+QList<QJsonObject>
+BrowserHost::parseSocketData(const QByteArray& socketData, const int socketDesc, const qsizetype maxLength)
+{
+    QList<QJsonObject> messages;
+
+    // Split, and put } back to the messages
+    auto splittedSocketData = socketData.split('}');
+    for (auto i = 0; i < splittedSocketData.size() - 1; ++i) {
+        splittedSocketData[i].append('}');
+    }
+
+    for (const auto& data : splittedSocketData) {
+        if (data.length() > 0) {
+            const auto parsedMessage = parseMessage(data, socketDesc, maxLength);
+            if (!parsedMessage.isEmpty()) {
+                messages << parsedMessage;
+            }
+        }
+    }
+
+    return messages;
+}
+
+// Parses fragmented messages, or messages with garbage data
+// The JSON data recevied is always just one object with keys & values. No nested objects, arrays etc. are present.
+// Coalesced messages rely entirely on that message format.
+QJsonObject BrowserHost::parseMessage(const QByteArray& socketData, const int socketDesc, const qsizetype maxLength)
+{
+    if (socketData.isEmpty()) {
+        return {};
+    }
+
+    // Ignore any garbage at the beginning and try to find the position where JSON data starts
+    auto startPos = socketData.indexOf('{');
+    if (startPos < 0) {
+        //  Allow -1 because message can be fragmented. Set startPos back to 0.
+        startPos = 0;
+    }
+
+    const auto message = socketData.mid(startPos);
+    QJsonParseError error;
+    auto json = QJsonDocument::fromJson(message, &error);
+    if (json.isNull()) {
+        qWarning() << "Failed to read proxy message: " << error.error << error.errorString();
+
+        // First fragmented message is of these errors. Partial message must be stored to a temporary buffer.
+        if (error.error == QJsonParseError::UnterminatedObject || error.error == QJsonParseError::UnterminatedArray
+            || error.error == QJsonParseError::UnterminatedString) {
+            m_messageBuffer.insert(socketDesc, message);
+            return {};
+        }
+
+        // Nth fragmented message can be an illegal value or illegal number
+        if (error.error == QJsonParseError::IllegalValue || error.error == QJsonParseError::IllegalNumber) {
+            return parseFragmentedMessage(message, socketDesc, maxLength);
+        }
+
+        // This error can happen with two different scenarios:
+        // 1. Identifies a non-fragmented message with garbage at the end.
+        // 2. Identifies a fragmented message and passes it forward.
+        if (error.error == QJsonParseError::GarbageAtEnd && error.offset > 0) {
+            // Parse message before the error offset and parse the JSON again
+            const auto parsedMessage = message.left(error.offset);
+            if (parsedMessage.startsWith('{')) {
+                json = QJsonDocument::fromJson(parsedMessage, &error);
+                if (!json.isNull() && error.error == QJsonParseError::NoError) {
+                    m_messageBuffer.remove(socketDesc);
+                    return json.object();
+                }
+            } else {
+                return parseFragmentedMessage(message, socketDesc, maxLength);
+            }
+        }
+    } else {
+        m_messageBuffer.remove(socketDesc);
+        return json.object();
+    }
+
+    return {};
+}
+
+// Returns the previous message(s) from the buffer, combines them with the current one, and parses again
+QJsonObject
+BrowserHost::parseFragmentedMessage(const QByteArray& message, const int socketDesc, const qsizetype maxLength)
+{
+    auto currentBuffer = m_messageBuffer.value(socketDesc);
+    if (currentBuffer.length() == 0) {
+        qWarning() << "Previous buffer not found.";
+        m_messageBuffer.remove(socketDesc);
+        return {};
+    }
+
+    if (currentBuffer.length() + message.length() > maxLength) {
+        qWarning() << "Combined fragmented messages exceeded the maximum allowed length.";
+        m_messageBuffer.remove(socketDesc);
+        return {};
+    }
+
+    currentBuffer.append(message);
+    return parseMessage(currentBuffer, socketDesc, maxLength);
 }
 
 void BrowserHost::proxyDisconnected()

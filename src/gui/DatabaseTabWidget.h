@@ -23,6 +23,7 @@
 #include "gui/MessageWidget.h"
 #include "wizard/ImportWizard.h"
 
+#include <QSet>
 #include <QTabWidget>
 #include <QTimer>
 
@@ -127,6 +128,7 @@ private:
     QPointer<ImportWizard> m_importWizard;
     QTimer m_lockDelayTimer;
     bool m_databaseOpenInProgress;
+    QSet<DatabaseWidget*> m_widgetsPendingClose;
 };
 
 #endif // KEEPASSXC_DATABASETABWIDGET_H

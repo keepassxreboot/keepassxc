@@ -17,6 +17,7 @@
 
 #include "TestBrowser.h"
 
+#include "browser/BrowserHost.h"
 #include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserSettings.h"
 #include "core/Group.h"
@@ -74,24 +75,145 @@ void TestBrowser::testEncryptMessage()
 {
     QJsonObject message;
     message["action"] = "test-action";
+    const int messageSize = 32;
 
+    QString invalidKey = "dGVzdHN0cmluZw==";
     m_browserAction->m_publicKey = SERVERPUBLICKEY;
     m_browserAction->m_secretKey = SERVERSECRETKEY;
     m_browserAction->m_clientPublicKey = PUBLICKEY;
-    auto encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
+    // Public key length is not valid
+    auto encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, invalidKey, SERVERSECRETKEY);
+    QVERIFY(encrypted.isEmpty());
+
+    // Secret key length is not valid
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, invalidKey);
+    QVERIFY(encrypted.isEmpty());
+
+    // Nonce length is not valid
+    encrypted = browserMessageBuilder()->encryptMessage(message, invalidKey, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(encrypted.isEmpty());
+
+    // Max message length is exceeded (set to 20)
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, 20);
+    QVERIFY(encrypted.isEmpty());
+
+    // Empty message
+    encrypted = browserMessageBuilder()->encryptMessage(QJsonObject(), NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(encrypted.isEmpty());
+
+    // Successful encryption, the message itself is 32 bytes
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
     QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
+
+    // Test boundaries (-1, exact length, +1)
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize - 1);
+    QVERIFY(encrypted.isEmpty()); // Exceeds
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize + 1);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
+
+    // Test the same boundaries with MACBYTES-1
+    encrypted = browserMessageBuilder()->encryptMessage(
+        message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize - 1, MacBytes - 1);
+    QVERIFY(encrypted.isEmpty()); // Exceeds
+    encrypted =
+        browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize, MacBytes - 1);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/o="));
+    encrypted = browserMessageBuilder()->encryptMessage(
+        message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize + 1, MacBytes - 1);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/o="));
+
+    // Test the same boundaries with MACBYTES+1
+    encrypted = browserMessageBuilder()->encryptMessage(
+        message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize - 1, MacBytes + 1);
+    QVERIFY(encrypted.isEmpty()); // Exceeds
+    encrypted =
+        browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize, MacBytes + 1);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rPAA=="));
+    encrypted = browserMessageBuilder()->encryptMessage(
+        message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize + 1, MacBytes + 1);
+    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rPAA=="));
+
+    // Encrypt JSON with NULL character. Result will be {"action": "test"}.
+    message["action"] = "test\u0000-action";
+    encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QCOMPARE(encrypted, QString("MRqyE6YAJQcytKFDkFWIF5/swvgeupk4lNgHEm2OO3ujNr0OMzH1XK8="));
 }
 
 void TestBrowser::testDecryptMessage()
 {
     QString message = "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP";
+    const int messageSize = 32;
+    QString invalidKey = "dGVzdHN0cmluZw==";
     m_browserAction->m_publicKey = SERVERPUBLICKEY;
     m_browserAction->m_secretKey = SERVERSECRETKEY;
     m_browserAction->m_clientPublicKey = PUBLICKEY;
-    auto decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
+    // Public key length is not valid
+    auto decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, invalidKey, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Secret key length is not valid
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, invalidKey);
+    QVERIFY(decrypted.isEmpty());
+
+    // Nonce length is not valid
+    decrypted = browserMessageBuilder()->decryptMessage(message, invalidKey, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Max message length is exceeded (set to 20)
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, 20);
+    QVERIFY(decrypted.isEmpty());
+
+    // Empty message
+    decrypted = browserMessageBuilder()->decryptMessage(QString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Successful decryption
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
     QCOMPARE(decrypted["action"].toString(), QString("test-action"));
+
+    // Test boundaries (-1, exact length, +1)
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize - 1);
+    QVERIFY(decrypted.isEmpty()); // Exceeds
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize);
+    QCOMPARE(decrypted["action"].toString(), QString("test-action"));
+    decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, messageSize + 1);
+    QCOMPARE(decrypted["action"].toString(), QString("test-action"));
+
+    // Test the same boundaries with MACBYTES-1
+    for (int i = messageSize - 1; i <= messageSize + 1; ++i) {
+        decrypted =
+            browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, i, MacBytes - 1);
+        QVERIFY(decrypted.isEmpty());
+    }
+
+    // Test the same boundaries with MACBYTES+1
+    for (int i = messageSize - 1; i <= messageSize + 1; ++i) {
+        decrypted =
+            browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY, i, MacBytes + 1);
+        QCOMPARE(decrypted["action"].toString(), QString("test-action"));
+    }
+
+    // Malformed base64
+    decrypted = browserMessageBuilder()->decryptMessage(
+        QString("+zjtntnk4r3GWSl/Ph7Vqip/swvgeupk4lNgHEmA3B4ujNr0OMz6eQtGwjtsj+/rP"),
+        NONCE,
+        PUBLICKEY,
+        SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Malformed data (not base64 encoded)
+    const auto malformed = QString("asdadfsar346fw3242ed<fs=");
+    decrypted = browserMessageBuilder()->decryptMessage(malformed, NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(decrypted.isEmpty());
+
+    // Data had originally a value with NULL char. Encrypted value from testEncryptMessage().
+    const auto jsonWithNull = QString("MRqyE6YAJQcytKFDkFWIF5/swvgeupk4lNgHEm2OO3ujNr0OMzH1XK8=");
+    decrypted = browserMessageBuilder()->decryptMessage(jsonWithNull, NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QCOMPARE(decrypted["action"].toString(), QString("test"));
 }
 
 void TestBrowser::testGetBase64FromKey()
@@ -110,6 +232,10 @@ void TestBrowser::testIncrementNonce()
 {
     auto result = browserMessageBuilder()->incrementNonce(NONCE);
     QCOMPARE(result, INCREMENTEDNONCE);
+
+    const QString invalidNonce = "dGVzdHN0cmluZw==";
+    result = browserMessageBuilder()->incrementNonce(invalidNonce);
+    QVERIFY(result.isEmpty());
 }
 
 void TestBrowser::testBuildResponse()
@@ -907,4 +1033,182 @@ void TestBrowser::testHideEntry()
     root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Disable);
     result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
+}
+
+void TestBrowser::testBrowserHostMessaging()
+{
+    BrowserHost browserHost;
+
+    QByteArray normalMessage(R"({"action": "test-action", "nonce": "testnonce"})");
+    auto result = browserHost.parseMessage(normalMessage, 0);
+    QVERIFY(result.value("action") == "test-action" && result.value("nonce") == "testnonce");
+
+    // Not a valid JSON
+    QByteArray notValid("A normal string");
+    result = browserHost.parseMessage(notValid, 0);
+    QVERIFY(result.isEmpty());
+
+    // Not a valid JSON
+    QByteArray notValid2("{A normal string}");
+    result = browserHost.parseMessage(notValid2, 0);
+    QVERIFY(result.isEmpty());
+
+    // Not a valid JSON
+    QByteArray notValid3("{A normal string");
+    result = browserHost.parseMessage(notValid3, 0);
+    QVERIFY(result.isEmpty());
+
+    // If multiple, only first one gets parsed. parseMessage() does not handle coalesced messages.
+    QByteArray multipleMessages(
+        R"({"action": "test-action", "nonce": "testnonce"}{"action": "test-action2", "nonce": "testnonce2"})");
+    result = browserHost.parseMessage(normalMessage, 0);
+    QVERIFY(result.value("action") == "test-action" && result.value("nonce") == "testnonce");
+
+    // Garbage at the start
+    QByteArray garbageAtStart(R"(GARBAGE{"action": "test-action", "nonce": "testnonce"})");
+    result = browserHost.parseMessage(garbageAtStart, 0);
+    QVERIFY(result.value("action") == "test-action" && result.value("nonce") == "testnonce");
+
+    // Garbage at the start with fragmentation
+    QByteArray garbageAtStartWithFragmentation(R"(GARBAGE{"action": "test-action", "nonce": "testno)");
+    result = browserHost.parseMessage(garbageAtStartWithFragmentation, 0);
+    QVERIFY(result.isEmpty());
+
+    // Garbage at the end
+    QByteArray garbageAtEnd(R"({"action": "test-action", "nonce": "testnonce"}GARBAGE)");
+    result = browserHost.parseMessage(garbageAtEnd, 0);
+    QVERIFY(result.value("action") == "test-action" && result.value("nonce") == "testnonce");
+
+    // Garbage at the end as NULL chars
+    QByteArray garbageAtEndNull(R"({"action": "test-action", "nonce": "testnonce"}GARBAGE)");
+    garbageAtEndNull.append('\0');
+    garbageAtEndNull.append('\0');
+    result = browserHost.parseMessage(garbageAtEndNull, 0);
+    QVERIFY(result.value("action") == "test-action" && result.value("nonce") == "testnonce");
+
+    // Garbage at the start and end
+    QByteArray garbageAtBoth(R"(GARBAGE{"action": "test-action", "nonce": "testnonce"}GARBAGE)");
+    result = browserHost.parseMessage(garbageAtBoth, 0);
+    QVERIFY(result.value("action") == "test-action" && result.value("nonce") == "testnonce");
+}
+
+void TestBrowser::testBrowserHostFragmentedMessaging()
+{
+    BrowserHost browserHost;
+
+    // Data has been fragmented between two messages. This is the original for comparison.
+    const auto originalMessage =
+        QJsonObject{{"action", "get-database-groups"},
+                    {"message", "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"},
+                    {"nonce", "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q"},
+                    {"clientID", "clientID"}};
+
+    // Second parse should return the original message
+    const QByteArray fragmentedFirst =
+        R"({"action":"get-database-groups","message":"+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP","nonce":"tZvLrBzkQ9GxXq)";
+    const QByteArray fragmentedSecond = R"(9PvKJj4iAnfPT0VZ3Q","clientID":"clientID"})";
+    auto result = browserHost.parseMessage(fragmentedFirst, 0);
+    result = browserHost.parseMessage(fragmentedSecond, 0);
+    QVERIFY(result == originalMessage);
+
+    // Different kind of fragmentation, comes from different socket
+    const QByteArray fragmentedTest =
+        R"({"action": "get-database-groups","message": "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP",)";
+    const QByteArray fragmentedTest2 = R"("nonce": "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q","clientID": "clientID"})";
+    result = browserHost.parseMessage(fragmentedTest, 1);
+    result = browserHost.parseMessage(fragmentedTest2, 1);
+    QVERIFY(result == originalMessage);
+
+    // Different kind of fragmentation, comes from different socket
+    const QByteArray fragmentedTest3 =
+        R"({"action": "get-database-groups","message": "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP")";
+    const QByteArray fragmentedTest4 = R"(,"nonce": "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q","clientID": "clientID"})";
+    result = browserHost.parseMessage(fragmentedTest3, 2);
+    result = browserHost.parseMessage(fragmentedTest4, 2);
+    QVERIFY(result == originalMessage);
+
+    // Maximum message size (set to 70) in the last check) exceeded during fragmented message parsing.
+    // It is multiplied by MAX_FRAGMENTED_FRAMES (3)
+    const QByteArray fragmentedTest5 =
+        R"({"action": "get-database-groups","message": "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP")";
+    const QByteArray fragmentedTest6 = R"(,"nonce": "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q","clientID": "clientID"})";
+    result = browserHost.parseMessage(fragmentedTest5, 2);
+    result = browserHost.parseMessage(fragmentedTest6, 2, 70);
+    QVERIFY(result.isEmpty());
+
+    // Test two fragmented frames after the first one
+    const QByteArray threeFragmented1 = R"({"action":"get-database-groups","message":)";
+    const QByteArray threeFragmented2 =
+        R"("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP","nonce":"tZvLrBzkQ9GxXq)";
+    const QByteArray threeFragmented3 = R"(9PvKJj4iAnfPT0VZ3Q","clientID":"clientID"})";
+    result = browserHost.parseMessage(threeFragmented1, 3);
+    result = browserHost.parseMessage(threeFragmented2, 3);
+    result = browserHost.parseMessage(threeFragmented3, 3);
+    QVERIFY(result == originalMessage);
+
+    // Two sockets are receiving fragmented messages in mixed order from different sockets
+    const auto secondOriginalMessage =
+        QJsonObject{{"action", "get-database-hash"},
+                    {"message", "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"},
+                    {"nonce", "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q"},
+                    {"clientID", "clientID2"}};
+    const QByteArray mixedOrderFirst1 =
+        R"({"action": "get-database-groups","message": "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP")";
+    const QByteArray mixedOrderFirst2 = R"(,"nonce": "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q","clientID": "clientID"})";
+    const QByteArray mixedOrderSecond1 =
+        R"({"action": "get-database-hash","message": "+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP")";
+    const QByteArray mixedOrderSecond2 = R"(,"nonce": "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q","clientID": "clientID2"})";
+    auto resultFirst = browserHost.parseMessage(mixedOrderFirst1, 4);
+    auto resultSecond = browserHost.parseMessage(mixedOrderSecond1, 5);
+    resultFirst = browserHost.parseMessage(mixedOrderFirst2, 4);
+    resultSecond = browserHost.parseMessage(mixedOrderSecond2, 5);
+    QVERIFY(resultFirst == originalMessage);
+    QVERIFY(resultSecond == secondOriginalMessage);
+}
+
+void TestBrowser::testBrowserHostCoalescedMessaging()
+{
+    BrowserHost browserHost;
+
+    // These two are sent together, or together and fragmented
+    const auto firstOriginalMessage = QJsonObject{{"nonce", "tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q"}};
+    const auto secondOriginalMessage = QJsonObject{{"clientID", "clientID"}};
+
+    // A basic coalesced message
+    const QByteArray coalesced = R"({"nonce":"tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q"}{"clientID":"clientID"})";
+    auto result = browserHost.parseSocketData(coalesced, 0);
+    QVERIFY(result.length() == 2);
+    QCOMPARE(result.at(0), firstOriginalMessage);
+    QCOMPARE(result.at(1), secondOriginalMessage);
+
+    // Coalesced but fragmented in first message
+    const QByteArray fragmented1 = R"({"nonce":"tZvLrBzkQ9GxXq9PvKJj4i)";
+    const QByteArray fragmented2 = R"(AnfPT0VZ3Q"}{"clientID":"clientID"})";
+    result = browserHost.parseSocketData(fragmented1, 0);
+    QVERIFY(result.isEmpty()); // No messages parsed yet
+    result = browserHost.parseSocketData(fragmented2, 0);
+    QVERIFY(result.length() == 2);
+    QCOMPARE(result.at(0), firstOriginalMessage);
+    QCOMPARE(result.at(1), secondOriginalMessage);
+
+    // Coalesced but fragmented in second message. First one should return the "nonce", and cache the start of "client".
+    const QByteArray fragmented3 = R"({"nonce":"tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q"}{"client)";
+    const QByteArray fragmented4 = R"(ID":"clientID"})";
+    result = browserHost.parseSocketData(fragmented3, 0);
+    QCOMPARE(result.first(), firstOriginalMessage);
+    result = browserHost.parseSocketData(fragmented4, 0);
+    QCOMPARE(result.first(), secondOriginalMessage);
+
+    // Three fragmented messages with coalesced data
+    const QByteArray fragmented5 = R"({"nonce":"tZvLrBzkQ9GxXq9PvKJj4iAnfPT0VZ3Q"}{"cli)";
+    const QByteArray fragmented6 = R"(entID":"clie)";
+    const QByteArray fragmented7 = R"(ntID"})";
+    result = browserHost.parseSocketData(fragmented5, 0);
+    QVERIFY(result.length() == 1);
+    QCOMPARE(result.first(), firstOriginalMessage);
+    result = browserHost.parseSocketData(fragmented6, 0);
+    QVERIFY(result.isEmpty()); // Still caching
+    result = browserHost.parseSocketData(fragmented7, 0);
+    QVERIFY(result.length() == 1);
+    QCOMPARE(result.first(), secondOriginalMessage);
 }

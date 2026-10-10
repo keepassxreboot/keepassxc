@@ -136,13 +136,6 @@ static const QString aboutContributors = R"(
     <li>Weinmann Willy</li>
     <li>WildMage</li>
 </ul>
-<h3>VIP GitHub Sponsors:</h3>
-<ul>
-    <li>mercedes-benz</li>
-    <li>tiangolo</li>
-    <li>mrniko</li>
-    <li>rszamszur</li>
-</ul>
 <h3>Notable Code Contributions:</h3>
 <ul>
     <li>droidmonkey</li>
@@ -276,21 +269,20 @@ static const QString aboutContributors = R"(
     <li>Druggo Yang</li>
     <li>Eric Stokes</li>
 </ul>
-<h3>GitHub Sponsors:</h3>
+<h3>VIP GitHub Sponsors:</h3>
 <ul>
-    <li>rszamszur</li>
-    <li>Sidicas</li>
-    <li>Mr-NH</li>
+    <li>oliverkroener</li>
 </ul>
 <h3>Translations:</h3>
 <ul>
     <li><strong>Arabic:</strong> kmutahar</li>
-    <li><strong>Chinese (Simplified):</strong> Biggulu, Brandon_c, hoilc, ligyxy, Small_Ku, umi_neko, vc5</li>
-    <li><strong>Chinese (Traditional):</strong> BestSteve, flachesis, MiauLightouch, Small_Ku, yan12125, ymhuang0808</li>
+    <li><strong>Chinese (China):</strong> Biggulu, Brandon_c, hoilc, ligyxy, Small_Ku, umi_neko, vc5</li>
+    <li><strong>Chinese (Taiwan):</strong> BestSteve, flachesis, MiauLightouch, Small_Ku, yan12125, ymhuang0808</li>
     <li><strong>Czech:</strong> DanielMilde, pavelb, tpavelek</li>
     <li><strong>English (United Kingdom):</strong> YCMHARHZ</li>
     <li><strong>English (United States):</strong> alexandercrice, DarkHolme, nguyenlekhtn</li>
     <li><strong>Finnish:</strong> artnay, hif1, MawKKe, varjolintu</li>
+    <li><strong>Galician:</strong> enfeitizador</li>
     <li><strong>German:</strong> antsas, BasicBaer, Calyrx, codejunky, DavidHamburg, eth0, for1real, jensrutschmann,
         joe776, kflesch, marcbone, MarcEdinger, mcliquid, mfernau77, montilo, nursoda, omnisome4, origin_de, pcrcoding,
         rgloor, vlenzer, waster, Wyrrrd</li>
@@ -308,7 +300,6 @@ static const QString aboutContributors = R"(
     <li><strong>Romanian:</strong> alexminza</li>
     <li><strong>Russian:</strong> _nomoretears_, agag11507, alexminza, anm, artemkonenko, denoos, KekcuHa, Mogost,
         netforhack, NetWormKido, RKuchma, ShareDVI, talvind, VictorR2007, vsvyatski, wkill95</li>
-    <li><strong>Serbian:</strong> ArtBIT</li>
     <li><strong>Swedish:</strong> Anders_Bergqvist, henziger, jpyllman, peron, Thelin</li>
     <li><strong>Turkish:</strong> etc, N3pp</li>
     <li><strong>Ukrainian:</strong> brisk022, netforhack, ShareDVI, zoresvit</li>

@@ -20,6 +20,7 @@
 #include "ui_BrowserEntrySaveDialog.h"
 
 #include "gui/DatabaseWidget.h"
+#include "gui/GuiTools.h"
 
 BrowserEntrySaveDialog::BrowserEntrySaveDialog(QWidget* parent)
     : QDialog(parent)
@@ -38,6 +39,12 @@ BrowserEntrySaveDialog::BrowserEntrySaveDialog(QWidget* parent)
 
 BrowserEntrySaveDialog::~BrowserEntrySaveDialog()
 {
+}
+
+void BrowserEntrySaveDialog::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    GuiTools::centerWidgetOnActiveScreen(this);
 }
 
 int BrowserEntrySaveDialog::setItems(QList<DatabaseWidget*>& databaseWidgets, DatabaseWidget* currentWidget) const
