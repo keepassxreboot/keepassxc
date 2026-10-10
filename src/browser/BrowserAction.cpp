@@ -554,11 +554,7 @@ BrowserRequest BrowserAction::decodeRequest(const QJsonObject& json)
     const auto encrypted = json.value("message").toString();
     const auto incrementedNonce = browserMessageBuilder()->incrementNonce(nonce);
 
-    return {browserService()->getDatabaseHash(),
-            nonce,
-            incrementedNonce,
-            clientID,
-            decryptMessage(encrypted, nonce)};
+    return {browserService()->getDatabaseHash(), nonce, incrementedNonce, clientID, decryptMessage(encrypted, nonce)};
 }
 
 StringPairList BrowserAction::getConnectionKeys(const BrowserRequest& browserRequest)
