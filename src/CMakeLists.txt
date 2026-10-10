@@ -236,6 +236,7 @@ if(UNIX AND NOT APPLE)
             gui/osutils/nixutils/NixUtils.cpp
             gui/osutils/nixutils/RemoteDesktopPortal.cpp
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
+            gui/osutils/nixutils/SettingsPortal.cpp
     )
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
         list(APPEND core_SOURCES
@@ -279,6 +280,10 @@ if(UNIX AND NOT APPLE)
     qt6_add_dbus_interface(core_SOURCES
         gui/osutils/nixutils/dbus/org.freedesktop.portal.Clipboard.xml
         xdp_clipboard
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.Settings.xml
+        xdp_settings
     )
 endif()
 
