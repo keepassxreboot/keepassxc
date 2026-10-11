@@ -1184,6 +1184,10 @@ void DatabaseWidget::syncWithRemote(const RemoteParams* params)
                 result.success = false;
                 result.errorMessage = error;
             }
+        } else {
+            // Download failed: nothing to merge or upload
+            finishSync(params, result);
+            return;
         }
     }
 
@@ -1226,7 +1230,8 @@ void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::Remot
         showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
     } else {
         emit databaseSyncFailed(params->name, result.errorMessage);
-        showErrorMessage(tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage));
+        showMessage(tr("Remote sync '%1' failed:\n%2").arg(params->name, result.errorMessage),
+                    MessageWidget::Error, true, 0);
     }
 }
 
