@@ -613,6 +613,50 @@ void TestGui::testTabs()
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_dbFileName);
 }
 
+void TestGui::testEntryPreviewFocusCycle()
+{
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    entryView->setFocus();
+    QVERIFY(entryView->hasFocus());
+
+    // Select the first entry ("Sample Entry")
+    QModelIndex entryItem = entryView->model()->index(0, 1);
+    clickIndex(entryItem, entryView, Qt::LeftButton);
+
+    auto* preview = m_dbWidget->findChild<EntryPreviewWidget*>("previewWidget");
+    QVERIFY(preview);
+    QTRY_VERIFY(preview->isVisible());
+    QVERIFY(!m_dbWidget->isPreviewFocused());
+
+    // Tab offers a single stop at the pane itself (discoverable, 1 stop not 9)
+    QVERIFY(m_dbWidget->focusPreview());
+    QVERIFY(m_dbWidget->isPreviewFocused());
+    QVERIFY(!m_dbWidget->isPreviewInnerFocused());
+    QVERIFY(preview->hasFocus());
+    QVERIFY(preview->focusProxy() == nullptr);
+    QVERIFY(preview->accessibleDescription().contains("F4"));
+
+    // A second call from the single stop refuses so Tab keeps moving to search
+    QVERIFY(!m_dbWidget->focusPreview());
+
+    // F4 enters the full in-pane walk; a second call refuses so Tab keeps moving
+    QVERIFY(m_dbWidget->focusPreviewControls());
+    QVERIFY(m_dbWidget->isPreviewFocused());
+    QVERIFY(m_dbWidget->isPreviewInnerFocused());
+    QVERIFY(!m_dbWidget->focusPreviewControls());
+    QVERIFY(!m_dbWidget->focusPreview());
+
+    // Hidden pane refuses both entry points so Tab falls through to search
+    config()->set(Config::GUI_HidePreviewPanel, true);
+    QApplication::processEvents();
+    entryView->setFocus();
+    QTRY_VERIFY(entryView->hasFocus());
+    QVERIFY(!m_dbWidget->focusPreview());
+    QVERIFY(!m_dbWidget->focusPreviewControls());
+    config()->set(Config::GUI_HidePreviewPanel, false);
+    QApplication::processEvents();
+}
+
 void TestGui::testEditEntry()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
