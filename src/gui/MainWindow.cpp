@@ -1404,6 +1404,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else if (event->key() == Qt::Key_F3 || event->key() == Qt::Key_F6) {
                 focusSearchWidget();
                 return;
+            } else if (event->key() == Qt::Key_F4) {
+                dbWidget->focusPreviewControls();
+                return;
+            } else if (event->key() == Qt::Key_Escape && dbWidget->isPreviewFocused()) {
+                dbWidget->focusOnEntries(false);
+                return;
             } else if (event->key() == Qt::Key_Escape && dbWidget->isSearchActive()) {
                 m_searchWidget->clearSearch();
                 return;
@@ -1430,7 +1436,16 @@ bool MainWindow::focusNextPrevChild(bool next)
             } else if (m_ui->tabWidget->hasFocus()) {
                 dbWidget->setFocus(Qt::TabFocusReason);
             } else {
-                focusSearchWidget();
+                // Single Tab stop at the preview pane; F4 enters the full
+                // in-pane walk. Inside the full walk Qt orders naturally;
+                // anywhere else keeps the previous behavior.
+                if (dbWidget->isPreviewInnerFocused())
+                    return QMainWindow::focusNextPrevChild(next);
+                QWidget* focused = focusWidget();
+                if (focused && dbWidget->isPreviewFocused())
+                    focusSearchWidget();
+                else if (!focused || !dbWidget->isAncestorOf(focused) || !dbWidget->focusPreview())
+                    focusSearchWidget();
             }
         } else {
             if (m_searchWidget->hasFocus()) {
@@ -1438,7 +1453,15 @@ bool MainWindow::focusNextPrevChild(bool next)
             } else if (m_ui->tabWidget->hasFocus()) {
                 focusSearchWidget();
             } else {
-                if (m_ui->tabWidget->count() > 1) {
+                // Shift+Tab inside the full preview walk moves naturally so
+                // it stays reversible; the single Tab stop steps back to the
+                // entry view; anywhere else keeps prior behavior.
+                if (dbWidget->isPreviewInnerFocused())
+                    return QMainWindow::focusNextPrevChild(next);
+                QWidget* focusedBack = focusWidget();
+                if (focusedBack && dbWidget->isPreviewFocused()) {
+                    dbWidget->focusOnEntries(false);
+                } else if (m_ui->tabWidget->count() > 1) {
                     m_ui->tabWidget->setFocus(Qt::BacktabFocusReason);
                 } else {
                     focusSearchWidget();
@@ -2025,6 +2048,13 @@ void MainWindow::initViewMenu()
         config()->set(Config::GUI_HidePreviewPanel, !checked);
     });
 
+    connect(m_ui->actionFocusPreviewPanel, &QAction::triggered, this, [this] {
+        auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        if (dbWidget) {
+            dbWidget->focusPreviewControls();
+        }
+    });
+
     connect(m_ui->actionAlwaysOnTop, &QAction::toggled, this, [this](bool checked) {
         config()->set(Config::GUI_AlwaysOnTop, checked);
         if (checked) {
@@ -2126,6 +2156,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionShowToolbar,
                     m_ui->actionShowGroupPanel,
                     m_ui->actionShowPreviewPanel,
+                    m_ui->actionFocusPreviewPanel,
                     m_ui->actionAllowScreenCapture,
                     m_ui->actionAlwaysOnTop,
                     m_ui->actionHideUsernames,

@@ -103,10 +103,27 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 
-    setFocusProxy(m_ui->entryTabWidget);
+    // Single Tab stop at the pane itself; F4 (focusInner) enters the full walk.
+    // No focus proxy: proxying would pull all nine inner controls into Tab.
+    setFocusProxy(nullptr);
+    setFocusPolicy(Qt::TabFocus);
+    const QString traverseTip = tr("Press F4 to traverse preview");
+    setAccessibleDescription(traverseTip);
+    m_ui->entryTabWidget->setAccessibleDescription(traverseTip);
+    m_ui->groupTabWidget->setAccessibleDescription(traverseTip);
 }
 
 EntryPreviewWidget::~EntryPreviewWidget() = default;
+
+void EntryPreviewWidget::focusInner()
+{
+    // Explicit F4 entry into the full in-pane walk (bypasses the single-stop Tab rule).
+    if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
+        m_ui->groupTabWidget->setFocus(Qt::ShortcutFocusReason);
+    } else {
+        m_ui->entryTabWidget->setFocus(Qt::ShortcutFocusReason);
+    }
+}
 
 bool EntryPreviewWidget::eventFilter(QObject* object, QEvent* event)
 {

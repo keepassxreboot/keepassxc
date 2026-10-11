@@ -189,6 +189,10 @@ public slots:
     void deleteEntries(QList<Entry*> entries, bool confirm = true);
     void focusOnEntries(bool editIfFocused = false);
     void focusOnGroups(bool editIfFocused = false);
+    bool focusPreview();
+    bool focusPreviewControls();
+    bool isPreviewFocused() const;
+    bool isPreviewInnerFocused() const;
     void moveEntryUp();
     void moveEntryDown();
     void copyTitle();
