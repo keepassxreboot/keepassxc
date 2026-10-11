@@ -116,6 +116,7 @@ public:
         GUI_MainWindowState,
         GUI_ListViewState,
         GUI_SearchViewState,
+        GUI_CustomColumns,
         GUI_PreviewSplitterState,
         GUI_SplitterState,
         GUI_GroupSplitterState,

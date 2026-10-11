@@ -21,6 +21,7 @@
 #include <QAbstractTableModel>
 #include <QPixmap>
 #include <QSet>
+#include <QStringList>
 
 #include "core/Config.h"
 
@@ -32,7 +33,7 @@ class EntryModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    enum ModelColumn
+    enum ModelColumn : int
     {
         ParentGroup = 0,
         Title = 1,
@@ -50,7 +51,8 @@ public:
         Size = 13,
         PasswordStrength = 14,
         Color = 15,
-        ParentGroupPath = 16
+        ParentGroupPath = 16,
+        CustomAttribute = 17
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -88,6 +90,7 @@ private:
     void severConnections();
     void makeConnections(const Group* group);
 
+    QStringList m_customColumns;
     bool m_backgroundColorVisible = true;
     Group* m_group;
     QList<Entry*> m_entries;

@@ -19,9 +19,13 @@
 #include "TestGui.h"
 #include "gui/Application.h"
 
+#include <algorithm>
+
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDialog>
+#include <QHeaderView>
+#include <QInputDialog>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -180,6 +184,81 @@ void TestGui::cleanup()
 void TestGui::cleanupTestCase()
 {
     m_dbFile.remove();
+}
+
+void TestGui::testCustomColumns()
+{
+    auto* view = m_dbWidget->findChild<EntryView*>();
+    QVERIFY(view);
+    auto* entry = new Entry();
+    entry->setTitle("Custom column entry");
+    entry->attributes()->set("E-Mail", "demo@example.invalid");
+    entry->setGroup(m_db->rootGroup());
+    view->displayGroup(m_db->rootGroup());
+    view->setCurrentEntry(entry);
+    view->header()->resizeSection(EntryModel::Title, 171);
+    const int customColumn = view->header()->count();
+    QCOMPARE(view->currentEntry(), entry);
+
+    const auto addColumn = [&](const QString& name) {
+        QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+        auto* menu = view->findChild<QMenu*>();
+        QVERIFY(menu);
+        QAction* add = nullptr;
+        for (auto* action : menu->actions()) {
+            if (action->text() == "Add custom column...") {
+                add = action;
+                break;
+            }
+        }
+        QVERIFY(add);
+        TEST_MODAL_NO_WAIT(auto* dialog = qobject_cast<QInputDialog*>(QApplication::activeModalWidget());
+                           QVERIFY(dialog);
+                           QVERIFY(dialog->comboBoxItems().contains("E-Mail"));
+                           dialog->setTextValue(name);
+                           dialog->accept(););
+        add->trigger();
+        QTRY_VERIFY(dialogFinished);
+        menu->hide();
+    };
+
+    addColumn("E-Mail");
+    QCOMPARE(view->header()->count(), customColumn + 1);
+    QCOMPARE(config()->get(Config::GUI_CustomColumns).toStringList(), QStringList({"E-Mail"}));
+    QCOMPARE(view->model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(view->currentEntry(), entry);
+    QCOMPARE(view->header()->sectionSize(EntryModel::Title), 171);
+    QVERIFY(!view->header()->isSectionHidden(customColumn));
+
+    view->hideColumn(customColumn);
+    addColumn("E-Mail");
+    QCOMPARE(view->header()->count(), customColumn + 1);
+    QVERIFY(!view->header()->isSectionHidden(customColumn));
+    view->header()->resizeSection(customColumn, 123);
+    const auto state = view->viewState();
+    EntryView restored;
+    QVERIFY(restored.setViewState(state));
+    QCOMPARE(restored.header()->sectionSize(customColumn), 123);
+    QVERIFY(!restored.header()->isSectionHidden(customColumn));
+
+    view->selectAll();
+    const auto selected = view->selectedEntries();
+    QVERIFY(selected.size() > 1);
+    addColumn("External & ID");
+    QCOMPARE(view->selectedEntries(), selected);
+    QCOMPARE(view->header()->count(), customColumn + 2);
+    QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), QString("External & ID"));
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    auto* menu = view->findChild<QMenu*>();
+    const auto actions = menu->actions();
+    QVERIFY(std::any_of(
+        actions.cbegin(), actions.cend(), [](QAction* action) { return action->text() == "External && ID"; }));
+    menu->hide();
+
+    view->displaySearch({entry});
+    QCOMPARE(view->model()->data(view->model()->index(0, customColumn)).toString(), QString("demo@example.invalid"));
+    QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+    QVERIFY(view->header()->isSectionHidden(customColumn));
 }
 
 void TestGui::testSettingsDefaultTabOrder()

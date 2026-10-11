@@ -23,6 +23,7 @@
 #include <QDrag>
 #include <QGuiApplication>
 #include <QHeaderView>
+#include <QInputDialog>
 #include <QListWidget>
 #include <QMenu>
 #include <QPainter>
@@ -30,6 +31,7 @@
 #include <QStyledItemDelegate>
 #include <QWindow>
 
+#include "core/Entry.h"
 #include "gui/Icons.h"
 #include "gui/SortFilterHideProxyModel.h"
 
@@ -99,33 +101,9 @@ EntryView::EntryView(QWidget* parent)
 
     resetViewToDefaults();
 
-    // Actions to toggle column visibility, each carrying the corresponding
-    // column index as data
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
-    for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
-        int logicalIndex = header()->logicalIndex(visualIndex);
-        auto caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole);
-        if (!caption.isValid()) {
-            caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::ToolTipRole);
-            if (!caption.isValid()) {
-                // Ignored column, skip it
-                continue;
-            }
-        }
-
-        auto action = m_headerMenu->addAction(caption.toString());
-        action->setCheckable(true);
-        action->setData(logicalIndex);
-        m_columnActions->addAction(action);
-    }
     connect(m_columnActions, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
-
-    m_headerMenu->addSeparator();
-    m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
-    m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
-    m_headerMenu->addSeparator();
-    m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
 
     header()->setDefaultSectionSize(100);
     header()->setStretchLastSection(false);
@@ -135,6 +113,10 @@ EntryView::EntryView(QWidget* parent)
     connect(header(), SIGNAL(sectionCountChanged(int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(viewStateChanged()));
+    connect(m_sortModel, &QAbstractItemModel::columnsInserted, this, [this] {
+        selectionModel()->select(selectionModel()->selection(),
+                                 QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    });
     connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), SLOT(sortIndicatorChanged(int, Qt::SortOrder)));
 }
 
@@ -351,17 +333,54 @@ bool EntryView::setViewState(const QByteArray& state)
  */
 void EntryView::showHeaderMenu(const QPoint& position)
 {
-    const QList<QAction*> actions = m_columnActions->actions();
-    for (auto& action : actions) {
-        Q_ASSERT(static_cast<QMetaType::Type>(action->data().type()) == QMetaType::Int);
-        if (static_cast<QMetaType::Type>(action->data().type()) != QMetaType::Int) {
+    m_headerMenu->clear();
+    for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
+        int logicalIndex = header()->logicalIndex(visualIndex);
+        if (logicalIndex == EntryModel::ParentGroup && !inSearchMode()) {
             continue;
         }
-        int columnIndex = action->data().toInt();
-        action->setChecked(!isColumnHidden(columnIndex));
+        auto caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole);
+        if (!caption.isValid()) {
+            caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::ToolTipRole);
+            if (!caption.isValid()) {
+                continue;
+            }
+        }
+        auto action = m_headerMenu->addAction(caption.toString().replace('&', "&&"));
+        action->setCheckable(true);
+        action->setChecked(!isColumnHidden(logicalIndex));
+        action->setData(logicalIndex);
+        m_columnActions->addAction(action);
     }
-    actions[EntryModel::ParentGroup]->setVisible(inSearchMode());
 
+    m_headerMenu->addSeparator();
+    m_headerMenu->addAction(tr("Add custom column..."), this, [this] {
+        auto attributes = config()->get(Config::GUI_CustomColumns).toStringList();
+        for (int row = 0; row < m_model->rowCount(); ++row) {
+            attributes.append(
+                m_model->entryFromIndex(m_model->index(row, EntryModel::Title))->attributes()->customKeys());
+        }
+        attributes.removeDuplicates();
+        attributes.sort();
+        bool accepted;
+        const auto attribute =
+            QInputDialog::getItem(this, tr("Add custom column"), tr("Attribute name:"), attributes, 0, true, &accepted);
+        if (!accepted || attribute.isEmpty() || EntryAttributes::isDefaultAttribute(attribute)) {
+            return;
+        }
+        auto columns = config()->get(Config::GUI_CustomColumns).toStringList();
+        if (!columns.contains(attribute)) {
+            columns.append(attribute);
+            config()->set(Config::GUI_CustomColumns, columns);
+        }
+        header()->showSection(EntryModel::CustomAttribute + columns.indexOf(attribute));
+        emit viewStateChanged();
+    });
+    m_headerMenu->addSeparator();
+    m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
+    m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
+    m_headerMenu->addSeparator();
+    m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
     m_headerMenu->popup(mapToGlobal(position));
 }
 
@@ -487,6 +506,9 @@ void EntryView::resetViewToDefaults()
     header()->hideSection(EntryModel::PasswordStrength);
     header()->hideSection(EntryModel::Color);
     header()->hideSection(EntryModel::ParentGroupPath);
+    for (int column = EntryModel::CustomAttribute; column < header()->count(); ++column) {
+        header()->hideSection(column);
+    }
     onHeaderChanged();
 
     // Reset column order to logical indices

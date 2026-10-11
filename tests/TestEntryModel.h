@@ -27,6 +27,9 @@ class TestEntryModel : public QObject
 private slots:
     void initTestCase();
     void test();
+    void testCustomColumns();
+    void testCustomColumnProtection();
+    void testCustomColumnChanges();
     void testAttachmentsModel();
     void testAttributesModel();
     void testDefaultIconModel();
