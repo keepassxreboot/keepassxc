@@ -4563,6 +4563,10 @@ Would you like to overwrite the existing attachment?</source>
         <source>Show notes</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Press F4 to traverse preview</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -6539,6 +6543,18 @@ This version is not meant for production use.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Focus Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move focus into the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F4</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
