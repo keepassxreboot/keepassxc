@@ -32,7 +32,10 @@
 #include <QSignalSpy>
 #include <QSpinBox>
 #include <QTableWidget>
+#include <QTabBar>
+#include <QTabWidget>
 #include <QTest>
+#include <QToolButton>
 #include <QToolBar>
 
 #include "config-keepassx-tests.h"
@@ -645,6 +648,37 @@ void TestGui::testEntryPreviewFocusCycle()
     QVERIFY(m_dbWidget->isPreviewInnerFocused());
     QVERIFY(!m_dbWidget->focusPreviewControls());
     QVERIFY(!m_dbWidget->focusPreview());
+
+    // The F4 walk visits every visible stop and exits without trapping.
+    // Fixture entry has no TOTP: Close -> Show-password toggle -> tab widget -> out.
+    auto* closeButton = preview->findChild<QToolButton*>("entryCloseButton");
+    QVERIFY(closeButton);
+    // F4 entry lands on the first visible stop (TOTP when the entry has one, else Close).
+    auto* totpButton = preview->findChild<QToolButton*>("entryTotpButton");
+    QVERIFY(totpButton);
+    auto* entered = QApplication::focusWidget();
+    QVERIFY(entered == totpButton || entered == closeButton);
+    auto* passwordToggle = preview->findChild<QToolButton*>("togglePasswordButton");
+    QVERIFY(passwordToggle);
+    auto* tabWidget = preview->findChild<QTabWidget*>("entryTabWidget");
+    QVERIFY(tabWidget);
+    bool sawToggle = false;
+    bool sawTabs = false;
+    for (int i = 0; i < 15; ++i) {
+        auto* focused = QApplication::focusWidget();
+        QVERIFY(focused);
+        QTest::keyClick(focused, Qt::Key_Tab);
+        QTRY_VERIFY(QApplication::focusWidget());
+        focused = QApplication::focusWidget();
+        sawToggle = sawToggle || focused == passwordToggle;
+        sawTabs = sawTabs || focused == tabWidget || qobject_cast<QTabBar*>(focused);
+        if (!m_dbWidget->isPreviewFocused()) {
+            break;
+        }
+    }
+    QVERIFY2(sawToggle, "F4 walk never reached the password toggle");
+    QVERIFY2(sawTabs, "F4 walk never reached the tab widget");
+    QVERIFY2(!m_dbWidget->isPreviewFocused(), "F4 walk trapped inside the preview");
 
     // Hidden pane refuses both entry points so Tab falls through to search
     config()->set(Config::GUI_HidePreviewPanel, true);
