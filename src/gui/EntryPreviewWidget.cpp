@@ -111,6 +111,19 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     setAccessibleDescription(traverseTip);
     m_ui->entryTabWidget->setAccessibleDescription(traverseTip);
     m_ui->groupTabWidget->setAccessibleDescription(traverseTip);
+
+    // Explicit in-pane Tab chain with each tab widget LAST among its page
+    // stops. Qt diverts focus from the tab bar into the page contents,
+    // bypassing chain siblings placed after the tab widget, so buttons that
+    // must stay reachable go first. Hidden widgets are skipped by Qt.
+    QWidget::setTabOrder(m_ui->entryTotpButton, m_ui->entryCloseButton);
+    QWidget::setTabOrder(m_ui->entryCloseButton, m_ui->toggleUsernameButton);
+    QWidget::setTabOrder(m_ui->toggleUsernameButton, m_ui->togglePasswordButton);
+    QWidget::setTabOrder(m_ui->togglePasswordButton, m_ui->toggleEntryNotesButton);
+    QWidget::setTabOrder(m_ui->toggleEntryNotesButton, m_ui->entryTabWidget);
+    QWidget::setTabOrder(m_ui->entryTabWidget, m_ui->toggleGroupNotesButton);
+    QWidget::setTabOrder(m_ui->toggleGroupNotesButton, m_ui->groupCloseButton);
+    QWidget::setTabOrder(m_ui->groupCloseButton, m_ui->groupTabWidget);
 }
 
 EntryPreviewWidget::~EntryPreviewWidget() = default;
@@ -118,10 +131,19 @@ EntryPreviewWidget::~EntryPreviewWidget() = default;
 void EntryPreviewWidget::focusInner()
 {
     // Explicit F4 entry into the full in-pane walk (bypasses the single-stop Tab rule).
+    // Enter at the first visible stop of the page walk.
     if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
-        m_ui->groupTabWidget->setFocus(Qt::ShortcutFocusReason);
+        if (m_ui->toggleGroupNotesButton->isVisibleTo(this)) {
+            m_ui->toggleGroupNotesButton->setFocus(Qt::ShortcutFocusReason);
+        } else if (m_ui->groupCloseButton->isVisibleTo(this)) {
+            m_ui->groupCloseButton->setFocus(Qt::ShortcutFocusReason);
+        } else {
+            m_ui->groupTabWidget->setFocus(Qt::ShortcutFocusReason);
+        }
+    } else if (m_ui->entryTotpButton->isVisibleTo(this)) {
+        m_ui->entryTotpButton->setFocus(Qt::ShortcutFocusReason);
     } else {
-        m_ui->entryTabWidget->setFocus(Qt::ShortcutFocusReason);
+        m_ui->entryCloseButton->setFocus(Qt::ShortcutFocusReason);
     }
 }
 
