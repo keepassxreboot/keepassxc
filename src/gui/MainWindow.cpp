@@ -72,10 +72,6 @@
 #include "browser/BrowserService.h"
 #endif
 
-#ifdef KPXC_FEATURE_URLOVERRIDE
-#include "urloverride/UrlOverrideSettingsPage.h"
-#endif
-
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "mainwindowadaptor.h"
 #endif
@@ -207,9 +203,6 @@ MainWindow::MainWindow()
     initActionCollection();
 
     m_ui->settingsWidget->addSettingsPage(new ShortcutSettingsPage());
-#ifdef KPXC_FEATURE_URLOVERRIDE
-    m_ui->settingsWidget->addSettingsPage(new UrlOverrideSettingsPage());
-#endif
 
 #ifdef KPXC_FEATURE_BROWSER
     connect(

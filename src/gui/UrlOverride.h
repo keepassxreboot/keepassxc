@@ -3,8 +3,8 @@
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,9 +22,8 @@
 #include <QString>
 
 // Global URL scheme override support. Lets a URL scheme (e.g. "ssh", "kdbx") be mapped to an
-// external command template instead of the default browser action. Storage is self-contained
-// here rather than in core/Config so the whole feature can be built out via
-// KPXC_FEATURE_URLOVERRIDE.
+// external command template instead of the default browser action. Rules are stored in the
+// application config under Config::UrlOverride_Rules.
 namespace UrlOverride
 {
     struct Rule

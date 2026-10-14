@@ -173,6 +173,12 @@ void TestUrlOverride::testFindUrlOverrideCommandEdgeCases()
     UrlOverride::setRules({{true, "ssh", ""}, {true, "ssh", "cmd://real-ssh-handler"}});
     QCOMPARE(UrlOverride::findCommand("ssh://example.com"), QString("cmd://real-ssh-handler"));
 
+    // A command without the cmd:// prefix cannot be run and must be skipped like an empty one
+    UrlOverride::setRules({{true, "ssh", "ssh {USERNAME}@{URL:HOST}"}, {true, "ssh", "cmd://real-ssh-handler"}});
+    QCOMPARE(UrlOverride::findCommand("ssh://example.com"), QString("cmd://real-ssh-handler"));
+    UrlOverride::setRules({{true, "ssh", "ssh {USERNAME}@{URL:HOST}"}});
+    QVERIFY(UrlOverride::findCommand("ssh://example.com").isEmpty());
+
     // If every rule for a scheme has an empty command, there is simply nothing to run
     UrlOverride::setRules({{true, "ssh", ""}});
     QVERIFY(UrlOverride::findCommand("ssh://example.com").isEmpty());

@@ -20,7 +20,7 @@
 
 #include <QObject>
 
-#include "urloverride/UrlOverride.h"
+#include "gui/UrlOverride.h"
 
 class TestUrlOverride : public QObject
 {

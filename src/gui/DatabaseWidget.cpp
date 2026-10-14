@@ -49,6 +49,7 @@
 #include "gui/TotpDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/TotpSetupDialog.h"
+#include "gui/UrlOverride.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
@@ -59,10 +60,6 @@
 #include "keeshare/KeeShare.h"
 #include "remote/RemoteHandler.h"
 #include "remote/RemoteSettings.h"
-
-#ifdef KPXC_FEATURE_URLOVERRIDE
-#include "urloverride/UrlOverride.h"
-#endif
 
 #ifdef KPXC_FEATURE_NETWORK
 #include "gui/IconDownloaderDialog.h"
@@ -1006,12 +1003,10 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     }
 
     QString rawTemplate = entry->url();
-#ifdef KPXC_FEATURE_URLOVERRIDE
     const auto overrideCommand = UrlOverride::findCommand(rawTemplate);
     if (!overrideCommand.isEmpty()) {
         rawTemplate = overrideCommand;
     }
-#endif
     QString cmdString = entry->resolveMultiplePlaceholders(rawTemplate);
 
     if (cmdString.startsWith("cmd://")) {
@@ -1056,11 +1051,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             QStringList cmdList = QProcess::splitCommand(cmd);
             if (!cmdList.isEmpty()) {
                 const QString program = cmdList.takeFirst();
-#ifdef KPXC_FEATURE_URLOVERRIDE
                 UrlOverride::executeCommand(program, cmdList);
-#else
-                QProcess::startDetached(program, cmdList);
-#endif
             }
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
