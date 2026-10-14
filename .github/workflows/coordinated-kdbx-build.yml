@@ -22,7 +22,8 @@ jobs:
             build-essential cmake ninja-build asciidoctor xvfb \
             qt6-base-dev qt6-svg-dev qt6-tools-dev libusb-1.0-0-dev \
             libbotan-2-dev zlib1g-dev libminizip-dev libpcsclite-dev \
-            libkeyutils-dev libxi-dev libxtst-dev libqrencode-dev
+            libkeyutils-dev libxi-dev libxtst-dev libqrencode-dev \
+            libxkbcommon-dev libreadline-dev
       - name: Configure
         run: >-
           cmake -S . -B build -G Ninja
