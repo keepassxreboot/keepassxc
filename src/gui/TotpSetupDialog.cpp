@@ -182,8 +182,16 @@ void TotpSetupDialog::applyOtpauthUri(const QString& uri)
         return;
     }
 
+    // Totp::parseSettings() does not check the OTP type, so reject HOTP and other types here
+    // instead of silently treating them as TOTP
+    if (!text.startsWith("otpauth://totp/", Qt::CaseInsensitive)
+        && text.startsWith("otpauth://", Qt::CaseInsensitive)) {
+        showError(tr("Error: only TOTP is supported"));
+        return;
+    }
+
     QSharedPointer<Totp::Settings> settings;
-    if (text.startsWith(QStringLiteral("otpauth://totp/"), Qt::CaseInsensitive)) {
+    if (text.startsWith("otpauth://totp/", Qt::CaseInsensitive)) {
         settings = Totp::parseSettings(text);
     }
 

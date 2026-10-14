@@ -32,6 +32,7 @@ private slots:
     void testApplyDefaultUri();
     void testApplyCustomUri();
     void testApplyInvalidUri();
+    void testApplyHotpUri();
     void testDropQrImage();
     void testDropImageWithoutQrCode();
     void testPasteQrImage();

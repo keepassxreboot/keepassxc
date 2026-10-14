@@ -154,6 +154,20 @@ void TestTotpSetupDialog::testApplyInvalidUri()
     QVERIFY(dialog.findChild<QLabel*>("invalidKeyLabel")->isHidden());
 }
 
+void TestTotpSetupDialog::testApplyHotpUri()
+{
+    Entry entry;
+    TotpSetupDialog dialog(nullptr, &entry);
+
+    // HOTP is counter based and must not be loaded as TOTP settings
+    dialog.findChild<QLineEdit*>("otpauthEdit")
+        ->setText(QStringLiteral("otpauth://hotp/ACME%20Co:john@example.com"
+                                 "?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&counter=0"));
+
+    QVERIFY(dialog.findChild<QLineEdit*>("seedEdit")->text().isEmpty());
+    QVERIFY(!dialog.findChild<QLabel*>("invalidKeyLabel")->isHidden());
+}
+
 void TestTotpSetupDialog::testDropQrImage()
 {
     Entry entry;

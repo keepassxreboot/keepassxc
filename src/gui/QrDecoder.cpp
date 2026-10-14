@@ -27,7 +27,7 @@
 
 namespace QrDecoder
 {
-    QString QrDecoder::decode(const QImage& input)
+    QString decode(const QImage& input)
     {
         if (input.isNull()) {
             return {};
