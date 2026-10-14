@@ -214,6 +214,8 @@ A lot of applications and web sites now require providing additional information
 
 To protect an attribute from being displayed by default, activate the _Protect_ checkbox *(A)*. To show the contents of the attribute while keeping it protected, press the _Reveal_ button *(B)*.
 
+To display an attribute on the entry preview panel below the password field, activate the _Pin_ checkbox. Protected attributes remain masked on the preview panel until revealed with the eye button; double click a value to copy it to the clipboard.
+
 .Additional attributes example
 image::edit_entry_attributes.png[]
 

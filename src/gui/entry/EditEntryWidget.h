@@ -106,6 +106,8 @@ private slots:
     void removeCurrentAttribute();
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
+    void pinCurrentAttribute(bool state);
+    void updatePinnedAttributeRename(const QString& oldKey, const QString& newKey);
     void toggleCurrentAttributeVisibility();
     void updateAutoTypeEnabled();
     void openAutotypeHelp();

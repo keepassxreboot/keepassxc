@@ -147,6 +147,25 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="pinAttributeButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="accessibleName">
+           <string>Toggle attribute display on the entry preview panel</string>
+          </property>
+          <property name="toolTip">
+           <string>Show this attribute on the entry preview panel</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">margin-left:50%;margin-right:50%</string>
+          </property>
+          <property name="text">
+           <string>Pin</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="revealAttributeButton">
           <property name="enabled">
            <bool>false</bool>
@@ -319,6 +338,7 @@
   <tabstop>removeAttributeButton</tabstop>
   <tabstop>editAttributeButton</tabstop>
   <tabstop>protectAttributeButton</tabstop>
+  <tabstop>pinAttributeButton</tabstop>
   <tabstop>revealAttributeButton</tabstop>
   <tabstop>excludeReportsCheckBox</tabstop>
   <tabstop>fgColorCheckBox</tabstop>

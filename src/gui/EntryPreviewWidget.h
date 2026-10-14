@@ -55,6 +55,7 @@ private slots:
     void updateEntryHeaderLine();
     void updateEntryTotp();
     void updateEntryGeneralTab();
+    void updateEntryPinnedAttributes();
     void updateEntryAdvancedTab();
     void updateEntryAutotypeTab();
     void setUsernameVisible(bool state);
@@ -73,6 +74,7 @@ private slots:
 
 private:
     void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
+    QWidget* createPinnedValueWidget(const QString& clearValue, bool protect);
 
     static QString hierarchy(const Group* group, const QString& title);
 

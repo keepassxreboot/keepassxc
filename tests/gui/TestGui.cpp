@@ -22,6 +22,7 @@
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDialog>
+#include <QLabel>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -34,6 +35,7 @@
 #include <QTableWidget>
 #include <QTest>
 #include <QToolBar>
+#include <QToolButton>
 
 #include "config-keepassx-tests.h"
 #include "core/PasswordHealth.h"
@@ -729,6 +731,14 @@ void TestGui::testEditEntry()
     QVERIFY(attrTextEdit->toPlainText().contains("PROTECTED"));
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
     QCOMPARE(attrTextEdit->toPlainText(), attrText);
+
+    // Test pinning the attribute to the preview panel
+    auto* pinAttributeCheck = editEntryWidget->findChild<QCheckBox*>("pinAttributeButton");
+    QVERIFY(pinAttributeCheck);
+    QVERIFY(pinAttributeCheck->isEnabled());
+    QCOMPARE(pinAttributeCheck->isChecked(), false);
+    QTest::mouseClick(pinAttributeCheck, Qt::LeftButton);
+    QVERIFY(pinAttributeCheck->isChecked());
     editEntryWidget->switchToPage(EditEntryWidget::Page::Main);
 
     // Save the edit (press OK)
@@ -743,6 +753,56 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->backgroundColor().toUpper(), bgColor.name().toUpper());
     QCOMPARE(entryItem.data(Qt::BackgroundRole), QVariant(bgColor));
     QCOMPARE(entry->historyItems().size(), ++editCount);
+
+    // Confirm the pinned attribute is stored and shown on the preview panel
+    QCOMPARE(entry->pinnedAttributes(), QStringList{"New attribute"});
+    auto* previewWidget = m_dbWidget->findChild<EntryPreviewWidget*>("previewWidget");
+    QVERIFY(previewWidget);
+    auto* pinnedWidget = previewWidget->findChild<QWidget*>("entryPinnedAttributesWidget");
+    QVERIFY(pinnedWidget);
+    QVERIFY(pinnedWidget->isVisible());
+    QLabel* pinnedValueLabel = nullptr;
+    for (auto* label : pinnedWidget->findChildren<QLabel*>()) {
+        if (label->property("clearValue").isValid()) {
+            pinnedValueLabel = label;
+            break;
+        }
+    }
+    QVERIFY(pinnedValueLabel);
+    QCOMPARE(pinnedValueLabel->property("clearValue").toString(), attrText);
+    // Protected attribute is masked until the reveal button is toggled
+    QCOMPARE(pinnedValueLabel->text(), QString("\u25cf").repeated(6));
+    auto* pinnedRevealButton = pinnedWidget->findChild<QToolButton*>();
+    QVERIFY(pinnedRevealButton);
+    QTest::mouseClick(pinnedRevealButton, Qt::LeftButton);
+    QCOMPARE(pinnedValueLabel->text(), attrText);
+
+    // Renaming a pinned attribute keeps it pinned under the new name
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
+    okButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    auto* attrListView = editEntryWidget->findChild<QListView*>("attributesView");
+    QVERIFY(attrListView->currentIndex().isValid());
+    QVERIFY(attrListView->model()->setData(attrListView->currentIndex(), "Renamed attribute", Qt::EditRole));
+    QTest::mouseClick(okButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    QCOMPARE(entry->pinnedAttributes(), QStringList{"Renamed attribute"});
+
+    // Removing the attribute unpins it and hides the preview section
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
+    okButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    QVERIFY(attrListView->currentIndex().isValid());
+    MessageBox::setNextAnswer(MessageBox::Remove);
+    QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("removeAttributeButton"), Qt::LeftButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    QVERIFY(entry->pinnedAttributes().isEmpty());
+    QVERIFY(!pinnedWidget->isVisible());
 
     // Confirm modified indicator is showing
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));

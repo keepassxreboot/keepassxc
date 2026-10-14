@@ -32,6 +32,7 @@ private slots:
     void testHistoryItemDeletion();
     void testHistoryItemCustomData();
     void testCopyDataFrom();
+    void testPinnedAttributes();
     void testClone();
     void testResolveUrl();
     void testResolveUrlPlaceholders();
