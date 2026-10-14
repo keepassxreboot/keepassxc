@@ -55,6 +55,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="showWeakOnly">
+     <property name="text">
+      <string>Show weak passwords only</string>
+     </property>
+     <property name="checked">
+       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="showExpired">
      <property name="text">
       <string>Show expired entries</string>
