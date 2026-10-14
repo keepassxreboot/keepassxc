@@ -135,6 +135,8 @@ void EntryView::contextMenuShortcutPressed()
 
 void EntryView::setDatabase(Database* database)
 {
+    m_headerMenu->hide();
+    m_headerMenu->clear();
     if (m_database) {
         disconnect(m_database->metadata()->customData(), nullptr, this, nullptr);
     }
@@ -348,6 +350,16 @@ bool EntryView::setViewState(const QByteArray& state)
     // Reset to unsorted first (https://bugreports.qt.io/browse/QTBUG-86694)
     header()->setSortIndicator(-1, Qt::AscendingOrder);
     bool status = header()->restoreState(state);
+    if (header()->count() != m_model->columnCount()) {
+        const auto current = selectionModel()->currentIndex();
+        const auto selection = selectionModel()->selection();
+        header()->reset();
+        selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
+        selectionModel()->setCurrentIndex(current, QItemSelectionModel::NoUpdate);
+    }
+    if (header()->sortIndicatorSection() >= m_model->columnCount()) {
+        header()->setSortIndicator(-1, Qt::AscendingOrder);
+    }
     resetFixedColumns();
     m_columnsNeedRelayout = state.isEmpty();
     onHeaderChanged();

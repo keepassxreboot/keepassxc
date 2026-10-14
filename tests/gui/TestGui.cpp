@@ -277,6 +277,19 @@ void TestGui::testCustomColumns()
     QCOMPARE(restored.model()->headerData(customColumn, Qt::Horizontal).toString(), QString("Private"));
     QCOMPARE(view->model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
     QCOMPARE(view->header()->count(), customColumn + 2);
+    restored.setDatabase(m_db.data());
+    restored.sortByColumn(customColumn + 1, Qt::DescendingOrder);
+    const auto customSortState = restored.viewState();
+    restored.setDatabase(&otherDatabase);
+    auto* otherEntry = new Entry();
+    otherEntry->setGroup(otherDatabase.rootGroup());
+    restored.displayGroup(otherDatabase.rootGroup());
+    restored.setCurrentEntry(otherEntry);
+    QVERIFY(restored.setViewState(customSortState));
+    QCOMPARE(restored.header()->count(), customColumn + 1);
+    QCOMPARE(restored.header()->sortIndicatorSection(), -1);
+    QCOMPARE(restored.currentEntry(), otherEntry);
+    QCOMPARE(restored.selectedEntries(), QList<Entry*>({otherEntry}));
 
     config()->sync();
     QFile settings(config()->getFileName());
@@ -299,6 +312,27 @@ void TestGui::testCustomColumns()
     QCOMPARE(restored.model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
     QCOMPARE(restored.model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
 
+    view->displayGroup(m_db->rootGroup());
+    view->header()->showSection(customColumn);
+    view->header()->resizeSection(customColumn, 137);
+    view->header()->hideSection(customColumn + 1);
+    view->header()->moveSection(view->header()->visualIndex(customColumn), 2);
+    view->sortByColumn(customColumn, Qt::DescendingOrder);
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    QVERIFY(menu->isVisible());
+    QVERIFY(m_dbWidget->lock());
+    QVERIFY(!menu->isVisible());
+    QCOMPARE(view->header()->count(), customColumn);
+    m_dbWidget->performUnlockDatabase("a");
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    m_db = m_dbWidget->database();
+    QCOMPARE(view->header()->count(), customColumn + 2);
+    QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
+    QCOMPARE(view->header()->sectionSize(customColumn), 137);
+    QVERIFY(view->header()->isSectionHidden(customColumn + 1));
+    QCOMPARE(view->header()->visualIndex(customColumn), 2);
+    QCOMPARE(view->header()->sortIndicatorSection(), customColumn);
+    QCOMPARE(view->header()->sortIndicatorOrder(), Qt::DescendingOrder);
     m_db->metadata()->customData()->remove(CustomData::EntryListColumns);
     QCOMPARE(view->header()->count(), customColumn);
     view->displaySearch({});
