@@ -82,6 +82,7 @@ private:
     bool backupDatabase(const QString& filePath, const QString& destinationFilePath);
     bool restoreDatabase(const QString& filePath, const QString& fromBackupFilePath);
     bool performSave(const QString& filePath, SaveAction flags, const QString& backupFilePath, QString* error);
+    bool saveToDevice(const QString& location, QString* error);
 
 public:
     bool open(QSharedPointer<const CompositeKey> key, QString* error = nullptr);

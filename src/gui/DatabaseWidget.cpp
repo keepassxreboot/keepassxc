@@ -33,6 +33,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/AsyncTask.h"
+#include "core/DeviceStorage.h"
 #include "core/EntrySearcher.h"
 #include "core/Merger.h"
 #include "core/Tools.h"
@@ -232,6 +233,17 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_autosaveTimer = new QTimer(this);
     m_autosaveTimer->setSingleShot(true);
     connect(m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveDelayTimeout()));
+
+    // A database on a device saves a few seconds after the last change, so
+    // that a burst of edits makes one (slow) device write.
+    m_deviceSaveTimer = new QTimer(this);
+    m_deviceSaveTimer->setSingleShot(true);
+    m_deviceSaveTimer->setInterval(DeviceSaveDelayMs);
+    connect(m_deviceSaveTimer, &QTimer::timeout, this, [this] {
+        if (m_db->isModified()) {
+            save();
+        }
+    });
 
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
@@ -1849,10 +1861,20 @@ void DatabaseWidget::onGroupChanged()
     emit groupChanged();
 }
 
+bool DatabaseWidget::isOnDevice() const
+{
+    return DeviceStorage::isDeviceLocation(m_db->filePath());
+}
+
 void DatabaseWidget::onDatabaseModified()
 {
     refreshSearch();
     m_remoteSettings->loadSettings();
+    if (isOnDevice()) {
+        // Write-through, after the delay; whatever the auto-save settings.
+        m_deviceSaveTimer->start();
+        return;
+    }
     int autosaveDelayMs = m_db->metadata()->autosaveDelayMin() * 60 * 1000; // min to msec for QTimer
     bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
     if (autosaveDelayMs > 0 && autosaveAfterEveryChangeConfig) {
@@ -1892,6 +1914,11 @@ void DatabaseWidget::triggerAutosaveTimer()
 
 void DatabaseWidget::onDatabaseNonDataChanged()
 {
+    // A database on a device is never written for non-data changes alone
+    // (an expanded group…): device writes are slow and wear the device.
+    if (isOnDevice()) {
+        return;
+    }
     // Force mark the database modified if we are not auto-saving non-data changes
     if (!config()->get(Config::AutoSaveNonDataChanges).toBool()) {
         m_db->markAsModified();
@@ -2071,9 +2098,11 @@ bool DatabaseWidget::lock()
 
     if (m_db->isModified()) {
         bool saved = false;
-        // Attempt to save on exit, but don't block locking if it fails
-        if (config()->get(Config::AutoSaveOnExit).toBool()
-            || config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+        // Attempt to save on exit, but don't block locking if it fails.  A
+        // database on a device saves its pending changes now.
+        if (config()->get(Config::AutoSaveOnExit).toBool() || config()->get(Config::AutoSaveAfterEveryChange).toBool()
+            || isOnDevice()) {
+            m_deviceSaveTimer->stop();
             saved = save();
 
             if (!saved) {
@@ -2111,10 +2140,16 @@ bool DatabaseWidget::lock()
                 return false;
             }
         }
-    } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+    } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool() && !isOnDevice()) {
         // Silently auto-save non-data changes, ignore errors
         QString errorMessage;
         performSave(errorMessage);
+    }
+
+    // The device's PIN is held only while the database is unlocked.
+    QString serial, blob;
+    if (DeviceStorage::parse(m_db->filePath(), &serial, &blob)) {
+        DeviceStorage::instance()->forgetPin(serial);
     }
 
     if (m_groupView->currentGroup()) {

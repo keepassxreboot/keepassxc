@@ -18,6 +18,7 @@
 #include "Utils.h"
 
 #include "core/Database.h"
+#include "core/DeviceStorage.h"
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
 #include "core/Global.h"
@@ -130,20 +131,25 @@ namespace Utils
         auto& err = quiet ? DEVNULL : STDERR;
         auto compositeKey = QSharedPointer<CompositeKey>::create();
 
+        // A database on a device has no file to check; reading it reports
+        // its own errors.
         QFileInfo dbFileInfo(databaseFilename);
-        if (dbFileInfo.canonicalFilePath().isEmpty()) {
-            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << Qt::endl;
-            return {};
-        }
+        if (!DeviceStorage::isDeviceLocation(databaseFilename)) {
+            if (dbFileInfo.canonicalFilePath().isEmpty()) {
+                err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << Qt::endl;
+                return {};
+            }
 
-        if (!dbFileInfo.isFile()) {
-            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << Qt::endl;
-            return {};
-        }
+            if (!dbFileInfo.isFile()) {
+                err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename)
+                    << Qt::endl;
+                return {};
+            }
 
-        if (!dbFileInfo.isReadable()) {
-            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << Qt::endl;
-            return {};
+            if (!dbFileInfo.isReadable()) {
+                err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << Qt::endl;
+                return {};
+            }
         }
 
         if (isPasswordProtected) {

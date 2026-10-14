@@ -23,6 +23,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
+#include <QInputDialog>
 #include <QList>
 #include <QMimeData>
 #include <QShortcut>
@@ -38,6 +39,7 @@
 #include "Application.h"
 #include "Clipboard.h"
 #include "autotype/AutoType.h"
+#include "core/DeviceStorage.h"
 #include "core/InactivityTimer.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
@@ -447,6 +449,18 @@ MainWindow::MainWindow()
 
     connect(m_ui->actionDatabaseNew, SIGNAL(triggered()), m_ui->tabWidget, SLOT(newDatabase()));
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
+
+    // Databases stored on a YubiKey: the PIN, when the device needs it.
+    DeviceStorage::instance()->setPinPrompt([this](const QString& serial) {
+        bool ok = false;
+        auto pin = QInputDialog::getText(this,
+                                         tr("YubiKey PIN"),
+                                         serial.isEmpty() ? tr("YubiKey PIN:") : tr("PIN of YubiKey %1:").arg(serial),
+                                         QLineEdit::Password,
+                                         {},
+                                         &ok);
+        return ok ? pin : QString();
+    });
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
     connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
@@ -678,8 +692,10 @@ void MainWindow::restoreConfigState()
                 openDatabase(filename);
             }
         }
+        // A database on a YubiKey is not reopened at start-up: it is opened
+        // through Open Database, which uses its stored master password.
         auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
-        if (!lastActiveFile.isEmpty()) {
+        if (!lastActiveFile.isEmpty() && !DeviceStorage::isDeviceLocation(lastActiveFile)) {
             openDatabase(lastActiveFile);
         }
     }
@@ -989,8 +1005,10 @@ void MainWindow::updateMenuActionState()
 
     // Database Menu
     m_ui->actionDatabaseSave->setEnabled(databaseUnlocked && m_ui->tabWidget->canSave());
-    m_ui->actionDatabaseSaveAs->setEnabled(databaseUnlocked);
-    m_ui->actionDatabaseSaveBackup->setEnabled(databaseUnlocked);
+    // A database on a device has no file to save as, back up, or sync.
+    const bool onDevice = dbWidget && DeviceStorage::isDeviceLocation(dbWidget->database()->filePath());
+    m_ui->actionDatabaseSaveAs->setEnabled(databaseUnlocked && !onDevice);
+    m_ui->actionDatabaseSaveBackup->setEnabled(databaseUnlocked && !onDevice);
     m_ui->actionDatabaseClose->setEnabled(dbWidget);
     m_ui->actionLockDatabase->setEnabled(databaseUnlocked);
     m_ui->actionLockAllDatabases->setEnabled(hasLockableDatabase);
@@ -998,7 +1016,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionDatabaseSettings->setEnabled(inDatabase || inDatabaseSettings);
     m_ui->actionDatabaseSecurity->setEnabled(inDatabase || inDatabaseSettings);
     m_ui->actionReports->setEnabled(inDatabase || inReports);
-    m_ui->menuRemoteSync->setEnabled(inDatabase || inDatabaseSettings);
+    m_ui->menuRemoteSync->setEnabled((inDatabase || inDatabaseSettings) && !onDevice);
     m_ui->menuExport->setEnabled(inDatabase);
     m_ui->actionDatabaseMerge->setEnabled(inDatabase);
 #ifdef KPXC_FEATURE_BROWSER

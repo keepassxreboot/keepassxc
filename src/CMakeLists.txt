@@ -25,6 +25,7 @@ set(core_SOURCES
         core/Config.cpp
         core/CustomData.cpp
         core/Database.cpp
+        core/DeviceStorage.cpp
         core/DatabaseStats.cpp
         core/Entry.cpp
         core/EntryAttachments.cpp
@@ -362,6 +363,9 @@ target_link_libraries(keepassxc_core
         ${ZLIB_LIBRARIES}
         ${MINIZIP_LIBRARIES}
         ${thirdparty_LIBRARIES})
+if(KPXC_FEATURE_YUBIBLOB)
+    target_link_libraries(keepassxc_core PkgConfig::YUBIBLOB)
+endif()
 
 # GUI Library Definition
 add_library(keepassxc_gui STATIC ${gui_SOURCES})

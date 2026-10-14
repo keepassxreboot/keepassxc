@@ -19,6 +19,7 @@
 #include "Database.h"
 
 #include "core/AsyncTask.h"
+#include "core/DeviceStorage.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
 #include "crypto/Random.h"
@@ -137,26 +138,44 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
         return false;
     }
 
-    QFile dbFile(filePath);
-    if (!dbFile.exists()) {
-        if (error) {
-            *error = tr("File %1 does not exist.").arg(filePath);
+    // A database on a device is read into memory; one in a file is read
+    // from the file.
+    const bool onDevice = DeviceStorage::isDeviceLocation(filePath);
+    QByteArray deviceData;
+    QBuffer deviceBuffer(&deviceData);
+    QFile file(filePath);
+    QIODevice& dbFile = onDevice ? static_cast<QIODevice&>(deviceBuffer) : file;
+    if (onDevice) {
+        QString deviceError;
+        // Reading only the public headers (no key) never asks for the PIN.
+        if (!DeviceStorage::instance()->read(filePath, &deviceData, &deviceError, !key.isNull())) {
+            if (error) {
+                *error = deviceError;
+            }
+            return false;
         }
-        return false;
-    }
+        deviceBuffer.open(QIODevice::ReadOnly);
+    } else {
+        if (!file.exists()) {
+            if (error) {
+                *error = tr("File %1 does not exist.").arg(filePath);
+            }
+            return false;
+        }
 
-    // Don't autodetect read-only mode, as it triggers an upstream bug.
-    // See https://github.com/keepassxreboot/keepassxc/issues/803
-    // if (!readOnly && !dbFile.open(QIODevice::ReadWrite)) {
-    //     readOnly = true;
-    // }
-    //
-    // if (!dbFile.isOpen() && !dbFile.open(QIODevice::ReadOnly)) {
-    if (!dbFile.open(QIODevice::ReadOnly)) {
-        if (error) {
-            *error = tr("Unable to open file %1.").arg(filePath);
+        // Don't autodetect read-only mode, as it triggers an upstream bug.
+        // See https://github.com/keepassxreboot/keepassxc/issues/803
+        // if (!readOnly && !dbFile.open(QIODevice::ReadWrite)) {
+        //     readOnly = true;
+        // }
+        //
+        // if (!dbFile.isOpen() && !dbFile.open(QIODevice::ReadOnly)) {
+        if (!file.open(QIODevice::ReadOnly)) {
+            if (error) {
+                *error = tr("Unable to open file %1.").arg(filePath);
+            }
+            return false;
         }
-        return false;
     }
 
     setEmitModified(false);
@@ -189,7 +208,9 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     markAsClean();
 
     emit databaseOpened();
-    m_fileWatcher->start(canonicalFilePath(), 30, 1);
+    if (!onDevice) {
+        m_fileWatcher->start(canonicalFilePath(), 30, 1);
+    }
     setEmitModified(true);
 
     return true;
@@ -284,6 +305,10 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         return false;
     }
 
+    if (DeviceStorage::isDeviceLocation(filePath)) {
+        return saveToDevice(filePath, error);
+    }
+
     // Make sure we don't overwrite external modifications unless explicitly allowed
     if (!m_ignoreFileChangesUntilSaved && !m_fileBlockHash.isEmpty() && filePath == m_data.filePath) {
         QFile dbFile(filePath);
@@ -352,6 +377,51 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         markAsModified();
     }
 
+    return ok;
+}
+
+/**
+ * Save the database to a device (write-through): serialize it in memory, as
+ * DirectWrite does, and hand the bytes to the device.  No file, no backup,
+ * no file watcher.
+ */
+bool Database::saveToDevice(const QString& location, QString* error)
+{
+    // Add random data to prevent side-channel data deduplication attacks
+    int length = Random::instance()->randomUIntRange(64, 512);
+    m_metadata->customData()->set(CustomData::RandomSlug, Random::instance()->randomArray(length).toHex());
+
+    QMutexLocker locker(&m_saveMutex);
+
+    bool ok = AsyncTask::runAndWaitForFuture([&] {
+        QBuffer dbBuffer;
+        dbBuffer.open(QIODevice::WriteOnly);
+        HashingStream hashingStream(&dbBuffer, QCryptographicHash::Md5, kFileBlockToHashSizeBytes);
+        if (!hashingStream.open(QIODevice::WriteOnly)) {
+            if (error) {
+                *error = hashingStream.errorString();
+            }
+            return false;
+        }
+        if (!writeDatabase(&hashingStream, error)) {
+            return false;
+        }
+        QString deviceError;
+        if (!DeviceStorage::instance()->write(location, dbBuffer.data(), &deviceError)) {
+            if (error) {
+                *error = deviceError;
+            }
+            return false;
+        }
+        m_fileBlockHash = hashingStream.hashingResult();
+        return true;
+    });
+    if (ok) {
+        setFilePath(location);
+        markAsClean();
+    } else {
+        markAsModified();
+    }
     return ok;
 }
 
@@ -708,6 +778,10 @@ QString Database::filePath() const
  */
 QString Database::canonicalFilePath() const
 {
+    // A device location is its own canonical form.
+    if (DeviceStorage::isDeviceLocation(m_data.filePath)) {
+        return m_data.filePath;
+    }
     QFileInfo fileInfo(m_data.filePath);
     return fileInfo.canonicalFilePath();
 }

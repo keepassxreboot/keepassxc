@@ -25,6 +25,7 @@
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
 #include "core/Config.h"
+#include "core/DeviceStorage.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -97,6 +98,15 @@ int main(int argc, char** argv)
 
     QCoreApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
+
+    // Databases on a YubiKey (`yubikey:<serial>/<vault>.kdbx`, through yb):
+    // the PIN is read from standard input when first needed.
+    DeviceStorage::instance()->setPinPrompt([](const QString& serial) {
+        Utils::STDERR << (serial.isEmpty() ? QObject::tr("YubiKey PIN: ")
+                                           : QObject::tr("PIN of YubiKey %1: ").arg(serial))
+                      << Qt::flush;
+        return Utils::getPassword();
+    });
     // Cleanup code pages after cli exits
     QObject::connect(&app, &QCoreApplication::destroyed, &app, [] { Utils::resetTextStreams(); });
 

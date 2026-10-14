@@ -19,6 +19,7 @@
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
+#include "core/DeviceStorage.h"
 #include "gui/FileDialog.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
@@ -250,6 +251,13 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     m_ui->fileNameLabel->setRawText(m_filename);
 
+    // The master password of a vault on a YubiKey may be stored there.
+    if (DeviceStorage::isDeviceLocation(m_filename) && DeviceStorage::instance()->hasStoredPassword(m_filename)) {
+        m_ui->messageWidget->showMessage(
+            tr("The master password is stored on the YubiKey: leave the password empty and click Unlock."),
+            MessageWidget::Information);
+    }
+
     // Set the public name if defined
     auto label = tr("Unlock KeePassXC Database");
     if (!m_db->publicName().isEmpty()) {
@@ -336,6 +344,19 @@ void DatabaseOpenWidget::openDatabase()
     m_ui->editPassword->setShowPassword(false);
     m_ui->messageWidget->hide();
     QCoreApplication::processEvents();
+
+    // A vault on a YubiKey may have its master password stored there
+    // (<vault>.passwd): with no password and no key file entered, use it.
+    if (DeviceStorage::isDeviceLocation(m_filename) && m_ui->editPassword->text().isEmpty()
+        && m_ui->keyFileLineEdit->text().isEmpty()) {
+        QString stored, deviceError;
+        if (!DeviceStorage::instance()->readPassword(m_filename, &stored, &deviceError)) {
+            m_ui->messageWidget->showMessage(deviceError, MessageWidget::Error);
+            setUserInteractionLock(false);
+            return;
+        }
+        m_ui->editPassword->setText(stored);
+    }
 
     const auto databaseKey = buildDatabaseKey();
     if (!databaseKey) {
