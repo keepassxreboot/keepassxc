@@ -28,6 +28,7 @@ private slots:
     void initTestCase();
     void test();
     void testCustomColumns();
+    void testCustomColumnPlaceholders();
     void testCustomColumnProtection();
     void testCustomColumnChanges();
     void testAttachmentsModel();

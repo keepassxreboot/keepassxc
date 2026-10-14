@@ -158,7 +158,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     if (index.column() >= CustomAttribute && (role == Qt::DisplayRole || role == Qt::UserRole)) {
         const auto name = m_customColumns.at(index.column() - CustomAttribute);
-        const auto value = attr->value(name);
+        const auto value = entry->resolveMultiplePlaceholders(attr->value(name));
         if (role == Qt::DisplayRole && !value.isEmpty() && attr->isProtected(name)
             && config()->get(Config::GUI_HidePasswords).toBool()) {
             return HiddenContentDisplay;

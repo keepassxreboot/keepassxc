@@ -350,18 +350,20 @@ bool EntryView::setViewState(const QByteArray& state)
     // Reset to unsorted first (https://bugreports.qt.io/browse/QTBUG-86694)
     header()->setSortIndicator(-1, Qt::AscendingOrder);
     bool status = header()->restoreState(state);
+    m_columnsNeedRelayout = state.isEmpty();
     if (header()->count() != m_model->columnCount()) {
         const auto current = selectionModel()->currentIndex();
         const auto selection = selectionModel()->selection();
         header()->reset();
         selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
         selectionModel()->setCurrentIndex(current, QItemSelectionModel::NoUpdate);
+        resetViewToDefaults();
+        m_columnsNeedRelayout = !isVisible();
     }
     if (header()->sortIndicatorSection() >= m_model->columnCount()) {
         header()->setSortIndicator(-1, Qt::AscendingOrder);
     }
     resetFixedColumns();
-    m_columnsNeedRelayout = state.isEmpty();
     onHeaderChanged();
     return status;
 }
@@ -563,6 +565,7 @@ void EntryView::resetViewToDefaults()
     header()->moveSection(header()->visualIndex(EntryModel::Totp), 2);
 
     // Sort by title or group (depending on the mode)
+    header()->setSortIndicator(-1, Qt::AscendingOrder);
     m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
     sortByColumn(EntryModel::Title, Qt::AscendingOrder);
 

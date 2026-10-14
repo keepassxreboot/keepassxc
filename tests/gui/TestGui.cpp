@@ -287,7 +287,7 @@ void TestGui::testCustomColumns()
     restored.setCurrentEntry(otherEntry);
     QVERIFY(restored.setViewState(customSortState));
     QCOMPARE(restored.header()->count(), customColumn + 1);
-    QCOMPARE(restored.header()->sortIndicatorSection(), -1);
+    QCOMPARE(restored.header()->sortIndicatorSection(), int(EntryModel::Title));
     QCOMPARE(restored.currentEntry(), otherEntry);
     QCOMPARE(restored.selectedEntries(), QList<Entry*>({otherEntry}));
 
@@ -339,6 +339,93 @@ void TestGui::testCustomColumns()
     QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
     view->displayGroup(m_db->rootGroup());
     QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+}
+
+void TestGui::testCustomColumnStateFallback_data()
+{
+    QTest::addColumn<bool>("searchMode");
+    QTest::addColumn<bool>("visible");
+    QTest::addColumn<int>("sortColumn");
+    QTest::newRow("group-hidden") << false << false << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("group-visible") << false << true << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("search-hidden") << true << false << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("search-visible") << true << true << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("group-title-descending") << false << true << int(EntryModel::Title);
+    QTest::newRow("search-title-descending") << true << false << int(EntryModel::Title);
+    QTest::newRow("search-group-descending") << true << true << int(EntryModel::ParentGroup);
+}
+
+void TestGui::testCustomColumnStateFallback()
+{
+    QFETCH(bool, searchMode);
+    QFETCH(bool, visible);
+    QFETCH(int, sortColumn);
+
+    Database database;
+    database.metadata()->customData()->set(CustomData::EntryListColumns, "[\"First\",\"Second\"]");
+    auto first = new Entry();
+    first->setGroup(database.rootGroup());
+    first->setTitle("B");
+    auto second = new Entry();
+    second->setGroup(database.rootGroup());
+    second->setTitle("A");
+    auto third = new Entry();
+    third->setGroup(database.rootGroup());
+    third->setTitle("C");
+
+    EntryView source;
+    source.setDatabase(&database);
+    source.header()->showSection(EntryModel::Password);
+    source.header()->hideSection(EntryModel::Title);
+    source.header()->moveSection(source.header()->visualIndex(EntryModel::Username), 1);
+    source.header()->resizeSection(EntryModel::Username, 271);
+    source.sortByColumn(sortColumn, Qt::DescendingOrder);
+    const auto state = source.viewState();
+
+    database.metadata()->customData()->set(CustomData::EntryListColumns, "[\"First\"]");
+    EntryView view;
+    view.setDatabase(&database);
+    if (searchMode) {
+        view.displaySearch({first, second, third});
+    } else {
+        view.displayGroup(database.rootGroup());
+    }
+    view.setCurrentEntry(first);
+    view.selectionModel()->select(view.indexFromEntry(third), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    view.resize(800, 400);
+    if (visible) {
+        view.show();
+        QTRY_VERIFY(view.isVisible());
+    }
+
+    QVERIFY(view.setViewState(state));
+    QCOMPARE(view.header()->count(), int(EntryModel::CustomAttribute + 1));
+    QVERIFY(view.header()->isSectionHidden(EntryModel::Password));
+    EntryView defaults;
+    defaults.setDatabase(&database);
+    if (searchMode) {
+        defaults.displaySearch({first, second, third});
+    }
+    QVERIFY(QMetaObject::invokeMethod(&defaults, "resetViewToDefaults"));
+    for (int column = 0; column < view.header()->count(); ++column) {
+        QCOMPARE(view.header()->isSectionHidden(column), defaults.header()->isSectionHidden(column));
+        QCOMPARE(view.header()->visualIndex(column), defaults.header()->visualIndex(column));
+        if (!view.header()->isSectionHidden(column)) {
+            QVERIFY(view.header()->sectionSize(column) > 0);
+        }
+    }
+    QCOMPARE(view.header()->sortIndicatorSection(), defaults.header()->sortIndicatorSection());
+    QCOMPARE(view.header()->sortIndicatorOrder(), Qt::AscendingOrder);
+    QCOMPARE(view.entryFromIndex(view.currentIndex()), first);
+    QCOMPARE(view.numberOfSelectedEntries(), 2);
+    QVERIFY(view.selectedEntries().contains(first));
+    QVERIFY(view.selectedEntries().contains(third));
+    view.show();
+    QTRY_COMPARE(view.header()->length(), view.viewport()->width());
+    view.header()->resizeSection(EntryModel::Username, 173);
+    view.hide();
+    view.show();
+    QCOMPARE(view.header()->sectionSize(EntryModel::Username), 173);
 }
 
 void TestGui::testSettingsDefaultTabOrder()

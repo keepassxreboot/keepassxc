@@ -39,6 +39,8 @@ private slots:
 
     void testSettingsDefaultTabOrder();
     void testCustomColumns();
+    void testCustomColumnStateFallback();
+    void testCustomColumnStateFallback_data();
     void testCreateDatabase();
     void testMergeDatabase();
     void testRemoteSyncDatabaseSameKey();
