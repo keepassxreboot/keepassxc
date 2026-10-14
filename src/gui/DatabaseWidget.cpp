@@ -1260,12 +1260,8 @@ void DatabaseWidget::onCoordinatorLeaseLost()
                                  + QUuid::createUuid().toString(QUuid::WithoutBraces)
                                  + QStringLiteral(".kdbx");
             const QString filePath = QDir(directoryPath).filePath(name);
-            QSaveFile recovery(filePath);
             QString error;
-            if (recovery.open(QIODevice::WriteOnly)
-                && recovery.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner)
-                && m_db->writeDatabase(&recovery, &error)
-                && recovery.commit()) {
+            if (m_db->saveEncryptedRecoveryCopy(filePath, &error)) {
                 recoveryStatus = tr("Encrypted local recovery file: %1").arg(filePath);
             } else {
                 recoveryStatus = tr("Could not persist encrypted recovery file: %1").arg(error);

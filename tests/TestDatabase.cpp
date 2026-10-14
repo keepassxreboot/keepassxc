@@ -139,6 +139,32 @@ void TestDatabase::testSaveAs()
     QCOMPARE(error, QString("Could not save, database has not been initialized!"));
 }
 
+void TestDatabase::testSaveEncryptedRecoveryCopy()
+{
+    TemporaryFile original;
+    QVERIFY(original.copyFromFile(dbFileName));
+    TemporaryFile recovery;
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    QString error;
+    QVERIFY2(db->open(original.fileName(), key, &error), error.toLatin1());
+
+    db->metadata()->setName("unsaved recovery contents");
+    QVERIFY(db->isModified());
+    const auto originalPath = db->filePath();
+    QVERIFY2(db->saveEncryptedRecoveryCopy(recovery.fileName(), &error), error.toLatin1());
+
+    // A recovery snapshot must not switch the active file or clear changes.
+    QCOMPARE(db->filePath(), originalPath);
+    QVERIFY(db->isModified());
+
+    auto restored = QSharedPointer<Database>::create();
+    QVERIFY2(restored->open(recovery.fileName(), key, &error), error.toLatin1());
+    QCOMPARE(restored->metadata()->name(), QStringLiteral("unsaved recovery contents"));
+}
+
 void TestDatabase::testSignals()
 {
     TemporaryFile tempFile;

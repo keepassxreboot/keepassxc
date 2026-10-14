@@ -355,6 +355,41 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     return ok;
 }
 
+bool Database::saveEncryptedRecoveryCopy(const QString& filePath, QString* error)
+{
+    if (!isInitialized() || isSaving()) {
+        if (error) {
+            *error = tr("Cannot create recovery copy: database is not ready or is already being saved.");
+        }
+        return false;
+    }
+
+    QMutexLocker locker(&m_saveMutex);
+    QSaveFile recovery(filePath);
+    if (!recovery.open(QIODevice::WriteOnly)) {
+        if (error) {
+            *error = recovery.errorString();
+        }
+        return false;
+    }
+    if (!recovery.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner)) {
+        if (error) {
+            *error = tr("Cannot restrict permissions on the encrypted recovery copy.");
+        }
+        return false;
+    }
+    if (!writeDatabase(&recovery, error)) {
+        return false;
+    }
+    if (!recovery.commit()) {
+        if (error) {
+            *error = recovery.errorString();
+        }
+        return false;
+    }
+    return true;
+}
+
 bool Database::performSave(const QString& filePath, SaveAction action, const QString& backupFilePath, QString* error)
 {
     if (!backupFilePath.isNull()) {

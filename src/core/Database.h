@@ -91,6 +91,9 @@ public:
                 SaveAction action = Atomic,
                 const QString& backupFilePath = QString(),
                 QString* error = nullptr);
+    // Atomically save an encrypted recovery copy without changing the open
+    // database path, dirty state, or file watcher.
+    bool saveEncryptedRecoveryCopy(const QString& filePath, QString* error = nullptr);
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
 
