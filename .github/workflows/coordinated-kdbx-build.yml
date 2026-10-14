@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            build-essential cmake ninja-build asciidoctor xvfb \
+            build-essential cmake ninja-build asciidoctor xvfb xclip \
             qt6-base-dev qt6-svg-dev qt6-tools-dev libusb-1.0-0-dev \
             libbotan-2-dev zlib1g-dev libminizip-dev libpcsclite-dev \
             libkeyutils-dev libxi-dev libxtst-dev libqrencode-dev \
@@ -35,7 +35,7 @@ jobs:
         run: cmake --build build --parallel 2
       - name: Execute upstream tests
         env:
-          QT_QPA_PLATFORM: offscreen
+          QT_QPA_PLATFORM: xcb
         run: xvfb-run -a ctest --test-dir build --output-on-failure --parallel 2
       - uses: actions/setup-go@v5
         with:
