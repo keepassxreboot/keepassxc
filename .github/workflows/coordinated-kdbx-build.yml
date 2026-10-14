@@ -1,0 +1,46 @@
+name: Coordinated KDBX - KeePassXC build and tests
+
+on:
+  push:
+    branches: ["feature/coordinated-kdbx"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install upstream-documented build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential cmake ninja-build asciidoctor xvfb \
+            qt6-base-dev qt6-svg-dev qt6-tools-dev libusb-1.0-0-dev \
+            libbotan-3-dev zlib1g-dev libminizip-dev libpcsclite-dev \
+            libkeyutils-dev libxi-dev libxtst-dev libqrencode-dev
+      - name: Configure
+        run: >-
+          cmake -S . -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Debug
+          -DWITH_TESTS=ON
+          -DWITH_GUI_TESTS=OFF
+          -DKPXC_FEATURE_DOCS=OFF
+      - name: Compile
+        run: cmake --build build --parallel 2
+      - name: Execute upstream tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: xvfb-run -a ctest --test-dir build --output-on-failure --parallel 2
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: utils/keepassxc-cr-recovery/go.mod
+          cache-dependency-path: utils/keepassxc-cr-recovery/go.sum
+      - name: Go recovery helper tests
+        run: |
+          cd utils/keepassxc-cr-recovery
+          go test ./...

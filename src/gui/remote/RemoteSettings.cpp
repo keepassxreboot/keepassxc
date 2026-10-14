@@ -87,6 +87,9 @@ QString RemoteSettings::toConfig() const
     for (const auto params : m_remoteParams.values()) {
         QJsonObject object;
         object["name"] = params->name;
+        object["coordinatorUrl"] = params->coordinatorUrl;
+        object["coordinatorDatabaseId"] = params->coordinatorDatabaseId;
+        object["coordinatorAccessToken"] = params->coordinatorAccessToken;
         object["downloadCommand"] = params->downloadCommand;
         object["downloadCommandInput"] = params->downloadInput;
         object["downloadTimeoutMsec"] = params->downloadTimeoutMsec;
@@ -108,6 +111,9 @@ void RemoteSettings::fromConfig(const QString& data)
         auto itemMap = item.toMap();
         auto* params = new RemoteParams();
         params->name = itemMap["name"].toString();
+        params->coordinatorUrl = itemMap["coordinatorUrl"].toString();
+        params->coordinatorDatabaseId = itemMap["coordinatorDatabaseId"].toString();
+        params->coordinatorAccessToken = itemMap["coordinatorAccessToken"].toString();
         params->downloadCommand = itemMap["downloadCommand"].toString();
         params->downloadInput = itemMap["downloadCommandInput"].toString();
         params->downloadTimeoutMsec = itemMap.value("downloadTimeoutMsec", 10000).toInt();

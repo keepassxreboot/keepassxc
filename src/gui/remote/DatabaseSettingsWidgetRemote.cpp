@@ -46,6 +46,9 @@ DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
 
     auto setModified = [this]() { m_modified = true; };
     connect(m_ui->nameLineEdit, &QLineEdit::textChanged, setModified);
+    connect(m_ui->coordinatorUrl, &QLineEdit::textChanged, setModified);
+    connect(m_ui->coordinatorDatabaseId, &QLineEdit::textChanged, setModified);
+    connect(m_ui->coordinatorAccessToken, &QLineEdit::textChanged, setModified);
     connect(m_ui->downloadCommand, &QLineEdit::textChanged, setModified);
     connect(m_ui->inputForDownload, &QPlainTextEdit::textChanged, setModified);
     connect(m_ui->downloadTimeoutSec, QOverload<int>::of(&QSpinBox::valueChanged), setModified);
@@ -102,6 +105,9 @@ void DatabaseSettingsWidgetRemote::saveCurrentSettings()
 
     auto* params = new RemoteParams();
     params->name = m_ui->nameLineEdit->text();
+    params->coordinatorUrl = m_ui->coordinatorUrl->text().trimmed();
+    params->coordinatorDatabaseId = m_ui->coordinatorDatabaseId->text().trimmed();
+    params->coordinatorAccessToken = m_ui->coordinatorAccessToken->text();
     params->downloadCommand = m_ui->downloadCommand->text();
     params->downloadInput = m_ui->inputForDownload->toPlainText();
     params->downloadTimeoutMsec = m_ui->downloadTimeoutSec->value() * 1000;
@@ -149,6 +155,9 @@ void DatabaseSettingsWidgetRemote::editCurrentSettings()
     }
 
     m_ui->nameLineEdit->setText(params->name);
+    m_ui->coordinatorUrl->setText(params->coordinatorUrl);
+    m_ui->coordinatorDatabaseId->setText(params->coordinatorDatabaseId);
+    m_ui->coordinatorAccessToken->setText(params->coordinatorAccessToken);
     m_ui->downloadCommand->setText(params->downloadCommand);
     m_ui->inputForDownload->setPlainText(params->downloadInput);
     m_ui->downloadTimeoutSec->setValue(params->downloadTimeoutMsec / 1000);
@@ -171,6 +180,9 @@ void DatabaseSettingsWidgetRemote::updateSettingsList()
 void DatabaseSettingsWidgetRemote::clearFields()
 {
     m_ui->nameLineEdit->setText("");
+    m_ui->coordinatorUrl->clear();
+    m_ui->coordinatorDatabaseId->clear();
+    m_ui->coordinatorAccessToken->clear();
     m_ui->downloadCommand->setText("");
     m_ui->inputForDownload->setPlainText("");
     m_ui->downloadTimeoutSec->setValue(10);

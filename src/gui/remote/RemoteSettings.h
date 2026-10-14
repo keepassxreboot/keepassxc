@@ -29,10 +29,13 @@ struct RemoteParams
     QString name;
     QString downloadCommand;
     QString downloadInput;
-    int downloadTimeoutMsec;
+    int downloadTimeoutMsec = 10000;
+    QString coordinatorUrl;
+    QString coordinatorDatabaseId;
+    QString coordinatorAccessToken;
     QString uploadCommand;
     QString uploadInput;
-    int uploadTimeoutMsec;
+    int uploadTimeoutMsec = 10000;
 };
 Q_DECLARE_METATYPE(RemoteParams)
 

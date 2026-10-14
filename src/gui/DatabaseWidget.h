@@ -46,6 +46,7 @@ class EntryPreviewWidget;
 class TagView;
 class ElidedLabel;
 class RemoteSettings;
+class KdbxCoordinatorClient;
 struct RemoteParams;
 
 namespace Ui
@@ -129,6 +130,7 @@ public:
     void setSearchStringForAutoType(const QString& search);
 
     void syncWithRemote(const RemoteParams* params);
+    bool syncWithCoordinator(const RemoteParams* params);
     void syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params);
     QList<RemoteParams*> getRemoteParams() const;
 
@@ -281,6 +283,7 @@ private slots:
     void onGroupChanged();
     void onDatabaseModified();
     void onDatabaseNonDataChanged();
+    void onCoordinatorLeaseLost();
     void onAutosaveDelayTimeout();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);
@@ -333,6 +336,11 @@ private:
     int m_saveAttempts;
     bool m_attemptingLock = false;
 
+    bool beginCoordinatedEditing();
+    QScopedPointer<KdbxCoordinatorClient> m_coordinatorClient;
+    QByteArray m_coordinatorIdentity;
+    bool m_coordinatorSyncing = false;
+    bool m_coordinatorLeaseLost = false;
     QScopedPointer<RemoteSettings> m_remoteSettings;
 
     // Search state

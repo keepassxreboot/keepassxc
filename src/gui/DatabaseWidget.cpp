@@ -19,11 +19,21 @@
 #include "DatabaseWidget.h"
 
 #include <QApplication>
+#include <QCryptographicHash>
 #include <QBoxLayout>
 #include <QCheckBox>
 #include <QDesktopServices>
 #include <QHostInfo>
 #include <QInputDialog>
+#include <QFile>
+#include <QTemporaryFile>
+#include <QScopedValueRollback>
+#include <QSaveFile>
+#include <QUuid>
+#include <QStandardPaths>
+#include <QDateTime>
+#include <QDir>
+#include <QUrl>
 #include <QKeyEvent>
 #include <QPlainTextEdit>
 #include <QProcess>
@@ -58,6 +68,7 @@
 #include "gui/widgets/ElidedLabel.h"
 #include "keeshare/KeeShare.h"
 #include "remote/RemoteHandler.h"
+#include "remote/KdbxCoordinatorClient.h"
 #include "remote/RemoteSettings.h"
 
 #ifdef KPXC_FEATURE_NETWORK
@@ -240,7 +251,12 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     KeeShare::instance()->connectDatabase(m_db, {});
 
     if (m_db->isInitialized()) {
-        switchToMainView();
+        if (beginCoordinatedEditing()) {
+            switchToMainView();
+        } else {
+            // The caller can still close the tab, but must not edit it.
+            setDisabled(true);
+        }
     } else {
         switchToOpenDatabase();
     }
@@ -484,6 +500,17 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // TODO: instead of increasing the ref count temporarily, there should be a clean
     // break from the old database. Without this crashes occur due to the change
     // signals triggering dangling pointers.
+    // Replacing an already-open coordinated database would silently drop its
+    // lease (for example during a file reload). Fail closed until the user
+    // opens a fresh, locked session. A normal unlock starts a new session.
+    const bool replacingCoordinatedSession = !isLocked() && (m_coordinatorClient || m_coordinatorLeaseLost);
+    m_coordinatorClient.reset();
+    m_coordinatorIdentity.clear();
+    m_coordinatorLeaseLost = replacingCoordinatedSession;
+    if (replacingCoordinatedSession) {
+        setDisabled(true);
+        showErrorMessage(tr("Shared database instance changed while editing. Reopen it to obtain a new lock."));
+    }
     auto oldDb = m_db;
     m_db = std::move(db);
     connectDatabaseSignals();
@@ -1154,8 +1181,111 @@ int DatabaseWidget::addChildWidget(QWidget* w)
     return index;
 }
 
+// A configured database needs its remote editing lease from unlock until lock.
+// Normal saves publish under this same lease. The feature is opt-in and keeps
+// the legacy remote command provider unchanged for unconfigured databases.
+bool DatabaseWidget::beginCoordinatedEditing()
+{
+    const RemoteParams* selected = nullptr;
+    for (const auto* params : m_remoteSettings->getAllRemoteParams()) {
+        if (!params->coordinatorUrl.isEmpty()) {
+            if (selected) {
+                showErrorMessage(tr("Only one coordinated storage profile may be active for a database."));
+                return false;
+            }
+            selected = params;
+        }
+    }
+    if (!selected) {
+        return true;
+    }
+    if (selected->coordinatorDatabaseId.isEmpty() || selected->coordinatorAccessToken.isEmpty()) {
+        showErrorMessage(tr("Coordinator configuration is incomplete."));
+        return false;
+    }
+    m_coordinatorIdentity = QCryptographicHash::hash(
+        (selected->coordinatorUrl + QChar::Null + selected->coordinatorDatabaseId
+         + QChar::Null + selected->coordinatorAccessToken).toUtf8(),
+        QCryptographicHash::Sha256);
+    m_coordinatorClient.reset(new KdbxCoordinatorClient(QUrl(selected->coordinatorUrl),
+                                                        selected->coordinatorDatabaseId,
+                                                        selected->coordinatorAccessToken.toUtf8(),
+                                                        QHostInfo::localHostName()));
+    connect(m_coordinatorClient.data(),
+            &KdbxCoordinatorClient::leaseLost,
+            this,
+            &DatabaseWidget::onCoordinatorLeaseLost);
+    QString error;
+    if (!m_coordinatorClient->acquire(&error)) {
+        m_coordinatorClient.reset();
+        showErrorMessage(tr("Cannot open shared database for editing: %1").arg(error));
+        return false;
+    }
+    if (!syncWithCoordinator(selected)) {
+        m_coordinatorClient.reset();
+        m_coordinatorIdentity.clear();
+        return false;
+    }
+    // Do not clear a lease-loss latch after it fired while the sync request
+    // was running. Reopening the database is required to start a new session.
+    if (m_coordinatorLeaseLost) {
+        return false;
+    }
+    return true;
+}
+
+void DatabaseWidget::onCoordinatorLeaseLost()
+{
+    if (m_coordinatorLeaseLost) {
+        return;
+    }
+    m_coordinatorLeaseLost = true;
+    if (m_autosaveTimer) {
+        m_autosaveTimer->stop();
+    }
+    // Fail closed before persisting any recovery data. A separate encrypted
+    // snapshot prevents an unsaved in-memory revision from being lost when the
+    // window is subsequently closed. Do not modify the source database path.
+    setDisabled(true);
+    QString recoveryStatus;
+    if (m_db && m_db->isInitialized() && !m_db->isSaving()) {
+        const QString directoryPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
+                                      + QStringLiteral("/coordinated-recovery");
+        if (!QDir().mkpath(directoryPath)) {
+            recoveryStatus = tr("Could not create encrypted recovery directory.");
+        } else {
+            const QString name = QStringLiteral("kdbx-recovery-")
+                                 + QDateTime::currentDateTimeUtc().toString(QStringLiteral("yyyyMMddTHHmmsszzz"))
+                                 + QStringLiteral("-")
+                                 + QUuid::createUuid().toString(QUuid::WithoutBraces)
+                                 + QStringLiteral(".kdbx");
+            const QString filePath = QDir(directoryPath).filePath(name);
+            QSaveFile recovery(filePath);
+            QString error;
+            if (recovery.open(QIODevice::WriteOnly)
+                && recovery.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner)
+                && m_db->writeDatabase(&recovery, &error)
+                && recovery.commit()) {
+                recoveryStatus = tr("Encrypted local recovery file: %1").arg(filePath);
+            } else {
+                recoveryStatus = tr("Could not persist encrypted recovery file: %1").arg(error);
+            }
+        }
+    } else {
+        recoveryStatus = tr("No automatic snapshot available while a database save is in progress.");
+    }
+    // No automatic lease reacquisition, because a newer writer may already
+    // have committed another revision.
+    showErrorMessage(tr("Shared database editing lock lost. Editing and remote saves are disabled. %1")
+                         .arg(recoveryStatus));
+}
+
 void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 {
+    if (params && !params->coordinatorUrl.isEmpty()) {
+        syncWithCoordinator(params);
+        return;
+    }
     setDisabled(true);
     emit databaseSyncInProgress();
 
@@ -1190,6 +1320,133 @@ void DatabaseWidget::syncWithRemote(const RemoteParams* params)
     uploadAndFinishSync(params, result);
 }
 
+// This provider synchronizes inside the existing editing lease if available.
+// Manual remote sync without a long-lived session uses a temporary lease.
+bool DatabaseWidget::syncWithCoordinator(const RemoteParams* params)
+{
+    if (!params || m_coordinatorSyncing || m_coordinatorLeaseLost) {
+        return false;
+    }
+    const RemoteParams stableParams = *params;
+    params = &stableParams;
+    QScopedValueRollback<bool> inProgress(m_coordinatorSyncing, true);
+    setDisabled(true);
+    emit databaseSyncInProgress();
+    RemoteHandler::RemoteResult result{};
+    result.success = false;
+
+    auto fail = [this, params, &result](const QString& why) {
+        result.success = false;
+        result.errorMessage = why;
+        finishSync(params, result);
+    };
+
+    if (params->coordinatorDatabaseId.isEmpty() || params->coordinatorAccessToken.isEmpty()) {
+        fail(tr("Coordinator URL, database ID and access token are required."));
+        return false;
+    }
+
+    if (m_coordinatorClient) {
+        const QByteArray identity = QCryptographicHash::hash(
+            (params->coordinatorUrl + QChar::Null + params->coordinatorDatabaseId
+             + QChar::Null + params->coordinatorAccessToken).toUtf8(),
+            QCryptographicHash::Sha256);
+        if (identity != m_coordinatorIdentity) {
+            fail(tr("Coordinator settings changed during editing. Reopen the database to reauthenticate."));
+            return false;
+        }
+    }
+    QScopedPointer<KdbxCoordinatorClient> transactionClient;
+    auto* client = m_coordinatorClient.data();
+    QString error;
+    if (!client) {
+        transactionClient.reset(new KdbxCoordinatorClient(QUrl(params->coordinatorUrl),
+                                                          params->coordinatorDatabaseId,
+                                                          params->coordinatorAccessToken.toUtf8(),
+                                                          QHostInfo::localHostName()));
+        client = transactionClient.data();
+        emit updateSyncProgress(10, tr("Acquiring exclusive remote lock..."));
+        if (!client->acquire(&error)) {
+            fail(error);
+            return false;
+        }
+    } else if (!client->hasLease()) {
+        fail(tr("The coordinator lease has expired. Unsynchronized local changes are preserved."));
+        return false;
+    }
+
+    // The client destructor releases the lease on all early return paths.
+    QByteArray remoteEncrypted;
+    bool remoteExists = false;
+    emit updateSyncProgress(25, tr("Downloading..."));
+    if (!client->download(&remoteEncrypted, &remoteExists, &error)) {
+        fail(error);
+        return false;
+    }
+
+    // Merge into the open database before publishing. Do not publish if the
+    // remote database cannot be opened with the current master key.
+    QTemporaryFile downloaded;
+    if (remoteExists) {
+        if (!downloaded.open() || downloaded.write(remoteEncrypted) != remoteEncrypted.size() ||
+            !downloaded.flush()) {
+            fail(tr("Could not create secure temporary remote database."));
+            return false;
+        }
+        downloaded.close();
+        auto remoteDb = QSharedPointer<Database>::create();
+        if (!remoteDb->open(downloaded.fileName(), m_db->key(), &error)) {
+            fail(tr("Cannot unlock remote database using the currently opened database key: %1").arg(error));
+            return false;
+        }
+        remoteDb->markAsTemporaryDatabase();
+        if (!client->hasLease()) {
+            fail(tr("Coordinator editing lease was lost before merging."));
+            return false;
+        }
+        emit updateSyncProgress(50, tr("Merging..."));
+        if (!syncWithDatabase(remoteDb, error)) {
+            fail(error);
+            return false;
+        }
+        QFile merged(downloaded.fileName());
+        if (!merged.open(QIODevice::ReadOnly)) {
+            fail(tr("Cannot read merged remote database."));
+            return false;
+        }
+        remoteEncrypted = merged.readAll();
+    } else {
+        // Initial publication of an already opened, locally saved database.
+        if (!save()) {
+            fail(tr("Local database could not be saved before initial publication."));
+            return false;
+        }
+        QFile local(m_db->filePath());
+        if (!local.open(QIODevice::ReadOnly)) {
+            fail(tr("Cannot read the local database for initial publication."));
+            return false;
+        }
+        remoteEncrypted = local.readAll();
+    }
+
+    if (!client->hasLease()) {
+        fail(tr("Coordinator editing lease expired; remote upload was not attempted."));
+        return false;
+    }
+    emit updateSyncProgress(75, tr("Publishing version-checked encrypted database..."));
+    if (!client->publish(remoteEncrypted, &error)) {
+        fail(tr("Remote publication failed; local database is retained: %1").arg(error));
+        return false;
+    }
+    if (transactionClient && !client->release(&error)) {
+        fail(tr("Remote publication succeeded, but lock release was not confirmed: %1").arg(error));
+        return false;
+    }
+    result.success = true;
+    finishSync(params, result);
+    return true;
+}
+
 void DatabaseWidget::syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params)
 {
     // disconnect any previously added slots to these signal
@@ -1219,7 +1476,7 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
 
 void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
 {
-    setDisabled(false);
+    setDisabled(m_coordinatorLeaseLost);
     emit updateSyncProgress(-1, "");
     if (result.success) {
         emit databaseSyncCompleted(params->name);
@@ -1335,6 +1592,12 @@ void DatabaseWidget::loadDatabase(bool accepted)
     if (accepted) {
         emit databaseAboutToUnlock();
         replaceDatabase(openWidget->database());
+        // Fail closed: do not permit editing a stale local copy before
+        // acquiring its cross-platform exclusive lease and reconciling it.
+        if (!beginCoordinatedEditing()) {
+            emit closeRequest();
+            return;
+        }
         switchToMainView();
         processAutoOpen();
 
@@ -2069,6 +2332,7 @@ bool DatabaseWidget::lock()
         }
     }
 
+    bool discardUnsaved = false;
     if (m_db->isModified()) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
@@ -2109,12 +2373,34 @@ bool DatabaseWidget::lock()
             } else if (result == MessageBox::Cancel) {
                 m_attemptingLock = false;
                 return false;
+            } else if (result == MessageBox::Discard) {
+                discardUnsaved = true;
             }
         }
     } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
         // Silently auto-save non-data changes, ignore errors
         QString errorMessage;
         performSave(errorMessage);
+    }
+
+    if (m_coordinatorClient) {
+        // Commit the last local revision before dropping the exclusive lease.
+        // Do NOT accidentally publish changes explicitly discarded by the user.
+        if (!discardUnsaved) {
+            const RemoteParams* selected = nullptr;
+            for (const auto* params : m_remoteSettings->getAllRemoteParams()) {
+                if (!params->coordinatorUrl.isEmpty()) {
+                    selected = params;
+                    break;
+                }
+            }
+            if (!selected || !syncWithCoordinator(selected)) {
+                m_attemptingLock = false;
+                return false;
+            }
+        }
+        m_coordinatorClient.reset();
+        m_coordinatorIdentity.clear();
     }
 
     if (m_groupView->currentGroup()) {
@@ -2488,6 +2774,10 @@ EntryView* DatabaseWidget::entryView()
  */
 bool DatabaseWidget::save()
 {
+    if (m_coordinatorLeaseLost || (m_coordinatorClient && !m_coordinatorClient->hasLease())) {
+        onCoordinatorLeaseLost();
+        return false;
+    }
     // Never allow saving a locked database; it causes corruption
     Q_ASSERT(!isLocked());
     // Release build interlock
@@ -2501,6 +2791,20 @@ bool DatabaseWidget::save()
         return false;
     }
 
+    // A coordinator configured while the database was already open must
+    // become active before the very next save. Never silently leave the
+    // freshly configured shared database in unsynchronized edit mode.
+    if (!m_coordinatorClient && !m_coordinatorSyncing) {
+        for (const auto* params : m_remoteSettings->getAllRemoteParams()) {
+            if (!params->coordinatorUrl.isEmpty()) {
+                if (!beginCoordinatedEditing()) {
+                    return false;
+                }
+                break;
+            }
+        }
+    }
+
     // Read-only and new databases ask for filename
     if (m_db->filePath().isEmpty()) {
         return saveAs();
@@ -2512,6 +2816,23 @@ bool DatabaseWidget::save()
 
     QString errorMessage;
     if (performSave(errorMessage)) {
+        if (m_coordinatorClient && !m_coordinatorSyncing) {
+            const RemoteParams* selected = nullptr;
+            for (const auto* params : m_remoteSettings->getAllRemoteParams()) {
+                if (!params->coordinatorUrl.isEmpty()) {
+                    selected = params;
+                    break;
+                }
+            }
+            if (!selected || !syncWithCoordinator(selected)) {
+                // Even if the local copy was saved, it has NOT been
+                // published. Keep the dirty flag and make closing ask.
+                m_db->markAsModified();
+                m_blockAutoSave = false;
+                showErrorMessage(tr("Local KDBX saved, but remote publication failed."));
+                return false;
+            }
+        }
         m_saveAttempts = 0;
         m_blockAutoSave = false;
         m_autosaveTimer->stop(); // stop autosave delay to avoid triggering another save
@@ -2549,6 +2870,10 @@ bool DatabaseWidget::save()
  */
 bool DatabaseWidget::saveAs()
 {
+    if (m_coordinatorLeaseLost || (m_coordinatorClient && !m_coordinatorClient->hasLease())) {
+        onCoordinatorLeaseLost();
+        return false;
+    }
     // Never allow saving a locked database; it causes corruption
     Q_ASSERT(!isLocked());
     // Release build interlock

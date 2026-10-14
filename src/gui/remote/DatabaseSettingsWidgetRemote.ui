@@ -127,6 +127,17 @@
           <property name="currentIndex">
            <number>0</number>
           </property>
+          <widget class="QWidget" name="coordinatorTab">
+           <attribute name="title"><string>HTTPS Coordinator</string></attribute>
+           <layout class="QFormLayout" name="coordinatorForm">
+            <item row="0" column="0"><widget class="QLabel" name="coordinatorUrlLabel"><property name="text"><string>Service URL</string></property></widget></item>
+            <item row="0" column="1"><widget class="QLineEdit" name="coordinatorUrl"><property name="placeholderText"><string>https://service.example</string></property></widget></item>
+            <item row="1" column="0"><widget class="QLabel" name="coordinatorDatabaseIdLabel"><property name="text"><string>Database ID</string></property></widget></item>
+            <item row="1" column="1"><widget class="QLineEdit" name="coordinatorDatabaseId"/></item>
+            <item row="2" column="0"><widget class="QLabel" name="coordinatorTokenLabel"><property name="text"><string>Access token</string></property></widget></item>
+            <item row="2" column="1"><widget class="QLineEdit" name="coordinatorAccessToken"><property name="echoMode"><enum>QLineEdit::Password</enum></property><property name="toolTip"><string>Stored inside the encrypted KDBX database metadata. Never paste into logs.</string></property></widget></item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="downloadTab">
            <attribute name="title">
             <string>Download</string>
