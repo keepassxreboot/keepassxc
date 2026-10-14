@@ -183,7 +183,7 @@ void TotpSetupDialog::applyOtpauthUri(const QString& uri)
     }
 
     QSharedPointer<Totp::Settings> settings;
-    if (text.startsWith("otpauth://", Qt::CaseInsensitive)) {
+    if (text.startsWith(QStringLiteral("otpauth://totp/"), Qt::CaseInsensitive)) {
         settings = Totp::parseSettings(text);
     }
 
