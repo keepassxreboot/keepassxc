@@ -88,7 +88,7 @@ parts:
       - libkeyutils-dev
     stage-packages:
       - libbotan-2-19
-      - libzxing1
+      - libzxing3
       - libusb-1.0-0
       - libreadline8
       - libpcsclite1
