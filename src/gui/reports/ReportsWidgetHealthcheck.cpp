@@ -152,8 +152,8 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
 
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(m_ui->showExcluded, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
-    connect(m_ui->showExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+    connect(m_ui->showExcluded, SIGNAL(toggled(bool)), this, SLOT(calculateHealth()));
+    connect(m_ui->showExpired, SIGNAL(toggled(bool)), this, SLOT(calculateHealth()));
 
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }

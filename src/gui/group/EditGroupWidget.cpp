@@ -114,7 +114,7 @@ void EditGroupWidget::setupModifiedTracking()
     // Group tab
     connect(m_mainUi->editName, SIGNAL(textChanged(QString)), SLOT(setModified()));
     connect(m_mainUi->editNotes, SIGNAL(textChanged()), SLOT(setModified()));
-    connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), SLOT(setModified()));
+    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), SLOT(setModified()));
     connect(m_mainUi->searchComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
     connect(m_mainUi->autotypeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
