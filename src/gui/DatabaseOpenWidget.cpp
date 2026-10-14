@@ -462,8 +462,8 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
             legacyWarning.setDefaultButton(QMessageBox::Ok);
             legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
 
-            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, this, [](int state) {
-                config()->set(Config::Messages_NoLegacyKeyFileWarning, state == Qt::CheckState::Checked);
+            connect(legacyWarning.checkBox(), &QCheckBox::toggled, this, [](bool checked) {
+                config()->set(Config::Messages_NoLegacyKeyFileWarning, checked);
             });
 
             legacyWarning.exec();
