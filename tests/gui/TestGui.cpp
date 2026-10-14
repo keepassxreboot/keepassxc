@@ -31,12 +31,12 @@
 #include <QRadioButton>
 #include <QSignalSpy>
 #include <QSpinBox>
-#include <QTableWidget>
 #include <QTabBar>
 #include <QTabWidget>
+#include <QTableWidget>
 #include <QTest>
-#include <QToolButton>
 #include <QToolBar>
+#include <QToolButton>
 
 #include "config-keepassx-tests.h"
 #include "core/PasswordHealth.h"
