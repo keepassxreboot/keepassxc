@@ -24,6 +24,8 @@
 #include <QGuiApplication>
 #include <QHeaderView>
 #include <QInputDialog>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QListWidget>
 #include <QMenu>
 #include <QPainter>
@@ -31,7 +33,10 @@
 #include <QStyledItemDelegate>
 #include <QWindow>
 
+#include "core/CustomData.h"
+#include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Metadata.h"
 #include "gui/Icons.h"
 #include "gui/SortFilterHideProxyModel.h"
 
@@ -126,6 +131,28 @@ void EntryView::contextMenuShortcutPressed()
     if (hasFocus() && index.isValid()) {
         emit customContextMenuRequested(visualRect(index).bottomLeft());
     }
+}
+
+void EntryView::setDatabase(Database* database)
+{
+    if (m_database) {
+        disconnect(m_database->metadata()->customData(), nullptr, this, nullptr);
+    }
+    m_database = database;
+    const auto updateColumns = [this] {
+        QStringList columns;
+        if (m_database) {
+            const auto value = m_database->metadata()->customData()->value(CustomData::EntryListColumns);
+            columns = QJsonDocument::fromJson(value.toUtf8()).toVariant().toStringList();
+        }
+        m_model->setCustomColumns(columns);
+    };
+    if (m_database) {
+        auto* data = m_database->metadata()->customData();
+        connect(data, &CustomData::modified, this, updateColumns);
+        connect(data, &CustomData::reset, this, updateColumns);
+    }
+    updateColumns();
 }
 
 void EntryView::sortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
@@ -354,8 +381,8 @@ void EntryView::showHeaderMenu(const QPoint& position)
     }
 
     m_headerMenu->addSeparator();
-    m_headerMenu->addAction(tr("Add custom column..."), this, [this] {
-        auto attributes = config()->get(Config::GUI_CustomColumns).toStringList();
+    auto* addCustomColumn = m_headerMenu->addAction(tr("Add custom column..."), this, [this] {
+        auto attributes = m_model->customColumns();
         for (int row = 0; row < m_model->rowCount(); ++row) {
             attributes.append(
                 m_model->entryFromIndex(m_model->index(row, EntryModel::Title))->attributes()->customKeys());
@@ -368,14 +395,17 @@ void EntryView::showHeaderMenu(const QPoint& position)
         if (!accepted || attribute.isEmpty() || EntryAttributes::isDefaultAttribute(attribute)) {
             return;
         }
-        auto columns = config()->get(Config::GUI_CustomColumns).toStringList();
+        auto columns = m_model->customColumns();
         if (!columns.contains(attribute)) {
             columns.append(attribute);
-            config()->set(Config::GUI_CustomColumns, columns);
+            m_database->metadata()->customData()->set(
+                CustomData::EntryListColumns,
+                QString::fromUtf8(QJsonDocument(QJsonArray::fromStringList(columns)).toJson(QJsonDocument::Compact)));
         }
         header()->showSection(EntryModel::CustomAttribute + columns.indexOf(attribute));
         emit viewStateChanged();
     });
+    addCustomColumn->setEnabled(m_database);
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
     m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));

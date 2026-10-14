@@ -1311,6 +1311,7 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 
 void DatabaseWidget::connectDatabaseSignals()
 {
+    m_entryView->setDatabase(m_db.data());
     // relayed Database events
     connect(m_db.data(),
             SIGNAL(filePathChanged(QString, QString)),

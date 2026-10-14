@@ -36,7 +36,6 @@
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
-    , m_customColumns(config()->get(Config::GUI_CustomColumns).toStringList())
     , m_group(nullptr)
     , HiddenContentDisplay(QString("\u25cf").repeated(6))
 {
@@ -100,6 +99,33 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
     }
 
     endResetModel();
+}
+
+QStringList EntryModel::customColumns() const
+{
+    return m_customColumns;
+}
+
+void EntryModel::setCustomColumns(const QStringList& customColumns)
+{
+    auto columns = customColumns;
+    columns.removeDuplicates();
+    columns.removeIf(
+        [](const QString& column) { return column.isEmpty() || EntryAttributes::isDefaultAttribute(column); });
+    int first = 0;
+    while (first < m_customColumns.size() && first < columns.size() && m_customColumns.at(first) == columns.at(first)) {
+        ++first;
+    }
+    if (first < m_customColumns.size()) {
+        beginRemoveColumns({}, CustomAttribute + first, columnCount() - 1);
+        m_customColumns.erase(m_customColumns.begin() + first, m_customColumns.end());
+        endRemoveColumns();
+    }
+    if (first < columns.size()) {
+        beginInsertColumns({}, CustomAttribute + first, CustomAttribute + columns.size() - 1);
+        m_customColumns = columns;
+        endInsertColumns();
+    }
 }
 
 int EntryModel::rowCount(const QModelIndex& parent) const
@@ -610,25 +636,6 @@ void EntryModel::onConfigChanged(Config::ConfigKey key)
     case Config::GUI_HidePasswords:
         emit dataChanged(index(0, Password), index(rowCount() - 1, columnCount() - 1), {Qt::DisplayRole});
         break;
-    case Config::GUI_CustomColumns: {
-        const auto columns = config()->get(Config::GUI_CustomColumns).toStringList();
-        int first = 0;
-        while (first < m_customColumns.size() && first < columns.size()
-               && m_customColumns.at(first) == columns.at(first)) {
-            ++first;
-        }
-        if (first < m_customColumns.size()) {
-            beginRemoveColumns({}, CustomAttribute + first, columnCount() - 1);
-            m_customColumns.erase(m_customColumns.begin() + first, m_customColumns.end());
-            endRemoveColumns();
-        }
-        if (first < columns.size()) {
-            beginInsertColumns({}, CustomAttribute + first, CustomAttribute + columns.size() - 1);
-            m_customColumns = columns;
-            endInsertColumns();
-        }
-        break;
-    }
     default:
         break;
     }

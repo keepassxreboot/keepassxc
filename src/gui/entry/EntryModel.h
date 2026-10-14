@@ -71,6 +71,8 @@ public:
 
     void setGroup(Group* group);
     void setEntries(const QList<Entry*>& entries);
+    QStringList customColumns() const;
+    void setCustomColumns(const QStringList& customColumns);
     void setBackgroundColorVisible(bool visible);
 
 private slots:

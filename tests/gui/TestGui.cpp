@@ -24,6 +24,7 @@
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDialog>
+#include <QFile>
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QListWidget>
@@ -40,6 +41,8 @@
 #include <QToolBar>
 
 #include "config-keepassx-tests.h"
+#include "core/CustomData.h"
+#include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -191,6 +194,7 @@ void TestGui::testCustomColumns()
     auto* view = m_dbWidget->findChild<EntryView*>();
     QVERIFY(view);
     auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
     entry->setTitle("Custom column entry");
     entry->attributes()->set("E-Mail", "demo@example.invalid");
     entry->setGroup(m_db->rootGroup());
@@ -222,9 +226,12 @@ void TestGui::testCustomColumns()
         menu->hide();
     };
 
+    m_db->markAsClean();
     addColumn("E-Mail");
     QCOMPARE(view->header()->count(), customColumn + 1);
-    QCOMPARE(config()->get(Config::GUI_CustomColumns).toStringList(), QStringList({"E-Mail"}));
+    QVERIFY(m_db->isModified());
+    QVERIFY(m_db->metadata()->customData()->contains(CustomData::EntryListColumns));
+    QVERIFY(m_db->metadata()->customData()->isProtected(CustomData::EntryListColumns));
     QCOMPARE(view->model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
     QCOMPARE(view->currentEntry(), entry);
     QCOMPARE(view->header()->sectionSize(EntryModel::Title), 171);
@@ -237,6 +244,7 @@ void TestGui::testCustomColumns()
     view->header()->resizeSection(customColumn, 123);
     const auto state = view->viewState();
     EntryView restored;
+    restored.setDatabase(m_db.data());
     QVERIFY(restored.setViewState(state));
     QCOMPARE(restored.header()->sectionSize(customColumn), 123);
     QVERIFY(!restored.header()->isSectionHidden(customColumn));
@@ -244,21 +252,59 @@ void TestGui::testCustomColumns()
     view->selectAll();
     const auto selected = view->selectedEntries();
     QVERIFY(selected.size() > 1);
-    addColumn("External & ID");
+    const auto extraColumnName = QString::fromUtf8("External & \"ID\", Büro");
+    addColumn(extraColumnName);
     QCOMPARE(view->selectedEntries(), selected);
     QCOMPARE(view->header()->count(), customColumn + 2);
-    QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), QString("External & ID"));
+    QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
     QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
     auto* menu = view->findChild<QMenu*>();
     const auto actions = menu->actions();
-    QVERIFY(std::any_of(
-        actions.cbegin(), actions.cend(), [](QAction* action) { return action->text() == "External && ID"; }));
+    QVERIFY(std::any_of(actions.cbegin(), actions.cend(), [extraColumnName](QAction* action) {
+        return action->text() == QString(extraColumnName).replace('&', "&&");
+    }));
     menu->hide();
 
     view->displaySearch({entry});
     QCOMPARE(view->model()->data(view->model()->index(0, customColumn)).toString(), QString("demo@example.invalid"));
     QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
     QVERIFY(view->header()->isSectionHidden(customColumn));
+
+    Database otherDatabase;
+    restored.setDatabase(&otherDatabase);
+    QCOMPARE(restored.header()->count(), customColumn);
+    otherDatabase.metadata()->customData()->set(CustomData::EntryListColumns, "[\"Private\"]");
+    QCOMPARE(restored.model()->headerData(customColumn, Qt::Horizontal).toString(), QString("Private"));
+    QCOMPARE(view->model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(view->header()->count(), customColumn + 2);
+
+    config()->sync();
+    QFile settings(config()->getFileName());
+    QVERIFY(settings.open(QIODevice::ReadOnly));
+    const auto settingsData = settings.readAll();
+    QVERIFY(!settingsData.contains("E-Mail"));
+    QVERIFY(!settingsData.contains("External"));
+
+    QVERIFY(m_db->save());
+    QFile encryptedDatabase(m_dbFilePath);
+    QVERIFY(encryptedDatabase.open(QIODevice::ReadOnly));
+    const auto encryptedData = encryptedDatabase.readAll();
+    QVERIFY(!encryptedData.contains("E-Mail"));
+    QVERIFY(!encryptedData.contains(extraColumnName.toUtf8()));
+
+    auto reopened = QSharedPointer<Database>::create();
+    QVERIFY(reopened->open(m_dbFilePath, m_db->key()));
+    restored.setDatabase(reopened.data());
+    QCOMPARE(restored.header()->count(), customColumn + 2);
+    QCOMPARE(restored.model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(restored.model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
+
+    m_db->metadata()->customData()->remove(CustomData::EntryListColumns);
+    QCOMPARE(view->header()->count(), customColumn);
+    view->displaySearch({});
+    QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+    view->displayGroup(m_db->rootGroup());
+    QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
 }
 
 void TestGui::testSettingsDefaultTabOrder()

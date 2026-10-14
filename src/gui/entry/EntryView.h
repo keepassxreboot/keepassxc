@@ -19,10 +19,12 @@
 #ifndef KEEPASSX_ENTRYVIEW_H
 #define KEEPASSX_ENTRYVIEW_H
 
+#include <QPointer>
 #include <QTreeView>
 
 #include "gui/entry/EntryModel.h"
 
+class Database;
 class Entry;
 class EntryModel;
 class Group;
@@ -35,6 +37,7 @@ class EntryView : public QTreeView
 
 public:
     explicit EntryView(QWidget* parent = nullptr);
+    void setDatabase(Database* database);
     void setModel(QAbstractItemModel* model) override;
     Entry* currentEntry();
     void setCurrentEntry(Entry* entry);
@@ -81,6 +84,7 @@ private:
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
+    QPointer<Database> m_database;
     int m_lastIndex;
     Qt::SortOrder m_lastOrder;
     bool m_inSearchMode = false;

@@ -134,11 +134,6 @@ void TestEntryModel::test()
 
 void TestEntryModel::testCustomColumns()
 {
-    const auto previousColumns = config()->get(Config::GUI_CustomColumns);
-    const auto restoreColumns =
-        qScopeGuard([previousColumns] { config()->set(Config::GUI_CustomColumns, previousColumns); });
-    config()->set(Config::GUI_CustomColumns, QStringList({"E-Mail", "Department"}));
-
     Group group;
     auto first = new Entry();
     first->setGroup(&group);
@@ -150,6 +145,7 @@ void TestEntryModel::testCustomColumns()
     second->attributes()->set("department", "Different attribute");
 
     EntryModel model;
+    model.setCustomColumns({"E-Mail", "Department"});
     ModelTest modelTest(&model, this);
     model.setGroup(&group);
     const int customColumn = EntryModel::ParentGroupPath + 1;
@@ -175,13 +171,9 @@ void TestEntryModel::testCustomColumns()
 
 void TestEntryModel::testCustomColumnProtection()
 {
-    const auto previousColumns = config()->get(Config::GUI_CustomColumns);
     const auto previousHidePasswords = config()->get(Config::GUI_HidePasswords);
-    const auto restoreSettings = qScopeGuard([previousColumns, previousHidePasswords] {
-        config()->set(Config::GUI_CustomColumns, previousColumns);
-        config()->set(Config::GUI_HidePasswords, previousHidePasswords);
-    });
-    config()->set(Config::GUI_CustomColumns, QStringList({"Protected", "Empty"}));
+    const auto restoreSettings =
+        qScopeGuard([previousHidePasswords] { config()->set(Config::GUI_HidePasswords, previousHidePasswords); });
     config()->set(Config::GUI_HidePasswords, true);
     Group group;
     auto entry = new Entry();
@@ -189,6 +181,7 @@ void TestEntryModel::testCustomColumnProtection()
     entry->attributes()->set("Protected", "Test value", true);
     entry->attributes()->set("Empty", "", true);
     EntryModel model;
+    model.setCustomColumns({"Protected", "Empty"});
     model.setGroup(&group);
     const auto index = model.index(0, EntryModel::ParentGroupPath + 1);
     QCOMPARE(model.data(index).toString(), QString("\u25cf").repeated(6));
@@ -203,10 +196,6 @@ void TestEntryModel::testCustomColumnProtection()
 
 void TestEntryModel::testCustomColumnChanges()
 {
-    const auto previousColumns = config()->get(Config::GUI_CustomColumns);
-    const auto restoreColumns =
-        qScopeGuard([previousColumns] { config()->set(Config::GUI_CustomColumns, previousColumns); });
-    config()->set(Config::GUI_CustomColumns, QStringList());
     Group group;
     auto entry = new Entry();
     entry->setGroup(&group);
@@ -216,19 +205,21 @@ void TestEntryModel::testCustomColumnChanges()
     QPersistentModelIndex title(model.index(0, EntryModel::Title));
     QSignalSpy inserted(&model, &EntryModel::columnsInserted);
     QSignalSpy removed(&model, &EntryModel::columnsRemoved);
-    config()->set(Config::GUI_CustomColumns, QStringList({"E-Mail"}));
+    model.setCustomColumns({"E-Mail"});
     QCOMPARE(inserted.count(), 1);
-    config()->set(Config::GUI_CustomColumns, QStringList({"E-Mail", "Department"}));
+    model.setCustomColumns({"E-Mail", "Department"});
     QCOMPARE(inserted.count(), 2);
     QCOMPARE(removed.count(), 0);
     QVERIFY(title.isValid());
     QCOMPARE(title.column(), int(EntryModel::Title));
-    config()->set(Config::GUI_CustomColumns, QStringList({"E-Mail", "Phone"}));
+    model.setCustomColumns({"E-Mail", "Phone"});
     QCOMPARE(removed.count(), 1);
     QCOMPARE(model.headerData(EntryModel::ParentGroupPath + 2, Qt::Horizontal).toString(), QString("Phone"));
-    config()->set(Config::GUI_CustomColumns, QStringList());
+    model.setCustomColumns({});
     QCOMPARE(model.columnCount(), int(EntryModel::ParentGroupPath + 1));
     QVERIFY(title.isValid());
+    model.setCustomColumns({"", "Password", "Title", "E-Mail", "E-Mail"});
+    QCOMPARE(model.customColumns(), QStringList({"E-Mail"}));
 }
 
 void TestEntryModel::testAttachmentsModel()

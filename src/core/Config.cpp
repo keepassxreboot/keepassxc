@@ -137,7 +137,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_MainWindowState, {QS("GUI/MainWindowState"), Local, {}}},
     {Config::GUI_ListViewState, {QS("GUI/ListViewState"), Local, {}}},
     {Config::GUI_SearchViewState, {QS("GUI/SearchViewState"), Local, {}}},
-    {Config::GUI_CustomColumns, {QS("GUI/CustomColumns"), Roaming, QStringList()}},
     {Config::GUI_SplitterState, {QS("GUI/SplitterState"), Local, {}}},
     {Config::GUI_GroupSplitterState, {QS("GUI/GroupSplitterState"), Local, {}}},
     {Config::GUI_PreviewSplitterState, {QS("GUI/PreviewSplitterState"), Local, {}}},
