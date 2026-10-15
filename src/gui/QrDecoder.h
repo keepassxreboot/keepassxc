@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,19 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* This class exists to isolate <qrencode.h> from the rest of the code base. */
+#ifndef KEEPASSXC_QRDECODER_H
+#define KEEPASSXC_QRDECODER_H
 
-#ifndef KEEPASSXC_QRCODEPRIVATE_H
-#define KEEPASSXC_QRCODEPRIVATE_H
+class QImage;
+class QString;
 
-#include <qrencode.h>
-
-struct QrCodePrivate
+namespace QrDecoder
 {
-    QRcode* m_qrcode;
+    QString decode(const QImage& image);
+}
 
-    QrCodePrivate();
-    ~QrCodePrivate();
-};
-
-#endif // KEEPASSXC_QRCODEPRIVATE_H
+#endif // KEEPASSXC_QRDECODER_H

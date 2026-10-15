@@ -75,7 +75,7 @@ parts:
       - libbotan-2-dev
       - libargon2-dev
       - zlib1g-dev
-      - libqrencode-dev
+      - libzxing-dev
       - libusb-1.0-0-dev
       - libreadline-dev
       - libpcsclite-dev
@@ -88,7 +88,7 @@ parts:
       - libkeyutils-dev
     stage-packages:
       - libbotan-2-19
-      - libqrencode4
+      - libzxing3
       - libusb-1.0-0
       - libreadline8
       - libpcsclite1

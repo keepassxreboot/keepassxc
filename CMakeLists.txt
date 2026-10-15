@@ -549,6 +549,9 @@ include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 find_package(Minizip REQUIRED)
 include_directories(SYSTEM ${MINIZIP_INCLUDE_DIR})
 
+# Find ZXing-C++ for QR code generation and decoding
+find_package(ZXing 2.2 CONFIG REQUIRED)
+
 # Find PCSC and LibUSB for hardware key support
 find_package(PCSC REQUIRED)
 include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})

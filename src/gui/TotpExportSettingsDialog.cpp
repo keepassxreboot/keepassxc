@@ -21,7 +21,7 @@
 #include "gui/Clipboard.h"
 #include "gui/MainWindow.h"
 #include "gui/SquareSvgWidget.h"
-#include "qrcode/QrCode.h"
+#include "gui/QrCode.h"
 
 #include <QBoxLayout>
 #include <QBuffer>

@@ -191,6 +191,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/hammer-wrench.svg
        share/icons/application/scalable/actions/health.svg
        share/icons/application/scalable/actions/help-about.svg
+       share/icons/application/scalable/actions/image-off.svg
        share/icons/application/scalable/actions/lock-question.svg
        share/icons/application/scalable/actions/keyboard-shortcuts.svg
        share/icons/application/scalable/actions/message-close.svg

@@ -9516,6 +9516,17 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>QrDropArea</name>
+    <message>
+        <source>Drop an image containing a TOTP QR code here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag &amp; drop QR code</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
@@ -10620,6 +10631,58 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Error: secret key is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste an otpauth:// URI to fill in the TOTP settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TOTP URI field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open image…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: only TOTP is supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: invalid otpauth URI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: no QR code found in the image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: the QR code does not contain a TOTP setup URI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open QR code image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: unable to open the image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: the clipboard does not contain an image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

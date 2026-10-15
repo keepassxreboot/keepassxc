@@ -142,6 +142,8 @@ set(gui_SOURCES
         gui/TotpSetupDialog.cpp
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp
+        gui/QrCode.cpp
+        gui/QrDecoder.cpp
         gui/DatabaseOpenDialog.cpp
         gui/URLEdit.cpp
         gui/UrlTools.cpp
@@ -201,6 +203,7 @@ set(gui_SOURCES
         gui/widgets/ElidedLabel.cpp
         gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
+        gui/widgets/QrDropArea.cpp
         gui/widgets/ShortcutWidget.cpp
         gui/wizard/ImportWizard.cpp
         gui/wizard/ImportWizardPageReview.cpp
@@ -325,10 +328,6 @@ add_subdirectory(thirdparty)
 add_subdirectory(autotype)
 set(autotype_LIB autotype)
 
-# TODO: Refactor to gui sources
-add_subdirectory(qrcode)
-set(qrcode_LIB qrcode)
-
 # TODO: Move to gui sources on refactor
 add_subdirectory(keeshare)
 set(keeshare_LIB keeshare)
@@ -353,9 +352,9 @@ find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
 add_library(keepassxc_core STATIC ${core_SOURCES})
 target_compile_definitions(keepassxc_core PRIVATE KPXC_BUILDING_CORE)
 target_link_libraries(keepassxc_core 
-        ${qrcode_LIB}
         Qt6::Core
         Qt6::Concurrent
+        Qt6::Gui
         ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
@@ -371,6 +370,7 @@ target_link_libraries(keepassxc_gui
         Qt6::Network
         Qt6::SvgWidgets
         Qt6::Widgets
+        ZXing::ZXing
         ${autotype_LIB}
         ${browser_LIB}
         ${fdosecrets_LIB}
