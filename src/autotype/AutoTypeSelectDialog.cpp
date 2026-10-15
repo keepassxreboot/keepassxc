@@ -355,7 +355,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         submitAutoTypeMatch(match);
     });
 
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"), nullptr);
     m_actionMenu->insertAction(copyUsernameAction, typeVirtualAction);
     typeVirtualAction->setShortcut(Qt::CTRL | Qt::Key_5);
