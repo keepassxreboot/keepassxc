@@ -53,7 +53,7 @@ PasswordWidget::PasswordWidget(QWidget* parent)
     setEchoMode(QLineEdit::Password);
 
     // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     constexpr auto modifier = Qt::MetaModifier;
 #else
     constexpr auto modifier = Qt::ControlModifier;
