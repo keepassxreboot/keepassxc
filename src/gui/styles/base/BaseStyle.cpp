@@ -724,7 +724,7 @@ namespace Phantom
 
         qreal dpiScaled(qreal value)
         {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
             // On mac the DPI is always 72 so we should not scale it
             return value;
 #else
@@ -4579,7 +4579,7 @@ int BaseStyle::styleHint(StyleHint hint,
         return 1;
     case SH_Menu_SupportsSections:
         return 0;
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     case SH_MenuBar_AltKeyNavigation:
         return 1;
 #endif
@@ -4610,7 +4610,7 @@ int BaseStyle::styleHint(StyleHint hint,
     case SH_ItemView_ScrollMode:
         return QAbstractItemView::ScrollPerPixel;
     case SH_ScrollBar_ContextMenu:
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         return 0;
 #else
         return 1;
@@ -4676,7 +4676,7 @@ int BaseStyle::styleHint(StyleHint hint,
         return 1;
     case SH_Menu_SubMenuResetWhenReenteringParent:
         return 0;
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     case SH_Menu_FlashTriggeredItem:
         return 1;
     case SH_Menu_FadeOutOnHide:
