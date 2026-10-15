@@ -1,0 +1,23 @@
+= KeePassXC – macOS AutoFill Integration
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== macOS AutoFill Integration
+On macOS 12 (Monterey) or later, KeePassXC integrates natively with Apple's AutoFill Credential Provider framework. This allows Safari and native macOS applications to fill usernames and passwords directly from unlocked KeePassXC databases without requiring a browser extension.
+
+=== Enabling the Integration
+1. In KeePassXC, open **Settings → General** (or press kbd:[Cmd+,]), check **Enable macOS AutoFill Integration**, and save the settings.
+2. In macOS **System Settings** (or **System Preferences** on macOS 12), open the password AutoFill settings (typically under **Passwords → Password Options**) and enable **KeePassXC**.
+3. Keep KeePassXC running with the relevant database unlocked.
+
+=== How It Works
+* **QuickType / Suggestion Bar**: When visiting a website or app with a matching entry, macOS suggests credentials directly in the login field or above the keyboard. Selecting a suggestion fills the credentials immediately.
+* **Credential Picker**: Clicking the password / key icon in a login field opens the native KeePassXC AutoFill picker, displaying matching entries for the current domain. Double-click an entry or select it and click **AutoFill** (or press kbd:[Enter]) to fill. Press kbd:[Esc] or click **Cancel** to dismiss.
+* **Domain Matching**: AutoFill matches entries based on standard URLs (`https://example.com`) or hostnames in entry URL fields, including subdomains of the same base domain.
+* **Security & Privacy**: Passwords are never written to disk or stored in Apple's credential cache. Credentials can only be fetched while KeePassXC is running and the containing database is unlocked. When databases lock, credential suggestions are automatically cleared from the system.
+
+=== Limitations
+* This feature requires a signed and notarized KeePassXC application bundle containing the AutoFill extension.
+* Only password credentials are currently supported; passkeys, time-based one-time passwords (TOTP), and saving new credentials back to the database from Safari are not supported via AutoFill.
+// end::content[]

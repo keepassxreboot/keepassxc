@@ -190,6 +190,21 @@ if(KPXC_FEATURE_NETWORK OR KPXC_FEATURE_BROWSER)
     add_unit_test(NAME testurltools SOURCES TestUrlTools.cpp LIBS ${TEST_LIBRARIES})
 endif()
 
+if(APPLE OR KPXC_FEATURE_NETWORK OR KPXC_FEATURE_BROWSER)
+    add_unit_test(NAME testautofillutils SOURCES TestAutoFillUtils.cpp LIBS ${TEST_LIBRARIES})
+endif()
+
+if(APPLE)
+    add_unit_test(NAME testautofillnative
+        SOURCES TestAutoFillNative.h TestAutoFillNative.mm
+                ${CMAKE_SOURCE_DIR}/src/autofill/CredentialProviderViewController.mm
+        LIBS Qt6::Test Qt6::Widgets
+             "-framework Foundation" "-framework AppKit" "-framework AuthenticationServices")
+    set_source_files_properties(TestAutoFillNative.mm
+        ${CMAKE_SOURCE_DIR}/src/autofill/CredentialProviderViewController.mm
+        PROPERTIES COMPILE_FLAGS "-fobjc-arc")
+endif()
+
 if(KPXC_FEATURE_NETWORK)
     add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
         LIBS ${TEST_LIBRARIES})

@@ -19,7 +19,8 @@ set(EXCLUDED_DIRS
         # objective-c directories
         src/quickunlock/touchid
         src/autotype/mac
-        src/gui/osutils/macutils)
+        src/gui/osutils/macutils
+        src/autofill)
 
 set(EXCLUDED_FILES
         # third-party files

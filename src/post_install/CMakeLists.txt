@@ -2,6 +2,8 @@
 # current scope are ran. It is required for correct functioning of macdeployqt.
 
 if(APPLE AND WITH_APP_BUNDLE)
+    install(CODE "file(REMOVE_RECURSE \"\${CMAKE_INSTALL_PREFIX}/${PLUGIN_INSTALL_DIR}/keepassxc-autofill.appex\")")
+
     # Run macdeloyqt on the main app and any extra binaries and plugins as specified by the
     # _MACDEPLOYQT_EXTRA_BINARIES global property.
     # All install(TARGETS) calls should have already been called.
@@ -10,4 +12,8 @@ if(APPLE AND WITH_APP_BUNDLE)
         APP_NAME "${PROGNAME}"
         EXTRA_BINARIES ${MACDEPLOYQT_EXTRA_BINARIES}
     )
+
+    install(DIRECTORY "$<TARGET_BUNDLE_DIR:keepassxc-autofill>"
+            DESTINATION "${PLUGIN_INSTALL_DIR}"
+            USE_SOURCE_PERMISSIONS)
 endif()

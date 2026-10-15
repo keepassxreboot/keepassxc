@@ -29,6 +29,8 @@ namespace UrlTools
 {
 #if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
     QUrl getRedirectTarget(QNetworkReply* reply);
+#endif
+#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER) || defined(Q_OS_MACOS)
     QString getBaseDomainFromUrl(const QString& url);
     QString getTopLevelDomainFromUrl(const QString& url);
     bool isIpAddress(const QString& host);

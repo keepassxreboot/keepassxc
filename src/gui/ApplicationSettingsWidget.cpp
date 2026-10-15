@@ -36,6 +36,9 @@
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
 #include "quickunlock/QuickUnlockInterface.h"
+#ifdef Q_OS_MACOS
+#include "autofill/AutoFill.h"
+#endif
 
 #include "FileDialog.h"
 #include "MessageBox.h"
@@ -463,6 +466,13 @@ void ApplicationSettingsWidget::loadSettings()
     hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());
     showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
 
+#if defined(Q_OS_MACOS)
+    m_generalUi->macOSAutoFillCheckBox->setEnabled(AutoFill::isAvailable());
+    m_generalUi->macOSAutoFillCheckBox->setChecked(config()->get(Config::Security_macOSAutoFill).toBool());
+#else
+    m_generalUi->macOSGroup->setVisible(false);
+#endif
+
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
@@ -552,6 +562,12 @@ void ApplicationSettingsWidget::saveSettings()
         }
         config()->set(Config::AutoTypePreferDesktopPortals, preferDesktopPortals);
     }
+
+#if defined(Q_OS_MACOS)
+    if (m_generalUi->macOSAutoFillCheckBox->isEnabled()) {
+        config()->set(Config::Security_macOSAutoFill, m_generalUi->macOSAutoFillCheckBox->isChecked());
+    }
+#endif
 
     // Security: clear storage if related settings are disabled
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
