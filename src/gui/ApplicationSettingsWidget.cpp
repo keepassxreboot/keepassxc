@@ -229,34 +229,42 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->resetSettingsButton, SIGNAL(clicked()), SLOT(resetSettings()));
     connect(m_generalUi->importSettingsButton, SIGNAL(clicked()), SLOT(importSettings()));
     connect(m_generalUi->exportSettingsButton, SIGNAL(clicked()), SLOT(exportSettings()));
-    connect(m_generalUi->useAlternativeSaveCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->alternativeSaveComboBox, SLOT(setEnabled(bool)));
-
-    connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->backupFilePath, SLOT(setEnabled(bool)));
-    connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
-            m_generalUi->backupFilePathPicker, SLOT(setEnabled(bool)));
     connect(m_generalUi->backupFilePathPicker, SIGNAL(pressed()), SLOT(selectBackupDirectory()));
     connect(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox, SIGNAL(toggled(bool)),
             SLOT(showExpiredEntriesOnDatabaseUnlockToggled(bool)));
     connect(m_generalUi->autoTypeAskCheckBox, SIGNAL(toggled(bool)),
             SLOT(autoTypeAskToggled(bool)));
 
-    connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
-    connect(m_secUi->clearSearchCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->clearSearchSpinBox, SLOT(setEnabled(bool)));
-    connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
+    connect(m_generalUi->useAlternativeSaveCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
+        m_generalUi->alternativeSaveComboBox->setEnabled(checked && !config()->isManaged(Config::UseDirectWriteSaves));
+    });
+    connect(m_generalUi->backupBeforeSaveCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
+        const bool enabled = checked && !config()->isManaged(Config::BackupFilePathPattern);
+        m_generalUi->backupFilePath->setEnabled(enabled);
+        m_generalUi->backupFilePathPicker->setEnabled(enabled);
+    });
+    connect(m_secUi->clearClipboardCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
+        m_secUi->clearClipboardSpinBox->setEnabled(checked
+                                                   && !config()->isManaged(Config::Security_ClearClipboardTimeout));
+    });
+    connect(m_secUi->clearSearchCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
+        m_secUi->clearSearchSpinBox->setEnabled(checked && !config()->isManaged(Config::Security_ClearSearchTimeout));
+    });
+    connect(m_secUi->lockDatabaseIdleCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
+        m_secUi->lockDatabaseIdleSpinBox->setEnabled(checked
+                                                     && !config()->isManaged(Config::Security_LockDatabaseIdleSeconds));
+    });
+
     connect(m_generalUi->minimizeAfterUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
-        if (state) {
+        if (state && !config()->isManaged(Config::Security_LockDatabaseMinimize)) {
             m_secUi->lockDatabaseMinimizeCheckBox->setChecked(false);
         }
         m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
             state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
-        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state && !config()->isManaged(Config::Security_LockDatabaseMinimize));
+        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(
+            !state && !config()->isManaged(Config::Security_LockDatabaseMinimize));
     });
 
     // Set Auto-Type shortcut when changed
@@ -407,10 +415,12 @@ void ApplicationSettingsWidget::loadSettings()
         }
         case Config::Security_LockDatabaseMinimize: {
             QCheckBox* checkbox = qobject_cast<QCheckBox*>(widget);
-            checkbox->setChecked(value.toBool() && !m_generalUi->minimizeAfterUnlockCheckBox->isChecked());
+            checkbox->setChecked(
+                value.toBool()
+                && (config()->isManaged(configKey) || !m_generalUi->minimizeAfterUnlockCheckBox->isChecked()));
             break;
         }
-        case Config:: UseDirectWriteSaves: {
+        case Config::UseDirectWriteSaves: {
             qobject_cast<QComboBox*>(widget)->setCurrentIndex(value.toBool() ? 1 : 0);
             break;
         }
@@ -448,15 +458,17 @@ void ApplicationSettingsWidget::loadSettings()
         if (!osUtils->externalGlobalShortcutsConfigurator() && m_globalAutoTypeKey > 0
             && m_globalAutoTypeModifiers > 0) {
             m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
-            }
+        }
         m_generalUi->autoTypeRetypeTimeSpinBox->setValue(config()->get(Config::GlobalAutoTypeRetypeTime).toInt());
         m_generalUi->autoTypeShortcutWidget->setAttribute(Qt::WA_MacShowFocusRect, true);
         m_generalUi->autoTypeDelaySpinBox->setValue(config()->get(Config::AutoTypeDelay).toInt());
         m_generalUi->autoTypeStartDelaySpinBox->setValue(config()->get(Config::AutoTypeStartDelay).toInt());
-        m_generalUi->autoTypePreferDesktopPortalsCheckBox->setChecked(config()->get(Config::AutoTypePreferDesktopPortals).toBool());
+        m_generalUi->autoTypePreferDesktopPortalsCheckBox->setChecked(
+            config()->get(Config::AutoTypePreferDesktopPortals).toBool());
         autoTypeAskToggled(m_generalUi->autoTypeAskCheckBox->isChecked());
     }
 
+    hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());
     showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
@@ -482,6 +494,10 @@ void ApplicationSettingsWidget::saveSettings()
         Config::ConfigKey configKey = it.key();
         QWidget* widget = it.value();
 
+        if (config()->isManaged(configKey)) {
+            continue;
+        }
+
         // Custom logic for specific configurations
         switch (configKey) {
         case Config::GUI_Language: {
@@ -504,7 +520,7 @@ void ApplicationSettingsWidget::saveSettings()
             config()->set(configKey, qobject_cast<QComboBox*>(widget)->currentData().toInt());
             break;
         }
-        case Config:: UseDirectWriteSaves: {
+        case Config::UseDirectWriteSaves: {
             config()->set(configKey, qobject_cast<QComboBox*>(widget)->currentIndex() == 1);
             break;
         }
@@ -518,7 +534,7 @@ void ApplicationSettingsWidget::saveSettings()
         default: {
             if (QAbstractButton* checkBoxOrRadio = qobject_cast<QAbstractButton*>(widget)) {
                 config()->set(configKey, checkBoxOrRadio->isChecked());
-            }  else if (QSpinBox* spinBox = qobject_cast<QSpinBox*>(widget)) {
+            } else if (QSpinBox* spinBox = qobject_cast<QSpinBox*>(widget)) {
                 config()->set(configKey, spinBox->value());
             } else if (QComboBox* comboBox = qobject_cast<QComboBox*>(widget)) {
                 config()->set(configKey, comboBox->currentIndex());
@@ -648,52 +664,75 @@ void ApplicationSettingsWidget::reject()
 void ApplicationSettingsWidget::autoSaveToggled(bool checked)
 {
     // Explicitly enable other auto-save options
-    if (checked) {
+    if (checked && !config()->isManaged(Config::AutoSaveOnExit)) {
         m_generalUi->autoSaveOnExitCheckBox->setChecked(true);
+    }
+    if (checked && !config()->isManaged(Config::AutoSaveNonDataChanges)) {
         m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(true);
     }
-    m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
-    m_generalUi->autoSaveNonDataChangesCheckBox->setEnabled(!checked);
+    m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked && !config()->isManaged(Config::AutoSaveOnExit));
+    m_generalUi->autoSaveNonDataChangesCheckBox->setEnabled(!checked
+                                                            && !config()->isManaged(Config::AutoSaveNonDataChanges));
 }
 
 void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
 {
-    m_generalUi->minimizeOnCopyRadioButton->setEnabled(checked);
-    m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(checked);
+    const bool minimizeManaged = config()->isManaged(Config::MinimizeOnCopy);
+    const bool dropToBackgroundManaged = config()->isManaged(Config::DropToBackgroundOnCopy);
+    if (minimizeManaged && !dropToBackgroundManaged) {
+        const bool minimize = config()->get(Config::MinimizeOnCopy).toBool();
+        m_generalUi->minimizeOnCopyRadioButton->setChecked(minimize);
+        m_generalUi->dropToBackgroundOnCopyRadioButton->setChecked(!minimize);
+    } else if (dropToBackgroundManaged && !minimizeManaged) {
+        const bool dropToBackground = config()->get(Config::DropToBackgroundOnCopy).toBool();
+        m_generalUi->dropToBackgroundOnCopyRadioButton->setChecked(dropToBackground);
+        m_generalUi->minimizeOnCopyRadioButton->setChecked(!dropToBackground);
+    }
+    const bool enabled = checked && !minimizeManaged && !dropToBackgroundManaged;
+    m_generalUi->minimizeOnCopyRadioButton->setEnabled(enabled);
+    m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(enabled);
 }
 
 void ApplicationSettingsWidget::systrayToggled(bool checked)
 {
-    m_generalUi->trayIconAppearance->setEnabled(checked);
-    m_generalUi->trayIconAppearanceLabel->setEnabled(checked);
-    m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
+    m_generalUi->trayIconAppearance->setEnabled(checked && !config()->isManaged(Config::GUI_TrayIconAppearance));
+    m_generalUi->trayIconAppearanceLabel->setEnabled(checked && !config()->isManaged(Config::GUI_TrayIconAppearance));
+    m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked && !config()->isManaged(Config::GUI_MinimizeToTray));
 }
 
 void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
 {
-    if (!checked) {
+    if (!checked && !config()->isManaged(Config::RememberLastKeyFiles)) {
         m_generalUi->rememberLastKeyFilesCheckBox->setChecked(false);
+    }
+    if (!checked && !config()->isManaged(Config::OpenPreviousDatabasesOnStartup)) {
         m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(false);
     }
 
-    m_generalUi->rememberLastDatabasesSpinbox->setEnabled(checked);
-    m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked);
-    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(checked);
+    m_generalUi->rememberLastDatabasesSpinbox->setEnabled(
+        checked && !config()->isManaged(Config::NumberOfRememberedLastDatabases));
+    m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked
+                                                          && !config()->isManaged(Config::RememberLastKeyFiles));
+    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(
+        checked && !config()->isManaged(Config::OpenPreviousDatabasesOnStartup));
 }
 
 void ApplicationSettingsWidget::checkUpdatesToggled(bool checked)
 {
-    m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(checked);
+    m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(
+        checked && !config()->isManaged(Config::GUI_CheckForUpdatesIncludeBetas));
 }
 
 void ApplicationSettingsWidget::showExpiredEntriesOnDatabaseUnlockToggled(bool checked)
 {
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setEnabled(checked);
+    m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setEnabled(
+        checked && !config()->isManaged(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays));
 }
 
 void ApplicationSettingsWidget::autoTypeAskToggled(bool checked)
 {
-    m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox->setEnabled(checked);
+    m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox->setEnabled(
+        checked && !config()->isManaged(Config::Security_AutoTypeSkipMainWindowConfirmation));
 }
 
 void ApplicationSettingsWidget::selectBackupDirectory()
