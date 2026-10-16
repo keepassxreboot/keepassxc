@@ -16,7 +16,7 @@ The following build tools must exist within your PATH:
 
 The following minimum versions of libraries must exist:
 * qt (>= 5.12.0)
-* botan (>= 2.12.0 or >= 3.0.0)
+* botan (>= 2.19.1 or >= 3.0.0)
 * zlib (>= 1.2.0)
 
 * Besides a working C++ toolchain, KeePassXC also has a number of direct build and runtime dependencies. For detailed information about how to install them, please refer to the GitHub wiki:
