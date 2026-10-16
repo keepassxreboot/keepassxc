@@ -80,7 +80,9 @@ public:
 
     QJsonObject getDatabaseGroups();
     QJsonArray getDatabaseEntries();
-    QJsonObject createNewGroup(const QString& groupName, bool isPasskeysGroup = false);
+    QJsonObject createNewGroup(const QString& groupName,
+                               const QSharedPointer<Database>& selectedDb = {},
+                               bool isPasskeysGroup = false);
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
