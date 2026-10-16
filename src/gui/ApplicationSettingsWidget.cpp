@@ -97,7 +97,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox},
         {Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox},
         {Config::BackupFilePathPattern, m_generalUi->backupFilePath},
-        {Config::UseDirectWriteSaves, m_generalUi->alternativeSaveComboBox},
         {Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox},
         {Config::MinimizeAfterUnlock, m_generalUi->minimizeAfterUnlockCheckBox},
         {Config::MinimizeOnOpenUrl, m_generalUi->minimizeOnOpenUrlCheckBox},
@@ -151,6 +150,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::GUI_Language, m_generalUi->languageComboBox},
         {Config::GUI_TrayIconAppearance, m_generalUi->trayIconAppearance},
         {Config::GUI_FontSizeOffset, m_generalUi->fontSizeComboBox},
+        {Config::UseDirectWriteSaves, m_generalUi->alternativeSaveComboBox},
         {Config::Security_LockDatabaseMinimize, m_secUi->lockDatabaseMinimizeCheckBox},
 
         // Negated logic
@@ -256,7 +256,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         }
         m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
             state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
-        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state);
+        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state && !config()->isManaged(Config::Security_LockDatabaseMinimize));
     });
 
     // Set Auto-Type shortcut when changed
@@ -389,6 +389,7 @@ void ApplicationSettingsWidget::loadSettings()
         }
         case Config::GUI_FontSizeOffset: {
             QComboBox* comboBox = qobject_cast<QComboBox*>(widget);
+            comboBox->clear();
             comboBox->addItem(tr("Small"), -1);
             comboBox->addItem(tr("Normal"), 0);
             comboBox->addItem(tr("Medium"), 1);
@@ -406,7 +407,11 @@ void ApplicationSettingsWidget::loadSettings()
         }
         case Config::Security_LockDatabaseMinimize: {
             QCheckBox* checkbox = qobject_cast<QCheckBox*>(widget);
-            checkbox->setChecked(checkbox->isEnabled() && config()->get(Config::Security_LockDatabaseMinimize).toBool());
+            checkbox->setChecked(value.toBool() && !m_generalUi->minimizeAfterUnlockCheckBox->isChecked());
+            break;
+        }
+        case Config:: UseDirectWriteSaves: {
+            qobject_cast<QComboBox*>(widget)->setCurrentIndex(value.toBool() ? 1 : 0);
             break;
         }
         case Config::UseAtomicSaves:
@@ -449,7 +454,10 @@ void ApplicationSettingsWidget::loadSettings()
         m_generalUi->autoTypeDelaySpinBox->setValue(config()->get(Config::AutoTypeDelay).toInt());
         m_generalUi->autoTypeStartDelaySpinBox->setValue(config()->get(Config::AutoTypeStartDelay).toInt());
         m_generalUi->autoTypePreferDesktopPortalsCheckBox->setChecked(config()->get(Config::AutoTypePreferDesktopPortals).toBool());
+        autoTypeAskToggled(m_generalUi->autoTypeAskCheckBox->isChecked());
     }
+
+    showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
@@ -496,6 +504,10 @@ void ApplicationSettingsWidget::saveSettings()
             config()->set(configKey, qobject_cast<QComboBox*>(widget)->currentData().toInt());
             break;
         }
+        case Config:: UseDirectWriteSaves: {
+            config()->set(configKey, qobject_cast<QComboBox*>(widget)->currentIndex() == 1);
+            break;
+        }
         case Config::UseAtomicSaves:
         case Config::Security_NoConfirmMoveEntryToRecycleBin:
         case Config::GUI_HideMenubar:
@@ -536,6 +548,7 @@ void ApplicationSettingsWidget::saveSettings()
             getMainWindow()->displayGlobalMessage(
                 tr("Restart KeePassXC to apply the Auto-Type desktop portals preference."), MessageWidget::Information);
         }
+        config()->set(Config::AutoTypePreferDesktopPortals, preferDesktopPortals);
     }
 
     // Security: clear storage if related settings are disabled
