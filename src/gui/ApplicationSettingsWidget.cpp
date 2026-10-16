@@ -446,7 +446,7 @@ void ApplicationSettingsWidget::loadSettings()
 
         if (config()->isManaged(configKey)) {
             widget->setEnabled(false);
-            widget->setToolTip("This setting is managed by your organization.");
+            widget->setToolTip(tr("This setting is managed by your organization."));
         }
     }
 
