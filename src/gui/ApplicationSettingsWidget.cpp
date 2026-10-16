@@ -229,7 +229,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     // clang-format off
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), SLOT(autoSaveToggled(bool)));
-    connect(m_generalUi->minimizeAfterUnlockCheckBox, SIGNAL(toggled(bool)), SLOT(minimizeOnUnlockCheckBoxToggled(bool)));
+    connect(m_generalUi->minimizeAfterUnlockCheckBox, SIGNAL(toggled(bool)), SLOT(minimizeAfterUnlockCheckBoxToggled(bool)));
     connect(m_generalUi->hideWindowOnCopyCheckBox, SIGNAL(toggled(bool)), SLOT(hideWindowOnCopyCheckBoxToggled(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
     connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
