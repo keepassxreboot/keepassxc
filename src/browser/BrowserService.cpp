@@ -261,13 +261,15 @@ QJsonArray BrowserService::getDatabaseEntries()
     return entries;
 }
 
-QJsonObject BrowserService::createNewGroup(const QString& groupName, bool isPasskeysGroup)
+QJsonObject BrowserService::createNewGroup(const QString& groupName,
+                                           const QSharedPointer<Database>& selectedDb,
+                                           bool isPasskeysGroup)
 {
     if (groupName.isEmpty()) {
         return {};
     }
 
-    auto db = getDatabase();
+    auto db = selectedDb ? selectedDb : getDatabase();
     if (!db) {
         return {};
     }
@@ -709,7 +711,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
         } else {
             // Handle new/existing group
             const auto createResponse =
-                createNewGroup(groupName.isEmpty() ? PASSKEYS_DEFAULT_GROUP_NAME : groupName, true);
+                createNewGroup(groupName.isEmpty() ? PASSKEYS_DEFAULT_GROUP_NAME : groupName, db, true);
             const auto group = db->rootGroup()->findGroupByUuid(Tools::hexToUuid(createResponse["uuid"].toString()));
 
             addPasskeyToGroup(db,
