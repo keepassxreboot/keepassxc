@@ -20,6 +20,7 @@
 #define KEEPASSX_SETTINGSWIDGET_H
 
 #include <QMap>
+#include <QSet>
 
 #include "core/Config.h"
 #include "gui/EditWidget.h"
@@ -75,6 +76,7 @@ private:
     const QScopedPointer<Ui::ApplicationSettingsWidgetSecurity> m_secUi;
     const QScopedPointer<Ui::ApplicationSettingsWidgetGeneral> m_generalUi;
     QMap<Config::ConfigKey, QWidget*> m_configWidgetMap;
+    QSet<Config::ConfigKey> m_configValueInverted;
     Qt::Key m_globalAutoTypeKey;
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
     class ExtraPage;

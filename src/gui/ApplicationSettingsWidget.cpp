@@ -97,6 +97,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox},
         {Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox},
         {Config::BackupFilePathPattern, m_generalUi->backupFilePath},
+        {Config::UseAtomicSaves, m_generalUi->useAlternativeSaveCheckBox},
         {Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox},
         {Config::MinimizeAfterUnlock, m_generalUi->minimizeAfterUnlockCheckBox},
         {Config::MinimizeOnOpenUrl, m_generalUi->minimizeOnOpenUrlCheckBox},
@@ -125,6 +126,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::GUI_CheckForUpdatesIncludeBetas, m_generalUi->checkForUpdatesIncludeBetasCheckBox},
         {Config::GUI_ShowExpiredEntriesOnDatabaseUnlock, m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox},
         {Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays, m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox},
+        {Config::GUI_HideMenubar, m_generalUi->menubarShowCheckBox},
+        {Config::GUI_HideToolbar, m_generalUi->toolbarShowCheckBox},
         {Config::Security_AutoTypeAsk, m_generalUi->autoTypeAskCheckBox},
         {Config::Security_AutoTypeSkipMainWindowConfirmation, m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox},
         {Config::Security_RelockAutoType, m_generalUi->autoTypeRelockDatabaseCheckBox},
@@ -142,6 +145,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox},
         {Config::Security_HideTotpPreviewPanel, m_secUi->hideTotpCheckBox},
         {Config::Security_HideNotes, m_secUi->hideNotesCheckBox},
+        {Config::Security_NoConfirmMoveEntryToRecycleBin, m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox},
         {Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox},
         {Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox},
 
@@ -152,12 +156,14 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::GUI_FontSizeOffset, m_generalUi->fontSizeComboBox},
         {Config::UseDirectWriteSaves, m_generalUi->alternativeSaveComboBox},
         {Config::Security_LockDatabaseMinimize, m_secUi->lockDatabaseMinimizeCheckBox},
+    };
 
-        // Negated logic
-        {Config::UseAtomicSaves, m_generalUi->useAlternativeSaveCheckBox},
-        {Config::Security_NoConfirmMoveEntryToRecycleBin, m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox},
-        {Config::GUI_HideMenubar, m_generalUi->menubarShowCheckBox},
-        {Config::GUI_HideToolbar, m_generalUi->toolbarShowCheckBox},
+    // Settings that have flipped their boolean values.
+    m_configValueInverted = {
+        Config::UseAtomicSaves,
+        Config::Security_NoConfirmMoveEntryToRecycleBin,
+        Config::GUI_HideMenubar,
+        Config::GUI_HideToolbar,
     };
     // clang-format on
 
@@ -424,16 +430,10 @@ void ApplicationSettingsWidget::loadSettings()
             qobject_cast<QComboBox*>(widget)->setCurrentIndex(value.toBool() ? 1 : 0);
             break;
         }
-        case Config::UseAtomicSaves:
-        case Config::Security_NoConfirmMoveEntryToRecycleBin:
-        case Config::GUI_HideMenubar:
-        case Config::GUI_HideToolbar: {
-            qobject_cast<QCheckBox*>(widget)->setChecked(!value.toBool());
-            break;
-        }
         default: {
             if (QAbstractButton* checkBoxOrRadio = qobject_cast<QAbstractButton*>(widget)) {
-                checkBoxOrRadio->setChecked(value.toBool());
+                bool valueBool = value.toBool() ^ m_configValueInverted.contains(configKey);
+                checkBoxOrRadio->setChecked(valueBool);
             } else if (QSpinBox* spinBox = qobject_cast<QSpinBox*>(widget)) {
                 spinBox->setValue(value.toInt());
             } else if (QComboBox* comboBox = qobject_cast<QComboBox*>(widget)) {
@@ -524,16 +524,10 @@ void ApplicationSettingsWidget::saveSettings()
             config()->set(configKey, qobject_cast<QComboBox*>(widget)->currentIndex() == 1);
             break;
         }
-        case Config::UseAtomicSaves:
-        case Config::Security_NoConfirmMoveEntryToRecycleBin:
-        case Config::GUI_HideMenubar:
-        case Config::GUI_HideToolbar: {
-            config()->set(configKey, !qobject_cast<QCheckBox*>(widget)->isChecked());
-            break;
-        }
         default: {
             if (QAbstractButton* checkBoxOrRadio = qobject_cast<QAbstractButton*>(widget)) {
-                config()->set(configKey, checkBoxOrRadio->isChecked());
+                bool valueBool = checkBoxOrRadio->isChecked() ^ m_configValueInverted.contains(configKey);
+                config()->set(configKey, valueBool);
             } else if (QSpinBox* spinBox = qobject_cast<QSpinBox*>(widget)) {
                 config()->set(configKey, spinBox->value());
             } else if (QComboBox* comboBox = qobject_cast<QComboBox*>(widget)) {
