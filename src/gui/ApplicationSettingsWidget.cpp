@@ -229,6 +229,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     // clang-format off
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), SLOT(autoSaveToggled(bool)));
+    connect(m_generalUi->minimizeAfterUnlockCheckBox, SIGNAL(toggled(bool)), SLOT(minimizeOnUnlockCheckBoxToggled(bool)));
     connect(m_generalUi->hideWindowOnCopyCheckBox, SIGNAL(toggled(bool)), SLOT(hideWindowOnCopyCheckBoxToggled(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
     connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
@@ -240,7 +241,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             SLOT(showExpiredEntriesOnDatabaseUnlockToggled(bool)));
     connect(m_generalUi->autoTypeAskCheckBox, SIGNAL(toggled(bool)),
             SLOT(autoTypeAskToggled(bool)));
-
     // clang-format on
 
     connect(m_generalUi->useAlternativeSaveCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
@@ -261,16 +261,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_secUi->lockDatabaseIdleCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
         m_secUi->lockDatabaseIdleSpinBox->setEnabled(checked
                                                      && !config()->isManaged(Config::Security_LockDatabaseIdleSeconds));
-    });
-
-    connect(m_generalUi->minimizeAfterUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
-        if (state && !config()->isManaged(Config::Security_LockDatabaseMinimize)) {
-            m_secUi->lockDatabaseMinimizeCheckBox->setChecked(false);
-        }
-        m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
-            state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
-        m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(
-            !state && !config()->isManaged(Config::Security_LockDatabaseMinimize));
     });
 
     // Set Auto-Type shortcut when changed
@@ -301,9 +291,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->languageComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->trayIconAppearance->installEventFilter(mouseWheelFilter);
     m_generalUi->fontSizeComboBox->installEventFilter(mouseWheelFilter);
-
-    // Enable quick unlock only if available
-    m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
 
 #ifdef Q_OS_MACOS
     // The menubar is always shown on macOS, so hide the option to avoid confusion
@@ -468,6 +455,11 @@ void ApplicationSettingsWidget::loadSettings()
         autoTypeAskToggled(m_generalUi->autoTypeAskCheckBox->isChecked());
     }
 
+    // Check for runtime TouchID availability.
+    m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable()
+                                             && !config()->isManaged(Config::Security_QuickUnlock));
+
+    minimizeAfterUnlockCheckBoxToggled(m_generalUi->minimizeAfterUnlockCheckBox->isChecked());
     hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());
     showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
 
@@ -667,6 +659,26 @@ void ApplicationSettingsWidget::autoSaveToggled(bool checked)
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked && !config()->isManaged(Config::AutoSaveOnExit));
     m_generalUi->autoSaveNonDataChangesCheckBox->setEnabled(!checked
                                                             && !config()->isManaged(Config::AutoSaveNonDataChanges));
+}
+
+void ApplicationSettingsWidget::minimizeAfterUnlockCheckBoxToggled(bool checked)
+{
+    const bool lockOnMinimizeEnforced = config()->isManaged(Config::Security_LockDatabaseMinimize)
+                                        && config()->get(Config::Security_LockDatabaseMinimize).toBool();
+    // Prevent immediate relock if lock on minimize is enforced by policy.
+    if (lockOnMinimizeEnforced && checked) {
+        checked = false;
+        m_generalUi->minimizeAfterUnlockCheckBox->setChecked(false);
+    }
+    m_generalUi->minimizeAfterUnlockCheckBox->setEnabled(!lockOnMinimizeEnforced
+                                                         && !config()->isManaged(Config::MinimizeAfterUnlock));
+    if (checked && !config()->isManaged(Config::Security_LockDatabaseMinimize)) {
+        m_secUi->lockDatabaseMinimizeCheckBox->setChecked(false);
+    }
+    m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
+        checked ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
+    m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!checked
+                                                      && !config()->isManaged(Config::Security_LockDatabaseMinimize));
 }
 
 void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)

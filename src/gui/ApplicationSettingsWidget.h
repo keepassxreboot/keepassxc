@@ -62,6 +62,7 @@ private slots:
     void exportSettings();
     void reject();
     void autoSaveToggled(bool checked);
+    void minimizeAfterUnlockCheckBoxToggled(bool checked);
     void hideWindowOnCopyCheckBoxToggled(bool checked);
     void systrayToggled(bool checked);
     void rememberDatabasesToggled(bool checked);
