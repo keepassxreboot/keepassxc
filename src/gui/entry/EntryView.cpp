@@ -23,6 +23,8 @@
 #include <QDrag>
 #include <QGuiApplication>
 #include <QHeaderView>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QListWidget>
 #include <QMenu>
 #include <QPainter>
@@ -30,6 +32,10 @@
 #include <QStyledItemDelegate>
 #include <QWindow>
 
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Metadata.h"
 #include "gui/Icons.h"
 #include "gui/SortFilterHideProxyModel.h"
 
@@ -69,6 +75,7 @@ EntryView::EntryView(QWidget* parent)
     , m_lastIndex(-1)
     , m_lastOrder(Qt::AscendingOrder)
     , m_headerMenu(new QMenu(this))
+    , m_customColumnsMenu(new QMenu(tr("Additional attributes"), m_headerMenu))
 {
     m_sortModel->setSourceModel(m_model);
     m_sortModel->setDynamicSortFilter(true);
@@ -99,33 +106,31 @@ EntryView::EntryView(QWidget* parent)
 
     resetViewToDefaults();
 
-    // Actions to toggle column visibility, each carrying the corresponding
-    // column index as data
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
-    for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
-        int logicalIndex = header()->logicalIndex(visualIndex);
-        auto caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole);
-        if (!caption.isValid()) {
-            caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::ToolTipRole);
-            if (!caption.isValid()) {
-                // Ignored column, skip it
-                continue;
-            }
-        }
-
-        auto action = m_headerMenu->addAction(caption.toString());
-        action->setCheckable(true);
-        action->setData(logicalIndex);
-        m_columnActions->addAction(action);
-    }
     connect(m_columnActions, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
-
-    m_headerMenu->addSeparator();
-    m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
-    m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
-    m_headerMenu->addSeparator();
-    m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
+    m_customColumnsMenu->setObjectName("customColumnsMenu");
+    connect(m_customColumnsMenu, &QMenu::triggered, this, [this](QAction* action) {
+        const auto attribute = action->data().toString();
+        auto columns = m_model->customColumns();
+        if (!action->isChecked()) {
+            if (header()->count() - header()->hiddenSectionCount() == 1) {
+                action->setChecked(true);
+                return;
+            }
+            columns.removeAll(attribute);
+        }
+        if (action->isChecked() && !columns.contains(attribute)) {
+            columns.append(attribute);
+        }
+        m_database->metadata()->customData()->set(
+            CustomData::EntryListColumns,
+            QString::fromUtf8(QJsonDocument(QJsonArray::fromStringList(columns)).toJson(QJsonDocument::Compact)));
+        if (action->isChecked()) {
+            header()->showSection(EntryModel::CustomAttribute + columns.indexOf(attribute));
+        }
+        emit viewStateChanged();
+    });
 
     header()->setDefaultSectionSize(100);
     header()->setStretchLastSection(false);
@@ -135,6 +140,10 @@ EntryView::EntryView(QWidget* parent)
     connect(header(), SIGNAL(sectionCountChanged(int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(viewStateChanged()));
     connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(viewStateChanged()));
+    connect(m_sortModel, &QAbstractItemModel::columnsInserted, this, [this] {
+        selectionModel()->select(selectionModel()->selection(),
+                                 QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    });
     connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), SLOT(sortIndicatorChanged(int, Qt::SortOrder)));
 }
 
@@ -144,6 +153,31 @@ void EntryView::contextMenuShortcutPressed()
     if (hasFocus() && index.isValid()) {
         emit customContextMenuRequested(visualRect(index).bottomLeft());
     }
+}
+
+void EntryView::setDatabase(Database* database)
+{
+    m_headerMenu->hide();
+    m_headerMenu->clear();
+    m_customColumnsMenu->clear();
+    if (m_database) {
+        disconnect(m_database->metadata()->customData(), nullptr, this, nullptr);
+    }
+    m_database = database;
+    const auto updateColumns = [this] {
+        QStringList columns;
+        if (m_database) {
+            const auto value = m_database->metadata()->customData()->value(CustomData::EntryListColumns);
+            columns = QJsonDocument::fromJson(value.toUtf8()).toVariant().toStringList();
+        }
+        m_model->setCustomColumns(columns);
+    };
+    if (m_database) {
+        auto* data = m_database->metadata()->customData();
+        connect(data, &CustomData::modified, this, updateColumns);
+        connect(data, &CustomData::reset, this, updateColumns);
+    }
+    updateColumns();
 }
 
 void EntryView::sortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
@@ -339,8 +373,20 @@ bool EntryView::setViewState(const QByteArray& state)
     // Reset to unsorted first (https://bugreports.qt.io/browse/QTBUG-86694)
     header()->setSortIndicator(-1, Qt::AscendingOrder);
     bool status = header()->restoreState(state);
-    resetFixedColumns();
     m_columnsNeedRelayout = state.isEmpty();
+    if (header()->count() != m_model->columnCount()) {
+        const auto current = selectionModel()->currentIndex();
+        const auto selection = selectionModel()->selection();
+        header()->reset();
+        selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
+        selectionModel()->setCurrentIndex(current, QItemSelectionModel::NoUpdate);
+        resetViewToDefaults();
+        m_columnsNeedRelayout = !isVisible();
+    }
+    if (header()->sortIndicatorSection() >= m_model->columnCount()) {
+        header()->setSortIndicator(-1, Qt::AscendingOrder);
+    }
+    resetFixedColumns();
     onHeaderChanged();
     return status;
 }
@@ -351,17 +397,52 @@ bool EntryView::setViewState(const QByteArray& state)
  */
 void EntryView::showHeaderMenu(const QPoint& position)
 {
-    const QList<QAction*> actions = m_columnActions->actions();
-    for (auto& action : actions) {
-        Q_ASSERT(static_cast<QMetaType::Type>(action->data().type()) == QMetaType::Int);
-        if (static_cast<QMetaType::Type>(action->data().type()) != QMetaType::Int) {
+    m_headerMenu->clear();
+    m_customColumnsMenu->clear();
+    for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
+        int logicalIndex = header()->logicalIndex(visualIndex);
+        if (logicalIndex >= EntryModel::CustomAttribute) {
             continue;
         }
-        int columnIndex = action->data().toInt();
-        action->setChecked(!isColumnHidden(columnIndex));
+        if (logicalIndex == EntryModel::ParentGroup && !inSearchMode()) {
+            continue;
+        }
+        auto caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole);
+        if (!caption.isValid()) {
+            caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::ToolTipRole);
+            if (!caption.isValid()) {
+                continue;
+            }
+        }
+        auto action = m_headerMenu->addAction(caption.toString().replace('&', "&&"));
+        action->setCheckable(true);
+        action->setChecked(!isColumnHidden(logicalIndex));
+        action->setData(logicalIndex);
+        m_columnActions->addAction(action);
     }
-    actions[EntryModel::ParentGroup]->setVisible(inSearchMode());
 
+    m_headerMenu->addSeparator();
+    auto attributes = m_model->customColumns();
+    for (int row = 0; row < m_model->rowCount(); ++row) {
+        attributes.append(m_model->entryFromIndex(m_model->index(row, EntryModel::Title))->attributes()->customKeys());
+    }
+    attributes.removeDuplicates();
+    attributes.removeAll(QString());
+    attributes.sort();
+    for (const auto& attribute : attributes) {
+        auto* action = m_customColumnsMenu->addAction(QString(attribute).replace('&', "&&"));
+        action->setCheckable(true);
+        const auto column = m_model->customColumns().indexOf(attribute);
+        action->setChecked(column >= 0 && !isColumnHidden(EntryModel::CustomAttribute + column));
+        action->setData(attribute);
+    }
+    m_customColumnsMenu->setEnabled(m_database && !attributes.isEmpty());
+    m_headerMenu->addMenu(m_customColumnsMenu);
+    m_headerMenu->addSeparator();
+    m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
+    m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
+    m_headerMenu->addSeparator();
+    m_headerMenu->addAction(tr("Reset to defaults"), this, SLOT(resetViewToDefaults()));
     m_headerMenu->popup(mapToGlobal(position));
 }
 
@@ -487,6 +568,9 @@ void EntryView::resetViewToDefaults()
     header()->hideSection(EntryModel::PasswordStrength);
     header()->hideSection(EntryModel::Color);
     header()->hideSection(EntryModel::ParentGroupPath);
+    for (int column = EntryModel::CustomAttribute; column < header()->count(); ++column) {
+        header()->hideSection(column);
+    }
     onHeaderChanged();
 
     // Reset column order to logical indices
@@ -499,6 +583,7 @@ void EntryView::resetViewToDefaults()
     header()->moveSection(header()->visualIndex(EntryModel::Totp), 2);
 
     // Sort by title or group (depending on the mode)
+    header()->setSortIndicator(-1, Qt::AscendingOrder);
     m_sortModel->sort(EntryModel::Title, Qt::AscendingOrder);
     sortByColumn(EntryModel::Title, Qt::AscendingOrder);
 
