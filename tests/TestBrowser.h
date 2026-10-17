@@ -48,6 +48,7 @@ private slots:
     void testSearchEntriesWithWildcardURLs();
     void testInvalidEntries();
     void testSubdomainsAndPaths();
+    void testSubdomainAnchor();
     void testBestMatchingCredentials();
     void testBestMatchingWithAdditionalURLs();
     void testRestrictBrowserKey();
