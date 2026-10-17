@@ -148,6 +148,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
     m_entryContextMenu->addAction(m_ui->actionEntryExpire);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
+    m_entryContextMenu->addAction(m_ui->actionEntryMerge);
     m_entryContextMenu->addAction(m_ui->actionEntryDelete);
     m_entryContextMenu->addAction(m_ui->actionEntryNew);
     m_entryContextMenu->addSeparator();
@@ -350,6 +351,7 @@ MainWindow::MainWindow()
 
     m_ui->actionEntryNew->setIcon(icons()->icon("entry-new"));
     m_ui->actionEntryClone->setIcon(icons()->icon("entry-clone"));
+    m_ui->actionEntryMerge->setIcon(icons()->icon("database-merge"));
     m_ui->actionEntryEdit->setIcon(icons()->icon("entry-edit"));
     m_ui->actionEntryExpire->setIcon(icons()->icon("entry-expire"));
     m_ui->actionEntryDelete->setIcon(icons()->icon("entry-delete"));
@@ -475,6 +477,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryEdit, SIGNAL(triggered()), SLOT(switchToEntryEdit()));
     m_actionMultiplexer.connect(m_ui->actionEntryExpire, SIGNAL(triggered()), SLOT(expireSelectedEntries()));
     m_actionMultiplexer.connect(m_ui->actionEntryClone, SIGNAL(triggered()), SLOT(cloneEntry()));
+    m_actionMultiplexer.connect(m_ui->actionEntryMerge, SIGNAL(triggered()), SLOT(mergeSelectedEntries()));
     m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()), SLOT(deleteSelectedEntries()));
     m_actionMultiplexer.connect(m_ui->actionEntryRestore, SIGNAL(triggered()), SLOT(restoreSelectedEntries()));
 
@@ -877,6 +880,7 @@ void MainWindow::updateMenuActionState()
     bool singleEntrySelected = (inDatabase && dbWidget->numberOfSelectedEntries() == 1);
     bool singleEntryOrEditing = (singleEntrySelected || editingEntry);
     bool multiEntrySelected = (inDatabase && dbWidget->numberOfSelectedEntries() > 0);
+    bool multipleEntriesSelected = (inDatabase && dbWidget->numberOfSelectedEntries() > 1);
 
     // Group State
     bool groupSelected = (inDatabase && dbWidget->isGroupSelected());
@@ -891,6 +895,7 @@ void MainWindow::updateMenuActionState()
 
     m_ui->actionEntryNew->setEnabled(inDatabase && !inRecycleBin);
     m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inRecycleBin);
+    m_ui->actionEntryMerge->setEnabled(multipleEntriesSelected && !inRecycleBin);
     m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
     m_ui->actionEntryExpire->setEnabled(multiEntrySelected);
     m_ui->actionEntryDelete->setEnabled(multiEntrySelected);
@@ -2077,6 +2082,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionEntryNew,
                     m_ui->actionEntryEdit,
                     m_ui->actionEntryClone,
+                    m_ui->actionEntryMerge,
                     m_ui->actionEntryDelete,
                     m_ui->actionEntryCopyUsername,
                     m_ui->actionEntryCopyPassword,
