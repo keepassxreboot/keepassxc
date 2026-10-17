@@ -1142,12 +1142,12 @@ void MainWindow::openBugReportUrl()
 
 void MainWindow::openGettingStartedGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.html")));
+    customOpenUrl(QString("file://%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.html")));
 }
 
 void MainWindow::openUserGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.html")));
+    customOpenUrl(QString("file://%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.html")));
 }
 
 void MainWindow::openOnlineHelp()
@@ -1157,7 +1157,7 @@ void MainWindow::openOnlineHelp()
 
 void MainWindow::openKeyboardShortcuts()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_KeyboardShortcuts.html")));
+    customOpenUrl(QString("file://%1").arg(resources()->dataPath("docs/KeePassXC_KeyboardShortcuts.html")));
 }
 
 void MainWindow::switchToDatabases()
