@@ -193,6 +193,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
            <widget class="QPushButton" name="dbPublicIconButton">
+            <property name="accessibleName">
+             <string>Database public display icon chooser</string>
+            </property>
             <property name="maximumSize">
              <size>
               <width>30</width>

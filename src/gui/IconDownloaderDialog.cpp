@@ -31,6 +31,7 @@
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 
+#include <QAccessible>
 #include <QStandardItemModel>
 
 IconDownloaderDialog::IconDownloaderDialog(QWidget* parent)
@@ -189,6 +190,12 @@ void IconDownloaderDialog::updateProgressBar()
     m_ui->progressBar->setMaximum(total);
     m_ui->progressLabel->setText(
         tr("Downloading favicons (%1/%2)…").arg(QString::number(value), QString::number(total)));
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+    QAccessibleAnnouncementEvent announcementEvent(
+        m_ui->progressLabel, m_ui->progressLabel->text());
+    QAccessible::updateAccessibility(&announcementEvent);
+#endif
 }
 
 void IconDownloaderDialog::updateCancelButton()
@@ -200,7 +207,12 @@ void IconDownloaderDialog::updateTable(const QString& url, const QString& messag
 {
     for (int i = 0; i < m_dataModel->rowCount(); ++i) {
         if (m_dataModel->item(i, 0)->text() == url) {
-            m_dataModel->item(i, 1)->setText(message);
+            auto* statusItem = m_dataModel->item(i, 1);
+            statusItem->setText(message);
+            statusItem->setData(message, Qt::AccessibleDescriptionRole);
+
+            QAccessibleEvent event(m_ui->tableView, QAccessible::VisibleDataChanged);
+            QAccessible::updateAccessibility(&event);
         }
     }
 }

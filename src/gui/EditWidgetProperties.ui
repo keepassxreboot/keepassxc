@@ -138,6 +138,9 @@
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectRows</enum>
         </property>
+        <property name="tabKeyNavigation">
+         <bool>false</bool>
+        </property>
         <attribute name="horizontalHeaderDefaultSectionSize">
          <number>200</number>
         </attribute>
@@ -185,6 +188,8 @@
   <tabstop>createdEdit</tabstop>
   <tabstop>modifiedEdit</tabstop>
   <tabstop>uuidEdit</tabstop>
+  <tabstop>customDataTable</tabstop>
+  <tabstop>removeCustomDataButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

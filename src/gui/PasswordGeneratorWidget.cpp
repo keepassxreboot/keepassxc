@@ -19,6 +19,8 @@
 #include "PasswordGeneratorWidget.h"
 #include "ui_PasswordGeneratorWidget.h"
 
+#include <QAccessible>
+#include <QApplication>
 #include <QCloseEvent>
 #include <QDir>
 #include <QShortcut>
@@ -285,8 +287,31 @@ void PasswordGeneratorWidget::updatePasswordStrength()
     }
 
     // Update the entropy text labels
-    m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(passwordHealth.entropy(), 'f', 2)));
+    const auto entropyText = QString::number(passwordHealth.entropy(), 'f', 2);
+    m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(entropyText));
     m_ui->entropyProgressBar->setValue(std::min(int(passwordHealth.entropy()), m_ui->entropyProgressBar->maximum()));
+
+    // Keep the exact entropy and quality available to assistive technology.
+    // The progress bar's exposed range/value may otherwise be reported as a
+    // percentage, which does not communicate the actual entropy in bits.
+    QString qualityText;
+    switch (passwordHealth.quality()) {
+    case PasswordHealth::Quality::Bad:
+    case PasswordHealth::Quality::Poor:
+        qualityText = tr("Poor", "Password quality");
+        break;
+    case PasswordHealth::Quality::Weak:
+        qualityText = tr("Weak", "Password quality");
+        break;
+    case PasswordHealth::Quality::Good:
+        qualityText = tr("Good", "Password quality");
+        break;
+    case PasswordHealth::Quality::Excellent:
+        qualityText = tr("Excellent", "Password quality");
+        break;
+    }
+    m_ui->entropyProgressBar->setAccessibleDescription(
+        tr("Password entropy: %1 bits. Password quality: %2.").arg(entropyText, qualityText));
 
     // Update the visual strength meter
     QString style = m_ui->entropyProgressBar->styleSheet();
@@ -461,14 +486,32 @@ void PasswordGeneratorWidget::setAdvancedMode(bool advanced)
 {
     saveSettings();
 
+    m_ui->buttonAdvancedMode->setAccessibleDescription(
+        advanced ? tr("Hide advanced password generation options") : tr("Show advanced password generation options"));
+
     if (advanced) {
+        m_ui->buttonAdvancedMode->setToolTip(tr("Switch to basic mode"));
         m_ui->checkBoxSpecialChars->setText("# $ % && @ ^ ` ~");
         m_ui->checkBoxSpecialChars->setToolTip(tr("Logograms"));
+        m_ui->checkBoxSpecialChars->setAccessibleName(tr("Logograms"));
         m_ui->checkBoxSpecialChars->setChecked(config()->get(Config::PasswordGenerator_Logograms).toBool());
     } else {
+        m_ui->buttonAdvancedMode->setToolTip(tr("Switch to advanced mode"));
         m_ui->checkBoxSpecialChars->setText("/ * + && …");
         m_ui->checkBoxSpecialChars->setToolTip(tr("Special Characters"));
+        m_ui->checkBoxSpecialChars->setAccessibleName(tr("Special characters"));
         m_ui->checkBoxSpecialChars->setChecked(config()->get(Config::PasswordGenerator_SpecialChars).toBool());
+    }
+
+    // Switching back to basic mode hides the advanced options. If keyboard or
+    // screen-reader focus is inside that container, move it to the still-visible
+    // mode toggle before hiding the container.
+    if (!advanced) {
+        auto* focusedWidget = QApplication::focusWidget();
+        if (focusedWidget
+            && (focusedWidget == m_ui->advancedContainer || m_ui->advancedContainer->isAncestorOf(focusedWidget))) {
+            m_ui->buttonAdvancedMode->setFocus(Qt::OtherFocusReason);
+        }
     }
 
     m_ui->advancedContainer->setVisible(advanced);
@@ -574,6 +617,11 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 void PasswordGeneratorWidget::updateGenerator()
 {
     if (m_ui->tabWidget->currentIndex() == Password) {
+        // The passphrase wordlist warning is only meaningful on the Passphrase tab.
+        // Hide it when switching back to password generation so it does not remain
+        // in the screen reader's accessible tree as stale status information.
+        m_ui->labelWordListWarning->setVisible(false);
+
         auto classes = charClasses();
         auto flags = generatorFlags();
 
@@ -596,6 +644,9 @@ void PasswordGeneratorWidget::updateGenerator()
         auto path = m_ui->comboBoxWordList->currentData().toString();
         if (m_ui->comboBoxWordList->currentIndex() < m_firstCustomWordlistIndex) {
             path = resources()->wordlistPath(path);
+            if (m_ui->buttonDeleteWordList->hasFocus()) {
+                m_ui->comboBoxWordList->setFocus(Qt::OtherFocusReason);
+            }
             m_ui->buttonDeleteWordList->setEnabled(false);
         } else {
             m_ui->buttonDeleteWordList->setEnabled(true);
@@ -604,7 +655,16 @@ void PasswordGeneratorWidget::updateGenerator()
 
         m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
 
-        m_ui->labelWordListWarning->setVisible(!m_dicewareGenerator->isWordListValid());
+        const bool wordListWarningVisible = !m_dicewareGenerator->isWordListValid();
+        const bool wordListWarningChanged = m_ui->labelWordListWarning->isVisible() != wordListWarningVisible;
+        m_ui->labelWordListWarning->setVisible(wordListWarningVisible);
+        if (wordListWarningChanged && wordListWarningVisible) {
+            m_ui->labelWordListWarning->setAccessibleName(tr("Wordlist warning"));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
+            QAccessibleAnnouncementEvent announcementEvent(m_ui->labelWordListWarning, m_ui->labelWordListWarning->text());
+            QAccessible::updateAccessibility(&announcementEvent);
+#endif
+        }
         m_ui->buttonGenerate->setEnabled(true);
     }
 

@@ -116,6 +116,12 @@
        </item>
        <item>
         <widget class="QProgressBar" name="progressBar">
+    <property name="accessibleName">
+     <string>Online password exposure check progress</string>
+    </property>
+    <property name="accessibleDescription">
+     <string>Shows the progress of checking database passwords against the online exposure service.</string>
+    </property>
          <property name="value">
           <number>0</number>
          </property>
@@ -139,6 +145,15 @@
        </property>
        <item>
         <widget class="QTableView" name="hibpTableView">
+         <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+     <property name="accessibleName">
+          <string>Online password exposure report entries</string>
+         </property>
+         <property name="accessibleDescription">
+          <string>Use the arrow keys to review password exposure results. Select a row to access entry actions from the context menu.</string>
+         </property>
          <property name="contextMenuPolicy">
           <enum>Qt::CustomContextMenu</enum>
          </property>
