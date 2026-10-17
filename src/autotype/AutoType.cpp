@@ -210,6 +210,11 @@ AutoType::~AutoType()
     unload();
 }
 
+bool AutoType::isSelectDialogVisible() const
+{
+    return m_selectDialog && m_selectDialog->isVisible();
+}
+
 bool AutoType::usesDesktopPortal() const
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(Q_OS_HAIKU)
@@ -500,7 +505,11 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         // Close any open modal windows that would interfere with the process
         getMainWindow()->closeModalWindow();
 
+#ifdef Q_OS_MACOS
+        macUtils()->toggleForegroundApp(true);
+#endif
         auto* selectDialog = new AutoTypeSelectDialog();
+        m_selectDialog = selectDialog;
         selectDialog->setMatches(matchList, dbList, m_lastMatch);
 
         if (!search.isEmpty()) {
@@ -526,13 +535,13 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
             emit autotypeFinished();
         });
 
-#ifdef Q_OS_MACOS
-        m_platform->raiseOwnWindow();
-        Tools::wait(50);
-#endif
         selectDialog->show();
+#ifdef Q_OS_MACOS
+        macUtils()->activateWindow(selectDialog->windowHandle());
+#else
         selectDialog->raise();
         selectDialog->activateWindow();
+#endif
         m_platform->prepareAutoType();
     } else if (!matchList.isEmpty()) {
         // Only one match and not asking, do it!
