@@ -7620,6 +7620,18 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>evalByCredential is not supported at registration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>evalByCredential is not empty, but allowedCredentials is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credential ID provided in evalByCredential not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unknown error</source>
         <translation type="unfinished"></translation>
     </message>
