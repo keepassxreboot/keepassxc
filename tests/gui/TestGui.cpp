@@ -612,6 +612,20 @@ void TestGui::testTabs()
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_dbFileName);
 }
 
+void TestGui::testWindowFilePath()
+{
+    QCOMPARE(m_mainWindow->windowFilePath(), m_dbFilePath);
+}
+
+void TestGui::testWindowFilePathClearsOnSettingsScreen()
+{
+    QCOMPARE(m_mainWindow->windowFilePath(), m_dbFilePath);
+    triggerAction("actionSettings");
+    QCOMPARE(m_mainWindow->windowFilePath(), QString());
+    QTest::keyClick(m_mainWindow->findChild<ApplicationSettingsWidget*>(), Qt::Key::Key_Escape);
+    QCOMPARE(m_mainWindow->windowFilePath(), m_dbFilePath);
+}
+
 void TestGui::testEditEntry()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
