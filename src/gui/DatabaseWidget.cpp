@@ -2023,9 +2023,16 @@ bool DatabaseWidget::lock()
         return isLocked();
     }
 
-    // ignore when reloading
+    // Ignore when reloading. A reload waiting for new credentials (e.g. an unplugged hardware key)
+    // can wait forever, so cancel that one and lock, unless it would lose unsaved changes the
+    // user has not already chosen to discard.
+    bool canceledReload = false;
     if (m_reloading) {
-        return false;
+        if (!m_reloadOpenDialog || (m_db->isModified() && !m_reloadDiscardsChanges)) {
+            return false;
+        }
+        m_reloadOpenDialog->reject();
+        canceledReload = true;
     }
 
     // Don't try to lock the database while saving, this will cause a deadlock
@@ -2065,7 +2072,9 @@ bool DatabaseWidget::lock()
         }
     }
 
-    if (m_db->isModified()) {
+    // Canceling a reload marks the database modified, since it no longer matches the file.
+    // Nothing in it is to be saved, and saving would meet the newer file and ask how to proceed.
+    if (m_db->isModified() && !canceledReload) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
         if (config()->get(Config::AutoSaveOnExit).toBool()
@@ -2107,7 +2116,8 @@ bool DatabaseWidget::lock()
                 return false;
             }
         }
-    } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+    } else if (m_db->hasNonDataChanges() && !canceledReload
+               && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
         // Silently auto-save non-data changes, ignore errors
         QString errorMessage;
         performSave(errorMessage);
@@ -2194,6 +2204,7 @@ void DatabaseWidget::reloadDatabaseFile(bool triggeredBySave)
         m_tagView->setDisabled(false);
 
         m_reloading = false;
+        m_reloadOpenDialog = nullptr;
 
         // Keep the previous message visible for 2 seconds if not hiding
         QTimer::singleShot(hideMsg ? 0 : 2000, this, [this] { emit updateSyncProgress(-1, ""); });
@@ -2253,6 +2264,7 @@ void DatabaseWidget::reloadDatabaseFile(bool triggeredBySave)
     }
 
     bool merge = false;
+    bool discard = false;
     QString changesActionStr;
     if (triggeredBySave || m_db->isModified() || m_db->hasNonDataChanges()) {
         emit updateSyncProgress(50, tr("Reload pending user action…"));
@@ -2294,6 +2306,9 @@ void DatabaseWidget::reloadDatabaseFile(bool triggeredBySave)
             return;
         case MessageBox::Merge:
             merge = true;
+            break;
+        case MessageBox::Discard:
+            discard = true;
         default:
             break;
         }
@@ -2316,6 +2331,8 @@ void DatabaseWidget::reloadDatabaseFile(bool triggeredBySave)
             reloadCanceled();
         }
     });
+    m_reloadOpenDialog = openDialog;
+    m_reloadDiscardsChanges = discard;
     openDialog->setAttribute(Qt::WA_DeleteOnClose);
     openDialog->addDatabaseTab(dbWidget);
     openDialog->setActiveDatabaseTab(dbWidget);
