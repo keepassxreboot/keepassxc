@@ -290,6 +290,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
