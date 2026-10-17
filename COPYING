@@ -153,8 +153,8 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/configure.svg
        share/icons/application/scalable/actions/csv.svg
        share/icons/application/scalable/actions/database-change-key.svg
-       share/icons/application/scalable/actions/database-lock.svg
        share/icons/application/scalable/actions/database-lock-all.svg
+       share/icons/application/scalable/actions/database-lock.svg
        share/icons/application/scalable/actions/database-merge.svg
        share/icons/application/scalable/actions/database-search.svg
        share/icons/application/scalable/actions/database-settings.svg
@@ -165,34 +165,46 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/document-export.svg
        share/icons/application/scalable/actions/document-import.svg
        share/icons/application/scalable/actions/document-new.svg
-       share/icons/application/scalable/actions/document-open.svg
        share/icons/application/scalable/actions/document-open-recent.svg
+       share/icons/application/scalable/actions/document-open.svg
        share/icons/application/scalable/actions/document-properties.svg
-       share/icons/application/scalable/actions/document-save.svg
        share/icons/application/scalable/actions/document-save-as.svg
        share/icons/application/scalable/actions/document-save-copy.svg
+       share/icons/application/scalable/actions/document-save.svg
        share/icons/application/scalable/actions/donate.svg
        share/icons/application/scalable/actions/edit-clear-locationbar-ltr.svg
        share/icons/application/scalable/actions/edit-clear-locationbar-rtl.svg
        share/icons/application/scalable/actions/entry-clone.svg
        share/icons/application/scalable/actions/entry-delete.svg
-       share/icons/application/scalable/actions/entry-restore.svg
        share/icons/application/scalable/actions/entry-edit.svg
        share/icons/application/scalable/actions/entry-expire.svg
        share/icons/application/scalable/actions/entry-new.svg
+       share/icons/application/scalable/actions/entry-restore.svg
        share/icons/application/scalable/actions/favicon-download.svg
        share/icons/application/scalable/actions/fingerprint.svg
+       share/icons/application/scalable/actions/format-code-block.svg
+       share/icons/application/scalable/actions/format-code.svg
+       share/icons/application/scalable/actions/format-header-decrease.svg
+       share/icons/application/scalable/actions/format-header-increase.svg
+       share/icons/application/scalable/actions/format-text-bold.svg
+       share/icons/application/scalable/actions/format-text-italic.svg
+       share/icons/application/scalable/actions/format-text-strikethrough.svg
+       share/icons/application/scalable/actions/format-text-underline.svg
        share/icons/application/scalable/actions/getting-started.svg
+       share/icons/application/scalable/actions/group-clone.svg
        share/icons/application/scalable/actions/group-delete.svg
        share/icons/application/scalable/actions/group-edit.svg
-       share/icons/application/scalable/actions/group-clone.svg
        share/icons/application/scalable/actions/group-empty-trash.svg
        share/icons/application/scalable/actions/group-new.svg
        share/icons/application/scalable/actions/hammer-wrench.svg
        share/icons/application/scalable/actions/health.svg
        share/icons/application/scalable/actions/help-about.svg
-       share/icons/application/scalable/actions/lock-question.svg
+       share/icons/application/scalable/actions/insert-link.svg
        share/icons/application/scalable/actions/keyboard-shortcuts.svg
+       share/icons/application/scalable/actions/lock-open-alert.svg
+       share/icons/application/scalable/actions/lock-open.svg
+       share/icons/application/scalable/actions/lock-question.svg
+       share/icons/application/scalable/actions/lock.svg
        share/icons/application/scalable/actions/message-close.svg
        share/icons/application/scalable/actions/move-down.svg
        share/icons/application/scalable/actions/move-up.svg
@@ -200,31 +212,33 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/object-unlocked.svg
        share/icons/application/scalable/actions/onepassword.svg
        share/icons/application/scalable/actions/paperclip.svg
-       share/icons/application/scalable/actions/password-copy.svg
        share/icons/application/scalable/actions/passkey.svg
+       share/icons/application/scalable/actions/password-copy.svg
        share/icons/application/scalable/actions/password-generator.svg
        share/icons/application/scalable/actions/password-show-off.svg
        share/icons/application/scalable/actions/password-show-on.svg
        share/icons/application/scalable/actions/qrcode.svg
+       share/icons/application/scalable/actions/redo.svg
        share/icons/application/scalable/actions/refresh.svg
        share/icons/application/scalable/actions/remote-sync.svg
-       share/icons/application/scalable/actions/reports.svg
        share/icons/application/scalable/actions/reports-exclude.svg
+       share/icons/application/scalable/actions/reports.svg
        share/icons/application/scalable/actions/sort-alphabetical-ascending.svg
        share/icons/application/scalable/actions/sort-alphabetical-descending.svg
        share/icons/application/scalable/actions/statistics.svg
        share/icons/application/scalable/actions/system-help.svg
        share/icons/application/scalable/actions/system-search.svg
        share/icons/application/scalable/actions/system-software-update.svg
-       share/icons/application/scalable/actions/tag.svg
        share/icons/application/scalable/actions/tag-multiple.svg
        share/icons/application/scalable/actions/tag-search.svg
-       share/icons/application/scalable/actions/totp.svg
-       share/icons/application/scalable/actions/totp-copy.svg
+       share/icons/application/scalable/actions/tag.svg
        share/icons/application/scalable/actions/totp-copy-password.svg
+       share/icons/application/scalable/actions/totp-copy.svg
        share/icons/application/scalable/actions/totp-edit.svg
        share/icons/application/scalable/actions/totp-invalid.svg
+       share/icons/application/scalable/actions/totp.svg
        share/icons/application/scalable/actions/trash.svg
+       share/icons/application/scalable/actions/undo.svg
        share/icons/application/scalable/actions/url-copy.svg
        share/icons/application/scalable/actions/user-guide.svg
        share/icons/application/scalable/actions/username-copy.svg
@@ -232,10 +246,10 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/web.svg
        share/icons/application/scalable/actions/yubikey-refresh.svg
        share/icons/application/scalable/apps/internet-web-browser.svg
-       share/icons/application/scalable/apps/keepassxc.svg
        share/icons/application/scalable/apps/keepassxc-dark.svg
        share/icons/application/scalable/apps/keepassxc-locked.svg
        share/icons/application/scalable/apps/keepassxc-unlocked.svg
+       share/icons/application/scalable/apps/keepassxc.svg
        share/icons/application/scalable/apps/preferences-desktop-icons.svg
        share/icons/application/scalable/apps/preferences-system-network-sharing.svg
        share/icons/application/scalable/apps/utilities-terminal.svg
@@ -245,12 +259,16 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/status/dialog-information.svg
        share/icons/application/scalable/status/dialog-warning.svg
        share/icons/application/scalable/status/security-high.svg
-       share/icons/application/scalable/actions/lock-open-alert.svg
-       share/icons/application/scalable/actions/lock-open.svg
-       share/icons/application/scalable/actions/lock.svg
 Copyright: 2023 Pictogrammers <https://pictogrammers.com/docs/general/about/>
 License: Apache-2.0
 Comment: Some icons are modified to fit KeePassXC design (https://pictogrammers.com/library/mdi/)
+
+Files: share/icons/application/scalable/actions/format-list-bulleted.svg
+       share/icons/application/scalable/actions/format-list-numbered.svg
+       share/icons/application/scalable/actions/format-list-check.svg
+Copyright: 2015–2025 IBM Corp. and the Carbon Design System contributors
+License: Apache-2.0
+Comment: Taken from https://github.com/carbon-design-system/carbon
 
 Files: src/streams/qtiocompressor.*
        src/streams/QtIOCompressor
