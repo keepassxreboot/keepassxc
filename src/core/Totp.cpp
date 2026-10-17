@@ -34,7 +34,7 @@ static QList<Totp::Encoder> totpEncoders{
     {"steam", Totp::STEAM_SHORTNAME, "23456789BCDFGHJKMNPQRTVWXY", Totp::STEAM_DIGITS, Totp::DEFAULT_STEP, true},
 };
 
-static Totp::Algorithm getHashTypeByName(const QString& name)
+Totp::Algorithm Totp::getHashTypeByName(const QString& name)
 {
     auto nameUpper = name.toUpper();
     if (nameUpper == "SHA512" || nameUpper == "HMAC-SHA-512") {
@@ -46,7 +46,7 @@ static Totp::Algorithm getHashTypeByName(const QString& name)
     return Totp::Algorithm::Sha1;
 }
 
-static QString getNameForHashType(const Totp::Algorithm hashType)
+QString Totp::getNameForHashType(const Totp::Algorithm hashType)
 {
     switch (hashType) {
     case Totp::Algorithm::Sha512:
