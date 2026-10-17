@@ -1439,6 +1439,17 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
 </context>
 <context>
+    <name>CategoryListWidget</name>
+    <message>
+        <source>Scroll categories up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll categories down</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
@@ -4528,6 +4539,34 @@ Would you like to overwrite the existing attachment?</source>
         <source>Double click to copy to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hide username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press F4 to traverse preview</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
@@ -6504,6 +6543,18 @@ This version is not meant for production use.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Focus Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move focus into the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F4</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
