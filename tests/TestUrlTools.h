@@ -34,5 +34,6 @@ private slots:
     void testIsUrlValid();
     void testIsUrlValidWithLooseComparison();
     void testDomainHasIllegalCharacters();
+    void testNormalizeScheme();
 };
 #endif // KEEPASSXC_TESTURLTOOLS_H

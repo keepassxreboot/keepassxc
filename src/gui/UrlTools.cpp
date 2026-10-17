@@ -210,3 +210,14 @@ bool UrlTools::domainHasIllegalCharacters(const QString& domain)
     static const QRegularExpression re(R"([\s\^#|/:<>\?@\[\]\\])");
     return re.match(domain).hasMatch();
 }
+
+// Extracts the URI scheme (ALPHA *( ALPHA / DIGIT / "+" / "-" / "." ), per RFC 3986) from a
+// possibly messy string, e.g. one entered by a user who isn't thinking about exact syntax.
+// Anything before or after the matched scheme is simply not part of it and is discarded, rather
+// than guessing which surrounding characters (like a trailing "://") to strip.
+QString UrlTools::normalizeScheme(const QString& scheme)
+{
+    static const QRegularExpression schemePattern("[A-Za-z][A-Za-z0-9+.-]*");
+    const auto match = schemePattern.match(scheme);
+    return match.hasMatch() ? match.captured(0) : QString();
+}

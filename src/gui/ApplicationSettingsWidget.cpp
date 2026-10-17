@@ -419,6 +419,8 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
     m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
 
+    m_generalUi->urlOverrideWidget->loadSettings();
+
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
@@ -570,6 +572,8 @@ void ApplicationSettingsWidget::saveSettings()
         config()->remove(Config::LastKeyFiles);
         config()->remove(Config::LastChallengeResponse);
     }
+
+    m_generalUi->urlOverrideWidget->saveSettings();
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.saveSettings();

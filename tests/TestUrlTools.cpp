@@ -171,3 +171,23 @@ void TestUrlTools::testDomainHasIllegalCharacters()
     QVERIFY(UrlTools::domainHasIllegalCharacters("domain has spaces.com"));
     QVERIFY(UrlTools::domainHasIllegalCharacters("example#|.com"));
 }
+
+void TestUrlTools::testNormalizeScheme()
+{
+    QCOMPARE(UrlTools::normalizeScheme("ff://"), QString("ff"));
+    QCOMPARE(UrlTools::normalizeScheme("ff:"), QString("ff"));
+    QCOMPARE(UrlTools::normalizeScheme("ff"), QString("ff"));
+    QCOMPARE(UrlTools::normalizeScheme("  ff://  "), QString("ff"));
+
+    // Extracted via the URI scheme grammar, not by stripping specific characters off either end:
+    // stray leading junk, doubled-up separators, and trailing garbage that isn't ":"/"/" all still
+    // resolve to just the scheme
+    QCOMPARE(UrlTools::normalizeScheme("/:ff://  "), QString("ff"));
+    QCOMPARE(UrlTools::normalizeScheme("://ff://  "), QString("ff"));
+    QCOMPARE(UrlTools::normalizeScheme("ff:&&  "), QString("ff"));
+
+    // No letters at all: there is no scheme to extract
+    QVERIFY(UrlTools::normalizeScheme("://").isEmpty());
+    QVERIFY(UrlTools::normalizeScheme("123").isEmpty());
+    QVERIFY(UrlTools::normalizeScheme("").isEmpty());
+}

@@ -664,6 +664,10 @@
         <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>URL Overrides</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -10658,6 +10662,51 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UrlOverrideWidget</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>URL Scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm URL Scheme Overrides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to change how KeePassXC opens URLs with certain schemes. Entries whose URL scheme matches one of these rules will run the configured command instead of the default action.
+
+Do you want to save these changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run a command instead of opening URLs with a matching scheme. The first enabled match is used.&lt;br&gt;Commands must start with &lt;code&gt;cmd://&lt;/code&gt; and can use &lt;a href=&quot;https://keepassxc.org/docs/KeePassXC_UserGuide#_entry_placeholders&quot;&gt;Entry Placeholders&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
