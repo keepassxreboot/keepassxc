@@ -4562,15 +4562,7 @@ Would you like to overwrite the existing attachment?</source>
         </translation>
     </message>
     <message>
-        <source>Add custom column...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add custom column</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attribute name:</source>
+        <source>Additional attributes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

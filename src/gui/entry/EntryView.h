@@ -91,6 +91,7 @@ private:
     bool m_columnsNeedRelayout = true;
 
     QMenu* m_headerMenu;
+    QMenu* m_customColumnsMenu;
     QActionGroup* m_columnActions;
 };
 

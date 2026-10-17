@@ -26,7 +26,6 @@
 #include <QDialog>
 #include <QFile>
 #include <QHeaderView>
-#include <QInputDialog>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -189,6 +188,20 @@ void TestGui::cleanupTestCase()
     m_dbFile.remove();
 }
 
+void TestGui::toggleCustomColumn(EntryView* view, const QString& name)
+{
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    auto* menu = view->findChild<QMenu*>("customColumnsMenu");
+    QVERIFY(menu);
+    const auto actions = menu->actions();
+    const auto action = std::find_if(
+        actions.cbegin(), actions.cend(), [name](QAction* candidate) { return candidate->data().toString() == name; });
+    QVERIFY(action != actions.cend());
+    QVERIFY((*action)->isCheckable());
+    (*action)->trigger();
+    view->findChild<QMenu*>()->hide();
+}
+
 void TestGui::testCustomColumns()
 {
     auto* view = m_dbWidget->findChild<EntryView*>();
@@ -204,30 +217,8 @@ void TestGui::testCustomColumns()
     const int customColumn = view->header()->count();
     QCOMPARE(view->currentEntry(), entry);
 
-    const auto addColumn = [&](const QString& name) {
-        QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
-        auto* menu = view->findChild<QMenu*>();
-        QVERIFY(menu);
-        QAction* add = nullptr;
-        for (auto* action : menu->actions()) {
-            if (action->text() == "Add custom column...") {
-                add = action;
-                break;
-            }
-        }
-        QVERIFY(add);
-        TEST_MODAL_NO_WAIT(auto* dialog = qobject_cast<QInputDialog*>(QApplication::activeModalWidget());
-                           QVERIFY(dialog);
-                           QVERIFY(dialog->comboBoxItems().contains("E-Mail"));
-                           dialog->setTextValue(name);
-                           dialog->accept(););
-        add->trigger();
-        QTRY_VERIFY(dialogFinished);
-        menu->hide();
-    };
-
     m_db->markAsClean();
-    addColumn("E-Mail");
+    toggleCustomColumn(view, "E-Mail");
     QCOMPARE(view->header()->count(), customColumn + 1);
     QVERIFY(m_db->isModified());
     QVERIFY(m_db->metadata()->customData()->contains(CustomData::EntryListColumns));
@@ -238,7 +229,7 @@ void TestGui::testCustomColumns()
     QVERIFY(!view->header()->isSectionHidden(customColumn));
 
     view->hideColumn(customColumn);
-    addColumn("E-Mail");
+    toggleCustomColumn(view, "E-Mail");
     QCOMPARE(view->header()->count(), customColumn + 1);
     QVERIFY(!view->header()->isSectionHidden(customColumn));
     view->header()->resizeSection(customColumn, 123);
@@ -253,13 +244,14 @@ void TestGui::testCustomColumns()
     const auto selected = view->selectedEntries();
     QVERIFY(selected.size() > 1);
     const auto extraColumnName = QString::fromUtf8("External & \"ID\", Büro");
-    addColumn(extraColumnName);
+    entry->attributes()->set(extraColumnName, "Extra value");
+    toggleCustomColumn(view, extraColumnName);
     QCOMPARE(view->selectedEntries(), selected);
     QCOMPARE(view->header()->count(), customColumn + 2);
     QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
     QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
     auto* menu = view->findChild<QMenu*>();
-    const auto actions = menu->actions();
+    const auto actions = view->findChild<QMenu*>("customColumnsMenu")->actions();
     QVERIFY(std::any_of(actions.cbegin(), actions.cend(), [extraColumnName](QAction* action) {
         return action->text() == QString(extraColumnName).replace('&', "&&");
     }));
@@ -322,6 +314,7 @@ void TestGui::testCustomColumns()
     QVERIFY(menu->isVisible());
     QVERIFY(m_dbWidget->lock());
     QVERIFY(!menu->isVisible());
+    QVERIFY(view->findChild<QMenu*>("customColumnsMenu")->actions().isEmpty());
     QCOMPARE(view->header()->count(), customColumn);
     m_dbWidget->performUnlockDatabase("a");
     QTRY_VERIFY(!m_dbWidget->isLocked());
@@ -339,6 +332,98 @@ void TestGui::testCustomColumns()
     QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
     view->displayGroup(m_db->rootGroup());
     QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+}
+
+void TestGui::testCustomColumnMenu()
+{
+    auto* view = m_dbWidget->findChild<EntryView*>();
+    QVERIFY(view);
+    auto* group = new Group();
+    group->setName("Custom columns");
+    group->setParent(m_db->rootGroup());
+    auto* entry = new Entry();
+    entry->setGroup(group);
+    entry->attributes()->set("First", "First value");
+    entry->attributes()->set("", "Invalid attribute name");
+    entry->attributes()->set("Second & column", "Second value");
+    entry->attributes()->set("Third", "Third value", true);
+    auto* otherEntry = new Entry();
+    otherEntry->setGroup(group);
+    otherEntry->attributes()->set("Second & column", "Another value");
+    view->displayGroup(group);
+    view->setCurrentEntry(entry);
+    const int firstColumn = EntryModel::CustomAttribute;
+
+    toggleCustomColumn(view, "First");
+    toggleCustomColumn(view, "Second & column");
+    toggleCustomColumn(view, "Third");
+    view->header()->resizeSection(firstColumn + 1, 137);
+    view->header()->moveSection(view->header()->visualIndex(firstColumn + 1), 2);
+    view->header()->hideSection(firstColumn + 2);
+    view->sortByColumn(firstColumn + 1, Qt::DescendingOrder);
+    view->selectAll();
+    const auto selected = view->selectedEntries();
+    const auto current = view->entryFromIndex(view->currentIndex());
+
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    auto* menu = view->findChild<QMenu*>();
+    auto* attributes = view->findChild<QMenu*>("customColumnsMenu");
+    QVERIFY(attributes);
+    QCOMPARE(attributes->actions().size(), 3);
+    QCOMPARE(attributes->actions().at(0)->text(), QString("First"));
+    QCOMPARE(attributes->actions().at(1)->text(), QString("Second && column"));
+    QCOMPARE(attributes->actions().at(2)->text(), QString("Third"));
+    for (auto* action : menu->actions()) {
+        QVERIFY(action->text() != "First");
+        QVERIFY(action->text() != "Second && column");
+        QVERIFY(action->text() != "Add custom column...");
+    }
+    menu->hide();
+
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn + 2);
+    QCOMPARE(view->model()->headerData(firstColumn, Qt::Horizontal).toString(), QString("Second & column"));
+    QCOMPARE(view->header()->sectionSize(firstColumn), 137);
+    QCOMPARE(view->header()->visualIndex(firstColumn), 2);
+    QVERIFY(view->header()->isSectionHidden(firstColumn + 1));
+    QCOMPARE(view->header()->sortIndicatorSection(), firstColumn);
+    QCOMPARE(view->header()->sortIndicatorOrder(), Qt::DescendingOrder);
+    QCOMPARE(view->selectedEntries(), selected);
+    QCOMPARE(view->entryFromIndex(view->currentIndex()), current);
+    QVERIFY(!m_db->metadata()->customData()->value(CustomData::EntryListColumns).contains("First"));
+    QCOMPARE(entry->attributes()->value("First"), QString("First value"));
+
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn + 3);
+    QCOMPARE(view->header()->sectionSize(firstColumn), 137);
+    toggleCustomColumn(view, "First");
+    toggleCustomColumn(view, "Second & column");
+    toggleCustomColumn(view, "Third");
+    toggleCustomColumn(view, "Third");
+    QCOMPARE(view->header()->count(), firstColumn);
+    QCOMPARE(m_db->metadata()->customData()->value(CustomData::EntryListColumns), QString("[]"));
+
+    toggleCustomColumn(view, "First");
+    for (int column = 0; column < firstColumn; ++column) {
+        view->header()->hideSection(column);
+    }
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn + 1);
+    QVERIFY(!view->header()->isSectionHidden(firstColumn));
+    view->header()->showSection(EntryModel::Title);
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn);
+
+    view->displaySearch({});
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    QVERIFY(!attributes->isEnabled());
+    menu->hide();
+    m_db->metadata()->customData()->set(CustomData::EntryListColumns, "[\"Removed attribute\"]");
+    toggleCustomColumn(view, "Removed attribute");
+    QCOMPARE(view->header()->count(), firstColumn);
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    QVERIFY(attributes->actions().isEmpty());
+    menu->hide();
 }
 
 void TestGui::testCustomColumnStateFallback_data()

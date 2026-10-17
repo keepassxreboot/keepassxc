@@ -112,6 +112,14 @@ void EntryModel::setCustomColumns(const QStringList& customColumns)
     columns.removeDuplicates();
     columns.removeIf(
         [](const QString& column) { return column.isEmpty() || EntryAttributes::isDefaultAttribute(column); });
+    for (int column = m_customColumns.size() - 1; column >= 0; --column) {
+        if (columns.contains(m_customColumns.at(column))) {
+            continue;
+        }
+        beginRemoveColumns({}, CustomAttribute + column, CustomAttribute + column);
+        m_customColumns.removeAt(column);
+        endRemoveColumns();
+    }
     int first = 0;
     while (first < m_customColumns.size() && first < columns.size() && m_customColumns.at(first) == columns.at(first)) {
         ++first;

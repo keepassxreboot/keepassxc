@@ -265,6 +265,12 @@ void TestEntryModel::testCustomColumnChanges()
     QVERIFY(title.isValid());
     model.setCustomColumns({"", "Password", "Title", "E-Mail", "E-Mail"});
     QCOMPARE(model.customColumns(), QStringList({"E-Mail"}));
+    model.setCustomColumns({"E-Mail", "Department", "Phone"});
+    QPersistentModelIndex phone(model.index(0, EntryModel::CustomAttribute + 2));
+    model.setCustomColumns({"E-Mail", "Phone"});
+    QVERIFY(phone.isValid());
+    QCOMPARE(phone.column(), int(EntryModel::CustomAttribute + 1));
+    QCOMPARE(model.headerData(phone.column(), Qt::Horizontal).toString(), QString("Phone"));
 }
 
 void TestEntryModel::testAttachmentsModel()

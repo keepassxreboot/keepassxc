@@ -23,7 +23,6 @@
 #include <QDrag>
 #include <QGuiApplication>
 #include <QHeaderView>
-#include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QListWidget>
@@ -76,6 +75,7 @@ EntryView::EntryView(QWidget* parent)
     , m_lastIndex(-1)
     , m_lastOrder(Qt::AscendingOrder)
     , m_headerMenu(new QMenu(this))
+    , m_customColumnsMenu(new QMenu(tr("Additional attributes"), m_headerMenu))
 {
     m_sortModel->setSourceModel(m_model);
     m_sortModel->setDynamicSortFilter(true);
@@ -109,6 +109,28 @@ EntryView::EntryView(QWidget* parent)
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
     connect(m_columnActions, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
+    m_customColumnsMenu->setObjectName("customColumnsMenu");
+    connect(m_customColumnsMenu, &QMenu::triggered, this, [this](QAction* action) {
+        const auto attribute = action->data().toString();
+        auto columns = m_model->customColumns();
+        if (!action->isChecked()) {
+            if (header()->count() - header()->hiddenSectionCount() == 1) {
+                action->setChecked(true);
+                return;
+            }
+            columns.removeAll(attribute);
+        }
+        if (action->isChecked() && !columns.contains(attribute)) {
+            columns.append(attribute);
+        }
+        m_database->metadata()->customData()->set(
+            CustomData::EntryListColumns,
+            QString::fromUtf8(QJsonDocument(QJsonArray::fromStringList(columns)).toJson(QJsonDocument::Compact)));
+        if (action->isChecked()) {
+            header()->showSection(EntryModel::CustomAttribute + columns.indexOf(attribute));
+        }
+        emit viewStateChanged();
+    });
 
     header()->setDefaultSectionSize(100);
     header()->setStretchLastSection(false);
@@ -137,6 +159,7 @@ void EntryView::setDatabase(Database* database)
 {
     m_headerMenu->hide();
     m_headerMenu->clear();
+    m_customColumnsMenu->clear();
     if (m_database) {
         disconnect(m_database->metadata()->customData(), nullptr, this, nullptr);
     }
@@ -375,8 +398,12 @@ bool EntryView::setViewState(const QByteArray& state)
 void EntryView::showHeaderMenu(const QPoint& position)
 {
     m_headerMenu->clear();
+    m_customColumnsMenu->clear();
     for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
         int logicalIndex = header()->logicalIndex(visualIndex);
+        if (logicalIndex >= EntryModel::CustomAttribute) {
+            continue;
+        }
         if (logicalIndex == EntryModel::ParentGroup && !inSearchMode()) {
             continue;
         }
@@ -395,31 +422,22 @@ void EntryView::showHeaderMenu(const QPoint& position)
     }
 
     m_headerMenu->addSeparator();
-    auto* addCustomColumn = m_headerMenu->addAction(tr("Add custom column..."), this, [this] {
-        auto attributes = m_model->customColumns();
-        for (int row = 0; row < m_model->rowCount(); ++row) {
-            attributes.append(
-                m_model->entryFromIndex(m_model->index(row, EntryModel::Title))->attributes()->customKeys());
-        }
-        attributes.removeDuplicates();
-        attributes.sort();
-        bool accepted;
-        const auto attribute =
-            QInputDialog::getItem(this, tr("Add custom column"), tr("Attribute name:"), attributes, 0, true, &accepted);
-        if (!accepted || attribute.isEmpty() || EntryAttributes::isDefaultAttribute(attribute)) {
-            return;
-        }
-        auto columns = m_model->customColumns();
-        if (!columns.contains(attribute)) {
-            columns.append(attribute);
-            m_database->metadata()->customData()->set(
-                CustomData::EntryListColumns,
-                QString::fromUtf8(QJsonDocument(QJsonArray::fromStringList(columns)).toJson(QJsonDocument::Compact)));
-        }
-        header()->showSection(EntryModel::CustomAttribute + columns.indexOf(attribute));
-        emit viewStateChanged();
-    });
-    addCustomColumn->setEnabled(m_database);
+    auto attributes = m_model->customColumns();
+    for (int row = 0; row < m_model->rowCount(); ++row) {
+        attributes.append(m_model->entryFromIndex(m_model->index(row, EntryModel::Title))->attributes()->customKeys());
+    }
+    attributes.removeDuplicates();
+    attributes.removeAll(QString());
+    attributes.sort();
+    for (const auto& attribute : attributes) {
+        auto* action = m_customColumnsMenu->addAction(QString(attribute).replace('&', "&&"));
+        action->setCheckable(true);
+        const auto column = m_model->customColumns().indexOf(attribute);
+        action->setChecked(column >= 0 && !isColumnHidden(EntryModel::CustomAttribute + column));
+        action->setData(attribute);
+    }
+    m_customColumnsMenu->setEnabled(m_database && !attributes.isEmpty());
+    m_headerMenu->addMenu(m_customColumnsMenu);
     m_headerMenu->addSeparator();
     m_headerMenu->addAction(tr("Fit to window"), this, SLOT(fitColumnsToWindow()));
     m_headerMenu->addAction(tr("Fit to contents"), this, SLOT(fitColumnsToContents()));
