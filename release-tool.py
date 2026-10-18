@@ -943,6 +943,14 @@ class Build(Command):
               *[f'--executable={ex}' for ex in executables]],
              cwd=build_dir, capture_output=False, path=env_path, env=env, **docker_args, docker_privileged=True)
 
+        # We need to remove libcrypto.so.* for TLS to work properly, but linuxdeploy's library
+        # exclusion flags are broken. See: https://github.com/linuxdeploy/linuxdeploy-plugin-qt/issues/205
+        remove_libs = [
+            path for pattern in ('libssl.so*', 'libcrypto.so*') for path in app_dir.rglob(pattern)
+        ]
+        for library in remove_libs:
+            library.unlink()
+
         logger.debug('Running appimagetool...')
         appimage_name = f'KeePassXC-{version}-{platform_target}.AppImage'
         desktop_file.write_text(desktop_file.read_text().strip() + f'\nX-AppImage-Version={version}\n')
