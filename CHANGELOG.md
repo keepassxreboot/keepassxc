@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.0 (unreleased)
+
+### Fixes
+- macOS: Fix the "Protect" checkbox not responding to clicks in the Classic theme [#13800]
+
 ## 2.8.0-beta1 (2026-09-23)
 
 ### New Features
