@@ -1,18 +1,20 @@
 # Changelog
 
-## 2.8.0-beta1 (2026-09-23)
+## 2.8.0 (2026-10-21)
 
 ### New Features
 - Add remote database synchronization and import using external tools [#7222, #10896, #11271]
 - Allow configuring keyboard shortcuts [#9643]
 - SSH Agent: Add support for generating RSA, ECDSA, and Ed25519 keys [#7215]
-- Linux: Add Wayland Auto-Type support using XDG Desktop Portals [#13359, #13449, #13579]
-- Linux: Add Quick Unlock using Polkit [#8983]
+- Linux: Add Wayland Auto-Type support using XDG Desktop Portals [#13359, #13449, #13579, #13770, #13810]
+- Linux: Add Quick Unlock using Polkit (adds a UUID to public metadata, marking database as modified on first launch) [#8983]
+- Linux Add AArch64 AppImage [#13816]
 - macOS: Allow Quick Unlock using the device password when Touch ID is unavailable [#11410]
-- Windows: Add native Arm64 builds [#13678]
+- Windows: Allow administrators to enforce certain user settings via global Group Policy overrides [#11223]
+- Windows: Add native Arm64 builds [#13678, #13727]
 
 ### Major Changes
-- Migrate to Qt 6 [#11651, #7783, #13456, #13473, #13684]
+- Migrate to Qt 6 [#11651, #7783, #13456, #13473, #13684, #13784]
 - Linux: Store application state in XDG_STATE_HOME instead of XDG_CACHE_HOME [#9755]
 - Build: Bundle build features under a single KPXC_MINIMAL CMake option [#11003]
 
@@ -51,15 +53,20 @@
 - Fix password font size not following application font size [#13658]
 - Fix typos and documentation links [#10124, #10893, #9993]
 - Fix null pointer dereference in Secret Service integration [#13655]
+- Fix ellipsis password reuse tooltip in database reports [#13091]
+- Fix database lock after autosave due to external changes [#13733]
 - Auto-Type: Support {PGDN} placeholder [#13463]
 - Auto-Type: Refactor Auto-Type plugins to integrate them into the main binary [#13469]
 - Browser: Fix showing and closing the password generator [#9984, #9743]
+- Browser: Respect selected database when storing a new passkey [#13798]
 - CSV Import: Fix automatic column mapping for English headers with non-English UI languages [#13531]
 - Secret Service: Fix crash when a database locks while the item access dialog is open [#13598, #13602]
 - SSH Agent: Prevent recursive updates when changing entry settings and attachments [#13068]
 - Linux: Improve AppImage desktop integration [#13470, #13476]
 - Linux: Include keyutils in Snap builds [#10687]
 - Linux: Fix race condition in dark mode detection at startup [#13366]
+- Linux: Do not query X root window without a display with QT_QPA_PLATFORM=offscreen [#13761]
+- Linux: Improve TLS handling im AppImages [#13805]
 - macOS: Improve window tray hide and restore behaviour [#13645]
 - macOS: Use the native temporary directory for the browser integration socket [#13484]
 - macOS: Prevent deleting entries and groups while a modal dialog is open [#13383]
