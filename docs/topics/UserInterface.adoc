@@ -106,8 +106,6 @@ Additionally, the following environment variables may be useful when running the
 |QT_SCALE_FACTOR_ROUNDING_POLICY | Control device pixel ratio rounding to the nearest integer. See https://doc.qt.io/qt-5/highdpi.html#high-dpi-support-in-qt
 |===
 
-To set a minimum password quality requirement, open the local configuration file and set `Security\DatabasePasswordMinimumQuality` to a value between `1` (Poor) and `4` (Excellent).
-
 === Installer Options
 The following options can be set when running the Windows Installer MSI in an unattended installation:
 
