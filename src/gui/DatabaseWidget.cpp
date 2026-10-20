@@ -76,7 +76,7 @@ namespace
 {
     const QString HideExpiredSearchToken = QStringLiteral("-is:expired");
     const QString HideExpiredPreferenceKey = QStringLiteral("HideExpiredEntries");
-    const QString HideExpiredTokenPreferenceKey = QStringLiteral("HideExpiredEntriesToken");
+    const QString LegacyHideExpiredTokenPreferenceKey = QStringLiteral("HideExpiredEntriesToken");
 
     bool hasHideExpiredSearchToken(const QString& searchText)
     {
@@ -94,9 +94,6 @@ namespace
 
         const auto hideExpiredActive = hasHideExpiredSearchToken(searchText);
         config()->setDatabaseSetting(db->canonicalFilePath(), HideExpiredPreferenceKey, hideExpiredActive);
-        if (hideExpiredActive) {
-            config()->setDatabaseSetting(db->canonicalFilePath(), HideExpiredTokenPreferenceKey, HideExpiredSearchToken);
-        }
     }
 }
 
@@ -1362,6 +1359,8 @@ void DatabaseWidget::loadDatabase(bool accepted)
         switchToMainView();
         processAutoOpen();
 
+        const auto firstUnlockInSession = m_groupBeforeLock.isNull() && m_entryBeforeLock.isNull();
+
         restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
 
         const auto hideExpiredPreference =
@@ -1369,18 +1368,19 @@ void DatabaseWidget::loadDatabase(bool accepted)
         const auto hasSavedHideExpiredPreference = hideExpiredPreference.isValid();
         const auto hideExpiredPreferenceEnabled = hideExpiredPreference.toBool();
 
-        if (hasSavedHideExpiredPreference && hideExpiredPreferenceEnabled) {
-            // Keep startup deterministic by restoring the canonical token when hide-expired is enabled.
-            config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredTokenPreferenceKey, HideExpiredSearchToken);
+        if (hasSavedHideExpiredPreference && hideExpiredPreferenceEnabled && firstUnlockInSession) {
+            // Keep startup deterministic by restoring the canonical token only on first unlock.
             requestSearch(HideExpiredSearchToken);
         } else if (!hasSavedHideExpiredPreference) {
             // Default first-open behavior: hide expired entries until the user changes this preference.
             config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredPreferenceKey, true);
-            config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredTokenPreferenceKey, HideExpiredSearchToken);
-            requestSearch(HideExpiredSearchToken);
-        } else {
-            config()->removeDatabaseSetting(m_db->canonicalFilePath(), HideExpiredTokenPreferenceKey);
+            if (firstUnlockInSession) {
+                requestSearch(HideExpiredSearchToken);
+            }
         }
+
+        // One-way cleanup of obsolete persisted token state.
+        config()->removeDatabaseSetting(m_db->canonicalFilePath(), LegacyHideExpiredTokenPreferenceKey);
 
         m_groupBeforeLock = QUuid();
         m_entryBeforeLock = QUuid();

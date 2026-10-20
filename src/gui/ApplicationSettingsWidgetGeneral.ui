@@ -267,61 +267,6 @@
                 </item>
                </layout>
               </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <property name="spacing">
-                 <number>6</number>
-                </property>
-                <property name="sizeConstraint">
-                 <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
-                </property>
-                <item>
-                 <widget class="QCheckBox" name="showExpiredEntriesOnDatabaseUnlockCheckBox">
-                  <property name="text">
-                   <string>On database unlock, show entries that will expire within</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="showExpiredEntriesOnDatabaseUnlockOffsetSpinBox">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="focusPolicy">
-                   <enum>Qt::FocusPolicy::StrongFocus</enum>
-                  </property>
-                  <property name="accessibleName">
-                   <string>On database unlock, show entries that will expire within </string>
-                  </property>
-                  <property name="suffix">
-                   <string comment="number of days warning for password expiration"> days</string>
-                  </property>
-                  <property name="minimum">
-                   <number>0</number>
-                  </property>
-                  <property name="maximum">
-                   <number>90</number>
-                  </property>
-                  <property name="value">
-                   <number>3</number>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="showExpiredEntriesSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
              </layout>
             </widget>
            </item>
@@ -1604,8 +1549,6 @@
   <tabstop>rememberLastKeyFilesCheckBox</tabstop>
   <tabstop>checkForUpdatesOnStartupCheckBox</tabstop>
   <tabstop>checkForUpdatesIncludeBetasCheckBox</tabstop>
-  <tabstop>showExpiredEntriesOnDatabaseUnlockCheckBox</tabstop>
-  <tabstop>showExpiredEntriesOnDatabaseUnlockOffsetSpinBox</tabstop>
   <tabstop>autoSaveAfterEveryChangeCheckBox</tabstop>
   <tabstop>autoSaveOnExitCheckBox</tabstop>
   <tabstop>autoSaveNonDataChangesCheckBox</tabstop>

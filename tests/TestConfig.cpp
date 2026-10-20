@@ -82,3 +82,39 @@ void TestConfig::testURLDoubleClickMigration()
 
     tempFile2.remove();
 }
+
+void TestConfig::testDatabaseSettingLifecycle()
+{
+    TemporaryFile tempFile;
+    tempFile.open();
+    tempFile.close();
+    Config::createConfigFromFile(tempFile.fileName());
+
+    const auto databasePath = QStringLiteral("/tmp/db-test.kdbx");
+    const auto key = QStringLiteral("HideExpiredEntries");
+    const auto fallback = QVariant(QStringLiteral("fallback"));
+
+    // Empty-argument guards should not alter state and should return default for reads.
+    QCOMPARE(config()->getDatabaseSetting({}, key, fallback), fallback);
+    QCOMPARE(config()->getDatabaseSetting(databasePath, {}, fallback), fallback);
+    config()->setDatabaseSetting({}, key, true);
+    config()->setDatabaseSetting(databasePath, {}, true);
+
+    // Set and get
+    config()->setDatabaseSetting(databasePath, key, true);
+    QCOMPARE(config()->getDatabaseSetting(databasePath, key, false).toBool(), true);
+
+    // Overwrite
+    config()->setDatabaseSetting(databasePath, key, false);
+    QCOMPARE(config()->getDatabaseSetting(databasePath, key, true).toBool(), false);
+
+    // Remove
+    config()->removeDatabaseSetting(databasePath, key);
+    QCOMPARE(config()->getDatabaseSetting(databasePath, key, fallback), fallback);
+
+    // Guard remove paths should be no-op.
+    config()->removeDatabaseSetting({}, key);
+    config()->removeDatabaseSetting(databasePath, {});
+
+    tempFile.remove();
+}
