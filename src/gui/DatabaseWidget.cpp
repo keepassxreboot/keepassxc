@@ -1372,12 +1372,12 @@ void DatabaseWidget::loadDatabase(bool accepted)
         if (hasSavedHideExpiredPreference && hideExpiredPreferenceEnabled) {
             // Keep startup deterministic by restoring the canonical token when hide-expired is enabled.
             config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredTokenPreferenceKey, HideExpiredSearchToken);
-            requestSearch(HideExpiredSearchToken);
+            emit requestSearch(HideExpiredSearchToken);
         } else if (!hasSavedHideExpiredPreference) {
             // Default first-open behavior: hide expired entries until the user changes this preference.
             config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredPreferenceKey, true);
             config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredTokenPreferenceKey, HideExpiredSearchToken);
-            requestSearch(HideExpiredSearchToken);
+            emit requestSearch(HideExpiredSearchToken);
         } else {
             config()->removeDatabaseSetting(m_db->canonicalFilePath(), HideExpiredTokenPreferenceKey);
         }

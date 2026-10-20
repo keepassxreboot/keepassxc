@@ -28,7 +28,7 @@
 TagModel::TagModel(QObject* parent)
     : QAbstractListModel(parent)
 {
-    m_defaultSearches << qMakePair(tr("Clear Search"), QString("")) 
+    m_defaultSearches << qMakePair(tr("Clear Search"), QString(""))
                       << qMakePair(tr("All Entries"), QString("*"))
                       << qMakePair(tr("Hide Expired"), QString("-is:expired"))
                       << qMakePair(tr("Expired"), QString("is:expired"))
