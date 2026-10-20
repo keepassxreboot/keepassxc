@@ -226,6 +226,9 @@ public:
     ~Config() override;
     QVariant get(ConfigKey key);
     QVariant getDefault(ConfigKey key);
+    QVariant getDatabaseSetting(const QString& databasePath, const QString& key, const QVariant& defaultValue = {}) const;
+    void setDatabaseSetting(const QString& databasePath, const QString& key, const QVariant& value);
+    void removeDatabaseSetting(const QString& databasePath, const QString& key);
     QString getFileName();
     void set(ConfigKey key, const QVariant& value);
     void remove(ConfigKey key);

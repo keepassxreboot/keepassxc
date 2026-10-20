@@ -36,6 +36,7 @@ private slots:
     void testAndConcatenationInSearch();
     void testSearch();
     void testDefaultSearchesIncludeHideExpired();
+    void testHideExpiredSearchToken();
     void testAllAttributesAreSearched();
     void testSearchTermParser();
     void testCustomAttributesAreSearched();

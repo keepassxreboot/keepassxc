@@ -20,6 +20,7 @@
 #include "Global.h"
 
 #include <QCoreApplication>
+#include <QCryptographicHash>
 #include <QDir>
 #include <QHash>
 #include <QProcessEnvironment>
@@ -257,6 +258,44 @@ QVariant Config::get(ConfigKey key)
 QVariant Config::getDefault(Config::ConfigKey key)
 {
     return configStrings[key].defaultValue;
+}
+
+QVariant Config::getDatabaseSetting(const QString& databasePath, const QString& key, const QVariant& defaultValue) const
+{
+    if (databasePath.isEmpty() || key.isEmpty()) {
+        return defaultValue;
+    }
+
+    const auto databaseHash = QCryptographicHash::hash(databasePath.toUtf8(), QCryptographicHash::Sha256).toHex();
+    const auto settingName = QStringLiteral("Database/%1/%2").arg(QString::fromLatin1(databaseHash), key);
+    return m_settings->value(settingName, defaultValue);
+}
+
+void Config::setDatabaseSetting(const QString& databasePath, const QString& key, const QVariant& value)
+{
+    if (databasePath.isEmpty() || key.isEmpty()) {
+        return;
+    }
+
+    const auto databaseHash = QCryptographicHash::hash(databasePath.toUtf8(), QCryptographicHash::Sha256).toHex();
+    const auto settingName = QStringLiteral("Database/%1/%2").arg(QString::fromLatin1(databaseHash), key);
+
+    if (m_settings->value(settingName) == value) {
+        return;
+    }
+
+    m_settings->setValue(settingName, value);
+}
+
+void Config::removeDatabaseSetting(const QString& databasePath, const QString& key)
+{
+    if (databasePath.isEmpty() || key.isEmpty()) {
+        return;
+    }
+
+    const auto databaseHash = QCryptographicHash::hash(databasePath.toUtf8(), QCryptographicHash::Sha256).toHex();
+    const auto settingName = QStringLiteral("Database/%1/%2").arg(QString::fromLatin1(databaseHash), key);
+    m_settings->remove(settingName);
 }
 
 bool Config::hasAccessError()

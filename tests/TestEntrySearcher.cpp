@@ -177,9 +177,40 @@ void TestEntrySearcher::testDefaultSearchesIncludeHideExpired()
 
     QCOMPARE(model.rowCount(QModelIndex()), 6);
 
-    const auto hideExpiredIndex = model.index(3, 0);
-    QCOMPARE(hideExpiredIndex.data(Qt::DisplayRole).toString(), QStringLiteral("Hide Expired"));
+    QModelIndex hideExpiredIndex;
+    for (int row = 0; row < model.rowCount(QModelIndex()); ++row) {
+        const auto index = model.index(row, 0);
+        if (index.data(Qt::DisplayRole).toString() == QStringLiteral("Hide Expired")) {
+            hideExpiredIndex = index;
+            break;
+        }
+    }
+
+    QVERIFY(hideExpiredIndex.isValid());
     QCOMPARE(hideExpiredIndex.data(Qt::UserRole).toString(), QStringLiteral("-is:expired"));
+}
+
+void TestEntrySearcher::testHideExpiredSearchToken()
+{
+    auto expiredEntry = new Entry();
+    expiredEntry->setGroup(m_rootGroup);
+    expiredEntry->setTitle("expired record");
+    expiredEntry->setExpires(true);
+    expiredEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(-1));
+
+    auto activeEntry = new Entry();
+    activeEntry->setGroup(m_rootGroup);
+    activeEntry->setTitle("active record");
+    activeEntry->setExpires(true);
+    activeEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(1));
+
+    auto results = m_entrySearcher.search(QStringLiteral("-is:expired"), m_rootGroup);
+    QCOMPARE(results.size(), 1);
+    QCOMPARE(results.first(), activeEntry);
+
+    results = m_entrySearcher.search(QStringLiteral("is:expired"), m_rootGroup);
+    QCOMPARE(results.size(), 1);
+    QCOMPARE(results.first(), expiredEntry);
 }
 
 void TestEntrySearcher::testAndConcatenationInSearch()
