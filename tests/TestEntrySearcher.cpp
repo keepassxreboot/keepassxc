@@ -169,6 +169,19 @@ void TestEntrySearcher::testSearch()
     QCOMPARE(m_searchResult.count(), 0);
 }
 
+void TestEntrySearcher::testDefaultSearchesIncludeHideExpired()
+{
+    TagModel model;
+    const auto db = QSharedPointer<Database>::create();
+    model.setDatabase(db);
+
+    QCOMPARE(model.rowCount(QModelIndex()), 6);
+
+    const auto hideExpiredIndex = model.index(3, 0);
+    QCOMPARE(hideExpiredIndex.data(Qt::DisplayRole).toString(), QStringLiteral("Hide Expired"));
+    QCOMPARE(hideExpiredIndex.data(Qt::UserRole).toString(), QStringLiteral("-is:expired"));
+}
+
 void TestEntrySearcher::testAndConcatenationInSearch()
 {
     auto entry = new Entry();
