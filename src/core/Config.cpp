@@ -20,6 +20,7 @@
 #include "Global.h"
 
 #include <QCoreApplication>
+#include <QCryptographicHash>
 #include <QDir>
 #include <QHash>
 #include <QProcessEnvironment>
@@ -128,8 +129,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_CheckForUpdatesNextCheck, {QS("GUI/CheckForUpdatesNextCheck"), Local, 0}},
     {Config::GUI_CheckForUpdatesIncludeBetas, {QS("GUI/CheckForUpdatesIncludeBetas"), Roaming, false}},
     {Config::GUI_SearchWaitForEnter, {QS("GUI/SearchWaitForEnter"), Roaming, false}},
-    {Config::GUI_ShowExpiredEntriesOnDatabaseUnlock, {QS("GUI/ShowExpiredEntriesOnDatabaseUnlock"), Roaming, true}},
-    {Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays, {QS("GUI/ShowExpiredEntriesOnDatabaseUnlockOffsetDays"), Roaming, 3}},
     {Config::GUI_FontSizeOffset, {QS("GUI/FontSizeOffset"), Local, 0}},
     {Config::GUI_XDPGlobalShortcutsConfigured, {QS("GUI/XDPGlobalShortcutsConfigured"), Local, false}},
 
@@ -257,6 +256,44 @@ QVariant Config::get(ConfigKey key)
 QVariant Config::getDefault(Config::ConfigKey key)
 {
     return configStrings[key].defaultValue;
+}
+
+QVariant Config::getDatabaseSetting(const QString& databasePath, const QString& key, const QVariant& defaultValue) const
+{
+    if (databasePath.isEmpty() || key.isEmpty()) {
+        return defaultValue;
+    }
+
+    const auto databaseHash = QCryptographicHash::hash(databasePath.toUtf8(), QCryptographicHash::Sha256).toHex();
+    const auto settingName = QStringLiteral("Database/%1/%2").arg(QString::fromLatin1(databaseHash), key);
+    return m_settings->value(settingName, defaultValue);
+}
+
+void Config::setDatabaseSetting(const QString& databasePath, const QString& key, const QVariant& value)
+{
+    if (databasePath.isEmpty() || key.isEmpty()) {
+        return;
+    }
+
+    const auto databaseHash = QCryptographicHash::hash(databasePath.toUtf8(), QCryptographicHash::Sha256).toHex();
+    const auto settingName = QStringLiteral("Database/%1/%2").arg(QString::fromLatin1(databaseHash), key);
+
+    if (m_settings->value(settingName) == value) {
+        return;
+    }
+
+    m_settings->setValue(settingName, value);
+}
+
+void Config::removeDatabaseSetting(const QString& databasePath, const QString& key)
+{
+    if (databasePath.isEmpty() || key.isEmpty()) {
+        return;
+    }
+
+    const auto databaseHash = QCryptographicHash::hash(databasePath.toUtf8(), QCryptographicHash::Sha256).toHex();
+    const auto settingName = QStringLiteral("Database/%1/%2").arg(QString::fromLatin1(databaseHash), key);
+    m_settings->remove(settingName);
 }
 
 bool Config::hasAccessError()

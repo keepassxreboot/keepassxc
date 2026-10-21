@@ -159,8 +159,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->backupBeforeSaveCheckBox, SIGNAL(toggled(bool)),
             m_generalUi->backupFilePathPicker, SLOT(setEnabled(bool)));
     connect(m_generalUi->backupFilePathPicker, SIGNAL(pressed()), SLOT(selectBackupDirectory()));
-    connect(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox, SIGNAL(toggled(bool)),
-            SLOT(showExpiredEntriesOnDatabaseUnlockToggled(bool)));
     connect(m_generalUi->autoTypeAskCheckBox, SIGNAL(toggled(bool)),
             SLOT(autoTypeAskToggled(bool)));
 
@@ -349,12 +347,6 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setChecked(
         config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool());
 
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->setChecked(
-        config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool());
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setValue(
-        config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt());
-    showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
-
     m_generalUi->autoTypeAskCheckBox->setChecked(config()->get(Config::Security_AutoTypeAsk).toBool());
     m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox->setChecked(
         config()->get(Config::Security_AutoTypeSkipMainWindowConfirmation).toBool());
@@ -513,11 +505,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::GUI_CheckForUpdates, m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
     config()->set(Config::GUI_CheckForUpdatesIncludeBetas,
                   m_generalUi->checkForUpdatesIncludeBetasCheckBox->isChecked());
-
-    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock,
-                  m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
-    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
-                  m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->value());
 
     config()->set(Config::Security_AutoTypeAsk, m_generalUi->autoTypeAskCheckBox->isChecked());
     config()->set(Config::Security_AutoTypeSkipMainWindowConfirmation,
@@ -690,11 +677,6 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
 void ApplicationSettingsWidget::checkUpdatesToggled(bool checked)
 {
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(checked);
-}
-
-void ApplicationSettingsWidget::showExpiredEntriesOnDatabaseUnlockToggled(bool checked)
-{
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setEnabled(checked);
 }
 
 void ApplicationSettingsWidget::autoTypeAskToggled(bool checked)

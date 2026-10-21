@@ -72,6 +72,31 @@
 #include "gui/passkeys/PasskeyImporter.h"
 #endif
 
+namespace
+{
+    const QString HideExpiredSearchToken = QStringLiteral("-is:expired");
+    const QString HideExpiredPreferenceKey = QStringLiteral("HideExpiredEntries");
+    const QString LegacyHideExpiredTokenPreferenceKey = QStringLiteral("HideExpiredEntriesToken");
+
+    bool hasHideExpiredSearchToken(const QString& searchText)
+    {
+        const auto searchTerms = searchText.split(QRegularExpression(QStringLiteral("\\s+")), Qt::SkipEmptyParts);
+        return std::any_of(searchTerms.cbegin(), searchTerms.cend(), [](const QString& term) {
+            return term.compare(HideExpiredSearchToken, Qt::CaseInsensitive) == 0;
+        });
+    }
+
+    void syncHideExpiredPreference(const QSharedPointer<Database>& db, const QString& searchText)
+    {
+        if (!db || !db->isInitialized() || db->filePath().isEmpty()) {
+            return;
+        }
+
+        const auto hideExpiredActive = hasHideExpiredSearchToken(searchText);
+        config()->setDatabaseSetting(db->canonicalFilePath(), HideExpiredPreferenceKey, hideExpiredActive);
+    }
+}
+
 DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(std::move(db))
@@ -1334,19 +1359,28 @@ void DatabaseWidget::loadDatabase(bool accepted)
         switchToMainView();
         processAutoOpen();
 
+        const auto firstUnlockInSession = m_groupBeforeLock.isNull() && m_entryBeforeLock.isNull();
+
         restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
 
-        // Only show expired entries if first unlock and option is enabled
-        if (m_groupBeforeLock.isNull() && config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool()) {
-            int expirationOffset = config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt();
-            if (expirationOffset <= 0) {
-                m_nextSearchLabelText = tr("Expired entries");
-            } else {
-                m_nextSearchLabelText =
-                    tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset);
+        const auto hideExpiredPreference =
+            config()->getDatabaseSetting(m_db->canonicalFilePath(), HideExpiredPreferenceKey, QVariant());
+        const auto hasSavedHideExpiredPreference = hideExpiredPreference.isValid();
+        const auto hideExpiredPreferenceEnabled = hideExpiredPreference.toBool();
+
+        if (hasSavedHideExpiredPreference && hideExpiredPreferenceEnabled && firstUnlockInSession) {
+            // Keep startup deterministic by restoring the canonical token only on first unlock.
+            requestSearch(HideExpiredSearchToken);
+        } else if (!hasSavedHideExpiredPreference) {
+            // Default first-open behavior: hide expired entries until the user changes this preference.
+            config()->setDatabaseSetting(m_db->canonicalFilePath(), HideExpiredPreferenceKey, true);
+            if (firstUnlockInSession) {
+                requestSearch(HideExpiredSearchToken);
             }
-            requestSearch(QString("is:expired-%1").arg(expirationOffset));
         }
+
+        // One-way cleanup of obsolete persisted token state.
+        config()->removeDatabaseSetting(m_db->canonicalFilePath(), LegacyHideExpiredTokenPreferenceKey);
 
         m_groupBeforeLock = QUuid();
         m_entryBeforeLock = QUuid();
@@ -1737,9 +1771,12 @@ void DatabaseWidget::refreshSearch()
 void DatabaseWidget::search(const QString& searchtext)
 {
     if (searchtext.isEmpty()) {
+        syncHideExpiredPreference(m_db, searchtext);
         endSearch();
         return;
     }
+
+    syncHideExpiredPreference(m_db, searchtext);
 
     auto searchGroup = m_db->rootGroup();
     if (m_searchLimitGroup && m_nextSearchLabelText.isEmpty()) {

@@ -32,3 +32,20 @@ out/
 # vcpkg
 vcpkg_installed*/
 
+# Github
+.github/skills
+.specify
+specs
+
+makefile
+
+# Additional C/C++ build artifacts
+bin/
+obj/
+*.o
+*.so
+*.a
+*.exe
+*.dll
+*.log
+.env*

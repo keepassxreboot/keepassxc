@@ -22,6 +22,7 @@
 
 #include "core/Entry.h"
 #include "core/EntrySearcher.h"
+#include "gui/tag/TagModel.h"
 
 class TestEntrySearcher : public QObject
 {
@@ -34,6 +35,10 @@ private slots:
 
     void testAndConcatenationInSearch();
     void testSearch();
+    void testDefaultSearchesIncludeHideExpired();
+    void testHideExpiredSearchToken();
+    void testHideExpiredSearchTokenWithExistingTerms();
+    void testHideExpiredSearchTokenCaseInsensitive();
     void testAllAttributesAreSearched();
     void testSearchTermParser();
     void testCustomAttributesAreSearched();

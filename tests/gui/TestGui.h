@@ -65,6 +65,8 @@ private slots:
     void testSaveBackupPath_data();
     void testDatabaseSettings();
     void testDatabaseLocking();
+    void testHideExpiredReunlockPreservesFocus();
+    void testLegacyHideExpiredTokenSettingIgnoredOnUnlock();
     void testDragAndDropKdbxFiles();
     void testSortGroups();
     void testAutoType();

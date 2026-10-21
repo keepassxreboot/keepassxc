@@ -169,6 +169,88 @@ void TestEntrySearcher::testSearch()
     QCOMPARE(m_searchResult.count(), 0);
 }
 
+void TestEntrySearcher::testDefaultSearchesIncludeHideExpired()
+{
+    TagModel model;
+    const auto db = QSharedPointer<Database>::create();
+    model.setDatabase(db);
+
+    QCOMPARE(model.rowCount(QModelIndex()), 6);
+
+    QModelIndex hideExpiredIndex;
+    for (int row = 0; row < model.rowCount(QModelIndex()); ++row) {
+        const auto index = model.index(row, 0);
+        if (index.data(Qt::DisplayRole).toString() == QStringLiteral("Hide Expired")) {
+            hideExpiredIndex = index;
+            break;
+        }
+    }
+
+    QVERIFY(hideExpiredIndex.isValid());
+    QCOMPARE(hideExpiredIndex.data(Qt::UserRole).toString(), QStringLiteral("-is:expired"));
+}
+
+void TestEntrySearcher::testHideExpiredSearchToken()
+{
+    auto expiredEntry = new Entry();
+    expiredEntry->setGroup(m_rootGroup);
+    expiredEntry->setTitle("expired record");
+    expiredEntry->setExpires(true);
+    expiredEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(-1));
+
+    auto activeEntry = new Entry();
+    activeEntry->setGroup(m_rootGroup);
+    activeEntry->setTitle("active record");
+    activeEntry->setExpires(true);
+    activeEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(1));
+
+    auto results = m_entrySearcher.search(QStringLiteral("-is:expired"), m_rootGroup);
+    QCOMPARE(results.size(), 1);
+    QCOMPARE(results.first(), activeEntry);
+
+    results = m_entrySearcher.search(QStringLiteral("is:expired"), m_rootGroup);
+    QCOMPARE(results.size(), 1);
+    QCOMPARE(results.first(), expiredEntry);
+}
+
+void TestEntrySearcher::testHideExpiredSearchTokenWithExistingTerms()
+{
+    auto expiredEntry = new Entry();
+    expiredEntry->setGroup(m_rootGroup);
+    expiredEntry->setTitle("shared title");
+    expiredEntry->setExpires(true);
+    expiredEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(-1));
+
+    auto activeEntry = new Entry();
+    activeEntry->setGroup(m_rootGroup);
+    activeEntry->setTitle("shared title");
+    activeEntry->setExpires(true);
+    activeEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(1));
+
+    const auto results = m_entrySearcher.search(QStringLiteral("title:\"shared title\" -is:expired"), m_rootGroup);
+    QCOMPARE(results.size(), 1);
+    QCOMPARE(results.first(), activeEntry);
+}
+
+void TestEntrySearcher::testHideExpiredSearchTokenCaseInsensitive()
+{
+    auto expiredEntry = new Entry();
+    expiredEntry->setGroup(m_rootGroup);
+    expiredEntry->setTitle("expired record");
+    expiredEntry->setExpires(true);
+    expiredEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(-1));
+
+    auto activeEntry = new Entry();
+    activeEntry->setGroup(m_rootGroup);
+    activeEntry->setTitle("active record");
+    activeEntry->setExpires(true);
+    activeEntry->setExpiryTime(QDateTime::currentDateTimeUtc().addDays(1));
+
+    const auto results = m_entrySearcher.search(QStringLiteral("-IS:EXPIRED"), m_rootGroup);
+    QCOMPARE(results.size(), 1);
+    QCOMPARE(results.first(), activeEntry);
+}
+
 void TestEntrySearcher::testAndConcatenationInSearch()
 {
     auto entry = new Entry();

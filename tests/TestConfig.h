@@ -28,6 +28,7 @@ private slots:
 
     void testUpgrade();
     void testURLDoubleClickMigration();
+    void testDatabaseSettingLifecycle();
 };
 
 #endif // KEEPASSX_TESTCONFIG_H

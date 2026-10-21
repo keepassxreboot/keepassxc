@@ -124,9 +124,6 @@ void TestGui::init()
     config()->set(Config::Security_QuickUnlock, false);
     // Disable atomic saves to prevent transient errors on some platforms
     config()->set(Config::UseAtomicSaves, false);
-    // Disable showing expired entries on unlock
-    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock, false);
-
     // Copy the test database file to the temporary file
     auto origFilePath = QDir(KEEPASSX_TEST_DATA_DIR).absoluteFilePath("NewDatabase.kdbx");
     QVERIFY(m_dbFile.copyFromFile(origFilePath));
@@ -1982,6 +1979,65 @@ void TestGui::testDatabaseLocking()
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+}
+
+void TestGui::testHideExpiredReunlockPreservesFocus()
+{
+    addCannedEntries();
+
+    auto* groupView = m_dbWidget->groupView();
+    auto* internetGroup = m_db->rootGroup()->findChildByName(QStringLiteral("Internet"));
+    QVERIFY(internetGroup);
+    groupView->setCurrentGroup(internetGroup);
+    QTRY_COMPARE(groupView->currentGroup(), internetGroup);
+
+    config()->setDatabaseSetting(m_db->canonicalFilePath(), QStringLiteral("HideExpiredEntries"), true);
+
+    triggerAction("actionLockDatabase");
+    QVERIFY(m_dbWidget->isLocked());
+
+    auto* unlockDatabaseWidget = m_dbWidget->findChild<QWidget*>("databaseOpenWidget");
+    QWidget* editPassword =
+        unlockDatabaseWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(editPassword);
+
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    QCOMPARE(groupView->currentGroup(), internetGroup);
+    QVERIFY(!m_dbWidget->isSearchActive());
+}
+
+void TestGui::testLegacyHideExpiredTokenSettingIgnoredOnUnlock()
+{
+    auto* groupView = m_dbWidget->groupView();
+    auto* rootGroup = m_db->rootGroup();
+    QVERIFY(rootGroup);
+    groupView->setCurrentGroup(rootGroup);
+
+    const auto dbPath = m_db->canonicalFilePath();
+    config()->removeDatabaseSetting(dbPath, QStringLiteral("HideExpiredEntries"));
+    config()->setDatabaseSetting(dbPath, QStringLiteral("HideExpiredEntriesToken"), QStringLiteral("-is:expired"));
+
+    triggerAction("actionLockDatabase");
+    QVERIFY(m_dbWidget->isLocked());
+
+    auto* unlockDatabaseWidget = m_dbWidget->findChild<QWidget*>("databaseOpenWidget");
+    QWidget* editPassword =
+        unlockDatabaseWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(editPassword);
+
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    QVERIFY(!m_dbWidget->isSearchActive());
+
+    const auto legacyValue =
+        config()->getDatabaseSetting(dbPath, QStringLiteral("HideExpiredEntriesToken"), QVariant());
+    QVERIFY(!legacyValue.isValid());
 }
 
 void TestGui::testDragAndDropKdbxFiles()
