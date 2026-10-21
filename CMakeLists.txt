@@ -536,7 +536,11 @@ if(_deployqt_exe_name)
     endif()
 
     # Finally attempt to find the specified deployqt executable
-    find_program(DEPLOYQT_EXE "${_deployqt_exe_name}" HINTS ${Qt6_TOOLS_PREFIX}/bin ${Qt6_TOOLS_PREFIX}/tools/qt/bin ENV PATH)
+    find_program(DEPLOYQT_EXE "${_deployqt_exe_name}" HINTS
+            "${Qt6_TOOLS_PREFIX}/bin"
+            "${Qt6_TOOLS_PREFIX}/tools/Qt6/bin"
+            "${Qt6_TOOLS_PREFIX}/tools/qt/bin"
+            ENV PATH)
     if(NOT DEPLOYQT_EXE)
         message(FATAL_ERROR "Failed to find ${_deployqt_exe_name}.")
     endif()
