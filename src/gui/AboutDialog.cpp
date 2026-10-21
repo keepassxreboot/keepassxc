@@ -271,6 +271,7 @@ static const QString aboutContributors = R"(
 </ul>
 <h3>VIP GitHub Sponsors:</h3>
 <ul>
+    <li>markcunninghamgit</li>
     <li>oliverkroener</li>
 </ul>
 <h3>Translations:</h3>
