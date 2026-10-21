@@ -395,9 +395,8 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
         break;
     }
     case TempFile: {
-        // Keep the temp file next to the target so the final rename stays on one file system
-        QFileInfo targetInfo(filePath);
-        QTemporaryFile tempFile(targetInfo.absolutePath() + "/." + targetInfo.fileName() + ".XXXXXX.tmp");
+        // Same directory keeps the rename on one file system, a short fixed name avoids the name length limit
+        QTemporaryFile tempFile(QFileInfo(filePath).absolutePath() + "/.keepassxc.XXXXXX.tmp");
         if (tempFile.open()) {
             HashingStream hashingStream(&tempFile, QCryptographicHash::Md5, kFileBlockToHashSizeBytes);
             if (!hashingStream.open(QIODevice::WriteOnly)) {

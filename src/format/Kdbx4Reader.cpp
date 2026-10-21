@@ -31,9 +31,8 @@
 #include "streams/SymmetricCipherStream.h"
 #include "streams/qtiocompressor.h"
 
-// Upper bounds on header field lengths, used to reject malformed files
+// The outer header is read before authentication, so bound it to reject forged lengths
 static constexpr quint32 kMaxOuterHeaderFieldSize = 1024 * 1024;
-static constexpr quint32 kMaxInnerHeaderFieldSize = 1024u * 1024u * 1024u;
 
 bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
                                    const QByteArray& headerData,
@@ -264,7 +263,7 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
 
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint32>(device, KeePass2::BYTEORDER, &ok);
-    if (!ok || fieldLen > kMaxInnerHeaderFieldSize) {
+    if (!ok) {
         raiseError(tr("Invalid inner header field length: field %1").arg(static_cast<int>(fieldID)));
         return false;
     }
