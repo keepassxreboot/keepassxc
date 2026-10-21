@@ -163,7 +163,7 @@
     </message>
     <message>
         <source>Minimize</source>
-        <translation>Minimise</translation>
+        <translation>Minimize</translation>
     </message>
     <message>
         <source>Zoom</source>
@@ -287,6 +287,10 @@
     <message>
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Restart KeePassXC to apply the Auto-Type desktop portals preference.</translation>
+    </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2453,7 +2457,7 @@ removed from the database.</translation>
     </message>
     <message>
         <source>Publicly visible color used on the unlock dialog</source>
-        <translation>Publicly visible colour used on the unlock dialogue</translation>
+        <translation>Publicly visible color used on the unlock dialogue</translation>
     </message>
 </context>
 <context>
@@ -4112,7 +4116,7 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Colour</translation>
+        <translation>Color</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -10762,7 +10766,7 @@ Example: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>The YubiKey PC/SC interface has not been initialized.</source>
-        <translation>The YubiKey PC/SC interface has not been initialised.</translation>
+        <translation>The YubiKey PC/SC interface has not been initialized.</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>

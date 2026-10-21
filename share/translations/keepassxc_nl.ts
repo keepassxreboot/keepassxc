@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>KeePassXC opnieuw starten om de voorkeur voor Auto-Type desktopportals toe te passen.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation>Deze instelling wordt beheerd door jouw organisatie.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -4752,7 +4756,7 @@ Dit maakt jouw wachtwoorden en gevoelige informatie kwetsbaar!
     </message>
     <message>
         <source>Global Auto-Type shortcut is already configured. To change it, open your system settings and navigate to the keyboard or application shortcuts section.</source>
-        <translation>Sneltoets Globaal automatisch invullen is al geconfigureerd. Als u dit wilt wijzigen, opent u de systeeminstellingen en navigeert u naar de sectie Sneltoetsen voor toetsenborden of toepassingen.</translation>
+        <translation>Sneltoets Globaal automatisch invullen is al geconfigureerd. Als je dit wilt wijzigen, open je de systeeminstellingen en navigeer je naar de sectie Sneltoetsen voor toetsenborden of toepassingen.</translation>
     </message>
     <message>
         <source>Trigger global Auto-Type</source>
@@ -6498,7 +6502,7 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
         <source>WARNING: You are using a development snapshot build of KeePassXC.
 Maintain a backup of your databases in the event of unknown bugs.
 This version is not meant for production use.</source>
-        <translation>WAARSCHUWING: U gebruikt een ontwikkelingsversie van KeePassXC.
+        <translation>WAARSCHUWING: Je gebruikt een ontwikkelingsversie van KeePassXC.
 Maak een back-up van uw databases in verband met mogelijke onbekende fouten.
 Deze versie is niet bedoeld voor regulier gebruik.</translation>
     </message>

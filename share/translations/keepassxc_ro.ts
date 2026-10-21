@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation type="unfinished"/>
+        <translation>Cale executabilă inexistentă/inaccesibilă. Verifică din nou dacă clientul este legitim.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -67,15 +67,15 @@
     </message>
     <message>
         <source>PID</source>
-        <translation type="unfinished"/>
+        <translation>PID</translation>
     </message>
     <message>
         <source>Executable</source>
-        <translation type="unfinished"/>
+        <translation>Executabil</translation>
     </message>
     <message>
         <source>Command Line</source>
-        <translation type="unfinished"/>
+        <translation>Linie de comandă</translation>
     </message>
     <message>
         <source>Details</source>
@@ -113,19 +113,19 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation type="unfinished"/>
+        <translation>Activează integrarea agentului SSH</translation>
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Folosește Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation type="unfinished"/>
+        <translation>Folosește OpenSSH</translation>
     </message>
     <message>
         <source>Use both agents</source>
-        <translation type="unfinished"/>
+        <translation>Folosește ambii agenți</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
@@ -160,19 +160,19 @@
     <name>AppKit</name>
     <message>
         <source>Window</source>
-        <translation type="unfinished"/>
+        <translation>Fereastră</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimizare</translation>
     </message>
     <message>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Zoom</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
-        <translation type="unfinished"/>
+        <translation>Adu totul în față</translation>
     </message>
 </context>
 <context>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Monochrome</source>
-        <translation type="unfinished"/>
+        <translation>Monocrom</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
@@ -283,10 +283,14 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Niciunul</translation>
     </message>
     <message>
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>Repornește KeePassXC pentru a aplica preferința Auto-Type pentru portaluri desktop.</translation>
+    </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -609,23 +613,23 @@
     </message>
     <message>
         <source>Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>Editează intrare</translation>
     </message>
     <message>
         <source>Open entry URL in browser</source>
-        <translation type="unfinished"/>
+        <translation>Deschide adresa URL a intrării în browser</translation>
     </message>
     <message>
         <source>Copy entry URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Copiază adresa URL a intrării în clipboard</translation>
     </message>
     <message>
         <source>Auto-generate password for new entries</source>
-        <translation type="unfinished"/>
+        <translation>Generare automată parolă pentru intrările noi</translation>
     </message>
     <message>
         <source>Keep remote desktop connection open after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Menține conexiunea desktop la distanță deschisă după efectuarea tastării automate</translation>
     </message>
     <message>
         <source>Remote desktop mode:</source>
@@ -645,15 +649,15 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Niciunul</translation>
     </message>
     <message>
         <source>Configure...</source>
-        <translation type="unfinished"/>
+        <translation>Configurare...</translation>
     </message>
     <message>
         <source>Use remote desktop for clipboard access</source>
-        <translation type="unfinished"/>
+        <translation>Folosește desktopul la distanță pentru accesul la clipboard</translation>
     </message>
     <message>
         <source>Experimental: Prefer desktop portals (Wayland implementation)</source>
@@ -1048,7 +1052,7 @@ Selectați baza de date corectă pentru salvarea acreditărilor.</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Actualizare</translation>
     </message>
     <message>
         <source>Authenticate</source>

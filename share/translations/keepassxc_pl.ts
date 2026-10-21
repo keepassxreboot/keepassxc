@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Uruchom ponownie KeePassXC, aby zastosować preferencje autowpisywania portalów pulpitu.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation>To ustawienie jest zarządzane przez Twoją organizację.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>

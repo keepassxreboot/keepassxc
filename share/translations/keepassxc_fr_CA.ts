@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Redémarrez KeePassXC pour que la préférence de saisie automatique des portails du bureau soit prise en compte.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation>Ce paramètre est géré par votre organisation.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -660,7 +664,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Afficher les suggestions de saisie automatique pour le nom d’utilisateur et les attributs supplémentaires</translation>
     </message>
 </context>
 <context>

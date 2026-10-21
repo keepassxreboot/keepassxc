@@ -167,11 +167,11 @@
     </message>
     <message>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>拡大:</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
-        <translation type="unfinished"/>
+        <translation>すべてを手前に移動</translation>
     </message>
 </context>
 <context>
@@ -282,10 +282,14 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>なし</translation>
     </message>
     <message>
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
+        <translation>自動入力でデスクトップポータルを使う設定を適用するには、KeePassXC を再起動してください。</translation>
+    </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -624,11 +628,11 @@
     </message>
     <message>
         <source>Keep remote desktop connection open after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>自動入力の実行後もリモートデスクトップ接続を開いたままにする</translation>
     </message>
     <message>
         <source>Remote desktop mode:</source>
-        <translation type="unfinished"/>
+        <translation>リモートデスクトップモード:</translation>
     </message>
     <message>
         <source>Never remember session</source>
@@ -644,7 +648,7 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>なし</translation>
     </message>
     <message>
         <source>Configure...</source>
@@ -4082,23 +4086,23 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>タイトル</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"/>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>パスワード</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>ノート</translation>
     </message>
     <message>
         <source>Custom Attributes</source>
@@ -4106,15 +4110,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"/>
+        <translation>アイコン</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>カラー</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>有効期限</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -4122,19 +4126,19 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation type="unfinished"/>
+        <translation>カスタムデータ</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"/>
+        <translation>添付ファイル</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>自動入力</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>タグ</translation>
     </message>
 </context>
 <context>
@@ -10290,11 +10294,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;この設定は、ゴミ箱の確認プロンプトの無効化を上書きしません 4&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;これにより、先にデータベースのロックを解除せずにパスワードを検索するアプリケーションとの互換性が向上します。&lt;/p&gt;&lt;p&gt;ただし、これを有効にすると、一定のタイムアウト内にデータベースのロックを解除できなかった場合に、クライアントがクラッシュする可能性があります。(通常は 25 秒ですが、アプリケーションによって異なる値が設定されている場合があります。) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -10575,7 +10579,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Error: secret key is invalid</source>
-        <translation type="unfinished"/>
+        <translation>エラー: シークレットキーが無効です</translation>
     </message>
 </context>
 <context>
@@ -10666,7 +10670,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     <name>YubiKey</name>
     <message>
         <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
-        <translation type="unfinished"/>
+        <translation>シリアル番号 %1 のハードウェアキーが見つかりませんでした。続行するには接続してください。</translation>
     </message>
 </context>
 <context>
@@ -10751,11 +10755,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>The YubiKey PC/SC interface has not been initialized.</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey の PC/SC インターフェースが初期化されていません。</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
-        <translation type="unfinished"/>
+        <translation>チャレンジレスポンスを完了できませんでした。PC/SC エラーコード: %1</translation>
     </message>
 </context>
 <context>

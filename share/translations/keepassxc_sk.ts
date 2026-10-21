@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -946,7 +950,7 @@
     </message>
     <message>
         <source>Copy URL</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovať URL adresu</translation>
     </message>
     <message>
         <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
@@ -1075,7 +1079,7 @@ Prosím, vyberte správnu databázu na uloženie prihlasovacích údajov.</trans
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Prístupové kľúče</translation>
     </message>
     <message>
         <source>Add to existing entry</source>
@@ -1145,7 +1149,7 @@ Chcete odstrániť položku?
     </message>
     <message>
         <source>%1 (Passkey)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Prístupový kľúč)</translation>
     </message>
     <message>
         <source>KeePassXC - Create a new group</source>
@@ -1173,7 +1177,7 @@ Chcete odstrániť položku?
     </message>
     <message>
         <source>Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Prístupový kľúč</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
@@ -1185,7 +1189,7 @@ Chcete odstrániť položku?
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Aktualizovať prístupový kľúč</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
@@ -1595,7 +1599,7 @@ Are you sure you want to import?</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Štítky</translation>
     </message>
 </context>
 <context>
@@ -2723,7 +2727,7 @@ Toto je určite chyba, prosím nahláste ju vývojárom.</translation>
     <name>DatabaseWidget</name>
     <message>
         <source>Searches and Tags</source>
-        <translation type="unfinished"/>
+        <translation>Vyhľadávania a štítky</translation>
     </message>
     <message>
         <source>Searching…</source>
@@ -3442,7 +3446,7 @@ Chcete to opraviť?</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation type="unfinished"/>
+        <translation>Zoznam štítkov</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
@@ -4020,7 +4024,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Prístupový kľúč</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
@@ -4090,7 +4094,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Štítky</translation>
     </message>
 </context>
 <context>
@@ -4441,11 +4445,11 @@ Prepísať existujúcu prílohu?</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Štítky</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation type="unfinished"/>
+        <translation>Zoznam štítkov</translation>
     </message>
     <message>
         <source>Username</source>
@@ -5800,7 +5804,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Štítky</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -5952,7 +5956,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Copy &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovať &amp;URL adresu</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -6056,11 +6060,11 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>Svetlý</translation>
+        <translation>Svetlá</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Tmavý</translation>
+        <translation>Tmavá</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
@@ -6112,7 +6116,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>No Tags</source>
-        <translation type="unfinished"/>
+        <translation>Žiadne štítky</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
@@ -6176,11 +6180,11 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Passkeys…</source>
-        <translation type="unfinished"/>
+        <translation>Prístupové kľúče…</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Importovať prístupový kľúč</translation>
     </message>
     <message>
         <source>Remote S&amp;ync…</source>
@@ -6212,7 +6216,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Delete Entry</source>
-        <translation type="unfinished"/>
+        <translation>Vymazať záznam</translation>
     </message>
     <message>
         <source>Create Group</source>
@@ -6224,7 +6228,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"/>
+        <translation>Vymazať skupinu</translation>
     </message>
     <message>
         <source>Download All Favicons</source>
@@ -6256,7 +6260,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Show Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť prístupový kľúč</translation>
     </message>
     <message>
         <source>Clone Entry</source>
@@ -6288,7 +6292,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Remove Passkey From Entry</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť prístupový kľúč zo záznamu</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {USERNAME}</source>
@@ -6316,7 +6320,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Copy URL</source>
-        <translation type="unfinished"/>
+        <translation>Kopírovať URL adresu</translation>
     </message>
     <message>
         <source>Copy Notes</source>
@@ -6392,11 +6396,11 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Set Theme: Light</source>
-        <translation type="unfinished"/>
+        <translation>Nastavená téma: Svetlá</translation>
     </message>
     <message>
         <source>Set Theme: Dark</source>
-        <translation type="unfinished"/>
+        <translation>Nastavená téma: Tmavá</translation>
     </message>
     <message>
         <source>Set Theme: Classic</source>
@@ -6482,7 +6486,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&amp;Delete Entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vymazať záznam</translation>
     </message>
     <message numerus="yes">
         <source>Move selected entry(s) to the recycle bin</source>
@@ -6594,7 +6598,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Deleted</source>
-        <translation type="unfinished"/>
+        <translation>Vymazané</translation>
     </message>
     <message>
         <source>Previous location: %1</source>
@@ -7000,7 +7004,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Importovať prístupový kľúč</translation>
     </message>
     <message>
         <source>Import</source>
@@ -7039,7 +7043,7 @@ Do you want to overwrite it?
     <name>PasskeyImporter</name>
     <message>
         <source>Passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Súbor s prístupovým kľúčom</translation>
     </message>
     <message>
         <source>All files</source>
@@ -7069,7 +7073,7 @@ The following data is missing:
     </message>
     <message>
         <source>Open Passkey File</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť súbor s prístupovým kľúčom</translation>
     </message>
     <message>
         <source>Passkey Import Failed</source>
@@ -9161,7 +9165,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Prístupové kľúče</translation>
     </message>
     <message>
         <source>AES initialization failed</source>
@@ -9351,7 +9355,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Prístupový kľúč</translation>
     </message>
     <message>
         <source>Reset Shortcuts</source>
@@ -9399,7 +9403,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>Štítky</translation>
     </message>
     <message>
         <source>start minimized to the system tray</source>
@@ -10000,7 +10004,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Počet prístupových kľúčov</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
@@ -10385,15 +10389,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Remove Tag</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť štítok</translation>
     </message>
     <message>
         <source>Confirm Remove Tag</source>
-        <translation type="unfinished"/>
+        <translation>Potvrdiť odstránenie štítku</translation>
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation type="unfinished"/>
+        <translation>Chcete odstrániť štítok „%1“ zo všetkých záznamov v tejto databáze?</translation>
     </message>
 </context>
 <context>

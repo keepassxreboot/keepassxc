@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Starta om KeePassXC för att tillämpa inställningen för autoskriv via skrivbordsportaler.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation>Denna inställning hanteras av din organisation.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>

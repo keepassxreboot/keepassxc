@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Käivita KeePassXC uuesti töölauaportaali eelistuste rakendamiseks automaatsisestuse kontekstis.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation>Seda seadistust haldab sinu organisatsioon.</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>

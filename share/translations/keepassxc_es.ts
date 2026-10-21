@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Reinicia KeePassXC para aplicar las preferencias de portales en Auto-Tecleo.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -660,7 +664,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar sugerencias de autocompletado para el nombre de usuario y atributos adicionales</translation>
     </message>
 </context>
 <context>
@@ -1882,7 +1886,7 @@ Un archivo de base de datos NO es un cerrojo.
     </message>
     <message>
         <source>I have a key file</source>
-        <translation type="unfinished"/>
+        <translation>Tengo un archivo clave</translation>
     </message>
 </context>
 <context>
@@ -8211,11 +8215,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Número de passkeys</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Entradas con TOTP configurado</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -10059,11 +10063,11 @@ Esta opción está obsoleta, use --set-key-file.</translation>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Número de passkeys</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Entradas con TOTP configurado</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>

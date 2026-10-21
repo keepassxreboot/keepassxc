@@ -50,7 +50,7 @@
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC - Richeista di accesso</translation>
+        <translation>KeePassXC - Richiesta di accesso</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
@@ -288,6 +288,10 @@ Controlla che il client sia legittimo.</translation>
     <message>
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Per applicare la preferenza per inserire automaticamente i dati nei portali desktop riavvia KeePassXC .</translation>
+    </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -661,7 +665,7 @@ Controlla che il client sia legittimo.</translation>
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza i suggerimenti di completamento automatico per il nome utente e gli attributi aggiuntivi</translation>
     </message>
 </context>
 <context>
@@ -785,9 +789,7 @@ Se hai già concesso il permesso, riavvia KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>Per effettuare il completamento automatico globale KeePasssXC richiede il permesso di Accessibilità e di Registrazione Schermo. 
-Per usare il titolo della finestra al fine di trovare le voci corrispondenti è necessaria la registrazione dello schermo. 
-Se hai già concesso il permesso, riavvia KeePassXC.</translation>
+        <translation>Per effettuare il completamento automatico globale KeePassXC richiede il permesso di Accessibilità e di Registrazione Schermo. Per usare il titolo della finestra al fine di trovare le voci corrispondenti è necessaria la registrazione dello schermo. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
@@ -1441,7 +1443,7 @@ Vuoi sovrascrivere la passkey in %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
-        <translation>Affinché l&apos;integrazione del browser funzioniKeePassXC è necessario KeePassXC. &lt;br /&gt;Scaricalo per %1 e %2 e %3.</translation>
+        <translation>Affinché l&apos;integrazione del browser funzioni  necessario KeePassXC-Browser. &lt;br /&gt;Scaricalo per %1 e %2 e %3.</translation>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
@@ -1872,7 +1874,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>I have a key file</source>
-        <translation type="unfinished"/>
+        <translation>Ho un file chiave</translation>
     </message>
 </context>
 <context>
@@ -1918,7 +1920,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Remote Sync</source>
-        <translation>Sincronizzazione Remota</translation>
+        <translation>Sincronizzazione remota</translation>
     </message>
     <message>
         <source>Database Settings: %1</source>
@@ -2546,7 +2548,7 @@ rimosse dal database.</translation>
     <name>DatabaseSettingsWidgetRemote</name>
     <message>
         <source>Sync Commands</source>
-        <translation>Comandi Sincronizzazione</translation>
+        <translation>Comandi sincronizzazione</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2554,7 +2556,7 @@ rimosse dal database.</translation>
     </message>
     <message>
         <source>Command Settings</source>
-        <translation>Impostazioni Comando</translation>
+        <translation>Impostazioni comando</translation>
     </message>
     <message>
         <source>Name</source>
@@ -2574,11 +2576,11 @@ rimosse dal database.</translation>
     </message>
     <message>
         <source>Download command field</source>
-        <translation>Download campo comando</translation>
+        <translation>Campo comando download</translation>
     </message>
     <message>
         <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
-        <translation>es.: &quot;sftp user@hostname&quot; oppure &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
+        <translation>es.: &quot;sftp user@hostname&quot; o &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
     </message>
     <message>
         <source>Input:</source>
@@ -2586,7 +2588,7 @@ rimosse dal database.</translation>
     </message>
     <message>
         <source>Download input field</source>
-        <translation>Download campo input</translation>
+        <translation>Campo input download</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2594,7 +2596,7 @@ rimosse dal database.</translation>
     </message>
     <message>
         <source>Upload command field</source>
-        <translation>Carica campo comando</translation>
+        <translation>Campo comando carica</translation>
     </message>
     <message>
         <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
@@ -2602,7 +2604,7 @@ rimosse dal database.</translation>
     </message>
     <message>
         <source>Upload input field</source>
-        <translation>Carica campo input</translation>
+        <translation>Campo input carica</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
@@ -2634,8 +2636,7 @@ rimosse dal database.</translation>
     </message>
     <message>
         <source>You have unsaved changes. Do you want to save them?</source>
-        <translation>Ci sono delle modifiche non salvate. 
-Vuoi salvarle?</translation>
+        <translation>Ci sono delle modifiche non salvate.  Vuoi salvarle?</translation>
     </message>
     <message>
         <source>e.g.:
@@ -2650,8 +2651,7 @@ get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
 ---
 {TEMP_DATABASE} è usato come segnaposto per memorizzare il database in una posizione temporanea
-Il comando deve uscire. 
-In caso di `sftp` come ultimo comando deve essre inviato `exit`.
+Il comando deve uscire.  In caso di `sftp` come ultimo comando deve essere inviato `exit`.
             </translation>
     </message>
     <message>
@@ -2667,8 +2667,7 @@ put {TEMP_DATABASE} DatabaseOnRemote.kdbx
 exit
 ---
 {TEMP_DATABASE} è usato come segnaposto per memorizzare il database in una posizione temporanea
-Il comando deve uscire. 
-In caso di `sftp` come ultimo comando deve essre inviato `exit`.
+Il comando deve uscire.  In caso di `sftp` come ultimo comando deve essere inviato `exit`.
             </translation>
     </message>
     <message>
@@ -4883,8 +4882,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Could not open remote database. Password or key file may be incorrect.</source>
-        <translation>Impossibile aprire il database remoto. 
-La password o il file chiave potrebbero essere errati.</translation>
+        <translation>Impossibile aprire il database remoto.  La password o il file chiave potrebbero essere errati.</translation>
     </message>
 </context>
 <context>
@@ -5026,8 +5024,7 @@ get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
 ---
 {TEMP_DATABASE} è usato come segnaposto per memorizzare il database in una posizione temporanea
-Il comando deve uscire. 
-In caso di `sftp` come ultimo comando deve essere inviato `exit`.
+Il comando deve uscire.  In caso di `sftp` come ultimo comando deve essere inviato `exit`.
             </translation>
     </message>
     <message>
@@ -6275,7 +6272,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Download All Favicons</source>
-        <translation>Downlaod di tutte le Favicon</translation>
+        <translation>Download di tutte le favicon</translation>
     </message>
     <message>
         <source>Sort Groups A-Z</source>
@@ -6291,23 +6288,23 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Show Database Security</source>
-        <translation>Mostra Sicurezza Database</translation>
+        <translation>Visualizza sicurezza database</translation>
     </message>
     <message>
         <source>Show Database Reports</source>
-        <translation>Mostra Reports Database</translation>
+        <translation>Visualizza rapporti database</translation>
     </message>
     <message>
         <source>Show Database Settings</source>
-        <translation>Mostra Impostazioni Database</translation>
+        <translation>Visualizza impostazioni database</translation>
     </message>
     <message>
         <source>Show Passkeys</source>
-        <translation>Mostra Passkey</translation>
+        <translation>Visualizza passkey</translation>
     </message>
     <message>
         <source>Clone Entry</source>
-        <translation>Clona Voce</translation>
+        <translation>Clona voce</translation>
     </message>
     <message>
         <source>Move Entry Up</source>
@@ -6479,7 +6476,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
-        <translation>Consenti cattura schermo</translation>
+        <translation>Attiva/disattiva consenti cattura schermo</translation>
     </message>
     <message>
         <source>Show Group Panel</source>
@@ -6491,13 +6488,13 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Setup Remote Sync…</source>
-        <translation>Imposta Sincronizzazione Remota...</translation>
+        <translation>Imposta sincronizzazione remota...</translation>
     </message>
     <message>
         <source>WARNING: You are using a development snapshot build of KeePassXC.
 Maintain a backup of your databases in the event of unknown bugs.
 This version is not meant for production use.</source>
-        <translation>ATTENZIONE: stai usando una versione snapshot di sviluppo di KeePassXC. Ti consigliamo di mantienere un backup dei database. Questa versione non è destinata all&apos;uso in produzione.</translation>
+        <translation>ATTENZIONE: stai usando uno snapshot di sviluppo di KeePassXC. Ti consigliamo di mantenere un backup dei database. Questa versione non è destinata all&apos;uso in produzione.</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
@@ -6673,7 +6670,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Modification time</source>
-        <translation>Orarto modifica</translation>
+        <translation>Orario modifica</translation>
     </message>
     <message>
         <source>%1 (Add local modifications to new entry)</source>
@@ -7419,7 +7416,7 @@ Mancano i seguenti dati:
     </message>
     <message>
         <source>Overwrite Wordlist?</source>
-        <translation>Vuuoi sovrascrivere elenco parole?</translation>
+        <translation>Vuoi sovrascrivere l&apos;elenco delle parole?</translation>
     </message>
     <message>
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
@@ -7516,7 +7513,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
-        <translation>Visualizza/nascondi password con Control + H. Apri il generarore di password con Control + G.</translation>
+        <translation>Visualizza/nascondi password con Control + H. Apri il generatore di password con Control + G.</translation>
     </message>
 </context>
 <context>
@@ -7724,7 +7721,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>Insersci la password per la nuova voce: </translation>
+        <translation>Inserisci la password per la nuova voce: </translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
@@ -8207,11 +8204,11 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Numero di passkey</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Voci con configurazione TOTP</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8258,7 +8255,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>Insersci la nuova password per la voce: </translation>
+        <translation>Inserisci la nuova password per la voce: </translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -9413,7 +9410,7 @@ Questa opzione è deprecata, utilizza invece --set-key-file.</translation>
     </message>
     <message>
         <source>Double click an action to change its shortcut</source>
-        <translation>Doppio clic un&apos;azione per modificare la relativa scorciatoia</translation>
+        <translation>Doppio clic su un&apos;azione per modificare la relativa scorciatoia</translation>
     </message>
     <message>
         <source>Filter...</source>
@@ -9425,8 +9422,7 @@ Questa opzione è deprecata, utilizza invece --set-key-file.</translation>
     </message>
     <message>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
-        <translation>La scorciatoia %1 è in conflitto con &apos;%2&apos;. 
-Vuoi sovrascrivere la scorciatoia?</translation>
+        <translation>La scorciatoia %1 è in conflitto con &apos;%2&apos;.  Vuoi sovrascrivere la scorciatoia?</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
@@ -9464,7 +9460,7 @@ Predefinito è &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
-        <translation>Attenzione: l&apos;lenco parole selezionato ha una dimensione più piccola della dimensione suggerita!</translation>
+        <translation>Attenzione: l&apos;elenco parole selezionato ha una dimensione più piccola della dimensione suggerita!</translation>
     </message>
     <message>
         <source>Invalid Step</source>
@@ -9570,15 +9566,15 @@ Predefinito è &apos;xml&apos;.</translation>
     <name>RemoteHandler</name>
     <message>
         <source>Command `%1` did not finish in time. Process was killed.</source>
-        <translation>Il comando `%1` non ha terminato nei tempi previsti. Il processo è stato ucciso.</translation>
+        <translation>Il comando `%1` non ha terminato nei tempi previsti. Il processo è stato terminato.</translation>
     </message>
     <message>
         <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
-        <translation>Upload del database combinato fallito. Il comando `%1` non ha terminato nei tempi previsti. Il processo è stato ucciso. </translation>
+        <translation>Upload del database combinato fallito. Il comando `%1` non ha terminato nei tempi previsti. Il processo è stato terminato. </translation>
     </message>
     <message>
         <source>Invalid download parameters provided.</source>
-        <translation>Parametri di download forniti non validi.</translation>
+        <translation>Parametri download forniti non validi.</translation>
     </message>
     <message>
         <source>Command `%1` failed to download database.</source>
@@ -9590,7 +9586,7 @@ Predefinito è &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>Command `%1` exited with status code: %2</source>
-        <translation>Il comando `%1` è terminato con status code: %2</translation>
+        <translation>Il comando `%1` è uscito con codice di stato: %2</translation>
     </message>
     <message>
         <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
@@ -9728,7 +9724,7 @@ Predefinito è &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation>Congratulazioni, tutt ok - nessun problema rilevato!</translation>
+        <translation>Congratulazioni, tutto ok - nessun problema rilevato!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -10058,11 +10054,11 @@ La funzionalità di rete è richiesta per verificare la password con i database 
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Numero passkey</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Voci con TOTP configurato</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10573,8 +10569,7 @@ La funzionalità di rete è richiesta per verificare la password con i database 
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation>Hai isnerito una chiave segreta non valida. 
-La chiave deve essere in formato Base32.
+        <translation>Hai inserito una chiave segreta non valida.  La chiave deve essere in formato Base32. 
 Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
@@ -10790,8 +10785,7 @@ Codice errore PC/SC: %1</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>Non è stato possibile trovare una chiave fisica nello slot numero %1. 
-Per contiinuare collega una chiave fisica.</translation>
+        <translation>Non è stato possibile trovare una chiave fisica nello slot numero %1. Per continuare collega una chiave fisica.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>

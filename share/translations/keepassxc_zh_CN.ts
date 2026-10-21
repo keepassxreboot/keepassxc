@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>重启 KeePassXC 以应用自动输入桌面门户首选项。</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -458,19 +462,19 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>显示任务栏图标</translation>
+        <translation>显示系统托盘图标</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>任务栏图标类型</translation>
+        <translation>托盘图标类型</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>任务栏图标类型：</translation>
+        <translation>托盘图标类型：</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>将窗口最小化至任务栏</translation>
+        <translation>最小化时将窗口隐藏到系统托盘</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
@@ -660,7 +664,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation>為使用者名稱和附加屬性顯示自動完成建議</translation>
+        <translation>为用户名和附加属性显示自动完成建议</translation>
     </message>
 </context>
 <context>
@@ -987,7 +991,7 @@ Ctrl+Shift+4 - 复制 URL&lt;br/&gt;
     </message>
     <message>
         <source>String length exceeds 10 MiB limit (requested %1)</source>
-        <translation>字符串程度超过 10 MiB 限制（请求值 %1）</translation>
+        <translation>字符串长度超过 10 MiB 限制（请求值 %1）</translation>
     </message>
 </context>
 <context>
@@ -1880,7 +1884,7 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>I have a key file</source>
-        <translation>我有一份金鑰檔</translation>
+        <translation>我有一份密钥文件</translation>
     </message>
 </context>
 <context>
@@ -6382,7 +6386,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Import 1Password Vault</source>
-        <translation>导入 1Passowrd 保险库</translation>
+        <translation>导入 1Password 保险库</translation>
     </message>
     <message>
         <source>Import CSV File</source>
@@ -8207,11 +8211,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation>通行密鑰數量</translation>
+        <translation>通行密钥数</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation>TOTP 設定數</translation>
+        <translation>有 TOTP 的条目数</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -10053,11 +10057,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation>通行密鑰數量</translation>
+        <translation>通行密钥数</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation>已設定 TOTP 項目數</translation>
+        <translation>有 TOTP 的条目数</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
@@ -10619,7 +10623,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>您的 KeePassXC 已经是最版本</translation>
+        <translation>您的 KeePassXC 已经是最新版本</translation>
     </message>
 </context>
 <context>

@@ -288,6 +288,10 @@
         <source>Restart KeePassXC to apply the Auto-Type desktop portals preference.</source>
         <translation>Перезапустите KeePassXC, чтобы применить настройку автонабора через порталы рабочего стола.</translation>
     </message>
+    <message>
+        <source>This setting is managed by your organization.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -660,7 +664,7 @@
     </message>
     <message>
         <source>Show autocomplete suggestions for username and additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Автодополнение имени пользователя и доп. атрибутов</translation>
     </message>
 </context>
 <context>
@@ -1879,7 +1883,7 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>I have a key file</source>
-        <translation type="unfinished"/>
+        <translation>У меня есть ключевой файл</translation>
     </message>
 </context>
 <context>
@@ -6327,11 +6331,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Show Application Settings</source>
-        <translation>Открыть параметры приложения</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Show Password Generator</source>
-        <translation>Открыть генератор паролей</translation>
+        <translation>Генератор паролей</translation>
     </message>
     <message>
         <source>Remove Passkey From Entry</source>
@@ -8208,11 +8212,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Количество ключей доступа</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Записи с TOTP</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -10056,11 +10060,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Number of passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Количество ключей доступа</translation>
     </message>
     <message>
         <source>Entries with TOTP setup</source>
-        <translation type="unfinished"/>
+        <translation>Записи с TOTP</translation>
     </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
