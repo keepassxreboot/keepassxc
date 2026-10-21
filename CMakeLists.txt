@@ -520,10 +520,9 @@ elseif(WIN32)
 endif()
 
 if(_deployqt_exe_name)
-    # Check if the Qt host path is specified or if we need to determine it based on the build configuration
-    if(QT_HOST_PATH)
-        set(Qt6_TOOLS_PREFIX "${QT_HOST_PATH}")
-    elseif(WITH_BUILD_QT)
+    # The deployment tool must run beside the target qt.conf when using vcpkg, so it deploys
+    # the target plugins rather than looking in the host tools installation.
+    if(WITH_BUILD_QT)
         get_filename_component(Qt6_TOOLS_PREFIX "${Qt6_PREFIX}/tools/Qt6" REALPATH)
         # If the host architecture differs from the target architecture, copy the appropriate deployqt executable
         if(NOT _host_triplet STREQUAL VCPKG_TARGET_TRIPLET)
@@ -531,6 +530,8 @@ if(_deployqt_exe_name)
                 "${VCPKG_INSTALLED_DIR}/${_host_triplet}/tools/Qt6/bin/${_deployqt_exe_name}"
                 DESTINATION "${Qt6_TOOLS_PREFIX}/bin")
         endif()
+    elseif(QT_HOST_PATH)
+        set(Qt6_TOOLS_PREFIX "${QT_HOST_PATH}")
     else()
         get_filename_component(Qt6_TOOLS_PREFIX "${Qt6_PREFIX}" REALPATH)
     endif()
