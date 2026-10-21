@@ -135,6 +135,11 @@ static const QString aboutContributors = R"(
     <li>Waido</li>
     <li>Weinmann Willy</li>
     <li>WildMage</li>
+    <li>k-advice software GmbH</li>
+    <li>Elmar Geese</li>
+    <li>Paul Mavrovic</li>
+    <li>Flüstrat</li>
+    <li>TJK8888</li>
 </ul>
 <h3>Notable Code Contributions:</h3>
 <ul>
@@ -271,7 +276,15 @@ static const QString aboutContributors = R"(
 </ul>
 <h3>VIP GitHub Sponsors:</h3>
 <ul>
+    <li>markcunninghamgit</li>
     <li>oliverkroener</li>
+    <li>donghao1393</li>
+    <li>jyhi</li>
+    <li>topocount</li>
+    <li>Sidicas</li>
+    <li>tiangolo</li>
+    <li>Mr-NH</li>
+    <li><i>anonymous</i></li>
 </ul>
 <h3>Translations:</h3>
 <ul>
