@@ -46,6 +46,18 @@ public:
 
     bool eventFilter(QObject* watched, QEvent* event) override;
 
+    // QWidget::setAccessibleName()/accessibleName() are not virtual, but since
+    // PasswordWidget always installs a focus proxy (see constructor), keyboard
+    // focus -- and therefore what a screen reader like JAWS actually announces
+    // -- lands on the internal QLineEdit, not on this outer container widget.
+    // Hiding the base implementations here ensures that callers who set
+    // accessibleName on a PasswordWidget instance (statically typed as
+    // PasswordWidget*, e.g. generated setupUi() code from a .ui file) reach the
+    // widget that is actually announced, instead of silently naming a widget
+    // no screen reader ever reports on.
+    void setAccessibleName(const QString& name);
+    QString accessibleName() const;
+
 signals:
     void textChanged(QString text);
     void requestPlaceholderResolution(const QString& rawText, QString& resolvedText);
@@ -82,6 +94,7 @@ private:
     QPointer<PasswordWidget> m_repeatPasswordWidget;
     QPointer<PasswordWidget> m_parentPasswordWidget;
 
+    QString m_defaultAccessibleDescription;
     bool m_capslockState = false;
 };
 

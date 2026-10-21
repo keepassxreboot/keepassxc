@@ -47,6 +47,9 @@
          <property name="accessibleName">
           <string>Attribute selection</string>
          </property>
+         <property name="tabKeyNavigation">
+          <bool>false</bool>
+         </property>
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::AdjustToContents</enum>
          </property>

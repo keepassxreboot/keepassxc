@@ -43,6 +43,9 @@ signals:
 
 private slots:
     void toggleCustom(bool status);
+    void algorithmChanged(int value);
+    void stepChanged(int value);
+    void digitsChanged(int value);
     void saveSettings();
 
 private:

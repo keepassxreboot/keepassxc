@@ -15,11 +15,23 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="totpLabel">
+    <widget class="QLineEdit" name="totpLabel">
+     <property name="accessibleName">
+      <string>TOTP code</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Current six-digit timed password.</string>
+     </property>
      <property name="font">
       <font>
        <pointsize>53</pointsize>
       </font>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
      </property>
      <property name="text">
       <string notr="true">000000</string>
@@ -31,6 +43,12 @@
    </item>
    <item>
     <widget class="QProgressBar" name="progressBar">
+     <property name="accessibleName">
+      <string>TOTP expiration progress</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Shows the remaining time before the current timed password expires.</string>
+     </property>
      <property name="value">
       <number>0</number>
      </property>

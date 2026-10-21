@@ -35,6 +35,7 @@ public:
 
     bool isExpanded();
     bool canExpand();
+    void updateButtonAccessibility();
 
 public slots:
     void setExpanded(bool state);

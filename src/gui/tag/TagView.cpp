@@ -54,6 +54,7 @@ TagView::TagView(QWidget* parent)
     , m_model(new TagModel(this))
 {
     setModel(m_model);
+    setAccessibleName(tr("Searches and Tags"));
     setFrameStyle(QFrame::NoFrame);
     setSelectionMode(QListView::ExtendedSelection);
     setSelectionBehavior(QListView::SelectRows);

@@ -22,6 +22,8 @@
 #include "gui/UrlTools.h"
 #include "gui/styles/StateColorPalette.h"
 
+#include <QAccessible>
+
 URLEdit::URLEdit(QWidget* parent)
     : QLineEdit(parent)
 {
@@ -55,8 +57,12 @@ void URLEdit::updateStylesheet(const QString& url)
         const auto color = statePalette.color(StateColorPalette::ColorRole::Error);
         setStyleSheet(stylesheetTemplate.arg(color.name()));
         m_errorAction->setVisible(true);
+        setAccessibleDescription(tr("Invalid URL"));
+        QAccessibleEvent alertEvent(this, QAccessible::Alert);
+        QAccessible::updateAccessibility(&alertEvent);
     } else {
         m_errorAction->setVisible(false);
         setStyleSheet("");
+        setAccessibleDescription({});
     }
 }

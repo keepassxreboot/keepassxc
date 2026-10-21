@@ -75,6 +75,10 @@ void KeyComponentWidget::updateAddStatus(bool added)
 {
     if (m_ui->stackedWidget->currentIndex() == Page::Edit) {
         emit editCanceled();
+    } else if (!added && m_ui->stackedWidget->currentIndex() == Page::LeaveOrRemove) {
+        if (m_ui->changeButton->hasFocus() || m_ui->removeButton->hasFocus()) {
+            m_ui->addButton->setFocus(Qt::OtherFocusReason);
+        }
     }
 
     if (added) {
@@ -87,11 +91,27 @@ void KeyComponentWidget::updateAddStatus(bool added)
 void KeyComponentWidget::doAdd()
 {
     changeVisiblePage(Page::Edit);
+    if (m_componentWidget) {
+        for (auto* widget : m_componentWidget->findChildren<QWidget*>(QString(), Qt::FindChildrenRecursively)) {
+            if (widget->isEnabled() && widget->isVisible() && widget->focusPolicy() != Qt::NoFocus) {
+                widget->setFocus(Qt::OtherFocusReason);
+                break;
+            }
+        }
+    }
 }
 
 void KeyComponentWidget::doEdit()
 {
     changeVisiblePage(Page::Edit);
+    if (m_componentWidget) {
+        for (auto* widget : m_componentWidget->findChildren<QWidget*>(QString(), Qt::FindChildrenRecursively)) {
+            if (widget->isEnabled() && widget->isVisible() && widget->focusPolicy() != Qt::NoFocus) {
+                widget->setFocus(Qt::OtherFocusReason);
+                break;
+            }
+        }
+    }
 }
 
 void KeyComponentWidget::doRemove()

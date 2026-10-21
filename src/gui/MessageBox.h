@@ -75,6 +75,7 @@ public:
 
     static void initializeButtonDefs();
     static void setNextAnswer(Button button);
+    static void announce(QMessageBox& messageBox);
 
     static Button critical(QWidget* parent,
                            const QString& title,

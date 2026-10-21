@@ -18,8 +18,10 @@
 #include "KPToolBar.h"
 
 #include <QAbstractButton>
+#include <QAction>
 #include <QEvent>
 #include <QLayout>
+#include <QToolButton>
 
 KPToolBar::KPToolBar(const QString& title, QWidget* parent)
     : QToolBar(title, parent)
@@ -50,6 +52,25 @@ bool KPToolBar::canExpand()
     return m_expandButton && m_expandButton->isVisible();
 }
 
+void KPToolBar::updateButtonAccessibility()
+{
+    for (QAction* action : actions()) {
+        if (action->isSeparator()) {
+            continue;
+        }
+        QWidget* widget = widgetForAction(action);
+        if (auto* button = qobject_cast<QToolButton*>(widget)) {
+            const QString name = action->toolTip().isEmpty()
+                ? action->text().remove(QLatin1Char('&'))
+                : action->toolTip();
+            if (!name.isEmpty()) {
+                button->setAccessibleName(name);
+            }
+            button->setFocusPolicy(Qt::TabFocus);
+        }
+    }
+}
+
 void KPToolBar::setExpanded(bool state)
 {
     if (canExpand() && !QMetaObject::invokeMethod(layout(), "setExpanded", Q_ARG(bool, state))) {
@@ -69,7 +90,12 @@ bool KPToolBar::event(QEvent* event)
         // Mouse came back in, stop hiding timer
         m_expandTimer.stop();
         return true;
+    case QEvent::Show:
+    case QEvent::LayoutRequest:
+        updateButtonAccessibility();
+        break;
     default:
-        return QToolBar::event(event);
+        break;
     }
+    return QToolBar::event(event);
 }

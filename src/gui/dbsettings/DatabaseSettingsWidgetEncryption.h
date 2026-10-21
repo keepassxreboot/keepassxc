@@ -49,6 +49,7 @@ private slots:
     void benchmarkTransformRounds(int millisecs = Kdf::DEFAULT_ENCRYPTION_TIME);
     void memoryChanged(int value);
     void parallelismChanged(int value);
+    void transformRoundsChanged();
     void updateDecryptionTime(int value);
     void loadKdfAlgorithms();
     void loadKdfParameters();

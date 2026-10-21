@@ -21,6 +21,8 @@
 #include <QFrame>
 #include <QPointer>
 
+class QKeyEvent;
+
 class PopupHelpWidget : public QFrame
 {
     Q_OBJECT
@@ -33,6 +35,7 @@ public:
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
     void showEvent(QShowEvent* event) override;
 
 private:

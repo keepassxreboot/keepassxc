@@ -25,6 +25,7 @@
 #include "TagsEdit.h"
 #include "gui/MainWindow.h"
 #include <QAbstractItemView>
+#include <QAccessible>
 #include <QApplication>
 #include <QClipboard>
 #include <QCompleter>
@@ -588,6 +589,7 @@ TagsEdit::TagsEdit(QWidget* parent)
     setSizePolicy(size_policy);
 
     setFocusPolicy(Qt::StrongFocus);
+    setAccessibleName(tr("Tags"));
     viewport()->setCursor(Qt::IBeamCursor);
     setAttribute(Qt::WA_InputMethodEnabled, true);
     setMouseTracking(true);
@@ -632,6 +634,15 @@ void TagsEdit::focusInEvent(QFocusEvent*)
     impl->calcRects(impl->tags);
     impl->completer->complete();
     viewport()->update();
+
+    if (!m_usageHintAnnounced) {
+        m_usageHintAnnounced = true;
+        announceTagsState(tr("Type text, then press Enter, comma, or semicolon to add a tag. "
+                              "Press Backspace in an empty field to edit or remove the previous tag. %1")
+                               .arg(tagsSummary()));
+    } else {
+        announceTagsState(tagsSummary());
+    }
 }
 
 void TagsEdit::focusOutEvent(QFocusEvent*)
@@ -698,11 +709,14 @@ void TagsEdit::mousePressEvent(QMouseEvent* event)
     bool found = false;
     for (int i = 0; i < impl->tags.size(); ++i) {
         if (impl->inCrossArea(i, event->pos())) {
+            const auto removedTag = impl->tags[i].text;
             impl->tags.erase(impl->tags.begin() + std::ptrdiff_t(i));
             if (i <= impl->editing_index) {
                 --impl->editing_index;
             }
             emit tagsEdited();
+            found = true;
+            announceTagsState(tr("Removed tag %1. %2").arg(removedTag, tagsSummary()));
             found = true;
             break;
         }
@@ -802,9 +816,19 @@ void TagsEdit::keyPressEvent(QKeyEvent* event)
     } else if (event == QKeySequence::Paste) {
         auto clipboard = QApplication::clipboard();
         if (clipboard) {
+            QStringList addedTags;
             for (auto tagtext : clipboard->text().split(",")) {
+                const auto trimmed = tagtext.trimmed();
                 impl->currentText().insert(impl->cursor, tagtext);
                 impl->editNewTag(impl->editing_index + 1);
+                if (!trimmed.isEmpty()) {
+                    addedTags << trimmed;
+                }
+            }
+            if (!addedTags.isEmpty()) {
+                announceTagsState(
+                    tr("Added %n tag(s) from paste: %1. %2", "", addedTags.size())
+                        .arg(addedTags.join(", "), tagsSummary()));
             }
         }
         event->accept();
@@ -861,8 +885,10 @@ void TagsEdit::keyPressEvent(QKeyEvent* event)
 
             // Make existing text into a tag
             if (!impl->currentText().isEmpty()) {
+                const auto committedTag = impl->currentText().trimmed();
                 impl->editNewTag(impl->editing_index + 1);
                 event->accept();
+                announceTagsState(tr("Added tag %1. %2").arg(committedTag, tagsSummary()));
             }
             break;
         default:
@@ -926,6 +952,7 @@ void TagsEdit::tags(QStringList const& tags)
     impl->calcRectsAndUpdateScrollRanges();
     viewport()->update();
     updateGeometry();
+    setAccessibleDescription(tagsSummary());
 }
 
 QStringList TagsEdit::tags() const
@@ -953,6 +980,22 @@ void TagsEdit::mouseMoveEvent(QMouseEvent* event)
             QAbstractScrollArea::mouseMoveEvent(event);
         }
     }
+}
+
+QString TagsEdit::tagsSummary() const
+{
+    const auto currentTags = tags();
+    if (currentTags.isEmpty()) {
+        return tr("No tags");
+    }
+    return tr("%n tag(s): %1", "", currentTags.size()).arg(currentTags.join(QStringLiteral(", ")));
+}
+
+void TagsEdit::announceTagsState(const QString& message)
+{
+    setAccessibleDescription(message);
+    QAccessibleEvent event(this, QAccessible::Alert);
+    QAccessible::updateAccessibility(&event);
 }
 
 bool TagsEdit::isAcceptableInput(const QKeyEvent* event) const

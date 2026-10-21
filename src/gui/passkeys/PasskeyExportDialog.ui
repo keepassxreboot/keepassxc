@@ -48,7 +48,16 @@
    </item>
    <item>
     <widget class="QTableWidget" name="itemsTable">
-     <property name="editTriggers">
+     <property name="accessibleName">
+      <string>Passkey entries to export</string>
+     </property>
+     <property name="accessibleDescription">
+      <string>Select one or more passkey entries to include in the export.</string>
+     </property>
+     <property name="tabKeyNavigation">
+       <bool>false</bool>
+      </property>
+      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="showDropIndicator" stdset="0">
