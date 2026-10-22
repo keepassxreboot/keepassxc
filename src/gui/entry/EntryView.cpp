@@ -39,7 +39,7 @@ class PasswordStrengthItemDelegate : public QStyledItemDelegate
 {
 public:
     explicit PasswordStrengthItemDelegate(QObject* parent)
-        : QStyledItemDelegate(parent){};
+        : QStyledItemDelegate(parent) {};
 
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override
     {
