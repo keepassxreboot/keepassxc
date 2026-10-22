@@ -522,7 +522,7 @@ endif()
 if(_deployqt_exe_name)
     # The deployment tool must run beside the target qt.conf when using vcpkg, so it deploys
     # the target plugins rather than looking in the host tools installation.
-if(WITH_BUILD_QT)
+    if(WITH_BUILD_QT)
         unset(DEPLOYQT_EXE CACHE)
         get_filename_component(Qt6_TOOLS_PREFIX "${Qt6_PREFIX}/tools/Qt6" REALPATH)
         # If the host architecture differs from the target architecture, copy the appropriate deployqt executable
