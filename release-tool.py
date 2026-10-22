@@ -961,8 +961,6 @@ class Build(Command):
             _run(['cmake', '--install', '.', '--strip',
                   '--prefix', (app_dir.absolute() / install_prefix.lstrip('/')).as_posix()],
                  cwd=build_dir, capture_output=False, **docker_args)
-            shutil.copytree(app_dir, output_dir / app_dir.name, symlinks=True, dirs_exist_ok=True)
-
             if appimage:
                 appimage_platform = _map_platform_target(platform_target, 'x86_64', 'aarch64')
                 self._build_linux_appimage(
@@ -1000,13 +998,10 @@ class Build(Command):
         app_run = src_dir / 'share/linux/appimage-apprun.sh'
 
         env = os.environ.copy()
+        env['QMAKE'] = env.get('QMAKE', 'qmake6')
         if docker_args.get('docker_image'):
-            # Use the Qt environment provided by the Linux build image, not the host's paths.
-            env.pop('QMAKE', None)
             # Containers may lack working FUSE, such as when run on a macOS host.
             env['APPIMAGE_EXTRACT_AND_RUN'] = '1'
-        else:
-            env['QMAKE'] = env.get('QMAKE', 'qmake6')
         run_args = dict(docker_args, cwd=build_dir, capture_output=False, env=env)
 
         logger.info('Building AppImage...')
