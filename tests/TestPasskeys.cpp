@@ -319,6 +319,32 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
     QCOMPARE(publicKey["-3"], predefinedSecond);
 }
 
+void TestPasskeys::testCreatingECPublicKeyWithLeadingZeros()
+{
+    // Private key whose public point has an x coordinate starting with 0x00
+    const auto predefinedData = QString("0xEB57F9D52C011C220CF754730C824DBD296F41977B455119636DADD361C78D1E");
+
+    TestingVariables testingVariables = {QString(), QString(), QString(), predefinedData};
+    const auto credentialPrivateKey =
+        browserPasskeys()->buildCredentialPrivateKey(WebAuthnAlgorithms::ES256, testingVariables);
+    QVERIFY(!credentialPrivateKey.cborEncodedPublicKey.isEmpty());
+
+    BrowserCbor browserCbor;
+    const auto publicKey = browserCbor.getJsonFromCborData(credentialPrivateKey.cborEncodedPublicKey);
+    QCOMPARE(publicKey["1"], WebAuthnCoseKeyType::EC2);
+    QCOMPARE(publicKey["3"], WebAuthnAlgorithms::ES256);
+    QCOMPARE(publicKey["-1"], 1);
+    QCOMPARE(publicKey["-2"], QString("AB_24aMKbuH-PMrm3f-TI1rkVi2xOoHCzGvR5sU226Y"));
+    QCOMPARE(publicKey["-3"], QString("7TwSbAqsPJ62uEtWnuyPkQEL9I9XR27Qo_kVC4HL2A8"));
+
+    // Coordinates must keep the leading zeros and be exactly 32 bytes for P-256
+    const auto x = browserMessageBuilder()->getArrayFromBase64(publicKey["-2"].toString());
+    const auto y = browserMessageBuilder()->getArrayFromBase64(publicKey["-3"].toString());
+    QCOMPARE(x.size(), 32);
+    QCOMPARE(y.size(), 32);
+    QCOMPARE(x.at(0), '\0');
+}
+
 void TestPasskeys::testCreatingAttestationObjectWithRSA()
 {
     // Predefined values for a desired outcome
