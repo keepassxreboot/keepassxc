@@ -195,30 +195,30 @@ void TestPasskeys::testDecodeResponseData()
     QCOMPARE(publicKey["-3"], QString("btZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU"));
 }
 
-void TestPasskeys::testLoadingECPrivateKeyFromPem()
+// Test vector from WebAuthn Level 3, 16.7. Packed Attestation with ES256 Credential
+void TestPasskeys::testLoadingECP256PrivateKeyFromPem()
 {
 #if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2, 14, 0)
     QSKIP("ECDSA Signature is broken on Botan < 2.14.0");
 #endif
-    const auto publicKeyCredentialRequestOptions =
-        browserMessageBuilder()->getJsonObject(PublicKeyCredentialRequestOptions.toUtf8());
     const auto privateKeyPem = QString("-----BEGIN PRIVATE KEY-----"
-                                       "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg5DX2R6I37nMSZqCp"
-                                       "XfHlE3UeitkGGE03FqGsdfxIBoOhRANCAAQG7K80W2KRYW0ZWQOmUCrKMcSVqGnl"
-                                       "8Ifl1LgyzQiF3eLuf+kPDukdB4NKAwnbQiSxC9Ml/xgy4VOZtx1CBOeD"
+                                       "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgNu176iNXzvqMTsfh"
+                                       "NPMxLS5sowWFGdC8tMFCQnIBBDKhRANCAAQc8n8l2lkSCKQjnC4yTxBPWFUlR5op"
+                                       "7e7dgw9I53rq5Vnkt9psAQbiBs45DJOrmKFaXsOIflfwzCvs6AO5IMQj"
                                        "-----END PRIVATE KEY-----");
 
     const auto authenticatorData =
-        browserMessageBuilder()->getArrayFromBase64("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAFAAAAAA");
+        browserMessageBuilder()->getArrayFromBase64("v6vDdDKViwYzYNOtZGHJxHNa5_jt1GWSpeDwFFKy5LUNAAAAAA");
     const auto clientData = browserMessageBuilder()->getArrayFromBase64(
-        "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiOXozNnZUZlFUTDk1TGY3V25aZ3l0ZTdvaEdlRi1YUmlMeGtMLUx1R1Uxem9wUm"
-        "1NSVVBMUxWd3pHcHlJbTFmT0JuMVFuUmEwUUgyN0FEQWFKR0h5c1EiLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmln"
-        "aW4iOmZhbHNlfQ");
+        "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoic1JCdnBHcFh2dkY0RlJIQVZYM0ltS0EwRTlYdzhYMGtSakRCbE1maHJiVSIsIm"
+        "9yaWdpbiI6Imh0dHBzOi8vZXhhbXBsZS5vcmciLCJjcm9zc09yaWdpbiI6ZmFsc2UsImV4dHJhRGF0YSI6ImNsaWVudERhdGFKU09OIG1heSBi"
+        "ZSBleHRlbmRlZCB3aXRoIGFkZGl0aW9uYWwgZmllbGRzIGluIHRoZSBmdXR1cmUsIHN1Y2ggYXMgdGhpczogQVpNd3lNeEliRDgtdWd1Rk5wNn"
+        "I4USJ9");
 
     const auto signature = browserPasskeys()->buildSignature(authenticatorData, clientData, privateKeyPem);
     QCOMPARE(
         browserMessageBuilder()->getBase64FromArray(signature),
-        QString("MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
+        QString("MEUCIGlJadPuko3m8C7yOpxkTX13mRZFFzSpS0MlQvSYoevpAiEAiwgZyCQhipcVLNCZxVv7FHeynZAKSaZAGDFPm_zNoWM"));
 }
 
 // Test vector from WebAuthn Level 3, 16.8. Packed Attestation with ES384 Credential

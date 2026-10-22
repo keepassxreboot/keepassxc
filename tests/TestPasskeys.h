@@ -33,7 +33,7 @@ private slots:
     void testBase64WithHexStrings();
     void testDecodeResponseData();
 
-    void testLoadingECPrivateKeyFromPem();
+    void testLoadingECP256PrivateKeyFromPem();
     void testLoadingECP384PrivateKeyFromPem();
     void testLoadingECP521PrivateKeyFromPem();
     void testLoadingUnsupportedECPrivateKeyFromPem();
