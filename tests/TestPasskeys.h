@@ -34,6 +34,9 @@ private slots:
     void testDecodeResponseData();
 
     void testLoadingECPrivateKeyFromPem();
+    void testLoadingECP384PrivateKeyFromPem();
+    void testLoadingECP521PrivateKeyFromPem();
+    void testLoadingUnsupportedECPrivateKeyFromPem();
     void testLoadingRSAPrivateKeyFromPem();
     void testCreatingAttestationObjectWithEC();
     void testCreatingAttestationObjectWithRSA();
