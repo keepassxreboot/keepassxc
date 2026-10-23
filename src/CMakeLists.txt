@@ -230,6 +230,7 @@ endif()
 
 if(UNIX AND NOT APPLE)
     list(APPEND gui_SOURCES
+            gui/osutils/nixutils/BackgroundPortal.cpp
             gui/osutils/nixutils/DesktopPortal.cpp
             gui/osutils/nixutils/DeviceListenerLibUsb.cpp
             gui/osutils/nixutils/GlobalShortcutsPortal.cpp
@@ -279,6 +280,10 @@ if(UNIX AND NOT APPLE)
     qt6_add_dbus_interface(core_SOURCES
         gui/osutils/nixutils/dbus/org.freedesktop.portal.Clipboard.xml
         xdp_clipboard
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.Background.xml
+        xdp_background
     )
 endif()
 
