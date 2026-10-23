@@ -22,6 +22,9 @@
 #include "polkit_dbus.h"
 #include <QHash>
 #include <QScopedPointer>
+#include <QSharedPointer>
+
+class SecretMemory;
 
 class Polkit : public QuickUnlockInterface
 {
@@ -40,9 +43,15 @@ public:
     void reset() override;
 
 private:
+    bool storeSecret(const QUuid& dbUuid, const QByteArray& secret);
+    bool retrieveSecret(const QUuid& dbUuid, QByteArray& secret);
+    bool hasSecret(const QUuid& dbUuid) const;
+
     bool m_available;
     QString m_error;
     QHash<QUuid, QByteArray> m_encryptedMasterKeys;
+    // Fallback storage for when the Linux keyring is unavailable (e.g. inside a Flatpak sandbox)
+    QHash<QUuid, QSharedPointer<SecretMemory>> m_secretMemory;
 
     QScopedPointer<org::freedesktop::PolicyKit1::Authority> m_polkit;
 };

@@ -46,6 +46,7 @@ option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 option(WITH_CCACHE "Use ccache for build" OFF)
 option(WITH_X11 "Enable building with X11 dependencies" ON)
+option(WITH_KEYUTILS "Use the Linux kernel keyring (libkeyutils) for Polkit quick unlock" ON)
 option(WITH_BUILD_QT "Build Qt6 as a dependency" OFF)
 
 # Advanced Features Control
@@ -577,9 +578,11 @@ if(UNIX AND NOT APPLE)
     find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb" REQUIRED)
     include_directories(SYSTEM ${LIBUSB_INCLUDE_DIR})
 
-    # For PolKit QuickUnlock
-    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+    # For PolKit QuickUnlock, falls back to memfd_secret when the keyring is unavailable
+    if("${CMAKE_SYSTEM}" MATCHES "Linux" AND WITH_KEYUTILS)
         find_library(KEYUTILS_LIBRARIES NAMES keyutils REQUIRED)
+    else()
+        set(WITH_KEYUTILS OFF)
     endif()
 endif()
 
