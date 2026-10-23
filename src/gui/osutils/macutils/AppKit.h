@@ -47,7 +47,7 @@ public:
     bool enableScreenRecording();
     void toggleForegroundApp(bool foreground);
     void setWindowSecurity(QWindow* window, bool state);
-    void configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu);
+    void configureMacMenus(QMainWindow* mainWindow, QMenu* viewMenu);
 
 signals:
     void userSwitched();
