@@ -29,6 +29,9 @@
 - (id) initWithObject:(AppKit*)appkit;
 
 @property (strong) NSRunningApplication *lastActiveApplication;
+// Dark (OLED) native chrome — version-safe, soft-fail on unsupported macOS
+@property (nonatomic, assign) BOOL oledNativeChromeDesired;
+@property (nonatomic, assign) BOOL oledNativeChromeBusy;
 
 - (pid_t) activeProcessId;
 - (pid_t) ownProcessId;
@@ -43,5 +46,9 @@
 - (void) toggleForegroundApp:(bool) foreground;
 - (void) setWindowSecurity:(NSWindow*) window state:(bool) state;
 - (void) configureWindowAndHelpMenus:(QMainWindow*) mainWindow helpMenu:(QMenu*) helpMenu;
+// Dark (OLED) theme: pure-black title bar (macOS, optional)
+- (void) setOledChromeEnabled:(bool) enabled;
+- (void) applyOledWindowChrome:(NSWindow*) window;
+- (void) clearOledWindowChrome:(NSWindow*) window;
 
 @end
