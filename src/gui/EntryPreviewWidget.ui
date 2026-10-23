@@ -1275,6 +1275,7 @@
   <tabstop>entryTotpButton</tabstop>
   <tabstop>entryCloseButton</tabstop>
   <tabstop>entryTabWidget</tabstop>
+  <tabstop>toggleUsernameButton</tabstop>
   <tabstop>togglePasswordButton</tabstop>
   <tabstop>toggleEntryNotesButton</tabstop>
   <tabstop>groupTabWidget</tabstop>
