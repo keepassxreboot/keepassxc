@@ -1,0 +1,17 @@
+diff --git a/cmake/QtBuildPathsHelpers.cmake b/cmake/QtBuildPathsHelpers.cmake
+index bd186c28b..2c1994d2e 100644
+--- a/cmake/QtBuildPathsHelpers.cmake
++++ b/cmake/QtBuildPathsHelpers.cmake
+@@ -141,11 +141,9 @@ function(qt_configure_process_path name default docstring)
+     elseif(rel_path MATCHES "^\.\./")
+         # INSTALL_SYSCONFDIR is allowed to be outside the prefix.
+         if(NOT name STREQUAL "INSTALL_SYSCONFDIR")
+-            message(FATAL_ERROR
+-                "Path component '${name}' is outside computed install prefix: ${rel_path} ")
+         endif()
+         # Keep the absolute path.
+         set(new_value "${${name}}")
+     else()
+         # Use the canonicalized path.
+         set(new_value "${rel_path}")
+

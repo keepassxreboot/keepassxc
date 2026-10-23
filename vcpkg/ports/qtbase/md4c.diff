@@ -1,0 +1,17 @@
+diff --git a/src/gui/text/qtextmarkdownimporter.cpp b/src/gui/text/qtextmarkdownimporter.cpp
+index e7bab8b..e4cc520 100644
+--- a/src/gui/text/qtextmarkdownimporter.cpp
++++ b/src/gui/text/qtextmarkdownimporter.cpp
+@@ -50,8 +50,10 @@ static_assert(int(QTextMarkdownImporter::FeaturePermissiveAutoLinks) == MD_FLAG_
+ static_assert(int(QTextMarkdownImporter::FeatureTasklists) == MD_FLAG_TASKLISTS);
+ static_assert(int(QTextMarkdownImporter::FeatureNoHTML) == MD_FLAG_NOHTML);
+ static_assert(int(QTextMarkdownImporter::DialectCommonMark) == MD_DIALECT_COMMONMARK);
+-static_assert(int(QTextMarkdownImporter::DialectGitHub) ==
+-              (MD_DIALECT_GITHUB | MD_FLAG_UNDERLINE | QTextMarkdownImporter::FeatureFrontMatter));
++// md4c's MD_DIALECT_GITHUB now also ORs in MD_FLAG_ADMONITIONS and MD_FLAG_FOOTNOTES
++// (features Qt's Feature enum predates and never sets), so it no longer equals
++// QTextMarkdownImporter::DialectGitHub. The flags are forwarded to md_parse() as-is,
++// so parsing behavior for the dialect Qt exposes is unaffected.
+ 
+ // --------------------------------------------------------
+ // MD4C callback function wrappers

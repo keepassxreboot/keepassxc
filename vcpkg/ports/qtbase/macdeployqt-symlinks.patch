@@ -1,0 +1,33 @@
+diff --git a/src/tools/macdeployqt/shared/shared.cpp b/src/tools/macdeployqt/shared/shared.cpp
+index 6ff269b..caffd44 100644
+--- a/src/tools/macdeployqt/shared/shared.cpp
++++ b/src/tools/macdeployqt/shared/shared.cpp
+@@ -1,4 +1,5 @@
+ // Copyright (C) 2016 The Qt Company Ltd.
++
+ // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only WITH Qt-GPL-exception-1.0
+ #include <QCoreApplication>
+ #include <QString>
+@@ -85,7 +86,21 @@
+         }
+     }
+ 
+-    if (QFile::copy(from, to)) {
++    QFileInfo fromFileInfo(from);
++
++    if (fromFileInfo.isSymLink()) {
++        const QString fromSymLinkTarget = fromFileInfo.absoluteDir().relativeFilePath(fromFileInfo.symLinkTarget());
++        if (QFile::link(fromSymLinkTarget, to)) {
++            return copyFilePrintStatus(fromFileInfo.absoluteDir().absoluteFilePath(fromSymLinkTarget), QFileInfo(to).absoluteDir().absoluteFilePath(fromSymLinkTarget));
++        }
++        else {
++            LogError() << "symlink copy failed from" << from;
++            LogError() << " to" << to;
++            return false;
++        }
++
++    }
++    else if (QFile::copy(from, to)) {
+         QFile dest(to);
+         dest.setPermissions(dest.permissions() | QFile::WriteOwner | QFile::WriteUser);
+         LogNormal() << " copied:" << from;

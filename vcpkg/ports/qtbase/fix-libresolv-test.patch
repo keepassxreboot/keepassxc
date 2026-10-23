@@ -1,0 +1,21 @@
+diff --git a/cmake/FindWrapResolv.cmake b/cmake/FindWrapResolv.cmake
+index 159df9b..412a2ae 100644
+--- a/cmake/FindWrapResolv.cmake
++++ b/cmake/FindWrapResolv.cmake
+@@ -18,4 +18,7 @@ if(QNX)
+     find_library(LIBRESOLV socket)
+ else()
+     find_library(LIBRESOLV resolv)
++    if(APPLE AND NOT LIBRESOLV)
++        set(LIBRESOLV resolv)
++    endif()
+ endif()
+@@ -40,7 +43,7 @@ check_cxx_source_compiles("
+ 
+ int main(int, char **argv)
+ {
+-    res_state statep = {};
++    res_state statep = nullptr;
+     int n = res_nmkquery(statep, 0, argv[1], 0, 0, NULL, 0, NULL, NULL, 0);
+     n = res_nsend(statep, NULL, 0, NULL, 0);
+     n = dn_expand(NULL, NULL, NULL, NULL, 0);

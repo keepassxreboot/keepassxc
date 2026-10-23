@@ -1,0 +1,24 @@
+diff --git a/src/corelib/configure.cmake b/src/corelib/configure.cmake
+index 5e6e966c..d6326a0f 100644
+--- a/src/corelib/configure.cmake
++++ b/src/corelib/configure.cmake
+@@ -591,6 +591,7 @@ qt_config_compile_test(cpp_winrt
+         runtimeobject
+     CODE
+ "// Including winrt/base.h causes an error in some configurations (Windows 10 SDK + c++20)
++#define _SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS
+ #   include <guiddef.h> // required by clang-cl: https://github.com/microsoft/cppwinrt/issues/1179
+ #   include <winrt/base.h>
+ 
+diff --git a/src/corelib/platform/windows/qt_winrtbase_p.h b/src/corelib/platform/windows/qt_winrtbase_p.h
+index 69a602a5..557c3ebb 100644
+--- a/src/corelib/platform/windows/qt_winrtbase_p.h
++++ b/src/corelib/platform/windows/qt_winrtbase_p.h
+@@ -19,6 +19,7 @@
+ #include <QtCore/qglobal.h>
+ 
+ #if QT_CONFIG(cpp_winrt)
++#define _SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS
+ #  include <guiddef.h> // required by clang-cl: https://github.com/microsoft/cppwinrt/issues/1179
+ #  include <winrt/base.h>
+ #  include <QtCore/private/qfactorycacheregistration_p.h>

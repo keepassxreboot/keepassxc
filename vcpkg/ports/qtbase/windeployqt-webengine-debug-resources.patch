@@ -1,0 +1,35 @@
+Locate the debug Qt WebEngine resources under the vcpkg debug tree.
+
+In the vcpkg layout the qtwebengine port moves the release WebEngine resources
+into share/Qt6/resources (== QT_INSTALL_DATA/resources), but keeps the debug
+".debug.pak" resources under <prefix>/debug/resources. QT_INSTALL_DATA is shared
+between the debug and release configurations, so windeployqt looked for the debug
+resources in share/Qt6/resources and failed with e.g.
+    "...\share\Qt6\resources\qtwebengine_resources.debug.pak does not exist."
+
+Resolve the resources from QT_INSTALL_PREFIX/debug for a debug deployment; the
+release path is unchanged. Paired with the LibraryExecutables fix in qt.conf.in
+(which points QT_INSTALL_LIBEXECS at tools/Qt6/bin/debug for the debug config),
+this lets windeployqt deploy Qt WebEngine for debug builds without relocating any
+debug binaries into the non-debug tree.
+
+diff --git a/src/tools/windeployqt/main.cpp b/src/tools/windeployqt/main.cpp
+index 839a0b4..bd0590e 100644
+--- a/src/tools/windeployqt/main.cpp
++++ b/src/tools/windeployqt/main.cpp
+@@ -1955,8 +1955,13 @@ static bool deployWebEngineCore(const QMap<QString, QString> &qtpathsVariables,
+     if (!deployWebProcess(qtpathsVariables, webEngineProcessName, pluginInfo, options, errorMessage))
+         return false;
+     const QString resourcesSubDir = QStringLiteral("/resources");
+-    const QString resourcesSourceDir = qtpathsVariables.value(QStringLiteral("QT_INSTALL_DATA"))
+-            + resourcesSubDir + u'/';
++    // vcpkg keeps the debug Qt WebEngine resources (.debug.pak) under <prefix>/debug/resources,
++    // separate from the release resources in QT_INSTALL_DATA/resources. QT_INSTALL_DATA is shared
++    // between debug and release, so resolve the debug resources from the prefix instead.
++    const QString resourcesBaseDir = isDebug
++            ? qtpathsVariables.value(QStringLiteral("QT_INSTALL_PREFIX")) + QStringLiteral("/debug")
++            : qtpathsVariables.value(QStringLiteral("QT_INSTALL_DATA"));
++    const QString resourcesSourceDir = resourcesBaseDir + resourcesSubDir + u'/';
+     const QString resourcesTargetDir(options.directory + resourcesSubDir);
+     if (!createDirectory(resourcesTargetDir, errorMessage, options.dryRun))
+         return false;

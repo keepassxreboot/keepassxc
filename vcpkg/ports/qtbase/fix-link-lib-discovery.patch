@@ -1,0 +1,12 @@
+diff --git a/cmake/QtPriHelpers.cmake b/cmake/QtPriHelpers.cmake
+index b6f1242..eaa4d65 100644
+--- a/cmake/QtPriHelpers.cmake	
++++ b/cmake/QtPriHelpers.cmake
+@@ -37,6 +37,7 @@ function(qt_generate_qmake_libraries_pri_content module_name output_root_dir out
+                 get_target_property(lib_target_type ${lib_target} TYPE)
+                 if(lib_target_type MATCHES "^(INTERFACE|UNKNOWN)_LIBRARY")
+                     get_target_property(iface_libs ${lib_target} INTERFACE_LINK_LIBRARIES)
++                    string(REGEX REPLACE [[\$<LINK_ONLY:([^>]+)>]] "\\1" iface_libs "${iface_libs}")
+                     if(iface_libs)
+                         list(PREPEND lib_targets ${iface_libs})
+                     endif()

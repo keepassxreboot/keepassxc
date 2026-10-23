@@ -1,0 +1,13 @@
+diff --git a/src/corelib/io/qfilesystemwatcher.cpp b/src/corelib/io/qfilesystemwatcher.cpp
+index cd72f21a..2fba878f 100644
+--- a/src/corelib/io/qfilesystemwatcher.cpp
++++ b/src/corelib/io/qfilesystemwatcher.cpp
+@@ -11,7 +11,7 @@
+ #include <qloggingcategory.h>
+ #include <qset.h>
+ 
+-#if (defined(Q_OS_LINUX) || defined(Q_OS_QNX)) && QT_CONFIG(inotify)
++#if (defined(Q_OS_LINUX) || defined(Q_OS_QNX) || defined(Q_OS_FREEBSD)) && QT_CONFIG(inotify)
+ #define USE_INOTIFY
+ #endif
+ 

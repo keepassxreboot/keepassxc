@@ -1,0 +1,33 @@
+diff --git a/src/corelib/Qt6CoreMacros.cmake b/src/corelib/Qt6CoreMacros.cmake
+index bfac685..c232c3e 100644
+--- a/src/corelib/Qt6CoreMacros.cmake	
++++ b/src/corelib/Qt6CoreMacros.cmake
+@@ -3225,7 +3225,7 @@ function(_qt_internal_setup_deploy_support)
+     set(qtpaths_name_candidates "")
+     foreach(base_name IN LISTS base_names)
+         if(CMAKE_HOST_WIN32)
+-            if(CMAKE_CROSSCOMPILING)
++            if(CMAKE_CROSSCOMPILING AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+                 set(qt_paths_ext ".bat")
+                 # Depending on whether QT_FORCE_BUILD_TOOLS was set when building Qt, a 'host-'
+                 # prefix is prepended to the created qtpaths wrapper, not to collide with the
+@@ -3234,6 +3234,10 @@ function(_qt_internal_setup_deploy_support)
+                 # project configuration, search for both, with the bare one searched first.
+                 list(APPEND qtpaths_name_candidates "${base_name}${qt_paths_ext}")
+                 list(APPEND qtpaths_name_candidates "host-${base_name}${qt_paths_ext}")
++            elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
++                set(qt_paths_ext ".debug.bat")
++                list(APPEND qtpaths_name_candidates "${base_name}${qt_paths_ext}")
++                list(APPEND qtpaths_name_candidates "host-${base_name}${qt_paths_ext}")
+             else()
+                 set(qt_paths_ext ".exe")
+                 list(APPEND qtpaths_name_candidates "${base_name}${qt_paths_ext}")
+@@ -3243,7 +3247,7 @@ function(_qt_internal_setup_deploy_support)
+         endif()
+     endforeach()
+ 
+-    set(qtpaths_prefix "${QT6_INSTALL_PREFIX}/${QT6_INSTALL_BINS}")
++    set(qtpaths_prefix "${QT6_INSTALL_PREFIX}/tools/Qt6/bin")
+ 
+     set(candidate_paths "")
+     foreach(qtpaths_name_candidate IN LISTS qtpaths_name_candidates)

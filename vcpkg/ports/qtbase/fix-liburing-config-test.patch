@@ -1,0 +1,32 @@
+diff --git a/src/corelib/CMakeLists.txt b/src/corelib/CMakeLists.txt
+index 1ca9728..b9f5d67 100644
+--- a/src/corelib/CMakeLists.txt
++++ b/src/corelib/CMakeLists.txt
+@@ -754,10 +754,10 @@ qt_internal_extend_target(Core CONDITION QCC
+ )
+ 
+ qt_internal_extend_target(Core CONDITION QT_FEATURE_liburing
+     SOURCES
+         io/qioring.cpp io/qioring_linux.cpp io/qioring_p.h
+     LIBRARIES
+-        uring
++        PkgConfig::Liburing
+ )
+ 
+ qt_internal_extend_target(Core CONDITION QT_FEATURE_windows_ioring
+diff --git a/src/corelib/configure.cmake b/src/corelib/configure.cmake
+index d7ec27c..170e433 100644
+--- a/src/corelib/configure.cmake
++++ b/src/corelib/configure.cmake
+@@ -405,10 +405,10 @@ int main(void)
+ ")
+ 
+ # liburing
+ qt_config_compile_test(liburing
+     LABEL "liburing"
+-    LIBRARIES uring
++    LIBRARIES PkgConfig::Liburing
+     CODE
+ "#include <liburing.h>
+ 
+ int main(void)

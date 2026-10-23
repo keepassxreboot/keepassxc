@@ -1,0 +1,15 @@
+diff --git a/cmake/QtBuildInternalsExtra.cmake.in b/cmake/QtBuildInternalsExtra.cmake.in
+index ffc9d90f8..0b3a7d59e 100644
+--- a/cmake/QtBuildInternalsExtra.cmake.in
++++ b/cmake/QtBuildInternalsExtra.cmake.in
+@@ -51,8 +51,8 @@ endif()
+ set(QT_WILL_INSTALL @QT_WILL_INSTALL@ CACHE BOOL
+     "Boolean indicating if doing a Qt prefix build (vs non-prefix build)." FORCE)
+ 
+-set(QT_SOURCE_TREE "@QT_SOURCE_TREE@" CACHE PATH
+-"A path to the source tree of the previously configured QtBase project." FORCE)
++# set(QT_SOURCE_TREE "@QT_SOURCE_TREE@" CACHE PATH
++# "A path to the source tree of the previously configured QtBase project." FORCE)
+ 
+ # Propagate decision of building tests and examples to other repositories.
+ set(QT_BUILD_TESTS @QT_BUILD_TESTS@ CACHE BOOL "Build the testing tree.")

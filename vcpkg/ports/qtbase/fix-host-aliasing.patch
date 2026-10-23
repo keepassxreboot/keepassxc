@@ -1,0 +1,17 @@
+diff --git a/cmake/QtTargetHelpers.cmake b/cmake/QtTargetHelpers.cmake
+index 180ec33..a03e3b1 100644
+--- a/cmake/QtTargetHelpers.cmake
++++ b/cmake/QtTargetHelpers.cmake
+@@ -281,10 +281,10 @@ function(qt_internal_add_target_aliases target)
+     set_target_properties("${target}" PROPERTIES _qt_versionfull_alias "${versionfull_alias}")
+ 
+     get_target_property(type "${target}" TYPE)
+-    if (type STREQUAL EXECUTABLE)
++    if (type STREQUAL EXECUTABLE AND NOT TARGET "${versionfull_alias}")
+         add_executable("${versionless_alias}" ALIAS "${target}")
+         add_executable("${versionfull_alias}" ALIAS "${target}")
+-    else()
++    elseif(NOT type STREQUAL EXECUTABLE)
+         add_library("${versionless_alias}" ALIAS "${target}")
+         add_library("${versionfull_alias}" ALIAS "${target}")
+     endif()

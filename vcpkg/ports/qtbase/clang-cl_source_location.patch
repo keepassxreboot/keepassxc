@@ -1,0 +1,14 @@
+diff --git a/src/corelib/kernel/qproperty.h b/src/corelib/kernel/qproperty.h
+index 823b2057b..4a8cd4fa8 100644
+--- a/src/corelib/kernel/qproperty.h
++++ b/src/corelib/kernel/qproperty.h
+@@ -16,8 +16,8 @@
+ 
+ #include <QtCore/qpropertyprivate.h>
+ 
+-#if __has_include(<source_location>) && __cplusplus >= 202002L && !defined(Q_QDOC)
++#if __has_include(<source_location>) && __cplusplus >= 202002L && !defined(Q_QDOC) && ( (defined(__cpp_consteval) && defined(_MSC_VER)) || !defined(_MSC_VER) )
+ #include <source_location>
+ #if defined(__cpp_lib_source_location)
+ #define QT_SOURCE_LOCATION_NAMESPACE std
+ #define QT_PROPERTY_COLLECT_BINDING_LOCATION

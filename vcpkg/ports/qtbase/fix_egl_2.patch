@@ -1,0 +1,13 @@
+diff --git a/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake b/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake
+index db48f79b9..4b1686132 100644
+--- a/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake	
++++ b/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake
+@@ -116,7 +116,7 @@ if(EGL_INCLUDE_DIR)
+     unset(_EGL_version_lines)
+ endif()
+ 
+-cmake_push_check_state(RESET)
++cmake_push_check_state() # To be able to fix the compile check in vcpkg-cmake-wrapper
+ list(APPEND CMAKE_REQUIRED_LIBRARIES "${EGL_LIBRARY}")
+ list(APPEND CMAKE_REQUIRED_INCLUDES "${EGL_INCLUDE_DIR}")
+ list(APPEND CMAKE_REQUIRED_DEFINITIONS "${EGL_DEFINITIONS}")

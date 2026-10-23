@@ -1,0 +1,38 @@
+diff --git a/src/corelib/kernel/qmetatype.h b/src/corelib/kernel/qmetatype.h
+index e40cd85..ba68a01 100644
+--- a/src/corelib/kernel/qmetatype.h
++++ b/src/corelib/kernel/qmetatype.h
+@@ -18,6 +18,7 @@
+ #include <QtCore/qscopeguard.h>
+ #include <QtCore/qttypetraits.h>
+ 
++#include <type_traits>
+ #include <array>
+ #include <new>
+ #include <vector>
+@@ -826,7 +829,13 @@
+     struct IsGadgetHelper { enum { IsRealGadget = false, IsGadgetOrDerivedFrom = false }; };
+ 
+     template<typename T>
++#if defined(__clang__) && (__clang_major__ > 11)
++    // Clang does not reject T::QtGadgetHelper as ambiguous if a class inherits from two QGADGETS
++    // but is not a QGADGET itself
++    struct IsGadgetHelper<T, std::void_t<typename T::QtGadgetHelper, decltype(&T::qt_check_for_QGADGET_macro)>>
++#else
+     struct IsGadgetHelper<T, typename T::QtGadgetHelper>
++#endif
+     {
+         template <typename X>
+         static char checkType(void (X::*)());
+@@ -841,7 +850,11 @@
+     struct IsPointerToGadgetHelper { enum { IsRealGadget = false, IsGadgetOrDerivedFrom = false }; };
+ 
+     template<typename T>
++#if defined(__clang__) && (__clang_major__ > 11)
++    struct IsPointerToGadgetHelper<T*, std::void_t<typename T::QtGadgetHelper, decltype(&T::qt_check_for_QGADGET_macro)>>
++#else
+     struct IsPointerToGadgetHelper<T*, typename T::QtGadgetHelper>
++#endif
+     {
+         using BaseType = T;
+         template <typename X>

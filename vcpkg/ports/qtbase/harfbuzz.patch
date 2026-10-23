@@ -1,0 +1,13 @@
+diff --git a/cmake/FindWrapSystemHarfbuzz.cmake b/cmake/FindWrapSystemHarfbuzz.cmake
+index 3cb44aa76..9bf0d7165 100644
+--- a/cmake/FindWrapSystemHarfbuzz.cmake
++++ b/cmake/FindWrapSystemHarfbuzz.cmake
+@@ -6,7 +6,7 @@ if(TARGET WrapSystemHarfbuzz::WrapSystemHarfbuzz)
+ endif()
+ set(WrapSystemHarfbuzz_REQUIRED_VARS __harfbuzz_found)
+ 
+-find_package(harfbuzz ${${CMAKE_FIND_PACKAGE_NAME}_FIND_VERSION} QUIET)
++find_package(harfbuzz QUIET) # VCPKG is missing the version file for harfbuzz. 
+ 
+ # Gentoo has some buggy version of a harfbuzz Config file. Check if include paths are valid.
+ set(__harfbuzz_target_name "harfbuzz::harfbuzz")

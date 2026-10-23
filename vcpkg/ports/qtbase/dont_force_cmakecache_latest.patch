@@ -1,0 +1,13 @@
+diff --git a/cmake/QtPostProcessHelpers.cmake b/cmake/QtPostProcessHelpers.cmake
+index 4f8106dfa..bec5c402e 100644
+--- a/cmake/QtPostProcessHelpers.cmake
++++ b/cmake/QtPostProcessHelpers.cmake
+@@ -414,7 +414,7 @@ function(qt_generate_install_prefixes out_var)
+ 
+     foreach(var ${vars})
+         get_property(docstring CACHE "${var}" PROPERTY HELPSTRING)
+-        string(APPEND content "set(${var} \"${${var}}\" CACHE STRING \"${docstring}\" FORCE)\n")
++        string(APPEND content "set(${var} \"${${var}}\" CACHE STRING \"${docstring}\")\n")
+     endforeach()
+ 
+     set(${out_var} "${content}" PARENT_SCOPE)

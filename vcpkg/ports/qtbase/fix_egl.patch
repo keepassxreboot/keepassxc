@@ -1,0 +1,12 @@
+diff --git a/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake b/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake
+index eafbc1ff9..dd4068838 100644
+--- a/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake
++++ b/cmake/3rdparty/extra-cmake-modules/find-modules/FindEGL.cmake	
+@@ -82,6 +82,7 @@ find_path(EGL_INCLUDE_DIR
+ find_library(EGL_LIBRARY
+     NAMES
+         EGL
++        libEGL # required to find angle on windows within vcpkg. 
+     HINTS
+         ${PKG_EGL_LIBRARY_DIRS}
+ )

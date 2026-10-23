@@ -1,0 +1,75 @@
+diff --git a/cmake/3rdparty/extra-cmake-modules/find-modules/FindGLIB2.cmake b/cmake/3rdparty/extra-cmake-modules/find-modules/FindGLIB2.cmake
+index 24a194c..91c8e41 100644
+--- a/cmake/3rdparty/extra-cmake-modules/find-modules/FindGLIB2.cmake
++++ b/cmake/3rdparty/extra-cmake-modules/find-modules/FindGLIB2.cmake
+@@ -95,6 +95,18 @@ find_library(GLIB2_GIO_LIBRARIES
+              HINTS ${PC_GIO_LIBDIR}
+ )
+ 
++pkg_check_modules(PC_GMODULE QUIET gmodule-2.0)
++
++find_path(GLIB2_GMODULE_INCLUDE_DIRS
++          NAMES gmodule.h
++          HINTS ${PC_GMODULE}
++          PATH_SUFFIXES glib-2.0)
++
++find_library(GLIB2_GMODULE_LIBRARIES
++             NAMES gmodule-2.0
++             HINTS ${PC_GMODULE}
++)
++
+ # search the glibconfig.h include dir under the same root where the library is found
+ get_filename_component(glib2LibDir "${GLIB2_LIBRARIES}" PATH)
+ 
+@@ -126,6 +138,11 @@ if(GLIB2_GIO_LIBRARIES AND GLIB2_GIO_INCLUDE_DIRS)
+   set(GLIB2_GIO_FOUND TRUE)
+ endif()
+ 
++if(GLIB2_GMODULE_LIBRARIES AND GLIB2_GMODULE_INCLUDE_DIRS)
++  set(GLIB2_GMODULE_FOUND TRUE)
++endif()
++
++
+ include(FindPackageHandleStandardArgs)
+ find_package_handle_standard_args(GLIB2
+                                   REQUIRED_VARS GLIB2_LIBRARIES GTHREAD2_LIBRARIES GLIB2_INCLUDE_DIRS
+@@ -137,6 +154,16 @@ if(GLIB2_FOUND AND NOT TARGET GLIB2::GLIB2)
+                         IMPORTED_LOCATION "${GLIB2_LIBRARIES}"
+                         INTERFACE_LINK_LIBRARIES "${GTHREAD2_LIBRARIES}"
+                         INTERFACE_INCLUDE_DIRECTORIES "${GLIB2_INCLUDE_DIRS}")
++    #vcpkg specific
++    pkg_check_modules(PC_PCRE2_8BIT QUIET libpcre2-8)
++    find_library(PCRE2_8BIT_LIBRARIES
++                 NAMES pcre2-8
++                 HINTS ${PC_PCRE2_8BIT}
++    )
++    target_link_libraries(GLIB2::GLIB2 INTERFACE ${PCRE2_8BIT_LIBRARIES})
++    find_package(Iconv)
++    find_package(Intl)
++    target_link_libraries(GLIB2::GLIB2 INTERFACE Intl::Intl Iconv::Iconv)
+ endif()
+ 
+ if(GLIB2_GOBJECT_FOUND AND NOT TARGET GLIB2::GOBJECT)
+@@ -153,12 +180,21 @@ if(GLIB2_GIO_FOUND AND NOT TARGET GLIB2::GIO)
+                         INTERFACE_INCLUDE_DIRECTORIES "${GLIB2_GIO_INCLUDE_DIRS}")
+ endif()
+ 
++if(GLIB2_GMODULE_FOUND AND NOT TARGET GLIB2::GMODULE)
++  add_library(GLIB2::GMODULE UNKNOWN IMPORTED)
++  set_target_properties(GLIB2::GMODULE PROPERTIES
++                        IMPORTED_LOCATION "${GLIB2_GMODULE_LIBRARIES}"
++                        INTERFACE_INCLUDE_DIRECTORIES "${GLIB2_GMODULE_INCLUDE_DIRS}")
++endif()
++
++
+ mark_as_advanced(GLIB2_INCLUDE_DIRS GLIB2_INCLUDE_DIR
+                  GLIB2_LIBRARIES GLIB2_LIBRARY
+                  GLIB2_GOBJECT_INCLUDE_DIRS GLIB2_GOBJECT_INCLUDE_DIR
+                  GLIB2_GOBJECT_LIBRARIES GLIB2_GOBJECT_LIBRARY
+                  GLIB2_GIO_INCLUDE_DIRS GLIB2_GIO_INCLUDE_DIR
+-                 GLIB2_GIO_LIBRARIES GLIB2_GIO_LIBRARY)
++                 GLIB2_GIO_LIBRARIES GLIB2_GIO_LIBRARY
++                 GLIB2_GMODULE_LIBRARIES GLIB2_GMODULE_INCLUDE_DIRS)
+ 
+ include(FeatureSummary)
+ set_package_properties(GLIB2 PROPERTIES

@@ -1,0 +1,31 @@
+ src/corelib/mimetypes/mimetypes_resources.cmake | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/corelib/mimetypes/mimetypes_resources.cmake b/src/corelib/mimetypes/mimetypes_resources.cmake
+index 1bec50e4..d4d54763 100644
+--- a/src/corelib/mimetypes/mimetypes_resources.cmake
++++ b/src/corelib/mimetypes/mimetypes_resources.cmake
+@@ -7,17 +7,17 @@
+ # file with the same information
+ 
+ set(corelib_mimetypes_resource_file
+-    "${CMAKE_CURRENT_LIST_DIR}/3rdparty/tika-mimetypes.xml"
++    "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/mime/packages/freedesktop.org.xml"
+ )
+ 
+ function(corelib_add_mimetypes_resources target)
+     set(source_file "${corelib_mimetypes_resource_file}")
+     set_source_files_properties("${source_file}"
+-        PROPERTIES QT_RESOURCE_ALIAS "tika-mimetypes.xml"
++        PROPERTIES QT_RESOURCE_ALIAS "freedesktop.org.xml"
+     )
+     qt_internal_add_resource(${target} "mimetypes"
+         PREFIX
+-            "/qt-project.org/qmime/tika/packages"
++            "/qt-project.org/qmime/packages"
+         FILES
+             "${source_file}"
+     )
+-- 
+2.34.1
+

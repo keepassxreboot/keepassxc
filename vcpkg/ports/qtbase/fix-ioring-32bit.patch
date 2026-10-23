@@ -1,0 +1,12 @@
+diff --git a/src/corelib/configure.cmake b/src/corelib/configure.cmake
+index 1234567..abcdefg 100644
+--- a/src/corelib/configure.cmake
++++ b/src/corelib/configure.cmake
+@@ -830,6 +830,6 @@ qt_feature("windows-ioring" PRIVATE
+     LABEL "Windows I/O Ring"
+     AUTODETECT WIN32
+-    CONDITION TEST_windows_ioring
++    CONDITION TEST_windows_ioring AND CMAKE_SIZEOF_VOID_P EQUAL 8
+ )
+ qt_feature("windows-ioring-skip-builder-param-checks" PRIVATE
+     LABEL "Windows I/O Ring IORING_CREATE_SKIP_BUILDER_PARAM_CHECKS"

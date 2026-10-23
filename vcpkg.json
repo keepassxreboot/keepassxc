@@ -1,7 +1,7 @@
 {
   "name": "keepassxc",
   "version-string": "2.8.0",
-  "builtin-baseline": "1600ce2ba1b6b621bfc5a31a785c4963b817a1c7",
+  "builtin-baseline": "23b8a8e7409c2d6346114a88e834165bde79a51c",
   "dependencies": [
     "botan",
     "minizip",
