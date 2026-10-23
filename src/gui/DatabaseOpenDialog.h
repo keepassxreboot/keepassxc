@@ -61,6 +61,7 @@ public slots:
     void done(int result) override;
     void complete(bool accepted);
     void tabChanged(int index);
+    void onDatabaseUnlocked(DatabaseWidget* dbWidget);
 
 protected:
     void showEvent(QShowEvent* event) override;
