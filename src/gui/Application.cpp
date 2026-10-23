@@ -49,6 +49,13 @@ namespace
     int g_OriginalFontSize = 0;
 } // namespace
 
+enum Application::SocketCmd : quint32
+{
+    OpenFiles = 1,
+    LockAll,
+    Unlock,
+};
+
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
 #ifdef Q_OS_UNIX
@@ -56,11 +63,7 @@ Application::Application(int& argc, char** argv)
 #endif
     , m_alreadyRunning(false)
     , m_lockFile(nullptr)
-#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
 {
-#else
-{
-#endif
 #if defined(Q_OS_UNIX)
     registerUnixSignals();
 #endif
@@ -324,13 +327,12 @@ void Application::socketReadyRead()
         return;
     }
 
-    QStringList fileNames;
-    quint32 id;
+    SocketCmd id;
     in >> id;
 
-    // TODO: move constants to enum
     switch (id) {
-    case 1:
+    case SocketCmd::OpenFiles: {
+        QStringList fileNames;
         in >> fileNames;
         for (const QString& fileName : asConst(fileNames)) {
             const QFileInfo fInfo(fileName);
@@ -338,10 +340,15 @@ void Application::socketReadyRead()
                 emit openFile(fileName);
             }
         }
-
         break;
-    case 2:
+    }
+    case SocketCmd::LockAll:
         getMainWindow()->lockAllDatabases();
+        break;
+    case SocketCmd::Unlock:
+        QString filename, password, keyfile;
+        in >> filename >> password >> keyfile;
+        emit openFile(filename, password, keyfile);
         break;
     }
 
@@ -350,20 +357,10 @@ void Application::socketReadyRead()
 
 bool Application::isAlreadyRunning() const
 {
-#ifdef QT_DEBUG
-    // In DEBUG mode we can run unlimited instances
-    return false;
-#endif
     return config()->get(Config::SingleInstance).toBool() && m_alreadyRunning;
 }
 
-/**
- * Send to-open file names to the running UI instance
- *
- * @param fileNames - list of file names to open
- * @return true if all operations succeeded (connection made, data sent, connection closed)
- */
-bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
+bool Application::sendSocketCommand(SocketCmd id, const std::function<void(QDataStream&)>& caller)
 {
     QLocalSocket client;
     client.connectToServer(m_socketName);
@@ -376,8 +373,8 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
     out << quint32(0); // reserve space for block size
-    out << quint32(1); // ID for file name send. TODO: move to enum
-    out << fileNames; // send file names to be opened
+    out << id; // ID of command being sent.
+    caller(out); // Pass to caller to add any additional data
     out.device()->seek(0);
     out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
 
@@ -389,35 +386,35 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
 }
 
 /**
+ * Send to-open file names to the running UI instance
+ *
+ * @param fileNames - list of file names to open
+ * @return true if all operations succeeded (connection made, data sent, connection closed)
+ */
+bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
+{
+    return this->sendSocketCommand(SocketCmd::OpenFiles, [&](QDataStream& out) { out << fileNames; });
+}
+
+/**
  * Locks all open databases in the running instance
  *
  * @return true if the "please lock" signal was sent successfully
  */
 bool Application::sendLockToInstance()
 {
-    // Make a connection to avoid SIGSEGV
-    QLocalSocket client;
-    client.connectToServer(m_socketName);
-    const bool connected = client.waitForConnected(WaitTimeoutMSec);
-    if (!connected) {
-        return false;
-    }
+    return this->sendSocketCommand(SocketCmd::LockAll, [](QDataStream&) { /* No Data */ });
+}
 
-    // Send lock signal
-    QByteArray data;
-    QDataStream out(&data, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_0);
-    out << quint32(0); // reserve space for block size
-    out << quint32(2); // ID for database lock. TODO: move to enum
-    out.device()->seek(0);
-    out << quint32(data.size() - sizeof(quint32)); // replace the previous constant 0 with block size
-
-    // Finish gracefully
-    const bool writeOk = client.write(data) != -1 && client.waitForBytesWritten(WaitTimeoutMSec);
-    client.disconnectFromServer();
-    const bool disconnected =
-        client.state() == QLocalSocket::UnconnectedState || client.waitForConnected(WaitTimeoutMSec);
-    return writeOk && disconnected;
+/**
+ * Open and unlock a database file in the running instance
+ *
+ * @return true if the instance receives the request
+ */
+bool Application::sendUnlockToInstance(const QString& filename, const QString& password, const QString& keyfile)
+{
+    return this->sendSocketCommand(SocketCmd::Unlock,
+                                   [&](QDataStream& out) { out << filename << password << keyfile; });
 }
 
 bool Application::isDarkTheme() const
