@@ -863,7 +863,7 @@ namespace Phantom
         {
             QRect ra = bar->rect;
             QRect rb = ra;
-            bool isHorizontal = bar->state == QStyle::State_Horizontal;
+            bool isHorizontal = bar->state & QStyle::State_Horizontal;
             bool isInverted = bar->invertedAppearance;
             bool isIndeterminate = bar->minimum == 0 && bar->maximum == 0;
             bool isForward = !isHorizontal || bar->direction != Qt::RightToLeft;
