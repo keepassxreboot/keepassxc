@@ -419,6 +419,13 @@ namespace FdoSecrets
                 });
                 connect(coll, &Collection::collectionAboutToDelete, ac, &AccessControlDialog::reject);
             }
+            // nobody is left to receive the answer once the client disconnects
+            connect(
+                dbus().data(), &DBusMgr::clientDisconnected, ac, [ac, c = client.data()](const DBusClientPtr& gone) {
+                    if (gone.data() == c) {
+                        ac->reject();
+                    }
+                });
             ac->open();
         } else {
             itemUnlockFinished({}, AuthDecision::Undecided);
@@ -431,6 +438,7 @@ namespace FdoSecrets
         if (!client) {
             // client already gone
             qDebug() << "DBus client gone before item unlocking finish";
+            finishPrompt(true);
             return;
         }
         for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
