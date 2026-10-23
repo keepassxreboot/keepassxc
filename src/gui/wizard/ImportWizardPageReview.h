@@ -58,6 +58,7 @@ private:
     QSharedPointer<Database> importProtonPass(const QString& filename);
     QSharedPointer<Database> importRemote(const QString& downloadCommand,
                                           const QString& downloadInput,
+                                          int downloadTimeSec,
                                           const QString& password,
                                           const QString& keyfile);
 
