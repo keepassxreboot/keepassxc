@@ -180,7 +180,7 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
         auto urlstring = QString("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
                              .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)),
                                   username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)),
-                                  QString(QUrl::toPercentEncoding(Base32::sanitizeInput(settings->key.toLatin1()))),
+                                  QString(QUrl::toPercentEncoding(Base32::sanitizeInput(settings->key.toLatin1(), !forceOtp))),
                                   QString::number(settings->step),
                                   QString::number(settings->digits));
 

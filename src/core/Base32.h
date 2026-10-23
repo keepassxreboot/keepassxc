@@ -35,7 +35,7 @@ public:
     Q_REQUIRED_RESULT static QByteArray encode(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray addPadding(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray removePadding(const QByteArray&);
-    Q_REQUIRED_RESULT static QByteArray sanitizeInput(const QByteArray&);
+    Q_REQUIRED_RESULT static QByteArray sanitizeInput(const QByteArray&, bool withPadding = true);
 };
 
 #endif // BASE32_H
