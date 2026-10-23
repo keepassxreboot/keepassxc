@@ -17,6 +17,7 @@
 
 #include "Polkit.h"
 
+#include "config-keepassx.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
@@ -27,14 +28,22 @@
 #include <QtDBus>
 #include <botan/mem_ops.h>
 #include <cerrno>
+#include <cstring>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 
+#ifdef WITH_KEYUTILS
 extern "C" {
 #include <keyutils.h>
 }
+#endif
 
 const QString polkit_service = "org.freedesktop.PolicyKit1";
 const QString polkit_object = "/org/freedesktop/PolicyKit1/Authority";
 
+#ifdef WITH_KEYUTILS
 namespace
 {
     QString getKeyName(const QUuid& dbUuid)
@@ -43,9 +52,79 @@ namespace
         return keyPrefix + dbUuid.toString();
     }
 } // namespace
+#endif
+
+/**
+ * Memory backed by memfd_secret(2). The pages are only mapped into this
+ * process and are removed from the kernel's direct map, so they cannot be read
+ * by other processes and are never swapped out.
+ */
+class SecretMemory
+{
+public:
+    ~SecretMemory()
+    {
+        Botan::secure_scrub_memory(m_data, m_size);
+        munmap(m_data, m_size);
+    }
+
+    static QSharedPointer<SecretMemory> create(const QByteArray& data)
+    {
+#ifdef SYS_memfd_secret
+        int fd = static_cast<int>(syscall(SYS_memfd_secret, O_CLOEXEC));
+        if (fd < 0) {
+            qDebug() << "polkit memfd_secret failed: " << errno;
+            return {};
+        }
+
+        auto size = static_cast<size_t>(data.size());
+        void* mem = MAP_FAILED;
+        if (ftruncate(fd, static_cast<off_t>(size)) == 0) {
+            mem = mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+        }
+        int error = errno;
+
+        // The mapping keeps the secret memory alive, so the file descriptor is no longer needed
+        close(fd);
+
+        if (mem == MAP_FAILED) {
+            qDebug() << "polkit failed to map secret memory: " << error;
+            return {};
+        }
+
+        std::memcpy(mem, data.constData(), size);
+        return QSharedPointer<SecretMemory>(new SecretMemory(mem, size));
+#else
+        Q_UNUSED(data)
+        qDebug() << "polkit: memfd_secret is not supported on this platform";
+        return {};
+#endif
+    }
+
+    QByteArray read() const
+    {
+        return {static_cast<const char*>(m_data), static_cast<qsizetype>(m_size)};
+    }
+
+private:
+    SecretMemory(void* data, size_t size)
+        : m_data(data)
+        , m_size(size)
+    {
+    }
+
+    void* m_data;
+    size_t m_size;
+};
 
 Polkit::Polkit()
 {
+#if !defined(WITH_KEYUTILS) && !defined(SYS_memfd_secret)
+    m_available = false;
+    qDebug() << "polkit: Neither the Linux keyring nor memfd_secret are available to store keys";
+    return;
+#endif
+
     PolkitSubject::registerMetaType();
     PolkitAuthorizationResults::registerMetaType();
 
@@ -82,6 +161,7 @@ Polkit::~Polkit()
 void Polkit::reset(const QUuid& dbUuid)
 {
     m_encryptedMasterKeys.remove(dbUuid);
+    m_secretMemory.remove(dbUuid);
 }
 
 bool Polkit::isAvailable() const
@@ -97,6 +177,86 @@ QString Polkit::errorString() const
 void Polkit::reset()
 {
     m_encryptedMasterKeys.clear();
+    m_secretMemory.clear();
+}
+
+bool Polkit::storeSecret(const QUuid& dbUuid, const QByteArray& secret)
+{
+#ifdef WITH_KEYUTILS
+    // Prefer the Linux keyring, which keeps the secret in kernel memory
+    key_serial_t key_serial = add_key(
+        "user", getKeyName(dbUuid).toStdString().c_str(), secret.constData(), secret.size(), KEY_SPEC_PROCESS_KEYRING);
+    if (key_serial >= 0) {
+        return true;
+    }
+    qDebug() << "polkit keyring failed to store: " << errno;
+#endif
+
+    // Fall back to secret memory, e.g. when the keyring syscalls are blocked by the Flatpak sandbox
+    auto secretMemory = SecretMemory::create(secret);
+    if (!secretMemory) {
+#ifdef WITH_KEYUTILS
+        m_error = QObject::tr("Failed to store in Linux Keyring or secret memory");
+#else
+        m_error = QObject::tr("Failed to store in secret memory");
+#endif
+        return false;
+    }
+
+    m_secretMemory.insert(dbUuid, secretMemory);
+    return true;
+}
+
+bool Polkit::retrieveSecret(const QUuid& dbUuid, QByteArray& secret)
+{
+    auto secretMemory = m_secretMemory.value(dbUuid);
+    if (secretMemory) {
+        secret = secretMemory->read();
+        return true;
+    }
+
+#ifdef WITH_KEYUTILS
+    key_serial_t keySerial =
+        find_key_by_type_and_desc("user", getKeyName(dbUuid).toStdString().c_str(), KEY_SPEC_PROCESS_KEYRING);
+
+    if (keySerial == -1) {
+        m_error = QObject::tr("Could not locate key in keyring");
+        qDebug() << "polkit keyring failed to find: " << errno;
+        return false;
+    }
+
+    void* keychainBuffer;
+    long keychainDataSize = keyctl_read_alloc(keySerial, &keychainBuffer);
+
+    if (keychainDataSize == -1) {
+        m_error = QObject::tr("Could not read key in keyring");
+        qDebug() << "polkit keyring failed to read: " << errno;
+        return false;
+    }
+
+    secret = QByteArray(static_cast<const char*>(keychainBuffer), keychainDataSize);
+
+    Botan::secure_scrub_memory(keychainBuffer, keychainDataSize);
+    free(keychainBuffer);
+
+    return true;
+#else
+    m_error = QObject::tr("Could not locate key in secret memory");
+    return false;
+#endif
+}
+
+bool Polkit::hasSecret(const QUuid& dbUuid) const
+{
+    if (m_secretMemory.contains(dbUuid)) {
+        return true;
+    }
+
+#ifdef WITH_KEYUTILS
+    return find_key_by_type_and_desc("user", getKeyName(dbUuid).toStdString().c_str(), KEY_SPEC_PROCESS_KEYRING) != -1;
+#else
+    return false;
+#endif
 }
 
 bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
@@ -122,22 +282,17 @@ bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
         return false;
     }
 
-    // Add the iv/key pair into the linux keyring
-    key_serial_t key_serial = add_key("user",
-                                      getKeyName(dbUuid).toStdString().c_str(),
-                                      keychainKeyValue.constData(),
-                                      keychainKeyValue.size(),
-                                      KEY_SPEC_PROCESS_KEYRING);
-    if (key_serial < 0) {
-        m_error = QObject::tr("Failed to store in Linux Keyring");
-        qDebug() << "polkit keyring failed to store: " << errno;
-        return false;
-    }
+    // Store the iv/key pair in the linux keyring or secret memory
+    bool stored = storeSecret(dbUuid, keychainKeyValue);
 
     // Scrub the keys from ram
     Botan::secure_scrub_memory(randomKey.data(), randomKey.size());
     Botan::secure_scrub_memory(randomIV.data(), randomIV.size());
     Botan::secure_scrub_memory(keychainKeyValue.data(), keychainKeyValue.size());
+
+    if (!stored) {
+        return false;
+    }
 
     // Store encrypted master password and return
     m_encryptedMasterKeys.insert(dbUuid, encryptedMasterKey);
@@ -177,28 +332,10 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
     PolkitAuthorizationResults authResult = result.value();
     if (authResult.is_authorized) {
         QByteArray encryptedMasterKey = m_encryptedMasterKeys.value(dbUuid);
-        key_serial_t keySerial =
-            find_key_by_type_and_desc("user", getKeyName(dbUuid).toStdString().c_str(), KEY_SPEC_PROCESS_KEYRING);
-
-        if (keySerial == -1) {
-            m_error = QObject::tr("Could not locate key in keyring");
-            qDebug() << "polkit keyring failed to find: " << errno;
+        QByteArray keychainBytes;
+        if (!retrieveSecret(dbUuid, keychainBytes)) {
             return false;
         }
-
-        void* keychainBuffer;
-        long keychainDataSize = keyctl_read_alloc(keySerial, &keychainBuffer);
-
-        if (keychainDataSize == -1) {
-            m_error = QObject::tr("Could not read key in keyring");
-            qDebug() << "polkit keyring failed to read: " << errno;
-            return false;
-        }
-
-        QByteArray keychainBytes(static_cast<const char*>(keychainBuffer), keychainDataSize);
-
-        Botan::secure_scrub_memory(keychainBuffer, keychainDataSize);
-        free(keychainBuffer);
 
         QByteArray keychainKey = keychainBytes.left(SymmetricCipher::keySize(SymmetricCipher::Aes256_GCM));
         QByteArray keychainIv = keychainBytes.right(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
@@ -243,5 +380,5 @@ bool Polkit::hasKey(const QUuid& dbUuid) const
         return false;
     }
 
-    return find_key_by_type_and_desc("user", getKeyName(dbUuid).toStdString().c_str(), KEY_SPEC_PROCESS_KEYRING) != -1;
+    return hasSecret(dbUuid);
 }
