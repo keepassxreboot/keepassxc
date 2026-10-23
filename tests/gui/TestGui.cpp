@@ -491,6 +491,19 @@ void TestGui::testRemoteSyncDatabaseRequiresPassword()
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
 }
 
+void TestGui::testRemoteSyncErrorDetail()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx"), 1,
+                                  "NAS share not connected"));
+    });
+    QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncFailed);
+    prepareAndTriggerRemoteSync();
+    QTRY_COMPARE(dbSyncSpy.count(), 1);
+    QVERIFY(dbSyncSpy.at(0).at(1).toString().contains("NAS share not connected"));
+}
+
 void TestGui::testOpenRemoteDatabase()
 {
     // close current database
