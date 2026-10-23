@@ -1,0 +1,47 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 22b21d2..90003a8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -152,14 +152,13 @@ endif()  # BUILD_SHARED_LIBS
+ 
+ foreach(lib ${BROTLI_SHARED_LIBRARIES} ${BROTLI_STATIC_LIBRARIES})
+   target_link_libraries(${lib} ${LIBM_LIBRARY})
+-  set_property(TARGET ${lib} APPEND PROPERTY INCLUDE_DIRECTORIES ${BROTLI_INCLUDE_DIRS})
+   set_target_properties(${lib} PROPERTIES
+     VERSION "${BROTLI_ABI_COMPATIBILITY}.${BROTLI_ABI_AGE}.${BROTLI_ABI_REVISION}"
+     SOVERSION "${BROTLI_ABI_COMPATIBILITY}")
+   if (NOT BROTLI_EMSCRIPTEN)
+     set_target_properties(${lib} PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+   endif()
+-  set_property(TARGET ${lib} APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES "$<BUILD_INTERFACE:${BROTLI_INCLUDE_DIRS}>")
++  set_property(TARGET ${lib} APPEND PROPERTY INTERFACE_INCLUDE_DIRECTORIES "$<BUILD_INTERFACE:${BROTLI_INCLUDE_DIRS}>" $<INSTALL_INTERFACE:include>)
+ endforeach()  # BROTLI_xxx_LIBRARIES
+ 
+ target_link_libraries(brotlidec brotlicommon)
+@@ -187,12 +186,15 @@ if (NOT BROTLI_BUNDLED_MODE)
+   if (BROTLI_BUILD_TOOLS)
+     install(
+       TARGETS brotli
+-      RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
++      RUNTIME DESTINATION tools/brotli
++      BUNDLE DESTINATION tools/brotli
++      CONFIGURATIONS Release
+     )
+   endif()
+ 
+   install(
+     TARGETS ${BROTLI_SHARED_LIBRARIES} ${BROTLI_STATIC_LIBRARIES}
++    EXPORT brotli
+     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+     LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+@@ -201,7 +203,9 @@ if (NOT BROTLI_BUNDLED_MODE)
+   install(
+     DIRECTORY ${BROTLI_INCLUDE_DIRS}/brotli
+     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
++    CONFIGURATIONS Release
+   )
++  install(EXPORT brotli FILE unofficial-brotli-config.cmake NAMESPACE unofficial::brotli:: DESTINATION share/unofficial-brotli)
+ endif()  # BROTLI_BUNDLED_MODE
+ 
+ # Tests

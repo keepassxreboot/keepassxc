@@ -1,0 +1,7 @@
+brotli provides CMake targets:
+
+    find_package(unofficial-brotli CONFIG REQUIRED)
+    # Brotli decoder library
+    target_link_libraries(main PRIVATE unofficial::brotli::brotlidec)
+    # Brotli encoder library
+    target_link_libraries(main PRIVATE unofficial::brotli::brotlienc)
