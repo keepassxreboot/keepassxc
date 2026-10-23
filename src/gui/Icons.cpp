@@ -246,6 +246,8 @@ QPixmap Icons::entryIconPixmap(const Entry* entry, IconSize size)
 
     if (entry->isExpired()) {
         icon = databaseIcons()->applyBadge(icon, DatabaseIcons::Badges::Expired);
+    } else if (entry->hasUnsavedChanges()) {
+        icon = databaseIcons()->applyBadge(icon, DatabaseIcons::Badges::Modified);
     }
 
     return icon;
