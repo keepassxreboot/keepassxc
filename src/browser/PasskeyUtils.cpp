@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,10 +20,22 @@
 #include "BrowserPasskeys.h"
 #include "core/EntryAttributes.h"
 #include "core/Tools.h"
+#include "crypto/Random.h"
 #include "gui/UrlTools.h"
+
+#include <botan/kdf.h>
 
 #include <QList>
 #include <QUrl>
+#include <botan/mac.h>
+
+#define CHALLENGE_MIN_LENGTH 16
+#define PRF_DERIVED_KEY_LENGTH 32
+#define PRF_SECRET_LENGTH 32
+#define USER_ID_MIN_LENGTH 1
+#define USER_ID_MAX_LENGTH 64
+
+const static auto SALT_PRF = QStringLiteral("WebAuthn PRF");
 
 Q_GLOBAL_STATIC(PasskeyUtils, s_passkeyUtils);
 
@@ -35,13 +47,13 @@ PasskeyUtils* PasskeyUtils::instance()
 int PasskeyUtils::checkLimits(const QJsonObject& pkOptions) const
 {
     const auto challenge = pkOptions["challenge"].toString();
-    if (challenge.isEmpty() || challenge.length() < 16) {
+    if (challenge.isEmpty() || challenge.length() < CHALLENGE_MIN_LENGTH) {
         return ERROR_PASSKEYS_INVALID_CHALLENGE;
     }
 
     const auto userIdBase64 = pkOptions["user"]["id"].toString();
     const auto userId = browserMessageBuilder()->getArrayFromBase64(userIdBase64);
-    if (userId.isEmpty() || (userId.length() < 1 || userId.length() > 64)) {
+    if (userId.isEmpty() || (userId.length() < USER_ID_MIN_LENGTH || userId.length() > USER_ID_MAX_LENGTH)) {
         return ERROR_PASSKEYS_INVALID_USER_ID;
     }
 
@@ -83,6 +95,35 @@ bool PasskeyUtils::checkCredentialAssertionOptions(const QJsonObject& assertionO
     }
 
     return true;
+}
+
+int PasskeyUtils::checkPrfEvalByCredential(const QJsonObject& assertionOptions,
+                                           const QJsonObject& extensionObject) const
+{
+    const auto prfObject = extensionObject["prf"].toObject();
+    if (!prfObject.isEmpty() && prfObject.contains("evalByCredential")) {
+        const auto evalByCredential = prfObject["evalByCredential"].toObject();
+        const auto allowedCredentials = passkeyUtils()->getAllowedCredentialsFromAssertionOptions(assertionOptions);
+
+        // Cannot be empty if evalByCredential is not empty
+        if (allowedCredentials.isEmpty() && !evalByCredential.isEmpty()) {
+            return ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_EMPTY;
+        }
+
+        // evalByCredential must include a key that is one of allowedCredentials
+        bool credentialFound = false;
+        for (const auto& credential : allowedCredentials) {
+            if (evalByCredential.contains(credential)) {
+                credentialFound = true;
+            }
+        }
+
+        if (!credentialFound) {
+            return ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_FOUND;
+        }
+    }
+
+    return PASSKEYS_SUCCESS;
 }
 
 int PasskeyUtils::getEffectiveDomain(const QString& origin, QString* result) const
@@ -307,9 +348,11 @@ bool PasskeyUtils::isUserVerificationRequired(const QJsonObject& authenticatorSe
                && BrowserPasskeys::SUPPORT_USER_VERIFICATION);
 }
 
-ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) const
+ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject,
+                                                 const QString& prfSecret,
+                                                 const QStringList& allowCredentials) const
 {
-    const QStringList allowedKeys = {"credProps", "uvm"};
+    const QStringList allowedKeys = {"credProps", "prf", "uvm"};
 
     // Remove unsupported keys
     for (const auto& key : extensionObject.keys()) {
@@ -320,6 +363,7 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 
     // Create response object
     QJsonObject extensionJSON;
+    ExtensionResult result;
 
     // https://w3c.github.io/webauthn/#sctn-authenticator-credential-properties-extension
     if (extensionObject.contains("credProps") && extensionObject["credProps"].toBool()) {
@@ -338,13 +382,21 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
         extensionJSON["uvm"] = uvmResponse;
     }
 
+    // https://www.w3.org/TR/webauthn-3/#prf-extension
+    if (extensionObject.contains("prf")) {
+        const auto prfResponse = getPrfResponse(extensionObject, prfSecret, allowCredentials);
+        extensionJSON["prf"] = prfResponse.response;
+        if (prfSecret.isEmpty()) {
+            result.prfSecret = prfResponse.secret;
+        }
+    }
+
     if (extensionJSON.isEmpty()) {
         return {};
     }
 
     auto extensionData = m_browserCbor.cborEncodeExtensionData(extensionObject);
     if (!extensionData.isEmpty()) {
-        ExtensionResult result;
         result.extensionData = extensionData;
         result.extensionObject = extensionJSON;
         return result;
@@ -402,4 +454,102 @@ QString PasskeyUtils::getUsernameFromEntry(const Entry* entry) const
     return entry->attributes()->hasKey(EntryAttributes::KPXC_PASSKEY_USERNAME)
                ? entry->attributes()->value(EntryAttributes::KPXC_PASSKEY_USERNAME)
                : entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_USERNAME);
+}
+
+// Gets PRF salts directly from the response, or from first matching credential ID in allowCredentials
+// https://w3c.github.io/webauthn/#dom-authenticationextensionsprfinputs-eval
+QPair<QByteArray, QByteArray> PasskeyUtils::getPrfSaltsFromResponse(const QJsonObject& prfObject,
+                                                                    const QStringList& allowCredentials) const
+{
+
+    if (prfObject.contains("eval")) {
+        const auto first = prfObject["eval"]["first"].toString();
+        const auto second = prfObject["eval"]["second"].toString();
+        return qMakePair(browserMessageBuilder()->getArrayFromBase64(first),
+                         browserMessageBuilder()->getArrayFromBase64(second));
+    }
+
+    // Look for matching credential ID
+    if (prfObject.contains("evalByCredential") && !allowCredentials.isEmpty()) {
+        const auto evalObject = prfObject["evalByCredential"].toObject();
+        for (const auto& credential : allowCredentials) {
+            const auto first = evalObject.value(credential).toObject()["first"].toString();
+            const auto second = evalObject.value(credential).toObject()["second"].toString();
+            // Second is not required, but can exist
+            if (!first.isEmpty()) {
+                return qMakePair(browserMessageBuilder()->getArrayFromBase64(first),
+                                 browserMessageBuilder()->getArrayFromBase64(second));
+            }
+        }
+    }
+
+    return {};
+}
+
+PrfResult PasskeyUtils::getPrfResponse(const QJsonObject& extensionObject,
+                                       const QString& prfSecret,
+                                       const QStringList& allowCredentials) const
+{
+    PrfResult result;
+
+    const auto prfObject = extensionObject["prf"].toObject();
+    const auto salts = getPrfSaltsFromResponse(prfObject, allowCredentials);
+
+    if (salts.first.isEmpty() && salts.second.isEmpty()) {
+        // Only the feature capability was requested
+        QJsonObject prfResponse{
+            {"enabled", true},
+        };
+        result.response = prfResponse;
+        return result;
+    }
+
+    // Generate a new secret if not provided
+    auto secret = prfSecret.isEmpty() ? randomGen()->randomArray(PRF_SECRET_LENGTH)
+                                      : browserMessageBuilder()->getArrayFromBase64(prfSecret);
+    const auto firstPrfValue = computePrfValue(secret, salts.first);
+    const auto secondPrfValue = computePrfValue(secret, salts.second);
+
+    QJsonObject results;
+    results["first"] = browserMessageBuilder()->getBase64FromArray(firstPrfValue);
+    if (!secondPrfValue.isEmpty()) {
+        results["second"] = browserMessageBuilder()->getBase64FromArray(secondPrfValue);
+    }
+
+    QJsonObject prfResponse{
+        {"results", results},
+    };
+
+    result.response = prfResponse;
+    if (prfSecret.isEmpty()) {
+        // New secret was generated
+        result.secret = browserMessageBuilder()->getBase64FromArray(secret);
+    }
+
+    return result;
+}
+
+// Salt must be: UTF8Encode("WebAuthn PRF") || 0x00 || eval.first)
+QByteArray PasskeyUtils::derivePrfSalt(const QByteArray& rawSalt) const
+{
+    return browserMessageBuilder()->getSha256Hash(SALT_PRF + QByteArray::fromHex("00") + rawSalt);
+}
+
+QByteArray PasskeyUtils::computePrfValue(const QByteArray& secret, const QByteArray& salt) const
+{
+    try {
+        auto derivedSalt = derivePrfSalt(salt);
+        const size_t derived_key_len = PRF_DERIVED_KEY_LENGTH;
+        const Botan::secure_vector<uint8_t> vecSecret(secret.begin(), secret.end());
+        const std::vector<uint8_t> vecSalt(derivedSalt.begin(), derivedSalt.end());
+
+        auto hmac = Botan::MessageAuthenticationCode::create_or_throw("HMAC(SHA-256)");
+        hmac->set_key(vecSecret);
+        hmac->update(vecSalt);
+        auto prfValue = hmac->final();
+        return browserMessageBuilder()->getQByteArray(prfValue.data(), derived_key_len);
+    } catch (std::exception& e) {
+        qWarning("PasskeyUtils::computePrfValue: Could not create KDF: %s", e.what());
+        return {};
+    }
 }
