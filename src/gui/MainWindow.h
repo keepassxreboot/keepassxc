@@ -38,6 +38,9 @@ namespace Ui
 class InactivityTimer;
 class SearchWidget;
 class MainWindowEventFilter;
+#ifdef Q_OS_MACOS
+class AutoFill;
+#endif
 
 class MainWindow : public QMainWindow
 {
@@ -190,6 +193,9 @@ private:
     QPointer<QProgressBar> m_progressBar;
     QPointer<QLabel> m_progressBarLabel;
     QPointer<QLabel> m_statusBarLabel;
+#ifdef Q_OS_MACOS
+    AutoFill* m_autoFill = nullptr;
+#endif
 
     Q_DISABLE_COPY(MainWindow)
 
