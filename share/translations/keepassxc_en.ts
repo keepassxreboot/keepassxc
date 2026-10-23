@@ -1862,6 +1862,15 @@ Are you sure you want to continue with this file?.</source>
         <source>I have a key file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot read key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected key file cannot be read.
+Please check that the file exists and is readable.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -5755,6 +5764,15 @@ Message: %2</source>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected key file cannot be read.
+Please check that the file exists and is readable.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
