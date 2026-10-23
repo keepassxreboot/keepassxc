@@ -181,6 +181,7 @@ public:
         FdoSecrets_ConfirmDeleteItem,
         FdoSecrets_ConfirmAccessItem,
         FdoSecrets_UnlockBeforeSearch,
+        FdoSecrets_AuthorizedClients,
 
         KeeShare_QuietSuccess,
         KeeShare_Own,
