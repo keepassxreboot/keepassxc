@@ -1929,9 +1929,9 @@ void MainWindow::closeAllDatabases()
     m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
-void MainWindow::lockAllDatabases()
+bool MainWindow::lockAllDatabases()
 {
-    m_ui->tabWidget->lockDatabases();
+    return m_ui->tabWidget->lockDatabases();
 }
 
 void MainWindow::displayDesktopNotification(const QString& msg, QString title, int msTimeoutHint)

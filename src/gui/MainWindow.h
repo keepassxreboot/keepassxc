@@ -93,7 +93,7 @@ public slots:
     void bringToFront();
     bool isMinimizedToSystemTray();
     void closeAllDatabases();
-    void lockAllDatabases();
+    bool lockAllDatabases();
     void closeModalWindow();
     void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
     void restartApp(const QString& message);
