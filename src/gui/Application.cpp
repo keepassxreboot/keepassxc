@@ -284,10 +284,17 @@ void Application::handleUnixSignal(int sig)
 
 void Application::quitBySignal()
 {
+    // Disabled while the quit runs: closing can spin nested event loops (save
+    // prompts, the unlock dialog of a pending reload), and a second signal must
+    // not re-enter it from there.
     m_unixSignalNotifier->setEnabled(false);
     char buf;
     Q_UNUSED(!::read(unixSignalSocket[1], &buf, sizeof(buf)));
     emit quitSignalReceived();
+    // The quit can be refused (a database that cannot be locked or closed yet).
+    // Listen again, or every later SIGTERM/SIGINT is ignored for the life of the
+    // process and a session manager's stop has to end in SIGKILL.
+    m_unixSignalNotifier->setEnabled(true);
 }
 #endif
 
