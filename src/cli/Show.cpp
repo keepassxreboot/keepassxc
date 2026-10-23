@@ -44,6 +44,10 @@ const QCommandLineOption Show::AttributesOption = QCommandLineOption(
         "If no attributes are specified, a summary of the default attributes is given."),
     QObject::tr("attribute"));
 
+const QCommandLineOption Show::NetrcOption = QCommandLineOption(
+    QStringList() << "format-netrc",
+    QObject::tr("Show a .netrc formatted output of the entry. Note that this option implies --show-protected."));
+
 Show::Show()
 {
     name = QString("show");
@@ -53,6 +57,7 @@ Show::Show()
     options.append(Show::ProtectedAttributesOption);
     options.append(Show::AllAttributesOption);
     options.append(Show::AttachmentsOption);
+    options.append(Show::NetrcOption);
     positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
 
@@ -66,6 +71,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     bool showTotp = parser->isSet(Show::TotpOption);
     bool showProtectedAttributes = parser->isSet(Show::ProtectedAttributesOption);
     bool showAllAttributes = parser->isSet(Show::AllAttributesOption);
+    bool showNetrcFormat = parser->isSet(Show::NetrcOption);
     QStringList attributes = parser->values(Show::AttributesOption);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -105,6 +111,24 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // Iterate over the attributes and output them line-by-line.
     bool encounteredError = false;
+
+    // First we do the special case for showNetrc.
+    if (showNetrcFormat) {
+        const QString entryUrl =
+            entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::URLKey));
+        if (entryUrl.isEmpty()) {
+            out << QString("default ");
+        } else {
+            out << QString("machine ") << entryUrl << QString(" ");
+        }
+        out << QString("login \"")
+            << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::UserNameKey))
+            << QString("\" ");
+        out << QString("password \"")
+            << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::PasswordKey))
+            << QString("\"") << Qt::endl;
+        return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;
+    }
     for (const QString& attributeName : asConst(attributes)) {
         if (Utils::EntryFieldNames.contains(attributeName)) {
             if (!attributesWereSpecified) {
