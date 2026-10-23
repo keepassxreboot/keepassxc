@@ -1364,7 +1364,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (m_appExiting) {
         saveWindowInformation();
         event->accept();
-        m_restartRequested ? kpxcApp->restart() : QApplication::quit();
+        if (m_restartRequested)
+            kpxcApp->restart();
         return;
     }
 
@@ -1571,8 +1572,6 @@ void MainWindow::updateTrayIcon()
             delete m_trayIcon;
         }
     }
-
-    QApplication::setQuitOnLastWindowClosed(!isTrayIconEnabled());
 }
 
 void MainWindow::updateProgressBar(int percentage, QString message)
