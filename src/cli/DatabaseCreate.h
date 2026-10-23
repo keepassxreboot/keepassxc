@@ -32,6 +32,11 @@ public:
     static const QCommandLineOption SetKeyFileShortOption;
     static const QCommandLineOption SetPasswordOption;
     static const QCommandLineOption DecryptionTimeOption;
+    static const QCommandLineOption KdfOption;
+    static const QCommandLineOption CipherOption;
+    static const QCommandLineOption RoundsOption;
+    static const QCommandLineOption MemoryOption;
+    static const QCommandLineOption ParallelismOption;
 };
 
 #endif // KEEPASSXC_DATABASECREATE_H

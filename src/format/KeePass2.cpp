@@ -153,3 +153,55 @@ QString KeePass2::kdfToString(QUuid kdfUuid)
     }
     return QObject::tr("Invalid KDF");
 }
+
+QUuid KeePass2::cliStringToCipherUuid(QString cliString)
+{
+    if (cliString == "aes256") {
+        return KeePass2::CIPHER_AES256;
+    } else if (cliString == "twofish") {
+        return KeePass2::CIPHER_TWOFISH;
+    } else if (cliString == "chacha20") {
+        return KeePass2::CIPHER_CHACHA20;
+    }
+    return QUuid(nullptr);
+}
+
+QUuid KeePass2::cliStringToKdfUuid(QString cliString)
+{
+    if (cliString == "argon2d") {
+        return KeePass2::KDF_ARGON2D;
+    } else if (cliString == "argon2id") {
+        return KeePass2::KDF_ARGON2ID;
+    } else if (cliString == "aes-kdf") {
+        return KeePass2::KDF_AES_KDBX4;
+    } /* else if (cliString == "aes-kbdx3") {
+        return KeePass2::KDF_AES_KDBX3;
+    } */
+    return QUuid(nullptr);
+}
+
+QString KeePass2::cipherUuidToCliString(QUuid cipherUuid)
+{
+    if (cipherUuid == KeePass2::CIPHER_AES256) {
+        return "aes256";
+    } else if (cipherUuid == KeePass2::CIPHER_TWOFISH) {
+        return "twofish";
+    } else if (cipherUuid == KeePass2::CIPHER_CHACHA20) {
+        return "chacha20";
+    }
+    return "";
+}
+
+QString KeePass2::kdfUuidToCliString(QUuid kdfUuid)
+{
+    if (kdfUuid == KeePass2::KDF_ARGON2D) {
+        return "argon2d";
+    } else if (kdfUuid == KeePass2::KDF_ARGON2ID) {
+        return "argon2id";
+    } else if (kdfUuid == KeePass2::KDF_AES_KDBX4) {
+        return "aes-kdf";
+    } /* else if (cliString == "aes-kbdx3") {
+        return KeePass2::KDF_AES_KDBX3;
+    } */
+    return "";
+}
