@@ -116,22 +116,25 @@ set(OVERRIDE_VERSION "" CACHE STRING "Override the KeePassXC Version for Snapsho
 set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
 set_property(CACHE KEEPASSXC_BUILD_TYPE PROPERTY STRINGS Snapshot Release)
 
-# Check if on a tag or has .version file, if so build as a release
-execute_process(COMMAND git tag --points-at HEAD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        OUTPUT_VARIABLE GIT_TAG
-        ERROR_QUIET)
-string(REGEX REPLACE "latest" "" GIT_TAG "${GIT_TAG}")
-if(GIT_TAG MATCHES "[0-9]+\.[0-9]+\.[0-9]+")
-    string(STRIP "${GIT_TAG}" GIT_TAG)
-    set(OVERRIDE_VERSION ${GIT_TAG})
-elseif(EXISTS ${CMAKE_SOURCE_DIR}/.version)
-    file(READ ${CMAKE_SOURCE_DIR}/.version OVERRIDE_VERSION)
+# Check if on a tag or has .version file if no explicit override version set
+if(NOT OVERRIDE_VERSION)
+    execute_process(COMMAND git tag --points-at HEAD
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            OUTPUT_VARIABLE GIT_TAG
+            ERROR_QUIET)
+    string(REGEX REPLACE "latest" "" GIT_TAG "${GIT_TAG}")
+    if(GIT_TAG MATCHES "^[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9]+)?$")
+        string(STRIP "${GIT_TAG}" GIT_TAG)
+        set(OVERRIDE_VERSION ${GIT_TAG})
+    elseif(EXISTS ${CMAKE_SOURCE_DIR}/.version)
+        file(READ ${CMAKE_SOURCE_DIR}/.version OVERRIDE_VERSION)
+    endif()
 endif()
 
 string(REGEX REPLACE "(\r?\n)+" "" OVERRIDE_VERSION "${OVERRIDE_VERSION}")
 if(OVERRIDE_VERSION)
-    if(OVERRIDE_VERSION MATCHES "^[\\.0-9]+$")
+    # Numeric packaging revisions (for example, 2.8.0-1) are stable releases.
+    if(OVERRIDE_VERSION MATCHES "^[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+)?$")
         set(KEEPASSXC_BUILD_TYPE "Release")
     else()
         set(KEEPASSXC_BUILD_TYPE "Snapshot")
