@@ -695,6 +695,23 @@ void TagsEdit::timerEvent(QTimerEvent* event)
 
 void TagsEdit::mousePressEvent(QMouseEvent* event)
 {
+    if (m_readOnly) {
+        for (int i = 0; i < impl->tags.size(); ++i) {
+            if (!impl->tags[i].isEmpty()
+                && impl->tags[i]
+                       .rect.translated(-horizontalScrollBar()->value(), -verticalScrollBar()->value())
+                       .contains(event->pos())) {
+                auto tag = impl->tags[i].text;
+                tag.replace("\"", "\\\"");
+                emit tagClicked(QString("tag:\"%1\"").arg(tag));
+                event->accept();
+                return;
+            }
+        }
+        event->ignore();
+        return;
+    }
+
     bool found = false;
     for (int i = 0; i < impl->tags.size(); ++i) {
         if (impl->inCrossArea(i, event->pos())) {
@@ -940,18 +957,30 @@ QStringList TagsEdit::tags() const
 
 void TagsEdit::mouseMoveEvent(QMouseEvent* event)
 {
-    if (!m_readOnly) {
+    if (m_readOnly) {
         for (int i = 0; i < impl->tags.size(); ++i) {
-            if (impl->inCrossArea(i, event->pos())) {
-                viewport()->setCursor(Qt::ArrowCursor);
+            if (!impl->tags[i].isEmpty()
+                && impl->tags[i]
+                       .rect.translated(-horizontalScrollBar()->value(), -verticalScrollBar()->value())
+                       .contains(event->pos())) {
+                viewport()->setCursor(Qt::PointingHandCursor);
                 return;
             }
         }
-        if (impl->contentsRect().contains(event->pos())) {
-            viewport()->setCursor(Qt::IBeamCursor);
-        } else {
-            QAbstractScrollArea::mouseMoveEvent(event);
+        viewport()->setCursor(Qt::ArrowCursor);
+        return;
+    }
+
+    for (int i = 0; i < impl->tags.size(); ++i) {
+        if (impl->inCrossArea(i, event->pos())) {
+            viewport()->setCursor(Qt::ArrowCursor);
+            return;
         }
+    }
+    if (impl->contentsRect().contains(event->pos())) {
+        viewport()->setCursor(Qt::IBeamCursor);
+    } else {
+        QAbstractScrollArea::mouseMoveEvent(event);
     }
 }
 
