@@ -10577,6 +10577,10 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>Sie haben einen ungültigen geheimen Schlüssel angegeben. Der Schlüssel muss im Base32-Format sein. Beispiel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
+        <source>You have entered an invalid TOTP URI. The URI must start with otpauth://totp/</source>
+        <translation>Sie haben eine ungültige Totp Uri eingegeben. Die Uri muss mit otpauth://totp/ beginnen.</translation>
+    </message>
+    <message>
         <source>Confirm Remove TOTP Settings</source>
         <translation>Löschen der TOTP-Einstellungen bestätigen</translation>
     </message>

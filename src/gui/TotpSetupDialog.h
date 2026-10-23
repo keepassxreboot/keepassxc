@@ -43,11 +43,19 @@ signals:
 
 private slots:
     void toggleCustom(bool status);
+    void toggleUri(bool status);
     void saveSettings();
 
 private:
     QScopedPointer<Ui::TotpSetupDialog> m_ui;
     Entry* m_entry;
+
+    QSharedPointer<Totp::Settings> createFromRfc6238();
+    QSharedPointer<Totp::Settings> createFromUri();
+    QSharedPointer<Totp::Settings> createFromSteam();
+    QSharedPointer<Totp::Settings> createFromCustom();
+    QString sanitizeSecretKey();
+    QString sanitizeSecretKey(const QString& key);
 };
 
 #endif // KEEPASSX_SETUPTOTPDIALOG_H
