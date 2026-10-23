@@ -252,7 +252,7 @@ NOTE: Restoring an old history item will store the current entry settings as a n
 
 // end::advanced[]
 === Search
-KeePassXC provides a robust search that enables you to find specific entries in the databases using different modifiers, wild card characters, and logical operators. By default, search considers the following fields when matching your query: Title, Username, URL, Tags, and Notes. To include other fields and/or narrow your search to specific fields, you can use the search syntax described below.
+KeePassXC provides a robust search that enables you to find specific entries in the databases using different modifiers, wild card characters, and logical operators. By default, search considers the following fields when matching your query: Title, Username, Password, URL, Notes, Additional Attributes, Attachments or Tags. However, protected fields (password, specified additional attributes) are only searched when the corresponding option is set. To narrow your search to specific fields, you can use the search syntax described below.
 
 ==== Modifiers and Fields
 [grid=rows, frame=none, width=70%]
@@ -262,7 +262,6 @@ KeePassXC provides a robust search that enables you to find specific entries in 
 |-          |Exclude this term from results
 |!          |Exclude this term from results
 |+	        |Match this term exactly
-|*	        |Term is handled as a regular expression
 |===
 
 The following fields can be searched along with their abbreviated name in parentheses:
@@ -274,9 +273,15 @@ The following fields can be searched along with their abbreviated name in parent
 * Notes (n)
 * Attribute names and values (attr)
 * Attachment (attach)
+* UUID (uuid)
 * Group (g)
 * Tags (tag)
 * Entry State (is:expired, is:weak)
+* Entry Feature (has:totp, has:passkey, has:expiration)
+
+Entries with empty fields can be searched for with, e.g., `u:`.
+Values in specific additional attributes can be searched by adding an underscore, e.g., `_customField1:value` searches for `value` only in field `customField1`.
+Note that also protected values are found regardless of the corresponding option, when explicitly searching the password field (e.g., `p:secret`).
 
 ==== Wild Card Characters and Logical Operators
 [grid=rows, frame=none, width=70%]
@@ -300,8 +305,8 @@ The following tables lists a few samples search queries for your reference:
 |`user:john\|smith`
 |Searches the Username field for john OR smith.
 
-|`+user:johnsmith -url:www.google.com *notes:"secret note \d"`
-|Search the username field for exactly johnsmith, the URL must not contain www.google.com, and notes contains secret note [digit].
+|`+user:johnsmith -url:www.google.com notes:"secret note*"`
+|Search the username field for exactly johnsmith, the URL must not contain www.google.com, and notes contains 'secret note*'.
 
 |`+attr:mystring123`
 |Searches all additional attributes for any name OR value equal to mystring123.
@@ -309,9 +314,20 @@ The following tables lists a few samples search queries for your reference:
 |`+tag:personal`
 | Search exactly for the 'personal' tag and do not include tags such as 'my personal'.
 
+|`!u:`
+| Searches for entries with non-empty username.
+
 |`is:expired is:weak`
 |Searches for all expired entries with weak passwords.
 |===
+
+==== Search Options
+The following options are available to affect the search:
+* *Include protected fields*: Include protected fields in default search
+* *Case sensitive*: Set search terms to be case-sensitive
+* *Regular expression*: Search terms are handled as regular expressions
+* *Limit search to selected group*: Only search within selected group
+* *Press Enter to search*: Instead of automatic beginning of search, you have to press enter
 
 // tag::advanced[]
 === Merging Databases

@@ -51,6 +51,11 @@
     <string>Search</string>
    </property>
   </action>
+  <action name="searchOptionsIcon">
+   <property name="text">
+    <string>Search Options</string>
+   </property>
+  </action>
   <action name="helpIcon">
    <property name="text">
     <string>Search Help</string>
