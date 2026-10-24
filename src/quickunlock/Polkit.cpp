@@ -154,6 +154,20 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
     subject.kind = "unix-process";
     subject.details.insert("pid", static_cast<uint>(QCoreApplication::applicationPid()));
     subject.details.insert("start-time", nixUtils()->getProcessStartTime());
+    subject.details.insert("uid", static_cast<int>(getuid()));
+
+#ifdef SYS_pidfd_open
+    if (m_polkit->connection().connectionCapabilities() & QDBusConnection::UnixFileDescriptorPassing) {
+        int pidfd = static_cast<int>(syscall(SYS_pidfd_open, getpid(), 0));
+        if (pidfd >= 0) {
+            subject.details.insert("pidfd", QVariant::fromValue(QDBusUnixFileDescriptor(pidfd)));
+            // QDBusUnixFileDescriptor duplicates the descriptor
+            close(pidfd);
+        } else {
+            qDebug() << "polkit pidfd_open failed: " << errno;
+        }
+    }
+#endif
 
     QMap<QString, QString> details;
 
