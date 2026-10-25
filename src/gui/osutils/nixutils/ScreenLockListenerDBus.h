@@ -20,6 +20,9 @@
 
 #include "gui/osutils/ScreenLockListenerPrivate.h"
 #include <QDBusMessage>
+#include <QDBusUnixFileDescriptor>
+
+class MainWindow;
 
 class ScreenLockListenerDBus : public ScreenLockListenerPrivate
 {
@@ -33,6 +36,15 @@ private slots:
     void unityLocked();
     void freedesktopScreenSaver(bool status);
     void login1SessionObjectReceived(QDBusMessage);
+    void refreshInhibitor();
+
+private:
+    void acquireInhibitor();
+    void releaseInhibitor();
+    bool anyDatabaseUnlocked() const;
+
+    MainWindow* m_mainWindow;
+    QDBusUnixFileDescriptor m_pipeFd;
 };
 
 #endif // SCREENLOCKLISTENERDBUS_H
