@@ -22,6 +22,7 @@
 #include "browser/BrowserSettings.h"
 #include "core/Group.h"
 #include "core/Tools.h"
+#include "core/Totp.h"
 #include "crypto/Crypto.h"
 
 #include <QJsonObject>
@@ -1033,6 +1034,68 @@ void TestBrowser::testHideEntry()
     root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Disable);
     result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
+}
+
+void TestBrowser::testParseTotp_data()
+{
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<uint>("digits");
+    QTest::addColumn<uint>("step");
+
+    QTest::newRow("otpauth URI") << "otpauth://totp/Example:alice?secret=JBSWY3DPEHPK3PXP&digits=8&period=60" << true
+                                 << 8u << 60u;
+    QTest::newRow("bare secret") << "JBSWY3DPEHPK3PXP" << true << 6u << 30u;
+    QTest::newRow("surrounding whitespace") << "  JBSWY3DPEHPK3PXP\n" << true << 6u << 30u;
+    QTest::newRow("HOTP URI") << "otpauth://hotp/Example:alice?secret=JBSWY3DPEHPK3PXP&counter=1" << false << 0u << 0u;
+    QTest::newRow("URI without secret") << "otpauth://totp/Example:alice?digits=6" << false << 0u << 0u;
+    QTest::newRow("not base32") << "!!!!" << false << 0u << 0u;
+}
+
+void TestBrowser::testParseTotp()
+{
+    QFETCH(QString, input);
+    QFETCH(bool, valid);
+    QFETCH(uint, digits);
+    QFETCH(uint, step);
+
+    const auto settings = BrowserAction::parseTotp(input);
+    QCOMPARE(!settings.isNull(), valid);
+    if (valid) {
+        QCOMPARE(settings->key, QString("JBSWY3DPEHPK3PXP"));
+        QCOMPARE(settings->digits, digits);
+        QCOMPARE(settings->step, step);
+    }
+}
+
+void TestBrowser::testAddEntryWithTotp()
+{
+    const auto db = QSharedPointer<Database>::create();
+
+    EntryParameters params;
+    params.siteUrl = "https://example.com";
+    params.login = "alice";
+    params.password = "secret";
+    params.totp = BrowserAction::parseTotp("JBSWY3DPEHPK3PXP");
+    QVERIFY(params.totp);
+    m_browserService->addEntry(params, {}, {}, false, db);
+
+    // Requests from older extensions carry no TOTP
+    params.login = "bob";
+    params.totp.reset();
+    m_browserService->addEntry(params, {}, {}, false, db);
+
+    const auto entries = db->rootGroup()->entriesRecursive();
+    QCOMPARE(entries.size(), 2);
+    for (const auto* entry : entries) {
+        if (entry->username() == "alice") {
+            QVERIFY(entry->hasValidTotp());
+            QCOMPARE(entry->totpSettings()->key, QString("JBSWY3DPEHPK3PXP"));
+        } else {
+            QCOMPARE(entry->username(), QString("bob"));
+            QVERIFY(!entry->hasTotp());
+        }
+    }
 }
 
 void TestBrowser::testBrowserHostMessaging()
