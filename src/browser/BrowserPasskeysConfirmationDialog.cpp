@@ -154,7 +154,7 @@ void BrowserPasskeysConfirmationDialog::updateEntriesToTable(const QList<Entry*>
         m_ui->credentialsTable->setItem(row, 0, item);
 
         if (row == 0) {
-            item->setSelected(true);
+            m_ui->credentialsTable->setCurrentItem(item);
         }
 
         ++row;
