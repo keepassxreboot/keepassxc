@@ -56,7 +56,7 @@ void OpenSSHKeyGenDialog::typeChanged()
     m_ui->bitsComboBox->clear();
 
     if (m_ui->typeComboBox->currentText() == QString("Ed25519")) {
-        m_ui->bitsComboBox->addItem("32");
+        m_ui->bitsComboBox->addItem("256");
     } else if (m_ui->typeComboBox->currentText() == QString("RSA")) {
         m_ui->bitsComboBox->addItem("2048");
         m_ui->bitsComboBox->addItem("3072");
