@@ -1632,6 +1632,7 @@ void TestGui::testSaveAs()
     triggerAction("actionDatabaseSaveAs");
 
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveAs"));
+    QCOMPARE(m_mainWindow->windowFilePath(), tmpFileName);
 
     checkDatabase(tmpFileName);
 
@@ -2564,6 +2565,28 @@ void TestGui::testDeleteEntryDuringModalDialog()
 
     // Verify entry was deleted normally
     QCOMPARE(entryView->model()->rowCount(), initialEntryCount - 1);
+}
+
+void TestGui::testWindowFilePath()
+{
+    // The window file path drives the title bar proxy icon and path menu on macOS
+    QCOMPARE(m_mainWindow->windowFilePath(), m_db->filePath());
+    QVERIFY(!m_mainWindow->isWindowModified());
+
+    // Modifying the database must keep the file path and set the modified indicator
+    m_db->markAsModified();
+    QTRY_VERIFY(m_mainWindow->isWindowModified());
+    QCOMPARE(m_mainWindow->windowFilePath(), m_db->filePath());
+
+    // No file path while a non-database screen is shown
+    triggerAction("actionSettings");
+    auto* settingsWidget = m_mainWindow->findChild<ApplicationSettingsWidget*>();
+    QVERIFY(settingsWidget->isVisible());
+    QVERIFY(m_mainWindow->windowFilePath().isEmpty());
+
+    QTest::keyClick(settingsWidget, Qt::Key::Key_Escape);
+    QTRY_VERIFY(!settingsWidget->isVisible());
+    QCOMPARE(m_mainWindow->windowFilePath(), m_db->filePath());
 }
 
 void TestGui::addCannedEntries()
