@@ -28,9 +28,12 @@
 #include <QTableView>
 #include <QTest>
 #include <QToolBar>
+#include <QTreeWidget>
 
+#include "browser/BrowserPasskeysConfirmationDialog.h"
 #include "browser/BrowserService.h"
 #include "config-keepassx-tests.h"
+#include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/FileDialog.h"
@@ -38,6 +41,7 @@
 #include "gui/PasswordWidget.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
+#include "gui/passkeys/PasskeyImportDialog.h"
 
 int main(int argc, char* argv[])
 {
@@ -242,6 +246,126 @@ void TestGuiBrowser::testGetDatabaseGroups()
     QCOMPARE(subGroups.count(), 1);
     auto subGroupObj = subGroups.at(0).toObject();
     QCOMPARE(subGroupObj["name"].toString(), QString("SubGroup"));
+}
+
+void TestGuiBrowser::testPasskeyImportDialogSearch()
+{
+    auto* group = new Group();
+    group->setUuid(QUuid::createUuid());
+    group->setName("Passkey Test");
+    group->setParent(m_db->rootGroup());
+
+    auto* mailEntry = new Entry();
+    mailEntry->setUuid(QUuid::createUuid());
+    mailEntry->setTitle("Mail Account");
+    mailEntry->setUsername("alice");
+    mailEntry->setGroup(group);
+
+    auto* bankEntry = new Entry();
+    bankEntry->setUuid(QUuid::createUuid());
+    bankEntry->setTitle("Bank Account");
+    bankEntry->setUsername("bob");
+    bankEntry->setGroup(m_db->rootGroup());
+
+    PasskeyImportDialog dialog;
+    dialog.setInfo("example.com", "alice", m_db, false);
+
+    auto* searchEdit = dialog.findChild<QLineEdit*>("searchEntryLineEdit");
+    auto* entryTree = dialog.findChild<QTreeWidget*>("entryTreeWidget");
+    auto* groupComboBox = dialog.findChild<QComboBox*>("selectGroupComboBox");
+    QVERIFY(searchEdit);
+    QVERIFY(entryTree);
+    QVERIFY(groupComboBox);
+
+    // All entries are listed regardless of their group, "Create new entry" is selected by default
+    const auto entryCount = m_db->rootGroup()->entriesRecursive().size();
+    QCOMPARE(entryTree->topLevelItemCount(), entryCount + 1);
+    QVERIFY(dialog.createNewEntry());
+    QVERIFY(groupComboBox->isEnabled());
+
+    // Searching selects the first match
+    QTest::keyClicks(searchEdit, "account");
+    QCOMPARE(entryTree->currentItem()->text(0), QString("Bank Account"));
+    QCOMPARE(dialog.getSelectedEntryUuid(), bankEntry->uuid());
+    QVERIFY(!dialog.createNewEntry());
+    QVERIFY(!groupComboBox->isEnabled());
+
+    int visibleCount = 0;
+    for (int i = 0; i < entryTree->topLevelItemCount(); ++i) {
+        if (!entryTree->topLevelItem(i)->isHidden()) {
+            ++visibleCount;
+        }
+    }
+    QCOMPARE(visibleCount, 3);
+
+    // Arrow keys in the search field move the selection
+    QTest::keyClick(searchEdit, Qt::Key_Down);
+    QCOMPARE(dialog.getSelectedEntryUuid(), mailEntry->uuid());
+
+    // Entries in subgroups can be found by username
+    searchEdit->clear();
+    QTest::keyClicks(searchEdit, "alice");
+    QCOMPARE(dialog.getSelectedEntryUuid(), mailEntry->uuid());
+
+    // Without matches, a new entry is created
+    searchEdit->clear();
+    QTest::keyClicks(searchEdit, "no such entry");
+    QVERIFY(dialog.createNewEntry());
+    QVERIFY(groupComboBox->isEnabled());
+}
+
+void TestGuiBrowser::testPasskeySuggestedEntries()
+{
+    const QString keyName("passkeytest");
+    const QString key("testkey");
+    m_db->metadata()->customData()->set(CustomData::getKeyWithPrefix(CustomData::BrowserKeyPrefix, keyName), key);
+    const StringPairList keyList({{keyName, key}});
+
+    auto* entryWithoutPasskey = new Entry();
+    entryWithoutPasskey->setUuid(QUuid::createUuid());
+    entryWithoutPasskey->setTitle("Example");
+    entryWithoutPasskey->setUrl("https://example.com");
+    entryWithoutPasskey->setGroup(m_db->rootGroup());
+
+    auto* entryWithPasskey = new Entry();
+    entryWithPasskey->setUuid(QUuid::createUuid());
+    entryWithPasskey->setTitle("Example with passkey");
+    entryWithPasskey->setUrl("https://example.com");
+    entryWithPasskey->setGroup(m_db->rootGroup());
+    browserService()->addPasskeyToEntry(
+        entryWithPasskey, "example.com", "example.com", "user", "credId", "userHandle", "privateKey");
+
+    auto* otherEntry = new Entry();
+    otherEntry->setUuid(QUuid::createUuid());
+    otherEntry->setTitle("Other");
+    otherEntry->setUrl("https://other.org");
+    otherEntry->setGroup(m_db->rootGroup());
+
+    const auto suggestedEntries = browserService()->getPasskeySuggestedEntries("https://example.com", keyList);
+    QCOMPARE(suggestedEntries.size(), 1);
+    QCOMPARE(suggestedEntries.first(), entryWithoutPasskey);
+
+    // Add to a suggested entry
+    BrowserPasskeysConfirmationDialog dialog;
+    dialog.registerCredential("user", "example.com", {}, suggestedEntries, 30000);
+    auto* otherEntryButton = dialog.findChild<QPushButton*>("otherEntryButton");
+    QVERIFY(otherEntryButton);
+    QVERIFY(!otherEntryButton->isHidden());
+    QTest::mouseClick(dialog.findChild<QPushButton*>("updateButton"), Qt::LeftButton);
+    QVERIFY(dialog.isPasskeyUpdated());
+    QCOMPARE(dialog.getSelectedEntry(), entryWithoutPasskey);
+
+    // Choose another entry instead
+    BrowserPasskeysConfirmationDialog otherDialog;
+    otherDialog.registerCredential("user", "example.com", {}, suggestedEntries, 30000);
+    QTest::mouseClick(otherDialog.findChild<QPushButton*>("otherEntryButton"), Qt::LeftButton);
+    QVERIFY(otherDialog.isPasskeyUpdated());
+    QVERIFY(!otherDialog.getSelectedEntry());
+
+    // Without suggestions the button is hidden
+    BrowserPasskeysConfirmationDialog emptyDialog;
+    emptyDialog.registerCredential("user", "example.com", {}, {}, 30000);
+    QVERIFY(emptyDialog.findChild<QPushButton*>("otherEntryButton")->isHidden());
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)

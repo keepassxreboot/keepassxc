@@ -1063,6 +1063,15 @@ Please select the correct database for saving credentials.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Matching entries without a passkey were found.
+Select one and press Add to entry, or register a new entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Register</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1104,6 +1113,10 @@ Do you want to register a new passkey for:</source>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other entry…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7049,6 +7062,30 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search entries…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group for the new entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
