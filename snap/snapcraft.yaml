@@ -68,8 +68,7 @@ parts:
       - -DKEEPASSXC_DIST_TYPE=Snap
       - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
-      - -DWITH_XC_ALL=ON
-      - -DWITH_XC_UPDATECHECK=OFF
+      - -DKPXC_FEATURE_UPDATES=OFF
     build-packages:
       - g++
       - libbotan-2-dev
