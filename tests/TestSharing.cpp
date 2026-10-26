@@ -17,12 +17,21 @@
 
 #include "TestSharing.h"
 
+#include <QTemporaryDir>
 #include <QTest>
 #include <QXmlStreamReader>
 
+#include "core/Config.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
+#include "core/FileWatcher.h"
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "crypto/Random.h"
+#include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"
+#include "keeshare/ShareObserver.h"
+#include "util/TemporaryFile.h"
 
 #include <botan/rsa.h>
 
@@ -36,6 +45,8 @@ void TestSharing::initTestCase()
 {
     QVERIFY(Crypto::init());
     QLocale::setDefault(QLocale::c());
+    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
+    KeeShare::init(this);
 }
 
 void TestSharing::testNullObjects()
@@ -121,6 +132,129 @@ void TestSharing::testReferenceSerialization_data()
     QTest::newRow("1") << "Password" << "/some/path" << QUuid::createUuid() << int(KeeShareSettings::Inactive);
     QTest::newRow("2") << "" << "" << QUuid() << int(KeeShareSettings::SynchronizeWith);
     QTest::newRow("3") << "" << "/some/path" << QUuid() << int(KeeShareSettings::ExportTo);
+}
+
+void TestSharing::testReferenceGroupUuid_data()
+{
+    QTest::addColumn<QString>("groupElement");
+    QTest::addColumn<QUuid>("expectedUuid");
+
+    QTest::newRow("missing") << "" << QUuid();
+    QTest::newRow("empty") << "<Group/>" << QUuid();
+    QTest::newRow("invalid-base64") << "<Group>!!!</Group>" << QUuid();
+    QTest::newRow("wrong-length") << "<Group>YWJj</Group>" << QUuid();
+    QTest::newRow("null") << "<Group>AAAAAAAAAAAAAAAAAAAAAA==</Group>" << QUuid();
+    const QUuid uuid("{01234567-89ab-cdef-0123-456789abcdef}");
+    QTest::newRow("valid") << QString("<Group>%1</Group>").arg(QString::fromLatin1(uuid.toRfc4122().toBase64()))
+                           << uuid;
+}
+
+void TestSharing::testReferenceGroupUuid()
+{
+    QFETCH(QString, groupElement);
+    QFETCH(QUuid, expectedUuid);
+
+    const QString xml = QString("<KeeShare><Type><Import/></Type>%1"
+                                "<Path>c2hhcmUua2RieA==</Path><Password>cG9jLXNoYXJl</Password>"
+                                "<KeepGroups>False</KeepGroups></KeeShare>")
+                            .arg(groupElement);
+    Group group;
+    group.customData()->set("KeeShare/Reference", xml.toUtf8().toBase64());
+    const auto first = KeeShare::referenceOf(&group);
+    const auto second = KeeShare::referenceOf(&group);
+
+    QCOMPARE(first.uuid, expectedUuid);
+    QCOMPARE(first.path, QString("share.kdbx"));
+    QCOMPARE(first.password, QString("poc-share"));
+    QCOMPARE(first.type, KeeShareSettings::Type(KeeShareSettings::ImportFrom));
+    QVERIFY(!first.keepGroups);
+    QCOMPARE(first.isValid(), !expectedUuid.isNull());
+    // Parsing the same reference must not generate a new identity on each scan.
+    QVERIFY(first == second);
+}
+
+void TestSharing::testReferenceValidity_data()
+{
+    QTest::addColumn<int>("type");
+    QTest::addColumn<QString>("path");
+    QTest::addColumn<QUuid>("uuid");
+    QTest::addColumn<bool>("valid");
+
+    const auto uuid = QUuid::createUuid();
+    QTest::newRow("inactive") << int(KeeShareSettings::Inactive) << "share.kdbx" << uuid << false;
+    QTest::newRow("empty-path") << int(KeeShareSettings::ImportFrom) << "" << uuid << false;
+    QTest::newRow("null-uuid") << int(KeeShareSettings::ImportFrom) << "share.kdbx" << QUuid() << false;
+    QTest::newRow("import") << int(KeeShareSettings::ImportFrom) << "share.kdbx" << uuid << true;
+    QTest::newRow("export") << int(KeeShareSettings::ExportTo) << "share.kdbx" << uuid << true;
+    QTest::newRow("synchronize") << int(KeeShareSettings::SynchronizeWith) << "share.kdbx" << uuid << true;
+}
+
+void TestSharing::testReferenceValidity()
+{
+    QFETCH(int, type);
+    QFETCH(QString, path);
+    QFETCH(QUuid, uuid);
+    QFETCH(bool, valid);
+
+    KeeShareSettings::Reference reference;
+    reference.type = static_cast<KeeShareSettings::Type>(type);
+    reference.path = path;
+    reference.uuid = uuid;
+    QCOMPARE(reference.isValid(), valid);
+}
+
+void TestSharing::testObserverRejectsInvalidReference()
+{
+    auto db = QSharedPointer<Database>::create();
+    KeeShareSettings::Reference reference;
+    reference.type = KeeShareSettings::ImportFrom;
+    reference.path = "share.kdbx";
+    reference.uuid = QUuid();
+    KeeShare::setReferenceTo(db->rootGroup(), reference);
+
+    KeeShareSettings::Active active;
+    active.in = true;
+    KeeShare::setActive(active);
+    ShareObserver observer(db);
+    int messages = 0;
+    connect(&observer, &ShareObserver::sharingMessage, this, [&messages] { ++messages; });
+    emit db->groupDataChanged(db->rootGroup());
+    QCOMPARE(messages, 0);
+    QVERIFY(observer.findChildren<FileWatcher*>().isEmpty());
+}
+
+void TestSharing::testObserverReinitializeReentry()
+{
+    QTemporaryDir directory;
+    QVERIFY(directory.isValid());
+    auto db = QSharedPointer<Database>::create();
+    db->setFilePath(directory.filePath("outer.kdbx"));
+
+    KeeShareSettings::Active active;
+    active.in = true;
+    KeeShare::setActive(active);
+    ShareObserver observer(db);
+
+    KeeShareSettings::Reference reference;
+    reference.type = KeeShareSettings::ImportFrom;
+    reference.path = "missing-first.kdbx";
+    KeeShare::setReferenceTo(db->rootGroup(), reference);
+
+    int messages = 0;
+    connect(&observer, &ShareObserver::sharingMessage, this, [&] {
+        if (++messages == 1) {
+            // Change the reference so a nested scan would attempt another import.
+            reference.path = "missing-second.kdbx";
+            KeeShare::setReferenceTo(db->rootGroup(), reference);
+            emit db->groupDataChanged(db->rootGroup());
+        }
+    });
+
+    emit db->groupDataChanged(db->rootGroup());
+    QCOMPARE(messages, 1);
+    // The scoped guard must allow subsequent, non-recursive scans.
+    emit db->groupDataChanged(db->rootGroup());
+    QCOMPARE(messages, 2);
 }
 
 void TestSharing::testSettingsSerialization()

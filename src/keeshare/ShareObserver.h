@@ -83,6 +83,8 @@ private:
     QMap<QString, QPointer<Group>> m_shareToGroup;
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
     bool m_inFileUpdate = false;
+    bool m_inReinitialize = false;
+    bool m_inImport = false;
     bool m_enabled = true;
 };
 

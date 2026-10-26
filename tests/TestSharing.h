@@ -34,6 +34,12 @@ private slots:
     void testKeySerialization();
     void testReferenceSerialization();
     void testReferenceSerialization_data();
+    void testReferenceGroupUuid();
+    void testReferenceGroupUuid_data();
+    void testReferenceValidity();
+    void testReferenceValidity_data();
+    void testObserverRejectsInvalidReference();
+    void testObserverReinitializeReentry();
     void testSettingsSerialization();
     void testSettingsSerialization_data();
 

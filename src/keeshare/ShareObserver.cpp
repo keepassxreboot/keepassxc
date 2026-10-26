@@ -23,6 +23,7 @@
 #include "keeshare/ShareImport.h"
 
 #include <QDir>
+#include <QScopedValueRollback>
 
 namespace
 {
@@ -71,6 +72,11 @@ void ShareObserver::deinitialize()
 
 void ShareObserver::reinitialize()
 {
+    if (m_inReinitialize || m_inImport) {
+        return;
+    }
+    QScopedValueRollback reinitializeGuard(m_inReinitialize, true);
+
     QList<QPair<QPointer<Group>, KeeShareSettings::Reference>> shares;
     for (Group* group : m_db->rootGroup()->groupsRecursive(true)) {
         auto oldReference = m_groupToReference.value(group);
@@ -84,12 +90,12 @@ void ShareObserver::reinitialize()
         m_shareToGroup.remove(oldResolvedPath);
         m_fileWatchers.remove(oldResolvedPath);
 
-        if (newReference.isValid()) {
-            m_groupToReference[group] = newReference;
-            const auto newResolvedPath = resolvePath(newReference.path, m_db);
-            m_shareToGroup[newResolvedPath] = group;
+        if (!newReference.isValid()) {
+            continue;
         }
-
+        m_groupToReference[group] = newReference;
+        const auto newResolvedPath = resolvePath(newReference.path, m_db);
+        m_shareToGroup[newResolvedPath] = group;
         shares.append({group, newReference});
     }
 
@@ -218,7 +224,7 @@ void ShareObserver::handleFileUpdated(const QString& path)
 
 ShareObserver::Result ShareObserver::importShare(const QString& path)
 {
-    if (!KeeShare::active().in) {
+    if (m_inImport || !KeeShare::active().in) {
         return {};
     }
     const auto changePath = resolvePath(path, m_db);
@@ -240,6 +246,9 @@ ShareObserver::Result ShareObserver::importShare(const QString& path)
     Q_ASSERT(shareGroup->database() == m_db);
     Q_ASSERT(shareGroup == m_db->rootGroup()->findGroupByUuid(shareGroup->uuid()));
     const auto resolvedPath = resolvePath(reference.path, m_db);
+
+    // Prevent synchronous reentry by database change signals during import.
+    QScopedValueRollback importGuard(m_inImport, true);
     return ShareImport::containerInto(resolvedPath, reference, shareGroup);
 }
 
