@@ -62,6 +62,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
         if (relatedOrigins.isEmpty() || !passkeyUtils()->validateRelatedOrigins(relatedOrigins, origin)) {
             return rpIdResponse;
         }
+        rpId = publicKeyOptions["rp"]["id"].toString();
     }
 
     // Check PublicKeyCredentialTypes
@@ -123,7 +124,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     credentialCreationOptions["userVerification"] = isUserVerificationRequired;
 
     *result = credentialCreationOptions;
-    return 0;
+    return PASSKEYS_SUCCESS;
 }
 
 // Use an existing credential
@@ -152,6 +153,7 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
         if (relatedOrigins.isEmpty() || !passkeyUtils()->validateRelatedOrigins(relatedOrigins, origin)) {
             return rpIdResponse;
         }
+        rpId = publicKeyOptions["rp"]["id"].toString();
     }
 
     // Extensions
@@ -179,5 +181,5 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
     assertionOptions["userVerification"] = isUserVerificationRequired;
 
     *result = assertionOptions;
-    return 0;
+    return PASSKEYS_SUCCESS;
 }

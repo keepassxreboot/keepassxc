@@ -420,7 +420,9 @@ void TestPasskeys::testRegisterWithRelatedOrigins()
     const auto origin = QString("https://webauthn.io");
 
     // Modify the RP ID not to match with the origin. Actual accepted origin is inside Related Origins list.
-    const auto credentialOptions = QString(PublicKeyCredentialOptions).replace("webauthn.io", "example.io");
+    const auto shaSize = 32;
+    const auto newOrigin = QString("example.io");
+    const auto credentialOptions = QString(PublicKeyCredentialOptions).replace("webauthn.io", newOrigin);
     const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(credentialOptions.toUtf8());
 
     // Only check that the creation succeeds with the Related Origins list
@@ -428,7 +430,22 @@ void TestPasskeys::testRegisterWithRelatedOrigins()
     QJsonObject credentialCreationOptions;
     const auto creationResult = browserPasskeysClient()->getCredentialCreationOptions(
         publicKeyCredentialOptions, origin, relatedOrigins, &credentialCreationOptions);
-    QVERIFY(creationResult == 0);
+    QVERIFY(creationResult == PASSKEYS_SUCCESS);
+
+    // Check actual register
+    const auto credential = browserPasskeys()->buildRegisterPublicKeyCredential(credentialCreationOptions);
+    QVERIFY(!credential.response.isEmpty());
+
+    // Check that "example.io" is present in authenticatorData
+    const auto response = credential.response["response"].toObject();
+    const auto expectedHash = browserMessageBuilder()->getSha256Hash(newOrigin);
+    const auto authData = browserMessageBuilder()->getArrayFromBase64(response["authenticatorData"].toString());
+    QCOMPARE(authData.left(shaSize), expectedHash);
+
+    // Check that "example.io" is present in authData on attestationObject
+    const auto attestation = browserMessageBuilder()->getArrayFromBase64(response["attestationObject"].toString());
+    const auto attestationData = QCborValue::fromCbor(attestation).toMap()[QString("authData")].toByteArray();
+    QCOMPARE(attestationData.left(shaSize), expectedHash);
 }
 
 void TestPasskeys::testGet()
