@@ -271,17 +271,17 @@ namespace KeeShareSettings
 
     bool Reference::isValid() const
     {
-        return type != Inactive && !path.isEmpty();
+        return type != Inactive && !path.isEmpty() && !uuid.isNull();
     }
 
     bool Reference::isExporting() const
     {
-        return (type & ExportTo) != 0 && !path.isEmpty();
+        return (type & ExportTo) != 0 && isValid();
     }
 
     bool Reference::isImporting() const
     {
-        return (type & ImportFrom) != 0 && !path.isEmpty();
+        return (type & ImportFrom) != 0 && isValid();
     }
 
     bool Reference::operator<(const Reference& other) const
@@ -330,8 +330,10 @@ namespace KeeShareSettings
         }
 
         Reference reference;
-        // If KeepGroups is not present, default to false for backward compatibility
+        // If KeepGroups is not present, default to false for backward compatibility.
         reference.keepGroups = false;
+        // Null an existing UUID to invalidate malformed references missing a <Group> element.
+        reference.uuid = QUuid();
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
                 if (reader.name().toString() == "Type") {

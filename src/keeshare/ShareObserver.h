@@ -20,6 +20,7 @@
 
 #include <QMap>
 #include <QObject>
+#include <QSet>
 
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShareSettings.h"
@@ -62,14 +63,17 @@ public:
     };
 
 signals:
+    void importFinished();
     void sharingMessage(QString, MessageWidget::MessageType);
 
 private slots:
     void handleDatabaseChanged();
     void handleDatabaseSaved();
-    void handleFileUpdated(const QString& path);
+    void handleImportFinished();
+    void handleFileUpdated(QString path);
 
 private:
+    void triggerImport(const QString& path);
     Result importShare(const QString& path);
     QList<Result> exportShares();
 
@@ -82,7 +86,10 @@ private:
     QMap<QPointer<Group>, KeeShareSettings::Reference> m_groupToReference;
     QMap<QString, QPointer<Group>> m_shareToGroup;
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
-    bool m_inFileUpdate = false;
+    QSet<QString> m_pendingImports;
+    bool m_reinitializePending = false;
+    bool m_inReinitialize = false;
+    bool m_inImport = false;
     bool m_enabled = true;
 };
 
