@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include "keeshare/ShareImport.h"
 
 #include <QDir>
+#include <QScopeGuard>
+#include <QScopedValueRollback>
 
 namespace
 {
@@ -40,6 +42,8 @@ ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
     : QObject(parent)
     , m_db(std::move(db))
 {
+    connect(this, &ShareObserver::importFinished, this, &ShareObserver::handleImportFinished, Qt::QueuedConnection);
+
     connect(KeeShare::instance(), &KeeShare::activeChanged, this, &ShareObserver::handleDatabaseChanged);
 
     connect(m_db.data(), &Database::groupDataChanged, this, &ShareObserver::handleDatabaseChanged);
@@ -64,6 +68,8 @@ void ShareObserver::setEnabled(bool enabled)
 
 void ShareObserver::deinitialize()
 {
+    m_pendingImports.clear();
+    m_reinitializePending = false;
     m_groupToReference.clear();
     m_shareToGroup.clear();
     m_fileWatchers.clear();
@@ -71,6 +77,13 @@ void ShareObserver::deinitialize()
 
 void ShareObserver::reinitialize()
 {
+    if (m_inReinitialize || m_inImport) {
+        m_reinitializePending = true;
+        return;
+    }
+    auto finished = qScopeGuard([this] { emit importFinished(); });
+    QScopedValueRollback reinitializeGuard(m_inReinitialize, true);
+
     QList<QPair<QPointer<Group>, KeeShareSettings::Reference>> shares;
     for (Group* group : m_db->rootGroup()->groupsRecursive(true)) {
         auto oldReference = m_groupToReference.value(group);
@@ -84,12 +97,12 @@ void ShareObserver::reinitialize()
         m_shareToGroup.remove(oldResolvedPath);
         m_fileWatchers.remove(oldResolvedPath);
 
-        if (newReference.isValid()) {
-            m_groupToReference[group] = newReference;
-            const auto newResolvedPath = resolvePath(newReference.path, m_db);
-            m_shareToGroup[newResolvedPath] = group;
+        if (!newReference.isValid()) {
+            continue;
         }
-
+        m_groupToReference[group] = newReference;
+        const auto newResolvedPath = resolvePath(newReference.path, m_db);
+        m_shareToGroup[newResolvedPath] = group;
         shares.append({group, newReference});
     }
 
@@ -189,36 +202,69 @@ void ShareObserver::handleDatabaseChanged()
     }
 }
 
-void ShareObserver::handleFileUpdated(const QString& path)
+void ShareObserver::handleImportFinished()
 {
-    if (!m_inFileUpdate) {
-        QTimer::singleShot(100, this, [this, path] {
-            const Result result = importShare(path);
-            m_inFileUpdate = false;
-            if (!result.isValid()) {
-                return;
-            }
-            QStringList success;
-            QStringList warning;
-            QStringList error;
-            if (result.isError()) {
-                error << tr("Import from %1 failed (%2)").arg(result.path, result.message);
-            } else if (result.isWarning()) {
-                warning << tr("Import from %1 failed (%2)").arg(result.path, result.message);
-            } else if (result.isInfo()) {
-                success << tr("Import from %1 successful (%2)").arg(result.path, result.message);
-            } else {
-                success << tr("Imported from %1").arg(result.path);
-            }
-            notifyAbout(success, warning, error);
-        });
-        m_inFileUpdate = true;
+    if (m_inImport || m_inReinitialize) {
+        return;
     }
+    if (m_reinitializePending) {
+        m_reinitializePending = false;
+        handleDatabaseChanged();
+    }
+    const auto pendingImports = m_pendingImports;
+    for (const auto& path : pendingImports) {
+        triggerImport(path);
+    }
+}
+
+void ShareObserver::handleFileUpdated(QString path)
+{
+    path = resolvePath(path, m_db);
+    if (m_pendingImports.contains(path)) {
+        return;
+    }
+    m_pendingImports.insert(path);
+    if (m_inImport || m_inReinitialize) {
+        return;
+    }
+    QTimer::singleShot(100, this, [this, path] { triggerImport(path); });
+}
+
+void ShareObserver::triggerImport(const QString& path)
+{
+    if (!m_pendingImports.remove(path)) {
+        return;
+    }
+    if (m_inImport || m_inReinitialize) {
+        m_pendingImports.insert(path);
+        return;
+    }
+    if (!m_shareToGroup.value(path)) {
+        return;
+    }
+    const Result result = importShare(path);
+    if (!result.isValid()) {
+        return;
+    }
+    QStringList success;
+    QStringList warning;
+    QStringList error;
+    if (result.isError()) {
+        error << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+    } else if (result.isWarning()) {
+        warning << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+    } else if (result.isInfo()) {
+        success << tr("Import from %1 successful (%2)").arg(result.path, result.message);
+    } else {
+        success << tr("Imported from %1").arg(result.path);
+    }
+    notifyAbout(success, warning, error);
 }
 
 ShareObserver::Result ShareObserver::importShare(const QString& path)
 {
-    if (!KeeShare::active().in) {
+    auto finished = qScopeGuard([this] { emit importFinished(); });
+    if (m_inImport || !KeeShare::active().in) {
         return {};
     }
     const auto changePath = resolvePath(path, m_db);
@@ -240,6 +286,9 @@ ShareObserver::Result ShareObserver::importShare(const QString& path)
     Q_ASSERT(shareGroup->database() == m_db);
     Q_ASSERT(shareGroup == m_db->rootGroup()->findGroupByUuid(shareGroup->uuid()));
     const auto resolvedPath = resolvePath(reference.path, m_db);
+
+    // Prevent synchronous reentry by database change signals during import.
+    QScopedValueRollback importGuard(m_inImport, true);
     return ShareImport::containerInto(resolvedPath, reference, shareGroup);
 }
 
