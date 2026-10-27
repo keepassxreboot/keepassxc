@@ -64,6 +64,7 @@ public:
     bool saveAttachmentToTempFile() const;
     const QString fileName() const;
     const QString fileNameEnvSubst(QProcessEnvironment environment = QProcessEnvironment::systemEnvironment()) const;
+    const QString passphraseAttribute() const;
 
     void setAllowUseOfSshKey(bool allowUseOfSshKey);
     void setAddAtDatabaseOpen(bool addAtDatabaseOpen);
@@ -76,6 +77,7 @@ public:
     void setAttachmentName(const QString& attachmentName);
     void setSaveAttachmentToTempFile(bool);
     void setFileName(const QString& fileName);
+    void setPassphraseAttribute(const QString& passphraseAttribute);
 
 private:
     bool readBool(QXmlStreamReader& reader);
@@ -93,6 +95,7 @@ private:
     QString m_attachmentName;
     bool m_saveAttachmentToTempFile;
     QString m_fileName;
+    QString m_passphraseAttribute;
     QString m_error;
 };
 

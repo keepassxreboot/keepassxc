@@ -130,6 +130,7 @@ private slots:
     void updateSSHAgent();
     void updateSSHAgentAttachment();
     void updateSSHAgentAttachments();
+    void updateSSHAgentPassphraseAttribute();
     void updateSSHAgentKeyInfo();
     void updateTotp();
     void browsePrivateKey();

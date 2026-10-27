@@ -3158,6 +3158,10 @@ Would you like to correct it?</source>
         <source>Failed to decrypt SSH key, ensure password is correct.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use entry password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -3589,6 +3593,14 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Clear agent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passphrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entry attribute to use as key passphrase</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -695,6 +695,26 @@ void EditEntryWidget::setupSSHAgent()
             this, &EditEntryWidget::updateSSHAgentAttachments);
     // clang-format on
 
+    connect(m_sshAgentUi->passphraseAttributeComboBox,
+            static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this,
+            [this] { setModified(); });
+
+    // Keep the passphrase attribute list in sync with the Advanced tab
+    connect(m_entryAttributes, &EntryAttributes::added, this, [this] { updateSSHAgentPassphraseAttribute(); });
+    connect(m_entryAttributes, &EntryAttributes::removed, this, [this](const QString& key) {
+        if (m_sshAgentSettings.passphraseAttribute() == key) {
+            m_sshAgentSettings.setPassphraseAttribute(QString());
+        }
+        updateSSHAgentPassphraseAttribute();
+    });
+    connect(m_entryAttributes, &EntryAttributes::renamed, this, [this](const QString& oldKey, const QString& newKey) {
+        if (m_sshAgentSettings.passphraseAttribute() == oldKey) {
+            m_sshAgentSettings.setPassphraseAttribute(newKey);
+        }
+        updateSSHAgentPassphraseAttribute();
+    });
+    connect(m_entryAttributes, &EntryAttributes::reset, this, [this] { updateSSHAgentPassphraseAttribute(); });
     addPage(tr("SSH Agent"), icons()->icon("utilities-terminal"), m_sshAgentWidget);
 }
 
@@ -710,6 +730,7 @@ void EditEntryWidget::setSSHAgentSettings()
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+    updateSSHAgentPassphraseAttribute();
 }
 
 void EditEntryWidget::updateSSHAgent()
@@ -765,6 +786,27 @@ void EditEntryWidget::updateSSHAgentAttachments()
     }
 
     updateSSHAgentKeyInfo();
+}
+
+void EditEntryWidget::updateSSHAgentPassphraseAttribute()
+{
+    QSignalBlocker blocker(m_sshAgentUi->passphraseAttributeComboBox);
+
+    const QString current = m_sshAgentSettings.passphraseAttribute();
+
+    m_sshAgentUi->passphraseAttributeComboBox->clear();
+    m_sshAgentUi->passphraseAttributeComboBox->addItem(tr("Use entry password"), QString());
+
+    const auto keys = m_entryAttributes->customKeys();
+    for (const QString& key : keys) {
+        m_sshAgentUi->passphraseAttributeComboBox->addItem(key, key);
+    }
+
+    int index = m_sshAgentUi->passphraseAttributeComboBox->findData(current);
+    if (index < 0) {
+        index = 0;
+    }
+    m_sshAgentUi->passphraseAttributeComboBox->setCurrentIndex(index);
 }
 
 void EditEntryWidget::updateSSHAgentKeyInfo()
@@ -824,6 +866,7 @@ void EditEntryWidget::toKeeAgentSettings(KeeAgentSettings& settings) const
     }
     settings.setAttachmentName(m_sshAgentUi->attachmentComboBox->currentText());
     settings.setFileName(m_sshAgentUi->externalFileEdit->text());
+    settings.setPassphraseAttribute(m_sshAgentUi->passphraseAttributeComboBox->currentData().toString());
 
     // we don't use this as we don't run an agent but for compatibility we set it if necessary
     settings.setAllowUseOfSshKey(settings.addAtDatabaseOpen() || settings.removeAtDatabaseClose());
@@ -859,8 +902,13 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
         return false;
     }
 
+    QString password = m_mainUi->passwordEdit->text();
+    if (!settings.passphraseAttribute().isEmpty()) {
+        password = m_entryAttributes->value(settings.passphraseAttribute());
+    }
+
     if (!settings.toOpenSSHKey(m_mainUi->usernameComboBox->lineEdit()->text(),
-                               m_mainUi->passwordEdit->text(),
+                               password,
                                m_db->filePath(),
                                m_attachments.data(),
                                key,

@@ -21,6 +21,7 @@
 #include "OpenSSHKey.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/EntryAttributes.h"
 #include "core/Tools.h"
 
 #include <QCoreApplication>
@@ -46,6 +47,7 @@ bool KeeAgentSettings::operator==(const KeeAgentSettings& other) const
             && m_selectedType == other.m_selectedType
             && m_attachmentName == other.m_attachmentName
             && m_saveAttachmentToTempFile == other.m_saveAttachmentToTempFile
+            && m_passphraseAttribute == other.m_passphraseAttribute
             && m_fileName == other.m_fileName);
     // clang-format on
 }
@@ -82,6 +84,7 @@ void KeeAgentSettings::reset()
     m_attachmentName.clear();
     m_saveAttachmentToTempFile = false;
     m_fileName.clear();
+    m_passphraseAttribute.clear();
     m_error.clear();
 }
 
@@ -150,6 +153,11 @@ const QString KeeAgentSettings::fileNameEnvSubst(QProcessEnvironment environment
     return Tools::envSubstitute(m_fileName, environment);
 }
 
+const QString KeeAgentSettings::passphraseAttribute() const
+{
+    return m_passphraseAttribute;
+}
+
 void KeeAgentSettings::setAllowUseOfSshKey(bool allowUseOfSshKey)
 {
     m_allowUseOfSshKey = allowUseOfSshKey;
@@ -198,6 +206,11 @@ void KeeAgentSettings::setSaveAttachmentToTempFile(bool saveAttachmentToTempFile
 void KeeAgentSettings::setFileName(const QString& fileName)
 {
     m_fileName = fileName;
+}
+
+void KeeAgentSettings::setPassphraseAttribute(const QString& passphraseAttribute)
+{
+    m_passphraseAttribute = passphraseAttribute;
 }
 
 bool KeeAgentSettings::readBool(QXmlStreamReader& reader)
@@ -262,6 +275,10 @@ bool KeeAgentSettings::fromXml(const QByteArray& ba)
                     reader.readNext();
                     m_attachmentName = reader.text().toString();
                     reader.readNext();
+                } else if (reader.name().toString() == "PassphraseAttribute") {
+                    reader.readNext();
+                    m_passphraseAttribute = reader.text().toString();
+                    reader.readNext();
                 } else if (reader.name().toString() == "SaveAttachmentToTempFile") {
                     m_saveAttachmentToTempFile = readBool(reader);
                 } else if (reader.name().toString() == "FileName") {
@@ -315,6 +332,12 @@ QByteArray KeeAgentSettings::toXml() const
         writer.writeTextElement("AttachmentName", m_attachmentName);
     } else {
         writer.writeEmptyElement("AttachmentName");
+    }
+
+    if (!m_passphraseAttribute.isEmpty()) {
+        writer.writeTextElement("PassphraseAttribute", m_passphraseAttribute);
+    } else {
+        writer.writeEmptyElement("PassphraseAttribute");
     }
 
     writer.writeTextElement("SaveAttachmentToTempFile", m_saveAttachmentToTempFile ? "true" : "false");
@@ -402,8 +425,12 @@ bool KeeAgentSettings::keyConfigured() const
  */
 bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool decrypt)
 {
-    return toOpenSSHKey(
-        entry->username(), entry->password(), entry->database()->filePath(), entry->attachments(), key, decrypt);
+    QString password = entry->password();
+    if (!m_passphraseAttribute.isEmpty()) {
+        password = entry->attributes()->value(m_passphraseAttribute);
+    }
+
+    return toOpenSSHKey(entry->username(), password, entry->database()->filePath(), entry->attachments(), key, decrypt);
 }
 
 /**

@@ -138,7 +138,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="3">
+      <item row="5" column="3" colspan="2">
        <layout class="QHBoxLayout" name="agentActionsLayout" stretch="0,0,0">
         <item>
          <widget class="QPushButton" name="addToAgentButton">
@@ -197,6 +197,32 @@
         </property>
         <property name="accessibleName">
          <string>Select attachment file</string>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="passphraseAttributeLabel">
+        <property name="text">
+         <string>Passphrase</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3" colspan="2">
+       <widget class="QComboBox" name="passphraseAttributeComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Select entry attribute to use as key passphrase</string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -341,6 +367,7 @@
   <tabstop>attachmentRadioButton</tabstop>
   <tabstop>externalFileRadioButton</tabstop>
   <tabstop>browseButton</tabstop>
+  <tabstop>passphraseAttributeComboBox</tabstop>
   <tabstop>addToAgentButton</tabstop>
   <tabstop>removeFromAgentButton</tabstop>
   <tabstop>decryptButton</tabstop>
