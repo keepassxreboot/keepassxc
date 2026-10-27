@@ -67,7 +67,7 @@ private:
 
     QSharedPointer<Database> m_db;
     QPointer<CsvImportWidget> m_csvWidget;
-    QPointer<RemoteHandler> m_remoteHandler;
+    QScopedPointer<RemoteHandler> m_remoteHandler;
 };
 
 #endif

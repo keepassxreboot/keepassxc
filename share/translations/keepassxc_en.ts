@@ -2908,6 +2908,10 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Could not upload the database. Remote handler was not initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The database file &quot;%1&quot; was modified externally</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9604,6 +9608,14 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not create temporary directory &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not change permissions of temporary directory &apos;%1&apos; to owner</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
