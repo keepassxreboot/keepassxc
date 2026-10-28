@@ -874,7 +874,9 @@ void Database::removeTag(const QString& tag)
     }
 
     for (auto entry : m_rootGroup->entriesRecursive()) {
+        entry->beginUpdate();
         entry->removeTag(tag);
+        entry->endUpdate();
     }
 }
 
