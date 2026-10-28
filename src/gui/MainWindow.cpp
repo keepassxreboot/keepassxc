@@ -1186,11 +1186,16 @@ void MainWindow::togglePasswordGenerator(bool enabled)
 {
     if (enabled) {
         m_ui->passwordGeneratorWidget->loadSettings();
+        const auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        m_ui->passwordGeneratorWidget->setDatabase(dbWidget && !dbWidget->isLocked() ? dbWidget->database().data()
+                                                                                     : nullptr);
         m_ui->passwordGeneratorWidget->regeneratePassword();
         m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
         statusBar()->setAutoFillBackground(false);
     } else {
         m_ui->passwordGeneratorWidget->saveSettings();
+        m_ui->passwordGeneratorWidget->setDatabase(nullptr);
+        m_ui->passwordGeneratorWidget->loadSettings();
         switchToDatabases();
     }
 }
