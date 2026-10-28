@@ -19,9 +19,13 @@
 #include "TestGui.h"
 #include "gui/Application.h"
 
+#include <algorithm>
+
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDialog>
+#include <QFile>
+#include <QHeaderView>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -36,6 +40,8 @@
 #include <QToolBar>
 
 #include "config-keepassx-tests.h"
+#include "core/CustomData.h"
+#include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -179,6 +185,331 @@ void TestGui::cleanup()
 void TestGui::cleanupTestCase()
 {
     m_dbFile.remove();
+}
+
+void TestGui::toggleCustomColumn(EntryView* view, const QString& name)
+{
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    auto* menu = view->findChild<QMenu*>("customColumnsMenu");
+    QVERIFY(menu);
+    const auto actions = menu->actions();
+    const auto action = std::find_if(
+        actions.cbegin(), actions.cend(), [name](QAction* candidate) { return candidate->data().toString() == name; });
+    QVERIFY(action != actions.cend());
+    QVERIFY((*action)->isCheckable());
+    (*action)->trigger();
+    view->findChild<QMenu*>()->hide();
+}
+
+void TestGui::testCustomColumns()
+{
+    auto* view = m_dbWidget->findChild<EntryView*>();
+    QVERIFY(view);
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle("Custom column entry");
+    entry->attributes()->set("E-Mail", "demo@example.invalid");
+    entry->setGroup(m_db->rootGroup());
+    view->displayGroup(m_db->rootGroup());
+    view->setCurrentEntry(entry);
+    view->header()->resizeSection(EntryModel::Title, 171);
+    const int customColumn = view->header()->count();
+    QCOMPARE(view->currentEntry(), entry);
+
+    m_db->markAsClean();
+    toggleCustomColumn(view, "E-Mail");
+    QCOMPARE(view->header()->count(), customColumn + 1);
+    QVERIFY(m_db->isModified());
+    QVERIFY(m_db->metadata()->customData()->contains(CustomData::EntryListColumns));
+    QVERIFY(m_db->metadata()->customData()->isProtected(CustomData::EntryListColumns));
+    QCOMPARE(view->model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(view->currentEntry(), entry);
+    QCOMPARE(view->header()->sectionSize(EntryModel::Title), 171);
+    QVERIFY(!view->header()->isSectionHidden(customColumn));
+
+    view->hideColumn(customColumn);
+    toggleCustomColumn(view, "E-Mail");
+    QCOMPARE(view->header()->count(), customColumn + 1);
+    QVERIFY(!view->header()->isSectionHidden(customColumn));
+    view->header()->resizeSection(customColumn, 123);
+    const auto state = view->viewState();
+    EntryView restored;
+    restored.setDatabase(m_db.data());
+    QVERIFY(restored.setViewState(state));
+    QCOMPARE(restored.header()->sectionSize(customColumn), 123);
+    QVERIFY(!restored.header()->isSectionHidden(customColumn));
+
+    view->selectAll();
+    const auto selected = view->selectedEntries();
+    QVERIFY(selected.size() > 1);
+    const auto extraColumnName = QString::fromUtf8("External & \"ID\", Büro");
+    entry->attributes()->set(extraColumnName, "Extra value");
+    toggleCustomColumn(view, extraColumnName);
+    QCOMPARE(view->selectedEntries(), selected);
+    QCOMPARE(view->header()->count(), customColumn + 2);
+    QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    auto* menu = view->findChild<QMenu*>();
+    const auto actions = view->findChild<QMenu*>("customColumnsMenu")->actions();
+    QVERIFY(std::any_of(actions.cbegin(), actions.cend(), [extraColumnName](QAction* action) {
+        return action->text() == QString(extraColumnName).replace('&', "&&");
+    }));
+    menu->hide();
+
+    view->displaySearch({entry});
+    QCOMPARE(view->model()->data(view->model()->index(0, customColumn)).toString(), QString("demo@example.invalid"));
+    QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+    QVERIFY(view->header()->isSectionHidden(customColumn));
+
+    Database otherDatabase;
+    restored.setDatabase(&otherDatabase);
+    QCOMPARE(restored.header()->count(), customColumn);
+    otherDatabase.metadata()->customData()->set(CustomData::EntryListColumns, "[\"Private\"]");
+    QCOMPARE(restored.model()->headerData(customColumn, Qt::Horizontal).toString(), QString("Private"));
+    QCOMPARE(view->model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(view->header()->count(), customColumn + 2);
+    restored.setDatabase(m_db.data());
+    restored.sortByColumn(customColumn + 1, Qt::DescendingOrder);
+    const auto customSortState = restored.viewState();
+    restored.setDatabase(&otherDatabase);
+    auto* otherEntry = new Entry();
+    otherEntry->setGroup(otherDatabase.rootGroup());
+    restored.displayGroup(otherDatabase.rootGroup());
+    restored.setCurrentEntry(otherEntry);
+    QVERIFY(restored.setViewState(customSortState));
+    QCOMPARE(restored.header()->count(), customColumn + 1);
+    QCOMPARE(restored.header()->sortIndicatorSection(), int(EntryModel::Title));
+    QCOMPARE(restored.currentEntry(), otherEntry);
+    QCOMPARE(restored.selectedEntries(), QList<Entry*>({otherEntry}));
+
+    config()->sync();
+    QFile settings(config()->getFileName());
+    QVERIFY(settings.open(QIODevice::ReadOnly));
+    const auto settingsData = settings.readAll();
+    QVERIFY(!settingsData.contains("E-Mail"));
+    QVERIFY(!settingsData.contains("External"));
+
+    QVERIFY(m_db->save());
+    QFile encryptedDatabase(m_dbFilePath);
+    QVERIFY(encryptedDatabase.open(QIODevice::ReadOnly));
+    const auto encryptedData = encryptedDatabase.readAll();
+    QVERIFY(!encryptedData.contains("E-Mail"));
+    QVERIFY(!encryptedData.contains(extraColumnName.toUtf8()));
+
+    auto reopened = QSharedPointer<Database>::create();
+    QVERIFY(reopened->open(m_dbFilePath, m_db->key()));
+    restored.setDatabase(reopened.data());
+    QCOMPARE(restored.header()->count(), customColumn + 2);
+    QCOMPARE(restored.model()->headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(restored.model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
+
+    view->displayGroup(m_db->rootGroup());
+    view->header()->showSection(customColumn);
+    view->header()->resizeSection(customColumn, 137);
+    view->header()->hideSection(customColumn + 1);
+    view->header()->moveSection(view->header()->visualIndex(customColumn), 2);
+    view->sortByColumn(customColumn, Qt::DescendingOrder);
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    QVERIFY(menu->isVisible());
+    QVERIFY(m_dbWidget->lock());
+    QVERIFY(!menu->isVisible());
+    QVERIFY(view->findChild<QMenu*>("customColumnsMenu")->actions().isEmpty());
+    QCOMPARE(view->header()->count(), customColumn);
+    m_dbWidget->performUnlockDatabase("a");
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    m_db = m_dbWidget->database();
+    QCOMPARE(view->header()->count(), customColumn + 2);
+    QCOMPARE(view->model()->headerData(customColumn + 1, Qt::Horizontal).toString(), extraColumnName);
+    QCOMPARE(view->header()->sectionSize(customColumn), 137);
+    QVERIFY(view->header()->isSectionHidden(customColumn + 1));
+    QCOMPARE(view->header()->visualIndex(customColumn), 2);
+    QCOMPARE(view->header()->sortIndicatorSection(), customColumn);
+    QCOMPARE(view->header()->sortIndicatorOrder(), Qt::DescendingOrder);
+    m_db->metadata()->customData()->remove(CustomData::EntryListColumns);
+    QCOMPARE(view->header()->count(), customColumn);
+    view->displaySearch({});
+    QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+    view->displayGroup(m_db->rootGroup());
+    QVERIFY(QMetaObject::invokeMethod(view, "resetViewToDefaults"));
+}
+
+void TestGui::testCustomColumnMenu()
+{
+    auto* view = m_dbWidget->findChild<EntryView*>();
+    QVERIFY(view);
+    auto* group = new Group();
+    group->setName("Custom columns");
+    group->setParent(m_db->rootGroup());
+    auto* entry = new Entry();
+    entry->setGroup(group);
+    entry->attributes()->set("First", "First value");
+    entry->attributes()->set("", "Invalid attribute name");
+    entry->attributes()->set("Second & column", "Second value");
+    entry->attributes()->set("Third", "Third value", true);
+    auto* otherEntry = new Entry();
+    otherEntry->setGroup(group);
+    otherEntry->attributes()->set("Second & column", "Another value");
+    view->displayGroup(group);
+    view->setCurrentEntry(entry);
+    const int firstColumn = EntryModel::CustomAttribute;
+
+    toggleCustomColumn(view, "First");
+    toggleCustomColumn(view, "Second & column");
+    toggleCustomColumn(view, "Third");
+    view->header()->resizeSection(firstColumn + 1, 137);
+    view->header()->moveSection(view->header()->visualIndex(firstColumn + 1), 2);
+    view->header()->hideSection(firstColumn + 2);
+    view->sortByColumn(firstColumn + 1, Qt::DescendingOrder);
+    view->selectAll();
+    const auto selected = view->selectedEntries();
+    const auto current = view->entryFromIndex(view->currentIndex());
+
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    auto* menu = view->findChild<QMenu*>();
+    auto* attributes = view->findChild<QMenu*>("customColumnsMenu");
+    QVERIFY(attributes);
+    QCOMPARE(attributes->actions().size(), 3);
+    QCOMPARE(attributes->actions().at(0)->text(), QString("First"));
+    QCOMPARE(attributes->actions().at(1)->text(), QString("Second && column"));
+    QCOMPARE(attributes->actions().at(2)->text(), QString("Third"));
+    for (auto* action : menu->actions()) {
+        QVERIFY(action->text() != "First");
+        QVERIFY(action->text() != "Second && column");
+        QVERIFY(action->text() != "Add custom column...");
+    }
+    menu->hide();
+
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn + 2);
+    QCOMPARE(view->model()->headerData(firstColumn, Qt::Horizontal).toString(), QString("Second & column"));
+    QCOMPARE(view->header()->sectionSize(firstColumn), 137);
+    QCOMPARE(view->header()->visualIndex(firstColumn), 2);
+    QVERIFY(view->header()->isSectionHidden(firstColumn + 1));
+    QCOMPARE(view->header()->sortIndicatorSection(), firstColumn);
+    QCOMPARE(view->header()->sortIndicatorOrder(), Qt::DescendingOrder);
+    QCOMPARE(view->selectedEntries(), selected);
+    QCOMPARE(view->entryFromIndex(view->currentIndex()), current);
+    QVERIFY(!m_db->metadata()->customData()->value(CustomData::EntryListColumns).contains("First"));
+    QCOMPARE(entry->attributes()->value("First"), QString("First value"));
+
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn + 3);
+    QCOMPARE(view->header()->sectionSize(firstColumn), 137);
+    toggleCustomColumn(view, "First");
+    toggleCustomColumn(view, "Second & column");
+    toggleCustomColumn(view, "Third");
+    toggleCustomColumn(view, "Third");
+    QCOMPARE(view->header()->count(), firstColumn);
+    QCOMPARE(m_db->metadata()->customData()->value(CustomData::EntryListColumns), QString("[]"));
+
+    toggleCustomColumn(view, "First");
+    for (int column = 0; column < firstColumn; ++column) {
+        view->header()->hideSection(column);
+    }
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn + 1);
+    QVERIFY(!view->header()->isSectionHidden(firstColumn));
+    view->header()->showSection(EntryModel::Title);
+    toggleCustomColumn(view, "First");
+    QCOMPARE(view->header()->count(), firstColumn);
+
+    view->displaySearch({});
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    QVERIFY(!attributes->isEnabled());
+    menu->hide();
+    m_db->metadata()->customData()->set(CustomData::EntryListColumns, "[\"Removed attribute\"]");
+    toggleCustomColumn(view, "Removed attribute");
+    QCOMPARE(view->header()->count(), firstColumn);
+    QVERIFY(QMetaObject::invokeMethod(view, "showHeaderMenu", Q_ARG(QPoint, QPoint())));
+    QVERIFY(attributes->actions().isEmpty());
+    menu->hide();
+}
+
+void TestGui::testCustomColumnStateFallback_data()
+{
+    QTest::addColumn<bool>("searchMode");
+    QTest::addColumn<bool>("visible");
+    QTest::addColumn<int>("sortColumn");
+    QTest::newRow("group-hidden") << false << false << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("group-visible") << false << true << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("search-hidden") << true << false << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("search-visible") << true << true << int(EntryModel::CustomAttribute + 1);
+    QTest::newRow("group-title-descending") << false << true << int(EntryModel::Title);
+    QTest::newRow("search-title-descending") << true << false << int(EntryModel::Title);
+    QTest::newRow("search-group-descending") << true << true << int(EntryModel::ParentGroup);
+}
+
+void TestGui::testCustomColumnStateFallback()
+{
+    QFETCH(bool, searchMode);
+    QFETCH(bool, visible);
+    QFETCH(int, sortColumn);
+
+    Database database;
+    database.metadata()->customData()->set(CustomData::EntryListColumns, "[\"First\",\"Second\"]");
+    auto first = new Entry();
+    first->setGroup(database.rootGroup());
+    first->setTitle("B");
+    auto second = new Entry();
+    second->setGroup(database.rootGroup());
+    second->setTitle("A");
+    auto third = new Entry();
+    third->setGroup(database.rootGroup());
+    third->setTitle("C");
+
+    EntryView source;
+    source.setDatabase(&database);
+    source.header()->showSection(EntryModel::Password);
+    source.header()->hideSection(EntryModel::Title);
+    source.header()->moveSection(source.header()->visualIndex(EntryModel::Username), 1);
+    source.header()->resizeSection(EntryModel::Username, 271);
+    source.sortByColumn(sortColumn, Qt::DescendingOrder);
+    const auto state = source.viewState();
+
+    database.metadata()->customData()->set(CustomData::EntryListColumns, "[\"First\"]");
+    EntryView view;
+    view.setDatabase(&database);
+    if (searchMode) {
+        view.displaySearch({first, second, third});
+    } else {
+        view.displayGroup(database.rootGroup());
+    }
+    view.setCurrentEntry(first);
+    view.selectionModel()->select(view.indexFromEntry(third), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    view.resize(800, 400);
+    if (visible) {
+        view.show();
+        QTRY_VERIFY(view.isVisible());
+    }
+
+    QVERIFY(view.setViewState(state));
+    QCOMPARE(view.header()->count(), int(EntryModel::CustomAttribute + 1));
+    QVERIFY(view.header()->isSectionHidden(EntryModel::Password));
+    EntryView defaults;
+    defaults.setDatabase(&database);
+    if (searchMode) {
+        defaults.displaySearch({first, second, third});
+    }
+    QVERIFY(QMetaObject::invokeMethod(&defaults, "resetViewToDefaults"));
+    for (int column = 0; column < view.header()->count(); ++column) {
+        QCOMPARE(view.header()->isSectionHidden(column), defaults.header()->isSectionHidden(column));
+        QCOMPARE(view.header()->visualIndex(column), defaults.header()->visualIndex(column));
+        if (!view.header()->isSectionHidden(column)) {
+            QVERIFY(view.header()->sectionSize(column) > 0);
+        }
+    }
+    QCOMPARE(view.header()->sortIndicatorSection(), defaults.header()->sortIndicatorSection());
+    QCOMPARE(view.header()->sortIndicatorOrder(), Qt::AscendingOrder);
+    QCOMPARE(view.entryFromIndex(view.currentIndex()), first);
+    QCOMPARE(view.numberOfSelectedEntries(), 2);
+    QVERIFY(view.selectedEntries().contains(first));
+    QVERIFY(view.selectedEntries().contains(third));
+    view.show();
+    QTRY_COMPARE(view.header()->length(), view.viewport()->width());
+    view.header()->resizeSection(EntryModel::Username, 173);
+    view.hide();
+    view.show();
+    QCOMPARE(view.header()->sectionSize(EntryModel::Username), 173);
 }
 
 void TestGui::testSettingsDefaultTabOrder()
