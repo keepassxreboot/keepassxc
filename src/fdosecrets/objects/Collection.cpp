@@ -251,10 +251,10 @@ namespace FdoSecrets
         }
 
         constexpr auto caseSensitive = false;
-        constexpr auto skipProtected = true;
+        constexpr auto includeProtected = false;
         constexpr auto forceSearch = true;
         const auto foundEntries =
-            EntrySearcher(caseSensitive, skipProtected).search(terms, m_exposedGroup, forceSearch);
+            EntrySearcher(caseSensitive, includeProtected).search(terms, m_exposedGroup, forceSearch);
         items.reserve(foundEntries.size());
         for (const auto& entry : foundEntries) {
             const auto item = m_entryToItem.value(entry);
