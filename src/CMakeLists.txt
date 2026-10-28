@@ -57,6 +57,8 @@ set(core_SOURCES
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
         format/BitwardenReader.cpp
+        format/CredentialExchangeReader.cpp
+        format/CredentialExchangeWriter.cpp
         format/CsvExporter.cpp
         format/CsvParser.cpp
         format/HtmlExporter.cpp
