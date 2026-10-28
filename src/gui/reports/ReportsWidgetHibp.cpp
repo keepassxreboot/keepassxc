@@ -37,7 +37,7 @@ namespace
     {
     public:
         ReportSortProxyModel(QObject* parent)
-            : QSortFilterProxyModel(parent){};
+            : QSortFilterProxyModel(parent) {};
         ~ReportSortProxyModel() override = default;
 
     protected:
@@ -70,7 +70,7 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->hibpTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
-    connect(m_ui->showKnownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(makeHibpTable()));
+    connect(m_ui->showKnownBadCheckBox, SIGNAL(toggled(bool)), this, SLOT(makeHibpTable()));
 #ifdef KPXC_FEATURE_NETWORK
     connect(&m_downloader, SIGNAL(hibpResult(QString, int)), SLOT(addHibpResult(QString, int)));
     connect(&m_downloader, SIGNAL(fetchFailed(QString)), SLOT(fetchFailed(QString)));

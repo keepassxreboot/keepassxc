@@ -1038,11 +1038,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             auto checkbox = new QCheckBox(tr("Remember my choice"), &msgbox);
             msgbox.setCheckBox(checkbox);
             bool remember = false;
-            QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
-                if (static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked) {
-                    remember = true;
-                }
-            });
+            QObject::connect(checkbox, &QCheckBox::toggled, [&](bool checked) { remember = checked; });
 
             int result = msgbox.exec();
             launch = (result == QMessageBox::Yes);
@@ -2101,6 +2097,7 @@ bool DatabaseWidget::lock()
                 QApplication::processEvents();
                 disconnect(connection);
                 if (reloadTriggered) {
+                    m_attemptingLock = false;
                     return false;
                 }
             }

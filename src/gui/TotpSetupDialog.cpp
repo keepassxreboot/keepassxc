@@ -179,7 +179,8 @@ void TotpSetupDialog::init()
         m_ui->invalidKeyLabel->setVisible(invalid);
         m_ui->seedEdit->setAccessibleDescription(invalid ? tr("Error: secret key is invalid") : QString());
         if (invalid) {
-            QAccessible::updateAccessibility(new QAccessibleEvent(m_ui->invalidKeyLabel, QAccessible::Alert));
+            QAccessibleEvent alertEvent(m_ui->invalidKeyLabel, QAccessible::Alert);
+            QAccessible::updateAccessibility(&alertEvent);
         }
     }
 }

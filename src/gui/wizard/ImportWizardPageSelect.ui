@@ -340,7 +340,7 @@ The command has to exit. In case of `sftp` as last commend `exit` has to be sent
   <customwidget>
    <class>ImportTypeListWidget</class>
    <extends>QListWidget</extends>
-   <header>ImportTypeListWidget.h</header>
+   <header>gui/wizard/ImportTypeListWidget.h</header>
   </customwidget>
   <customwidget>
    <class>PasswordWidget</class>

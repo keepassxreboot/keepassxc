@@ -41,4 +41,6 @@ include::topics/SecretService.adoc[tags=*]
 
 include::topics/SSHAgent.adoc[tags=*]
 
+include::topics/AdminOptions.adoc[tags=*]
+
 include::topics/Reference.adoc[tags=*]

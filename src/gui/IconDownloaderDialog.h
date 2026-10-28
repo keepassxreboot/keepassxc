@@ -53,7 +53,7 @@ private:
 
     void showFallbackMessage(bool state);
     void updateTable(const QString& url, const QString& message);
-    void updateProgressBar();
+    void updateProgressBar(bool announce = false);
     void updateCancelButton();
 
     QScopedPointer<Ui::IconDownloaderDialog> m_ui;

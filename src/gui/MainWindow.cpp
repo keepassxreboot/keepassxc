@@ -2233,7 +2233,7 @@ void MainWindow::initActionCollection()
 
     // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
     // Note: Qt::META means Ctrl on Mac.
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     ac->setDefaultShortcut(m_ui->actionEntryAddToAgent, Qt::META | Qt::Key_H);
     ac->setDefaultShortcut(m_ui->actionEntryRemoveFromAgent, Qt::META | Qt::SHIFT | Qt::Key_H);
 #endif

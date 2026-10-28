@@ -142,6 +142,16 @@ logger.addHandler(console_handler)
 
 
 _GIT_ORIG_BRANCH_CWD = None  # type: tuple[str, str] | None
+_PLATFORM_TARGETS = ['x86_64', 'amd64', 'aarch64', 'arm64']
+
+
+def _map_platform_target(target, amd64, arm64):
+    return {
+        'x86_64': amd64,
+        'amd64': amd64,
+        'aarch64': arm64,
+        'arm64': arm64,
+    }[target.lower()]
 
 
 def _get_bin_path(build_dir=None):
@@ -174,7 +184,8 @@ def _choice_prompt(prompt, choices):
 
 
 def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, timeout=None, check=True,
-         docker_image=None, docker_privileged=False, docker_mounts=None, docker_platform=None, **run_kwargs):
+         docker_image=None, docker_privileged=False, docker_mounts=None, docker_platform=None,
+         docker_ro_mounts=None, **run_kwargs):
     """
     Run a command and return its output.
     Raises an error if ``check`` is ``True`` and the process exited with a non-zero code.
@@ -192,12 +203,16 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
     if docker_image:
         cwd2 = Path(cwd or '.').absolute()
         docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd2}', f'--user={os.getuid()}:{os.getgid()}']
-        docker_cmd.extend([f'--env={k}={v}' for k, v in env.items() if k in ['FORCE_COLOR', 'CC', 'CXX', 'QMAKE']])
+        docker_cmd.extend([f'--env={k}={v}' for k, v in env.items()
+                           if k in ['FORCE_COLOR', 'CC', 'CXX', 'QMAKE', 'APPIMAGE_EXTRACT_AND_RUN']])
         if path:
             docker_cmd.append(f'--env=PATH={path}')
         docker_cmd.append(f'--volume={cwd2}:{cwd2}:rw')
         if docker_mounts:
             docker_cmd.extend([f'--volume={Path(d).absolute()}:{Path(d).absolute()}:rw' for d in docker_mounts])
+        if docker_ro_mounts:
+            docker_cmd.extend([f'--volume={Path(source).absolute()}:{target}:ro'
+                               for source, target in docker_ro_mounts.items()])
         if docker_privileged:
             docker_cmd.extend(['--cap-add=SYS_ADMIN', '--security-opt=apparmor:unconfined', '--device=/dev/fuse'])
         if docker_platform:
@@ -327,9 +342,21 @@ def _capture_vs_env(arch='amd64'):
 
     logger.info('Using Visual Studio developer command script: %s', vs_cmd)
 
+    # Determine the host architecture for Visual Studio
+    host_arch = (os.environ.get('PROCESSOR_ARCHITECTURE') or platform.machine()).lower()
+    host_arch = {
+        'amd64': 'x64',
+        'x64': 'x64',
+        'x86_64': 'x64',
+        'aarch64': 'arm64',
+        'arm64': 'arm64',
+    }.get(host_arch)
+    if not host_arch:
+        raise Error('Unsupported Visual Studio host architecture: %s', platform.machine())
+
     # Use cmd.exe to run the batch file and then dump the environment with `set`
     try:
-        out = _run(f'cmd /c "{vs_cmd}" -arch={arch} -no_logo && set', cwd=None, text=True).stdout
+        out = _run(f'cmd /c "{vs_cmd}" -arch={arch} -host_arch={host_arch} -no_logo && set', cwd=None, text=True).stdout
     except subprocess.CalledProcessError as e:
         raise Error('Failed to run Visual Studio dev script: %s', e.output or str(e))
 
@@ -424,7 +451,7 @@ class Check(Command):
         logger.info('All checks passed.')
 
     @classmethod
-    def perform_basic_checks(cls, src_dir):
+    def perform_basic_checks(cls, src_dir, check_xcode=True):
         logger.info('Performing basic checks...')
         cls.check_src_dir_exists(src_dir)
         cls.check_git()
@@ -433,7 +460,8 @@ class Check(Command):
         logger.info('Checking for required build tools...')
         cls.check_git()
         cls.check_gnupg()
-        cls.check_xcode_setup()
+        if check_xcode:
+            cls.check_xcode_setup()
 
     @classmethod
     def perform_version_checks(cls, version, src_dir, git_ref=None, version_exists=False, checkout=True):
@@ -647,39 +675,38 @@ class Build(Command):
         parser.add_argument('--minimal', help='Build with minimal feature set.', action='store_true')
         parser.add_argument('--build-qt', help='Build Qt6 dependency.', action='store_true')
         parser.add_argument('--override-version', help='Override displayed version number.')
+        parser.add_argument('-p', '--platform-target', default=platform.machine().lower(),
+                            help='Build target platform (default: %(default)s).', choices=_PLATFORM_TARGETS)
+
+        if sys.platform in ['darwin', 'linux']:
+            parser.add_argument('-d', '--docker-image',
+                                help='Build for Linux in the given Docker image (overrides --use-system-deps).')
+            parser.add_argument('-a', '--appimage', help='Build a Linux AppImage.', action='store_true')
 
         if sys.platform == 'darwin':
             parser.add_argument('--macos-target', default=12, metavar='MACOSX_DEPLOYMENT_TARGET',
                                 help='macOS deployment target version (default: %(default)s).')
-            parser.add_argument('-p', '--platform-target', default=platform.uname().machine,
-                                help='Build target platform (default: %(default)s).', choices=['x86_64', 'arm64'])
             parser.add_argument('--sign', help='Sign binaries prior to packaging.', action='store_true')
             parser.add_argument('--sign-identity',
                                 help='Apple Developer identity name used for signing binaries (default: ask).')
             parser.add_argument('--notarize', help='Notarize signed file(s).', action='store_true')
             parser.add_argument('--keychain-profile', default='notarization-creds',
                                 help='Read Apple credentials for notarization from a keychain (default: %(default)s).')
-            parser.set_defaults(cmake_generator='Ninja')
-        elif sys.platform == 'linux':
-            parser.add_argument('-d', '--docker-image', help='Run build in Docker image (overrides --use-system-deps).')
-            parser.add_argument('-p', '--platform-target', help='Build target platform (default: %(default)s).',
-                                choices=['x86_64', 'aarch64'], default=platform.uname().machine)
-            parser.add_argument('-a', '--appimage', help='Build an AppImage.', action='store_true')
         elif sys.platform == 'win32':
-            parser.add_argument('-p', '--platform-target', help='Build target platform (default: %(default)s).',
-                                choices=['amd64', 'arm64'], default='amd64')
             parser.add_argument('--mingw', help='Build using MinGW-w64 toolchain.', action='store_true')
             parser.add_argument('--sign', help='Sign binaries prior to packaging.', action='store_true')
             parser.add_argument('--sign-identity', help='SHA1 fingerprint of the signing certificate.')
             parser.add_argument('--sign-timestamp-url', help='Timestamp URL for signing binaries.',
-                                default='http://timestamp.sectigo.com')
-            parser.set_defaults(cmake_generator='Ninja')
+                                default='http://timestamp.acs.microsoft.com')
 
         parser.add_argument('-c', '--cmake-opts', nargs=argparse.REMAINDER,
                             help='Additional CMake options (no other arguments can be specified after this).')
 
     def run(self, version, src_dir, output_dir, tag_name, snapshot, cmake_generator, yes, with_tests, **kwargs):
-        Check.perform_basic_checks(src_dir)
+        docker_image = kwargs.get('docker_image')
+        if kwargs.get('appimage') and sys.platform == 'darwin' and not docker_image:
+            raise Error('--appimage requires --docker-image on macOS.')
+        Check.perform_basic_checks(src_dir, check_xcode=not docker_image)
         src_dir = Path(src_dir).resolve()
         output_dir = Path(output_dir)
         if output_dir.exists():
@@ -702,7 +729,7 @@ class Build(Command):
             '-DKPXC_MINIMAL=' + minimal
         ]
 
-        if not kwargs['use_system_deps'] and not kwargs.get('docker_image'):
+        if not kwargs['use_system_deps'] and not docker_image:
             cmake_opts.append(f'-DCMAKE_TOOLCHAIN_FILE={self._get_vcpkg_toolchain_file()}')
             if kwargs['build_qt']:
                 cmake_opts.append('-DWITH_BUILD_QT=ON')
@@ -724,16 +751,18 @@ class Build(Command):
             cmake_opts.append(f'-DOVERRIDE_VERSION={kwargs["override_version"]}')
             version = kwargs['override_version']
 
+        if not cmake_generator and (docker_image or sys.platform in ['darwin', 'win32']):
+            cmake_generator = 'Ninja'
         if cmake_generator:
             cmake_opts.extend(['-G', cmake_generator])
         kwargs['cmake_opts'] = cmake_opts + (kwargs['cmake_opts'] or [])
 
+        if docker_image or sys.platform == 'linux':
+            return self.build_linux(version, src_dir, output_dir, **kwargs)
         if sys.platform == 'win32':
             return self.build_windows(version, src_dir, output_dir, **kwargs)
         if sys.platform == 'darwin':
             return self.build_macos(version, src_dir, output_dir, **kwargs)
-        if sys.platform == 'linux':
-            return self.build_linux(version, src_dir, output_dir, **kwargs)
         raise Error('Unsupported build platform: %s', sys.platform)
 
     @staticmethod
@@ -752,15 +781,19 @@ class Build(Command):
         return toolchain.resolve()
 
     @staticmethod
-    def _run_tests(cwd, ctest_cmd='ctest', parallelism=4):
+    def _run_tests(cwd, ctest_cmd='ctest', parallelism=4, **run_kwargs):
         logger.info('Running tests...')
-        _run([ctest_cmd, '-E', 'gui|cli', '--output-on-failure', '-j', str(parallelism)], cwd=cwd, capture_output=False)
-        _run([ctest_cmd, '-R', 'gui|cli', '--output-on-failure'], cwd=cwd, capture_output=False)
+        _run([ctest_cmd, '-E', 'gui|cli', '--output-on-failure', '-j', str(parallelism)],
+             cwd=cwd, capture_output=False, **run_kwargs)
+        _run([ctest_cmd, '-R', 'gui|cli', '--output-on-failure'],
+             cwd=cwd, capture_output=False, **run_kwargs)
 
     # noinspection PyMethodMayBeStatic
     def build_windows(self, version, src_dir, output_dir, *, parallelism, cmake_opts, platform_target,
                       sign, sign_identity, sign_timestamp_url, with_tests, mingw, use_system_deps,
                       build_qt, **_):
+        platform_target = _map_platform_target(platform_target, 'amd64', 'arm64')
+
         # Setup build signing if requested
         if sign:
             cmake_opts.append(f'-DWITH_XC_CODESIGN_IDENTITY={sign_identity}')
@@ -819,8 +852,10 @@ class Build(Command):
     # noinspection PyMethodMayBeStatic
     def build_macos(self, version, src_dir, output_dir, *, use_system_deps, parallelism, cmake_opts,
                     macos_target, platform_target, with_tests, sign, sign_identity, notarize, keychain_profile, **_):
+        platform_target = _map_platform_target(platform_target, 'x86_64', 'arm64')
         if not use_system_deps:
-            cmake_opts.append(f'-DVCPKG_TARGET_TRIPLET={platform_target.replace("86_", "")}-osx-dynamic-release')
+            vcpkg_target = _map_platform_target(platform_target, 'x64', 'arm64')
+            cmake_opts.append(f'-DVCPKG_TARGET_TRIPLET={vcpkg_target}-osx-dynamic-release')
         cmake_opts.append(f'-DCMAKE_OSX_DEPLOYMENT_TARGET={macos_target}')
         cmake_opts.append(f'-DCMAKE_OSX_ARCHITECTURES={platform_target}')
 
@@ -854,27 +889,56 @@ class Build(Command):
             logger.info('All done! Please don\'t forget to sign the binaries before distribution.')
 
     @staticmethod
-    def _download_tools_if_not_available(toolname, bin_dir, url, docker_args=None):
-        if _run(['which', toolname], cwd=None, check=False, **(docker_args or {})).returncode != 0:
+    def _prepare_appimage_tool(toolname, bin_dir, url, docker_args=None, fix_binfmt=False):
+        outfile = bin_dir / toolname
+        installed_tool = _run(['which', toolname], cwd=bin_dir, check=False, text=True,
+                              **(docker_args or {}))
+
+        if installed_tool.returncode == 0:
+            installed_tool = installed_tool.stdout.strip()
+            if not fix_binfmt:
+                return Path(installed_tool)
+            logger.info(f'Preparing {toolname} for cross-platform execution...')
+            _run(['cp', installed_tool, outfile.as_posix()], cwd=bin_dir, **(docker_args or {}))
+            if docker_args and docker_args.get('docker_image'):
+                # Plugin discovery must see the patched copy at the original image path too.
+                docker_args.setdefault('docker_ro_mounts', {})[outfile] = installed_tool
+        else:
             logger.info(f'Downloading {toolname}...')
-            outfile = bin_dir / toolname
             request.urlretrieve(url, outfile)
             outfile.chmod(outfile.stat().st_mode | stat.S_IEXEC)
 
+        if fix_binfmt:
+            # Cross-architecture Docker builds use binfmt to send target-platform executables to an emulator.
+            # The AppImage AI\x02 marker changes ELF header bytes used by binfmt for matching, causing an
+            # "Exec format error". Remove the marker from this temporary build tool; the generated AppImage
+            # is not modified.
+            with outfile.open('r+b') as appimage:
+                appimage.seek(8)
+                if appimage.read(3) == b'AI\x02':
+                    appimage.seek(8)
+                    appimage.write(b'\0\0\0')
+
+        return outfile
+
     def build_linux(self, version, src_dir, output_dir, *, install_prefix, parallelism, cmake_opts, use_system_deps,
                     platform_target, appimage, docker_image, with_tests, **_):
-        if use_system_deps and platform_target != platform.uname().machine and not docker_image:
+        platform_target = _map_platform_target(platform_target, 'amd64', 'aarch64')
+        host_platform = _map_platform_target(platform.machine(), 'amd64', 'aarch64')
+        if use_system_deps and platform_target != host_platform and not docker_image:
             raise Error('Need --docker-image for cross-platform compilation when not building with vcpkg!')
 
+        output_dir = output_dir.resolve()
+        docker_mounts = [src_dir]
+        try:
+            output_dir.relative_to(src_dir)
+        except ValueError:
+            docker_mounts.append(output_dir)
         docker_args = dict(
             docker_image=docker_image,
-            docker_mounts=[src_dir],
-            docker_platform=f'linux/{platform_target}',
+            docker_mounts=docker_mounts,
+            docker_platform=f'linux/{_map_platform_target(platform_target, "amd64", "arm64")}',
         )
-        if docker_image:
-            logger.info('Pulling Docker image...')
-            _run(['docker', 'pull', f'--platform=linux/{platform_target}', docker_image],
-                 cwd=None, capture_output=False)
 
         if appimage:
             cmake_opts.append('-DKEEPASSXC_DIST_TYPE=AppImage')
@@ -890,66 +954,82 @@ class Build(Command):
                  cwd=build_dir, capture_output=False, **docker_args)
 
             if with_tests:
-                self._run_tests(cwd=build_dir, parallelism=parallelism)
+                self._run_tests(cwd=build_dir, parallelism=parallelism, **docker_args)
 
             logger.info('Bundling AppDir...')
             app_dir = Path(build_dir) / f'KeePassXC-{version}-{platform_target}.AppDir'
             _run(['cmake', '--install', '.', '--strip',
                   '--prefix', (app_dir.absolute() / install_prefix.lstrip('/')).as_posix()],
                  cwd=build_dir, capture_output=False, **docker_args)
-            shutil.copytree(app_dir, output_dir / app_dir.name, symlinks=True, dirs_exist_ok=True)
-
             if appimage:
+                appimage_platform = _map_platform_target(platform_target, 'x86_64', 'aarch64')
                 self._build_linux_appimage(
-                    version, src_dir, output_dir, app_dir, build_dir, install_prefix, platform_target, docker_args)
+                    version, src_dir, output_dir, app_dir, build_dir, install_prefix, appimage_platform,
+                    docker_args, fix_binfmt=bool(docker_image and platform_target != host_platform))
 
     def _build_linux_appimage(self, version, src_dir, output_dir, app_dir, build_dir, install_prefix,
-                              platform_target, docker_args):
+                              platform_target, docker_args, fix_binfmt=False):
         if (app_dir / 'AppRun').exists():
             raise Error('AppDir has already been run through linuxdeploy! Please create a fresh AppDir and try again.')
 
         bin_dir = Path(build_dir) / 'bin'
         bin_dir.mkdir()
-        self._download_tools_if_not_available(
+        # Keep tool replacement mounts local to the packaging containers.
+        docker_args = dict(docker_args, docker_ro_mounts={})
+        linuxdeploy = self._prepare_appimage_tool(
             'linuxdeploy', bin_dir,
             'https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/' +
             f'linuxdeploy-{platform_target}.AppImage',
-            docker_args)
-        self._download_tools_if_not_available(
+            docker_args, fix_binfmt)
+        qt_plugin = self._prepare_appimage_tool(
             'linuxdeploy-plugin-qt', bin_dir,
             'https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/' +
             f'linuxdeploy-plugin-qt-{platform_target}.AppImage',
-            docker_args)
-        self._download_tools_if_not_available(
+            docker_args, fix_binfmt)
+        appimagetool = self._prepare_appimage_tool(
             'appimagetool', bin_dir,
-            'https://github.com/AppImage/AppImageKit/releases/download/continuous/' +
+            'https://github.com/AppImage/appimagetool/releases/download/continuous/' +
             f'appimagetool-{platform_target}.AppImage',
-            docker_args)
-
-        env_path = ':'.join([bin_dir.as_posix(), _get_bin_path()])
+            docker_args, fix_binfmt)
         install_prefix = app_dir / install_prefix.lstrip('/')
         desktop_file = install_prefix / 'share/applications/org.keepassxc.KeePassXC.desktop'
         icon_file = install_prefix / 'share/icons/hicolor/256x256/apps/keepassxc.png'
         executables = (install_prefix / 'bin').glob('keepassxc*')
         app_run = src_dir / 'share/linux/appimage-apprun.sh'
 
-        # Ensure QMAKE points to qmake6 for linuxdeploy-plugin-qt to find Qt6
-        env = {**os.environ, 'QMAKE': os.environ.get('QMAKE', 'qmake6')}
+        env = os.environ.copy()
+        env['QMAKE'] = env.get('QMAKE', 'qmake6')
+        if docker_args.get('docker_image'):
+            # Containers may lack working FUSE, such as when run on a macOS host.
+            env['APPIMAGE_EXTRACT_AND_RUN'] = '1'
+        run_args = dict(docker_args, cwd=build_dir, capture_output=False, env=env)
 
         logger.info('Building AppImage...')
         logger.debug('Running linuxdeploy...')
-        _run(['linuxdeploy', '--plugin=qt', f'--appdir={app_dir}', f'--custom-apprun={app_run}',
+        _run([linuxdeploy.as_posix(), f'--appdir={app_dir}', f'--custom-apprun={app_run}',
               f'--desktop-file={desktop_file}', f'--icon-file={icon_file}',
               *[f'--executable={ex}' for ex in executables]],
-             cwd=build_dir, capture_output=False, path=env_path, env=env, **docker_args, docker_privileged=True)
+             **run_args)
+
+        logger.debug('Running linuxdeploy-plugin-qt...')
+        _run([qt_plugin.as_posix(), f'--appdir={app_dir}'], **run_args)
+
+        # We need to remove libcrypto.so.* for TLS to work properly, but linuxdeploy's library
+        # exclusion flags are broken. See: https://github.com/linuxdeploy/linuxdeploy-plugin-qt/issues/205
+        remove_libs = [
+            path for pattern in ('libssl.so*', 'libcrypto.so*') for path in app_dir.rglob(pattern)
+        ]
+        for library in remove_libs:
+            library.unlink()
 
         logger.debug('Running appimagetool...')
         appimage_name = f'KeePassXC-{version}-{platform_target}.AppImage'
         desktop_file.write_text(desktop_file.read_text().strip() + f'\nX-AppImage-Version={version}\n')
-        _run(['appimagetool', '--updateinformation=gh-releases-zsync|keepassxreboot|keepassxc|latest|' +
+        _run([appimagetool.as_posix(),
+              '--updateinformation=gh-releases-zsync|keepassxreboot|keepassxc|latest|' +
               f'KeePassXC-*-{platform_target}.AppImage.zsync',
               app_dir.as_posix(), (output_dir.absolute() / appimage_name).as_posix()],
-             cwd=build_dir, capture_output=False, path=env_path, env=env, **docker_args, docker_privileged=True)
+             **run_args)
         # Move appimage zsync file to output dir
         zsync_file = next(Path(build_dir).glob('*.AppImage.zsync'), None)
         if zsync_file and zsync_file.is_file():

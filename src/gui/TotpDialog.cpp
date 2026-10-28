@@ -55,7 +55,7 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     setTabOrder(m_ui->totpLabel, closeButton);
     setTabOrder(closeButton, copyButton);
     m_ui->totpLabel->setFocusPolicy(Qt::StrongFocus);
-    m_ui->totpLabel->setFocus(Qt::OtherFocusReason);
+    closeButton->setFocus(Qt::OtherFocusReason);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
