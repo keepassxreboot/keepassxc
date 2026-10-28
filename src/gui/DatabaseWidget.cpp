@@ -51,6 +51,7 @@
 #include "gui/TotpSetupDialog.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EntryView.h"
+#include "gui/entry/MergeEntriesDialog.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
@@ -522,6 +523,33 @@ void DatabaseWidget::cloneEntry()
     });
 
     cloneDialog->show();
+}
+
+void DatabaseWidget::mergeSelectedEntries()
+{
+    auto selectedEntries = m_entryView->selectedEntries();
+    if (selectedEntries.size() < 2) {
+        return;
+    }
+
+    auto mergeEntriesDialog = new MergeEntriesDialog(selectedEntries, this);
+    connect(mergeEntriesDialog,
+            &MergeEntriesDialog::entriesMerged,
+            this,
+            [this](Entry* entry, const QList<Entry*>& discardedEntries) {
+                if (!discardedEntries.isEmpty()) {
+                    // The merge dialog covers moving the entries to the recycle bin, but
+                    // deleting them for good asks for confirmation as it does everywhere else
+                    auto recycleBin = m_db->metadata()->recycleBin();
+                    bool permanent = !m_db->metadata()->recycleBinEnabled()
+                                     || (recycleBin && recycleBin->findEntryByUuid(discardedEntries.first()->uuid()));
+                    deleteEntries(discardedEntries, permanent);
+                }
+                refreshSearch();
+                m_entryView->setCurrentEntry(entry);
+            });
+
+    mergeEntriesDialog->show();
 }
 
 void DatabaseWidget::showTotp()
