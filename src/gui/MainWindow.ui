@@ -373,6 +373,7 @@
     </property>
     <addaction name="actionPasswordGenerator"/>
     <addaction name="actionClearSSHAgent"/>
+    <addaction name="actionReloadSSHAgentKeys"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -1362,6 +1363,17 @@
    </property>
    <property name="toolTip">
     <string>Clear all identities in ssh-agent</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionReloadSSHAgentKeys">
+   <property name="text">
+    <string>Reload SSH Keys</string>
+   </property>
+   <property name="toolTip">
+    <string>Re-add missing KeePassXC identities to ssh-agent</string>
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
