@@ -123,7 +123,7 @@ bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
         return false;
     }
 
-    // Encrypt the data using AES-256-CBC
+    // Encrypt the data using AES-256-GCM
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, key, challenge)) {
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
