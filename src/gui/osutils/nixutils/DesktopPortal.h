@@ -30,6 +30,8 @@ class DesktopPortal : public QObject
     Q_OBJECT
 
 public:
+    static QString portalRequest(QObject* parent, const std::function<void(uint, const QVariantMap&)>& handler);
+
     void closeSession();
     bool hasSession() const;
     QDBusObjectPath sessionPath() const;
@@ -39,7 +41,10 @@ protected:
     explicit DesktopPortal(QObject* parent = nullptr);
     ~DesktopPortal() override;
 
-    QString portalRequest(const std::function<void(uint, const QVariantMap&)>& handler);
+    QString portalRequest(const std::function<void(uint, const QVariantMap&)>& handler)
+    {
+        return portalRequest(this, handler);
+    }
     QString prepareSession();
 
     virtual void onSessionClosed(const QVariantMap& details);
