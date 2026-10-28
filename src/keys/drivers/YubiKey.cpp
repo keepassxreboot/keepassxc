@@ -22,6 +22,7 @@
 
 #include <QMutexLocker>
 #include <QSet>
+#include <QThread>
 #include <QtConcurrent>
 
 QMutex YubiKey::s_interfaceMutex;
@@ -71,41 +72,61 @@ bool YubiKey::isInitialized()
     return m_initialized;
 }
 
-bool YubiKey::findValidKeys()
+YubiKey::ScanResult YubiKey::scanKeys()
 {
     // Block operations on hardware keys while scanning
     QMutexLocker lock(&s_interfaceMutex);
 
-    m_connectedKeys = 0;
-    m_findingKeys = true;
-    m_usbKeys = YubiKeyInterfaceUSB::instance()->findValidKeys(m_connectedKeys);
-    m_pcscKeys = YubiKeyInterfacePCSC::instance()->findValidKeys(m_connectedKeys);
-    m_findingKeys = false;
+    ScanResult result;
+    result.usbKeys = YubiKeyInterfaceUSB::instance()->findValidKeys(result.connectedKeys);
+    result.pcscKeys = YubiKeyInterfacePCSC::instance()->findValidKeys(result.connectedKeys);
+    return result;
+}
 
-    return !m_usbKeys.isEmpty() || !m_pcscKeys.isEmpty();
+bool YubiKey::setFoundKeys(const ScanResult& result)
+{
+    Q_ASSERT(QThread::currentThread() == thread());
+
+    ++m_scanGeneration;
+    m_lastScan = result;
+    const bool found = !m_lastScan.usbKeys.isEmpty() || !m_lastScan.pcscKeys.isEmpty();
+    emit detectComplete(found);
+    return found;
+}
+
+bool YubiKey::findValidKeys()
+{
+    return setFoundKeys(scanKeys());
 }
 
 void YubiKey::findValidKeysAsync()
 {
     // Don't start another scan if we are already doing one
-    if (!m_findingKeys) {
-        m_findingKeys = true;
-        auto future = QtConcurrent::run([this] { emit detectComplete(findValidKeys()); });
-        Q_UNUSED(future)
+    if (!m_keyScan.isFinished()) {
+        return;
     }
+
+    // Scan on a worker thread, but store the results on this object's thread, where they are read
+    const auto generation = m_scanGeneration;
+    m_keyScan = QtConcurrent::run(&YubiKey::scanKeys).then(this, [this, generation](const ScanResult& result) {
+        // Skip if a synchronous scan has published newer results in the meantime
+        if (generation == m_scanGeneration) {
+            setFoundKeys(result);
+        }
+    });
 }
 
 YubiKey::KeyMap YubiKey::foundKeys()
 {
-    KeyMap foundKeys = m_usbKeys;
-    foundKeys.unite(m_pcscKeys);
+    KeyMap foundKeys = m_lastScan.usbKeys;
+    foundKeys.unite(m_lastScan.pcscKeys);
 
     return foundKeys;
 }
 
 int YubiKey::connectedKeys()
 {
-    return m_connectedKeys;
+    return m_lastScan.connectedKeys;
 }
 
 QString YubiKey::errorMessage()
@@ -125,15 +146,9 @@ bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 {
     QMutexLocker lock(&s_interfaceMutex);
 
-    if (m_usbKeys.contains(slot)) {
-        return YubiKeyInterfaceUSB::instance()->testChallenge(slot, wouldBlock);
-    }
-
-    if (m_pcscKeys.contains(slot)) {
-        return YubiKeyInterfacePCSC::instance()->testChallenge(slot, wouldBlock);
-    }
-
-    return false;
+    // Like challenge(), try USB first, then PC/SC
+    return YubiKeyInterfaceUSB::instance()->testChallenge(slot, wouldBlock)
+           || YubiKeyInterfacePCSC::instance()->testChallenge(slot, wouldBlock);
 }
 
 /**
