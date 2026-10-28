@@ -21,11 +21,13 @@
 
 #include <QColor>
 #include <QObject>
+#include <QPointer>
 #include <QMenu>
 #include <QMainWindow>
 #include <unistd.h>
 
 class QWindow;
+class MacWindowActivation;
 
 class AppKit : public QObject
 {
@@ -39,6 +41,7 @@ public:
     pid_t activeProcessId();
     pid_t ownProcessId();
     bool activateProcess(pid_t pid);
+    void activateWindow(QWindow* window);
     bool hideProcess(pid_t pid);
     bool isHidden(pid_t pid);
     bool isDarkMode();
@@ -55,6 +58,7 @@ signals:
 
 private:
     void* self;
+    QPointer<MacWindowActivation> m_windowActivation;
 };
 
 #endif // KEEPASSX_APPKIT_H
