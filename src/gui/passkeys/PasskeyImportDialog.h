@@ -21,7 +21,10 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include <QDialog>
+#include <QPointer>
 #include <QUuid>
+
+class QTreeWidgetItem;
 
 namespace Ui
 {
@@ -49,8 +52,12 @@ public:
     bool useDefaultGroup() const;
     bool createNewEntry() const;
 
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 private:
     void addDatabases();
+    void selectFirstVisibleEntry();
 
 signals:
     void updateEntries();
@@ -60,8 +67,9 @@ private slots:
     void addEntries();
     void addGroups();
     void changeDatabase(int index);
-    void changeEntry(int index);
+    void changeEntry(QTreeWidgetItem* current);
     void changeGroup(int index);
+    void filterEntries(const QString& searchString);
 
 private:
     QScopedPointer<Ui::PasskeyImportDialog> m_ui;
@@ -69,6 +77,7 @@ private:
     QUuid m_selectedDatabaseUuid;
     QUuid m_selectedEntryUuid;
     QUuid m_selectedGroupUuid;
+    QList<QPointer<Entry>> m_entries;
 };
 
 #endif // KEEPASSXC_PASSKEYIMPORTDIALOG_H

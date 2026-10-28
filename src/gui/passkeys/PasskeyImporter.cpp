@@ -127,15 +127,10 @@ bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
 
     // Import to entry selected instead of creating a new one
     if (!passkeyImportDialog.createNewEntry()) {
-        auto groupUuid = passkeyImportDialog.getSelectedGroupUuid();
-        auto group = db->rootGroup()->findGroupByUuid(groupUuid);
-
-        if (group) {
-            auto selectedEntry = group->findEntryByUuid(passkeyImportDialog.getSelectedEntryUuid());
-            if (selectedEntry) {
-                browserService()->addPasskeyToEntry(
-                    selectedEntry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
-            }
+        auto selectedEntry = db->rootGroup()->findEntryByUuid(passkeyImportDialog.getSelectedEntryUuid());
+        if (selectedEntry) {
+            browserService()->addPasskeyToEntry(
+                selectedEntry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
         }
 
         return true;

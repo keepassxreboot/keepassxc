@@ -193,6 +193,7 @@ private:
     QList<Entry*> getPasskeyEntries(const QString& rpId, const StringPairList& keyList);
     QList<Entry*>
     getPasskeyEntriesWithUserHandle(const QString& rpId, const QString& userId, const StringPairList& keyList);
+    QList<Entry*> getPasskeySuggestedEntries(const QString& origin, const StringPairList& keyList);
     QList<Entry*>
     getPasskeyAllowedEntries(const QJsonObject& assertionOptions, const QString& rpId, const StringPairList& keyList);
     bool isPasskeyCredentialExcluded(const QJsonArray& excludeCredentials,
@@ -226,6 +227,7 @@ private:
     Q_DISABLE_COPY(BrowserService);
 
     friend class TestBrowser;
+    friend class TestGuiBrowser;
     friend class TestPasskeys;
 };
 

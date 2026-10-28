@@ -19,10 +19,12 @@
 #include "ui_PasskeyImportDialog.h"
 
 #include "browser/BrowserService.h"
+#include "core/EntrySearcher.h"
 #include "core/Metadata.h"
 #include "gui/MainWindow.h"
 #include <QCloseEvent>
 #include <QFileInfo>
+#include <QKeyEvent>
 
 PasskeyImportDialog::PasskeyImportDialog(QWidget* parent)
     : QDialog(parent)
@@ -37,8 +39,21 @@ PasskeyImportDialog::PasskeyImportDialog(QWidget* parent)
     connect(m_ui->importButton, SIGNAL(clicked()), SLOT(accept()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
     connect(m_ui->selectDatabaseCombobBox, SIGNAL(currentIndexChanged(int)), SLOT(changeDatabase(int)));
-    connect(m_ui->selectEntryComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeEntry(int)));
     connect(m_ui->selectGroupComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeGroup(int)));
+    connect(m_ui->entryTreeWidget,
+            SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)),
+            SLOT(changeEntry(QTreeWidgetItem*)));
+    connect(m_ui->entryTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), SLOT(accept()));
+    connect(m_ui->searchEntryLineEdit, SIGNAL(textChanged(QString)), SLOT(filterEntries(QString)));
+
+    auto header = m_ui->entryTreeWidget->header();
+    header->setStretchLastSection(false);
+    header->setSectionResizeMode(0, QHeaderView::Stretch);
+    header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+
+    // Allow navigating the entry list while typing in the search field
+    m_ui->searchEntryLineEdit->installEventFilter(this);
 }
 
 PasskeyImportDialog::~PasskeyImportDialog()
@@ -65,6 +80,7 @@ void PasskeyImportDialog::setInfo(const QString& relyingParty,
     m_selectedDatabase = database;
     addDatabases();
     addGroups();
+    addEntries();
 
     auto openDatabaseCount = 0;
     for (auto dbWidget : getMainWindow()->getOpenDatabases()) {
@@ -84,6 +100,10 @@ void PasskeyImportDialog::setInfo(const QString& relyingParty,
 
     if (!importButtonText.isEmpty()) {
         m_ui->importButton->setText(importButtonText);
+    }
+
+    if (!isEntry) {
+        m_ui->searchEntryLineEdit->setFocus();
     }
 }
 
@@ -131,25 +151,27 @@ void PasskeyImportDialog::addDatabases()
 
 void PasskeyImportDialog::addEntries()
 {
+    m_entries.clear();
+    m_ui->entryTreeWidget->clear();
+
+    auto createNewItem = new QTreeWidgetItem(m_ui->entryTreeWidget, {tr("Create new entry")});
+    createNewItem->setFirstColumnSpanned(true);
+    auto font = createNewItem->font(0);
+    font.setItalic(true);
+    createNewItem->setFont(0, font);
+    m_ui->entryTreeWidget->setCurrentItem(createNewItem);
+
     if (!m_selectedDatabase || !m_selectedDatabase->rootGroup()) {
         return;
     }
 
-    m_ui->selectEntryComboBox->clear();
-    m_ui->selectEntryComboBox->addItem(tr("Create new entry"), {});
-
-    const auto group = m_selectedDatabase->rootGroup()->findGroupByUuid(m_selectedGroupUuid);
-    if (!group) {
-        return;
-    }
-
-    // Collect all entries in the group and resolve the title
-    QList<QPair<QString, QUuid>> entries;
-    for (const auto entry : group->entries()) {
+    // Collect all entries in the database and resolve the title
+    QList<QPair<QString, Entry*>> entries;
+    for (const auto entry : m_selectedDatabase->rootGroup()->entriesRecursive()) {
         if (!entry || entry->isRecycled()) {
             continue;
         }
-        entries.append({entry->resolveMultiplePlaceholders(entry->title()), entry->uuid()});
+        entries.append({entry->resolveMultiplePlaceholders(entry->title()), entry});
     }
 
     // Sort entries by title
@@ -157,10 +179,16 @@ void PasskeyImportDialog::addEntries()
         return a.first.compare(b.first, Qt::CaseInsensitive) < 0;
     });
 
-    // Add sorted entries to the combobox
     for (const auto& pair : entries) {
-        m_ui->selectEntryComboBox->addItem(pair.first, pair.second);
+        const auto entry = pair.second;
+        auto item = new QTreeWidgetItem(
+            m_ui->entryTreeWidget,
+            {pair.first, entry->resolveMultiplePlaceholders(entry->username()), entry->group()->fullPath()});
+        item->setData(0, Qt::UserRole, entry->uuid());
+        m_entries.append(entry);
     }
+
+    filterEntries(m_ui->searchEntryLineEdit->text());
 }
 
 void PasskeyImportDialog::addGroups()
@@ -186,15 +214,74 @@ void PasskeyImportDialog::changeDatabase(int index)
     m_selectedDatabaseUuid = m_ui->selectDatabaseCombobBox->itemData(index).value<QUuid>();
     m_selectedDatabase = browserService()->getDatabase(m_selectedDatabaseUuid);
     emit updateGroups();
+    emit updateEntries();
 }
 
-void PasskeyImportDialog::changeEntry(int index)
+void PasskeyImportDialog::changeEntry(QTreeWidgetItem* current)
 {
-    m_selectedEntryUuid = m_ui->selectEntryComboBox->itemData(index).value<QUuid>();
+    m_selectedEntryUuid = current ? current->data(0, Qt::UserRole).value<QUuid>() : QUuid();
+
+    // The group is only used when a new entry is created
+    m_ui->selectGroupComboBox->setEnabled(m_selectedEntryUuid.isNull());
 }
 
 void PasskeyImportDialog::changeGroup(int index)
 {
     m_selectedGroupUuid = m_ui->selectGroupComboBox->itemData(index).value<QUuid>();
-    emit updateEntries();
+}
+
+void PasskeyImportDialog::filterEntries(const QString& searchString)
+{
+    QList<Entry*> entries;
+    for (const auto& entry : m_entries) {
+        if (entry) {
+            entries.append(entry);
+        }
+    }
+
+    QSet<QUuid> matches;
+    if (!searchString.isEmpty()) {
+        EntrySearcher searcher;
+        for (const auto entry : searcher.searchEntries(searchString, entries)) {
+            matches.insert(entry->uuid());
+        }
+    }
+
+    // The first item ("Create new entry") is always shown
+    for (int i = 1; i < m_ui->entryTreeWidget->topLevelItemCount(); ++i) {
+        auto item = m_ui->entryTreeWidget->topLevelItem(i);
+        item->setHidden(!searchString.isEmpty() && !matches.contains(item->data(0, Qt::UserRole).value<QUuid>()));
+    }
+
+    // Select the best match while searching
+    auto current = m_ui->entryTreeWidget->currentItem();
+    if (!searchString.isEmpty() || !current || current->isHidden()) {
+        selectFirstVisibleEntry();
+    }
+}
+
+void PasskeyImportDialog::selectFirstVisibleEntry()
+{
+    for (int i = 1; i < m_ui->entryTreeWidget->topLevelItemCount(); ++i) {
+        auto item = m_ui->entryTreeWidget->topLevelItem(i);
+        if (!item->isHidden()) {
+            m_ui->entryTreeWidget->setCurrentItem(item);
+            return;
+        }
+    }
+
+    m_ui->entryTreeWidget->setCurrentItem(m_ui->entryTreeWidget->topLevelItem(0));
+}
+
+bool PasskeyImportDialog::eventFilter(QObject* watched, QEvent* event)
+{
+    if (watched == m_ui->searchEntryLineEdit && event->type() == QEvent::KeyPress) {
+        const auto key = static_cast<QKeyEvent*>(event)->key();
+        if (key == Qt::Key_Up || key == Qt::Key_Down || key == Qt::Key_PageUp || key == Qt::Key_PageDown) {
+            QCoreApplication::sendEvent(m_ui->entryTreeWidget, event);
+            return true;
+        }
+    }
+
+    return QDialog::eventFilter(watched, event);
 }
