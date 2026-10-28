@@ -64,7 +64,7 @@ namespace KeeShareSettings
             return;
         }
         auto berKey = Botan::PKCS8::BER_encode(*certificate.key);
-        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), berKey.size());
+        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), static_cast<int>(berKey.size()));
 
         writer.writeStartElement("Signer");
         writer.writeCharacters(certificate.signer);
@@ -146,7 +146,7 @@ namespace KeeShareSettings
             return;
         }
         auto berKey = Botan::PKCS8::BER_encode(*key.key);
-        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), berKey.size());
+        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), static_cast<int>(berKey.size()));
         writer.writeCharacters(baKey.toBase64());
     }
 
@@ -386,8 +386,8 @@ namespace KeeShareSettings
         QByteArray rsaKeySerialized;
         QDataStream stream(&rsaKeySerialized, QIODevice::WriteOnly);
         stream.writeBytes("ssh-rsa", 7);
-        stream.writeBytes(reinterpret_cast<const char*>(rsaE.data()), rsaE.size());
-        stream.writeBytes(reinterpret_cast<const char*>(rsaN.data()), rsaN.size());
+        stream.writeBytes(reinterpret_cast<const char*>(rsaE.data()), static_cast<uint>(rsaE.size()));
+        stream.writeBytes(reinterpret_cast<const char*>(rsaN.data()), static_cast<uint>(rsaN.size()));
 
         return xmlSerialize([&](QXmlStreamWriter& writer) {
             writer.writeStartElement("Signature");
