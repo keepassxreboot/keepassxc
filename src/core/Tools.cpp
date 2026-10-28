@@ -214,9 +214,12 @@ namespace Tools
 
     bool isAsciiString(const QString& str)
     {
-        constexpr auto pattern = R"(^[\x00-\x7F]+$)";
-        QRegularExpression regexp(pattern, QRegularExpression::CaseInsensitiveOption);
-        return regexp.match(str).hasMatch();
+        for (const auto& ch : str) {
+            if (ch.unicode() > 127) {
+                return false;
+            }
+        }
+        return true;
     }
 
     void sleep(int ms)
@@ -436,6 +439,26 @@ namespace Tools
     QString escapeAccelerators(QString string)
     {
         return string.replace("&", "&&");
+    }
+
+    QString stripDiacritics(const QString& str)
+    {
+        // Fast path: pure ASCII has no diacritics to strip
+        if (isAsciiString(str)) {
+            return str;
+        }
+
+        // Strip combining marks after NFD decomposition
+        auto decomposed = str.normalized(QString::NormalizationForm_D);
+        QString result;
+        result.reserve(decomposed.size());
+        for (const auto& ch : decomposed) {
+            if (ch.category() != QChar::Mark_NonSpacing && ch.category() != QChar::Mark_SpacingCombining
+                && ch.category() != QChar::Mark_Enclosing) {
+                result.append(ch);
+            }
+        }
+        return result;
     }
 
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties)
