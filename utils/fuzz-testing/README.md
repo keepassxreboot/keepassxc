@@ -24,7 +24,7 @@ A special "instrumented build" is used that allows the fuzzer to look into the p
     $ cd your_keepassxc_source_directory
     $ mkdir buildafl
     $ cd buildafl
-    $ CXX=afl-g++ AFL_HARDEN=1 cmake -DWITH_XC_ALL=ON ..
+    $ CXX=afl-g++ AFL_HARDEN=1 cmake ..
     $ make
 
 In the source code, special behavior for fuzz testing can be implemented with `#ifdef __AFL_COMPILER`. For example, in fuzz builds, the KeePassXC CLI takes the database password from environment variable `KEEPASSXC_AFL_PASSWORD` to allow non-interactive operation.
