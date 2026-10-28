@@ -30,6 +30,7 @@
 #include "PasskeyUtils.h"
 #include "core/EntryAttributes.h"
 #include "core/Tools.h"
+#include "core/Totp.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/UrlTools.h"
@@ -893,6 +894,9 @@ void BrowserService::addEntry(const EntryParameters& entryParameters,
     entry->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
     entry->setUsername(entryParameters.login);
     entry->setPassword(entryParameters.password);
+    if (entryParameters.totp) {
+        entry->setTotp(entryParameters.totp);
+    }
 
     // Select a group for the entry
     if (!group.isEmpty()) {
@@ -931,6 +935,9 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
         return true;
     }
 
+    // The TOTP belongs to the site entry, even when its password references another entry
+    auto* totpEntry = entry;
+
     // Check if the entry password is a reference. If so, update the original entry instead
     while (entry->attributes()->isReference(EntryAttributes::PasswordKey)) {
         const QUuid referenceUuid = entry->attributes()->referenceUuid(EntryAttributes::PasswordKey);
@@ -947,34 +954,50 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
         return false;
     }
 
-    bool result = false;
-    if (username.compare(entryParameters.login, Qt::CaseSensitive) != 0
-        || entry->password().compare(entryParameters.password, Qt::CaseSensitive) != 0) {
-        MessageBox::Button dialogResult = MessageBox::No;
-        if (!browserSettings()->alwaysAllowUpdate()) {
-            raiseWindow();
-            dialogResult = MessageBox::question(m_currentDatabaseWidget,
-                                                tr("KeePassXC - Update Entry"),
-                                                tr("Do you want to update the information in %1 - %2?")
-                                                    .arg(QUrl(entryParameters.siteUrl).host(), username),
-                                                MessageBox::Save | MessageBox::Cancel,
-                                                MessageBox::Cancel);
-        }
+    const bool credentialsChanged = username.compare(entryParameters.login, Qt::CaseSensitive) != 0
+                                    || entry->password().compare(entryParameters.password, Qt::CaseSensitive) != 0;
+    const bool totpChanged = entryParameters.totp
+                             && (!totpEntry->hasTotp()
+                                 || Totp::writeSettings(totpEntry->totpSettings(), {}, {}, true)
+                                        != Totp::writeSettings(entryParameters.totp, {}, {}, true));
+    if (!credentialsChanged && !totpChanged) {
+        return false;
+    }
 
-        if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
+    // Replacing an existing TOTP secret can lock the user out of their account, so always ask
+    const bool replacesTotp = totpChanged && totpEntry->hasTotp();
+    bool accepted = true;
+    if (replacesTotp || !browserSettings()->alwaysAllowUpdate()) {
+        raiseWindow();
+        auto message =
+            tr("Do you want to update the information in %1 - %2?").arg(QUrl(entryParameters.siteUrl).host(), username);
+        if (replacesTotp) {
+            message.append("\n\n").append(tr("This will replace the existing TOTP secret of this entry."));
+        }
+        accepted = MessageBox::question(m_currentDatabaseWidget,
+                                        tr("KeePassXC - Update Entry"),
+                                        message,
+                                        MessageBox::Save | MessageBox::Cancel,
+                                        MessageBox::Cancel)
+                   == MessageBox::Save;
+    }
+
+    if (accepted) {
+        if (credentialsChanged) {
             entry->beginUpdate();
             if (!entry->attributes()->isReference(EntryAttributes::UserNameKey)) {
                 entry->setUsername(entryParameters.login);
             }
             entry->setPassword(entryParameters.password);
             entry->endUpdate();
-            result = true;
         }
-
-        hideWindow();
+        if (totpChanged) {
+            totpEntry->setTotp(entryParameters.totp);
+        }
     }
 
-    return result;
+    hideWindow();
+    return accepted;
 }
 
 bool BrowserService::deleteEntry(const QString& uuid)

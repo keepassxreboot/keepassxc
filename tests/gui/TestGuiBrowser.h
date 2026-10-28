@@ -40,6 +40,7 @@ private slots:
     void testEntrySettings();
     void testAdditionalURLs();
     void testGetDatabaseGroups();
+    void testUpdateEntryTotp();
 
 private:
     void triggerAction(const QString& name);

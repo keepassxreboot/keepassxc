@@ -30,7 +30,9 @@
 #include <QToolBar>
 
 #include "browser/BrowserService.h"
+#include "browser/BrowserSettings.h"
 #include "config-keepassx-tests.h"
+#include "core/Totp.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/FileDialog.h"
@@ -242,6 +244,72 @@ void TestGuiBrowser::testGetDatabaseGroups()
     QCOMPARE(subGroups.count(), 1);
     auto subGroupObj = subGroups.at(0).toObject();
     QCOMPARE(subGroupObj["name"].toString(), QString("SubGroup"));
+}
+
+void TestGuiBrowser::testUpdateEntryTotp()
+{
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setUsername("alice");
+    entry->setPassword("secret");
+    entry->setUrl("https://example.com");
+    entry->setGroup(m_db->rootGroup());
+    const auto uuid = entry->uuidToHex();
+
+    EntryParameters params;
+    params.siteUrl = "https://example.com";
+    params.login = "alice";
+    params.password = "secret";
+    params.totp = Totp::createSettings("JBSWY3DPEHPK3PXP");
+
+    // Adding a TOTP to an entry without one asks once, even if the credentials are unchanged
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(browserService()->updateEntry(params, uuid));
+    QVERIFY(entry->hasValidTotp());
+    QCOMPARE(entry->totpSettings()->key, QString("JBSWY3DPEHPK3PXP"));
+
+    // Sending the same TOTP again changes nothing
+    const auto historyCount = entry->historyItems().size();
+    QVERIFY(!browserService()->updateEntry(params, uuid));
+    QCOMPARE(entry->historyItems().size(), historyCount);
+
+    // Replacing an existing TOTP always asks, even when updates are always allowed
+    browserSettings()->setAlwaysAllowUpdate(true);
+    params.totp = Totp::createSettings("GEZDGNBVGY3TQOJQ");
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    QVERIFY(!browserService()->updateEntry(params, uuid));
+    QCOMPARE(entry->totpSettings()->key, QString("JBSWY3DPEHPK3PXP"));
+
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(browserService()->updateEntry(params, uuid));
+    QCOMPARE(entry->totpSettings()->key, QString("GEZDGNBVGY3TQOJQ"));
+
+    // Requests from older extensions carry no TOTP and leave the existing one untouched
+    params.totp.reset();
+    params.password = "new secret";
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    QVERIFY(browserService()->updateEntry(params, uuid));
+    QCOMPARE(entry->password(), QString("new secret"));
+    QCOMPARE(entry->totpSettings()->key, QString("GEZDGNBVGY3TQOJQ"));
+    browserSettings()->setAlwaysAllowUpdate(false);
+
+    // The TOTP is stored on the site entry, not on the entry its password references
+    auto* siteEntry = new Entry();
+    siteEntry->setUuid(QUuid::createUuid());
+    siteEntry->setUsername("alice");
+    siteEntry->setPassword(QString("{REF:P@I:%1}").arg(entry->uuidToHex()));
+    siteEntry->setUrl("https://other.example.com");
+    siteEntry->setGroup(m_db->rootGroup());
+
+    params.siteUrl = "https://other.example.com";
+    params.password = "new secret";
+    params.totp = Totp::createSettings("JBSWY3DPEHPK3PXP");
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(browserService()->updateEntry(params, siteEntry->uuidToHex()));
+    QCOMPARE(siteEntry->totpSettings()->key, QString("JBSWY3DPEHPK3PXP"));
+    QCOMPARE(entry->totpSettings()->key, QString("GEZDGNBVGY3TQOJQ"));
+
+    MessageBox::setNextAnswer(MessageBox::NoButton);
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)

@@ -92,6 +92,7 @@ private:
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
     BrowserRequest decodeRequest(const QJsonObject& json);
     StringPairList getConnectionKeys(const BrowserRequest& browserRequest);
+    static QSharedPointer<Totp::Settings> parseTotp(const QString& totp);
 
     static const int MaxUrlLength;
 
