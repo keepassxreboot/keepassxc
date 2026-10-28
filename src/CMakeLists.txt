@@ -352,11 +352,12 @@ find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
 # Core Library Definition
 add_library(keepassxc_core STATIC ${core_SOURCES})
 target_compile_definitions(keepassxc_core PRIVATE KPXC_BUILDING_CORE)
-target_link_libraries(keepassxc_core 
-        ${qrcode_LIB}
+target_link_libraries(keepassxc_core
+        PUBLIC
         Qt6::Core
         Qt6::Concurrent
-        ${BOTAN_LIBRARIES}
+        Botan::botan
+        ${qrcode_LIB}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
@@ -367,6 +368,7 @@ target_link_libraries(keepassxc_core
 add_library(keepassxc_gui STATIC ${gui_SOURCES})
 target_compile_definitions(keepassxc_gui PRIVATE KPXC_BUILDING_CORE)
 target_link_libraries(keepassxc_gui
+        PUBLIC
         keepassxc_core
         Qt6::Network
         Qt6::SvgWidgets
@@ -378,27 +380,27 @@ target_link_libraries(keepassxc_gui
         ${sshagent_LIB})
 
 if(APPLE)
-    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
+    target_link_libraries(keepassxc_gui PUBLIC "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
     if(Qt6MacExtras_FOUND)
-        target_link_libraries(keepassxc_gui Qt6::MacExtras)
+        target_link_libraries(keepassxc_gui PRIVATE Qt6::MacExtras)
     endif()
 endif()
 if(HAIKU)
-    target_link_libraries(keepassxc_gui network)
+    target_link_libraries(keepassxc_gui PRIVATE network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassxc_core Qt6::DBus ${LIBUSB_LIBRARIES})
+    target_link_libraries(keepassxc_core PUBLIC Qt6::DBus PRIVATE ${LIBUSB_LIBRARIES})
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
-        target_link_libraries(keepassxc_core ${KEYUTILS_LIBRARIES})
+        target_link_libraries(keepassxc_core PRIVATE ${KEYUTILS_LIBRARIES})
     endif()
     if(WITH_X11)
-        target_link_libraries(keepassxc_gui X11)
+        target_link_libraries(keepassxc_gui PRIVATE X11)
     endif()
 endif()
 if(WIN32)
-    target_link_libraries(keepassxc_gui Wtsapi32.lib Ws2_32.lib)
+    target_link_libraries(keepassxc_gui PRIVATE Wtsapi32.lib Ws2_32.lib)
     if (WINSDK)
-        target_link_libraries(keepassxc_gui WindowsApp.lib)
+        target_link_libraries(keepassxc_gui PRIVATE WindowsApp.lib)
     endif()
 endif()
 
