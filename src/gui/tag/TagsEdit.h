@@ -57,6 +57,7 @@ public:
 
 signals:
     void tagsEdited();
+    void tagClicked(const QString& search);
 
 protected:
     // QWidget
