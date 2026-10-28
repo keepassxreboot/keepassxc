@@ -169,6 +169,8 @@ public:
 
     void addTag(const QString& tag);
     void removeTag(const QString& tag);
+    bool hasTag(const QString& tag);
+    bool renameTag(const QString& oldTag, const QString& newTag);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
