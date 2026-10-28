@@ -19,6 +19,8 @@
 
 #include "AttachmentTypes.h"
 
+#include "gui/widgets/MarkdownToolbar.h"
+
 #include <QScopedPointer>
 #include <QWidget>
 
@@ -36,6 +38,10 @@ public:
 
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
     attachments::Attachment getAttachment() const;
+    QToolBar* markdownToolbar() const
+    {
+        return m_mdToolbar;
+    }
 
 signals:
     void textChanged();
@@ -46,6 +52,7 @@ private:
     void updateUi();
 
     QScopedPointer<Ui::TextAttachmentsEditWidget> m_ui;
+    MarkdownToolbar* m_mdToolbar = nullptr;
 
     attachments::Attachment m_attachment;
     attachments::OpenMode m_mode;
