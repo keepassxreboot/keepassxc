@@ -1344,7 +1344,7 @@ int BrowserService::sortPriority(const QStringList& urls, const QString& siteUrl
         priorityList << getPriority(entryUrl);
     }
 
-    return *std::max_element(priorityList.begin(), priorityList.end());
+    return priorityList.isEmpty() ? 0 : *std::max_element(priorityList.begin(), priorityList.end());
 }
 
 bool BrowserService::removeFirstDomain(QString& hostname)
