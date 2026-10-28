@@ -233,10 +233,19 @@
     [window setSharingType: state ? NSWindowSharingNone : NSWindowSharingReadOnly];
 }
 
-- (void) configureWindowAndHelpMenus:(QMainWindow*) mainWindow helpMenu:(QMenu*) helpMenu
+- (void) configureMacMenus:(QMainWindow*) mainWindow viewMenu:(QMenu*) viewMenu
 {
-    QMenu *qtWindowMenu = new QMenu(AppKit::tr("Window"));
-    NSMenu *nsWindowMenu = qtWindowMenu->toNSMenu();
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"NSFullScreenMenuItemEverywhere": @NO }];
+
+    NSMenu *nsViewMenu = viewMenu->toNSMenu();
+    [nsViewMenu addItem:[NSMenuItem separatorItem]];
+    NSMenuItem *fullScreenItem = [nsViewMenu addItemWithTitle:@"" action:@selector(toggleFullScreen:) keyEquivalent:@"f"];
+    fullScreenItem.keyEquivalentModifierMask = NSEventModifierFlagFunction;
+
+    QMenu *helpMenu = mainWindow->menuBar()->actions().last()->menu();
+
+    QMenu *windowMenu = new QMenu(AppKit::tr("Window"));
+    NSMenu *nsWindowMenu = windowMenu->toNSMenu();
 
     QString minimizeStr = AppKit::tr("Minimize");
     [nsWindowMenu addItemWithTitle:minimizeStr.toNSString() action:@selector(performMiniaturize:) keyEquivalent:@""];
@@ -247,8 +256,7 @@
     [nsWindowMenu addItemWithTitle:bringAllToFrontStr.toNSString() action:@selector(arrangeInFront:) keyEquivalent:@""];
 
     NSApp.windowsMenu = nsWindowMenu;
-
-    mainWindow->menuBar()->insertMenu(helpMenu->menuAction(), qtWindowMenu);
+    mainWindow->menuBar()->insertMenu(helpMenu->menuAction(), windowMenu);
 
     NSApp.helpMenu = helpMenu->toNSMenu();
 }
@@ -336,7 +344,7 @@ void AppKit::setWindowSecurity(QWindow* window, bool state)
     [static_cast<id>(self) setWindowSecurity:view.window state:state];
 }
 
-void AppKit::configureWindowAndHelpMenus(QMainWindow* window, QMenu* helpMenu)
+void AppKit::configureMacMenus(QMainWindow* window, QMenu* viewMenu)
 {
-    [static_cast<id>(self) configureWindowAndHelpMenus:window helpMenu:helpMenu];
+    [static_cast<id>(self) configureMacMenus:window viewMenu:viewMenu];
 }
