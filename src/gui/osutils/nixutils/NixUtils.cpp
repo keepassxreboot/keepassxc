@@ -18,6 +18,7 @@
 #include "NixUtils.h"
 
 #include "autotype/AutoType.h"
+#include "gui/osutils/nixutils/DesktopPortal.h"
 #include "gui/osutils/nixutils/GlobalShortcutsPortal.h"
 #include "gui/osutils/nixutils/RemoteDesktopPortal.h"
 
@@ -34,7 +35,6 @@
 #include <QMimeData>
 #include <QPointer>
 #include <QProcess>
-#include <QRandomGenerator>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
@@ -183,45 +183,26 @@ void NixUtils::setLaunchAtStartup(bool enable)
         QFile::remove(getAutostartDesktopFilename());
     }
 #else
-    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+    // Subscribe to the portal's Response before sending the request, so a quick reply isn't missed
+    auto token = DesktopPortal::portalRequest(this, [](uint response, const QVariantMap& results) {
+        if (response > 0) {
+            qDebug() << "DBus Error: the request to autostart was cancelled.";
+            return;
+        }
+        config()->set(Config::GUI_LaunchAtStartup, results["autostart"].value<bool>());
+    });
+
     QDBusMessage msg = QDBusMessage::createMethodCall("org.freedesktop.portal.Desktop",
                                                       "/org/freedesktop/portal/desktop",
                                                       "org.freedesktop.portal.Background",
                                                       "RequestBackground");
+    msg << "" << QVariantMap{{"autostart", enable}, {"reason", "Launch KeePassXC at startup"}, {"handle_token", token}};
 
-    QMap<QString, QVariant> options;
-    options["autostart"] = QVariant(enable);
-    options["reason"] = QVariant("Launch KeePassXC at startup");
-    int token = QRandomGenerator::global()->bounded(1000, 9999);
-    options["handle_token"] = QVariant(QString("keepassxc_%1").arg(token));
-
-    msg << "" << options;
-
-    QDBusMessage response = sessionBus.call(msg);
-
-    QDBusObjectPath handle = response.arguments().at(0).value<QDBusObjectPath>();
-
-    bool res = sessionBus.connect("org.freedesktop.portal.Desktop",
-                                  handle.path(),
-                                  "org.freedesktop.portal.Request",
-                                  "Response",
-                                  this,
-                                  SLOT(launchAtStartupRequested(uint, QVariantMap)));
-
-    if (!res) {
-        qDebug() << "DBus Error: could not connect to org.freedesktop.portal.Request";
+    auto response = QDBusConnection::sessionBus().call(msg);
+    if (response.type() == QDBusMessage::ErrorMessage) {
+        qWarning() << "Failed to request autostart from the portal:" << response.errorMessage();
     }
 #endif
-}
-
-void NixUtils::launchAtStartupRequested(uint response, const QVariantMap& results)
-{
-    if (response > 0) {
-        qDebug() << "DBus Error: the request to autostart was cancelled.";
-        return;
-    }
-
-    config()->set(Config::GUI_LaunchAtStartup, results["autostart"].value<bool>());
 }
 
 bool NixUtils::isCapslockEnabled()
