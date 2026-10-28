@@ -37,6 +37,6 @@ Overriding a setting will enforce the set value for all users and disable the se
 
 NOTE: User shortcuts cannot be overridden.
 
-A basic ADMX Template for import into Group Policy Management Console can be found here: https://github.com/krikk/keepassxc/tree/develop/docs/admx-templates
+A basic ADMX Template for import into Group Policy Management Console can be found here: https://github.com/keepassxreboot/keepassxc/tree/develop/docs/admx-templates
 
 // end::content[]
