@@ -1628,8 +1628,12 @@ void TestGui::testSaveAs()
     tmpFile.remove();
 
     fileDialog()->setNextFileName(tmpFileName);
+    config()->set(Config::RememberLastDatabases, true);
 
-    triggerAction("actionDatabaseSaveAs");
+    // Save As reports the save's success, and the database joins the
+    // recent databases.
+    QVERIFY(m_tabWidget->saveDatabaseAs());
+    QVERIFY(config()->get(Config::LastDatabases).toStringList().contains(QDir::toNativeSeparators(tmpFileName)));
 
     QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveAs"));
 
