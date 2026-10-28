@@ -37,6 +37,7 @@ OpenSSHKeyGenDialog::OpenSSHKeyGenDialog(QWidget* parent)
     m_ui->typeComboBox->addItem("Ed25519");
     m_ui->typeComboBox->addItem("RSA");
     m_ui->typeComboBox->addItem("ECDSA");
+    m_ui->typeComboBox->addItem("ML-DSA 44 + Ed25519");
 
     QString user = QProcessEnvironment::systemEnvironment().value("USER");
     m_ui->commentLineEdit->setText(user + "@" + QHostInfo::localHostName());
@@ -67,6 +68,8 @@ void OpenSSHKeyGenDialog::typeChanged()
         m_ui->bitsComboBox->addItem("384");
         m_ui->bitsComboBox->addItem("521");
         m_ui->bitsComboBox->setCurrentText("256");
+    } else if (m_ui->typeComboBox->currentText() == QString("ML-DSA 44 + Ed25519")) {
+        // No bits selection needed for ML-DSA 44 + Ed25519
     }
 }
 
@@ -84,6 +87,8 @@ void OpenSSHKeyGenDialog::accept()
         OpenSSHKeyGen::generateRSA(*m_key, bits);
     } else if (m_ui->typeComboBox->currentText() == QString("ECDSA")) {
         OpenSSHKeyGen::generateECDSA(*m_key, bits);
+    } else if (m_ui->typeComboBox->currentText() == QString("ML-DSA 44 + Ed25519")) {
+        OpenSSHKeyGen::generateMLDSA44Ed25519(*m_key);
     } else {
         reject();
         return;
