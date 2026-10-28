@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>KeePassXC -  Access Request</string>
+   <string>KeePassXC - Access Request</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
