@@ -32,6 +32,7 @@
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFont>
+#include <QScopedValueRollback>
 
 namespace
 {
@@ -322,15 +323,16 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
-    m_blockQuickUnlock = true;
+
+    // We have no need for quick unlock here, the password is already set
+    QScopedValueRollback<bool> blockQuickUnlockRollback(m_blockQuickUnlock, true);
+
     openDatabase();
 }
 
 void DatabaseOpenWidget::openDatabase()
 {
-    // Cache this variable for future use then reset
     bool blockQuickUnlock = m_blockQuickUnlock || isOnQuickUnlockScreen();
-    m_blockQuickUnlock = false;
 
     setUserInteractionLock(true);
     m_ui->editPassword->setShowPassword(false);
@@ -421,7 +423,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
-    if (!m_db.isNull() && canPerformQuickUnlock()) {
+    if (!m_db.isNull() && !m_blockQuickUnlock && canPerformQuickUnlock()) {
         // try to retrieve the stored password using Windows Hello
         QByteArray keyData;
         if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
