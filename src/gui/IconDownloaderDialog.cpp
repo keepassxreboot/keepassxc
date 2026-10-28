@@ -31,6 +31,7 @@
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 
+#include <QAccessible>
 #include <QStandardItemModel>
 
 IconDownloaderDialog::IconDownloaderDialog(QWidget* parent)
@@ -90,7 +91,7 @@ void IconDownloaderDialog::downloadFavicons(const QSharedPointer<Database>& data
         }
 
         // Setup the dialog
-        updateProgressBar();
+        updateProgressBar(true);
         updateCancelButton();
         QApplication::processEvents();
 
@@ -142,7 +143,7 @@ void IconDownloaderDialog::downloadFinished(const QString& url, const QImage& ic
         m_activeDownloaders.removeAll(downloader);
     }
 
-    updateProgressBar();
+    updateProgressBar(true);
     updateCancelButton();
 
     if (m_db && !icon.isNull()) {
@@ -181,7 +182,7 @@ void IconDownloaderDialog::showFallbackMessage(bool state)
     m_ui->fallbackLabel->setVisible(show);
 }
 
-void IconDownloaderDialog::updateProgressBar()
+void IconDownloaderDialog::updateProgressBar(bool announce)
 {
     int total = m_urlToEntries.uniqueKeys().count();
     int value = total - m_activeDownloaders.count();
@@ -189,6 +190,17 @@ void IconDownloaderDialog::updateProgressBar()
     m_ui->progressBar->setMaximum(total);
     m_ui->progressLabel->setText(
         tr("Downloading favicons (%1/%2)…").arg(QString::number(value), QString::number(total)));
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 0)
+    Q_UNUSED(announce);
+#else
+    // Announce the batch boundaries, while keeping every progress update
+    // available through the label and progress bar without queuing speech.
+    if (announce && isVisible() && total > 0 && (value == 0 || value == total)) {
+        QAccessibleAnnouncementEvent announcementEvent(m_ui->progressLabel, m_ui->progressLabel->text());
+        QAccessible::updateAccessibility(&announcementEvent);
+    }
+#endif
 }
 
 void IconDownloaderDialog::updateCancelButton()
@@ -200,7 +212,12 @@ void IconDownloaderDialog::updateTable(const QString& url, const QString& messag
 {
     for (int i = 0; i < m_dataModel->rowCount(); ++i) {
         if (m_dataModel->item(i, 0)->text() == url) {
-            m_dataModel->item(i, 1)->setText(message);
+            auto* statusItem = m_dataModel->item(i, 1);
+            statusItem->setText(message);
+            statusItem->setData(message, Qt::AccessibleDescriptionRole);
+
+            QAccessibleEvent event(m_ui->tableView, QAccessible::VisibleDataChanged);
+            QAccessible::updateAccessibility(&event);
         }
     }
 }

@@ -42,7 +42,7 @@ signals:
     void importFile();
 
 protected:
-    void keyPressEvent(QKeyEvent* event) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
     void showEvent(QShowEvent* event) override;
 
 private slots:

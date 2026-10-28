@@ -20,6 +20,8 @@
 #include "gui/osutils/OSUtilsBase.h"
 #include "ui_ApplicationSettingsWidgetGeneral.h"
 #include "ui_ApplicationSettingsWidgetSecurity.h"
+#include <QAccessible>
+#include <QApplication>
 #include <QDesktopServices>
 #include <QDir>
 #include <QLabel>
@@ -42,6 +44,26 @@
 #ifdef KPXC_FEATURE_BROWSER
 #include "browser/BrowserSettingsPage.h"
 #endif
+
+namespace
+{
+    void setEnabledWithFocusRestore(QWidget* widget, bool enabled, QWidget* focusTarget)
+    {
+        auto* focused = QApplication::focusWidget();
+        if (!enabled && focused && (widget == focused || widget->isAncestorOf(focused))) {
+            auto* candidate = focusTarget;
+            do {
+                if (candidate != widget && !widget->isAncestorOf(candidate) && candidate->isVisible()
+                    && candidate->isEnabled() && (candidate->focusPolicy() & Qt::TabFocus)) {
+                    candidate->setFocus(Qt::OtherFocusReason);
+                    break;
+                }
+                candidate = candidate->nextInFocusChain();
+            } while (candidate != focusTarget);
+        }
+        widget->setEnabled(enabled);
+    }
+} // namespace
 
 class ApplicationSettingsWidget::ExtraPage
 {
@@ -244,23 +266,39 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     // clang-format on
 
     connect(m_generalUi->useAlternativeSaveCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
-        m_generalUi->alternativeSaveComboBox->setEnabled(checked && !config()->isManaged(Config::UseDirectWriteSaves));
+        setEnabledWithFocusRestore(
+            m_generalUi->alternativeSaveComboBox,
+            checked && !config()->isManaged(Config::UseDirectWriteSaves),
+            m_generalUi->useAlternativeSaveCheckBox);
     });
     connect(m_generalUi->backupBeforeSaveCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
         const bool enabled = checked && !config()->isManaged(Config::BackupFilePathPattern);
-        m_generalUi->backupFilePath->setEnabled(enabled);
-        m_generalUi->backupFilePathPicker->setEnabled(enabled);
+        setEnabledWithFocusRestore(
+            m_generalUi->backupFilePath,
+            enabled,
+            m_generalUi->backupBeforeSaveCheckBox);
+        setEnabledWithFocusRestore(
+            m_generalUi->backupFilePathPicker,
+            enabled,
+            m_generalUi->backupBeforeSaveCheckBox);
     });
     connect(m_secUi->clearClipboardCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
-        m_secUi->clearClipboardSpinBox->setEnabled(checked
-                                                   && !config()->isManaged(Config::Security_ClearClipboardTimeout));
+        setEnabledWithFocusRestore(
+            m_secUi->clearClipboardSpinBox,
+            checked && !config()->isManaged(Config::Security_ClearClipboardTimeout),
+            m_secUi->clearClipboardCheckBox);
     });
     connect(m_secUi->clearSearchCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
-        m_secUi->clearSearchSpinBox->setEnabled(checked && !config()->isManaged(Config::Security_ClearSearchTimeout));
+        setEnabledWithFocusRestore(
+            m_secUi->clearSearchSpinBox,
+            checked && !config()->isManaged(Config::Security_ClearSearchTimeout),
+            m_secUi->clearSearchCheckBox);
     });
     connect(m_secUi->lockDatabaseIdleCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
-        m_secUi->lockDatabaseIdleSpinBox->setEnabled(checked
-                                                     && !config()->isManaged(Config::Security_LockDatabaseIdleSeconds));
+        setEnabledWithFocusRestore(
+            m_secUi->lockDatabaseIdleSpinBox,
+            checked && !config()->isManaged(Config::Security_LockDatabaseIdleSeconds),
+            m_secUi->lockDatabaseIdleCheckBox);
     });
 
     // Set Auto-Type shortcut when changed
@@ -269,8 +307,12 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             QString error;
             if (autoType()->registerGlobalShortcut(key, modifiers, &error)) {
                 m_generalUi->autoTypeShortcutWidget->setStyleSheet("");
+                m_generalUi->autoTypeShortcutWidget->setAccessibleDescription({});
             } else {
                 QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
+                m_generalUi->autoTypeShortcutWidget->setAccessibleDescription(error);
+                QAccessibleEvent alertEvent(m_generalUi->autoTypeShortcutWidget, QAccessible::Alert);
+                QAccessible::updateAccessibility(&alertEvent);
                 StateColorPalette statePalette;
                 auto color = statePalette.color(StateColorPalette::ColorRole::Error);
                 m_generalUi->autoTypeShortcutWidget->setStyleSheet(
@@ -656,9 +698,14 @@ void ApplicationSettingsWidget::autoSaveToggled(bool checked)
     if (checked && !config()->isManaged(Config::AutoSaveNonDataChanges)) {
         m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(true);
     }
-    m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked && !config()->isManaged(Config::AutoSaveOnExit));
-    m_generalUi->autoSaveNonDataChangesCheckBox->setEnabled(!checked
-                                                            && !config()->isManaged(Config::AutoSaveNonDataChanges));
+    setEnabledWithFocusRestore(
+        m_generalUi->autoSaveOnExitCheckBox,
+        !checked && !config()->isManaged(Config::AutoSaveOnExit),
+        m_generalUi->autoSaveAfterEveryChangeCheckBox);
+    setEnabledWithFocusRestore(
+        m_generalUi->autoSaveNonDataChangesCheckBox,
+        !checked && !config()->isManaged(Config::AutoSaveNonDataChanges),
+        m_generalUi->autoSaveAfterEveryChangeCheckBox);
 }
 
 void ApplicationSettingsWidget::minimizeAfterUnlockCheckBoxToggled(bool checked)
@@ -677,8 +724,10 @@ void ApplicationSettingsWidget::minimizeAfterUnlockCheckBoxToggled(bool checked)
     }
     m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
         checked ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
-    m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!checked
-                                                      && !config()->isManaged(Config::Security_LockDatabaseMinimize));
+    setEnabledWithFocusRestore(
+        m_secUi->lockDatabaseMinimizeCheckBox,
+        !checked && !config()->isManaged(Config::Security_LockDatabaseMinimize),
+        m_secUi->lockDatabaseIdleCheckBox);
 }
 
 void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
@@ -695,15 +744,27 @@ void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
         m_generalUi->minimizeOnCopyRadioButton->setChecked(!dropToBackground);
     }
     const bool enabled = checked && !minimizeManaged && !dropToBackgroundManaged;
-    m_generalUi->minimizeOnCopyRadioButton->setEnabled(enabled);
-    m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(enabled);
+    setEnabledWithFocusRestore(
+        m_generalUi->minimizeOnCopyRadioButton,
+        enabled,
+        m_generalUi->hideWindowOnCopyCheckBox);
+    setEnabledWithFocusRestore(
+        m_generalUi->dropToBackgroundOnCopyRadioButton,
+        enabled,
+        m_generalUi->hideWindowOnCopyCheckBox);
 }
 
 void ApplicationSettingsWidget::systrayToggled(bool checked)
 {
-    m_generalUi->trayIconAppearance->setEnabled(checked && !config()->isManaged(Config::GUI_TrayIconAppearance));
+    setEnabledWithFocusRestore(
+        m_generalUi->trayIconAppearance,
+        checked && !config()->isManaged(Config::GUI_TrayIconAppearance),
+        m_generalUi->systrayShowCheckBox);
     m_generalUi->trayIconAppearanceLabel->setEnabled(checked && !config()->isManaged(Config::GUI_TrayIconAppearance));
-    m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked && !config()->isManaged(Config::GUI_MinimizeToTray));
+    setEnabledWithFocusRestore(
+        m_generalUi->systrayMinimizeToTrayCheckBox,
+        checked && !config()->isManaged(Config::GUI_MinimizeToTray),
+        m_generalUi->systrayShowCheckBox);
 }
 
 void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
@@ -715,30 +776,42 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
         m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(false);
     }
 
-    m_generalUi->rememberLastDatabasesSpinbox->setEnabled(
-        checked && !config()->isManaged(Config::NumberOfRememberedLastDatabases));
-    m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked
-                                                          && !config()->isManaged(Config::RememberLastKeyFiles));
-    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(
-        checked && !config()->isManaged(Config::OpenPreviousDatabasesOnStartup));
+    setEnabledWithFocusRestore(
+        m_generalUi->rememberLastDatabasesSpinbox,
+        checked && !config()->isManaged(Config::NumberOfRememberedLastDatabases),
+        m_generalUi->rememberLastDatabasesCheckBox);
+    setEnabledWithFocusRestore(
+        m_generalUi->rememberLastKeyFilesCheckBox,
+        checked && !config()->isManaged(Config::RememberLastKeyFiles),
+        m_generalUi->rememberLastDatabasesCheckBox);
+    setEnabledWithFocusRestore(
+        m_generalUi->openPreviousDatabasesOnStartupCheckBox,
+        checked && !config()->isManaged(Config::OpenPreviousDatabasesOnStartup),
+        m_generalUi->rememberLastDatabasesCheckBox);
 }
 
 void ApplicationSettingsWidget::checkUpdatesToggled(bool checked)
 {
-    m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(
-        checked && !config()->isManaged(Config::GUI_CheckForUpdatesIncludeBetas));
+    setEnabledWithFocusRestore(
+        m_generalUi->checkForUpdatesIncludeBetasCheckBox,
+        checked && !config()->isManaged(Config::GUI_CheckForUpdatesIncludeBetas),
+        m_generalUi->checkForUpdatesOnStartupCheckBox);
 }
 
 void ApplicationSettingsWidget::showExpiredEntriesOnDatabaseUnlockToggled(bool checked)
 {
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setEnabled(
-        checked && !config()->isManaged(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays));
+    setEnabledWithFocusRestore(
+        m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox,
+        checked && !config()->isManaged(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays),
+        m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox);
 }
 
 void ApplicationSettingsWidget::autoTypeAskToggled(bool checked)
 {
-    m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox->setEnabled(
-        checked && !config()->isManaged(Config::Security_AutoTypeSkipMainWindowConfirmation));
+    setEnabledWithFocusRestore(
+        m_generalUi->autoTypeSkipMainWindowConfirmationCheckBox,
+        checked && !config()->isManaged(Config::Security_AutoTypeSkipMainWindowConfirmation),
+        m_generalUi->autoTypeAskCheckBox);
 }
 
 void ApplicationSettingsWidget::selectBackupDirectory()

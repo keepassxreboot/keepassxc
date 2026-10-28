@@ -53,6 +53,7 @@ PickcharsDialog::PickcharsDialog(const QString& string, QWidget* parent)
         auto btn = new QPushButton(QString::number(count + 1));
         btn->setProperty("char", ch);
         btn->setProperty("count", count);
+        btn->setAccessibleName(tr("Character %1, position %2").arg(ch).arg(count + 1));
         connect(btn, &QPushButton::clicked, this, &PickcharsDialog::charSelected);
         m_ui->charsGrid->addWidget(btn, count / width, count % width);
         m_lastSelected = count;

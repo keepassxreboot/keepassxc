@@ -54,7 +54,9 @@ void ReportsWidgetStatistics::addStatsRow(QString name, QString value, bool bad,
     if (bad) {
         m_referencesModel->item(m_referencesModel->rowCount() - 1, 1)->setIcon(m_errIcon);
         if (!badMsg.isEmpty()) {
-            m_referencesModel->item(m_referencesModel->rowCount() - 1, 1)->setToolTip(badMsg);
+            auto* valueItem = m_referencesModel->item(m_referencesModel->rowCount() - 1, 1);
+            valueItem->setToolTip(badMsg);
+            valueItem->setData(badMsg, Qt::AccessibleDescriptionRole);
         }
     }
 };

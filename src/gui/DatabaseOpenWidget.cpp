@@ -90,7 +90,12 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
         m_ui->addKeyFileLinkLabel->setVisible(!state);
         m_ui->selectKeyFileComponent->setVisible(state);
     });
-    connect(m_ui->useHardwareKeyCheckBox, &QCheckBox::toggled, m_ui->hardwareKeyCombo, &QComboBox::setEnabled);
+    connect(m_ui->useHardwareKeyCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled && m_ui->hardwareKeyCombo->hasFocus()) {
+            m_ui->useHardwareKeyCheckBox->setFocus(Qt::OtherFocusReason);
+        }
+        m_ui->hardwareKeyCombo->setEnabled(enabled);
+    });
 
     m_ui->selectKeyFileComponent->setVisible(false);
     toggleHardwareKeyComponent(false);

@@ -86,6 +86,9 @@ namespace
         {
             auto* editor = QStyledItemDelegate::createEditor(parent, option, index);
             if (auto* lineEdit = qobject_cast<QLineEdit*>(editor)) {
+                lineEdit->setAccessibleName(QCoreApplication::translate("EditEntryWidget", "Attribute name"));
+                lineEdit->setAccessibleDescription(
+                    QCoreApplication::translate("EditEntryWidget", "Name of the custom attribute being edited."));
                 if (config()->get(Config::AutocompleteSuggestions).toBool()) {
                     auto* completer = new QCompleter(m_getSuggestion ? m_getSuggestion() : QStringList(), lineEdit);
                     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -769,6 +772,19 @@ void EditEntryWidget::updateSSHAgentAttachments()
 
 void EditEntryWidget::updateSSHAgentKeyInfo()
 {
+    const bool addHasFocus = m_sshAgentUi->addToAgentButton->hasFocus();
+    const bool removeHasFocus = m_sshAgentUi->removeFromAgentButton->hasFocus();
+    const bool copyHasFocus = m_sshAgentUi->copyToClipboardButton->hasFocus();
+    const bool decryptHasFocus = m_sshAgentUi->decryptButton->hasFocus();
+
+    if (addHasFocus || removeHasFocus || copyHasFocus || decryptHasFocus) {
+        if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
+            m_sshAgentUi->attachmentComboBox->setFocus(Qt::OtherFocusReason);
+        } else {
+            m_sshAgentUi->externalFileEdit->setFocus(Qt::OtherFocusReason);
+        }
+    }
+
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
@@ -983,6 +999,9 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
 
 void EditEntryWidget::toggleHideNotes(bool visible)
 {
+    if (!visible && m_mainUi->notesEdit->hasFocus()) {
+        m_mainUi->revealNotesButton->setFocus(Qt::OtherFocusReason);
+    }
     m_mainUi->notesEdit->setVisible(visible);
     m_mainUi->revealNotesButton->setIcon(icons()->onOffIcon("password-show", visible));
 }
@@ -1080,7 +1099,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     if (m_history) {
         editTriggers = QAbstractItemView::NoEditTriggers;
     } else {
-        editTriggers = QAbstractItemView::DoubleClicked;
+        editTriggers = QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
     m_advancedUi->excludeReportsCheckBox->setChecked(entry->excludeFromReports());
@@ -1564,9 +1583,13 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
+            const bool attributesEditHasFocus = m_advancedUi->attributesEdit->hasFocus();
             m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press Reveal to view or edit"));
-            m_advancedUi->attributesEdit->setEnabled(false);
             m_advancedUi->revealAttributeButton->setEnabled(true);
+            if (attributesEditHasFocus) {
+                m_advancedUi->revealAttributeButton->setFocus(Qt::OtherFocusReason);
+            }
+            m_advancedUi->attributesEdit->setEnabled(false);
             m_advancedUi->protectAttributeButton->setChecked(true);
         } else {
             m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
@@ -1621,6 +1644,7 @@ void EditEntryWidget::toggleCurrentAttributeVisibility()
             m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
             m_advancedUi->attributesEdit->setEnabled(true);
             m_advancedUi->attributesEdit->blockSignals(oldBlockSignals);
+            m_advancedUi->attributesEdit->setFocus();
         }
         m_advancedUi->revealAttributeButton->setText(tr("Hide"));
     } else {
@@ -1631,8 +1655,37 @@ void EditEntryWidget::toggleCurrentAttributeVisibility()
 
 void EditEntryWidget::updateAutoTypeEnabled()
 {
-    bool autoTypeEnabled = m_autoTypeUi->enableButton->isChecked();
-    bool validIndex = m_autoTypeUi->assocView->currentIndex().isValid() && m_autoTypeAssoc->size() != 0;
+    QWidget* focusedWidget = QApplication::focusWidget();
+    const bool autoTypeEnabled = m_autoTypeUi->enableButton->isChecked();
+    const bool validIndex = m_autoTypeUi->assocView->currentIndex().isValid() && m_autoTypeAssoc->size() != 0;
+
+    const auto hasFocusWithin = [focusedWidget](QWidget* widget) {
+        return focusedWidget && (focusedWidget == widget || widget->isAncestorOf(focusedWidget));
+    };
+
+    const bool focusedControlWillDisable =
+        (hasFocusWithin(m_autoTypeUi->enableButton) && m_history)
+        || (hasFocusWithin(m_autoTypeUi->inheritSequenceButton) && (m_history || !autoTypeEnabled))
+        || (hasFocusWithin(m_autoTypeUi->customSequenceButton) && (m_history || !autoTypeEnabled))
+        || (hasFocusWithin(m_autoTypeUi->sequenceEdit)
+            && (!autoTypeEnabled || !m_autoTypeUi->customSequenceButton->isChecked()))
+        || (hasFocusWithin(m_autoTypeUi->openHelpButton) && !autoTypeEnabled)
+        || (hasFocusWithin(m_autoTypeUi->assocView) && !autoTypeEnabled)
+        || (hasFocusWithin(m_autoTypeUi->assocAddButton) && m_history)
+        || (hasFocusWithin(m_autoTypeUi->assocRemoveButton) && (m_history || !validIndex))
+        || (hasFocusWithin(m_autoTypeUi->windowTitleCombo) && (!autoTypeEnabled || !validIndex))
+        || (hasFocusWithin(m_autoTypeUi->customWindowSequenceButton)
+            && (m_history || !autoTypeEnabled || !validIndex))
+        || (hasFocusWithin(m_autoTypeUi->windowSequenceEdit)
+            && (!autoTypeEnabled || !validIndex || !m_autoTypeUi->customWindowSequenceButton->isChecked()));
+
+    if (focusedControlWillDisable) {
+        if (!m_history) {
+            m_autoTypeUi->enableButton->setFocus();
+        } else if (m_mainUi->titleEdit->isEnabled()) {
+            m_mainUi->titleEdit->setFocus();
+        }
+    }
 
     m_autoTypeUi->enableButton->setEnabled(!m_history);
     m_autoTypeUi->inheritSequenceButton->setEnabled(!m_history && autoTypeEnabled);

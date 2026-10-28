@@ -204,7 +204,7 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     }
 
     auto row = QList<QStandardItem*>();
-    row << new QStandardItem(Icons::instance()->icon(iconName, true, qualityColor), "");
+    row << new QStandardItem(Icons::instance()->icon(iconName, true, qualityColor), tip);
     row << new QStandardItem(Icons::entryIconPixmap(entry), title);
     row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
     row << new QStandardItem(QString::number(health->score()));
@@ -282,7 +282,7 @@ void ReportsWidgetHealthcheck::calculateHealth()
     if (m_referencesModel->rowCount() == 0) {
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, everything is healthy!"));
     } else {
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("") << tr("Title") << tr("Path") << tr("Score")
+        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Health") << tr("Title") << tr("Path") << tr("Score")
                                                                    << tr("Reason"));
     }
 
