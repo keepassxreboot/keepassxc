@@ -23,7 +23,7 @@
 class MockRemoteProcess : public RemoteProcess
 {
 public:
-    explicit MockRemoteProcess(QObject* parent, QString dbPath);
+    explicit MockRemoteProcess(QObject* parent, QString dbPath, int exitCode = 0, QString errorOutput = {});
     ~MockRemoteProcess() override = default;
 
     void start(const QString& program) override;
@@ -38,6 +38,8 @@ public:
 private:
     QByteArray m_data;
     QString m_dbPath;
+    int m_exitCode = 0;
+    QString m_errorOutput;
 };
 
 #endif // KEEPASSXC_MOCKREMOTEPROCESS_H
