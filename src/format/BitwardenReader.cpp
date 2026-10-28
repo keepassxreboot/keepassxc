@@ -26,6 +26,11 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 #include "crypto/kdf/Argon2Kdf.h"
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/KeeAgentSettings.h"
+#include "sshagent/SSHAgent.h"
+#include "sshagent/OpenSSHKey.h"
+#endif
 
 #include <botan/kdf.h>
 #include <botan/pwdhash.h>
@@ -41,7 +46,7 @@
 
 namespace
 {
-    Entry* readItem(const QJsonObject& item, QString& folderId)
+    Entry* readItem(const QJsonObject& item, QString& folderId, Database& db)
     {
         // Create the item map and extract the folder id
         const auto itemMap = item.toVariantMap();
@@ -256,6 +261,58 @@ namespace
             }
         }
 
+        // Parse SSH-Key entry, if present
+        if (itemMap.contains("sshKey")) {
+            const auto sshKey = itemMap.value("sshKey").toMap();
+
+            if (sshKey.contains("publicKey") && sshKey.contains("privateKey")) {
+                const auto publicKey = sshKey.value("publicKey").toString();
+                const auto privateKey = sshKey.value("privateKey").toString();
+
+                if (!publicKey.isEmpty() && !privateKey.isEmpty()) {
+                    auto baseName = QString("id");
+
+                    if (publicKey.startsWith("ssh-ed25519 ")) {
+                        baseName.append("_ed25519");
+                    } else if (publicKey.startsWith("ssh-rsa ") || publicKey.startsWith("ssh-sha2-256 ")
+                               || publicKey.startsWith("ssh-sha2-512 ")) {
+                        baseName.append("_rsa");
+                    } else if (publicKey.startsWith("ecdsa-sha2-nistp256 ")
+                               || publicKey.startsWith("ecdsa-sha2-nistp384 ")
+                               || publicKey.startsWith("ecdsa-sha2-nistp521 ")) {
+                        baseName.append("_ecdsa");
+                    } else if (publicKey.startsWith("ssh-dss ")) {
+                        baseName.append("_dss");
+                    }
+
+                    entry->attachments()->set(baseName + ".pub", publicKey.toUtf8());
+                    entry->attachments()->set(baseName, privateKey.toUtf8());
+
+#ifdef WITH_XC_SSHAGENT
+                    KeeAgentSettings sshAgentSettings{};
+
+                    sshAgentSettings.fromEntry(entry.data());
+                    sshAgentSettings.setAttachmentName(baseName);
+                    sshAgentSettings.setSelectedType("attachment");
+                    sshAgentSettings.toEntry(entry.data());
+
+                    OpenSSHKey key;
+
+                    // setGroup is called after creating the entry, so the simpler overload does not work here.
+                    if (sshAgentSettings.toOpenSSHKey(
+                            entry->username(),
+                            entry->password(),
+                            "",
+                            entry->attachments(),
+                            key,
+                            false)) {
+                        sshAgent()->addIdentity(key, sshAgentSettings, db.uuid());
+                    }
+#endif
+                }
+            }
+        }
+
         entry->setEmitModified(true);
         return entry.take();
     }
@@ -329,7 +386,7 @@ namespace
         QString folderId;
         const auto items = vault.value("items").toArray();
         for (const auto& item : items) {
-            auto entry = readItem(item.toObject(), folderId);
+            auto entry = readItem(item.toObject(), folderId, *db);
             if (entry) {
                 entry->setUpdateTimeinfo(false);
                 entry->setGroup(folderMap.value(folderId, db->rootGroup()), false);
