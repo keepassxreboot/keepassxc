@@ -24,7 +24,6 @@
 #include <QMessageAuthenticationCode>
 #include <QSharedPointer>
 #include <QUrlQuery>
-#include <QVariant>
 #include <QtEndian>
 
 #include <cmath>
@@ -215,8 +214,9 @@ QString Totp::checkValidSettings(const QSharedPointer<Totp::Settings>& settings)
     if (settings.isNull()) {
         return QObject::tr("Invalid Settings", "TOTP");
     }
-    QVariant secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
-    if (secret.isNull()) {
+    // Base32::decode() returns an empty array for keys that are not valid Base32
+    auto secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
+    if (secret.isEmpty()) {
         return QObject::tr("Invalid Key", "TOTP");
     }
     if (settings->step == 0) {
@@ -249,7 +249,7 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, bool*
         current = qToBigEndian(time / step);
     }
 
-    QVariant secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
+    auto secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
 
     QCryptographicHash::Algorithm cryptoHash;
     switch (settings->algorithm) {
@@ -264,7 +264,7 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, bool*
         break;
     }
     QMessageAuthenticationCode code(cryptoHash);
-    code.setKey(secret.toByteArray());
+    code.setKey(secret);
     code.addData(QByteArray(reinterpret_cast<char*>(&current), sizeof(current)));
     QByteArray hmac = code.result();
 

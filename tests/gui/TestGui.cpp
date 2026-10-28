@@ -1088,10 +1088,19 @@ void TestGui::testTotp()
     QString exampleSeed = "gezd gnbvgY 3tqojqGEZdgnb vgy3tqoJq===";
     QString expectedFinalSeed = exampleSeed.toUpper().remove(" ").remove("=");
     auto* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
+    auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Base32 characters with an undecodable length are rejected and the dialog stays open
+    auto totpBefore = entry->totpSettings();
+    seedEdit->setText("ABC");
+    MessageBox::setNextAnswer(MessageBox::Ok);
+    QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QVERIFY(setupTotpDialog->isVisible());
+    QCOMPARE(entry->totpSettings(), totpBefore);
+
     seedEdit->setText("");
     QTest::keyClicks(seedEdit, exampleSeed);
 
-    auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     QTRY_VERIFY(!setupTotpDialog->isVisible());
 

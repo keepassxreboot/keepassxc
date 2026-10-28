@@ -130,6 +130,41 @@ void TestTotp::testTotpCode()
     QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("69279037"));
 }
 
+void TestTotp::testInvalidKey_data()
+{
+    QTest::addColumn<QString>("key");
+
+    // Keys that cannot be decoded as Base32 must not produce a code
+    QTest::newRow("No Base32 characters") << QString("!!!!");
+    QTest::newRow("Only whitespace") << QString("   ");
+    QTest::newRow("Invalid length 1") << QString("A");
+    QTest::newRow("Invalid length 3") << QString("ABC");
+    QTest::newRow("Invalid length 6") << QString("ABCDEF");
+}
+
+void TestTotp::testInvalidKey()
+{
+    QFETCH(QString, key);
+
+    auto settings = Totp::createSettings(key, Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP);
+    QCOMPARE(Totp::checkValidSettings(settings), QObject::tr("Invalid Key", "TOTP"));
+
+    bool isValid = true;
+    Totp::generateTotp(settings, &isValid, 1234567890);
+    QVERIFY(!isValid);
+
+    Entry entry;
+    entry.setTotp(settings);
+    QVERIFY(entry.hasTotp());
+    QVERIFY(!entry.hasValidTotp());
+
+    // A decodable key is still accepted
+    settings = Totp::createSettings("JBSWY3DPEHPK3PXP", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP);
+    QVERIFY(Totp::checkValidSettings(settings).isEmpty());
+    entry.setTotp(settings);
+    QVERIFY(entry.hasValidTotp());
+}
+
 void TestTotp::testSteamTotp()
 {
     // Legacy parsing
