@@ -122,6 +122,9 @@ void PasswordWidget::setText(const QString& text)
 void PasswordWidget::setEchoMode(QLineEdit::EchoMode mode)
 {
     m_ui->passwordEdit->setEchoMode(mode);
+    auto hints = m_ui->passwordEdit->inputMethodHints();
+    hints.setFlag(Qt::ImhHiddenText, false);
+    m_ui->passwordEdit->setInputMethodHints(hints);
 }
 
 void PasswordWidget::clear()
