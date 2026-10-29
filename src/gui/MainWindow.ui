@@ -1283,7 +1283,7 @@
     <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">Perform Auto-Type: Entry Default</string>
+    <string>Perform Auto-Type: Entry Default</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+V</string>
@@ -1296,10 +1296,10 @@
   </action>
   <action name="actionEntryRestore">
    <property name="text">
-    <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry(s)</string>
+    <string extracomment="Translatable string with plural form set in CPP file">Restore Entry(s)</string>
    </property>
    <property name="toolTip">
-    <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry</string>
+    <string extracomment="Translatable string with plural form set in CPP file">Restore Entry</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+R</string>
