@@ -1792,6 +1792,53 @@ void TestGuiFdoSecrets::testAliasObjectPathAccessible()
     VERIFY(waitForSignal(spyItemCreated, 1));
 }
 
+void TestGuiFdoSecrets::testAliasObjectPathAfterClosingPreviousOwner()
+{
+    // The default alias follows the current database. Closing the database that held it
+    // before must not unregister the alias path from its new owner. See issue #13524.
+    auto service = enableService();
+    VERIFY(service);
+
+    auto firstColl = getDefaultCollection(service);
+    VERIFY(firstColl);
+
+    // open a second copy of the database, it becomes current and takes over the default alias
+    QByteArray dbData;
+    VERIFY(m_dbFile->open());
+    VERIFY(Tools::readAllFromDevice(m_dbFile.data(), dbData));
+    m_dbFile->close();
+
+    QTemporaryFile anotherFile;
+    VERIFY(anotherFile.open());
+    COMPARE(anotherFile.write(dbData), static_cast<qint64>(dbData.size()));
+    anotherFile.close();
+
+    m_tabWidget->addDatabaseTab(anotherFile.fileName(), false, "a");
+    auto anotherWidget = m_tabWidget->currentDatabaseWidget();
+    VERIFY(anotherWidget != m_dbWidget);
+    processEvents();
+
+    auto secondColl = getDefaultCollection(service);
+    VERIFY(secondColl);
+    VERIFY(secondColl->path() != firstColl->path());
+
+    // close the first database
+    VERIFY(m_tabWidget->closeDatabaseTab(m_dbWidget));
+    m_dbWidget = anotherWidget;
+    m_db = anotherWidget->database();
+    processEvents();
+    // the closed collection is removed with deleteLater, make sure it is gone
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    processEvents();
+
+    // the alias path still resolves to the second collection
+    auto collViaAlias = getProxy<CollectionProxy>(QDBusObjectPath(DBUS_PATH_DEFAULT_ALIAS));
+    VERIFY(collViaAlias);
+    DBUS_GET(labelViaAlias, collViaAlias->label());
+    DBUS_GET(labelSecond, secondColl->label());
+    COMPARE(labelViaAlias, labelSecond);
+}
+
 void TestGuiFdoSecrets::testExposeSubgroup()
 {
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking/Subgroup");

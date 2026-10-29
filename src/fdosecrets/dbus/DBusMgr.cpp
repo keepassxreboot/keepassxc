@@ -539,7 +539,12 @@ namespace FdoSecrets
         }
         // alias signals are handled together with collections' primary path in emitCollection*
         // but we need to handle object destroy here
-        connect(coll, &DBusObject::destroyed, this, [this, alias]() { unregisterAlias(alias); });
+        connect(coll, &DBusObject::destroyed, this, [this, alias, path](QObject* obj) {
+            // drop the alias if not lost to another object in the meantime
+            if (m_objects.value(path) == obj) {
+                unregisterAlias(alias);
+            }
+        });
         return true;
     }
 
