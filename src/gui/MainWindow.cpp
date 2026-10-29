@@ -454,6 +454,16 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionDatabaseSettings, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(showDatabaseSettings(bool)));
     connect(m_ui->actionDatabaseSecurity, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSecurity()));
+    connect(m_ui->actionRemoteSync, &QAction::triggered, this, [this]() {
+        DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        auto params = dbWidget->getRemoteParams();
+
+        if (params.size() == 1) {
+            dbWidget->syncWithRemote(params[0]);
+        } else {
+            m_ui->tabWidget->showRemoteSync();
+        }
+    });
     connect(m_ui->actionReports, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(showDatabaseReports(bool)));
 #ifdef KPXC_FEATURE_BROWSER
     connect(m_ui->actionPasskeys, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showPasskeys()));
@@ -997,6 +1007,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionLockDatabaseToolbar->setEnabled(hasLockableDatabase);
     m_ui->actionDatabaseSettings->setEnabled(inDatabase || inDatabaseSettings);
     m_ui->actionDatabaseSecurity->setEnabled(inDatabase || inDatabaseSettings);
+    m_ui->actionRemoteSync->setEnabled(inDatabase || inDatabaseSettings);
     m_ui->actionReports->setEnabled(inDatabase || inReports);
     m_ui->menuRemoteSync->setEnabled(inDatabase || inDatabaseSettings);
     m_ui->menuExport->setEnabled(inDatabase);
@@ -2062,6 +2073,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionLockAllDatabases,
                     m_ui->actionDatabaseSettings,
                     m_ui->actionDatabaseSecurity,
+                    m_ui->actionRemoteSync,
                     m_ui->actionReports,
                     m_ui->actionPasskeys,
                     m_ui->actionDatabaseMerge,
