@@ -667,14 +667,9 @@ bool AutoTypePlatformX11::raiseWindow(WId window)
     event.xclient.window = window;
     event.xclient.message_type = m_atomNetActiveWindow;
     event.xclient.format = 32;
-    event.xclient.data.l[0] = 1; // FromApplication
-    event.xclient.data.l[1] = appUserTime(window);
-    QWidget* activeWindow = QApplication::activeWindow();
-    if (activeWindow) {
-        event.xclient.data.l[2] = activeWindow->internalWinId();
-    } else {
-        event.xclient.data.l[2] = 0;
-    }
+    event.xclient.data.l[0] = 2; // pager/tool
+    event.xclient.data.l[1] = CurrentTime;
+    event.xclient.data.l[2] = 0;
     event.xclient.data.l[3] = 0;
     event.xclient.data.l[4] = 0;
     XSendEvent(m_dpy, m_rootWindow, False, SubstructureRedirectMask | SubstructureNotifyMask, &event);
