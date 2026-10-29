@@ -19,6 +19,7 @@
 #ifndef KEEPASSXC_YUBIKEY_H
 #define KEEPASSXC_YUBIKEY_H
 
+#include <QFuture>
 #include <QHash>
 #include <QMultiMap>
 #include <QMutex>
@@ -84,22 +85,32 @@ signals:
     void challengeCompleted();
 
 private:
+    struct ScanResult
+    {
+        KeyMap usbKeys;
+        KeyMap pcscKeys;
+        int connectedKeys = 0;
+    };
+
     explicit YubiKey();
+
+    static ScanResult scanKeys();
+    bool setFoundKeys(const ScanResult& result);
 
     static YubiKey* m_instance;
 
     QTimer m_interactionTimer;
     bool m_initialized = false;
-    bool m_findingKeys = false;
+    QFuture<void> m_keyScan;
     QString m_error;
 
     // Prevents multiple simultaneous operations on hardware keys
     static QMutex s_interfaceMutex;
 
-    KeyMap m_usbKeys;
-    KeyMap m_pcscKeys;
-
-    int m_connectedKeys = 0;
+    // Results of the last scan, only accessed from the thread that owns this object (the GUI thread)
+    ScanResult m_lastScan;
+    // Counts published scans, so an async scan that finishes after a newer one is not published
+    quint64 m_scanGeneration = 0;
 
     Q_DISABLE_COPY(YubiKey)
 };
