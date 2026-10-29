@@ -1748,6 +1748,97 @@ void TestGuiFdoSecrets::testDefaultAliasAlwaysPresent()
     DBUS_COMPARE(coll->locked(), false);
 }
 
+void TestGuiFdoSecrets::testAliasObjectPathAccessible()
+{
+    // Applications like Evolution access aliased collections directly through their
+    // alias object path (e.g. /org/freedesktop/secrets/aliases/default) instead of
+    // resolving them via ReadAlias. Verify such direct access works. See issue #13524.
+    auto service = enableService();
+    VERIFY(service);
+
+    // resolve the default collection via ReadAlias for comparison
+    auto collViaReadAlias = getDefaultCollection(service);
+    VERIFY(collViaReadAlias);
+    QString labelViaReadAlias;
+    {
+        DBUS_GET(lbl, collViaReadAlias->label());
+        labelViaReadAlias = lbl;
+    }
+
+    // access the alias object path directly
+    auto collViaAlias = getProxy<CollectionProxy>(QDBusObjectPath(DBUS_PATH_DEFAULT_ALIAS));
+    VERIFY(collViaAlias);
+    VERIFY(collViaAlias->isValid());
+
+    // the aliased collection behaves identically to the primary one
+    DBUS_COMPARE(collViaAlias->locked(), false);
+    DBUS_GET(labelViaAlias, collViaAlias->label());
+    COMPARE(labelViaAlias, labelViaReadAlias);
+
+    // listing items through the alias path works
+    DBUS_GET(itemsViaAlias, collViaAlias->items());
+
+    // creating an item (i.e. storing credentials) through the alias path works
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+
+    QSignalSpy spyItemCreated(collViaReadAlias.data(), SIGNAL(ItemCreated(QDBusObjectPath)));
+    VERIFY(spyItemCreated.isValid());
+
+    StringStringMap attributes{{"application", "fdosecrets-test"}, {"alias-path", "default"}};
+    auto item = createItem(sess, collViaAlias, "alias-entry", "Password", attributes, false);
+    VERIFY(item);
+
+    VERIFY(waitForSignal(spyItemCreated, 1));
+}
+
+void TestGuiFdoSecrets::testAliasObjectPathAfterClosingPreviousOwner()
+{
+    // The default alias follows the current database. Closing the database that held it
+    // before must not unregister the alias path from its new owner. See issue #13524.
+    auto service = enableService();
+    VERIFY(service);
+
+    auto firstColl = getDefaultCollection(service);
+    VERIFY(firstColl);
+
+    // open a second copy of the database, it becomes current and takes over the default alias
+    QByteArray dbData;
+    VERIFY(m_dbFile->open());
+    VERIFY(Tools::readAllFromDevice(m_dbFile.data(), dbData));
+    m_dbFile->close();
+
+    QTemporaryFile anotherFile;
+    VERIFY(anotherFile.open());
+    COMPARE(anotherFile.write(dbData), static_cast<qint64>(dbData.size()));
+    anotherFile.close();
+
+    m_tabWidget->addDatabaseTab(anotherFile.fileName(), false, "a");
+    auto anotherWidget = m_tabWidget->currentDatabaseWidget();
+    VERIFY(anotherWidget != m_dbWidget);
+    processEvents();
+
+    auto secondColl = getDefaultCollection(service);
+    VERIFY(secondColl);
+    VERIFY(secondColl->path() != firstColl->path());
+
+    // close the first database
+    VERIFY(m_tabWidget->closeDatabaseTab(m_dbWidget));
+    m_dbWidget = anotherWidget;
+    m_db = anotherWidget->database();
+    processEvents();
+    // the closed collection is removed with deleteLater, make sure it is gone
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    processEvents();
+
+    // the alias path still resolves to the second collection
+    auto collViaAlias = getProxy<CollectionProxy>(QDBusObjectPath(DBUS_PATH_DEFAULT_ALIAS));
+    VERIFY(collViaAlias);
+    DBUS_GET(labelViaAlias, collViaAlias->label());
+    DBUS_GET(labelSecond, secondColl->label());
+    COMPARE(labelViaAlias, labelSecond);
+}
+
 void TestGuiFdoSecrets::testExposeSubgroup()
 {
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking/Subgroup");
