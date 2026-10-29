@@ -333,7 +333,8 @@ void TestBrowser::testSearchEntries()
                         "github.com",
                         "github.com/login",
                         "https://github", // Invalid URL
-                        "github.com"};
+                        "github.com",
+                        "https://login.example.com"};
 
     createEntries(urls, root);
 
@@ -357,6 +358,11 @@ void TestBrowser::testSearchEntries()
     QCOMPARE(result[1]->url(), QString("https://github.com/login"));
     QCOMPARE(result[2]->url(), QString("https://github.com/"));
     QCOMPARE(result[3]->url(), QString("github.com/login"));
+
+    // Check subdomain matching. "notlogin." should not match with "login."
+    QCOMPARE(m_browserService->searchEntries(db, "https://login.example.com", "").length(), 1);
+    QCOMPARE(m_browserService->searchEntries(db, "https://another.login.example.com", "").length(), 1);
+    QCOMPARE(m_browserService->searchEntries(db, "https://notlogin.example.com", "").length(), 0);
 }
 
 void TestBrowser::testSearchEntriesByPath()
@@ -528,30 +534,29 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QStringList urls = {
-        "https://github.com/login_page/*",
-        "https://github.com/*/second",
-        "https://github.com/*",
-        "http://github.com/*",
-        "github.com/*", // Defaults to https
-        "https://*.github.com/*",
-        "https://subdomain.*.github.com/*/second",
-        "https://*.sub.github.com/*",
-        "https://********", // Invalid wildcard URL
-        "https://*.thub.com/", // Partial suffix URL
-        "https://subdomain.yes.github.com/*",
-        "https://example.com:8448/*",
-        "https://example.com/*/*",
-        "https://example.com/$/*",
-        "https://127.128.129.*:8448/",
-        "https://127.128.*/",
-        "https://127.160.*.2/login",
-        "http://[2001:db8:85a3:8d3:1319:8a2e:370:*]/",
-        "https://[2001:db8:85a3:8d3:*]:443/",
-        "fe80::1ff:fe23:4567:890a",
-        "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
-        "\"https://thisisatest.com/login.php\"" // Exact URL
-    };
+    QStringList urls = {"https://github.com/login_page/*",
+                        "https://github.com/*/second",
+                        "https://github.com/*",
+                        "http://github.com/*",
+                        "github.com/*", // Defaults to https
+                        "https://*.github.com/*",
+                        "https://subdomain.*.github.com/*/second",
+                        "https://*.sub.github.com/*",
+                        "https://********", // Invalid wildcard URL
+                        "https://*.thub.com/", // Partial suffix URL
+                        "https://subdomain.yes.github.com/*",
+                        "https://example.com:8448/*",
+                        "https://example.com/*/*",
+                        "https://example.com/$/*",
+                        "https://127.128.129.*:8448/",
+                        "https://127.128.*/",
+                        "https://127.160.*.2/login",
+                        "http://[2001:db8:85a3:8d3:1319:8a2e:370:*]/",
+                        "https://[2001:db8:85a3:8d3:*]:443/",
+                        "fe80::1ff:fe23:4567:890a",
+                        "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
+                        "\"https://thisisatest.com/login.php\"", // Exact URL
+                        "https://*.good.test"};
 
     createEntries(urls, root, true);
     browserSettings()->setMatchUrlScheme(false);
@@ -624,6 +629,13 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
         m_browserService->searchEntries(db, "https://thisisatest.com/login.php", "https://thisisatest.com/login.php");
     QCOMPARE(result.length(), 1);
     QCOMPARE(firstUrl(result[0]), QString("\"https://thisisatest.com/login.php\""));
+
+    // Wildcard domains
+    // https://*.good.test must not match with https://www.good.test.evil.test/
+    result = m_browserService->searchEntries(db, "https://very.good.test/", "");
+    QCOMPARE(result.length(), 1);
+    result = m_browserService->searchEntries(db, "https://www.good.test.evil.test/", "");
+    QCOMPARE(result.length(), 0);
 
     // With scheme matching enabled
     browserSettings()->setMatchUrlScheme(true);

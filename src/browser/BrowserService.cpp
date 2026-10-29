@@ -1518,7 +1518,8 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     // URL host validation fails
-    if (entryQUrl.host().isEmpty()) {
+    const auto entryUrlHost = entryQUrl.host();
+    if (entryUrlHost.isEmpty()) {
         return false;
     }
 
@@ -1546,12 +1547,13 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     // Match the base domain
-    if (UrlTools::getBaseDomainFromUrl(siteQUrl.host()) != UrlTools::getBaseDomainFromUrl(entryQUrl.host())) {
+    const auto siteUrlHost = siteQUrl.host();
+    if (UrlTools::getBaseDomainFromUrl(siteUrlHost) != UrlTools::getBaseDomainFromUrl(entryUrlHost)) {
         return false;
     }
 
     // Match the subdomains with the limited wildcard
-    if (siteQUrl.host().endsWith(entryQUrl.host())) {
+    if (siteUrlHost == entryUrlHost || siteUrlHost.endsWith(QString(".%1").arg(entryUrlHost))) {
         return true;
     }
 
@@ -1585,6 +1587,12 @@ bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString
 
         // Replace any remaining wildcards for paths
         re = re.replace(UrlTools::URL_WILDCARD, "(.*?)");
+
+        // Parse against the real host if hostname is used
+        if (hostnameUsed) {
+            re.append("$"); // Regex must not allow everything after the wildcard domains
+        }
+
         return QRegularExpression(re).match(secondPart).hasMatch();
     };
 
