@@ -261,6 +261,10 @@ void KdbxXmlReader::parseMeta()
             m_meta->setDefaultUserName(readString());
         } else if (name == qsv(u"DefaultUserNameChanged")) {
             m_meta->setDefaultUserNameChanged(readDateTime());
+        } else if (name == qsv(u"DefaultSearch")) {
+            m_meta->setDefaultSearch(readString());
+        } else if (name == qsv(u"DefaultSearchChanged")) {
+            m_meta->setDefaultSearchChanged(readDateTime());
         } else if (name == qsv(u"MaintenanceHistoryDays")) {
             m_meta->setMaintenanceHistoryDays(readNumber());
         } else if (name == qsv(u"Color")) {

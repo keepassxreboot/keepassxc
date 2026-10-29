@@ -144,6 +144,8 @@ void KdbxXmlWriter::writeMetadata()
     writeDateTime("DatabaseDescriptionChanged", m_meta->descriptionChanged());
     writeString("DefaultUserName", m_meta->defaultUserName());
     writeDateTime("DefaultUserNameChanged", m_meta->defaultUserNameChanged());
+    writeString("DefaultSearch", m_meta->defaultSearch());
+    writeDateTime("DefaultSearchChanged", m_meta->defaultSearchChanged());
     writeNumber("MaintenanceHistoryDays", m_meta->maintenanceHistoryDays());
     writeString("Color", m_meta->color());
     writeDateTime("MasterKeyChanged", m_meta->databaseKeyChanged());

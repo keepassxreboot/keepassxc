@@ -56,6 +56,7 @@ void DatabaseSettingsWidgetGeneral::initialize()
     m_ui->dbDescriptionEdit->setText(meta->description());
     m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
+    m_ui->defaultSearchComboBox->setCurrentText(meta->defaultSearch());
     m_ui->compressionCheckbox->setChecked(m_db->compressionAlgorithm() != Database::CompressionNone);
 
     m_ui->dbPublicName->setText(m_db->publicName());
@@ -129,6 +130,7 @@ bool DatabaseSettingsWidgetGeneral::saveSettings()
     meta->setName(m_ui->dbNameEdit->text());
     meta->setDescription(m_ui->dbDescriptionEdit->text());
     meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
+    meta->setDefaultSearch(m_ui->defaultSearchComboBox->currentText());
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
     meta->setSettingsChanged(Clock::currentDateTimeUtc());
 
