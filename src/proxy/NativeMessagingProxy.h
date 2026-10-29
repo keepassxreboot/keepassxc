@@ -20,9 +20,6 @@
 
 #include <QLocalSocket>
 
-class QWinEventNotifier;
-class QSocketNotifier;
-
 class NativeMessagingProxy : public QObject
 {
     Q_OBJECT
@@ -31,11 +28,11 @@ public:
     ~NativeMessagingProxy() override = default;
 
 signals:
-    void stdinMessage(QString msg);
+    void stdinMessage(QByteArray message);
 
 public slots:
     void transferSocketMessage();
-    void transferStdinMessage(const QString& msg);
+    void transferStdinMessage(const QByteArray& message);
     void socketDisconnected();
 
 private:
