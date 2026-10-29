@@ -29,11 +29,15 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSemaphore>
 #include <QSignalSpy>
 #include <QSpinBox>
 #include <QTableWidget>
 #include <QTest>
+#include <QThreadPool>
+#include <QTimer>
 #include <QToolBar>
+#include <QtConcurrent>
 
 #include "config-keepassx-tests.h"
 #include "core/PasswordHealth.h"
@@ -43,6 +47,7 @@
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
+#include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
@@ -1982,6 +1987,53 @@ void TestGui::testDatabaseLocking()
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+}
+
+void TestGui::testUnlockDialogReplacedWhileUnlocking()
+{
+    // While the unlock dialog derives the key, other events keep running. Another unlock request
+    // (global Auto-Type, Secret Service, merge, remote sync) reinitializes the dialog in that time,
+    // which must not free the database that is still being opened.
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    triggerAction("actionLockAllDatabases");
+    QVERIFY(m_dbWidget->isLocked());
+
+    m_tabWidget->unlockDatabaseInDialog(m_dbWidget, DatabaseOpenDialog::Intent::None);
+    auto* dialog = m_tabWidget->findChild<DatabaseOpenDialog*>();
+    QVERIFY(dialog);
+    QTRY_VERIFY(dialog->isVisible());
+    auto* editPassword = dialog->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(editPassword);
+    QTest::keyClicks(editPassword, "a");
+
+    // Queue a blocker for every pool thread so the key derivation waits behind them
+    const int threads = QThreadPool::globalInstance()->maxThreadCount();
+    QSemaphore gate;
+    for (int i = 0; i < threads; ++i) {
+        auto future = QtConcurrent::run([&] { gate.acquire(); });
+        Q_UNUSED(future)
+    }
+
+    // Reset the dialog once the unlock has replaced the header-only database and waits for the key
+    auto* openWidget = dialog->findChild<DatabaseOpenWidget*>();
+    const auto headerDb = openWidget->database();
+    QTimer timer;
+    connect(&timer, &QTimer::timeout, this, [&] {
+        if (openWidget->database() != headerDb) {
+            timer.stop();
+            m_tabWidget->unlockDatabaseInDialog(m_dbWidget, DatabaseOpenDialog::Intent::None);
+            gate.release(threads);
+        }
+    });
+    timer.start(10);
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    // The first attempt was dropped, the reinitialized dialog still works
+    QVERIFY(m_dbWidget->isLocked());
+    QVERIFY(dialog->isVisible());
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+    QTRY_VERIFY(!m_dbWidget->isLocked());
 }
 
 void TestGui::testDragAndDropKdbxFiles()

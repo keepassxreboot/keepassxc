@@ -344,8 +344,13 @@ void DatabaseOpenWidget::openDatabase()
     }
 
     QString error;
-    m_db.reset(new Database());
-    bool ok = m_db->open(m_filename, databaseKey, &error);
+    auto db = QSharedPointer<Database>::create();
+    m_db = db;
+    bool ok = db->open(m_filename, databaseKey, &error);
+    // Events run while the key is derived, the dialog may have been reinitialized meanwhile
+    if (m_db != db) {
+        return;
+    }
 
     if (ok) {
         // Warn user about minor version mismatch to halt loading if necessary
