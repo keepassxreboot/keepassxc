@@ -29,11 +29,14 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QScopeGuard>
 #include <QSignalSpy>
 #include <QSpinBox>
 #include <QTableWidget>
 #include <QTest>
+#include <QThreadPool>
 #include <QToolBar>
+#include <QtConcurrent>
 
 #include "config-keepassx-tests.h"
 #include "core/PasswordHealth.h"
@@ -62,10 +65,12 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
+#include "gui/osutils/DeviceListener.h"
 #include "gui/remote/RemoteHandler.h"
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
+#include "keys/drivers/YubiKeyInterfaceUSB.h"
 #include "mock/MockRemoteProcess.h"
 
 #define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
@@ -1982,6 +1987,30 @@ void TestGui::testDatabaseLocking()
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+}
+
+void TestGui::testUsbHotplugKeepsThreadPoolFree()
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+    // The libusb event loop runs until the hotplug callbacks are deregistered. With a single CPU the global
+    // thread pool has one thread, which the key derivation and other background tasks still need.
+    auto* pool = QThreadPool::globalInstance();
+    const int maxThreads = pool->maxThreadCount();
+    pool->setMaxThreadCount(1);
+    auto restoreMaxThreads = qScopeGuard([&] { pool->setMaxThreadCount(maxThreads); });
+
+    DeviceListener listener(nullptr);
+    const auto handle = listener.registerHotplugCallback(true, true, YubiKeyInterfaceUSB::YUBICO_USB_VID);
+    if (!handle) {
+        QSKIP("USB hotplug is not available");
+    }
+    auto deregister = qScopeGuard([&] { listener.deregisterHotplugCallback(handle); });
+
+    auto task = QtConcurrent::run([] {});
+    QTRY_VERIFY_WITH_TIMEOUT(task.isFinished(), 5000);
+#else
+    QSKIP("Only the libusb device listener runs an event loop on the thread pool");
+#endif
 }
 
 void TestGui::testDragAndDropKdbxFiles()
