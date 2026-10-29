@@ -101,7 +101,8 @@ DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int vendo
         m_callbackHandles.insert(handle);
         if (!m_usbEvents.isRunning()) {
             m_completed = false;
-            m_usbEvents = QtConcurrent::run(handleUsbEvents, static_cast<libusb_context*>(m_ctx), &m_completed);
+            m_usbEvents =
+                QtConcurrent::run(&m_usbEventsPool, handleUsbEvents, static_cast<libusb_context*>(m_ctx), &m_completed);
         }
     }
     return handle;
