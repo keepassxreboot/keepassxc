@@ -23,14 +23,13 @@
 # For format of parsed arguments, see "Connection-based messaging" at:
 # https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_messaging
 
-# Chromium, Google Chrome, Vivaldi & Brave
-readonly arg1='chrome-extension://oboonakemofpalcgghocfoadofidjkkk'
 # Firefox & Tor Browser
-readonly arg2='keepassxc-browser@keepassxc.org'
+readonly firefoxExtension='keepassxc-browser@keepassxc.org'
 
-# Check arguments to see if this was a proxy launch from the browser
-# Use =~ to account for minor variations in the chrome extension
-if [[ "$1" =~ "$arg1" || "$2" == "$arg2" ]]; then
+# Check arguments to see if this was a proxy launch from the browser.
+# Chromium-based browsers pass the extension origin, which they have already
+# checked against the allowed origins in the native messaging manifest.
+if [[ "$1" == chrome-extension://* || "$2" == "$firefoxExtension" ]]; then
     exec keepassxc-proxy "$@"
 elif [[ "$1" == "cli" ]]; then
     exec keepassxc-cli "${@:2}"
