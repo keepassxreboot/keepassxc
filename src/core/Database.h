@@ -252,6 +252,7 @@ private:
     QMutex m_saveMutex;
     QPointer<FileWatcher> m_fileWatcher;
     bool m_modified = false;
+    bool m_modifiedDuringSave = false;
     bool m_hasNonDataChange = false;
     QString m_keyError;
     bool m_isTemporaryDatabase = false;
