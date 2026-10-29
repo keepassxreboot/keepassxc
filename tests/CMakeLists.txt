@@ -157,6 +157,9 @@ add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
+add_unit_test(NAME testfilewatcher SOURCES TestFileWatcher.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
+
 add_unit_test(NAME testconfig SOURCES TestConfig.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
