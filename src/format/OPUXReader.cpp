@@ -30,7 +30,7 @@
 #include <QScopedPointer>
 #include <QUrl>
 
-#include <../minizip/unzip.h>
+#include <minizip/unzip.h>
 
 namespace
 {
