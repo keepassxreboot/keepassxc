@@ -20,8 +20,7 @@
 
 #include <QLocalSocket>
 
-class QWinEventNotifier;
-class QSocketNotifier;
+#include <istream>
 
 class NativeMessagingProxy : public QObject
 {
@@ -31,11 +30,11 @@ public:
     ~NativeMessagingProxy() override = default;
 
 signals:
-    void stdinMessage(QString msg);
+    void stdinMessage(QByteArray message);
 
 public slots:
     void transferSocketMessage();
-    void transferStdinMessage(const QString& msg);
+    void transferStdinMessage(const QByteArray& message);
     void socketDisconnected();
 
 private:
@@ -47,5 +46,28 @@ private:
 
     Q_DISABLE_COPY(NativeMessagingProxy)
 };
+
+/**
+ * Read one native messaging frame: a 32-bit length in native byte order, then that many bytes.
+ * The bytes are returned unchanged. A frame longer than maxLength is skipped and gives an
+ * empty message.
+ *
+ * @return false when the input ends, including in the middle of a frame
+ */
+inline bool readNativeMessage(std::istream& in, QByteArray& message, quint32 maxLength)
+{
+    quint32 length = 0;
+    if (!in.read(reinterpret_cast<char*>(&length), sizeof(length))) {
+        return false;
+    }
+
+    if (length > maxLength) {
+        message.clear();
+        return static_cast<bool>(in.ignore(length));
+    }
+
+    message.resize(length);
+    return static_cast<bool>(in.read(message.data(), length));
+}
 
 #endif // NATIVEMESSAGINGPROXY_H
