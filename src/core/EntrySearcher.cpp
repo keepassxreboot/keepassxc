@@ -231,12 +231,21 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         case Field::Uuid:
             found = term.regex.match(entry->uuidToHex()).hasMatch();
             break;
-        default:
-            // Terms without a specific field try to match title, username, url, and notes
+        case Field::All:
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
-                    || entry->tagList().indexOf(term.regex) != -1 || term.regex.match(entry->notes()).hasMatch();
+                    || entry->tagList().indexOf(term.regex) != -1
+                    || term.regex.match(entry->notes()).hasMatch()
+                    || !attributes.filter(term.regex).empty();
+            break;
+        default:
+            // Terms without a specific field try to match title, username, url, tags, and notes
+            found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
+                    || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
+                    || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
+                    || entry->tagList().indexOf(term.regex) != -1
+                    || term.regex.match(entry->notes()).hasMatch();
         }
 
         // negate the result if exclude:
@@ -256,6 +265,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
 void EntrySearcher::parseSearchTerms(const QString& searchString)
 {
     static const QList<QPair<QString, Field>> fieldnames{
+        {QStringLiteral("all"), Field::All},
         {QStringLiteral("attachment"), Field::Attachment},
         {QStringLiteral("attribute"), Field::AttributeKV},
         {QStringLiteral("notes"), Field::Notes},
