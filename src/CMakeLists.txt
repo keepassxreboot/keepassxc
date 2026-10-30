@@ -129,6 +129,7 @@ set(gui_SOURCES
         gui/MainWindow.cpp
         gui/MergeDialog.cpp
         gui/MessageBox.cpp
+        gui/QuickStartWindow.cpp
         gui/MessageWidget.cpp
         gui/PasswordWidget.cpp
         gui/PasswordGeneratorWidget.cpp
@@ -408,7 +409,9 @@ if(WIN32 AND WITH_BUILD_QT AND VCPKG_APPLOCAL_DEPS)
     set(VCPKG_APPLOCAL_DEPS OFF)
     set(_restore_vcpkg_applocal_deps ON)
 endif()
-add_executable(${PROGNAME} main.cpp)
+add_executable(${PROGNAME} main.cpp
+
+)
 if(_restore_vcpkg_applocal_deps)
     set(VCPKG_APPLOCAL_DEPS ON)
     unset(_restore_vcpkg_applocal_deps)

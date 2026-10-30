@@ -38,6 +38,7 @@
 #include "Application.h"
 #include "Clipboard.h"
 #include "autotype/AutoType.h"
+#include "core/Group.h"
 #include "core/InactivityTimer.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
@@ -45,6 +46,7 @@
 #include "gui/ActionCollection.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
+#include "gui/QuickStartWindow.h"
 #include "gui/SearchWidget.h"
 #include "gui/ShortcutSettingsPage.h"
 #include "gui/entry/EntryView.h"
@@ -1523,6 +1525,29 @@ bool MainWindow::saveLastDatabases()
     return m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
+static void fillGroupMenu(QMenu* menu, Group* group, DatabaseWidget* dbWidget)
+{
+    for (auto* child : group->children()) {
+        if (child->isRecycled()) {
+            continue;
+        }
+        auto* sub = menu->addMenu(child->name());
+        fillGroupMenu(sub, child, dbWidget);
+    }
+
+    for (auto* entry : group->entries()) {
+        QPointer<Entry> safeEntry = entry;
+        QPointer<DatabaseWidget> safeDb = dbWidget;
+        auto* action = menu->addAction(entry->title());
+        QObject::connect(action, &QAction::triggered, menu, [safeEntry, safeDb]() {
+            if (safeEntry && safeDb) {
+                auto* win = new QuickStartWindow(safeEntry, safeDb);
+                win->show();
+            }
+        });
+    }
+}
+
 void MainWindow::updateTrayIcon()
 {
     if (config()->get(Config::GUI_ShowTrayIcon).toBool()) {
@@ -1533,6 +1558,46 @@ void MainWindow::updateTrayIcon()
             auto* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
             actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
+
+            auto* quickMenu = menu->addMenu(tr("Quick start"));
+            connect(quickMenu, &QMenu::aboutToShow, this, [this, quickMenu]() {
+                quickMenu->clear();
+                auto* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+                if (!dbWidget || dbWidget->isLocked()) {
+                    quickMenu->addAction(tr("No database unlocked"))->setEnabled(false);
+                    return;
+                }
+                fillGroupMenu(quickMenu, dbWidget->database()->rootGroup(), dbWidget);
+            });
+
+            connect(menu, &QMenu::aboutToShow, this, [this, quickMenu]() {
+                QString title = tr("Quick start");
+                auto* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+                if (dbWidget) {
+                    QString name = dbWidget->displayName();
+                    name.replace("&", "&&");
+                    title += " - " + name;
+                }
+                quickMenu->setTitle(title);
+            });
+
+            auto* switchMenu = menu->addMenu(tr("Switch database"));
+            connect(switchMenu, &QMenu::aboutToShow, this, [this, switchMenu]() {
+                switchMenu->clear();
+                const int count = m_ui->tabWidget->count();
+                if (count == 0) {
+                    switchMenu->addAction(tr("No database open"))->setEnabled(false);
+                    return;
+                }
+                for (int i = 0; i < count; ++i) {
+                    QString name = m_ui->tabWidget->tabName(i);
+                    name.replace("&", "&&");
+                    auto* action = switchMenu->addAction(name);
+                    action->setCheckable(true);
+                    action->setChecked(i == m_ui->tabWidget->currentIndex());
+                    connect(action, &QAction::triggered, this, [this, i]() { m_ui->tabWidget->setCurrentIndex(i); });
+                }
+            });
 
             menu->addAction(m_ui->actionLockAllDatabases);
 
