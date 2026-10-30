@@ -24,7 +24,7 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/UrlTools.h"
-#include "proxy/NativeMessageReader.h"
+#include "proxy/NativeMessagingProxy.h"
 
 #include <QJsonObject>
 #include <QTest>
