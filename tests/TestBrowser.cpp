@@ -23,7 +23,7 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "proxy/NativeMessageReader.h"
+#include "proxy/NativeMessagingProxy.h"
 
 #include <QJsonObject>
 #include <QTest>

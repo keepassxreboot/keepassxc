@@ -16,7 +16,6 @@
  */
 
 #include "NativeMessagingProxy.h"
-#include "NativeMessageReader.h"
 #include "browser/BrowserShared.h"
 
 #include <QCoreApplication>
