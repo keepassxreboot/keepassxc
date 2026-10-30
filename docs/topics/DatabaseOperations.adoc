@@ -277,6 +277,8 @@ The following fields can be searched along with their abbreviated name in parent
 * Group (g)
 * Tags (tag)
 * Entry State (is:expired, is:weak)
+* All Text (all) - Title, Username, URL, Tags, Notes, and Attributes (excludes passwords and groups)
+* Specific Attribute (pass:q[_]_yourAttr_)
 
 ==== Wild Card Characters and Logical Operators
 [grid=rows, frame=none, width=70%]
@@ -306,11 +308,20 @@ The following tables lists a few samples search queries for your reference:
 |`+attr:mystring123`
 |Searches all additional attributes for any name OR value equal to mystring123.
 
+|`_color:green`
+|Searches for entries that have a 'color' attribute with the word 'green' anywhere inside that attribute's value.
+
 |`+tag:personal`
-| Search exactly for the 'personal' tag and do not include tags such as 'my personal'.
+|Search exactly for the 'personal' tag and do not include tags such as 'my personal'.
 
 |`is:expired is:weak`
 |Searches for all expired entries with weak passwords.
+
+|`all:special`
+|Searches for the word 'special' in all text fields.
+
+|`g:servers/main`
+|Search only in the specified group/subgroup. When no `/` is used, it will match anywhere in the hierarchy.
 |===
 
 // tag::advanced[]
