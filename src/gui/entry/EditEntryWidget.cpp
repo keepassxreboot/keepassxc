@@ -836,6 +836,10 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
 
     m_sshAgentUi->decryptButton->setEnabled(key.encrypted());
 
+    // Passphrase source is only relevant for encrypted keys
+    m_sshAgentUi->passphraseAttributeLabel->setEnabled(key.encrypted());
+    m_sshAgentUi->passphraseAttributeComboBox->setEnabled(key.encrypted());
+
     if (!key.publicKey().isEmpty()) {
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
         m_sshAgentUi->copyToClipboardButton->setEnabled(true);
