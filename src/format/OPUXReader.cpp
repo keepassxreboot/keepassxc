@@ -42,7 +42,7 @@ namespace
         }
 
         // Read export.data into memory
-        int bytes, bytesRead = 0;
+        qsizetype bytes, bytesRead = 0;
         QByteArray data;
         unzOpenCurrentFile(uf);
         do {
