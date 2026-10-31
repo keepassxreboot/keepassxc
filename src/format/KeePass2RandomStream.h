@@ -26,7 +26,7 @@ public:
     KeePass2RandomStream() = default;
 
     bool init(SymmetricCipher::Mode mode, const QByteArray& key);
-    QByteArray randomBytes(int size, bool* ok);
+    QByteArray randomBytes(qsizetype size, bool* ok);
     QByteArray process(const QByteArray& data, bool* ok);
     Q_REQUIRED_RESULT bool processInPlace(QByteArray& data);
     QString errorString() const;
