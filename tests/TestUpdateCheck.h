@@ -26,6 +26,7 @@ class TestUpdateCheck : public QObject
 
 private slots:
     void initTestCase();
+    void testCompareVersion_data();
     void testCompareVersion();
 };
 
