@@ -199,6 +199,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Enable database Quick Unlock via TouchID or user password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable database Quick Unlock via Windows Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Icon only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -710,10 +718,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Lock databases when session is locked or lid is closed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -755,6 +759,10 @@
     </message>
     <message>
         <source>Hide notes in the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable database Quick Unlock via fingerprint or user password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1752,6 +1760,26 @@ We recommend you update your KeePassXC installation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Set up database for Quick Unlock?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to enable Quick Unlock via fingerprint or user password for this database?
+
+Opening the database for the first time after starting KeePassXC still requires the full database password.
+
+You can change the decision any time under Database Settings / Security.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes, enable Quick Unlock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No, thanks!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2049,6 +2077,14 @@ This is only necessary if your database is a copy of another and the browser ext
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Allow Quick Unlock via TouchID or user password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow Quick Unlock via Windows Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>No password set</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2088,6 +2124,14 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow Quick Unlock via fingerprint or user password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
