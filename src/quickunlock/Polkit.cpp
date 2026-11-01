@@ -99,8 +99,9 @@ void Polkit::reset()
     m_encryptedMasterKeys.clear();
 }
 
-bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
+QuickUnlockInterface::KeyStatus Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
 {
+    m_error.clear();
     reset(dbUuid);
 
     // Generate a random iv/key pair to encrypt the master password with
@@ -111,7 +112,7 @@ bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
     SymmetricCipher aes256Encrypt;
     if (!aes256Encrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, randomKey, randomIV)) {
         m_error = QObject::tr("AES initialization failed");
-        return false;
+        return ERR_CRYPTO_FAILURE;
     }
 
     // Encrypt the master password
@@ -119,7 +120,7 @@ bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
     if (!aes256Encrypt.finish(encryptedMasterKey)) {
         m_error = QObject::tr("AES encrypt failed");
         qDebug() << "polkit aes encrypt failed: " << aes256Encrypt.errorString();
-        return false;
+        return ERR_CRYPTO_FAILURE;
     }
 
     // Add the iv/key pair into the linux keyring
@@ -131,7 +132,7 @@ bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
     if (key_serial < 0) {
         m_error = QObject::tr("Failed to store in Linux Keyring");
         qDebug() << "polkit keyring failed to store: " << errno;
-        return false;
+        return ERR_OTHER;
     }
 
     // Scrub the keys from ram
@@ -141,13 +142,17 @@ bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
 
     // Store encrypted master password and return
     m_encryptedMasterKeys.insert(dbUuid, encryptedMasterKey);
-    return true;
+    return OK;
 }
 
-bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
+QuickUnlockInterface::KeyStatus Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
 {
+    m_error.clear();
+    key.clear();
+
     if (!m_polkit || !hasKey(dbUuid)) {
-        return false;
+        m_error = QObject::tr("Polkit unavailable or no key set");
+        return ERR_OTHER;
     }
 
     PolkitSubject subject;
@@ -156,6 +161,7 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
     subject.details.insert("start-time", nixUtils()->getProcessStartTime());
 
     QMap<QString, QString> details;
+    const auto cancellationId = QUuid::createUuid().toString();
 
     auto result = m_polkit->CheckAuthorization(
         subject,
@@ -164,14 +170,21 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         0x00000001,
         // AllowUserInteraction - wait for user to authenticate
         // https://www.freedesktop.org/software/polkit/docs/0.105/eggdbus-interface-org.freedesktop.PolicyKit1.Authority.html#eggdbus-enum-CheckAuthorizationFlags
-        "");
+        cancellationId);
+    result.waitForFinished();
 
     // A general error occurred
     if (result.isError()) {
+        const auto errorType = result.error().type();
+        if (errorType == QDBusError::NoReply || errorType == QDBusError::Timeout || errorType == QDBusError::TimedOut) {
+            // A D-Bus timeout does not automatically cancel polkit's authentication dialog.
+            m_polkit->CancelCheckAuthorization(cancellationId);
+            return ERR_USER_CANCELED;
+        }
         auto msg = result.error().message();
         m_error = QObject::tr("Polkit returned an error: %1").arg(msg);
         qDebug() << "polkit returned an error: " << msg;
-        return false;
+        return ERR_OTHER;
     }
 
     PolkitAuthorizationResults authResult = result.value();
@@ -183,7 +196,7 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         if (keySerial == -1) {
             m_error = QObject::tr("Could not locate key in keyring");
             qDebug() << "polkit keyring failed to find: " << errno;
-            return false;
+            return ERR_NO_KEY;
         }
 
         void* keychainBuffer;
@@ -192,7 +205,7 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         if (keychainDataSize == -1) {
             m_error = QObject::tr("Could not read key in keyring");
             qDebug() << "polkit keyring failed to read: " << errno;
-            return false;
+            return ERR_OTHER;
         }
 
         QByteArray keychainBytes(static_cast<const char*>(keychainBuffer), keychainDataSize);
@@ -207,7 +220,7 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         if (!aes256Decrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, keychainKey, keychainIv)) {
             m_error = QObject::tr("AES initialization failed");
             qDebug() << "polkit aes init failed";
-            return false;
+            return ERR_CRYPTO_FAILURE;
         }
 
         key = encryptedMasterKey;
@@ -215,7 +228,7 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
             key.clear();
             m_error = QObject::tr("AES decrypt failed");
             qDebug() << "polkit aes decrypt failed: " << aes256Decrypt.errorString();
-            return false;
+            return ERR_CRYPTO_FAILURE;
         }
 
         // Scrub the keys from ram
@@ -224,17 +237,22 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         Botan::secure_scrub_memory(keychainBytes.data(), keychainBytes.size());
         Botan::secure_scrub_memory(encryptedMasterKey.data(), encryptedMasterKey.size());
 
-        return true;
+        return OK;
     }
 
-    // Failed to authenticate
     if (authResult.is_challenge) {
         m_error = QObject::tr("No Polkit authentication agent was available");
-    } else {
-        m_error = QObject::tr("Polkit authorization failed");
+        return ERR_OTHER;
     }
 
-    return false;
+    if (authResult.is_canceled) {
+        m_error = QObject::tr("User canceled action");
+        return ERR_USER_CANCELED;
+    }
+
+    // Authentication failure
+    m_error = QObject::tr("Polkit authorization failed");
+    return ERR_AUTH_FAILURE;
 }
 
 bool Polkit::hasKey(const QUuid& dbUuid) const

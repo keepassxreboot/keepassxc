@@ -1780,6 +1780,10 @@ You can change the decision any time under Database Settings / Security.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Error setting up Quick Unlock: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9199,14 +9203,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to create Windows Hello credential.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to sign challenge using Windows Hello.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9276,6 +9272,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Polkit unavailable or no key set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Polkit returned an error: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9296,11 +9296,31 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>User canceled action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Polkit authorization failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User canceled the action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authentication failure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credential not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Windows Hello returned an unknown failure.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9564,6 +9584,42 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illegal arguments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already stored key for this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES encrypt failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error creating security flags: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No stored key found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Unlock authentication timed out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User canceled authentication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authentication failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES decrypt failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
