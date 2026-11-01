@@ -1126,7 +1126,8 @@ QSharedPointer<Kdf> Database::kdf() const
 void Database::setKdf(QSharedPointer<Kdf> kdf)
 {
     m_data.kdf = std::move(kdf);
-    setFormatVersion(KeePass2Writer::kdbxVersionRequired(this, true, m_data.kdf.isNull()));
+    // Preserve the KDBX version from the file header when loading (see #13974).
+    setFormatVersion(KeePass2Writer::kdbxVersionRequired(this, false, m_data.kdf.isNull()));
 }
 
 bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)

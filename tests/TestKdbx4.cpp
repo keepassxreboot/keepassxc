@@ -611,3 +611,22 @@ void TestKdbx4Format::testCustomData()
     QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
     QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
 }
+
+void TestKdbx4Format::testMinorVersionMismatchAfterSetKdf()
+{
+    const quint32 futureVersion = KeePass2::FILE_VERSION_MAX + 1;
+
+    Database db;
+    // Simulate KdbxReader reading a newer minor version from the file header.
+    db.setFormatVersion(futureVersion);
+    // Simulate Kdbx4Reader applying KDF parameters from the header.
+    db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D));
+    QCOMPARE(db.formatVersion(), futureVersion);
+    QVERIFY(db.hasMinorVersionMismatch());
+
+    Database supportedDb;
+    supportedDb.setFormatVersion(KeePass2::FILE_VERSION_4_1);
+    supportedDb.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D));
+    QCOMPARE(supportedDb.formatVersion(), KeePass2::FILE_VERSION_4_1);
+    QVERIFY(!supportedDb.hasMinorVersionMismatch());
+}
