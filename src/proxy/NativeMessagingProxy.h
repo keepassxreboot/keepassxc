@@ -20,7 +20,8 @@
 
 #include <QLocalSocket>
 
-#include <istream>
+class QWinEventNotifier;
+class QSocketNotifier;
 
 class NativeMessagingProxy : public QObject
 {
@@ -30,11 +31,11 @@ public:
     ~NativeMessagingProxy() override = default;
 
 signals:
-    void stdinMessage(QByteArray message);
+    void stdinMessage(QString msg);
 
 public slots:
     void transferSocketMessage();
-    void transferStdinMessage(const QByteArray& message);
+    void transferStdinMessage(const QString& msg);
     void socketDisconnected();
 
 private:
@@ -43,31 +44,25 @@ private:
 
 private:
     QScopedPointer<QLocalSocket> m_localSocket;
+    QByteArray m_socketBuffer;
 
     Q_DISABLE_COPY(NativeMessagingProxy)
 };
 
 /**
- * Read one native messaging frame: a 32-bit length in native byte order, then that many bytes.
- * The bytes are returned unchanged. A frame longer than maxLength is skipped and gives an
- * empty message.
- *
- * @return false when the input ends, including in the middle of a frame
+ * Take the complete messages out of the data read from the application. Replies can arrive
+ * coalesced or fragmented. Like BrowserHost::parseSocketData, this relies on every message
+ * being one flat JSON object. An incomplete message stays in the buffer.
  */
-inline bool readNativeMessage(std::istream& in, QByteArray& message, quint32 maxLength)
+inline QList<QByteArray> takeSocketMessages(QByteArray& buffer)
 {
-    quint32 length = 0;
-    if (!in.read(reinterpret_cast<char*>(&length), sizeof(length))) {
-        return false;
+    QList<QByteArray> messages;
+    qsizetype end;
+    while ((end = buffer.indexOf('}')) != -1) {
+        messages << buffer.left(end + 1);
+        buffer.remove(0, end + 1);
     }
-
-    if (length > maxLength) {
-        message.clear();
-        return static_cast<bool>(in.ignore(length));
-    }
-
-    message.resize(length);
-    return static_cast<bool>(in.read(message.data(), length));
+    return messages;
 }
 
 #endif // NATIVEMESSAGINGPROXY_H

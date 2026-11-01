@@ -57,23 +57,33 @@ void NativeMessagingProxy::setupStandardInput()
 #endif
 #endif
 
-    // Forward the messages unchanged, the application parses them. It drops messages
-    // longer than its socket buffer, so don't send those at all.
     auto res = QtConcurrent::run([this] {
-        QByteArray message;
-        while (readNativeMessage(std::cin, message, BrowserShared::SOCKET_BUFFER_SIZE)) {
-            if (!message.isEmpty()) {
-                emit stdinMessage(message);
+        while (std::cin.good()) {
+            if (std::cin.peek() != EOF) {
+                uint length = 0;
+                for (uint i = 0; i < sizeof(uint); ++i) {
+                    length |= getchar() << (i * 8);
+                }
+
+                QString msg;
+                msg.reserve(length);
+                for (uint i = 0; i < length; ++i) {
+                    msg.append(QChar(getchar()));
+                }
+
+                if (msg.length() > 0) {
+                    emit stdinMessage(msg);
+                }
             }
         }
         QCoreApplication::quit();
     });
 }
 
-void NativeMessagingProxy::transferStdinMessage(const QByteArray& message)
+void NativeMessagingProxy::transferStdinMessage(const QString& msg)
 {
     if (m_localSocket && m_localSocket->state() == QLocalSocket::ConnectedState) {
-        m_localSocket->write(message);
+        m_localSocket->write(msg.toUtf8(), msg.length());
         m_localSocket->flush();
     }
 }
@@ -95,8 +105,8 @@ void NativeMessagingProxy::setupLocalSocket()
 
 void NativeMessagingProxy::transferSocketMessage()
 {
-    auto msg = m_localSocket->readAll();
-    if (!msg.isEmpty()) {
+    m_socketBuffer += m_localSocket->readAll();
+    for (const auto& msg : takeSocketMessages(m_socketBuffer)) {
         // Explicitly write the message length as 1 byte chunks
         uint len = msg.size();
         std::cout.write(reinterpret_cast<char*>(&len), sizeof(len));

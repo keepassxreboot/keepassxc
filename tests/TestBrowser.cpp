@@ -29,8 +29,6 @@
 #include <QJsonObject>
 #include <QTest>
 
-#include <sstream>
-
 #include <botan/sodium.h>
 
 using namespace Botan::Sodium;
@@ -1382,33 +1380,22 @@ void TestBrowser::testBrowserHostCoalescedMessaging()
     QCOMPARE(result.first(), secondOriginalMessage);
 }
 
-void TestBrowser::testProxyReadNativeMessage()
+void TestBrowser::testProxySocketMessages()
 {
-    auto frame = [](const QByteArray& message) {
-        const quint32 length = message.size();
-        return QByteArray(reinterpret_cast<const char*>(&length), sizeof(length)) + message;
-    };
+    const QByteArray first = "{\"action\":\"get-databasehash\",\"nonce\":\"a\"}";
+    const QByteArray second = "{\"action\":\"get-databasehash\",\"nonce\":\"b\"}";
 
-    // Messages are returned byte for byte, including non-ASCII UTF-8
-    const QByteArray first = "{\"action\":\"a\",\"note\":\"caf\xc3\xa9 \xe2\x9c\x93\"}";
-    const QByteArray second = "{\"action\":\"b\"}";
-    const QByteArray tooLong(100, 'x');
-    std::istringstream in((frame(first) + frame(tooLong) + frame(second)).toStdString());
+    // Coalesced replies are split into separate messages
+    QByteArray buffer = first + second;
+    QCOMPARE(takeSocketMessages(buffer), QList<QByteArray>({first, second}));
+    QVERIFY(buffer.isEmpty());
 
-    QByteArray message;
-    QVERIFY(readNativeMessage(in, message, 64));
-    QCOMPARE(message, first);
-
-    // A message over the limit is skipped and the next one is still read
-    QVERIFY(readNativeMessage(in, message, 64));
-    QVERIFY(message.isEmpty());
-    QVERIFY(readNativeMessage(in, message, 64));
-    QCOMPARE(message, second);
-    QVERIFY(!readNativeMessage(in, message, 64));
-
-    // Input that ends in the middle of a frame stops reading
-    std::istringstream truncatedBody(frame(first).left(10).toStdString());
-    QVERIFY(!readNativeMessage(truncatedBody, message, 64));
-    std::istringstream truncatedLength(QByteArray("\x05\x00").toStdString());
-    QVERIFY(!readNativeMessage(truncatedLength, message, 64));
+    // A fragmented reply is kept until it is complete
+    buffer = first + second.left(10);
+    QCOMPARE(takeSocketMessages(buffer), QList<QByteArray>({first}));
+    QCOMPARE(buffer, second.left(10));
+    QVERIFY(takeSocketMessages(buffer).isEmpty());
+    buffer += second.mid(10);
+    QCOMPARE(takeSocketMessages(buffer), QList<QByteArray>({second}));
+    QVERIFY(buffer.isEmpty());
 }

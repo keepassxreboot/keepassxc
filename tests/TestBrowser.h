@@ -59,7 +59,7 @@ private slots:
     void testBrowserHostMessaging();
     void testBrowserHostFragmentedMessaging();
     void testBrowserHostCoalescedMessaging();
-    void testProxyReadNativeMessage();
+    void testProxySocketMessages();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root, bool additionalUrl = false) const;
