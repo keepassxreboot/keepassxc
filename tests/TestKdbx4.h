@@ -68,6 +68,7 @@ private slots:
     void testAttachmentIndexStability();
     void testCustomData();
     void testMinorVersionMismatchAfterSetKdf();
+    void testChangeKdfDowngradesToKdbx3();
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H

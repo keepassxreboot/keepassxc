@@ -630,3 +630,29 @@ void TestKdbx4Format::testMinorVersionMismatchAfterSetKdf()
     QCOMPARE(supportedDb.formatVersion(), KeePass2::FILE_VERSION_4_1);
     QVERIFY(!supportedDb.hasMinorVersionMismatch());
 }
+
+void TestKdbx4Format::testChangeKdfDowngradesToKdbx3()
+{
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
+
+    Database db;
+    db.setKey(key, true, true);
+    db.changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D)));
+    QCOMPARE(db.formatVersion(), KeePass2::FILE_VERSION_4);
+
+    db.changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
+    QCOMPARE(db.formatVersion(), KeePass2::FILE_VERSION_3_1);
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, &db));
+
+    buffer.seek(0);
+    KeePass2Reader reader;
+    Database reopened;
+    QVERIFY(reader.readDatabase(&buffer, key, &reopened));
+    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1);
+    QCOMPARE(reopened.kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
+}
