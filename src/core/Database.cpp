@@ -1142,6 +1142,8 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
     }
 
     setKdf(kdf);
+    // Recalculate format version for intentional KDF change (e.g. KDBX 3 downgrade).
+    setFormatVersion(KeePass2Writer::kdbxVersionRequired(this, true));
     m_data.transformedDatabaseKey->setRawKey(transformedDatabaseKey);
     markAsModified();
 
