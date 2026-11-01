@@ -29,6 +29,7 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QScopeGuard>
 #include <QSemaphore>
 #include <QSignalSpy>
 #include <QSpinBox>
@@ -2010,10 +2011,17 @@ void TestGui::testUnlockDialogReplacedWhileUnlocking()
     // Queue a blocker for every pool thread so the key derivation waits behind them
     const int threads = QThreadPool::globalInstance()->maxThreadCount();
     QSemaphore gate;
+    QList<QFuture<void>> blockers;
     for (int i = 0; i < threads; ++i) {
-        auto future = QtConcurrent::run([&] { gate.acquire(); });
-        Q_UNUSED(future)
+        blockers << QtConcurrent::run([&] { gate.acquire(); });
     }
+    // Release the blockers even if the test returns early, or they wait on a destroyed semaphore
+    auto releaseGate = qScopeGuard([&] {
+        gate.release(threads);
+        for (auto& blocker : blockers) {
+            blocker.waitForFinished();
+        }
+    });
 
     // Reset the dialog once the unlock has replaced the header-only database and waits for the key
     auto* openWidget = dialog->findChild<DatabaseOpenWidget*>();
