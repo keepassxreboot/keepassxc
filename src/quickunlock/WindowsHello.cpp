@@ -57,14 +57,35 @@ namespace
         });
     }
 
-    bool deriveEncryptionKey(QByteArray& challenge, QByteArray& key, QString& error)
+    QuickUnlockInterface::KeyStatus checkKeyCredentialStatus(const KeyCredentialStatus status, QString& error)
     {
-        error.clear();
-        auto challengeBuffer = CryptographicBuffer::CreateFromByteArray(
-            array_view<uint8_t>(reinterpret_cast<uint8_t*>(challenge.data()), challenge.size()));
+        switch (status) {
+        case KeyCredentialStatus::Success:
+            return QuickUnlockInterface::OK;
+        case KeyCredentialStatus::UserCanceled:
+        case KeyCredentialStatus::UserPrefersPassword:
+            error = QObject::tr("User canceled the action.");
+            return QuickUnlockInterface::ERR_USER_CANCELED;
+        case KeyCredentialStatus::SecurityDeviceLocked:
+            error = QObject::tr("Authentication failure.");
+            return QuickUnlockInterface::ERR_AUTH_FAILURE;
+        case KeyCredentialStatus::NotFound:
+            error = QObject::tr("Credential not found.");
+            return QuickUnlockInterface::ERR_NO_KEY;
+        default:
+            error = QObject::tr("Windows Hello returned an unknown failure.");
+            return QuickUnlockInterface::ERR_OTHER;
+        }
+    }
 
+    QuickUnlockInterface::KeyStatus deriveEncryptionKey(QByteArray& challenge, QByteArray& key, QString& error)
+    {
         return AsyncTask::runAndWaitForFuture([&] {
             try {
+                error.clear();
+                auto challengeBuffer = CryptographicBuffer::CreateFromByteArray(
+                    array_view<uint8_t>(reinterpret_cast<uint8_t*>(challenge.data()), challenge.size()));
+
                 // The first time this is used a key-pair will be generated using the common name
                 auto result = KeyCredentialManager::RequestCreateAsync(s_winHelloKeyName,
                                                                        KeyCredentialCreationOption::FailIfExists)
@@ -72,17 +93,14 @@ namespace
 
                 if (result.Status() == KeyCredentialStatus::CredentialAlreadyExists) {
                     result = KeyCredentialManager::OpenAsync(s_winHelloKeyName).get();
-                } else if (result.Status() != KeyCredentialStatus::Success) {
-                    error = QObject::tr("Failed to create Windows Hello credential.");
-                    return false;
+                }
+                if (result.Status() != KeyCredentialStatus::Success) {
+                    return checkKeyCredentialStatus(result.Status(), error);
                 }
 
                 const auto signature = result.Credential().RequestSignAsync(challengeBuffer).get();
                 if (signature.Status() != KeyCredentialStatus::Success) {
-                    if (signature.Status() != KeyCredentialStatus::UserCanceled) {
-                        error = QObject::tr("Failed to sign challenge using Windows Hello.");
-                    }
-                    return false;
+                    return checkKeyCredentialStatus(signature.Status(), error);
                 }
 
                 // Use the SHA-256 hash of the challenge signature as the encryption key
@@ -90,10 +108,10 @@ namespace
                 CryptoHash hasher(CryptoHash::Sha256);
                 hasher.addData({reinterpret_cast<const char*>(response.data()), static_cast<int>(response.Length())});
                 key = hasher.result();
-                return true;
+                return QuickUnlockInterface::OK;
             } catch (winrt::hresult_error const& ex) {
                 error = QString::fromStdString(winrt::to_string(ex.message()));
-                return false;
+                return QuickUnlockInterface::ERR_OTHER;
             }
         });
     }
@@ -110,7 +128,7 @@ QString WindowsHello::errorString() const
     return m_error;
 }
 
-bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
+QuickUnlockInterface::KeyStatus WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
 {
     queueSecurityPromptFocus();
 
@@ -119,34 +137,35 @@ bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
     auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
     auto challenge = Random::instance()->randomArray(ivSize);
     QByteArray key;
-    if (!deriveEncryptionKey(challenge, key, m_error)) {
-        return false;
+    auto status = deriveEncryptionKey(challenge, key, m_error);
+    if (status != OK) {
+        return status;
     }
 
     // Encrypt the data using AES-256-CBC
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, key, challenge)) {
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
-        return false;
+        return ERR_CRYPTO_FAILURE;
     }
     QByteArray encrypted = data;
     if (!cipher.finish(encrypted)) {
         m_error = QObject::tr("Failed to encrypt key data.");
-        return false;
+        return ERR_CRYPTO_FAILURE;
     }
 
     // Prepend the challenge/IV to the encrypted data
     encrypted.prepend(challenge);
     m_encryptedKeys.insert(dbUuid, encrypted);
-    return true;
+    return OK;
 }
 
-bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
+QuickUnlockInterface::KeyStatus WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 {
     data.clear();
     if (!hasKey(dbUuid)) {
         m_error = QObject::tr("Failed to get Windows Hello credential.");
-        return false;
+        return ERR_NO_KEY;
     }
 
     queueSecurityPromptFocus();
@@ -158,15 +177,16 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
     auto encrypted = keydata.mid(ivSize);
     QByteArray key;
 
-    if (!deriveEncryptionKey(challenge, key, m_error)) {
-        return false;
+    const auto status = deriveEncryptionKey(challenge, key, m_error);
+    if (status != OK) {
+        return status;
     }
 
     // Decrypt the data using the generated key and IV from above
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, key, challenge)) {
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
-        return false;
+        return ERR_CRYPTO_FAILURE;
     }
 
     // Store the decrypted data into the passed parameter
@@ -174,10 +194,10 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
     if (!cipher.finish(data)) {
         data.clear();
         m_error = QObject::tr("Failed to decrypt key data.");
-        return false;
+        return ERR_CRYPTO_FAILURE;
     }
 
-    return true;
+    return OK;
 }
 
 void WindowsHello::reset(const QUuid& dbUuid)

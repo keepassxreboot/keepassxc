@@ -65,7 +65,7 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
 
 #if defined(Q_OS_MACOS)
     m_ui->allowQuickUnlockCheckbox->setText(tr("Allow Quick Unlock via TouchID or user password"));
-#elif defined(Q_OS_WINDOWS)
+#elif defined(Q_OS_WIN)
     m_ui->allowQuickUnlockCheckbox->setText(tr("Allow Quick Unlock via Windows Hello"));
 #endif
 
@@ -130,21 +130,25 @@ void DatabaseSettingsWidgetDatabaseKey::uninitialize()
 
 bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
 {
-    auto allowQuickUnlockNew = m_ui->allowQuickUnlockCheckbox->isChecked() ? "true" : "false";
-    auto allowQuickUnlockOld = m_db->metadata()->customData()->value(CustomData::DatabaseAllowQuickUnlock).toLower();
-    if (allowQuickUnlockNew != allowQuickUnlockOld) {
-        if (!m_ui->allowQuickUnlockCheckbox->isChecked()) {
+    const auto saveAllowQuickUnlock = [this](bool resetQuickUnlock) {
+        auto allowQuickUnlockNew = m_ui->allowQuickUnlockCheckbox->isChecked() ? "true" : "false";
+        auto allowQuickUnlockOld =
+            m_db->metadata()->customData()->value(CustomData::DatabaseAllowQuickUnlock).toLower();
+        if (allowQuickUnlockNew != allowQuickUnlockOld && getQuickUnlock()->isAvailable()) {
+            m_db->metadata()->customData()->set(CustomData::DatabaseAllowQuickUnlock, allowQuickUnlockNew);
+        }
+        if (resetQuickUnlock) {
             getQuickUnlock()->reset(m_db->publicUuid());
         }
-        m_db->metadata()->customData()->set(CustomData::DatabaseAllowQuickUnlock, allowQuickUnlockNew);
-    }
+    };
 
     m_isDirty |= (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_keyFileEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_yubiKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
 
+    // Key unchanged
     if (m_db->key() && !m_db->key()->isEmpty() && !m_isDirty) {
-        // Key unchanged
+        saveAllowQuickUnlock(!m_ui->allowQuickUnlockCheckbox->isChecked());
         return true;
     }
 
@@ -237,7 +241,7 @@ bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
 
     m_db->setKey(newKey, true, false, false);
 
-    getQuickUnlock()->reset(m_db->publicUuid());
+    saveAllowQuickUnlock(true);
 
     emit editFinished(true);
     if (m_isDirty) {

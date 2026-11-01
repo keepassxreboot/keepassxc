@@ -300,7 +300,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 #else
     m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(false);
 #endif
-#ifdef Q_OS_WINDOWS
+#ifdef Q_OS_WIN
     m_secUi->quickUnlockCheckBox->setText(tr("Enable database Quick Unlock via Windows Hello"));
 #endif
 

@@ -415,12 +415,12 @@ void DatabaseOpenWidget::openDatabase()
                     "password.\n\n"
                     "You can change the decision any time under Database Settings / Security."));
                 auto enableBtn = msgBox->addButton(tr("Yes, enable Quick Unlock"), QMessageBox::ButtonRole::AcceptRole);
-                auto disableBtn = msgBox->addButton(tr("No, thanks!"), QMessageBox::ButtonRole::RejectRole);
+                msgBox->addButton(tr("No, thanks!"), QMessageBox::ButtonRole::RejectRole);
                 msgBox->setDefaultButton(enableBtn);
                 msgBox->layout()->setSizeConstraint(QLayout::SetMinimumSize);
                 msgBox->exec();
                 enrollQuickUnlock(m_db, msgBox->clickedButton() == enableBtn);
-                if (msgBox->clickedButton() == disableBtn) {
+                if (msgBox->clickedButton() != enableBtn) {
                     blockQuickUnlock = true;
                 }
             }
@@ -428,7 +428,9 @@ void DatabaseOpenWidget::openDatabase()
             // Save Quick Unlock credentials if available
             if (!blockQuickUnlock) {
                 auto keyData = databaseKey->serialize();
-                getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
+                if (getQuickUnlock()->setKey(m_db->publicUuid(), keyData) != QuickUnlockInterface::OK) {
+                    qWarning() << tr("Error setting up Quick Unlock: %1").arg(getQuickUnlock()->errorString());
+                }
                 m_ui->messageWidget->hideMessage();
             }
         }
@@ -475,7 +477,14 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
     if (!m_db.isNull() && canPerformQuickUnlock()) {
         // try to retrieve the stored password using Windows Hello
         QByteArray keyData;
-        if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
+        const auto status = getQuickUnlock()->getKey(m_db->publicUuid(), keyData);
+        if (status == QuickUnlockInterface::ERR_AUTH_FAILURE) {
+            // (three?) failed attempts, reset Quick Unlock
+            resetQuickUnlock();
+        } else if (status == QuickUnlockInterface::ERR_USER_CANCELED) {
+            return {};
+        }
+        if (status != QuickUnlockInterface::OK) {
             m_ui->messageWidget->showMessage(
                 tr("Failed to authenticate with Quick Unlock: %1").arg(getQuickUnlock()->errorString()),
                 MessageWidget::Error);
@@ -704,9 +713,6 @@ void DatabaseOpenWidget::triggerQuickUnlock()
  */
 void DatabaseOpenWidget::resetQuickUnlock()
 {
-    if (!isQuickUnlockAvailable()) {
-        return;
-    }
     if (!m_db.isNull()) {
         getQuickUnlock()->reset(m_db->publicUuid());
     }
