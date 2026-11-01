@@ -3669,7 +3669,7 @@ Bạn có muốn sửa nó không?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Các cài đặt này ảnh hưởng đến hành vi của nhóm với tiện ích mở rộng trình duyệt.</translation>
     </message>
     <message>

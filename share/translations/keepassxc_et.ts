@@ -3671,7 +3671,7 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Need seaded mõjutavad grupi käitumist brauserilaiendusega.</translation>
     </message>
     <message>

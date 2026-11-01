@@ -3635,7 +3635,7 @@ Would you like to correct it?</source>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>การตั้งค่าเหล่านี้ส่งผลต่อพฤติกรรมของกลุ่มด้วยส่วนขยายของเบราว์เซอร์</translation>
     </message>
     <message>

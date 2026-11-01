@@ -3624,7 +3624,7 @@ Would you like to correct it?</source>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>ဤဆက်တင်များသည် ဘရောက်ဇာအဆက်နှင့်ဆိုင်သော အဖွဲ့၏ အပြုအမူပေါ် သက်ရောက်သည်။</translation>
     </message>
     <message>

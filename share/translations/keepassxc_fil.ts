@@ -3639,7 +3639,7 @@ Gusto mo bang itama ito?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Ang mga setting na ito ay nakakaapekto sa gawi ng group sa extension ng browser.</translation>
     </message>
     <message>

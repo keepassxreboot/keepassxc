@@ -3667,7 +3667,7 @@ Szeretné kijavítani?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Ezek a beállítások befolyásolják a csoport viselkedését a böngészőkiegészítővel.</translation>
     </message>
     <message>

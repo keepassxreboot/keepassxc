@@ -3671,7 +3671,7 @@ Korrigieren?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Diese Einstellungen beeinflussen das Verhalten der Gruppe in der Browser-Erweiterung.</translation>
     </message>
     <message>

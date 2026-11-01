@@ -3669,7 +3669,7 @@ Would you like to correct it?</source>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Estas opciones afectan al comportamiento del grupo con la extensión del explorador.</translation>
     </message>
     <message>

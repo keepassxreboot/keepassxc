@@ -3661,7 +3661,7 @@ navigateurs</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Ces paramètres influencent le comportement du groupe avec l’extension pour navigateurs.</translation>
     </message>
     <message>

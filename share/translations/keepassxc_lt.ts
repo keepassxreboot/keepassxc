@@ -3630,7 +3630,7 @@ Ar norėtumėte ją ištaisyti?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Šie nustatymai turi įtakos grupės elgesiui su naršyklės plėtiniu.</translation>
     </message>
     <message>

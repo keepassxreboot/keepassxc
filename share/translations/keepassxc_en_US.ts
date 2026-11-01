@@ -3669,8 +3669,8 @@ Would you like to correct it?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
-        <translation>These settings affect to the group&apos;s behaviour with the browser extension.</translation>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
+        <translation>These settings affect the group&apos;s behaviour with the browser extension.</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>

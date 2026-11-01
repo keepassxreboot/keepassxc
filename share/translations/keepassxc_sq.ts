@@ -3659,7 +3659,7 @@ Do të donit të ndreqet?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Këto rregullime prekin sjelljen e grupit me zgjerimin e shfletuesit.</translation>
     </message>
     <message>

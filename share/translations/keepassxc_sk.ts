@@ -3623,7 +3623,7 @@ Chcete to opraviť?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Tieto nastavenia ovplyvňujú správanie skupiny s doplnkom prehliadača.</translation>
     </message>
     <message>

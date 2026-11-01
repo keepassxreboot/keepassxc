@@ -3668,7 +3668,7 @@ Would you like to correct it?</source>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>이 설정은 브라우저 확장 기능에서 해당 그룹을 처리하는 방법을 변경합니다.</translation>
     </message>
     <message>

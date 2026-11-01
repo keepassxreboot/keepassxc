@@ -3643,7 +3643,7 @@ Vil du rette den?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Disse innstillingene påvirker oppføringens funksjon mot nettleserutvidelsen.</translation>
     </message>
     <message>

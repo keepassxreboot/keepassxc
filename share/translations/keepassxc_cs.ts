@@ -3649,7 +3649,7 @@ Chcete ji opravit?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Tato nastavení ovlivní chování skupiny pro rozšíření pro webový prohlížeč.</translation>
     </message>
     <message>

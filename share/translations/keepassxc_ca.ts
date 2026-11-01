@@ -3008,7 +3008,7 @@ Would you like to correct it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation type="unfinished"/>
     </message>
     <message>

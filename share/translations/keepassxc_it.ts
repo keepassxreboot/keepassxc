@@ -3664,7 +3664,7 @@ Vuoi correggerla?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>Queste impostazioni influiscono sul comportamento del gruppo con l&apos;estensione del browser.</translation>
     </message>
     <message>

@@ -3630,7 +3630,7 @@ Would you like to correct it?</source>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
+        <source>These settings affect the group&apos;s behaviour with the browser extension.</source>
         <translation>මෙම සැකසීම් බ්‍රවුසර දිගුව සමඟ&apos;කණ්ඩායමේ හැසිරීමට බලපායි.</translation>
     </message>
     <message>
