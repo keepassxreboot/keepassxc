@@ -282,8 +282,8 @@ void ReportsWidgetHealthcheck::calculateHealth()
     if (m_referencesModel->rowCount() == 0) {
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, everything is healthy!"));
     } else {
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("") << tr("Title") << tr("Path") << tr("Score")
-                                                                   << tr("Reason"));
+        m_referencesModel->setHorizontalHeaderLabels(QStringList()
+                                                     << "" << tr("Title") << tr("Path") << tr("Score") << tr("Reason"));
     }
 
     // Restore sorting options that was stored before the model was cleared

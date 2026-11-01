@@ -1236,7 +1236,7 @@ class I18N(Command):
     def check_lupdate_exists(path):
         if _cmd_exists('lupdate', path=path):
             result = _run(['lupdate', '-version'], path=path, check=False, cwd=None, text=True)
-            if result.returncode == 0 and result.stdout.startswith('lupdate version 5.'):
+            if result.returncode == 0:
                 return
         raise Error('lupdate command not found. Make sure it is installed and the correct version.')
 

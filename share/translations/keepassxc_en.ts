@@ -6756,6 +6756,10 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Plain text length out of range: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unable to read all HMAC signature bytes</source>
         <translation type="unfinished"></translation>
     </message>
