@@ -70,5 +70,4 @@ private slots:
     void testMinorVersionMismatchAfterSetKdf();
 };
 
-
 #endif // KEEPASSXC_TEST_KDBX4_H
