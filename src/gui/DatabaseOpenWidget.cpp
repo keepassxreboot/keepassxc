@@ -44,6 +44,33 @@ namespace
         }
         return false;
     }
+
+    enum QuickUnlockEnrollment
+    {
+        UNENROLLED,
+        ENROLLED,
+        BLOCKED,
+    };
+
+    QuickUnlockEnrollment getQuickUnlockEnrollmentStatus(QSharedPointer<Database> db)
+    {
+        if (!db || !db->metadata()->customData()->hasKey(CustomData::DatabaseAllowQuickUnlock)) {
+            return UNENROLLED;
+        }
+        const auto allowed = db->metadata()->customData()->value(CustomData::DatabaseAllowQuickUnlock).toLower();
+        if (allowed == "true" || allowed == "1") {
+            return ENROLLED;
+        }
+        return BLOCKED;
+    }
+
+    void enrollQuickUnlock(QSharedPointer<Database> db, bool allowQuickUnlock)
+    {
+        if (!db) {
+            return;
+        }
+        db->metadata()->customData()->set(CustomData::DatabaseAllowQuickUnlock, allowQuickUnlock ? "true" : "false");
+    }
 } // namespace
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
@@ -346,6 +373,7 @@ void DatabaseOpenWidget::openDatabase()
     QString error;
     m_db.reset(new Database());
     bool ok = m_db->open(m_filename, databaseKey, &error);
+    setUserInteractionLock(false);
 
     if (ok) {
         // Warn user about minor version mismatch to halt loading if necessary
@@ -368,16 +396,41 @@ void DatabaseOpenWidget::openDatabase()
                 m_db->open(m_filename, nullptr, &error);
 
                 m_ui->messageWidget->showMessage(tr("Database unlock canceled."), MessageWidget::MessageType::Error);
-                setUserInteractionLock(false);
                 return;
             }
         }
 
-        // Save Quick Unlock credentials if available
-        if (!blockQuickUnlock && isQuickUnlockAvailable()) {
-            auto keyData = databaseKey->serialize();
-            getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
-            m_ui->messageWidget->hideMessage();
+        if (isQuickUnlockAvailable()) {
+            // Check Quick Unlock enrollment
+            auto quickUnlockStatus = getQuickUnlockEnrollmentStatus(m_db);
+            if (quickUnlockStatus == BLOCKED) {
+                blockQuickUnlock = true;
+            } else if (quickUnlockStatus == UNENROLLED) {
+                QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
+                msgBox->setIcon(QMessageBox::Question);
+                msgBox->setWindowTitle(tr("Set up database for Quick Unlock?"));
+                msgBox->setText(tr(
+                    "Do you want to enable Quick Unlock via fingerprint or user password for this database?\n\n"
+                    "Opening the database for the first time after starting KeePassXC still requires the full database "
+                    "password.\n\n"
+                    "You can change the decision any time under Database Settings / Security."));
+                auto enableBtn = msgBox->addButton(tr("Yes, enable Quick Unlock"), QMessageBox::ButtonRole::AcceptRole);
+                auto disableBtn = msgBox->addButton(tr("No, thanks!"), QMessageBox::ButtonRole::RejectRole);
+                msgBox->setDefaultButton(enableBtn);
+                msgBox->layout()->setSizeConstraint(QLayout::SetMinimumSize);
+                msgBox->exec();
+                enrollQuickUnlock(m_db, msgBox->clickedButton() == enableBtn);
+                if (msgBox->clickedButton() == disableBtn) {
+                    blockQuickUnlock = true;
+                }
+            }
+
+            // Save Quick Unlock credentials if available
+            if (!blockQuickUnlock) {
+                auto keyData = databaseKey->serialize();
+                getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
+                m_ui->messageWidget->hideMessage();
+            }
         }
 
         emit dialogFinished(true);
@@ -403,8 +456,6 @@ void DatabaseOpenWidget::openDatabase()
                 return;
             }
         }
-
-        setUserInteractionLock(false);
 
         m_retryUnlockWithEmptyPassword = false;
         m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
