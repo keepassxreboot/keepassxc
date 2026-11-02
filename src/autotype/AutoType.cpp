@@ -545,7 +545,7 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
 
 void AutoType::restoreWindowState()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (getMainWindow()) {
         if (m_windowState == WindowState::Minimized) {
             getMainWindow()->showMinimized();

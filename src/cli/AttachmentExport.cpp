@@ -24,8 +24,7 @@
 #include <QCommandLineParser>
 #include <QFile>
 
-const QCommandLineOption AttachmentExport::StdoutOption =
-    QCommandLineOption(QStringList() << "stdout", QObject::tr(""));
+const QCommandLineOption AttachmentExport::StdoutOption = QCommandLineOption(QStringList() << "stdout");
 
 AttachmentExport::AttachmentExport()
 {

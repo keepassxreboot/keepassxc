@@ -13,6 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+set(CLANG_FORMAT_EXECUTABLE "clang-format" CACHE STRING "Name of the clang-format executable to use")
+
 set(EXCLUDED_DIRS
         # third-party directories
         src/thirdparty
@@ -53,7 +55,7 @@ add_custom_command(
         TARGET format
         PRE_BUILD
         COMMAND find src tests "\\(" -name "\\*.h" -o -name "\\*.cpp" ${FIND_EXCLUDE_DIR_EXPR} "\\)"
-            ${FIND_EXCLUDE_FILE_EXPR} -type f -print0 | xargs -0 -P0 -n10 clang-format -style=file -i
+            ${FIND_EXCLUDE_FILE_EXPR} -type f -print0 | xargs -0 -P0 -n10 "${CLANG_FORMAT_EXECUTABLE}" -style=file -i
 
         COMMENT "Formatting source files..."
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})

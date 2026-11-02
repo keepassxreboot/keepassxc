@@ -1,0 +1,40 @@
+= KeePassXC – Administrative Options
+
+// tag::content[]
+== Administrative Options
+
+=== User Settings Locations
+KeePassXC's user settings are stored in INI files in the user's home directory. The exact path differs depending on the platform:
+
+- Windows: `%AppData%\KeePassXC\keepassxc.ini`
+- macOS: `~/Library/Application Support/KeePassXC/keepassxc.ini`
+- Linux: `${XDG_CONFIG_HOME}/keepassxc/keepassxc.ini` (typically: `~/.config/keepassxc/keepassxc.ini`)
+
+Additional application state is stored in the following locations:
+
+- Windows: `%LocalAppData%\KeePassXC\keepassxc.ini`
+- macOS: `~/Library/Caches/KeePassXC/keepassxc.ini`
+- Linux: `${XDG_STATE_HOME}/keepassxc/keepassxc.ini` (typically: `~/.local/state/keepassxc/keepassxc.ini`)
+
+The default configuration and state locations can be overridden by setting the `KPXC_CONFIG` and `KPXC_CONFIG_LOCAL` environment variables to different paths.
+
+=== Group Policy Settings Enforcement (Windows)
+
+On Windows, administrators can enforce certain user settings by Group Policy overrides. To enforce a setting globally for all users, a corresponding value needs to be created in the Windows registry under `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\KeePassXC`. The value's name must correspond to an existing INI setting. Hierarchical INI settings containing slashes must be represented as subkeys. For example, the following Group Policy overrides correspond to the INI settings `BackupBeforeSave`, `BackupFilePathPattern`, and `Security/LockDatabaseIdle`:
+
+----
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\KeePassXC]
+"BackupBeforeSave"=dword:00000001
+"BackupFilePathPattern"="{DB_FILENAME}.old.kdbx"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\KeePassXC\Security]
+"LockDatabaseIdle"=dword:00000001
+----
+
+Overriding a setting will enforce the set value for all users and disable the setting in the KeePassXC user interface.
+
+NOTE: User shortcuts cannot be overridden.
+
+// end::content[]

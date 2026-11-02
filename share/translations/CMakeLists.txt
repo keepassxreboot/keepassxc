@@ -23,7 +23,7 @@ message(STATUS "Including translations...\n")
 qt6_add_translation(QM_FILES ${TRANSLATION_FILES})
 
 if(WIN32)
-    file(GLOB QTBASE_TRANSLATIONS ${Qt6_PREFIX}/share/qt/translations/qtbase_*.qm)
+    file(GLOB QTBASE_TRANSLATIONS ${Qt6_PREFIX}/translations/qtbase_*.qm)
 elseif(APPLE OR KEEPASSXC_DIST_APPIMAGE)
     file(GLOB QTBASE_TRANSLATIONS
             /usr/share/qt/translations/qtbase_*.qm

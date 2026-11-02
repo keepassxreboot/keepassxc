@@ -19,6 +19,10 @@
 #ifndef KEEPASSX_SETTINGSWIDGET_H
 #define KEEPASSX_SETTINGSWIDGET_H
 
+#include <QMap>
+#include <QSet>
+
+#include "core/Config.h"
 #include "gui/EditWidget.h"
 
 namespace Ui
@@ -58,6 +62,7 @@ private slots:
     void exportSettings();
     void reject();
     void autoSaveToggled(bool checked);
+    void minimizeAfterUnlockCheckBoxToggled(bool checked);
     void hideWindowOnCopyCheckBoxToggled(bool checked);
     void systrayToggled(bool checked);
     void rememberDatabasesToggled(bool checked);
@@ -71,6 +76,8 @@ private:
     QWidget* const m_generalWidget;
     const QScopedPointer<Ui::ApplicationSettingsWidgetSecurity> m_secUi;
     const QScopedPointer<Ui::ApplicationSettingsWidgetGeneral> m_generalUi;
+    QMap<Config::ConfigKey, QWidget*> m_configWidgetMap;
+    QSet<Config::ConfigKey> m_configValueInverted;
     Qt::Key m_globalAutoTypeKey;
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
     class ExtraPage;

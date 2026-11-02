@@ -25,7 +25,7 @@ class Key
 {
 public:
     explicit Key(const QUuid& uuid)
-        : m_uuid(uuid){};
+        : m_uuid(uuid) {};
     Q_DISABLE_COPY(Key);
     virtual ~Key() = default;
     virtual QByteArray rawKey() const = 0;

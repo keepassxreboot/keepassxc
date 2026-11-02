@@ -80,7 +80,7 @@ namespace
     {
     public:
         ReportSortProxyModel(QObject* parent)
-            : QSortFilterProxyModel(parent){};
+            : QSortFilterProxyModel(parent) {};
         ~ReportSortProxyModel() override = default;
 
     protected:
@@ -152,8 +152,8 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
 
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(m_ui->showExcluded, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
-    connect(m_ui->showExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+    connect(m_ui->showExcluded, SIGNAL(toggled(bool)), this, SLOT(calculateHealth()));
+    connect(m_ui->showExpired, SIGNAL(toggled(bool)), this, SLOT(calculateHealth()));
 
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
@@ -282,8 +282,8 @@ void ReportsWidgetHealthcheck::calculateHealth()
     if (m_referencesModel->rowCount() == 0) {
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, everything is healthy!"));
     } else {
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("") << tr("Title") << tr("Path") << tr("Score")
-                                                                   << tr("Reason"));
+        m_referencesModel->setHorizontalHeaderLabels(QStringList()
+                                                     << "" << tr("Title") << tr("Path") << tr("Score") << tr("Reason"));
     }
 
     // Restore sorting options that was stored before the model was cleared

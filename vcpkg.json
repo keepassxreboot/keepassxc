@@ -29,7 +29,10 @@
     "qt": {
       "description": "Build Qt6 dependency.",
       "dependencies": [
-        "qtbase",
+        {
+          "name": "qtbase",
+          "features": ["network", "openssl"]
+        },
         {
           "name": "qtbase",
           "platform": "linux | freebsd",

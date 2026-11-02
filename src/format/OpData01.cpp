@@ -53,7 +53,7 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
     /*!
      * The next 8 bytes contain the length in bytes of the plaintext as a little endian unsigned 64 bit integer.
      */
-    qlonglong len;
+    quint64 len;
     in >> len;
 
     /*!
@@ -79,13 +79,17 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
      * to the plaintext. Otherwise, between 1 and 15 (inclusive) bytes of random data are prepended to the plaintext
      * to achieve an even multiple of blocks.
      */
-    const int blockSize = cipher.blockSize(cipher.mode());
-    int randomBytes = blockSize - (len % blockSize);
+    const qsizetype blockSize = cipher.blockSize(cipher.mode());
+    qsizetype randomBytes = blockSize - (len % blockSize);
     if (randomBytes == 0) {
         // add random block
         randomBytes = blockSize;
     }
-    qlonglong clear_len = len + randomBytes;
+    if (len > static_cast<quint64>(std::numeric_limits<qsizetype>::max()) - randomBytes) {
+        m_errorStr = tr("Plain text length out of range: %1").arg(len);
+        return false;
+    }
+    const qsizetype clear_len = static_cast<qsizetype>(len) + randomBytes;
     QByteArray qbaCT(clear_len, '\0');
     in.readRawData(qbaCT.data(), clear_len);
 
@@ -115,7 +119,7 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
 
     // Remove random bytes
     const QByteArray& clearText = qbaCT.mid(randomBytes);
-    if (clearText.size() != len) {
+    if (clearText.size() != static_cast<qsizetype>(len)) {
         m_errorStr = tr("Expected %1 bytes of clear-text, found %2").arg(len, clearText.size());
         return false;
     }

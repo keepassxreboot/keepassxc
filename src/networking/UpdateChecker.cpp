@@ -27,6 +27,7 @@
 #include <QJsonObject>
 #include <QNetworkReply>
 #include <QRegularExpression>
+#include <QVersionNumber>
 
 const QString UpdateChecker::ErrorVersion("error");
 UpdateChecker* UpdateChecker::m_instance(nullptr);
@@ -118,51 +119,46 @@ bool UpdateChecker::compareVersions(const QString& localVersion, const QString& 
         return false;
     }
 
-    QRegularExpression verRegex(R"(^((?:\d+\.){2}\d+)(?:-(\w+?)(\d+)?)?$)");
+    QRegularExpression verRegex(R"(^((?:\d+\.)*\d+)(?:-(alpha|beta|snapshot)?(\d+)?)?$)",
+                                QRegularExpression::CaseInsensitiveOption);
 
     auto lmatch = verRegex.match(localVersion);
     auto rmatch = verRegex.match(remoteVersion);
 
-    auto lVersion = lmatch.captured(1).split(".");
-    auto lSuffix = lmatch.captured(2);
-    auto lBetaNum = lmatch.captured(3);
+    auto lVersion = QVersionNumber::fromString(lmatch.captured(1)).normalized();
+    auto lReleaseType = lmatch.captured(2).toLower();
+    auto lRevNum = lmatch.captured(3).toInt();
 
-    auto rVersion = rmatch.captured(1).split(".");
-    auto rSuffix = rmatch.captured(2);
-    auto rBetaNum = rmatch.captured(3);
+    auto rVersion = QVersionNumber::fromString(rmatch.captured(1)).normalized();
+    auto rReleaseType = rmatch.captured(2).toLower();
+    auto rRevNum = rmatch.captured(3).toInt();
 
-    if (!lVersion.isEmpty() && !rVersion.isEmpty()) {
-        if (lSuffix.compare("snapshot", Qt::CaseInsensitive) == 0) {
-            // Snapshots are not checked for version updates
-            return false;
-        }
-
-        // Check "-beta[X]" versions
-        if (lVersion == rVersion && !lSuffix.isEmpty()) {
-            // Check if stable version has been released or new beta is available
-            // otherwise the version numbers are equal
-            return rSuffix.isEmpty() || lBetaNum.toInt() < rBetaNum.toInt();
-        }
-
-        for (int i = 0; i < 3; i++) {
-            int l = lVersion[i].toInt();
-            int r = rVersion[i].toInt();
-
-            if (l == r) {
-                continue;
-            }
-
-            if (l > r) {
-                return false; // Installed version is newer than release
-            } else {
-                return true; // Installed version is outdated
-            }
-        }
-
-        return false; // Installed version is the same
+    // Invalid version string
+    if (lVersion.isNull() || rVersion.isNull()) {
+        return false;
+    }
+    // Snapshots are not checked for version updates
+    if (lReleaseType == "snapshot") {
+        return false;
     }
 
-    return false; // Invalid version string
+    if (lVersion != rVersion) {
+        return lVersion < rVersion;
+    }
+
+    // -alpha[X] < -beta[X]
+    if (lReleaseType == "alpha" && rReleaseType == "beta") {
+        return true;
+    }
+    // -beta1 < -beta2, -1 < -2
+    if (lReleaseType == rReleaseType) {
+        return lRevNum < rRevNum;
+    }
+    // -beta1 < -1
+    if (!lReleaseType.isEmpty() && rReleaseType.isEmpty()) {
+        return true;
+    }
+    return false;
 }
 
 UpdateChecker* UpdateChecker::instance()

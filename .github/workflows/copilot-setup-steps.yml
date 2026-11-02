@@ -26,4 +26,23 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install --no-install-recommends build-essential cmake g++ ninja-build qtbase5-dev qtbase5-private-dev qttools5-dev qttools5-dev-tools libqt5svg5-dev libargon2-dev libkeyutils-dev libminizip-dev libbotan-2-dev libqrencode-dev zlib1g-dev asciidoctor libreadline-dev libpcsclite-dev libusb-1.0-0-dev libxi-dev libxtst-dev libqt5x11extras5-dev
+          sudo apt install -y --no-install-recommends \
+            asciidoctor \
+            build-essential \
+            cmake \
+            libbotan-3-dev \
+            libkeyutils-dev \
+            libminizip-dev \
+            libpcsclite-dev \
+            libqrencode-dev \
+            libreadline-dev \
+            libusb-1.0-0-dev \
+            libxi-dev \
+            libxkbcommon-dev \
+            libxtst-dev \
+            qt6-base-dev \
+            qt6-base-dev-tools \
+            qt6-l10n-tools \
+            qt6-tools-dev \
+            qt6-svg-dev \
+            zlib1g-dev

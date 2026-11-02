@@ -76,7 +76,10 @@ NixUtils::NixUtils(QObject* parent)
 #ifdef WITH_X11
     if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
         dpy = native->display();
-        rootWindow = DefaultRootWindow(dpy);
+        // The offscreen platform has no X display
+        if (dpy) {
+            rootWindow = DefaultRootWindow(dpy);
+        }
     }
 #endif
 
@@ -404,16 +407,11 @@ bool NixUtils::setClipboardText(const QString& text)
 bool NixUtils::clearClipboardText(const QString& text)
 {
     // The remote desktop portal tracks whether KeePassXC owns the selection, so
-    // NixUtils does not need the copied text to decide whether clearing is safe.
-    Q_UNUSED(text)
-
-    if (!autoType()->isAvailable() || !autoType()->usesDesktopPortal()) {
-        return false;
-    }
-
+    // it does not need the copied text to decide whether clearing is safe.
     auto* portal = m_remoteDesktopPortal;
-    if (portal && autoType()->isAvailable() && config()->get(Config::AutoTypeDesktopPortalUseClipboard).toBool()
-        && portal->isClipboardAvailable() && portal->hasSession()) {
+    if (portal && autoType()->isAvailable() && autoType()->usesDesktopPortal()
+        && config()->get(Config::AutoTypeDesktopPortalUseClipboard).toBool() && portal->isClipboardAvailable()
+        && portal->hasSession()) {
         if (portal->clearClipboardText()) {
             return true;
         }
@@ -422,12 +420,14 @@ bool NixUtils::clearClipboardText(const QString& text)
         return false;
     }
 
+    if (!qEnvironmentVariableIsSet("WAYLAND_DISPLAY")) {
+        return false;
+    }
+
+    // Don't clear data another application has put into the clipboard in the meantime.
     auto* clipboard = QApplication::clipboard();
-    auto hasClipboardData = clipboard && clipboard->mimeData(QClipboard::Clipboard)
-                            && !clipboard->mimeData(QClipboard::Clipboard)->formats().isEmpty();
-    auto hasSelectionData = clipboard && clipboard->supportsSelection() && clipboard->mimeData(QClipboard::Selection)
-                            && !clipboard->mimeData(QClipboard::Selection)->formats().isEmpty();
-    if (hasClipboardData || hasSelectionData) {
+    auto* mimeData = clipboard ? clipboard->mimeData(QClipboard::Clipboard) : nullptr;
+    if (mimeData && !mimeData->formats().isEmpty() && mimeData->text() != text) {
         return false;
     }
 
