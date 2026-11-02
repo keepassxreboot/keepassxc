@@ -40,6 +40,8 @@ public:
     void reset() override;
 
 private:
+    bool isChallengeRequired();
+
     bool m_available;
     QString m_error;
     QHash<QUuid, QByteArray> m_encryptedMasterKeys;

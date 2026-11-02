@@ -37,6 +37,15 @@ const QString polkit_object = "/org/freedesktop/PolicyKit1/Authority";
 
 namespace
 {
+    PolkitSubject processSubject()
+    {
+        PolkitSubject subject;
+        subject.kind = "unix-process";
+        subject.details.insert("pid", static_cast<uint>(QCoreApplication::applicationPid()));
+        subject.details.insert("start-time", nixUtils()->getProcessStartTime());
+        return subject;
+    }
+
     QString getKeyName(const QUuid& dbUuid)
     {
         static const QString keyPrefix = "keepassxc_polkit_keys_";
@@ -73,6 +82,13 @@ Polkit::Polkit()
     }
 
     m_polkit.reset(new org::freedesktop::PolicyKit1::Authority(polkit_service, polkit_object, bus));
+
+    m_available = isChallengeRequired();
+    if (!m_available) {
+        m_polkit.reset();
+        qDebug() << "polkit: Polkit does not require interactive challenge";
+        return;
+    }
 }
 
 Polkit::~Polkit()
@@ -99,8 +115,45 @@ void Polkit::reset()
     m_encryptedMasterKeys.clear();
 }
 
+/**
+ * Check whether Polkit requires an interactive challenge.
+ * Pre-authorised or password-less users might otherwise be permitted to unlock the database
+ * without being presented an authentication prompt.
+ */
+bool Polkit::isChallengeRequired()
+{
+    if (!m_polkit) {
+        m_error = QObject::tr("Polkit is not available");
+        return false;
+    }
+
+    // Issue check to see if user authorisation finished without challenge.
+    // flags = 0: disable interactive prompt, only check for authorisation
+    // https://www.freedesktop.org/software/polkit/docs/0.105/eggdbus-interface-org.freedesktop.PolicyKit1.Authority.html#eggdbus-enum-CheckAuthorizationFlags
+    auto result = m_polkit->CheckAuthorization(processSubject(), "org.keepassxc.KeePassXC.unlockDatabase", {}, 0, "");
+    result.waitForFinished();
+    if (result.isError()) {
+        m_error = QObject::tr("Polkit error: %1").arg(result.error().message());
+        return false;
+    }
+    const auto authResult = result.value();
+    if (authResult.is_authorized) {
+        m_error = QObject::tr("Password-less or pre-authorized users cannot use Quick Unlock.");
+        return false;
+    }
+    if (!authResult.is_challenge) {
+        m_error = QObject::tr("Polkit authorization failed");
+        return false;
+    }
+    return true;
+}
+
 bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
 {
+    if (!isChallengeRequired()) {
+        return false;
+    }
+
     reset(dbUuid);
 
     // Generate a random iv/key pair to encrypt the master password with
@@ -150,21 +203,18 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         return false;
     }
 
-    PolkitSubject subject;
-    subject.kind = "unix-process";
-    subject.details.insert("pid", static_cast<uint>(QCoreApplication::applicationPid()));
-    subject.details.insert("start-time", nixUtils()->getProcessStartTime());
+    if (!isChallengeRequired()) {
+        reset(dbUuid);
+        return false;
+    }
 
     QMap<QString, QString> details;
 
-    auto result = m_polkit->CheckAuthorization(
-        subject,
-        "org.keepassxc.KeePassXC.unlockDatabase",
-        details,
-        0x00000001,
-        // AllowUserInteraction - wait for user to authenticate
-        // https://www.freedesktop.org/software/polkit/docs/0.105/eggdbus-interface-org.freedesktop.PolicyKit1.Authority.html#eggdbus-enum-CheckAuthorizationFlags
-        "");
+    // flags = 1: AllowUserInteraction - wait for user to authenticate
+    // https://www.freedesktop.org/software/polkit/docs/0.105/eggdbus-interface-org.freedesktop.PolicyKit1.Authority.html#eggdbus-enum-CheckAuthorizationFlags
+    auto result =
+        m_polkit->CheckAuthorization(processSubject(), "org.keepassxc.KeePassXC.unlockDatabase", details, 1, "");
+    result.waitForFinished();
 
     // A general error occurred
     if (result.isError()) {
