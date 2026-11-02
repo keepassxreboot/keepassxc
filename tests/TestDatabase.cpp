@@ -20,6 +20,7 @@
 
 #include <QRegularExpression>
 #include <QSignalSpy>
+#include <QTemporaryDir>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
@@ -103,6 +104,103 @@ void TestDatabase::testSave()
     QVERIFY(QFile::exists(backupFilePath));
     QFile::remove(backupFilePath);
     QVERIFY(!QFile::exists(backupFilePath));
+}
+
+void TestDatabase::testSaveStaged_data()
+{
+    QTest::addColumn<int>("action");
+    QTest::addColumn<bool>("existing");
+    QTest::newRow("atomic-existing") << int(Database::Atomic) << true;
+    QTest::newRow("atomic-new") << int(Database::Atomic) << false;
+    QTest::newRow("staged-existing") << int(Database::TempFile) << true;
+    QTest::newRow("staged-new") << int(Database::TempFile) << false;
+}
+
+void TestDatabase::testSaveStaged()
+{
+    QFETCH(int, action);
+    QFETCH(bool, existing);
+    QTemporaryDir directory;
+    QVERIFY(directory.isValid());
+    const auto target = directory.filePath(QStringLiteral("database-\u00e4.kdbx"));
+    if (existing) {
+        QFile source(dbFileName);
+        QFile destination(target);
+        QVERIFY(source.open(QIODevice::ReadOnly));
+        QVERIFY(destination.open(QIODevice::WriteOnly | QIODevice::NewOnly));
+        const auto contents = source.readAll();
+        QCOMPARE(destination.write(contents), qint64(contents.size()));
+        destination.close();
+    }
+    const auto originalPermissions = QFile::permissions(target);
+
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    Database db;
+    QString error;
+    QVERIFY2(db.open(existing ? target : dbFileName, key, &error), qPrintable(error));
+    db.metadata()->setName("staged save");
+    QVERIFY2(db.saveAs(target, static_cast<Database::SaveAction>(action), {}, &error), qPrintable(error));
+    QVERIFY(!db.isModified());
+    QVERIFY(error.isEmpty());
+    if (existing) {
+        QCOMPARE(QFile::permissions(target), originalPermissions);
+    }
+
+    Database reopened;
+    QVERIFY2(reopened.open(target, key, &error), qPrintable(error));
+    QCOMPARE(reopened.metadata()->name(), QString("staged save"));
+    QCOMPARE(QDir(directory.path()).entryList(QDir::Files | QDir::Hidden).size(), 1);
+}
+
+void TestDatabase::testSaveStagedFailure_data()
+{
+    QTest::addColumn<int>("action");
+    QTest::newRow("atomic") << int(Database::Atomic);
+    QTest::newRow("staged") << int(Database::TempFile);
+}
+
+void TestDatabase::testSaveStagedFailure()
+{
+    QFETCH(int, action);
+    QTemporaryDir directory;
+    QVERIFY(directory.isValid());
+    // Replacing a directory with a file must fail after the sibling has been written.
+    const auto target = directory.filePath("database.kdbx");
+    QVERIFY(QDir().mkdir(target));
+    const auto original = QDir(target).filePath("original");
+    QFile originalFile(original);
+    QVERIFY(originalFile.open(QIODevice::WriteOnly));
+    QCOMPARE(originalFile.write("original"), qint64(8));
+    originalFile.close();
+
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    Database db;
+    QString error;
+    QVERIFY2(db.open(dbFileName, key, &error), qPrintable(error));
+    db.metadata()->setName("recoverable staged save");
+    QVERIFY(!db.saveAs(target, static_cast<Database::SaveAction>(action), {}, &error));
+    QVERIFY(db.isModified());
+    QVERIFY(originalFile.open(QIODevice::ReadOnly));
+    QCOMPARE(originalFile.readAll(), QByteArray("original"));
+    QCOMPARE(QDir(directory.path()).entryList(QDir::Files | QDir::Hidden).size(), 0);
+
+    if (action == Database::Atomic) {
+        // Atomic failures must be returned to the caller for user confirmation,
+        // without silently attempting the alternative save method.
+        QVERIFY(!error.isEmpty());
+        QVERIFY(!error.contains("Backup database located at"));
+        return;
+    }
+
+    const auto match = QRegularExpression("Backup database located at (.+)").match(error);
+    QVERIFY2(match.hasMatch(), qPrintable(error));
+    const auto recoveryPath = match.captured(1);
+    Database recovered;
+    QVERIFY2(recovered.open(recoveryPath, key, &error), qPrintable(error));
+    QCOMPARE(recovered.metadata()->name(), QString("recoverable staged save"));
+    QVERIFY(QFile::remove(recoveryPath));
 }
 
 void TestDatabase::testSaveAs()

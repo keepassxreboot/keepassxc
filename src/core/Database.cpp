@@ -31,14 +31,114 @@
 #include <QJsonObject>
 #include <QRegularExpression>
 #include <QSaveFile>
+#include <QScopeGuard>
 #include <QTemporaryFile>
 #include <QTimer>
 
 #include <algorithm>
+#include <cerrno>
+#include <cstdio>
+#include <cstring>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
+#include <io.h>
+#else
+#include <unistd.h>
 #endif
+
+namespace
+{
+    /**
+     * Flush file contents and then force a disk sync.
+     *
+     * @param file File to sync
+     * @param error Error string
+     * @return true on success
+     */
+    bool syncFile(QFile& file, QString& error)
+    {
+        if (!file.flush()) {
+            error = file.errorString();
+            return false;
+        }
+        const auto descriptor = file.handle();
+        if (descriptor < 0) {
+            error = Database::tr("Could not obtain descriptor for syncing file.");
+            return false;
+        }
+#ifdef Q_OS_WIN
+        const auto handle = reinterpret_cast<HANDLE>(_get_osfhandle(descriptor));
+        if (!FlushFileBuffers(handle)) {
+            error = Database::tr("Error syncing file (error code: %1)").arg(GetLastError());
+            return false;
+        }
+#else
+        int result;
+        do {
+            result = ::fsync(descriptor);
+        } while (result == -1 && errno == EINTR);
+        if (result == -1) {
+            error = Database::tr("Error syncing file: %1").arg(QString::fromLocal8Bit(std::strerror(errno)));
+            return false;
+        }
+#endif
+        return true;
+    }
+
+    /**
+     * Atomically replace a file using native OS APIs.
+     *
+     * Unlike `QFile::rename()`, this function allows overwrite semantics without a copy / delete fallback.
+     * Atomicity guarantees depend on the target filesystem.
+     *
+     * @param source source file to rename
+     * @param target target to replace
+     * @param error error string
+     * @return true on success
+     */
+    bool replaceFile(const QString& source, const QString& target, QString& error)
+    {
+#ifdef Q_OS_WIN
+        // QFile supports long paths, so convert all paths to extended path syntax first.
+        const auto toNativePath = [](const QString& path) {
+            const auto native = QDir::toNativeSeparators(path);
+            const auto prefix = R"(\\?\)";
+            if (native.startsWith(prefix)) {
+                return native;
+            }
+            return prefix + (native.startsWith(R"(\\)") ? R"(UNC\)" + native.mid(2) : native);
+        };
+        // There is little documentation about the atomicity of file replacements on Windows,
+        // but ReplaceFile() seems to be atomic at least on NTFS: https://stackoverflow.com/a/2368286
+        // ReplaceFile() also supports keeping the original file as a backup:
+        // https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew
+        // MoveFileEx() does not do atomic file replacements.
+        const auto nativeSource = toNativePath(source).toStdWString();
+        const auto nativeTarget = toNativePath(target).toStdWString();
+        const auto backupPath = source + ".bkp";
+        const auto nativeBackup = toNativePath(backupPath).toStdWString();
+        const auto renamed =
+            QFileInfo::exists(target)
+                ? ReplaceFileW(nativeTarget.c_str(), nativeSource.c_str(), nativeBackup.c_str(), 0, nullptr, nullptr)
+                : MoveFileExW(nativeSource.c_str(), nativeTarget.c_str(), 0);
+        if (!renamed) {
+            error = Database::tr("Could not replace file (error code: %1)").arg(GetLastError());
+            if (QFile::exists(backupPath)) {
+                error += "\n" + Database::tr("Original database backup kept at %1").arg(backupPath);
+            }
+            return false;
+        }
+        QFile::remove(backupPath);
+#else
+        if (::rename(QFile::encodeName(source).constData(), QFile::encodeName(target).constData()) != 0) {
+            error = Database::tr("Could not replace file: %1").arg(QString::fromLocal8Bit(std::strerror(errno)));
+            return false;
+        }
+#endif
+        return true;
+    }
+} // namespace
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
 
@@ -229,12 +329,12 @@ bool Database::isSaving()
  * Save the database to the current file path. It is an error to call this function
  * if no file path has been defined.
  *
- * @param error error message in case of failure
- * @param atomic Use atomic file transactions
+ * @param error Error message in case of failure
+ * @param savingMethod Saving method
  * @param backupFilePath Absolute file path to write the backup file to. Pass an empty QString to disable backup.
  * @return true on success
  */
-bool Database::save(SaveAction action, const QString& backupFilePath, QString* error)
+bool Database::save(SaveAction savingMethod, const QString& backupFilePath, QString* error)
 {
     Q_ASSERT(!m_data.filePath.isEmpty());
     if (m_data.filePath.isEmpty()) {
@@ -244,29 +344,33 @@ bool Database::save(SaveAction action, const QString& backupFilePath, QString* e
         return false;
     }
 
-    return saveAs(m_data.filePath, action, backupFilePath, error);
+    return saveAs(m_data.filePath, savingMethod, backupFilePath, error);
 }
 
 /**
- * Save the database to a specific file.
+ * Save the database to a specific file using the specified saving method.
  *
- * If atomic is false, this function uses QTemporaryFile instead of QSaveFile
- * due to a bug in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may
- * prevent the QSaveFile from renaming itself when using Dropbox, Google Drive,
- * or OneDrive.
+ * Atomic saves may fail due to a bug in Qt (https://bugreports.qt.io/browse/QTBUG-57299).
+ * In that case, `TempFile` may be used as an alternative save method. It will instead write
+ * to a temporary file, stream the serialised contents to a named sibling of the destination,
+ * sync, and then replace the destination with an atomic rename. Streaming the byte contents
+ * into the destination avoids another Qt bug with `QFile::copy()` / `QFile::rename()`, which can
+ * trigger on certain remote file systems that don't support hard-links.
  *
- * The risk in using QTemporaryFile is that the rename function is not atomic
- * and may result in loss of data if there is a crash or power loss at the
- * wrong moment.
+ * Failures to save are reported to the caller, which can decide to offer the user an
+ * alternative saving method.
+ *
+ * Direct write is the most dangerous alternative save method, which will truncate and
+ * directly write to the destination.
  *
  * @param filePath Absolute path of the file to save
- * @param error error message in case of failure
- * @param atomic Use atomic file transactions
- * @param backupFilePath Absolute path to the location where the backup should be stored. Passing an empty string
- * disables backup.
+ * @param error Error message in case of failure
+ * @param savingMethod Selected saving method
+ * @param backupFilePath Absolute path to the location where the backup should be stored. Passing
+ *                       an empty string disables backup.
  * @return true on success
  */
-bool Database::saveAs(const QString& filePath, SaveAction action, const QString& backupFilePath, QString* error)
+bool Database::saveAs(const QString& filePath, SaveAction savingMethod, const QString& backupFilePath, QString* error)
 {
     // Disallow overlapping save operations
     if (isSaving()) {
@@ -332,7 +436,8 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     bool isHidden = fileInfo.isHidden();
 #endif
 
-    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
+    bool ok =
+        AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, savingMethod, backupFilePath, error); });
     if (ok) {
         setFilePath(filePath);
         markAsClean();
@@ -355,7 +460,10 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     return ok;
 }
 
-bool Database::performSave(const QString& filePath, SaveAction action, const QString& backupFilePath, QString* error)
+bool Database::performSave(const QString& filePath,
+                           SaveAction savingMethod,
+                           const QString& backupFilePath,
+                           QString* error)
 {
     if (!backupFilePath.isNull()) {
         backupDatabase(filePath, backupFilePath);
@@ -364,7 +472,7 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
     QFileInfo info(filePath);
     auto createTime = info.exists() ? info.birthTime() : QDateTime::currentDateTime();
 
-    switch (action) {
+    switch (savingMethod) {
     case Atomic: {
         QSaveFile saveFile(filePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
@@ -395,49 +503,111 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
         break;
     }
     case TempFile: {
+        // Since replacing the destination file is a directory-level operation on POSIX systems,
+        // we may inadvertently overwrite read-only files if the parent directory permissions allow it.
+        // Check file permissions first and error out if file is marked as read-only.
+        if (info.isFile() && !info.isWritable()) {
+            if (error) {
+                *error = tr("Database file is read-only.");
+            }
+            return false;
+        }
+
         QTemporaryFile tempFile;
-        if (tempFile.open()) {
-            HashingStream hashingStream(&tempFile, QCryptographicHash::Md5, kFileBlockToHashSizeBytes);
-            if (!hashingStream.open(QIODevice::WriteOnly)) {
-                return false;
+        if (!tempFile.open()) {
+            if (error) {
+                *error = tempFile.errorString();
             }
-            // write the database to the file
-            if (!writeDatabase(&hashingStream, error)) {
-                return false;
+            return false;
+        }
+
+        // Materialize the temporary file before writing so it has a usable recovery
+        // path even if writing or syncing subsequently fails.
+        const auto recoveryPath = tempFile.fileName();
+        if (recoveryPath.isEmpty() || !QFile::exists(recoveryPath)) {
+            if (error) {
+                *error = tr("Could not create a named temporary file: %1").arg(tempFile.errorString());
             }
-            tempFile.close(); // flush to disk
+            return false;
+        }
 
-            // Delete the original db and move the temp file in place
-            auto perms = QFile::permissions(filePath);
-            QFile::remove(filePath);
+        HashingStream hashingStream(&tempFile, QCryptographicHash::Md5, kFileBlockToHashSizeBytes);
+        if (!hashingStream.open(QIODevice::WriteOnly)) {
+            if (error) {
+                *error = hashingStream.errorString();
+            }
+            return false;
+        }
+        if (!writeDatabase(&hashingStream, error)) {
+            return false;
+        }
 
-            // Note: call into the QFile rename instead of QTemporaryFile
-            // due to an undocumented difference in how the function handles
-            // errors. This prevents errors when saving across file systems.
-            if (tempFile.QFile::rename(filePath)) {
-                // successfully saved the database
-                tempFile.setAutoRemove(false);
-                QFile::setPermissions(filePath, perms);
-                // Retain original creation time
-                tempFile.setFileTime(createTime, QFile::FileBirthTime);
-                // store the new hash
-                m_fileBlockHash = hashingStream.hashingResult();
-                return true;
-            } else if (backupFilePath.isEmpty() || !restoreDatabase(filePath, backupFilePath)) {
-                // Failed to copy new database in place, and
-                // failed to restore from backup or backups disabled
-                tempFile.setAutoRemove(false);
-                if (error) {
-                    *error = tr("%1\nBackup database located at %2").arg(tempFile.errorString(), tempFile.fileName());
-                }
-                return false;
+        // Fail with error message and return path to retained backup copy.
+        const auto fail = [&](const QString& message) {
+            tempFile.setAutoRemove(false);
+            if (error) {
+                *error = tr("%1\nBackup database located at %2").arg(message, recoveryPath);
+            }
+            return false;
+        };
+
+        QString fileError;
+        if (!syncFile(tempFile, fileError)) {
+            return fail(fileError);
+        }
+
+        // Stream contents from temporary file to sibling. Don't use QFile::copy() or QFile::rename(), since they
+        // are not atomic and can fail on destination file systems that don't support hard-linking or O_TMPFILE renames.
+        const auto siblingName =
+            QStringLiteral(".~%1.tmp.%2").arg(info.fileName()).arg(Random::instance()->randomArray(8).toHex());
+        const auto siblingPath = info.absoluteDir().filePath(siblingName);
+        QFile sibling(siblingPath);
+        if (!sibling.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
+            return fail(sibling.errorString());
+        }
+        auto cleanup = qScopeGuard([&] {
+            sibling.close();
+            sibling.remove();
+        });
+        if (!sibling.setPermissions(QFile::ReadUser | QFile::WriteUser)) {
+            return fail(sibling.errorString());
+        }
+        if (!tempFile.reset()) {
+            return fail(tempFile.errorString());
+        }
+        while (!tempFile.atEnd()) {
+            const auto chunk = tempFile.read(64 << 10);
+            if (tempFile.error() != QFile::NoError) {
+                return fail(tempFile.errorString());
+            }
+            if (sibling.write(chunk) != chunk.size()) {
+                return fail(sibling.errorString());
             }
         }
 
+        // Keep original permissions if available.
+        if (info.exists()) {
+            sibling.setPermissions(info.permissions());
+        }
+        // Best effort. Setting FileBirthTime is unsupported on Linux.
+        sibling.setFileTime(createTime, QFile::FileBirthTime);
+        if (!syncFile(sibling, fileError)) {
+            return fail(fileError);
+        }
+        sibling.close();
+        if (sibling.error() != QFile::NoError) {
+            return fail(sibling.errorString());
+        }
+        if (!replaceFile(siblingPath, filePath, fileError)) {
+            return fail(fileError);
+        }
+        cleanup.dismiss();
+
+        m_fileBlockHash = hashingStream.hashingResult();
         if (error) {
-            *error = tempFile.errorString();
+            error->clear();
         }
-        break;
+        return true;
     }
     case DirectWrite: {
         QBuffer dbBuffer;
@@ -550,7 +720,6 @@ bool Database::import(const QString& xmlExportPath, QString* error)
  *
  * A previously reparented root group will not be freed.
  */
-
 void Database::releaseData()
 {
     // Prevent data release while saving
@@ -607,27 +776,6 @@ bool Database::backupDatabase(const QString& filePath, const QString& destinatio
     bool res = QFile::copy(filePath, destinationFilePath);
     QFile::setPermissions(destinationFilePath, perms);
     return res;
-}
-
-/**
- * Restores the database file from the backup file with
- * name <filename>.old.<extension> to filePath. This will
- * overwrite the existing file!
- *
- * @param filePath Path to the file to restore
- * @return true on success
- */
-bool Database::restoreDatabase(const QString& filePath, const QString& fromBackupFilePath)
-{
-    auto perms = QFile::permissions(filePath);
-    // Only try to restore if the backup file actually exists
-    if (QFile::exists(fromBackupFilePath)) {
-        QFile::remove(filePath);
-        if (QFile::copy(fromBackupFilePath, filePath)) {
-            return QFile::setPermissions(filePath, perms);
-        }
-    }
-    return false;
 }
 
 /**
