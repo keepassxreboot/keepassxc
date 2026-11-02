@@ -368,6 +368,10 @@ void DatabaseOpenWidget::openDatabase()
             msgBox->addButton(QMessageBox::Cancel);
             msgBox->layout()->setSizeConstraint(QLayout::SetMinimumSize);
             msgBox->exec();
+            // The dialog may have been reinitialized while the warning was open
+            if (m_db != db) {
+                return;
+            }
             if (msgBox->clickedButton() != btn) {
                 m_db.reset(new Database());
                 m_db->open(m_filename, nullptr, &error);

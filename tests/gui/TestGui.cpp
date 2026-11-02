@@ -2045,6 +2045,53 @@ void TestGui::testUnlockDialogReplacedWhileUnlocking()
     QTRY_VERIFY(!m_dbWidget->isLocked());
 }
 
+void TestGui::testUnlockDialogReplacedWhileWarningVersion()
+{
+    // The minor version warning runs its own event loop, the dialog may be reinitialized while it is open.
+    // Confirming the warning afterwards must not unlock the database with the reinitialized header database.
+    m_db->setFormatVersion(KeePass2::FILE_VERSION_MAX + 1);
+    QString error;
+    QVERIFY2(m_db->save(Database::DirectWrite, {}, &error), qPrintable(error));
+
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    triggerAction("actionLockAllDatabases");
+    QVERIFY(m_dbWidget->isLocked());
+
+    m_tabWidget->unlockDatabaseInDialog(m_dbWidget, DatabaseOpenDialog::Intent::None);
+    auto* dialog = m_tabWidget->findChild<DatabaseOpenDialog*>();
+    QVERIFY(dialog);
+    QTRY_VERIFY(dialog->isVisible());
+    auto* editPassword = dialog->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(editPassword);
+    QTest::keyClicks(editPassword, "a");
+
+    // Reset the dialog while the first warning is open, then confirm every warning
+    int warnings = 0;
+    QTimer timer;
+    connect(&timer, &QTimer::timeout, this, [&] {
+        auto* msgBox = qobject_cast<QMessageBox*>(QApplication::activeModalWidget());
+        if (!msgBox || msgBox->windowTitle() != "Database Version Mismatch") {
+            return;
+        }
+        if (++warnings == 1) {
+            m_tabWidget->unlockDatabaseInDialog(m_dbWidget, DatabaseOpenDialog::Intent::None);
+        }
+        msgBox->defaultButton()->click();
+    });
+    timer.start(10);
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    // The first attempt was dropped, the reinitialized dialog still works
+    QCOMPARE(warnings, 1);
+    QVERIFY(m_dbWidget->isLocked());
+    QVERIFY(dialog->isVisible());
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    QCOMPARE(warnings, 2);
+    QVERIFY(!m_dbWidget->database()->rootGroup()->entriesRecursive().isEmpty());
+}
+
 void TestGui::testDragAndDropKdbxFiles()
 {
     const int openedDatabasesCount = m_tabWidget->count();
