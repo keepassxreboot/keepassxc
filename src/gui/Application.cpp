@@ -157,8 +157,9 @@ void Application::bootstrap(const QString& uiLanguage)
     MessageBox::initializeButtonDefs();
 
 #ifdef Q_OS_MACOS
-    // Don't show menu icons on OSX
-    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
+    // Force showing icons and shortcuts in menus with macOS
+    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, false);
+    QApplication::setAttribute(Qt::AA_DontShowShortcutsInContextMenus, false);
 #endif
 }
 
