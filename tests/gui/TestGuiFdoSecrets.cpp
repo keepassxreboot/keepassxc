@@ -138,7 +138,8 @@ void TestGuiFdoSecrets::initTestCase()
 {
     VERIFY(Crypto::init());
     // Create temporary config file
-    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
+    const auto configFile = TemporaryFile::createTempConfigFile();
+    Config::createConfigFromFile(configFile, configFile);
     config()->set(Config::AutoSaveAfterEveryChange, false);
     config()->set(Config::AutoSaveOnExit, false);
     config()->set(Config::GUI_ShowTrayIcon, true);
