@@ -58,7 +58,8 @@ void TestGuiBrowser::initTestCase()
 {
     QVERIFY(Crypto::init());
     // Create temporary config file
-    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
+    const auto configFile = TemporaryFile::createTempConfigFile();
+    Config::createConfigFromFile(configFile, configFile);
     // Disable autosave so we can test the modified file indicator
     config()->set(Config::AutoSaveAfterEveryChange, false);
     config()->set(Config::AutoSaveOnExit, false);

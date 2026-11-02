@@ -87,6 +87,7 @@ public slots:
     void hideYubiKeyPopup();
     void hide();
     void show();
+    void setVisible(bool visible) override;
     void hideWindow();
     void minimizeOrHide();
     void toggleWindow();
