@@ -1692,6 +1692,10 @@ Backup database located at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Original database backup kept at %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Could not replace file: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1701,10 +1705,6 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Could not create a named temporary file: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not create temporary file (error code: %1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

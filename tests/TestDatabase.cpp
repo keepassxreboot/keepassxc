@@ -130,6 +130,8 @@ void TestDatabase::testSaveStaged()
         QVERIFY(destination.open(QIODevice::WriteOnly | QIODevice::NewOnly));
         const auto contents = source.readAll();
         QCOMPARE(destination.write(contents), qint64(contents.size()));
+        QVERIFY(destination.flush());
+        QVERIFY(destination.setFileTime(QDateTime::currentDateTimeUtc().addDays(-7), QFile::FileModificationTime));
         destination.close();
     }
     const auto originalPermissions = QFile::permissions(target);
@@ -140,7 +142,13 @@ void TestDatabase::testSaveStaged()
     QString error;
     QVERIFY2(db.open(existing ? target : dbFileName, key, &error), qPrintable(error));
     db.metadata()->setName("staged save");
+    const auto saveStarted = QDateTime::currentDateTimeUtc();
     QVERIFY2(db.saveAs(target, static_cast<Database::SaveAction>(action), {}, &error), qPrintable(error));
+    const auto modified = QFileInfo(target).lastModified().toUTC();
+    QVERIFY(modified.isValid());
+    // Allow for filesystems with a two-second timestamp resolution.
+    QVERIFY(modified >= saveStarted.addSecs(-2));
+    QVERIFY(modified <= QDateTime::currentDateTimeUtc().addSecs(2));
     QVERIFY(!db.isModified());
     QVERIFY(error.isEmpty());
     if (existing) {
