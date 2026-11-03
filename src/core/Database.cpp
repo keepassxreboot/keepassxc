@@ -348,20 +348,27 @@ bool Database::save(SaveAction savingMethod, const QString& backupFilePath, QStr
 /**
  * Save the database to a specific file using the specified saving method.
  *
- * Atomic saves may fail due to a bug in Qt (https://bugreports.qt.io/browse/QTBUG-57299).
- * In that case, `TempFile` may be used as an alternative saving method. It will instead write
- * to a temporary file, stream the serialised contents to a named sibling of the destination,
- * sync, and then replace the destination with an atomic rename. Streaming the byte contents
- * into the destination avoids another Qt bug with `QFile::copy()` / `QFile::rename()`, which can
- * trigger on certain file systems that don't support hard-linking an unnamed O_TMPFILE.
+ * `Atomic` uses a `QSaveFile` for saving. Previously, this was prone to fail in folders monitored
+ * by Dropbox and the like due to file locking issues. The upstream bug report
+ * (https://bugreports.qt.io/browse/QTBUG-57299) was resolved in Qt 5.9.6, so this saving method
+ * should be a safe default now.
+ *
+ * In Qt6, however, `QSaveFile` may rely on unnamed `O_TMPFILE`s, which cannot be hard-linked on some
+ * file systems (e.g., certain SMB shares). To solve this, users can use the `TempFile` saving method
+ * starting with KeePassXC 2.8.1 (which is distinct from the `TempFile` method in 2.8.0 and below).
+ * `TempFile` uses a local temporary file for materialising the database contents. It then streams
+ * the temp file contents to a named sibling of the destination, syncs it, and then replaces the
+ * destination using an atomic rename. Streaming the byte contents into the destination avoids
+ * using `QFile::copy()` / `QFile::rename()`, which can rely on linking `O_TMPFILE`. The temporary
+ * file ensures we have a local (albeit temporary) backup of the file in case something goes wrong.
  * The sibling rename is guaranteed to be atomic on Linux and macOS and may be atomic on
  * NTFS file systems on Windows.
  *
- * Failures to save are reported to the caller, which can decide to offer the user an
- * alternative saving method.
+ * If all else fails, users can resort to `DirectWrite`,  which will truncate and directly write
+ * to the destination. This is the most dangerous method.
  *
- * Direct write is the most dangerous alternative save method, which will truncate and
- * directly write to the destination.
+ * Failures during the save are reported to the caller, which can decide to offer the user an
+ * alternative saving method.
  *
  * @param filePath Absolute path of the file to save
  * @param error Error message in case of failure
@@ -478,6 +485,9 @@ bool Database::performSave(const QString& filePath,
         if (saveFile.open(QIODevice::WriteOnly)) {
             HashingStream hashingStream(&saveFile, QCryptographicHash::Md5, kFileBlockToHashSizeBytes);
             if (!hashingStream.open(QIODevice::WriteOnly)) {
+                if (error) {
+                    *error = hashingStream.errorString();
+                }
                 return false;
             }
             // write the database to the file
@@ -485,8 +495,11 @@ bool Database::performSave(const QString& filePath,
                 return false;
             }
 
-            // Retain original creation time
-            saveFile.setFileTime(createTime, QFile::FileBirthTime);
+            // Retain original creation time. This is best effort only.
+            // Setting FileBirthTime is unsupported on Linux and Qt refuses to do it on macOS.
+            if (!saveFile.setFileTime(createTime, QFile::FileBirthTime)) {
+                saveFile.unsetError();
+            }
 
             if (saveFile.commit()) {
                 // store the new hash
@@ -542,7 +555,7 @@ bool Database::performSave(const QString& filePath,
             return false;
         }
 
-        // Fail with error message and return path to retained backup copy.
+        // Fail with error message and print path to retained backup copy.
         const auto fail = [&](const QString& message) {
             tempFile.setAutoRemove(false);
             if (error) {
@@ -589,7 +602,7 @@ bool Database::performSave(const QString& filePath,
         if (info.exists() && !sibling.setPermissions(info.permissions())) {
             return fail(sibling.errorString());
         }
-        // Best effort. Setting FileBirthTime is unsupported on Linux and Qt refuses to do it on macOS.
+        // Try to retain creation time if supported.
         if (!sibling.setFileTime(createTime, QFile::FileBirthTime)) {
             sibling.unsetError();
         }
