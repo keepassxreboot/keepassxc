@@ -203,6 +203,48 @@ void TestDatabase::testSaveStagedFailure()
     QVERIFY(QFile::remove(recoveryPath));
 }
 
+void TestDatabase::testSaveStagedLockedDestination()
+{
+#ifndef Q_OS_WIN
+    QSKIP("Windows file sharing restrictions only");
+#else
+    QTemporaryDir directory;
+    QVERIFY(directory.isValid());
+    const auto target = directory.filePath("database.kdbx");
+    QVERIFY(QFile::copy(dbFileName, target));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    Database db;
+    QString error;
+    QVERIFY2(db.open(target, key, &error), qPrintable(error));
+    db.metadata()->setName("save after sharing conflict");
+
+    // QFile opens without FILE_SHARE_DELETE on Windows, blocking destination replacement.
+    QFile reader(target);
+    QVERIFY(reader.open(QIODevice::ReadOnly));
+    const auto original = reader.readAll();
+    QVERIFY(!db.save(Database::TempFile, {}, &error));
+    QVERIFY(db.isModified());
+    QVERIFY(reader.seek(0));
+    QCOMPARE(reader.readAll(), original);
+    QCOMPARE(QDir(directory.path()).entryList(QDir::Files | QDir::Hidden).size(), 1);
+
+    const auto match = QRegularExpression("Backup database located at (.+)").match(error);
+    QVERIFY2(match.hasMatch(), qPrintable(error));
+    const auto recoveryPath = match.captured(1);
+    Database recovered;
+    QVERIFY2(recovered.open(recoveryPath, key, &error), qPrintable(error));
+    QCOMPARE(recovered.metadata()->name(), QString("save after sharing conflict"));
+    QVERIFY(QFile::remove(recoveryPath));
+
+    reader.close();
+    QVERIFY2(db.save(Database::TempFile, {}, &error), qPrintable(error));
+    Database reopened;
+    QVERIFY2(reopened.open(target, key, &error), qPrintable(error));
+    QCOMPARE(reopened.metadata()->name(), QString("save after sharing conflict"));
+#endif
+}
+
 void TestDatabase::testSaveAs()
 {
     TemporaryFile tempFile;
