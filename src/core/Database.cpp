@@ -707,20 +707,22 @@ QString Database::filePath() const
  * @return canonical file path
  */
 QString Database::canonicalFilePath() const
+QString Database::canonicalFilePath() const
 {
-    QFileInfo fileInfo(m_data.filePath);
-    return fileInfo.canonicalFilePath();
+    if (m_cachedCanonicalFilePath.isEmpty() && !m_data.filePath.isEmpty()) {
+        m_cachedCanonicalFilePath = QDir::cleanPath(QFileInfo(m_data.filePath).absoluteFilePath());
+    }
+    return m_cachedCanonicalFilePath;
 }
 
-void Database::setFilePath(const QString& filePath)
+void Database::setFilePath(const QString& path)
 {
-    if (filePath != m_data.filePath) {
-        QString oldPath = m_data.filePath;
-        m_data.filePath = filePath;
-        // Don't watch for changes until the next open or save operation
-        m_fileWatcher->stop();
-        m_ignoreFileChangesUntilSaved = false;
-        emit filePathChanged(oldPath, filePath);
+    m_data.filePath = path;
+    if (!path.isEmpty()) {
+        // Clean up the path string only; DO NOT call exists() or canonicalFilePath()!
+        m_cachedCanonicalFilePath = QDir::cleanPath(QFileInfo(path).absoluteFilePath());
+    } else {
+        m_cachedCanonicalFilePath.clear();
     }
 }
 
