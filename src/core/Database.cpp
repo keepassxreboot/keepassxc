@@ -34,6 +34,7 @@
 #include <QScopeGuard>
 #include <QTemporaryFile>
 #include <QTimer>
+#include <QVector>
 
 #include <algorithm>
 #include <cerrno>
@@ -42,6 +43,7 @@
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
+#include <fcntl.h>
 #include <io.h>
 #else
 #include <unistd.h>
@@ -49,6 +51,62 @@
 
 namespace
 {
+#ifdef Q_OS_WIN
+    /**
+     * QFile supports long file names. Convert paths to extended path syntax.
+     */
+    QString nativeFilePath(const QString& path)
+    {
+        const auto native = QDir::toNativeSeparators(QFileInfo(path).absoluteFilePath());
+        const auto prefix = R"(\\?\)";
+        if (native.startsWith(prefix)) {
+            return native;
+        }
+        return prefix + (native.startsWith(R"(\\)") ? R"(UNC\)" + native.mid(2) : native);
+    }
+
+    /**
+     * Open sibling file with a native handle, which we can keep open to prevent other processes
+     * from intermittently acquiring a lock on it.
+     *
+     * @param path sibling file path
+     * @param file QFile object to assign handle to
+     * @param error error string
+     * @return true on success
+     */
+    bool openSibling(const QString& path, QFile& file, QString& error)
+    {
+        const auto nativePath = nativeFilePath(path).toStdWString();
+        const auto handle = CreateFileW(nativePath.c_str(),
+                                        GENERIC_READ | GENERIC_WRITE | DELETE,
+                                        0,
+                                        nullptr,
+                                        CREATE_NEW,
+                                        FILE_ATTRIBUTE_NORMAL,
+                                        nullptr);
+        if (handle == INVALID_HANDLE_VALUE) {
+            const auto code = GetLastError();
+            error = Database::tr("Could not create temporary file (error code: %1)").arg(code);
+            return false;
+        }
+        const auto descriptor = _open_osfhandle(reinterpret_cast<intptr_t>(handle), _O_RDWR | _O_BINARY);
+        if (descriptor == -1) {
+            error = QString::fromLocal8Bit(std::strerror(errno));
+            CloseHandle(handle);
+            QFile::remove(path);
+            return false;
+        }
+        // The descriptor owns the native handle. QFile takes ownership of both on success.
+        if (!file.open(descriptor, QIODevice::WriteOnly, QFileDevice::AutoCloseHandle)) {
+            error = file.errorString();
+            _close(descriptor);
+            QFile::remove(path);
+            return false;
+        }
+        return true;
+    }
+#endif
+
     /**
      * Flush file contents and then force a disk sync.
      *
@@ -92,46 +150,36 @@ namespace
      * Unlike `QFile::rename()`, this function allows overwrite semantics without a copy / delete fallback.
      * Atomicity guarantees depend on the target filesystem.
      *
-     * @param source source file to rename
+     * @param source open source file (must have DELETE access on Windows)
+     * @param sourcePath source file path
      * @param target target to replace
      * @param error error string
      * @return true on success
      */
-    bool replaceFile(const QString& source, const QString& target, QString& error)
+    bool replaceFile(QFile& source, const QString& sourcePath, const QString& target, QString& error)
     {
 #ifdef Q_OS_WIN
-        // QFile supports long paths, so convert all paths to extended path syntax first.
-        const auto toNativePath = [](const QString& path) {
-            const auto native = QDir::toNativeSeparators(path);
-            const auto prefix = R"(\\?\)";
-            if (native.startsWith(prefix)) {
-                return native;
-            }
-            return prefix + (native.startsWith(R"(\\)") ? R"(UNC\)" + native.mid(2) : native);
-        };
-        // There is little documentation about the atomicity of file replacements on Windows,
-        // but ReplaceFile() seems to be atomic at least on NTFS: https://stackoverflow.com/a/2368286
-        // ReplaceFile() also supports keeping the original file as a backup:
-        // https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew
-        // MoveFileEx() does not do atomic file replacements.
-        const auto nativeSource = toNativePath(source).toStdWString();
-        const auto nativeTarget = toNativePath(target).toStdWString();
-        const auto backupPath = source + ".bkp";
-        const auto nativeBackup = toNativePath(backupPath).toStdWString();
-        const auto renamed =
-            QFileInfo::exists(target)
-                ? ReplaceFileW(nativeTarget.c_str(), nativeSource.c_str(), nativeBackup.c_str(), 0, nullptr, nullptr)
-                : MoveFileExW(nativeSource.c_str(), nativeTarget.c_str(), 0);
-        if (!renamed) {
-            error = Database::tr("Could not replace file (error code: %1)").arg(GetLastError());
-            if (QFile::exists(backupPath)) {
-                error += "\n" + Database::tr("Original database backup kept at %1").arg(backupPath);
-            }
+        // Replace directly through the exclusive handle. Never close and reopen the sibling.
+        // Unlike ReplaceFileW, this does not merge the destination's ACLs or other metadata.
+        const auto nativeTarget = nativeFilePath(target);
+        const auto nameBytes = nativeTarget.size() * sizeof(ushort);
+        const auto bufferSize = sizeof(FILE_RENAME_INFO) + nameBytes;
+        // Use suitably aligned storage for the variable-length FILE_RENAME_INFO structure.
+        QVector<quint64> buffer((bufferSize + sizeof(quint64) - 1) / sizeof(quint64), 0);
+        auto* renameInfo = reinterpret_cast<FILE_RENAME_INFO*>(buffer.data());
+        renameInfo->ReplaceIfExists = TRUE;
+        renameInfo->FileNameLength = static_cast<DWORD>(nameBytes);
+        std::memcpy(renameInfo->FileName, nativeTarget.utf16(), nameBytes);
+        const auto handle = reinterpret_cast<HANDLE>(_get_osfhandle(source.handle()));
+        if (!SetFileInformationByHandle(handle, FileRenameInfo, renameInfo, static_cast<DWORD>(bufferSize))) {
+            const auto code = GetLastError();
+            error = Database::tr("Could not replace file (error code: %1)").arg(code);
             return false;
         }
-        QFile::remove(backupPath);
+        Q_UNUSED(sourcePath);
 #else
-        if (::rename(QFile::encodeName(source).constData(), QFile::encodeName(target).constData()) != 0) {
+        Q_UNUSED(source);
+        if (::rename(QFile::encodeName(sourcePath).constData(), QFile::encodeName(target).constData()) != 0) {
             error = Database::tr("Could not replace file: %1").arg(QString::fromLocal8Bit(std::strerror(errno)));
             return false;
         }
@@ -352,10 +400,12 @@ bool Database::save(SaveAction savingMethod, const QString& backupFilePath, QStr
  *
  * Atomic saves may fail due to a bug in Qt (https://bugreports.qt.io/browse/QTBUG-57299).
  * In that case, `TempFile` may be used as an alternative save method. It will instead write
- * to a temporary file, stream the serialised contents to a named sibling of the destination,
- * sync, and then replace the destination with an atomic rename. Streaming the byte contents
- * into the destination avoids another Qt bug with `QFile::copy()` / `QFile::rename()`, which can
- * trigger on certain remote file systems that don't support hard-links.
+ * to a (local) temporary file, stream the serialised contents to a named sibling of the destination,
+ * sync, and then replace the destination with an atomic rename. Using a temporary file
+ * has the advantage of keeping a temporary backup copy on the local file system in case of a failure.
+ * Streaming the byte contents into the destination avoids another Qt bug with `QFile::copy()` /
+ * `QFile::rename()`, which can trigger on certain remote file systems that don't support hard-links.
+ * TempFile also tries to keep the sibling handle open to prevent intermittent locking by other processes.
  *
  * Failures to save are reported to the caller, which can decide to offer the user an
  * alternative saving method.
@@ -562,16 +612,26 @@ bool Database::performSave(const QString& filePath,
             QStringLiteral(".~%1.tmp.%2").arg(info.fileName()).arg(Random::instance()->randomArray(8).toHex());
         const auto siblingPath = info.absoluteDir().filePath(siblingName);
         QFile sibling(siblingPath);
+#ifdef Q_OS_WIN
+        if (!openSibling(siblingPath, sibling, fileError)) {
+            return fail(fileError);
+        }
+#else
         if (!sibling.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
             return fail(sibling.errorString());
         }
+#endif
         auto cleanup = qScopeGuard([&] {
             sibling.close();
-            sibling.remove();
+            QFile::remove(siblingPath);
         });
-        if (!sibling.setPermissions(QFile::ReadUser | QFile::WriteUser)) {
-            return fail(sibling.errorString());
+        // A QFile opened from a descriptor has no path in its
+        // file engine on Windows. So, use another (unopened) handle to the sibling to set permissions.
+        QFile siblingPermissions(siblingPath);
+        if (!siblingPermissions.setPermissions(QFile::ReadUser | QFile::WriteUser)) {
+            return fail(siblingPermissions.errorString());
         }
+        // Stream temp file contents
         if (!tempFile.reset()) {
             return fail(tempFile.errorString());
         }
@@ -584,23 +644,24 @@ bool Database::performSave(const QString& filePath,
                 return fail(sibling.errorString());
             }
         }
-
-        // Keep original permissions if available.
-        if (info.exists()) {
-            sibling.setPermissions(info.permissions());
+        // Keep original permissions.
+        if (info.exists() && !siblingPermissions.setPermissions(info.permissions())) {
+            return fail(siblingPermissions.errorString());
         }
-        // Best effort. Setting FileBirthTime is unsupported on Linux.
-        sibling.setFileTime(createTime, QFile::FileBirthTime);
+        // Best effort. Qt does not support setting FileBirthTime on Unix.
+        if (!sibling.setFileTime(createTime, QFile::FileBirthTime)) {
+            sibling.unsetError();
+        }
         if (!syncFile(sibling, fileError)) {
             return fail(fileError);
         }
-        sibling.close();
         if (sibling.error() != QFile::NoError) {
             return fail(sibling.errorString());
         }
-        if (!replaceFile(siblingPath, filePath, fileError)) {
+        if (!replaceFile(sibling, siblingPath, filePath, fileError)) {
             return fail(fileError);
         }
+        sibling.close();
         cleanup.dismiss();
 
         m_fileBlockHash = hashingStream.hashingResult();

@@ -33,6 +33,7 @@ private slots:
     void testSaveStaged();
     void testSaveStagedFailure_data();
     void testSaveStagedFailure();
+    void testSaveStagedLockedDestination();
     void testSaveAs();
     void testSignals();
     void testEmptyRecycleBinOnDisabled();
