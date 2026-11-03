@@ -102,7 +102,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
         m_db->open(nullptr);
     }
 
-    m_messageWidget->setObjectName("databaseMessageWidget");
     m_messageWidget->setHidden(true);
 
     auto mainLayout = new QVBoxLayout();

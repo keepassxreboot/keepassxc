@@ -47,7 +47,6 @@
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
-#include "gui/MessageWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #include "gui/SearchWidget.h"
@@ -2624,12 +2623,7 @@ void TestGui::checkSaveDatabase()
             checkDatabase();
             return;
         }
-        const auto* message =
-            m_tabWidget->currentDatabaseWidget()->findChild<MessageWidget*>("databaseMessageWidget");
-        const auto detail = message && !message->text().isEmpty()
-                                ? message->text()
-                                : QStringLiteral("No save error message available");
-        QWARN(qPrintable(QStringLiteral("Failed to save database, trying again: %1").arg(detail)));
+        QWARN("Failed to save database, trying again...");
         Tools::wait(250);
     } while (++i < 2);
 
