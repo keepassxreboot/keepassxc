@@ -262,6 +262,8 @@ private:
 
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;
+
+    mutable QString m_cachedCanonicalFilePath;
 };
 
 #endif // KEEPASSX_DATABASE_H
