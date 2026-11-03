@@ -584,7 +584,9 @@ bool Database::performSave(const QString& filePath,
             sibling.close();
             sibling.remove();
         });
-        if (!sibling.setPermissions(QFile::ReadUser | QFile::WriteUser)) {
+        // Keep original permissions if available.
+        const auto perm = info.exists() ? info.permissions() : QFile::ReadUser | QFile::WriteUser;
+        if (!sibling.setPermissions(perm)) {
             return fail(sibling.errorString());
         }
         if (!tempFile.reset()) {
@@ -600,10 +602,6 @@ bool Database::performSave(const QString& filePath,
             }
         }
 
-        // Keep original permissions if available.
-        if (info.exists() && !sibling.setPermissions(info.permissions())) {
-            return fail(sibling.errorString());
-        }
         // Try to retain creation time if supported.
         if (!sibling.setFileTime(createTime, QFile::FileBirthTime)) {
             sibling.unsetError();
