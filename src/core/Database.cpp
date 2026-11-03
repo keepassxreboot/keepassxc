@@ -571,8 +571,10 @@ bool Database::performSave(const QString& filePath,
 
         // Stream contents from temporary file to sibling. Don't use QFile::copy() or QFile::rename(), since they
         // are not atomic and can fail on destination file systems that don't support hard-linking O_TMPFILEs.
-        const auto siblingName =
-            QStringLiteral(".~%1.tmp.%2").arg(info.fileName()).arg(Random::instance()->randomArray(8).toHex());
+        const auto siblingName = QStringLiteral(".~%1.%2.tmp.%3")
+                                     .arg(info.baseName().left(25))
+                                     .arg(info.suffix().left(4))
+                                     .arg(Random::instance()->randomArray(8).toHex());
         const auto siblingPath = info.absoluteDir().filePath(siblingName);
         QFile sibling(siblingPath);
         if (!sibling.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
