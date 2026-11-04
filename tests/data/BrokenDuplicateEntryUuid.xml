@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<KeePassFile>
+	<Root>
+		<Group>
+			<UUID>lmU+9n0aeESKZvcEze+bRg==</UUID>
+			<Name>Root</Name>
+			<Entry>
+				<UUID>MTExMTExMTExMTExMTExMQ==</UUID>
+				<String>
+					<Key>Title</Key>
+					<Value>Entry1</Value>
+				</String>
+			</Entry>
+			<Group>
+				<UUID>MjIyMjIyMjIyMjIyMjIyMg==</UUID>
+				<Name>A</Name>
+				<Entry>
+					<UUID>MTExMTExMTExMTExMTExMQ==</UUID>
+					<String>
+						<Key>Title</Key>
+						<Value>Entry2</Value>
+					</String>
+				</Entry>
+			</Group>
+		</Group>
+	</Root>
+</KeePassFile>
