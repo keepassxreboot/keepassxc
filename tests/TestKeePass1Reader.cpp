@@ -19,12 +19,17 @@
 #include "TestKeePass1Reader.h"
 
 #include <QBuffer>
+#include <QDataStream>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "crypto/CryptoHash.h"
+#include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/AesKdf.h"
+#include "format/KeePass1.h"
 #include "format/KeePass1Reader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
@@ -32,6 +37,27 @@
 #include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestKeePass1Reader)
+
+namespace
+{
+    QByteArray kdbField(quint16 type, const QByteArray& value = {})
+    {
+        QByteArray field;
+        QDataStream stream(&field, QIODevice::WriteOnly);
+        stream.setByteOrder(QDataStream::LittleEndian);
+        stream << type << static_cast<quint32>(value.size());
+        field.append(value);
+        return field;
+    }
+
+    QByteArray
+    kdbMetastream(const QByteArray& name, const QByteArray& data, const QByteArray& uuid = QByteArray(16, 'm'))
+    {
+        return kdbField(1, uuid) + kdbField(2, QByteArray(4, '\0')) + kdbField(4, QByteArray("Meta-Info\0", 10))
+               + kdbField(5, QByteArray("$\0", 2)) + kdbField(6, QByteArray("SYSTEM\0", 7)) + kdbField(8, name + '\0')
+               + kdbField(13, QByteArray("bin-stream\0", 11)) + kdbField(14, data) + kdbField(0xffff);
+    }
+} // namespace
 
 void TestKeePass1Reader::initTestCase()
 {
@@ -105,6 +131,182 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(group2->iconNumber(), 19);
 
     reopenDatabase(m_db, "masterpw", QString());
+}
+
+void TestKeePass1Reader::testEntryFields_data()
+{
+    QTest::addColumn<QByteArray>("entryFields");
+    QTest::addColumn<bool>("success");
+
+    const auto uuidField = kdbField(1, QByteArray(16, 'b'));
+    // Both groups exist; the final group field must determine the entry's parent.
+    const auto groupFields =
+        kdbField(2, QByteArray::fromHex("00000000")) + kdbField(2, QByteArray::fromHex("01000000"));
+    QTest::newRow("duplicate-group-last-is-used") << uuidField + groupFields << true;
+    QTest::newRow("missing-uuid") << groupFields << false;
+    QTest::newRow("missing-group") << uuidField << false;
+    QTest::newRow("missing-both") << QByteArray() << false;
+}
+
+void TestKeePass1Reader::testEntryFields()
+{
+    QFETCH(QByteArray, entryFields);
+    QFETCH(bool, success);
+
+    const QByteArray content = entryFields + kdbField(4, QByteArray("entry\0", 6)) + kdbField(0xffff);
+
+    KeePass1Reader reader;
+    QSharedPointer<Database> db;
+    readTestDatabase(content, 1, reader, db);
+    if (!success) {
+        QVERIFY(!db);
+        QVERIFY(reader.hasError());
+        QCOMPARE(reader.errorString(), QStringLiteral("Incomplete entry: No UUID or group ID"));
+        return;
+    }
+    QVERIFY2(db, qPrintable(reader.errorString()));
+    QVERIFY(!reader.hasError());
+    QCOMPARE(db->rootGroup()->entriesRecursive().size(), 1);
+    const auto entry = db->rootGroup()->entriesRecursive().first();
+    QCOMPARE(entry->title(), QStringLiteral("entry"));
+    QCOMPARE(entry->group(), db->rootGroup()->children().at(1));
+}
+
+void TestKeePass1Reader::testDeletedMetastreamUuidAliases()
+{
+    const QByteArray firstUuid(16, 'a'), lastUuid(16, 'b');
+    // This metastream has two UUIDs and is deleted before the next metastream is processed.
+    QByteArray content = kdbField(1, firstUuid) + kdbMetastream("KPX_GROUP_TREE_STATE", QByteArray(4, '\0'), lastUuid);
+
+    const auto icon = m_db->metadata()->customIcon(m_db->metadata()->customIconsOrder().first()).data;
+    QByteArray iconData;
+    QDataStream icons(&iconData, QIODevice::WriteOnly);
+    icons.setByteOrder(QDataStream::LittleEndian);
+    icons << static_cast<quint32>(1) << static_cast<quint32>(2) << static_cast<quint32>(0)
+          << static_cast<quint32>(icon.size());
+    icons.writeRawData(icon.constData(), static_cast<int>(icon.size()));
+    // Look up both UUIDs: the old reader removed only one, depending on hash iteration order.
+    for (const auto& uuid : {firstUuid, lastUuid}) {
+        icons.writeRawData(uuid.constData(), 16);
+        icons << static_cast<quint32>(0);
+    }
+    content += kdbMetastream("KPX_CUSTOM_ICONS_4", iconData);
+
+    KeePass1Reader reader;
+    QSharedPointer<Database> db;
+    // ASan/Valgrind detects a stale UUID lookup accessing the deleted entry.
+    readTestDatabase(content, 2, reader, db);
+    QVERIFY2(db, qPrintable(reader.errorString()));
+    QVERIFY(!reader.hasError());
+    QVERIFY(db->rootGroup()->entriesRecursive().isEmpty());
+    QCOMPARE(db->metadata()->customIconsOrder().size(), 1);
+}
+
+void TestKeePass1Reader::testMetastreamBounds_data()
+{
+    QTest::addColumn<QByteArray>("name");
+    QTest::addColumn<QByteArray>("data");
+    QTest::addColumn<bool>("valid");
+
+    const auto words = [](std::initializer_list<quint32> values) {
+        QByteArray bytes;
+        QDataStream stream(&bytes, QIODevice::WriteOnly);
+        stream.setByteOrder(QDataStream::LittleEndian);
+        for (auto value : values) {
+            stream << value;
+        }
+        return bytes;
+    };
+    const QByteArray tree("KPX_GROUP_TREE_STATE");
+    QTest::newRow("tree-empty") << tree << words({0}) << true;
+    QTest::newRow("tree-one-record") << tree << words({1, 0}) + QByteArray(1, '\0') << true;
+    QTest::newRow("tree-missing-count") << tree << QByteArray(3, '\0') << false;
+    QTest::newRow("tree-truncated-record") << tree << words({1, 0}) << false;
+    QTest::newRow("tree-trailing-byte") << tree << words({0}) + QByteArray(1, '\0') << false;
+    // 0xcccccccd * 5 wraps to 1 in 32-bit arithmetic.
+    QTest::newRow("tree-count-wrap") << tree << words({0xcccccccd}) + QByteArray(1, '\0') << false;
+    QTest::newRow("tree-maximum-count") << tree << words({0xffffffff}) << false;
+
+    const QByteArray icons("KPX_CUSTOM_ICONS_4");
+    QTest::newRow("icons-empty") << icons << words({0, 0, 0}) << true;
+    QTest::newRow("icons-truncated-header") << icons << QByteArray(11, '\0') << false;
+    QTest::newRow("icons-missing-size") << icons << words({1, 0, 0}) << false;
+    QTest::newRow("icons-truncated-image") << icons << words({1, 0, 0, 1}) << false;
+    // The icon starts at offset 16; adding 0xfffffff0 used to wrap to zero.
+    QTest::newRow("icons-size-wrap") << icons << words({1, 0, 0, 0xfffffff0}) << false;
+    QTest::newRow("icons-maximum-size") << icons << words({1, 0, 0, 0xffffffff}) << false;
+    QTest::newRow("icons-entry-count-wrap") << icons << words({0, 0x40000000, 0}) << false;
+    QTest::newRow("icons-entry-offset-wrap") << icons << words({0, 0x33333333, 0}) << false;
+    QTest::newRow("icons-group-count-wrap") << icons << words({0, 0, 0x20000000}) << false;
+    QTest::newRow("icons-group-offset-wrap") << icons << words({0, 0, 0x1fffffff}) << false;
+    QTest::newRow("icons-truncated-entry") << icons << words({0, 1, 0}) + QByteArray(19, '\0') << false;
+    QTest::newRow("icons-truncated-group") << icons << words({0, 0, 1}) + QByteArray(7, '\0') << false;
+}
+
+void TestKeePass1Reader::testMetastreamBounds()
+{
+    QFETCH(QByteArray, name);
+    QFETCH(QByteArray, data);
+    QFETCH(bool, valid);
+    if (!valid) {
+        QTest::ignoreMessage(QtWarningMsg,
+                             name == "KPX_GROUP_TREE_STATE" ? "Unable to parse group tree state metastream."
+                                                            : "Unable to parse custom icons metastream.");
+    }
+    KeePass1Reader reader;
+    QSharedPointer<Database> db;
+    readTestDatabase(kdbMetastream(name, data), 1, reader, db);
+    // Malformed optional metadata is ignored, while the database itself is still imported.
+    QVERIFY2(db, qPrintable(reader.errorString()));
+    QVERIFY(!reader.hasError());
+    QCOMPARE(db->rootGroup()->children().size(), 2);
+    QVERIFY(db->rootGroup()->entriesRecursive().isEmpty());
+    QVERIFY(db->metadata()->customIconsOrder().isEmpty());
+    if (valid && name == "KPX_GROUP_TREE_STATE" && data.size() > 4) {
+        QVERIFY(!db->rootGroup()->children().first()->isExpanded());
+    }
+}
+
+void TestKeePass1Reader::readTestDatabase(const QByteArray& entries,
+                                          quint32 entryCount,
+                                          KeePass1Reader& reader,
+                                          QSharedPointer<Database>& db)
+{
+    QByteArray content;
+    for (const auto& id : {QByteArray::fromHex("00000000"), QByteArray::fromHex("01000000")}) {
+        content += kdbField(1, id) + kdbField(8, QByteArray(2, '\0')) + kdbField(0xffff);
+    }
+    content += entries;
+
+    const QByteArray masterSeed(16, 's'), iv(16, 'i'), transformSeed(32, 't');
+    AesKdf kdf(true);
+    QVERIFY(kdf.setRounds(1));
+    QVERIFY(kdf.setSeed(transformSeed));
+    QByteArray transformedKey;
+    QVERIFY(kdf.transform(CryptoHash::hash(QByteArray("test"), CryptoHash::Sha256), transformedKey));
+    const auto key = CryptoHash::hash(masterSeed + transformedKey, CryptoHash::Sha256);
+    SymmetricCipher cipher;
+    QVERIFY(cipher.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Encrypt, key, iv));
+    auto ciphertext = content;
+    QVERIFY(cipher.finish(ciphertext));
+
+    QByteArray file;
+    QDataStream header(&file, QIODevice::WriteOnly);
+    header.setByteOrder(QDataStream::LittleEndian);
+    header << KeePass1::SIGNATURE_1 << KeePass1::SIGNATURE_2 << static_cast<quint32>(KeePass1::Rijndael)
+           << KeePass1::FILE_VERSION;
+    header.writeRawData(masterSeed.constData(), 16);
+    header.writeRawData(iv.constData(), 16);
+    header << static_cast<quint32>(2) << entryCount;
+    const auto hash = CryptoHash::hash(content, CryptoHash::Sha256);
+    header.writeRawData(hash.constData(), 32);
+    header.writeRawData(transformSeed.constData(), 32);
+    header << static_cast<quint32>(1);
+    file.append(ciphertext);
+
+    QBuffer buffer(&file);
+    QVERIFY(buffer.open(QIODevice::ReadOnly));
+    db = reader.readDatabase(&buffer, "test", nullptr);
 }
 
 void TestKeePass1Reader::testMasterKey()

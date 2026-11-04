@@ -5586,6 +5586,10 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Invalid entry field type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Incomplete entry: No UUID or group ID</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeeShare</name>

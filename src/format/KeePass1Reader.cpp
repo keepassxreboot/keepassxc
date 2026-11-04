@@ -59,6 +59,10 @@ KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevi
 {
     m_error = false;
     m_errorStr.clear();
+    m_entryUuids.clear();
+    m_groupIds.clear();
+    m_groupLevels.clear();
+    m_entryGroupIds.clear();
 
     QByteArray keyfileData;
     auto newFileKey = QSharedPointer<FileKey>::create();
@@ -572,6 +576,8 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
 
     TimeInfo timeInfo;
     QString binaryName;
+    QByteArray uuid;
+    QVariant groupId;
     bool ok;
     bool reachedEnd = false;
 
@@ -603,15 +609,14 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
                 raiseError(tr("Invalid entry UUID field size"));
                 return nullptr;
             }
-            m_entryUuids.insert(fieldData, entry.data());
+            uuid = fieldData;
             break;
         case 0x0002: {
             if (fieldSize != 4) {
                 raiseError(tr("Invalid entry group id field size"));
                 return nullptr;
             }
-            auto groupId = Endian::bytesToSizedInt<quint32>(fieldData, KeePass1::BYTEORDER);
-            m_entryGroupIds.insert(entry.data(), groupId);
+            groupId = Endian::bytesToSizedInt<quint32>(fieldData, KeePass1::BYTEORDER);
             break;
         }
         case 0x0003: {
@@ -700,6 +705,13 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             return nullptr;
         }
     } while (!reachedEnd);
+
+    if (uuid.isEmpty() || groupId.isNull()) {
+        raiseError(tr("Incomplete entry: No UUID or group ID"));
+        return nullptr;
+    }
+    m_entryUuids.insert(uuid, entry.data());
+    m_entryGroupIds.insert(entry.data(), groupId.toUInt());
 
     entry->setTimeInfo(timeInfo);
 

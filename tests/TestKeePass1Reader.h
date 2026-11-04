@@ -23,6 +23,7 @@
 #include <QSharedPointer>
 
 class Database;
+class KeePass1Reader;
 
 class TestKeePass1Reader : public QObject
 {
@@ -31,6 +32,11 @@ class TestKeePass1Reader : public QObject
 private slots:
     void initTestCase();
     void testBasic();
+    void testEntryFields_data();
+    void testEntryFields();
+    void testDeletedMetastreamUuidAliases();
+    void testMetastreamBounds_data();
+    void testMetastreamBounds();
     void testMasterKey();
     void testCustomIcons();
     void testGroupExpanded();
@@ -45,6 +51,10 @@ private slots:
     void cleanupTestCase();
 
 private:
+    static void readTestDatabase(const QByteArray& entries,
+                                 quint32 entryCount,
+                                 KeePass1Reader& reader,
+                                 QSharedPointer<Database>& db);
     static QDateTime genDT(int year, int month, int day, int hour, int min);
     static void reopenDatabase(QSharedPointer<Database> db, const QString& password, const QString& keyfileName);
 
