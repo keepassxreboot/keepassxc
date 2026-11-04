@@ -52,6 +52,7 @@ private slots:
     void testXmlDuplicateGroupUuids();
     void testXmlDuplicateEntryUuids();
     void testXmlDeepGroupNesting();
+    void testXmlInvalidDateTime();
 
     /**
      * KDBX binary format tests.

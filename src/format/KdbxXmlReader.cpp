@@ -31,6 +31,8 @@
 
 #define UUID_LENGTH 16
 #define MAX_GROUP_DEPTH 1000
+// Seconds from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z
+#define MAX_DATETIME_SECS Q_INT64_C(315537897599)
 
 /**
  * @param version KDBX version
@@ -1101,7 +1103,9 @@ QDateTime KdbxXmlReader::readDateTime()
     if (Tools::isBase64(str.toLatin1())) {
         QByteArray secsBytes = QByteArray::fromBase64(str.toUtf8()).leftJustified(8, '\0', true).left(8);
         qint64 secs = Endian::bytesToSizedInt<quint64>(secsBytes, KeePass2::BYTEORDER);
-        return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
+        if (secs >= 0 && secs <= MAX_DATETIME_SECS) {
+            return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
+        }
     }
 
     QDateTime dt = Clock::parse(str, Qt::ISODate);
