@@ -1032,6 +1032,12 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     QString value = m_xml.readElementText();
 
     if (isProtected && !value.isEmpty()) {
+        if (!m_randomStream) {
+            value.clear();
+            raiseError(tr("This XML file contains protected values that cannot be decrypted during import"));
+            return value;
+        }
+
         QByteArray ciphertext = QByteArray::fromBase64(value.toLatin1());
         bool ok;
         QByteArray plaintext = m_randomStream->process(ciphertext, &ok);
@@ -1148,6 +1154,12 @@ QByteArray KdbxXmlReader::readBinary()
     QByteArray data = QByteArray::fromBase64(value.toLatin1());
 
     if (isProtected && !data.isEmpty()) {
+        if (!m_randomStream) {
+            data.clear();
+            raiseError(tr("This XML file contains protected values that cannot be decrypted during import"));
+            return data;
+        }
+
         bool ok;
         QByteArray plaintext = m_randomStream->process(data, &ok);
         if (!ok) {

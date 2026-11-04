@@ -611,3 +611,22 @@ void TestKdbx4Format::testCustomData()
     QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
     QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
 }
+
+void TestKdbx4Format::testProtectedValuesWithoutRandomStream()
+{
+    // Database::import() reads XML without a random stream. Encountering a protected value
+    // must raise an error instead of dereferencing the missing stream.
+    const QByteArray xml("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+                         "<KeePassFile><Meta><DatabaseName Protected=\"True\">AAAA</DatabaseName>"
+                         "</Meta></KeePassFile>");
+
+    QBuffer buffer;
+    buffer.setData(xml);
+    QVERIFY(buffer.open(QIODevice::ReadOnly));
+
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
+    reader.readDatabase(&buffer);
+
+    QVERIFY(reader.hasError());
+    QVERIFY(!reader.errorString().isEmpty());
+}
