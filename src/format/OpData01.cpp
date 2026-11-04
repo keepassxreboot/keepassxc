@@ -90,6 +90,15 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
         return false;
     }
     const qsizetype clear_len = static_cast<qsizetype>(len) + randomBytes;
+
+    // The ciphertext and its trailing HMAC cannot be larger than the OpData01 blob itself,
+    // so reject lengths that exceed the available data before allocating memory for them.
+    constexpr qsizetype envelopeOverhead = 8 + 8 + 16 + 256 / 8; // magic, length, IV, HMAC
+    if (data.size() < envelopeOverhead || clear_len > data.size() - envelopeOverhead) {
+        m_errorStr = tr("Plain text length exceeds the size of the OpData01 blob: %1").arg(len);
+        return false;
+    }
+
     QByteArray qbaCT(clear_len, '\0');
     in.readRawData(qbaCT.data(), clear_len);
 
