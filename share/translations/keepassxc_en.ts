@@ -5378,6 +5378,10 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unexpected protected value in unencrypted XML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid bool value</source>
         <translation type="unfinished"></translation>
     </message>

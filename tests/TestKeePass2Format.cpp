@@ -378,6 +378,8 @@ void TestKeePass2Format::testXmlBroken_data()
     QTest::newRow("BrokenDeletedObjects            (not strict)") << "BrokenDeletedObjects"            << false << false;
     QTest::newRow("BrokenDifferentEntryHistoryUuid     (strict)") << "BrokenDifferentEntryHistoryUuid" << true  << true;
     QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
+    QTest::newRow("BrokenProtectedValue                (strict)") << "BrokenProtectedValue"            << true  << true;
+    QTest::newRow("BrokenProtectedValue            (not strict)") << "BrokenProtectedValue"            << false << true;
 }
 // clang-format on
 

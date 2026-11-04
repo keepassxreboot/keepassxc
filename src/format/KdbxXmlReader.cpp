@@ -1032,6 +1032,11 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     QString value = m_xml.readElementText();
 
     if (isProtected && !value.isEmpty()) {
+        if (!m_randomStream) {
+            raiseError(tr("Unexpected protected value in unencrypted XML"));
+            return {};
+        }
+
         QByteArray ciphertext = QByteArray::fromBase64(value.toLatin1());
         bool ok;
         QByteArray plaintext = m_randomStream->process(ciphertext, &ok);
@@ -1148,6 +1153,11 @@ QByteArray KdbxXmlReader::readBinary()
     QByteArray data = QByteArray::fromBase64(value.toLatin1());
 
     if (isProtected && !data.isEmpty()) {
+        if (!m_randomStream) {
+            raiseError(tr("Unexpected protected value in unencrypted XML"));
+            return {};
+        }
+
         bool ok;
         QByteArray plaintext = m_randomStream->process(data, &ok);
         if (!ok) {
