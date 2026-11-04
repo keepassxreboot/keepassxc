@@ -21,6 +21,7 @@
 #include "crypto/SymmetricCipher.h"
 
 #include <QDataStream>
+#include <limits>
 
 OpData01::OpData01(QObject* parent)
     : QObject(parent)
@@ -46,6 +47,20 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
         return false;
     }
 
+    constexpr auto lenBytes = static_cast<qsizetype>(sizeof(quint64));
+    const qsizetype blockSize = SymmetricCipher::blockSize(SymmetricCipher::Aes256_CBC);
+    const qsizetype prefixLen = header.size() + lenBytes + SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_CBC);
+    constexpr qsizetype hmacLen = 256 / 8;
+    if (data.size() < prefixLen + blockSize + hmacLen) {
+        m_errorStr = tr("Invalid OpData01 data length");
+        return false;
+    }
+    const qsizetype ciphertextLen = data.size() - prefixLen - hmacLen;
+    if (ciphertextLen % blockSize != 0 || ciphertextLen > std::numeric_limits<int>::max()) {
+        m_errorStr = tr("Invalid OpData01 ciphertext length");
+        return false;
+    }
+
     QDataStream in(data);
     in.setByteOrder(QDataStream::LittleEndian);
     in.skipRawData(header.size());
@@ -57,73 +72,46 @@ bool OpData01::decode(const QByteArray& data, const QByteArray& key, const QByte
     in >> len;
 
     /*!
-     * The next 16 bytes are the randomly chosen initialization vector.
-     */
-    QByteArray iv(16, '\0');
-    int read = in.readRawData(iv.data(), 16);
-    if (read != 16) {
-        m_errorStr = tr("Unable to read all IV bytes, wanted 16 but got %1").arg(iv.size());
-        return false;
-    }
-
-    SymmetricCipher cipher;
-    if (!cipher.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, key, iv)) {
-        m_errorStr = tr("Unable to init cipher for opdata01: %1").arg(cipher.errorString());
-        return false;
-    }
-
-    /*!
      * The plaintext is padded using the following scheme.
      *
      * If the size of the plaintext is an even multiple of the block size then 1 block of random data is prepended
      * to the plaintext. Otherwise, between 1 and 15 (inclusive) bytes of random data are prepended to the plaintext
      * to achieve an even multiple of blocks.
      */
-    const qsizetype blockSize = cipher.blockSize(cipher.mode());
-    qsizetype randomBytes = blockSize - (len % blockSize);
-    if (randomBytes == 0) {
-        // add random block
-        randomBytes = blockSize;
-    }
-    if (len > static_cast<quint64>(std::numeric_limits<qsizetype>::max()) - randomBytes) {
+    if (len >= static_cast<quint64>(ciphertextLen)
+        || static_cast<quint64>(ciphertextLen) - len > static_cast<quint64>(blockSize)) {
         m_errorStr = tr("Plain text length out of range: %1").arg(len);
         return false;
     }
-    const qsizetype clear_len = static_cast<qsizetype>(len) + randomBytes;
-    QByteArray qbaCT(clear_len, '\0');
-    in.readRawData(qbaCT.data(), clear_len);
+    const qsizetype randomBytes = ciphertextLen - static_cast<qsizetype>(len);
 
     /*!
      * The HMAC-SHA256 is computed over the entirety of the opdata including header, length, IV and ciphertext
      * using a 256-bit MAC key. The 256-bit MAC is not truncated. It is appended to the ciphertext.
      */
-    const int hmacLen = 256 / 8;
-    QByteArray hmacSig(hmacLen, '\0'); // 256 / 8, '\0');
-    in.readRawData(hmacSig.data(), hmacLen);
-    if (hmacSig.size() != hmacLen) {
-        m_errorStr = tr("Unable to read all HMAC signature bytes");
-        return false;
-    }
-
-    const QByteArray hmacData = data.mid(0, data.size() - hmacSig.size());
-    const QByteArray actualHmac = CryptoHash::hmac(hmacData, hmacKey, CryptoHash::Algorithm::Sha256);
-    if (actualHmac != hmacSig) {
+    const QByteArray hmacData = QByteArray::fromRawData(data.constData(), data.size() - hmacLen);
+    const QByteArray hmacSig = data.right(hmacLen);
+    const QByteArray hmacComputed = CryptoHash::hmac(hmacData, hmacKey, CryptoHash::Algorithm::Sha256);
+    if (hmacComputed != hmacSig) {
         m_errorStr = tr("Malformed OpData01 due to a failed HMAC");
         return false;
     }
 
+    const QByteArray iv = data.mid(header.size() + lenBytes, 16);
+    SymmetricCipher cipher;
+    if (!cipher.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Decrypt, key, iv)) {
+        m_errorStr = tr("Unable to init cipher for opdata01: %1").arg(cipher.errorString());
+        return false;
+    }
+
+    QByteArray qbaCT = data.mid(prefixLen, ciphertextLen);
     if (!cipher.process(qbaCT)) {
         m_errorStr = tr("Unable to process clearText in place");
         return false;
     }
 
     // Remove random bytes
-    const QByteArray& clearText = qbaCT.mid(randomBytes);
-    if (clearText.size() != static_cast<qsizetype>(len)) {
-        m_errorStr = tr("Expected %1 bytes of clear-text, found %2").arg(len, clearText.size());
-        return false;
-    }
-    m_clearText = clearText;
+    m_clearText = qbaCT.mid(randomBytes);
     return true;
 }
 
