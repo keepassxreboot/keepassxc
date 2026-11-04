@@ -50,6 +50,7 @@ private slots:
     void testXmlInvalidXmlChars();
     void testXmlRepairUuidHistoryItem();
     void testXmlDuplicateGroupUuids();
+    void testXmlDuplicateEntryUuids();
 
     /**
      * KDBX binary format tests.

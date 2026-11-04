@@ -382,6 +382,8 @@ void TestKeePass2Format::testXmlBroken_data()
     QTest::newRow("BrokenProtectedValue            (not strict)") << "BrokenProtectedValue"            << false << true;
     QTest::newRow("BrokenDuplicateGroupUuid            (strict)") << "BrokenDuplicateGroupUuid"        << true  << true;
     QTest::newRow("BrokenDuplicateGroupUuid        (not strict)") << "BrokenDuplicateGroupUuid"        << false << false;
+    QTest::newRow("BrokenDuplicateEntryUuid            (strict)") << "BrokenDuplicateEntryUuid"        << true  << true;
+    QTest::newRow("BrokenDuplicateEntryUuid        (not strict)") << "BrokenDuplicateEntryUuid"        << false << false;
 }
 // clang-format on
 
@@ -528,6 +530,32 @@ void TestKeePass2Format::testXmlDuplicateGroupUuids()
     QCOMPARE(groupC->name(), QString("C"));
     QCOMPARE(groupC->children().size(), 1);
     QCOMPARE(groupC->children().at(0)->name(), QString("B2"));
+}
+
+void TestKeePass2Format::testXmlDuplicateEntryUuids()
+{
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDuplicateEntryUuid");
+    QVERIFY(QFile::exists(xmlFile));
+    bool hasError;
+    QString errorString;
+    auto db = readXml(xmlFile, false, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
+    }
+    QVERIFY(!hasError);
+
+    // Entries with duplicate uuids must not overwrite each other
+    QList<Entry*> rootEntries = db->rootGroup()->entries();
+    QCOMPARE(rootEntries.size(), 1);
+    QCOMPARE(rootEntries.at(0)->title(), QString("Entry1"));
+    QCOMPARE(rootEntries.at(0)->uuid(), QUuid::fromRfc4122("1111111111111111"));
+
+    QCOMPARE(db->rootGroup()->children().size(), 1);
+    QList<Entry*> groupEntries = db->rootGroup()->children().at(0)->entries();
+    QCOMPARE(groupEntries.size(), 1);
+    QCOMPARE(groupEntries.at(0)->title(), QString("Entry2"));
+    QVERIFY(!groupEntries.at(0)->uuid().isNull());
+    QVERIFY(groupEntries.at(0)->uuid() != rootEntries.at(0)->uuid());
 }
 
 void TestKeePass2Format::testReadBackTargetDb()

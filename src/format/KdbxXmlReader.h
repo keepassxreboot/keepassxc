@@ -111,6 +111,7 @@ protected:
     QHash<QUuid, Group*> m_groups;
     QHash<QUuid, Entry*> m_entries;
     QSet<QUuid> m_parsedGroupUuids;
+    QSet<QUuid> m_parsedEntryUuids;
 
     QHash<QString, QByteArray> m_binaryPool;
     QMultiHash<QString, QPair<Entry*, QString>> m_binaryMap;

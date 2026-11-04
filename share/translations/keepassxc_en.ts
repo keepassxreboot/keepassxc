@@ -5350,6 +5350,10 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Duplicate entry uuid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid entry icon number</source>
         <translation type="unfinished"></translation>
     </message>

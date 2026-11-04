@@ -712,7 +712,16 @@ Entry* KdbxXmlReader::parseEntry(bool history)
                 } else {
                     entry->setUuid(QUuid::createUuid());
                 }
+            } else if (!history && m_parsedEntryUuids.contains(uuid)) {
+                // Merging duplicates would silently overwrite the previous entry
+                if (m_strictMode) {
+                    raiseError(tr("Duplicate entry uuid"));
+                }
+                entry->setUuid(QUuid::createUuid());
             } else {
+                if (!history) {
+                    m_parsedEntryUuids.insert(uuid);
+                }
                 entry->setUuid(uuid);
             }
             continue;
