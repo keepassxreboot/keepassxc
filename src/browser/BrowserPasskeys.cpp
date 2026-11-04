@@ -353,11 +353,24 @@ QByteArray BrowserPasskeys::buildSignature(const QByteArray& authenticatorData,
         std::vector<uint8_t> rawSignature;
         if (algName == "ECDSA") {
             Botan::ECDSA_PrivateKey privateKey(algId, privateKeyBytes);
+
+            std::string emsa;
+            const auto& domain = privateKey.domain();
+            if (domain == Botan::EC_Group("secp256r1")) {
+                emsa = "EMSA1(SHA-256)";
+            } else if (domain == Botan::EC_Group("secp384r1")) {
+                emsa = "EMSA1(SHA-384)";
+            } else if (domain == Botan::EC_Group("secp521r1")) {
+                emsa = "EMSA1(SHA-512)";
+            } else {
+                qWarning("BrowserWebAuthn::buildSignature: ECDSA curve not supported");
+                return {};
+            }
+
 #ifdef WITH_BOTAN3
-            Botan::PK_Signer signer(
-                privateKey, *randomGen()->getRng(), "EMSA1(SHA-256)", Botan::Signature_Format::DerSequence);
+            Botan::PK_Signer signer(privateKey, *randomGen()->getRng(), emsa, Botan::Signature_Format::DerSequence);
 #else
-            Botan::PK_Signer signer(privateKey, *randomGen()->getRng(), "EMSA1(SHA-256)", Botan::DER_SEQUENCE);
+            Botan::PK_Signer signer(privateKey, *randomGen()->getRng(), emsa, Botan::DER_SEQUENCE);
 #endif
 
             signer.update(reinterpret_cast<const uint8_t*>(attToBeSigned.constData()), attToBeSigned.size());
