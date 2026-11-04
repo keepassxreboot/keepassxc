@@ -28,17 +28,16 @@ namespace
     QByteArray readZipFile(void* uf)
     {
         QByteArray data;
-        int bytes, bytesRead = 0;
+        char buffer[8192];
         unzOpenCurrentFile(uf);
-        do {
-            data.resize(data.size() + 8192);
-            bytes = unzReadCurrentFile(uf, data.data() + bytesRead, 8192);
-            if (bytes > 0) {
-                bytesRead += bytes;
+        while (true) {
+            int bytes = unzReadCurrentFile(uf, buffer, sizeof(buffer));
+            if (bytes <= 0) {
+                break;
             }
-        } while (bytes > 0);
+            data.append(buffer, bytes);
+        }
         unzCloseCurrentFile(uf);
-        data.truncate(bytesRead);
         return data;
     }
 } // namespace
