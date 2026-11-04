@@ -5314,6 +5314,10 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Maximum group depth exceeded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Null group uuid</source>
         <translation type="unfinished"></translation>
     </message>

@@ -558,6 +558,27 @@ void TestKeePass2Format::testXmlDuplicateEntryUuids()
     QVERIFY(groupEntries.at(0)->uuid() != rootEntries.at(0)->uuid());
 }
 
+void TestKeePass2Format::testXmlDeepGroupNesting()
+{
+    auto readNestedGroups = [this](int depth, QString& errorString) {
+        QByteArray xml = "<KeePassFile><Root>";
+        xml += QByteArray("<Group><Name>Group</Name>").repeated(depth);
+        xml += QByteArray("</Group>").repeated(depth);
+        xml += "</Root></KeePassFile>";
+        QBuffer buffer(&xml);
+        buffer.open(QIODevice::ReadOnly);
+        bool hasError;
+        readXml(&buffer, false, hasError, errorString);
+        return hasError;
+    };
+
+    QString errorString;
+    QVERIFY2(!readNestedGroups(1000, errorString), qPrintable(errorString));
+    QVERIFY(readNestedGroups(1001, errorString));
+    // Must not exhaust the stack
+    QVERIFY(readNestedGroups(200000, errorString));
+}
+
 void TestKeePass2Format::testReadBackTargetDb()
 {
     // read back previously constructed KDBX

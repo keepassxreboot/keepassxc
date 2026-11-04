@@ -30,6 +30,7 @@
 #define qsv QStringView
 
 #define UUID_LENGTH 16
+#define MAX_GROUP_DEPTH 1000
 
 /**
  * @param version KDBX version
@@ -492,6 +493,14 @@ Group* KdbxXmlReader::parseGroup()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == qsv(u"Group"));
 
+    // Prevent stack exhaustion from excessively nested groups
+    if (m_groupDepth >= MAX_GROUP_DEPTH) {
+        raiseError(tr("Maximum group depth exceeded"));
+        m_xml.skipCurrentElement();
+        return nullptr;
+    }
+    ++m_groupDepth;
+
     auto group = new Group();
     group->setUpdateTimeinfo(false);
     QList<Group*> children;
@@ -641,6 +650,7 @@ Group* KdbxXmlReader::parseGroup()
         entry->setGroup(group, false);
     }
 
+    --m_groupDepth;
     return group;
 }
 

@@ -112,6 +112,7 @@ protected:
     QHash<QUuid, Entry*> m_entries;
     QSet<QUuid> m_parsedGroupUuids;
     QSet<QUuid> m_parsedEntryUuids;
+    int m_groupDepth = 0;
 
     QHash<QString, QByteArray> m_binaryPool;
     QMultiHash<QString, QPair<Entry*, QString>> m_binaryMap;
