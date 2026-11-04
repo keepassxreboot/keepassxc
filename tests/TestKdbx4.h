@@ -67,6 +67,7 @@ private slots:
     void testUpgradeMasterKeyIntegrity_data();
     void testAttachmentIndexStability();
     void testCustomData();
+    void testProtectedValuesWithoutRandomStream();
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H
