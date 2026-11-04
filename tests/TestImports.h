@@ -28,6 +28,11 @@ private slots:
     void initTestCase();
     void testOPUX();
     void testOPVault();
+    void testOpData01_data();
+    void testOpData01();
+    void testOpData01Invalid_data();
+    void testOpData01Invalid();
+    void testOpData01Truncated();
     void testBitwarden();
     void testBitwardenEncrypted();
     void testBitwardenPasskey();

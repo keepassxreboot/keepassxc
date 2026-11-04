@@ -22,14 +22,19 @@
 #include "core/Metadata.h"
 #include "core/Totp.h"
 #include "crypto/Crypto.h"
+#include "crypto/CryptoHash.h"
+#include "crypto/SymmetricCipher.h"
 #include "format/BitwardenReader.h"
 #include "format/OPUXReader.h"
+#include "format/OpData01.h"
 #include "format/OpVaultReader.h"
 #include "format/ProtonPassReader.h"
 
 #include <QJsonObject>
 #include <QList>
 #include <QTest>
+#include <QtEndian>
+#include <limits>
 
 QTEST_GUILESS_MAIN(TestImports)
 
@@ -37,6 +42,104 @@ void TestImports::initTestCase()
 {
     QVERIFY(Crypto::init());
     QLocale::setDefault(QLocale::c());
+}
+
+namespace
+{
+    QByteArray makeOpData01(quint64 plaintextLen, const QByteArray& ciphertext)
+    {
+        QByteArray frame("opdata01");
+        char length[sizeof(quint64)];
+        qToLittleEndian(plaintextLen, length);
+        frame.append(length, sizeof(length));
+        frame.append(QByteArray(16, 'i'));
+        frame.append(ciphertext);
+        frame.append(CryptoHash::hmac(frame, QByteArray(32, 'm'), CryptoHash::Sha256));
+        return frame;
+    }
+} // namespace
+
+void TestImports::testOpData01_data()
+{
+    QTest::addColumn<int>("plaintextLen");
+    QTest::newRow("empty") << 0;
+    QTest::newRow("one-byte") << 1;
+    QTest::newRow("one-padding-byte") << 15;
+    QTest::newRow("full-padding-block") << 16;
+    QTest::newRow("two-blocks") << 17;
+    QTest::newRow("two-blocks-one-padding-byte") << 31;
+    QTest::newRow("two-full-blocks") << 32;
+    QTest::newRow("master-key-size") << 256;
+}
+
+void TestImports::testOpData01()
+{
+    QFETCH(int, plaintextLen);
+    const QByteArray plaintext(plaintextLen, 'x');
+    QByteArray ciphertext(16 - plaintextLen % 16, 'p');
+    ciphertext.append(plaintext);
+    const QByteArray key(32, 'k');
+    const QByteArray hmacKey(32, 'm');
+    SymmetricCipher cipher;
+    QVERIFY(cipher.init(SymmetricCipher::Aes256_CBC, SymmetricCipher::Encrypt, key, QByteArray(16, 'i')));
+    QVERIFY(cipher.process(ciphertext));
+    const auto frame = makeOpData01(plaintextLen, ciphertext);
+
+    OpData01 decoder;
+    QVERIFY2(decoder.decode(frame, key, hmacKey), qPrintable(decoder.errorString()));
+    QCOMPARE(decoder.getClearText(), plaintext);
+    QVERIFY2(decoder.decodeBase64(QString::fromLatin1(frame.toBase64()), key, hmacKey),
+             qPrintable(decoder.errorString()));
+    QCOMPARE(decoder.getClearText(), plaintext);
+}
+
+void TestImports::testOpData01Invalid_data()
+{
+    QTest::addColumn<QByteArray>("frame");
+    QTest::addColumn<QString>("error");
+    const QString lengthError = QStringLiteral("Plain text length out of range");
+    const QByteArray ciphertext(32, 'c');
+    // Authenticate malformed frames so that HMAC failure cannot mask missing length validation.
+    QTest::newRow("no-padding") << makeOpData01(32, ciphertext) << lengthError;
+    QTest::newRow("plaintext-exceeds-ciphertext") << makeOpData01(33, ciphertext) << lengthError;
+    QTest::newRow("excess-padding") << makeOpData01(15, ciphertext) << lengthError;
+    QTest::newRow("huge-length") << makeOpData01(static_cast<quint64>(1) << 36, ciphertext) << lengthError;
+    QTest::newRow("length-exceeds-32-bits")
+        << makeOpData01((static_cast<quint64>(1) << 32) + 16, ciphertext) << lengthError;
+    QTest::newRow("high-bit-set") << makeOpData01((static_cast<quint64>(1) << 63) + 16, ciphertext) << lengthError;
+    QTest::newRow("maximum-length") << makeOpData01(std::numeric_limits<quint64>::max(), ciphertext) << lengthError;
+    QTest::newRow("missing-ciphertext") << makeOpData01(0, {}) << QStringLiteral("Invalid OpData01 data length");
+    QTest::newRow("unaligned-ciphertext")
+        << makeOpData01(16, QByteArray(17, 'c')) << QStringLiteral("Invalid OpData01 ciphertext length");
+
+    const auto validFrame = makeOpData01(16, ciphertext);
+    for (int offset : {8, 16, 32, 64}) {
+        auto frame = validFrame;
+        frame[offset] ^= 1; // Alter the length, IV, ciphertext, or HMAC without updating the signature.
+        QTest::newRow(qPrintable(QStringLiteral("tampered-byte-%1").arg(offset)))
+            << frame << QStringLiteral("failed HMAC");
+    }
+}
+
+void TestImports::testOpData01Invalid()
+{
+    QFETCH(QByteArray, frame);
+    QFETCH(QString, error);
+    OpData01 decoder;
+    // An invalid encryption key also ensures malformed data is rejected before cipher initialization.
+    QVERIFY(!decoder.decode(frame, {}, QByteArray(32, 'm')));
+    QVERIFY2(decoder.errorString().contains(error), qPrintable(decoder.errorString()));
+    QVERIFY(decoder.getClearText().isEmpty());
+}
+
+void TestImports::testOpData01Truncated()
+{
+    const auto frame = makeOpData01(16, QByteArray(32, 'c'));
+    for (qsizetype size = 0; size < frame.size(); ++size) {
+        OpData01 decoder;
+        QVERIFY2(!decoder.decode(frame.left(size), QByteArray(32, 'k'), QByteArray(32, 'm')),
+                 qPrintable(QStringLiteral("Accepted frame truncated to %1 bytes").arg(size)));
+    }
 }
 
 void TestImports::testOPUX()

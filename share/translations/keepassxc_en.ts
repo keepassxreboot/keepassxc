@@ -6752,19 +6752,11 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to init cipher for opdata01: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Plain text length out of range: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to read all HMAC signature bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6776,7 +6768,11 @@ This version is not meant for production use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Expected %1 bytes of clear-text, found %2</source>
+        <source>Invalid OpData01 data length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid OpData01 ciphertext length</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
