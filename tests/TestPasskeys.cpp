@@ -21,6 +21,7 @@
 #include "browser/BrowserPasskeysClient.h"
 #include "browser/BrowserService.h"
 #include "browser/PasskeyUtils.h"
+#include "config-keepassx.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -29,6 +30,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QTest>
+#include <botan/data_src.h>
+#include <botan/pkcs8.h>
+#include <botan/pubkey.h>
 #include <botan/sodium.h>
 
 using namespace Botan::Sodium;
@@ -113,6 +117,42 @@ const QJsonArray validPubKeyCredParams = {
 };
 
 // clang-format on
+
+namespace
+{
+    // Botan 3.14 randomizes ECDSA signatures by default, so their exact bytes are no longer
+    // reproducible. Verify the signature against the public key embedded in the signing key's PEM
+    // instead, which works for both deterministic and randomized signatures.
+    bool verifySignature(const QByteArray& authenticatorData,
+                         const QByteArray& clientData,
+                         const QByteArray& signature,
+                         const QString& privateKeyPem)
+    {
+        const auto clientDataHash = browserMessageBuilder()->getSha256Hash(clientData);
+        const auto attToBeSigned = authenticatorData + clientDataHash;
+
+        try {
+            const auto privateKeyArray = privateKeyPem.toUtf8();
+            Botan::DataSource_Memory dataSource(reinterpret_cast<const uint8_t*>(privateKeyArray.constData()),
+                                                privateKeyArray.size());
+            const auto key = Botan::PKCS8::load_key(dataSource);
+            if (!key) {
+                return false;
+            }
+
+#ifdef WITH_BOTAN3
+            Botan::PK_Verifier verifier(*key, "EMSA1(SHA-256)", Botan::Signature_Format::DerSequence);
+#else
+            Botan::PK_Verifier verifier(*key, "EMSA1(SHA-256)", Botan::DER_SEQUENCE);
+#endif
+            verifier.update(reinterpret_cast<const uint8_t*>(attToBeSigned.constData()), attToBeSigned.size());
+            return verifier.check_signature(reinterpret_cast<const uint8_t*>(signature.constData()), signature.size());
+        } catch (const std::exception& e) {
+            qWarning("Failed to verify signature: %s", e.what());
+            return false;
+        }
+    }
+} // namespace
 
 void TestPasskeys::initTestCase()
 {
@@ -216,9 +256,7 @@ void TestPasskeys::testLoadingECPrivateKeyFromPem()
         "aW4iOmZhbHNlfQ");
 
     const auto signature = browserPasskeys()->buildSignature(authenticatorData, clientData, privateKeyPem);
-    QCOMPARE(
-        browserMessageBuilder()->getBase64FromArray(signature),
-        QString("MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
+    QVERIFY(verifySignature(authenticatorData, clientData, signature, privateKeyPem));
 }
 
 void TestPasskeys::testLoadingRSAPrivateKeyFromPem()
@@ -445,9 +483,10 @@ void TestPasskeys::testGet()
              QString("eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiOXozNnZUZlFUTDk1TGY3V25aZ3l0ZTdvaEdlRi1YUmlMeGtML"
                      "Ux1R1Uxem9wUm1NSVVBMUxWd3pHcHlJbTFmT0JuMVFuUmEwUUgyN0FEQWFKR0h5c1EiLCJvcmlnaW4iOiJodHRwczovL3dlYm"
                      "F1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"));
-    QCOMPARE(
-        response["signature"].toString(),
-        QString("MEUCIQCvg3nXO2fiNK9ockxscgPtoM9_u6ERaW2-F1L99YasOAIgNhYOjPJyKJ-W8roV531kC59ss1USas7jy8TfRnbJLtg"));
+    const auto signature = browserMessageBuilder()->getArrayFromBase64(response["signature"].toString());
+    const auto authData = browserMessageBuilder()->getArrayFromBase64(response["authenticatorData"].toString());
+    const auto clientData = browserMessageBuilder()->getArrayFromBase64(response["clientDataJSON"].toString());
+    QVERIFY(verifySignature(authData, clientData, signature, privateKeyPem));
 
     auto clientDataJson = response["clientDataJSON"].toString();
     auto clientDataByteArray = browserMessageBuilder()->getArrayFromBase64(clientDataJson);
