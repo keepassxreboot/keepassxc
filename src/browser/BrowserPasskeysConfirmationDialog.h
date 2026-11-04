@@ -19,6 +19,7 @@
 #define KEEPASSXC_BROWSERPASSKEYSCONFIRMATIONDIALOG_H
 
 #include <QDialog>
+#include <QPointer>
 #include <QTableWidget>
 #include <QTimer>
 
