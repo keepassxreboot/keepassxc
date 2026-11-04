@@ -506,7 +506,14 @@ Group* KdbxXmlReader::parseGroup()
                 } else {
                     group->setUuid(QUuid::createUuid());
                 }
+            } else if (m_parsedGroupUuids.contains(uuid)) {
+                // Merging duplicates would corrupt the group tree, potentially making a group its own ancestor
+                if (m_strictMode) {
+                    raiseError(tr("Duplicate group uuid"));
+                }
+                group->setUuid(QUuid::createUuid());
             } else {
+                m_parsedGroupUuids.insert(uuid);
                 group->setUuid(uuid);
             }
             continue;

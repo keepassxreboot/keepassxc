@@ -5318,6 +5318,10 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Duplicate group uuid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid group icon number</source>
         <translation type="unfinished"></translation>
     </message>

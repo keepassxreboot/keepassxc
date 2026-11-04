@@ -380,6 +380,8 @@ void TestKeePass2Format::testXmlBroken_data()
     QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
     QTest::newRow("BrokenProtectedValue                (strict)") << "BrokenProtectedValue"            << true  << true;
     QTest::newRow("BrokenProtectedValue            (not strict)") << "BrokenProtectedValue"            << false << true;
+    QTest::newRow("BrokenDuplicateGroupUuid            (strict)") << "BrokenDuplicateGroupUuid"        << true  << true;
+    QTest::newRow("BrokenDuplicateGroupUuid        (not strict)") << "BrokenDuplicateGroupUuid"        << false << false;
 }
 // clang-format on
 
@@ -489,6 +491,43 @@ void TestKeePass2Format::testXmlRepairUuidHistoryItem()
     QVERIFY(!entry->uuid().isNull());
     QVERIFY(!historyItem->uuid().isNull());
     QCOMPARE(historyItem->uuid(), entry->uuid());
+}
+
+void TestKeePass2Format::testXmlDuplicateGroupUuids()
+{
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDuplicateGroupUuid");
+    QVERIFY(QFile::exists(xmlFile));
+    bool hasError;
+    QString errorString;
+    auto db = readXml(xmlFile, false, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
+    }
+    QVERIFY(!hasError);
+
+    // Groups with duplicate uuids must not be merged into each other
+    QSet<QUuid> uuids;
+    for (const Group* group : db->rootGroup()->groupsRecursive(true)) {
+        uuids.insert(group->uuid());
+    }
+    QCOMPARE(uuids.size(), 6);
+
+    Group* root = db->rootGroup();
+    QCOMPARE(root->children().size(), 2);
+    Group* groupA = root->children().at(0);
+    Group* groupB = root->children().at(1);
+    QCOMPARE(groupA->name(), QString("A"));
+    QCOMPARE(groupB->name(), QString("B"));
+    QCOMPARE(groupA->uuid(), QUuid::fromRfc4122("1111111111111111"));
+    QCOMPARE(groupB->uuid(), QUuid::fromRfc4122("2222222222222222"));
+
+    QCOMPARE(groupA->children().size(), 1);
+    QCOMPARE(groupA->children().at(0)->name(), QString("A2"));
+    QCOMPARE(groupB->children().size(), 1);
+    Group* groupC = groupB->children().at(0);
+    QCOMPARE(groupC->name(), QString("C"));
+    QCOMPARE(groupC->children().size(), 1);
+    QCOMPARE(groupC->children().at(0)->name(), QString("B2"));
 }
 
 void TestKeePass2Format::testReadBackTargetDb()

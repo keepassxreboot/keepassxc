@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<KeePassFile>
+	<Root>
+		<Group>
+			<UUID>lmU+9n0aeESKZvcEze+bRg==</UUID>
+			<Name>Root</Name>
+			<Group>
+				<UUID>MTExMTExMTExMTExMTExMQ==</UUID>
+				<Name>A</Name>
+				<Group>
+					<UUID>MTExMTExMTExMTExMTExMQ==</UUID>
+					<Name>A2</Name>
+				</Group>
+			</Group>
+			<Group>
+				<UUID>MjIyMjIyMjIyMjIyMjIyMg==</UUID>
+				<Name>B</Name>
+				<Group>
+					<UUID>MzMzMzMzMzMzMzMzMzMzMw==</UUID>
+					<Name>C</Name>
+					<Group>
+						<UUID>MjIyMjIyMjIyMjIyMjIyMg==</UUID>
+						<Name>B2</Name>
+					</Group>
+				</Group>
+			</Group>
+		</Group>
+	</Root>
+</KeePassFile>

@@ -23,6 +23,7 @@
 
 #include <QCoreApplication>
 #include <QMultiHash>
+#include <QSet>
 #include <QStringView>
 #include <QXmlStreamReader>
 
@@ -109,6 +110,7 @@ protected:
     QScopedPointer<Group> m_tmpParent;
     QHash<QUuid, Group*> m_groups;
     QHash<QUuid, Entry*> m_entries;
+    QSet<QUuid> m_parsedGroupUuids;
 
     QHash<QString, QByteArray> m_binaryPool;
     QMultiHash<QString, QPair<Entry*, QString>> m_binaryMap;
