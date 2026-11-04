@@ -26,8 +26,6 @@
 #include <QRegularExpression>
 #include <QUrl>
 
-#include <utility>
-
 const QString UrlTools::URL_WILDCARD = "1kpxcwc1";
 
 #if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
@@ -134,13 +132,13 @@ bool UrlTools::isUrlIdentical(QString first, QString second)
     }
 
     // Replace URL wildcards for comparison if found
-    const auto firstUrl = trimUrl(first);
-    const auto secondUrl = trimUrl(second);
-    if (firstUrl == secondUrl) {
+    first = trimUrl(first);
+    second = trimUrl(second);
+    if (first == second) {
         return true;
     }
 
-    return QUrl(firstUrl).matches(QUrl(secondUrl), QUrl::StripTrailingSlash);
+    return QUrl(first).matches(QUrl(second), QUrl::StripTrailingSlash);
 }
 
 bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison)
