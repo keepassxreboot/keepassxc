@@ -26,6 +26,7 @@ void PolkitAuthorizationResults::registerMetaType()
 {
     qRegisterMetaType<PolkitAuthorizationResults>("PolkitAuthorizationResults");
     qDBusRegisterMetaType<PolkitAuthorizationResults>();
+    qDBusRegisterMetaType<QMap<QString, QString>>();
 }
 
 QDBusArgument& operator<<(QDBusArgument& argument, const PolkitAuthorizationResults& res)
