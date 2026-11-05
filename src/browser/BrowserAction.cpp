@@ -20,8 +20,10 @@
 #include "BrowserPasskeys.h"
 #include "BrowserSettings.h"
 #include "PasskeyUtils.h"
+#include "core/Base32.h"
 #include "core/Global.h"
 #include "core/Tools.h"
+#include "core/Totp.h"
 
 #include <QJsonDocument>
 #include <QLocalSocket>
@@ -311,10 +313,19 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const auto group = browserRequest.getString("group");
     const auto groupUuid = browserRequest.getString("groupUuid");
     const auto downloadFavicon = browserRequest.getString("downloadFavicon");
+    const auto totp = browserRequest.getString("totp");
     const QString realm;
 
     if (EntryPlaceholders::containsPlaceholder(login) || EntryPlaceholders::containsPlaceholder(password)) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_USE_REFERENCES);
+    }
+
+    QSharedPointer<Totp::Settings> totpSettings;
+    if (!totp.isEmpty()) {
+        totpSettings = parseTotp(totp);
+        if (!totpSettings) {
+            return getErrorReply(action, ERROR_KEEPASS_INVALID_TOTP);
+        }
     }
 
     EntryParameters entryParameters;
@@ -324,6 +335,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     entryParameters.siteUrl = url;
     entryParameters.formUrl = submitUrl;
     entryParameters.realm = realm;
+    entryParameters.totp = totpSettings;
 
     bool result = true;
     if (uuid.isEmpty()) {
@@ -623,4 +635,28 @@ StringPairList BrowserAction::getConnectionKeys(const BrowserRequest& browserReq
     }
 
     return keyList;
+}
+
+// Accepts an otpauth://totp/ URI or a bare Base32 secret. Returns null when invalid.
+QSharedPointer<Totp::Settings> BrowserAction::parseTotp(const QString& totp)
+{
+    QSharedPointer<Totp::Settings> settings;
+    const QUrl url(totp.trimmed());
+    if (url.scheme().compare("otpauth", Qt::CaseInsensitive) == 0) {
+        // HOTP is counter based and cannot be stored as TOTP
+        if (url.host().compare("totp", Qt::CaseInsensitive) != 0) {
+            return {};
+        }
+        settings = Totp::parseSettings(url.toString());
+    } else {
+        settings = Totp::createSettings(totp.trimmed());
+    }
+
+    // Totp::checkValidSettings() accepts keys that decode to nothing, and an empty key
+    // would make Entry::setTotp() remove an existing TOTP
+    if (!settings || Base32::decode(Base32::sanitizeInput(settings->key.toLatin1())).isEmpty()
+        || !Totp::checkValidSettings(settings).isEmpty()) {
+        return {};
+    }
+    return settings;
 }

@@ -154,6 +154,8 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("user.id does not match the required length");
     case ERROR_KEEPASS_CANNOT_USE_REFERENCES:
         return QObject::tr("Username or password cannot contain references");
+    case ERROR_KEEPASS_INVALID_TOTP:
+        return QObject::tr("Invalid TOTP secret provided");
     default:
         return QObject::tr("Unknown error");
     }
