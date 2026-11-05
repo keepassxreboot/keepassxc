@@ -27,6 +27,8 @@ TextAttachmentsEditWidget::TextAttachmentsEditWidget(QWidget* parent)
     , m_ui(new Ui::TextAttachmentsEditWidget())
 {
     m_ui->setupUi(this);
+    m_mdToolbar = new MarkdownToolbar(this);
+    m_mdToolbar->setTarget(m_ui->attachmentsTextEdit);
 
     connect(m_ui->attachmentsTextEdit, &QTextEdit::textChanged, this, &TextAttachmentsEditWidget::textChanged);
     connect(m_ui->previewPushButton, &QPushButton::clicked, this, &TextAttachmentsEditWidget::previewButtonClicked);
@@ -43,7 +45,6 @@ void TextAttachmentsEditWidget::openAttachment(attachments::Attachment attachmen
 {
     m_attachment = std::move(attachments);
     m_mode = mode;
-
     updateUi();
 }
 
