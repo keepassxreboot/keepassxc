@@ -228,6 +228,7 @@ private:
 
     friend class TestBrowser;
     friend class TestPasskeys;
+    friend class TestGuiBrowser;
 };
 
 static inline BrowserService* browserService()
