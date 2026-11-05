@@ -20,9 +20,11 @@
 #include "core/EntrySearcher.h"
 #include "core/Group.h"
 #include "crypto/Random.h"
+#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
+#include <QCoreApplication>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestFdoSecrets)
@@ -129,3 +131,36 @@ void TestFdoSecrets::testDBusPathParse()
     parsed = DBusMgr::parsePath(QStringLiteral("/org"));
     QCOMPARE(parsed.type, PathType::Unknown);
 }
+
+void TestFdoSecrets::testHashProcess()
+{
+    using FdoSecrets::FdoSecretsSettings;
+
+    uint pid = QCoreApplication::applicationPid();
+    QString appPath = QCoreApplication::applicationFilePath();
+    QVERIFY(!appPath.isEmpty());
+
+    QString hashPid = FdoSecretsSettings::hashProcess(pid);
+    QString hashPath = FdoSecretsSettings::hashProcess(0, appPath);
+
+#ifdef Q_OS_LINUX
+    QVERIFY(!hashPid.isEmpty());
+    QVERIFY(!hashPath.isEmpty());
+    QCOMPARE(hashPid, hashPath);
+#endif
+
+    auto* settings = FdoSecretsSettings::instance();
+    // Initially clean state
+    settings->removeAuthorizedClient(appPath);
+    QVERIFY(!settings->isClientAuthorized(appPath, pid));
+
+    // Authorize client with pid
+    QVERIFY(settings->addAuthorizedClient(appPath, pid));
+    QVERIFY(settings->isClientAuthorized(appPath, pid));
+    QVERIFY(settings->isClientAuthorized(appPath, 0));
+
+    // Clean up
+    QVERIFY(settings->removeAuthorizedClient(appPath));
+    QVERIFY(!settings->isClientAuthorized(appPath, pid));
+}
+

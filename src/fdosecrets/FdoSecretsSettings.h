@@ -47,6 +47,14 @@ namespace FdoSecrets
         bool unlockBeforeSearch() const;
         void setUnlockBeforeSearch(bool unlockBeforeSearch);
 
+        QStringList authorizedClients() const;
+        void setAuthorizedClients(const QStringList& authorizedClients);
+        bool isClientAuthorized(const QString& exePath, uint pid = 0) const;
+        bool addAuthorizedClient(const QString& exePath, uint pid = 0);
+        bool removeAuthorizedClient(const QString& exePath);
+
+        static QString hashProcess(uint pid, const QString& fallbackExePath = {});
+
         // Per db settings
 
         QUuid exposedGroup(const QSharedPointer<Database>& db) const;

@@ -31,6 +31,7 @@ private slots:
     void testCrazyAttributeKey();
     void testSpecialCharsInAttributeValue();
     void testDBusPathParse();
+    void testHashProcess();
 };
 
 #endif // KEEPASSXC_TESTFDOSECRETS_H
