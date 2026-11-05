@@ -203,9 +203,9 @@ void MacUtils::registerNativeEventFilter()
     ::InstallApplicationEventHandler(MacUtils::hotkeyHandler, 1, &eventSpec, this, nullptr);
 }
 
-void MacUtils::configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu)
+void MacUtils::configureMacMenus(QMainWindow* mainWindow, QMenu* viewMenu)
 {
-    return m_appkit->configureWindowAndHelpMenus(mainWindow, helpMenu);
+    return m_appkit->configureMacMenus(mainWindow, viewMenu);
 }
 
 bool MacUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
