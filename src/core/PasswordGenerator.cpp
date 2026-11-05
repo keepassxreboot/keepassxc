@@ -128,14 +128,14 @@ QString PasswordGenerator::generatePassword() const
 
     const QVector<PasswordGroup> groups = passwordGroups();
 
-    QVector<QChar> passwordChars;
+    QVector<QString> passwordChars;
     for (const PasswordGroup& group : groups) {
-        for (QChar ch : group) {
+        for (const QString& ch : group) {
             passwordChars.append(ch);
         }
     }
 
-    QString password;
+    QVector<QString> password;
 
     if (m_flags & CharFromEveryGroup) {
         for (const auto& group : groups) {
@@ -154,9 +154,7 @@ QString PasswordGenerator::generatePassword() const
         for (int i = (password.size() - 1); i >= 1; i--) {
             int j = randomGen()->randomUInt(static_cast<quint32>(i + 1));
 
-            QChar tmp = password[i];
-            password[i] = password[j];
-            password[j] = tmp;
+            password.swapItemsAt(i, j);
         }
     } else {
         for (int i = 0; i < m_length; i++) {
@@ -166,7 +164,7 @@ QString PasswordGenerator::generatePassword() const
         }
     }
 
-    return password;
+    return password.join(QString());
 }
 
 bool PasswordGenerator::isValid() const
@@ -326,7 +324,8 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
     if (!m_custom.isEmpty()) {
         PasswordGroup group;
 
-        for (const auto& ch : m_custom) {
+        for (char32_t codePoint : m_custom.toUcs4()) {
+            const QString ch = QString::fromUcs4(&codePoint, 1);
             if (!group.contains(ch)) {
                 group.append(ch);
             }
@@ -337,16 +336,13 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 
     // Loop over character groups and remove excluded characters from them;
     // remove empty groups
+    const auto excluded = m_excluded.toUcs4();
     int i = 0;
     while (i != passwordGroups.size()) {
         PasswordGroup group = passwordGroups[i];
 
-        for (QChar ch : m_excluded) {
-            int j = group.indexOf(ch);
-            while (j != -1) {
-                group.remove(j);
-                j = group.indexOf(ch);
-            }
+        for (char32_t codePoint : excluded) {
+            group.removeAll(QString::fromUcs4(&codePoint, 1));
         }
         if (!group.isEmpty()) {
             passwordGroups.replace(i, group);
