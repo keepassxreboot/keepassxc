@@ -8,5 +8,7 @@
 	<array>
 		<string>G2S7P7J672.org.keepassxc.keepassxc</string>
 	</array>
+	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
+	<true/>
 </dict>
 </plist>

@@ -16,7 +16,7 @@
  */
 
 #include "UrlTools.h"
-#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
+#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER) || defined(Q_OS_MACOS)
 #include <QHostAddress>
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
@@ -40,7 +40,9 @@ QUrl UrlTools::getRedirectTarget(QNetworkReply* reply)
     }
     return url;
 }
+#endif
 
+#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER) || defined(Q_OS_MACOS)
 /**
  * Gets the base domain of URL or hostname.
  *
