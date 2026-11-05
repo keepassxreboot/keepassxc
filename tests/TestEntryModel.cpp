@@ -132,6 +132,147 @@ void TestEntryModel::test()
     delete model;
 }
 
+void TestEntryModel::testCustomColumns()
+{
+    Group group;
+    auto first = new Entry();
+    first->setGroup(&group);
+    first->attributes()->set("E-Mail", "b@example.invalid");
+    first->attributes()->set("Department", QString::fromUtf8("Büro"));
+    auto second = new Entry();
+    second->setGroup(&group);
+    second->attributes()->set("E-Mail", "a@example.invalid");
+    second->attributes()->set("department", "Different attribute");
+
+    EntryModel model;
+    model.setCustomColumns({"E-Mail", "Department"});
+    ModelTest modelTest(&model, this);
+    model.setGroup(&group);
+    const int customColumn = EntryModel::ParentGroupPath + 1;
+    QCOMPARE(model.columnCount(), customColumn + 2);
+    QCOMPARE(model.headerData(customColumn, Qt::Horizontal).toString(), QString("E-Mail"));
+    QCOMPARE(model.headerData(customColumn + 1, Qt::Horizontal).toString(), QString("Department"));
+    QCOMPARE(model.data(model.index(0, customColumn)).toString(), QString("b@example.invalid"));
+    QCOMPARE(model.data(model.index(0, customColumn + 1)).toString(), QString::fromUtf8("Büro"));
+    QCOMPARE(model.data(model.index(1, customColumn + 1)).toString(), QString());
+
+    SortFilterHideProxyModel proxy;
+    proxy.setSourceModel(&model);
+    proxy.setDynamicSortFilter(true);
+    proxy.setSortRole(Qt::UserRole);
+    proxy.sort(customColumn);
+    QCOMPARE(proxy.mapToSource(proxy.index(0, customColumn)).row(), 1);
+    second->attributes()->set("E-Mail", "z@example.invalid");
+    QCOMPARE(proxy.mapToSource(proxy.index(0, customColumn)).row(), 0);
+
+    model.setEntries({second, first});
+    QCOMPARE(model.data(model.index(0, customColumn)).toString(), QString("z@example.invalid"));
+}
+
+void TestEntryModel::testCustomColumnPlaceholders()
+{
+    Group group;
+    auto first = new Entry();
+    first->setGroup(&group);
+    first->setUsername("b");
+    first->attributes()->set("Department", "Sales");
+    first->attributes()->set("Contact", "{USERNAME} / {S:Department}");
+    auto second = new Entry();
+    second->setGroup(&group);
+    second->attributes()->set("Contact", "m / Sales");
+
+    EntryModel model;
+    model.setCustomColumns({"Contact"});
+    model.setGroup(&group);
+    const auto index = model.index(0, EntryModel::CustomAttribute);
+    QCOMPARE(model.data(index).toString(), QString("b / Sales"));
+    QCOMPARE(model.data(index, Qt::UserRole).toString(), QString("b / Sales"));
+
+    SortFilterHideProxyModel proxy;
+    proxy.setSourceModel(&model);
+    proxy.setDynamicSortFilter(true);
+    proxy.setSortRole(Qt::UserRole);
+    proxy.sort(index.column());
+    QCOMPARE(proxy.mapToSource(proxy.index(0, index.column())).row(), 0);
+    first->setUsername("z");
+    QCOMPARE(model.data(index).toString(), QString("z / Sales"));
+    QCOMPARE(proxy.mapToSource(proxy.index(0, index.column())).row(), 1);
+    first->attributes()->set("Department", "Support");
+    QCOMPARE(model.data(index).toString(), QString("z / Support"));
+    QCOMPARE(model.data(index, Qt::UserRole).toString(), QString("z / Support"));
+
+    model.setEntries({second, first});
+    QCOMPARE(model.data(model.index(1, index.column())).toString(), QString("z / Support"));
+}
+
+void TestEntryModel::testCustomColumnProtection()
+{
+    const auto previousHidePasswords = config()->get(Config::GUI_HidePasswords);
+    const auto restoreSettings =
+        qScopeGuard([previousHidePasswords] { config()->set(Config::GUI_HidePasswords, previousHidePasswords); });
+    config()->set(Config::GUI_HidePasswords, true);
+    Group group;
+    auto entry = new Entry();
+    entry->setGroup(&group);
+    entry->setUsername("Test value");
+    entry->attributes()->set("Protected", "Test value", true);
+    entry->attributes()->set("Empty", "", true);
+    entry->attributes()->set("Reference", "{USERNAME}", true);
+    entry->attributes()->set("EmptyReference", "{S:Missing}", true);
+    EntryModel model;
+    model.setCustomColumns({"Protected", "Empty", "Reference", "EmptyReference"});
+    model.setGroup(&group);
+    const auto index = model.index(0, EntryModel::ParentGroupPath + 1);
+    QCOMPARE(model.data(index).toString(), QString("\u25cf").repeated(6));
+    QCOMPARE(model.data(index, Qt::UserRole).toString(), QString("Test value"));
+    QVERIFY(!model.data(index, Qt::ToolTipRole).isValid());
+    QCOMPARE(model.data(model.index(0, index.column() + 1)).toString(), QString());
+    const auto referenceIndex = model.index(0, index.column() + 2);
+    QCOMPARE(model.data(referenceIndex).toString(), QString("\u25cf").repeated(6));
+    QCOMPARE(model.data(referenceIndex, Qt::UserRole).toString(), QString("Test value"));
+    QVERIFY(!model.data(referenceIndex, Qt::ToolTipRole).isValid());
+    QCOMPARE(model.data(model.index(0, index.column() + 3)).toString(), QString());
+    QSignalSpy changed(&model, &EntryModel::dataChanged);
+    config()->set(Config::GUI_HidePasswords, false);
+    QVERIFY(!changed.isEmpty());
+    QCOMPARE(model.data(index).toString(), QString("Test value"));
+    QCOMPARE(model.data(referenceIndex).toString(), QString("Test value"));
+}
+
+void TestEntryModel::testCustomColumnChanges()
+{
+    Group group;
+    auto entry = new Entry();
+    entry->setGroup(&group);
+    EntryModel model;
+    ModelTest modelTest(&model, this);
+    model.setGroup(&group);
+    QPersistentModelIndex title(model.index(0, EntryModel::Title));
+    QSignalSpy inserted(&model, &EntryModel::columnsInserted);
+    QSignalSpy removed(&model, &EntryModel::columnsRemoved);
+    model.setCustomColumns({"E-Mail"});
+    QCOMPARE(inserted.count(), 1);
+    model.setCustomColumns({"E-Mail", "Department"});
+    QCOMPARE(inserted.count(), 2);
+    QCOMPARE(removed.count(), 0);
+    QVERIFY(title.isValid());
+    QCOMPARE(title.column(), int(EntryModel::Title));
+    model.setCustomColumns({"E-Mail", "Phone"});
+    QCOMPARE(removed.count(), 1);
+    QCOMPARE(model.headerData(EntryModel::ParentGroupPath + 2, Qt::Horizontal).toString(), QString("Phone"));
+    model.setCustomColumns({});
+    QCOMPARE(model.columnCount(), int(EntryModel::ParentGroupPath + 1));
+    QVERIFY(title.isValid());
+    model.setCustomColumns({"", "Password", "Title", "E-Mail", "E-Mail"});
+    QCOMPARE(model.customColumns(), QStringList({"E-Mail"}));
+    model.setCustomColumns({"E-Mail", "Department", "Phone"});
+    QPersistentModelIndex phone(model.index(0, EntryModel::CustomAttribute + 2));
+    model.setCustomColumns({"E-Mail", "Phone"});
+    QVERIFY(phone.isValid());
+    QCOMPARE(phone.column(), int(EntryModel::CustomAttribute + 1));
+    QCOMPARE(model.headerData(phone.column(), Qt::Horizontal).toString(), QString("Phone"));
+}
+
 void TestEntryModel::testAttachmentsModel()
 {
     auto entryAttachments = new EntryAttachments(this);

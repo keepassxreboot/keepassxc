@@ -57,7 +57,7 @@ Entry::Entry()
 
     connect(m_attributes, &EntryAttributes::modified, this, &Entry::updateTotp);
     connect(m_attributes, &EntryAttributes::modified, this, &Entry::modified);
-    connect(m_attributes, &EntryAttributes::defaultKeyModified, this, &Entry::emitDataChanged);
+    connect(m_attributes, &EntryAttributes::modified, this, &Entry::emitDataChanged);
     connect(m_attachments, &EntryAttachments::modified, this, &Entry::modified);
     connect(m_autoTypeAssociations, &AutoTypeAssociations::modified, this, &Entry::modified);
     connect(m_customData, &CustomData::modified, this, &Entry::modified);
