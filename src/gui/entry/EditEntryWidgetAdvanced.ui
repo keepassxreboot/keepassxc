@@ -135,9 +135,6 @@
           <property name="accessibleName">
            <string>Toggle attribute protection</string>
           </property>
-          <property name="styleSheet">
-           <string notr="true">margin-left:50%;margin-right:50%</string>
-          </property>
           <property name="text">
            <string>Protect</string>
           </property>
