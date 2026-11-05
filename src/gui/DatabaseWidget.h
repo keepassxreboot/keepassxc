@@ -344,6 +344,8 @@ private:
     // Autoreload
     bool m_blockAutoSave;
     bool m_reloading;
+    QPointer<DatabaseOpenDialog> m_reloadOpenDialog;
+    bool m_reloadDiscardsChanges = false;
 
     // Autosave delay
     QPointer<QTimer> m_autosaveTimer;
