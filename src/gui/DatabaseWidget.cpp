@@ -680,6 +680,59 @@ void DatabaseWidget::focusOnGroups(bool editIfFocused)
     }
 }
 
+bool DatabaseWidget::focusPreview()
+{
+    // Single Tab stop at the preview pane itself (discoverable, 1 stop not 9).
+    // Returns false when already inside or the pane cannot take focus so
+    // Tab can continue to search instead of trapping on a hidden target.
+    if (!isEntryViewActive() || !m_previewView) {
+        return false;
+    }
+    auto* fw = focusWidget();
+    if (fw == m_previewView || m_previewView->isAncestorOf(fw)) {
+        return false;
+    }
+    if (!m_previewView->isVisible() || !m_previewView->isEnabled() || m_previewView->width() == 0
+        || m_previewView->height() == 0) {
+        return false;
+    }
+    m_previewView->setFocus(Qt::TabFocusReason);
+    // Verify focus actually landed; otherwise let the caller move to search.
+    auto* landed = focusWidget();
+    return landed == m_previewView;
+}
+
+bool DatabaseWidget::focusPreviewControls()
+{
+    // Explicit F4 entry into the full in-pane walk (all preview controls).
+    // Returns false when already inside the controls or the pane cannot
+    // take focus.
+    if (!isEntryViewActive() || !m_previewView) {
+        return false;
+    }
+    if (isPreviewInnerFocused()) {
+        return false;
+    }
+    if (!m_previewView->isVisible() || !m_previewView->isEnabled() || m_previewView->width() == 0
+        || m_previewView->height() == 0) {
+        return false;
+    }
+    m_previewView->focusInner();
+    return isPreviewInnerFocused();
+}
+
+bool DatabaseWidget::isPreviewFocused() const
+{
+    auto* fw = focusWidget();
+    return m_previewView && (fw == m_previewView || m_previewView->isAncestorOf(fw));
+}
+
+bool DatabaseWidget::isPreviewInnerFocused() const
+{
+    auto* fw = focusWidget();
+    return m_previewView && fw != m_previewView && m_previewView->isAncestorOf(fw);
+}
+
 void DatabaseWidget::moveEntryUp()
 {
     auto currentEntry = currentSelectedEntry();

@@ -45,6 +45,7 @@ private slots:
     void testOpenRemoteDatabase();
     void testAutoreloadDatabase();
     void testTabs();
+    void testEntryPreviewFocusCycle();
     void testEditEntry();
     void testSearchEditEntry();
     void testAddEntry();

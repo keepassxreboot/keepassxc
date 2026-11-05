@@ -103,10 +103,49 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 
-    setFocusProxy(m_ui->entryTabWidget);
+    // Single Tab stop at the pane itself; F4 (focusInner) enters the full walk.
+    // No focus proxy: proxying would pull all nine inner controls into Tab.
+    setFocusProxy(nullptr);
+    setFocusPolicy(Qt::TabFocus);
+    const QString traverseTip = tr("Press F4 to traverse preview");
+    setAccessibleDescription(traverseTip);
+    m_ui->entryTabWidget->setAccessibleDescription(traverseTip);
+    m_ui->groupTabWidget->setAccessibleDescription(traverseTip);
+
+    // Explicit in-pane Tab chain with each tab widget LAST among its page
+    // stops. Qt diverts focus from the tab bar into the page contents,
+    // bypassing chain siblings placed after the tab widget, so buttons that
+    // must stay reachable go first. Hidden widgets are skipped by Qt.
+    QWidget::setTabOrder(m_ui->entryTotpButton, m_ui->entryCloseButton);
+    QWidget::setTabOrder(m_ui->entryCloseButton, m_ui->toggleUsernameButton);
+    QWidget::setTabOrder(m_ui->toggleUsernameButton, m_ui->togglePasswordButton);
+    QWidget::setTabOrder(m_ui->togglePasswordButton, m_ui->toggleEntryNotesButton);
+    QWidget::setTabOrder(m_ui->toggleEntryNotesButton, m_ui->entryTabWidget);
+    QWidget::setTabOrder(m_ui->entryTabWidget, m_ui->toggleGroupNotesButton);
+    QWidget::setTabOrder(m_ui->toggleGroupNotesButton, m_ui->groupCloseButton);
+    QWidget::setTabOrder(m_ui->groupCloseButton, m_ui->groupTabWidget);
 }
 
 EntryPreviewWidget::~EntryPreviewWidget() = default;
+
+void EntryPreviewWidget::focusInner()
+{
+    // Explicit F4 entry into the full in-pane walk (bypasses the single-stop Tab rule).
+    // Enter at the first visible stop of the page walk.
+    if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
+        if (m_ui->toggleGroupNotesButton->isVisibleTo(this)) {
+            m_ui->toggleGroupNotesButton->setFocus(Qt::ShortcutFocusReason);
+        } else if (m_ui->groupCloseButton->isVisibleTo(this)) {
+            m_ui->groupCloseButton->setFocus(Qt::ShortcutFocusReason);
+        } else {
+            m_ui->groupTabWidget->setFocus(Qt::ShortcutFocusReason);
+        }
+    } else if (m_ui->entryTotpButton->isVisibleTo(this)) {
+        m_ui->entryTotpButton->setFocus(Qt::ShortcutFocusReason);
+    } else {
+        m_ui->entryCloseButton->setFocus(Qt::ShortcutFocusReason);
+    }
+}
 
 bool EntryPreviewWidget::eventFilter(QObject* object, QEvent* event)
 {
@@ -273,6 +312,9 @@ void EntryPreviewWidget::setUsernameVisible(bool state)
     }
 
     m_ui->toggleUsernameButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString usernameTip = state ? tr("Hide username") : tr("Show username");
+    m_ui->toggleUsernameButton->setToolTip(usernameTip);
+    m_ui->toggleUsernameButton->setAccessibleName(usernameTip);
 }
 
 void EntryPreviewWidget::setPasswordVisible(bool state)
@@ -311,6 +353,9 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
                                                + m_ui->passwordScrollArea->horizontalScrollBar()->sizeHint().height());
 
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString passwordTip = state ? tr("Hide password") : tr("Show password");
+    m_ui->togglePasswordButton->setToolTip(passwordTip);
+    m_ui->togglePasswordButton->setAccessibleName(passwordTip);
 }
 
 void EntryPreviewWidget::setEntryNotesVisible(bool state)
@@ -318,12 +363,18 @@ void EntryPreviewWidget::setEntryNotesVisible(bool state)
     setNotesVisible(
         m_ui->entryNotesTextEdit, m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->notes()), state);
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString entryNotesTip = state ? tr("Hide notes") : tr("Show notes");
+    m_ui->toggleEntryNotesButton->setToolTip(entryNotesTip);
+    m_ui->toggleEntryNotesButton->setAccessibleName(entryNotesTip);
 }
 
 void EntryPreviewWidget::setGroupNotesVisible(bool state)
 {
     setNotesVisible(m_ui->groupNotesTextEdit, m_currentGroup->notes(), state);
     m_ui->toggleGroupNotesButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString groupNotesTip = state ? tr("Hide notes") : tr("Show notes");
+    m_ui->toggleGroupNotesButton->setToolTip(groupNotesTip);
+    m_ui->toggleGroupNotesButton->setAccessibleName(groupNotesTip);
 }
 
 void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& notes, bool state)
