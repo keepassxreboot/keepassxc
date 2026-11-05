@@ -20,11 +20,15 @@
 #include "browser/BrowserHost.h"
 #include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserSettings.h"
+#include "browser/NativeMessageInstaller.h"
+#include "config-keepassx.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
 #include <QJsonObject>
+#include <QScopeGuard>
+#include <QTemporaryDir>
 #include <QTest>
 
 #include <botan/sodium.h>
@@ -1211,4 +1215,41 @@ void TestBrowser::testBrowserHostCoalescedMessaging()
     result = browserHost.parseSocketData(fragmented7, 0);
     QVERIFY(result.length() == 1);
     QCOMPARE(result.first(), secondOriginalMessage);
+}
+
+void TestBrowser::testFirefoxNativeMessagePath()
+{
+#if defined(Q_OS_LINUX) && !defined(KEEPASSXC_DIST_FLATPAK) && !defined(KEEPASSXC_DIST_SNAP)
+    QTemporaryDir home;
+    QVERIFY(home.isValid());
+    const auto oldHome = qgetenv("HOME");
+    const auto oldConfigHome = qgetenv("XDG_CONFIG_HOME");
+    auto restoreEnv = qScopeGuard([&] {
+        qputenv("HOME", oldHome);
+        qputenv("XDG_CONFIG_HOME", oldConfigHome);
+    });
+    qputenv("HOME", home.path().toLocal8Bit());
+    qputenv("XDG_CONFIG_HOME", QString(home.path() + "/config").toLocal8Bit());
+
+    const QString xdgPath = home.path() + "/config/mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json";
+    const QString legacyPath = home.path() + "/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json";
+    NativeMessageInstaller installer;
+
+    // Without ~/.mozilla the manifest goes to $XDG_CONFIG_HOME/mozilla
+    installer.setBrowserEnabled(BrowserShared::FIREFOX, true);
+    QVERIFY(QFile::exists(xdgPath));
+    QVERIFY(!QDir(home.path() + "/.mozilla").exists());
+    QVERIFY(installer.isBrowserEnabled(BrowserShared::FIREFOX));
+    installer.setBrowserEnabled(BrowserShared::FIREFOX, false);
+    QVERIFY(!QFile::exists(xdgPath));
+
+    // An existing ~/.mozilla keeps the legacy location
+    QVERIFY(QDir(home.path()).mkdir(".mozilla"));
+    installer.setBrowserEnabled(BrowserShared::FIREFOX, true);
+    QVERIFY(QFile::exists(legacyPath));
+    QVERIFY(!QFile::exists(xdgPath));
+    QVERIFY(installer.isBrowserEnabled(BrowserShared::FIREFOX));
+#else
+    QSKIP("Only native Linux builds choose between ~/.mozilla and $XDG_CONFIG_HOME/mozilla");
+#endif
 }
