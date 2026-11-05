@@ -75,7 +75,6 @@ void NativeMessagingProxy::setupStandardInput()
                     emit stdinMessage(msg);
                 }
             }
-            QThread::msleep(100);
         }
         QCoreApplication::quit();
     });
@@ -106,8 +105,8 @@ void NativeMessagingProxy::setupLocalSocket()
 
 void NativeMessagingProxy::transferSocketMessage()
 {
-    auto msg = m_localSocket->readAll();
-    if (!msg.isEmpty()) {
+    m_socketBuffer += m_localSocket->readAll();
+    for (const auto& msg : takeSocketMessages(m_socketBuffer)) {
         // Explicitly write the message length as 1 byte chunks
         uint len = msg.size();
         std::cout.write(reinterpret_cast<char*>(&len), sizeof(len));

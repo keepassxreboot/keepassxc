@@ -23,6 +23,7 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "proxy/NativeMessagingProxy.h"
 
 #include <QJsonObject>
 #include <QTest>
@@ -1211,4 +1212,24 @@ void TestBrowser::testBrowserHostCoalescedMessaging()
     result = browserHost.parseSocketData(fragmented7, 0);
     QVERIFY(result.length() == 1);
     QCOMPARE(result.first(), secondOriginalMessage);
+}
+
+void TestBrowser::testProxySocketMessages()
+{
+    const QByteArray first = "{\"action\":\"get-databasehash\",\"nonce\":\"a\"}";
+    const QByteArray second = "{\"action\":\"get-databasehash\",\"nonce\":\"b\"}";
+
+    // Coalesced replies are split into separate messages
+    QByteArray buffer = first + second;
+    QCOMPARE(takeSocketMessages(buffer), QList<QByteArray>({first, second}));
+    QVERIFY(buffer.isEmpty());
+
+    // A fragmented reply is kept until it is complete
+    buffer = first + second.left(10);
+    QCOMPARE(takeSocketMessages(buffer), QList<QByteArray>({first}));
+    QCOMPARE(buffer, second.left(10));
+    QVERIFY(takeSocketMessages(buffer).isEmpty());
+    buffer += second.mid(10);
+    QCOMPARE(takeSocketMessages(buffer), QList<QByteArray>({second}));
+    QVERIFY(buffer.isEmpty());
 }

@@ -44,8 +44,25 @@ private:
 
 private:
     QScopedPointer<QLocalSocket> m_localSocket;
+    QByteArray m_socketBuffer;
 
     Q_DISABLE_COPY(NativeMessagingProxy)
 };
+
+/**
+ * Take the complete messages out of the data read from the application. Replies can arrive
+ * coalesced or fragmented. Like BrowserHost::parseSocketData, this relies on every message
+ * being one flat JSON object. An incomplete message stays in the buffer.
+ */
+inline QList<QByteArray> takeSocketMessages(QByteArray& buffer)
+{
+    QList<QByteArray> messages;
+    qsizetype end;
+    while ((end = buffer.indexOf('}')) != -1) {
+        messages << buffer.left(end + 1);
+        buffer.remove(0, end + 1);
+    }
+    return messages;
+}
 
 #endif // NATIVEMESSAGINGPROXY_H
