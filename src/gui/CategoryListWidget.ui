@@ -49,6 +49,12 @@
      <property name="text">
       <string notr="true"/>
      </property>
+     <property name="toolTip">
+      <string>Scroll categories up</string>
+     </property>
+     <property name="accessibleName">
+      <string>Scroll categories up</string>
+     </property>
      <property name="arrowType">
       <enum>Qt::UpArrow</enum>
      </property>
@@ -104,6 +110,12 @@
      </property>
      <property name="text">
       <string notr="true"/>
+     </property>
+     <property name="toolTip">
+      <string>Scroll categories down</string>
+     </property>
+     <property name="accessibleName">
+      <string>Scroll categories down</string>
      </property>
      <property name="arrowType">
       <enum>Qt::DownArrow</enum>

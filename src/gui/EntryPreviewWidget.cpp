@@ -273,6 +273,9 @@ void EntryPreviewWidget::setUsernameVisible(bool state)
     }
 
     m_ui->toggleUsernameButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString usernameTip = state ? tr("Hide username") : tr("Show username");
+    m_ui->toggleUsernameButton->setToolTip(usernameTip);
+    m_ui->toggleUsernameButton->setAccessibleName(usernameTip);
 }
 
 void EntryPreviewWidget::setPasswordVisible(bool state)
@@ -311,6 +314,9 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
                                                + m_ui->passwordScrollArea->horizontalScrollBar()->sizeHint().height());
 
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString passwordTip = state ? tr("Hide password") : tr("Show password");
+    m_ui->togglePasswordButton->setToolTip(passwordTip);
+    m_ui->togglePasswordButton->setAccessibleName(passwordTip);
 }
 
 void EntryPreviewWidget::setEntryNotesVisible(bool state)
@@ -318,12 +324,18 @@ void EntryPreviewWidget::setEntryNotesVisible(bool state)
     setNotesVisible(
         m_ui->entryNotesTextEdit, m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->notes()), state);
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString entryNotesTip = state ? tr("Hide notes") : tr("Show notes");
+    m_ui->toggleEntryNotesButton->setToolTip(entryNotesTip);
+    m_ui->toggleEntryNotesButton->setAccessibleName(entryNotesTip);
 }
 
 void EntryPreviewWidget::setGroupNotesVisible(bool state)
 {
     setNotesVisible(m_ui->groupNotesTextEdit, m_currentGroup->notes(), state);
     m_ui->toggleGroupNotesButton->setIcon(icons()->onOffIcon("password-show", state));
+    const QString groupNotesTip = state ? tr("Hide notes") : tr("Show notes");
+    m_ui->toggleGroupNotesButton->setToolTip(groupNotesTip);
+    m_ui->toggleGroupNotesButton->setAccessibleName(groupNotesTip);
 }
 
 void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& notes, bool state)
