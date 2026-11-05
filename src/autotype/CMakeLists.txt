@@ -38,13 +38,15 @@ elseif(WIN32)
 endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
-target_link_libraries(autotype Qt6::Core Qt6::Widgets)
+target_link_libraries(autotype
+        PUBLIC Qt6::Core Qt6::Widgets
+        PRIVATE Botan::botan)
 
 if(UNIX AND NOT APPLE AND NOT HAIKU)
-    target_link_libraries(autotype Qt6::DBus PkgConfig::Xkbcommon)
+    target_link_libraries(autotype PRIVATE Qt6::DBus PkgConfig::Xkbcommon)
     if(WITH_X11)
-        target_link_libraries(autotype ${X11_X11_LIB} ${X11_Xi_LIB} ${X11_XTest_LIB})
+        target_link_libraries(autotype PRIVATE ${X11_X11_LIB} ${X11_Xi_LIB} ${X11_XTest_LIB})
     endif()
 elseif(APPLE)
-    target_link_libraries(autotype "-framework Foundation" "-framework AppKit" "-framework Carbon" "-framework ScreenCaptureKit")
+    target_link_libraries(autotype PUBLIC "-framework Foundation" "-framework AppKit" "-framework Carbon" "-framework ScreenCaptureKit")
 endif()
