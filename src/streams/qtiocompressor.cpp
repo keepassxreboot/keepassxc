@@ -140,7 +140,7 @@ void QtIOCompressorPrivate::flushZlib(int flushMode)
 
         ZlibSize outputSize = bufferSize - zlibStream.avail_out;
 
-        // Try to write data from the buffer to to the underlying device, return on failure.
+        // Try to write data from the buffer to the underlying device, return on failure.
         if (!writeBytes(buffer, outputSize))
             return;
 
@@ -528,7 +528,7 @@ qint64 QtIOCompressor::readData(char *data, qint64 maxSize)
 
     int status;
     do {
-        // Read data if if the input buffer is empty. There could be data in the buffer
+        // Read data if the input buffer is empty. There could be data in the buffer
         // from a previous readData call.
         if (d->zlibStream.avail_in == 0) {
             qint64 bytesAvailable = d->device->read(reinterpret_cast<char *>(d->buffer), d->bufferSize);
@@ -605,7 +605,7 @@ qint64 QtIOCompressor::writeData(const char *data, qint64 maxSize)
 
         ZlibSize outputSize = d->bufferSize - d->zlibStream.avail_out;
 
-        // Try to write data from the buffer to to the underlying device, return -1 on failure.
+        // Try to write data from the buffer to the underlying device, return -1 on failure.
         if (d->writeBytes(d->buffer, outputSize) == false)
             return -1;
 

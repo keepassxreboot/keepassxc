@@ -69,7 +69,7 @@ namespace Phantom
         //
         // If you need to update the hsluv-c code, be mindful of the removed sRGB
         // conversions -- you will need to make similar modifications to the upstream
-        // hsluv-c code. Also note that that the hpluv (pastel) functions have been
+        // hsluv-c code. Also note that the hpluv (pastel) functions have been
         // removed, as they are not used in Phantom.
         typedef struct Triplet_tag Triplet;
         struct Triplet_tag

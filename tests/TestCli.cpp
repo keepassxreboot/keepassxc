@@ -592,7 +592,7 @@ void TestCli::testAttachmentRemove()
     QVERIFY(!attachmentRemoveCmd.name.isEmpty());
     QVERIFY(attachmentRemoveCmd.getDescriptionLine().contains(attachmentRemoveCmd.name));
 
-    // Try deleting an attachment belonging to an non-existent entry
+    // Try deleting an attachment belonging to a non-existent entry
     setInput("a");
     execCmd(attachmentRemoveCmd,
             {"attachment-rm", m_dbFile->fileName(), "invalid_entry_path", "invalid_attachment_name"});

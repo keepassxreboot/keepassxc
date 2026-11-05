@@ -26,7 +26,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>These settings affect to the group's behaviour with the browser extension.</string>
+       <string>These settings affect the group's behaviour with the browser extension.</string>
       </property>
      </widget>
     </item>
