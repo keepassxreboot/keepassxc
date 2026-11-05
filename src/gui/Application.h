@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QString>
 #include <QtNetwork/qlocalserver.h>
+#include <functional>
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
 
@@ -52,11 +53,12 @@ public:
 
     bool sendFileNamesToRunningInstance(const QStringList& fileNames);
     bool sendLockToInstance();
+    bool sendUnlockToInstance(const QString& filename, const QString& password = {}, const QString& keyfile = {});
 
     void restart();
 
 signals:
-    void openFile(const QString& filename);
+    void openFile(const QString& filename, const QString& password = {}, const QString& keyfile = {});
     void anotherInstanceStarted();
     void applicationActivated();
     void quitSignalReceived();
@@ -78,6 +80,10 @@ private:
     static void handleUnixSignal(int sig);
     static int unixSignalSocket[2];
 #endif
+
+    enum SocketCmd : quint32;
+    bool sendSocketCommand(SocketCmd id, const std::function<void(QDataStream&)>&);
+
     bool m_alreadyRunning;
     bool m_darkTheme = false;
     QLockFile* m_lockFile;
