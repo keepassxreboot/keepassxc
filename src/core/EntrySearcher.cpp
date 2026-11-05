@@ -218,6 +218,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                         break;
                     }
                 }
+            } else if (term.word.compare("modified", Qt::CaseInsensitive) == 0) {
+                found = entry->hasUnsavedChanges();
+                break;
             }
             found = false;
             break;
