@@ -290,9 +290,9 @@ void TestMerge::testResolveConflictExisting()
 
 void TestMerge::testResolveConflictTemplate(
     int mergeMode,
-    std::function<void(Database*, const QMap<const char*, QDateTime>&)> verification)
+    std::function<void(Database*, const QMap<QString, QDateTime>&)> verification)
 {
-    QMap<const char*, QDateTime> timestamps;
+    QMap<QString, QDateTime> timestamps;
     timestamps["initialTime"] = m_clock->currentDateTimeUtc();
     QScopedPointer<Database> dbDestination(createTestDatabase());
 
@@ -636,7 +636,7 @@ void TestMerge::assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid>
     QVERIFY(db->containsDeletedObject(identifiers["EntryDeletedInTargetAfterEntryUpdatedInSource"]));
 }
 
-void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<const char*, QDateTime>& timestamps)
+void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<QString, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry1->historyItems().count(), 4);
     QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString(""));
@@ -654,7 +654,7 @@ void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<const c
     QCOMPARE(mergedEntry1->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
 }
 
-void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<const char*, QDateTime>& timestamps)
+void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<QString, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry2->historyItems().count(), 5);
     QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString(""));
@@ -675,7 +675,7 @@ void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<cons
     QCOMPARE(mergedEntry2->timeInfo().lastModificationTime(), timestamps["mergeTime"]);
 }
 
-void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<const char*, QDateTime>& timestamps)
+void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<QString, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry1->historyItems().count(), 5);
     QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString(""));
@@ -696,7 +696,7 @@ void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<cons
     QCOMPARE(mergedEntry1->timeInfo().lastModificationTime(), timestamps["mergeTime"]);
 }
 
-void TestMerge::assertUpdateMergedEntry2(Entry* mergedEntry2, const QMap<const char*, QDateTime>& timestamps)
+void TestMerge::assertUpdateMergedEntry2(Entry* mergedEntry2, const QMap<QString, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry2->historyItems().count(), 4);
     QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString(""));
@@ -729,7 +729,7 @@ void TestMerge::testDeletionConflictEntry_KeepNewer()
  */
 void TestMerge::testResolveConflictEntry_Synchronize()
 {
-    testResolveConflictTemplate(Group::Synchronize, [](Database* db, const QMap<const char*, QDateTime>& timestamps) {
+    testResolveConflictTemplate(Group::Synchronize, [](Database* db, const QMap<QString, QDateTime>& timestamps) {
         QPointer<Group> mergedRootGroup = db->rootGroup();
         QPointer<Group> mergedGroup1 = mergedRootGroup->children().at(0);
         TestMerge::assertUpdateMergedEntry1(mergedGroup1->entries().at(0), timestamps);
@@ -739,7 +739,7 @@ void TestMerge::testResolveConflictEntry_Synchronize()
 
 void TestMerge::testResolveConflictEntry_KeepNewer()
 {
-    testResolveConflictTemplate(Group::KeepNewer, [](Database* db, const QMap<const char*, QDateTime>& timestamps) {
+    testResolveConflictTemplate(Group::KeepNewer, [](Database* db, const QMap<QString, QDateTime>& timestamps) {
         QPointer<Group> mergedRootGroup = db->rootGroup();
         QPointer<Group> mergedGroup1 = mergedRootGroup->children().at(0);
         TestMerge::assertUpdateMergedEntry1(mergedGroup1->entries().at(0), timestamps);
