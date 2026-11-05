@@ -19,10 +19,15 @@
 #include "TestDatabase.h"
 
 #include <QRegularExpression>
+#include <QSemaphore>
 #include <QSignalSpy>
 #include <QTest>
+#include <QThreadPool>
+#include <QTimer>
+#include <QtConcurrent>
 
 #include "config-keepassx-tests.h"
+#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -391,4 +396,49 @@ void TestDatabase::testCustomAttributeKeys()
     };
 
     QCOMPARE(db.customAttributeKeys(), expectedKeys);
+}
+
+void TestDatabase::testModifiedDuringSave()
+{
+    // Saving waits for the worker thread in a nested event loop. A change that arrives in that time
+    // (Secret Service, browser integration) after the database was serialized must keep the database
+    // marked as modified, otherwise it is silently dropped on lock/close.
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.copyFromFile(dbFileName));
+    const QString path = tempFile.fileName();
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    QString error;
+    QVERIFY(db->open(path, key, &error));
+    db->metadata()->setName("before save");
+    QVERIFY(db->isModified());
+
+    // Keep the save task queued until we are inside the nested event loop
+    const int threads = QThreadPool::globalInstance()->maxThreadCount();
+    QSemaphore gate;
+    for (int i = 0; i < threads; ++i) {
+        auto future = QtConcurrent::run([&] { gate.acquire(); });
+        Q_UNUSED(future)
+    }
+
+    // save() is synchronous, so this timer can only fire inside its nested event loop
+    QTimer::singleShot(0, this, [&] {
+        // Let the worker write the file, then change the database before the nested loop sees the save finish
+        gate.release(threads);
+        QVERIFY(QThreadPool::globalInstance()->waitForDone(10000));
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setTitle("added during save");
+        entry->setGroup(db->rootGroup());
+    });
+    QVERIFY2(db->save(Database::Atomic, {}, &error), qPrintable(error));
+    QVERIFY(db->rootGroup()->findEntryByPath("/added during save"));
+
+    // The entry is not in the file, so the database must still be modified
+    auto reopened = QSharedPointer<Database>::create();
+    QVERIFY(reopened->open(path, key, &error));
+    QVERIFY(!reopened->rootGroup()->findEntryByPath("/added during save"));
+    QVERIFY(db->isModified());
 }
