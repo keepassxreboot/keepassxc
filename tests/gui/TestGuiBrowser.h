@@ -40,6 +40,8 @@ private slots:
     void testEntrySettings();
     void testAdditionalURLs();
     void testGetDatabaseGroups();
+    void testPasskeyImportDialogSearch();
+    void testPasskeySuggestedEntries();
 
 private:
     void triggerAction(const QString& name);

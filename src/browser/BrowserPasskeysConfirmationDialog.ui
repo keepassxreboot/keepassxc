@@ -141,6 +141,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="otherEntryButton">
+       <property name="text">
+        <string>Other entry…</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="updateButton">
        <property name="text">
         <string>Update</string>

@@ -40,6 +40,7 @@ public:
     void registerCredential(const QString& username,
                             const QString& relyingParty,
                             const QList<Entry*>& existingEntries,
+                            const QList<Entry*>& suggestedEntries,
                             int timeout);
     void authenticateCredential(const QList<Entry*>& entries, const QString& relyingParty, int timeout);
     Entry* getSelectedEntry() const;
@@ -50,6 +51,8 @@ protected:
 
 private slots:
     void updatePasskey();
+    void selectOtherEntry();
+    void handleDoubleClick();
     void updateProgressBar();
     void updateSeconds();
 
@@ -64,6 +67,8 @@ private:
     QTimer m_timer;
     int m_counter;
     bool m_passkeyUpdated;
+    bool m_otherEntrySelected;
+    bool m_hasSuggestions;
 };
 
 #endif // KEEPASSXC_BROWSERPASSKEYSCONFIRMATIONDIALOG_H
