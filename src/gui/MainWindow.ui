@@ -395,6 +395,7 @@
     <addaction name="separator"/>
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="actionShowGroupPanel"/>
+    <addaction name="actionShowEntriesOfSubgroups"/>
     <addaction name="separator"/>
     <addaction name="actionShowMenubar"/>
     <addaction name="actionShowToolbar"/>
@@ -1214,6 +1215,17 @@
    </property>
    <property name="toolTip">
     <string>Toggle Show Toolbar</string>
+   </property>
+  </action>
+  <action name="actionShowEntriesOfSubgroups">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Entries of Subgroups</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Show Entries of Subgroups</string>
    </property>
   </action>
   <action name="actionShowPreviewPanel">
