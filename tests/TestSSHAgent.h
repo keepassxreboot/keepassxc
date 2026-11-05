@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,11 @@
 #include "sshagent/OpenSSHKey.h"
 #include "util/TemporaryFile.h"
 #include <QProcess>
+#include <QSharedPointer>
 #include <QUuid>
+
+class Database;
+class Entry;
 
 class TestSSHAgent : public QObject
 {
@@ -39,9 +43,17 @@ private slots:
     void testKeyGenRSA();
     void testKeyGenECDSA();
     void testKeyGenEd25519();
+    void testReloadReAddsMissingIdentity();
+    void testReloadTerminatesWhenAlreadyLoaded();
+    void testReloadProcessesAllIdentitiesDespiteEarlierFailure();
+    void testReloadKeepsTrackingWhenDatabaseClosed();
+    void testReloadForgetsDeletedEntry();
+    void testReloadForgetsWhenSshKeyUseDisabled();
     void cleanupTestCase();
 
 private:
+    bool buildTestEntry(QSharedPointer<Database>& db, Entry*& entry, OpenSSHKey& key);
+
     QScopedPointer<TemporaryFile> m_agentSocketFile;
     QString m_agentSocketFileName;
     QProcess m_agentProcess;
