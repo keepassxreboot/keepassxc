@@ -163,6 +163,7 @@ set(gui_SOURCES
         gui/entry/attachments/AttachmentWidget.cpp
         gui/entry/EntryHistoryModel.cpp
         gui/entry/EntryModel.cpp
+        gui/entry/MergeEntriesDialog.cpp
         gui/entry/EntryView.cpp
         gui/export/ExportDialog.cpp
         gui/group/EditGroupWidget.cpp
