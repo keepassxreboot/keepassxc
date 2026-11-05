@@ -79,7 +79,7 @@ namespace FdoSecrets
             return false;
         }
 
-        // populate contents after expose on dbus, because items rely on parent's dbus object path
+        // populate contents after expose on dbus, because items rely on parent's dbus object path.
         if (!backendLocked()) {
             populateContents();
         } else {
@@ -107,7 +107,7 @@ namespace FdoSecrets
 
     DBusResult Collection::ensureUnlocked() const
     {
-        if (backendLocked()) {
+        if (collectionLocked()) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
         return {};
@@ -130,7 +130,7 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (backendLocked()) {
+        if (collectionLocked()) {
             label = name();
         } else {
             label = m_backend->database()->metadata()->name();
@@ -159,7 +159,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        locked = backendLocked();
+        locked = collectionLocked();
         return {};
     }
 
@@ -219,9 +219,9 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (backendLocked()) {
+        if (collectionLocked()) {
             // searchItems should work, whether `this` is locked or not.
-            // however, we can't search items the same way as in gnome-keying,
+            // However, we can't search items the same way as in gnome-keyring,
             // because there's no database at all when locked.
             return {};
         }
@@ -395,7 +395,7 @@ namespace FdoSecrets
             removeFromDBus();
             return;
         }
-        emit collectionLockChanged(backendLocked());
+        emit collectionLockChanged(collectionLocked());
     }
 
     void Collection::populateContents()
@@ -606,7 +606,9 @@ namespace FdoSecrets
             }
         }
 
+        m_exposedGroup = nullptr;
         m_items.clear();
+        m_entryToItem.clear();
     }
 
     QString Collection::backendFilePath() const
@@ -621,7 +623,17 @@ namespace FdoSecrets
 
     bool Collection::backendLocked() const
     {
+        // True when the underlying database is locked, uninitialised, or absent.
         return !m_backend || !m_backend->database()->isInitialized() || m_backend->isLocked();
+    }
+
+    bool Collection::collectionLocked() const
+    {
+        // True when the collection appears locked to DBus clients.
+        // The collection appears locked when the database is locked, and also while
+        // m_exposedGroup is null - between the databaseUnlocked signal and the end of
+        // populateContents().
+        return backendLocked() || !m_exposedGroup;
     }
 
     bool Collection::doDeleteEntry(Entry* entry)
