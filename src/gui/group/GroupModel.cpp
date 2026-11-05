@@ -131,6 +131,8 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
         return Icons::groupIconPixmap(group);
     } else if (role == Qt::FontRole) {
         QFont font;
+        font.setBold(true);
+
         if (group->isExpired()) {
             font.setStrikeOut(true);
         }
