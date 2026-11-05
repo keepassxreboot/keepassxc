@@ -725,13 +725,8 @@ bool MainWindow::isHardwareKeySupported()
  */
 bool MainWindow::refreshHardwareKeys()
 {
-    auto yk = YubiKey::instance();
     // find keys sync to allow returning if any key was found
-    bool found = yk->findValidKeys();
-    // emit signal so DatabaseOpenWidget can select last used key
-    // emit here manually because sync findValidKeys() cannot do that properly
-    emit yk->detectComplete(found);
-    return found;
+    return YubiKey::instance()->findValidKeys();
 }
 
 void MainWindow::updateLastDatabasesMenu()
