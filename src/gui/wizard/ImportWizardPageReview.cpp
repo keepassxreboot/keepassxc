@@ -92,6 +92,7 @@ void ImportWizardPageReview::initializePage()
     case ImportWizard::IMPORT_REMOTE:
         m_db = importRemote(field("DownloadCommand").toString(),
                             field("DownloadInput").toString(),
+                            field("DownloadTimeoutSec").toInt(),
                             field("ImportPassword").toString(),
                             field("ImportKeyFile").toString());
         break;
@@ -243,17 +244,20 @@ bool ImportWizardPageReview::isCsvImport() const
 
 QSharedPointer<Database> ImportWizardPageReview::importRemote(const QString& downloadCommand,
                                                               const QString& downloadInput,
+                                                              int downloadTimeoutSec,
                                                               const QString& password,
                                                               const QString& keyfile)
 {
     auto* params = new RemoteParams();
     params->downloadCommand = downloadCommand;
     params->downloadInput = downloadInput;
+    params->downloadTimeoutMsec = downloadTimeoutSec * 1000;
 
     auto result = m_remoteHandler->download(params);
 
     if (!result.success) {
         m_ui->messageWidget->showMessage(result.errorMessage, KMessageWidget::Error, -1);
+        return {};
     }
 
     auto key = QSharedPointer<CompositeKey>::create();
