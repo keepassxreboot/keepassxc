@@ -18,12 +18,15 @@
 #include "TestSSHAgent.h"
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
+#include "core/Group.h"
 #include "crypto/Crypto.h"
+#include "keys/PasswordKey.h"
 #include "sshagent/KeeAgentSettings.h"
 #include "sshagent/OpenSSHKeyGen.h"
 #include "sshagent/SSHAgent.h"
 
 #include <QElapsedTimer>
+#include <QScopeGuard>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestSSHAgent)
@@ -84,9 +87,9 @@ void TestSSHAgent::initTestCase()
                                       "MEBQY=\n"
                                       "-----END OPENSSH PRIVATE KEY-----\n");
 
-    const QByteArray keyData = keyString.toLatin1();
+    m_keyData = keyString.toLatin1();
 
-    QVERIFY(m_key.parsePKCS1PEM(keyData));
+    QVERIFY(m_key.parsePKCS1PEM(m_keyData));
 }
 
 void TestSSHAgent::init()
@@ -162,6 +165,135 @@ void TestSSHAgent::testRemoveOnClose()
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
     agent.setEnabled(false);
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && !keyInAgent);
+}
+
+// A database file holding m_key as an attachment, set to be added to the agent
+// on unlock and removed on lock.
+void TestSSHAgent::writeKeyDatabase(const QString& filePath)
+{
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    db->setKey(key);
+
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(db->rootGroup());
+    entry->attachments()->set("id_ed25519", m_keyData);
+
+    KeeAgentSettings settings;
+    settings.setAllowUseOfSshKey(true);
+    settings.setAddAtDatabaseOpen(true);
+    settings.setRemoveAtDatabaseClose(true);
+    settings.setSelectedType("attachment");
+    settings.setAttachmentName("id_ed25519");
+    settings.toEntry(entry);
+
+    QString error;
+    QVERIFY2(db->saveAs(filePath, Database::Atomic, QString(), &error), qPrintable(error));
+}
+
+// Every load of the file builds a new Database object, as a reload from disk
+// (DatabaseWidget::reloadDatabaseFile) or opening a second copy of the file does.
+QSharedPointer<Database> TestSSHAgent::loadKeyDatabase(const QString& filePath)
+{
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    QString error;
+    if (!db->open(filePath, key, &error)) {
+        qWarning() << error;
+        return {};
+    }
+    return db;
+}
+
+void TestSSHAgent::testRemoveOnLockAfterReload()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+    auto cleanup = qScopeGuard([&] { agent.removeIdentity(m_key); });
+
+    TemporaryFile file;
+    QVERIFY(file.open());
+    writeKeyDatabase(file.fileName());
+    bool keyInAgent;
+
+    auto db = loadKeyDatabase(file.fileName());
+    QVERIFY(db);
+    agent.databaseUnlocked(db);
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
+
+    auto reloaded = loadKeyDatabase(file.fileName());
+    QVERIFY(reloaded);
+    db.reset();
+
+    agent.databaseLocked(reloaded);
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent));
+    QVERIFY2(!keyInAgent, "key stayed in the agent after locking a reloaded database");
+}
+
+void TestSSHAgent::testReaddOnUnlockAfterReload()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+    auto cleanup = qScopeGuard([&] { agent.removeIdentity(m_key); });
+
+    TemporaryFile file;
+    QVERIFY(file.open());
+    writeKeyDatabase(file.fileName());
+    bool keyInAgent;
+
+    auto db = loadKeyDatabase(file.fileName());
+    QVERIFY(db);
+    agent.databaseUnlocked(db);
+
+    auto reloaded = loadKeyDatabase(file.fileName());
+    QVERIFY(reloaded);
+    db.reset();
+    agent.databaseLocked(reloaded);
+
+    // The user clears the agent (ssh-add -D) and unlocks again.
+    agent.removeIdentity(m_key);
+    agent.databaseUnlocked(reloaded);
+    QCOMPARE(agent.errorString(), QString());
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent));
+    QVERIFY2(keyInAgent, "key was not added back when unlocking a reloaded database");
+}
+
+// Two copies of one file open at once hold the same keys, so the agent treats
+// them as one owner: neither is refused, and locking either removes the keys.
+void TestSSHAgent::testTwoOpenCopiesShareKeys()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+    auto cleanup = qScopeGuard([&] { agent.removeIdentity(m_key); });
+
+    TemporaryFile original;
+    QVERIFY(original.open());
+    writeKeyDatabase(original.fileName());
+    TemporaryFile copy;
+    QVERIFY(copy.copyFromFile(original.fileName()));
+    bool keyInAgent;
+
+    auto first = loadKeyDatabase(original.fileName());
+    auto second = loadKeyDatabase(copy.fileName());
+    QVERIFY(first && second);
+
+    agent.databaseUnlocked(first);
+    agent.databaseUnlocked(second);
+    QCOMPARE(agent.errorString(), QString());
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
+
+    agent.databaseLocked(second);
+    QVERIFY(agent.checkIdentity(m_key, keyInAgent));
+    QVERIFY2(!keyInAgent, "key stayed in the agent after locking the second copy");
 }
 
 void TestSSHAgent::testLifetimeConstraint()
