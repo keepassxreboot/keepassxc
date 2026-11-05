@@ -1161,7 +1161,31 @@ void TestGui::testSearch()
     auto* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
     QVERIFY(searchWidget->isEnabled());
     auto* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
+    QVERIFY(searchTextEdit);
+
+    auto* includeProtectedAction = searchWidget->findChild<QAction*>("actionSearchIncludeProtected");
+    auto* caseSensitiveAction = searchWidget->findChild<QAction*>("actionSearchCaseSensitive");
+    auto* regularExprAction = searchWidget->findChild<QAction*>("actionSearchRegularExpr");
+    auto* limitGroupAction = searchWidget->findChild<QAction*>("actionSearchLimitGroup");
     auto* waitForEnterAction = searchWidget->findChild<QAction*>("actionSearchWaitForEnter");
+
+    QVERIFY(includeProtectedAction);
+    QVERIFY(caseSensitiveAction);
+    QVERIFY(regularExprAction);
+    QVERIFY(limitGroupAction);
+    QVERIFY(waitForEnterAction);
+
+    QVERIFY(includeProtectedAction->isVisible());
+    QVERIFY(caseSensitiveAction->isVisible());
+    QVERIFY(regularExprAction->isVisible());
+    QVERIFY(limitGroupAction->isVisible());
+    QVERIFY(waitForEnterAction->isVisible());
+
+    QVERIFY(includeProtectedAction->isCheckable());
+    QVERIFY(caseSensitiveAction->isCheckable());
+    QVERIFY(regularExprAction->isCheckable());
+    QVERIFY(limitGroupAction->isCheckable());
+    QVERIFY(waitForEnterAction->isCheckable());
 
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
@@ -1173,29 +1197,134 @@ void TestGui::testSearch()
     QVERIFY(helpButton->isVisible());
     QVERIFY(!helpPanel->isVisible());
 
-    // Test "wait for enter" toggle
-    QVERIFY(waitForEnterAction->isVisible());
-    QVERIFY(waitForEnterAction->isCheckable());
+    // Add some more data to make search meaningful
+    Entry* testEntry = nullptr;
+    Entry* something2Entry = nullptr;
+    Entry* something3Entry = nullptr;
+    for (auto* entry : m_db->rootGroup()->entries()) {
+        if (entry->title() == "test") {
+            testEntry = entry;
+        } else if (entry->title() == "something 2") {
+            something2Entry = entry;
+        } else if (entry->title() == "something 3") {
+            something3Entry = entry;
+        }
+    }
+    QVERIFY(testEntry);
+    QVERIFY(something2Entry);
+    QVERIFY(something3Entry);
 
-    // Test search with "wait for enter" disabled (default)
+    testEntry->setNotes("abc");
+
+    something2Entry->setUsername("johnwilliams");
+    something2Entry->setUrl("www.domain.com");
+    something2Entry->setPassword("protected-password-value");
+    something2Entry->attributes()->set("ProtectedAttribute", "protected-attribute-value", true);
+    something2Entry->attributes()->set("MyAttribute", "mystring123");
+
+    something3Entry->setUsername("williams");
+    something3Entry->setUrl("www.example.com");
+    something3Entry->setNotes("test");
+    something3Entry->attributes()->set("mystring123", "ordinary-attribute-value");
+
+    // Start from the default search policy.
+    QVERIFY(!includeProtectedAction->isChecked());
+    QVERIFY(!caseSensitiveAction->isChecked());
+    QVERIFY(!regularExprAction->isChecked());
+    QVERIFY(!limitGroupAction->isChecked());
+    QVERIFY(!waitForEnterAction->isChecked());
+
+    // Helper functions to simplify search and cleanup
+    auto startSearch = [&](const QString& search) {
+        searchTextEdit->clear();
+        QTest::keyClicks(searchTextEdit, search);
+        QTRY_VERIFY(m_dbWidget->isSearchActive());
+    };
+
+    // Default search
+    startSearch("ZZZ");
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
     searchTextEdit->clear();
-    QTest::keyClicks(searchTextEdit, "ZZZ");
-    QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
-    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_VERIFY(!m_dbWidget->isSearchActive());
+    QTRY_VERIFY(searchTextEdit->text().isEmpty());
+
+    // * matchs all entries
+    startSearch("*");
+    QTRY_COMPARE(entryView->model()->rowCount(), 5);
+
+    // With field specified
+    startSearch("u:johnwilliams url:www.domain.com");
+    QTRY_COMPARE(entryView->model()->rowCount(), 1);
+    startSearch("u:john|williams");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+
+    // Exclude term
+    startSearch("test");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    startSearch("williams !john");
+    QTRY_COMPARE(entryView->model()->rowCount(), 1);
+
+    // Exact match; Both key and value of attribute is searched
+    startSearch("+attr:mystring123");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    startSearch("+attr:MyAttribute");
+    QTRY_COMPARE(entryView->model()->rowCount(), 1);
+
+    // Password and protected additional attributes are excluded
+    startSearch("protected-password-value");
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    startSearch("protected-attribute-value");
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    
+    // Now include protected values
+    includeProtectedAction->trigger();
+    QVERIFY(includeProtectedAction->isChecked());
+    searchTextEdit->clear();
+    QTRY_VERIFY(!m_dbWidget->isSearchActive());
+
+    startSearch("protected-attribute-value");
+    QTRY_COMPARE(entryView->model()->rowCount(), 1);
+    startSearch("protected-password-value");
+    QTRY_COMPARE(entryView->model()->rowCount(), 1);
+
+    // Disable again
+    includeProtectedAction->trigger();
+    QVERIFY(!includeProtectedAction->isChecked());
+    startSearch("protected-password-value");
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
 
-    // Clear search
-    searchTextEdit->clear();
-    QTRY_VERIFY(!m_dbWidget->isSearchActive());
+    // Now set option for regular expression
+    regularExprAction->trigger();
+    QVERIFY(regularExprAction->isChecked());
+    startSearch("^something [23]$");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    startSearch("some.*");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
 
-    // Enable "wait for enter" mode
-    waitForEnterAction->trigger();
-    QVERIFY(waitForEnterAction->isChecked());
+    // Disable again
+    regularExprAction->trigger();
+    QVERIFY(!regularExprAction->isChecked());
+    startSearch("some.*");
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    startSearch("someTHING");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+
+    // Test case-sensitivity
+    caseSensitiveAction->trigger();
+    QVERIFY(caseSensitiveAction->isChecked());
+    startSearch("someTHING");
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    caseSensitiveAction->trigger();
+    QVERIFY(!caseSensitiveAction->isChecked());
+    startSearch("someTHING");
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    searchTextEdit->clear();
+    QTRY_VERIFY(searchTextEdit->text().isEmpty());
 
     // Test search with "wait for enter" enabled
+    waitForEnterAction->trigger(); // Enable
+    QVERIFY(waitForEnterAction->isChecked());
     QTest::keyClicks(searchTextEdit, "ZZZ");
-    QTRY_VERIFY(!m_dbWidget->isSearchActive());
-
     // Press Enter to execute search
     QTest::keyClick(searchTextEdit, Qt::Key_Return);
     QTRY_VERIFY(m_dbWidget->isSearchActive());
@@ -1203,24 +1332,15 @@ void TestGui::testSearch()
     // Check that search remains active even after clearing
     searchTextEdit->clear();
     QTRY_VERIFY(m_dbWidget->isSearchActive());
-
     // Disable "wait for enter" mode
     waitForEnterAction->trigger();
     QVERIFY(!waitForEnterAction->isChecked());
-
-    // Test search with "wait for enter" disabled again
-    QTest::keyClicks(searchTextEdit, "ZZZ");
-    QTRY_VERIFY(m_dbWidget->isSearchActive());
-    QTRY_COMPARE(entryView->model()->rowCount(), 0);
-
-    // Clear search
     searchTextEdit->clear();
-    QTRY_VERIFY(!m_dbWidget->isSearchActive());
+    QTRY_VERIFY(searchTextEdit->text().isEmpty());
 
-    // Enter search
+    // Test Show/Hide search help
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    // Show/Hide search help
     helpButton->trigger();
     QTRY_VERIFY(helpPanel->isVisible());
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
@@ -1244,7 +1364,7 @@ void TestGui::testSearch()
 
     // Test tag search
     searchTextEdit->clear();
-    QTest::keyClicks(searchTextEdit, "tag: testTag");
+    QTest::keyClicks(searchTextEdit, "tag:testTag");
     QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 1);
 
@@ -1316,14 +1436,7 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QCOMPARE(clipboard->text(), QString());
 
-    // Test case sensitive search
-    searchWidget->setCaseSensitive(true);
-    QTRY_COMPARE(entryView->model()->rowCount(), 0);
-    searchWidget->setCaseSensitive(false);
-    QTRY_COMPARE(entryView->model()->rowCount(), 2);
-
     // Test group search
-    searchWidget->setLimitGroup(false);
     GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
@@ -1336,7 +1449,8 @@ void TestGui::testSearch()
     QTest::keyClicks(searchTextEdit, "someTHING");
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
     // Enable group limiting
-    searchWidget->setLimitGroup(true);
+    limitGroupAction->trigger();
+    QVERIFY(limitGroupAction->isChecked());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Selecting another group should NOT cancel search
     clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
@@ -1344,7 +1458,8 @@ void TestGui::testSearch()
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
 
     // reset
-    searchWidget->setLimitGroup(false);
+    limitGroupAction->trigger();
+    QVERIFY(!limitGroupAction->isChecked());
     clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QVERIFY(!m_dbWidget->isSearchActive());
