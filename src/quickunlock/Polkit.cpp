@@ -166,6 +166,9 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
         // https://www.freedesktop.org/software/polkit/docs/0.105/eggdbus-interface-org.freedesktop.PolicyKit1.Authority.html#eggdbus-enum-CheckAuthorizationFlags
         "");
 
+    // The call is asynchronous, wait for the reply before checking it for errors
+    result.waitForFinished();
+
     // A general error occurred
     if (result.isError()) {
         auto msg = result.error().message();
