@@ -749,6 +749,13 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
                 continue;
             }
 
+            // Remote sync settings describe the download/upload commands of a
+            // specific client. They are client-specific and must never be
+            // copied to another database or client.
+            if (key == CustomData::RemoteProgramSettings) {
+                continue;
+            }
+
             auto sourceValue = sourceMetadata->customData()->value(key);
             auto targetValue = targetMetadata->customData()->value(key);
             // Merge only if the values are not the same.
