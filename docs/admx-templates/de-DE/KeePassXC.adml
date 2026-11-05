@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>KeePassXC</displayName>
+  <description>Computerbezogene Richtlinien für ausgewählte KeePassXC-Einstellungen.</description>
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED">KeePassXC 2.8.0 oder neuer</string>
+      <string id="Category_KeePassXC">KeePassXC</string>
+      <string id="Category_General">Allgemein</string>
+      <string id="Category_PasswordGenerator">Passwortgenerator</string>
+      <string id="Category_GUI">Grafische Benutzeroberfläche</string>
+      <string id="Category_Security">Sicherheit</string>
+      <string id="Category_Browser">Browser-Integration</string>
+      <string id="Category_SSHAgent">SSH-Agent</string>
+
+      <string id="BoolExplain">Erzwingt diese KeePassXC-Einstellung für alle Benutzer über HKLM\SOFTWARE\Policies\KeePassXC oder den zugehörigen Abschnittsunterschlüssel.
+
+Aktiviert: schreibt REG_DWORD 1 und erzwingt true.
+Deaktiviert: schreibt REG_DWORD 0 und erzwingt false.
+Nicht konfiguriert: entfernt die Richtlinienvorgabe.
+
+Eine erzwungene Einstellung kann in der KeePassXC-Benutzeroberfläche nicht geändert werden. Der Registrierungswertname entspricht dem Namen der INI-Einstellung. Allgemeine Einstellungen werden direkt im Richtlinienhauptschlüssel gespeichert; andere Abschnitte verwenden entsprechende Unterschlüssel.</string>
+      <string id="TextExplain">Erzwingt diese KeePassXC-Einstellung für alle Benutzer.
+
+Aktiviert: schreibt den eingegebenen Text als REG_SZ.
+Deaktiviert oder Nicht konfiguriert: entfernt die Richtlinienvorgabe.
+
+Es ist kein Standardtext vorgegeben. Geben Sie einen von KeePassXC unterstützten Wert ein. Eine erzwungene Einstellung kann in der KeePassXC-Benutzeroberfläche nicht geändert werden.
+
+Registrierung: HKLM\SOFTWARE\Policies\KeePassXC, im Unterschlüssel des entsprechenden INI-Abschnitts. Der Wertname entspricht dem Namen der INI-Einstellung.</string>
+      <string id="DecimalExplain">Erzwingt diese KeePassXC-Einstellung für alle Benutzer.
+
+Aktiviert: schreibt die eingegebene Zahl als REG_DWORD.
+Deaktiviert oder Nicht konfiguriert: entfernt die Richtlinienvorgabe.
+
+Es ist kein ausdrücklicher numerischer Standardwert vorgegeben. Windows zeigt im Zahlenfeld möglicherweise zunächst null an. Geben Sie vor dem Anwenden der Richtlinie einen geeigneten Wert ein. Die Vorlage prüft keine anwendungsspezifischen Grenzwerte.
+
+Eine erzwungene Einstellung kann in der KeePassXC-Benutzeroberfläche nicht geändert werden.
+
+Registrierung: HKLM\SOFTWARE\Policies\KeePassXC, im Unterschlüssel des entsprechenden INI-Abschnitts. Der Wertname entspricht dem Namen der INI-Einstellung.</string>
+
+      <string id="UpdateCheckMessageShown">Hinweis zur Aktualisierungsprüfung angezeigt</string>
+      <string id="PasswordGenerator_ExcludedChars">Ausgeschlossene Zeichen</string>
+      <string id="GUI_CheckForUpdates">Nach Aktualisierungen suchen</string>
+      <string id="Security_LockDatabaseScreenLock">Datenbank bei Bildschirmsperre sperren</string>
+      <string id="Security_LockDatabaseIdleSeconds">Datenbanken sperren nach Inaktivität von x Sekunden</string>
+      <string id="Security_ClearClipboardTimeout">Zeitlimit zum Leeren der Zwischenablage (Sekunden)</string>
+      <string id="Browser_Enabled">Browser-Integration aktivieren</string>
+      <string id="SSHAgent_UsePageant">Pageant verwenden</string>
+      <string id="SSHAgent_UseOpenSSH">OpenSSH verwenden</string>
+      <string id="SSHAgent_Enabled">SSH-Agent-Integration aktivieren</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="PasswordGenerator_ExcludedChars_Pres">
+        <textBox refId="PasswordGenerator_ExcludedChars_Elem">
+          <label>Auszuschließende Zeichen:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Security_ClearClipboardTimeout_Pres">
+        <decimalTextBox refId="Security_ClearClipboardTimeout_Elem" spinStep="1">Clipboard timeout in seconds:</decimalTextBox>
+      </presentation>
+      <presentation id="Security_LockDatabaseIdleSeconds_Pres">
+        <decimalTextBox refId="Security_LockDatabaseIdleSeconds_Elem" spinStep="1">Datenbank nach x Sekunden Inaktivität sperren:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
