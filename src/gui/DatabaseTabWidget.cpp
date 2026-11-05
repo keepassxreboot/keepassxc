@@ -294,6 +294,8 @@ void DatabaseTabWidget::importFile()
             // Use the already created database as temporary database
             auto dbWidget = new DatabaseWidget(db, this);
             addDatabaseTab(dbWidget);
+            // the temporary database is created already unlocked, announce it
+            emit databaseUnlocked(dbWidget);
             return;
         }
         default:
