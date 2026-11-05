@@ -128,7 +128,7 @@ Files: share/icons/badges/0_ShareActive.svg
        share/icons/database/C54_Signature.svg
        share/icons/database/C66_Money.svg
 Copyright: none
-License: CC0
+License: CC0-1.0
 Comment: Taken from https://github.com/paomedia/small-n-flat
 
 Files: share/icons/badges/2_Expired.svg
@@ -278,7 +278,7 @@ Comment: from Freedesktop.org website
 
 Files: share/icons/application/scalable/actions/hibp.svg
        share/icons/database/C64_Apple.svg
-Copyright: GPL-2+
+Copyright: CC0-1.0
 Comment: from the Simple Icons repo (https://github.com/simple-icons/simple-icons/)
 
 Files: src/thirdparty/ykcore/yk*
