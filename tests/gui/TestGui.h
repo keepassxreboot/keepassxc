@@ -72,6 +72,7 @@ private slots:
     void testShortcutConfig();
     void testMenuActionStates();
     void testDeleteEntryDuringModalDialog();
+    void testUsbHotplugKeepsThreadPoolFree();
 
 private:
     void addCannedEntries();
