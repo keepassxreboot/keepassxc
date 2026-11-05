@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,9 @@ private slots:
     void testCreatingAttestationObjectWithEC();
     void testCreatingAttestationObjectWithRSA();
     void testRegister();
+    void testRegisterWithRelatedOrigins();
     void testGet();
+    void testGetWithRelatedOrigins();
 
     void testExtensions();
     void testParseFlags();
@@ -48,6 +50,7 @@ private slots:
     void testIsDomain();
     void testRegistrableDomainSuffix();
     void testRpIdValidation();
+    void testRelatedOriginsValidation();
     void testParseAttestation();
     void testParseCredentialTypes();
     void testIsAuthenticatorSelectionValid();

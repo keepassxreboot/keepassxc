@@ -66,6 +66,18 @@ void TestUrlTools::testTopLevelDomain()
     }
 }
 
+void TestUrlTools::testTopLevelDomainWithReturnOnlyLabel()
+{
+    QList<QPair<QString, QString>> urls{
+        {QString("https://another.example.co.uk"), QString("example")},
+        {QString("https://www.example.com"), QString("example")},
+    };
+
+    for (const auto& u : urls) {
+        QCOMPARE(UrlTools::getBaseDomainFromUrl(u.first, true), u.second);
+    }
+}
+
 void TestUrlTools::testIsIpAddress()
 {
     auto host1 = "example.com"; // Not valid

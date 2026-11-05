@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@ public:
     bool checkCredentialAssertionOptions(const QJsonObject& assertionOptions) const;
     int getEffectiveDomain(const QString& origin, QString* result) const;
     int validateRpId(const QJsonValue& rpIdValue, const QString& effectiveDomain, QString* result) const;
+    bool validateRelatedOrigins(const QStringList& relatedOrigins, const QString& origin) const;
     QString parseAttestation(const QString& attestation) const;
     QJsonArray parseCredentialTypes(const QJsonArray& credentialTypes) const;
     bool isAuthenticatorSelectionValid(const QJsonObject& authenticatorSelection) const;
