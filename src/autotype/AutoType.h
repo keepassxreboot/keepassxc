@@ -22,6 +22,7 @@
 #include "AutoTypeAction.h"
 
 #include <QMutex>
+#include <QPointer>
 #include <QTimer>
 #include <QWidget>
 
@@ -33,6 +34,7 @@
 #include "core/Entry.h"
 
 class AutoTypePlatformInterface;
+class AutoTypeSelectDialog;
 
 class AutoType : public QObject
 {
@@ -40,6 +42,7 @@ class AutoType : public QObject
 
 public:
     QStringList windowTitles();
+    bool isSelectDialogVisible() const;
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error = nullptr);
     void unregisterGlobalShortcut();
     void performAutoType(const Entry* entry);
@@ -107,6 +110,7 @@ private:
     QString m_windowTitleForGlobal;
     WindowState m_windowState;
     WId m_windowForGlobal;
+    QPointer<AutoTypeSelectDialog> m_selectDialog;
     AutoTypeMatch m_lastMatch;
     QTimer m_lastMatchRetypeTimer;
 
