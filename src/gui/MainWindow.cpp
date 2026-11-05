@@ -1124,7 +1124,7 @@ void MainWindow::showUpdateCheckDialog()
 void MainWindow::customOpenUrl(QString url)
 {
 #ifdef KEEPASSXC_DIST_APPIMAGE
-    QProcess::execute("xdg-open", {url});
+    QProcess::startDetached("xdg-open", {url});
 #else
     QDesktopServices::openUrl(QUrl(url));
 #endif
