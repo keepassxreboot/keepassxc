@@ -37,6 +37,7 @@ class PolkitAuthorizationResults
 {
 public:
     bool is_authorized;
+    bool is_canceled;
     bool is_challenge;
     QMap<QString, QString> details;
 

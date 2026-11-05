@@ -25,14 +25,24 @@ class QuickUnlockInterface
     Q_DISABLE_COPY(QuickUnlockInterface)
 
 public:
+    enum KeyStatus
+    {
+        OK,
+        ERR_AUTH_FAILURE,
+        ERR_USER_CANCELED,
+        ERR_NO_KEY,
+        ERR_CRYPTO_FAILURE,
+        ERR_OTHER,
+    };
+
     QuickUnlockInterface() = default;
     virtual ~QuickUnlockInterface() = default;
 
     virtual bool isAvailable() const = 0;
     virtual QString errorString() const = 0;
 
-    virtual bool setKey(const QUuid& dbUuid, const QByteArray& key) = 0;
-    virtual bool getKey(const QUuid& dbUuid, QByteArray& key) = 0;
+    virtual KeyStatus setKey(const QUuid& dbUuid, const QByteArray& key) = 0;
+    virtual KeyStatus getKey(const QUuid& dbUuid, QByteArray& key) = 0;
     virtual bool hasKey(const QUuid& dbUuid) const = 0;
 
     virtual void reset(const QUuid& dbUuid) = 0;
@@ -45,8 +55,8 @@ public:
     bool isAvailable() const override;
     QString errorString() const override;
 
-    bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
-    bool getKey(const QUuid& dbUuid, QByteArray& key) override;
+    KeyStatus setKey(const QUuid& dbUuid, const QByteArray& key) override;
+    KeyStatus getKey(const QUuid& dbUuid, QByteArray& key) override;
     bool hasKey(const QUuid& dbUuid) const override;
 
     void reset(const QUuid& dbUuid) override;

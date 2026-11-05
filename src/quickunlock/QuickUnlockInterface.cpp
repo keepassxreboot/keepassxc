@@ -55,18 +55,18 @@ void NoQuickUnlock::reset()
 {
 }
 
-bool NoQuickUnlock::setKey(const QUuid& dbUuid, const QByteArray& key)
+QuickUnlockInterface::KeyStatus NoQuickUnlock::setKey(const QUuid& dbUuid, const QByteArray& key)
 {
     Q_UNUSED(dbUuid)
     Q_UNUSED(key)
-    return false;
+    return ERR_OTHER;
 }
 
-bool NoQuickUnlock::getKey(const QUuid& dbUuid, QByteArray& key)
+QuickUnlockInterface::KeyStatus NoQuickUnlock::getKey(const QUuid& dbUuid, QByteArray& key)
 {
     Q_UNUSED(dbUuid)
     Q_UNUSED(key)
-    return false;
+    return ERR_OTHER;
 }
 
 bool NoQuickUnlock::hasKey(const QUuid& dbUuid) const

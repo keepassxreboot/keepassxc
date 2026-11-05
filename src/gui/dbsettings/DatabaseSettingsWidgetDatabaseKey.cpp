@@ -16,6 +16,7 @@
  */
 
 #include "DatabaseSettingsWidgetDatabaseKey.h"
+#include "ui_DatabaseSettingsWidgetDatabaseKey.h"
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -32,26 +33,27 @@
 #include <QLayout>
 #include <QPushButton>
 
+#include "core/Metadata.h"
+
 DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)
+    , m_ui(new Ui::DatabaseSettingsWidgetDatabaseKey())
     , m_additionalKeyOptionsToggle(new QPushButton(tr("Add additional protection…"), this))
     , m_additionalKeyOptions(new QWidget(this))
     , m_passwordEditWidget(new PasswordEditWidget(this))
     , m_keyFileEditWidget(new KeyFileEditWidget(this))
     , m_yubiKeyEditWidget(new YubiKeyEditWidget(this))
 {
-    auto* vbox = new QVBoxLayout(this);
-    vbox->setSizeConstraint(QLayout::SetMinimumSize);
-    vbox->setSpacing(20);
+    m_ui->setupUi(this);
 
     // Primary password option
-    vbox->addWidget(m_passwordEditWidget);
+    m_ui->passwordKey->addWidget(m_passwordEditWidget);
 
     // Additional key options
     m_additionalKeyOptionsToggle->setObjectName("additionalKeyOptionsToggle");
-    vbox->addWidget(m_additionalKeyOptionsToggle);
-    vbox->addWidget(m_additionalKeyOptions);
-    vbox->setSizeConstraint(QLayout::SetMinimumSize);
+    m_ui->otherKeys->addWidget(m_additionalKeyOptionsToggle);
+    m_ui->otherKeys->addWidget(m_additionalKeyOptions);
+    m_ui->otherKeys->setSizeConstraint(QLayout::SetMinimumSize);
     m_additionalKeyOptions->setLayout(new QVBoxLayout());
     m_additionalKeyOptions->layout()->setContentsMargins(0, 0, 0, 0);
     m_additionalKeyOptions->layout()->setSpacing(20);
@@ -61,8 +63,15 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
 
     connect(m_additionalKeyOptionsToggle, SIGNAL(clicked()), SLOT(showAdditionalKeyOptions()));
 
-    vbox->addStretch();
-    setLayout(vbox);
+#if defined(Q_OS_MACOS)
+    m_ui->allowQuickUnlockCheckbox->setText(tr("Allow Quick Unlock via TouchID or user password"));
+#elif defined(Q_OS_WIN)
+    m_ui->allowQuickUnlockCheckbox->setText(tr("Allow Quick Unlock via Windows Hello"));
+#endif
+
+    if (!getQuickUnlock()->isAvailable()) {
+        m_ui->allowQuickUnlockLayout->setVisible(false);
+    }
 }
 
 DatabaseSettingsWidgetDatabaseKey::~DatabaseSettingsWidgetDatabaseKey() = default;
@@ -95,6 +104,10 @@ void DatabaseSettingsWidgetDatabaseKey::loadSettings(QSharedPointer<Database> db
         }
 
         setAdditionalKeyOptionsVisible(hasAdditionalKeys);
+
+        auto quickUnlockEnrolled =
+            m_db->metadata()->customData()->value(CustomData::DatabaseAllowQuickUnlock).toLower();
+        m_ui->allowQuickUnlockCheckbox->setChecked(quickUnlockEnrolled == "true" || quickUnlockEnrolled == "1");
     }
 
     connect(m_passwordEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
@@ -117,12 +130,25 @@ void DatabaseSettingsWidgetDatabaseKey::uninitialize()
 
 bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
 {
+    const auto saveAllowQuickUnlock = [this](bool resetQuickUnlock) {
+        auto allowQuickUnlockNew = m_ui->allowQuickUnlockCheckbox->isChecked() ? "true" : "false";
+        auto allowQuickUnlockOld =
+            m_db->metadata()->customData()->value(CustomData::DatabaseAllowQuickUnlock).toLower();
+        if (allowQuickUnlockNew != allowQuickUnlockOld && getQuickUnlock()->isAvailable()) {
+            m_db->metadata()->customData()->set(CustomData::DatabaseAllowQuickUnlock, allowQuickUnlockNew);
+        }
+        if (resetQuickUnlock) {
+            getQuickUnlock()->reset(m_db->publicUuid());
+        }
+    };
+
     m_isDirty |= (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_keyFileEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_yubiKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
 
+    // Key unchanged
     if (m_db->key() && !m_db->key()->isEmpty() && !m_isDirty) {
-        // Key unchanged
+        saveAllowQuickUnlock(!m_ui->allowQuickUnlockCheckbox->isChecked());
         return true;
     }
 
@@ -215,7 +241,7 @@ bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
 
     m_db->setKey(newKey, true, false, false);
 
-    getQuickUnlock()->reset(m_db->publicUuid());
+    saveAllowQuickUnlock(true);
 
     emit editFinished(true);
     if (m_isDirty) {
