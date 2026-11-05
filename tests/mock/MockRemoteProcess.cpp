@@ -19,15 +19,19 @@
 
 #include "MockRemoteProcess.h"
 
-MockRemoteProcess::MockRemoteProcess(QObject* parent, QString dbPath)
+MockRemoteProcess::MockRemoteProcess(QObject* parent, QString dbPath, int exitCode, QString errorOutput)
     : RemoteProcess(parent)
     , m_dbPath(std::move(dbPath))
+    , m_exitCode(exitCode)
+    , m_errorOutput(std::move(errorOutput))
 {
 }
 
 void MockRemoteProcess::start(const QString&)
 {
-    QFile::copy(m_dbPath, m_tempFileLocation);
+    if (m_exitCode == 0) {
+        QFile::copy(m_dbPath, m_tempFileLocation);
+    }
 }
 
 qint64 MockRemoteProcess::write(const QString& data)
@@ -53,7 +57,7 @@ bool MockRemoteProcess::waitForFinished(int)
 
 int MockRemoteProcess::exitCode() const
 {
-    return 0; // always return success
+    return m_exitCode;
 }
 
 QString MockRemoteProcess::readOutput()
@@ -63,5 +67,5 @@ QString MockRemoteProcess::readOutput()
 
 QString MockRemoteProcess::readError()
 {
-    return {};
+    return m_errorOutput;
 }
