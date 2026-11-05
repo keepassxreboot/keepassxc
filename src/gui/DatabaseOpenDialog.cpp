@@ -171,6 +171,23 @@ DatabaseOpenDialog::Intent DatabaseOpenDialog::intent() const
     return m_intent;
 }
 
+void DatabaseOpenDialog::onDatabaseUnlocked(DatabaseWidget* dbWidget)
+{
+    if (!isVisible()) {
+        return;
+    }
+
+    if (m_currentDbWidget != dbWidget && m_tabDbWidgets.contains(dbWidget)) {
+        setActiveDatabaseTab(dbWidget);
+    }
+
+    if (m_currentDbWidget == dbWidget) {
+        m_db = m_currentDbWidget->database();
+        disconnect(this, &DatabaseOpenDialog::dialogFinished, m_currentDbWidget, nullptr);
+        complete(true);
+    }
+}
+
 void DatabaseOpenDialog::clearForms()
 {
     m_view->clearForms();
@@ -221,7 +238,9 @@ void DatabaseOpenDialog::done(int result)
 void DatabaseOpenDialog::complete(bool accepted)
 {
     // save DB, since DatabaseOpenWidget will reset its data after accept() is called
-    m_db = m_view->database();
+    if (!m_db && m_view->database()) {
+        m_db = m_view->database();
+    }
     if (m_db && m_intent == Intent::RemoteSync) {
         m_db->markAsTemporaryDatabase();
     }
