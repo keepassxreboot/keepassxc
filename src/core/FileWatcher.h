@@ -19,6 +19,7 @@
 #define KEEPASSXC_FILEWATCHER_H
 
 #include <QFileSystemWatcher>
+#include <QFutureWatcher>
 #include <QTimer>
 
 class FileWatcher : public QObject
@@ -54,6 +55,7 @@ private:
     QTimer m_fileChangeDelayTimer;
     QTimer m_fileIgnoreDelayTimer;
     QTimer m_fileChecksumTimer;
+    QFutureWatcher<QByteArray> m_checksumWatcher;
     int m_fileChecksumSizeBytes = -1;
     bool m_ignoreFileChange = false;
     bool m_paused = false;

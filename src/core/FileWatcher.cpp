@@ -17,11 +17,33 @@
 
 #include "FileWatcher.h"
 
-#include "core/AsyncTask.h"
+#include <QCryptographicHash>
+#include <QFile>
+#include <QtConcurrent>
 
 #ifdef Q_OS_LINUX
 #include <sys/statfs.h>
 #endif
+
+namespace
+{
+    // Returns an empty checksum if the file can't be read
+    QByteArray fileChecksum(const QString& filePath, int sizeBytes)
+    {
+        QFile file(filePath);
+        if (filePath.isEmpty() || !file.open(QFile::ReadOnly)) {
+            return {};
+        }
+
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        if (sizeBytes > 0) {
+            hash.addData(file.read(sizeBytes));
+        } else {
+            hash.addData(&file);
+        }
+        return hash.result();
+    }
+} // namespace
 
 FileWatcher::FileWatcher(QObject* parent)
     : QObject(parent)
@@ -29,6 +51,21 @@ FileWatcher::FileWatcher(QObject* parent)
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(checkFileChanged()));
     connect(&m_fileChecksumTimer, SIGNAL(timeout()), SLOT(checkFileChanged()));
     connect(&m_fileChangeDelayTimer, &QTimer::timeout, this, [this] { emit fileChanged(m_filePath); });
+    connect(&m_checksumWatcher, &QFutureWatcherBase::finished, this, [this] {
+        // Canceled by stop()
+        if (m_checksumWatcher.isCanceled()) {
+            return;
+        }
+
+        // An unreadable file keeps the last known checksum, see calculateChecksum()
+        const auto checksum = m_checksumWatcher.result();
+        if (!checksum.isEmpty() && checksum != m_fileChecksum) {
+            m_fileChecksum = checksum;
+            m_fileChangeDelayTimer.start(0);
+        }
+
+        m_ignoreFileChange = false;
+    });
     m_fileChangeDelayTimer.setSingleShot(true);
     m_fileIgnoreDelayTimer.setSingleShot(true);
 }
@@ -79,6 +116,8 @@ void FileWatcher::stop()
     m_fileChecksum.clear();
     m_fileChecksumTimer.stop();
     m_fileChangeDelayTimer.stop();
+    // Drop a checksum computed before stop(), also one already waiting in the event queue
+    m_checksumWatcher.setFuture({});
     m_paused = false;
 }
 
@@ -117,31 +156,14 @@ void FileWatcher::checkFileChanged()
     // Prevent reentrance
     m_ignoreFileChange = true;
 
-    AsyncTask::runThenCallback([this] { return calculateChecksum(); },
-                               this,
-                               [this](const QByteArray& checksum) {
-                                   if (checksum != m_fileChecksum) {
-                                       m_fileChecksum = checksum;
-                                       m_fileChangeDelayTimer.start(0);
-                                   }
-
-                                   m_ignoreFileChange = false;
-                               });
+    // The worker only gets copies: this object can be deleted or restarted meanwhile
+    m_checksumWatcher.setFuture(QtConcurrent::run(fileChecksum, m_filePath, m_fileChecksumSizeBytes));
 }
 
 QByteArray FileWatcher::calculateChecksum()
 {
-    QFile file(m_filePath);
-    if (!m_filePath.isEmpty() && file.open(QFile::ReadOnly)) {
-        QCryptographicHash hash(QCryptographicHash::Sha256);
-        if (m_fileChecksumSizeBytes > 0) {
-            hash.addData(file.read(m_fileChecksumSizeBytes));
-        } else {
-            hash.addData(&file);
-        }
-        return hash.result();
-    }
     // If we fail to open the file return the last known checksum, this
     // prevents unnecessary merge requests on intermittent network shares
-    return m_fileChecksum;
+    const auto checksum = fileChecksum(m_filePath, m_fileChecksumSizeBytes);
+    return checksum.isEmpty() ? m_fileChecksum : checksum;
 }
