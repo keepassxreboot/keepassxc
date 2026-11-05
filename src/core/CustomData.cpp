@@ -20,6 +20,9 @@
 #include "core/Clock.h"
 #include "core/Global.h"
 
+const QString CustomData::PasswordProfiles = QStringLiteral("KPXC_PasswordProfiles");
+const QString CustomData::PasswordProfile = QStringLiteral("KPXC_PasswordProfile");
+const QString CustomData::DefaultPasswordProfile = QStringLiteral("KPXC_DefaultPasswordProfile");
 const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
 const QString CustomData::Created = QStringLiteral("_CREATED_");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");

@@ -67,6 +67,9 @@ public:
     static QString getKeyWithPrefix(const QString& prefix, const QString& key);
 
     // Pre-defined keys
+    static const QString PasswordProfiles;
+    static const QString PasswordProfile;
+    static const QString DefaultPasswordProfile;
     static const QString LastModified;
     static const QString Created;
     static const QString BrowserKeyPrefix;

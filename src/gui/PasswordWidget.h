@@ -29,6 +29,8 @@ namespace Ui
     class PasswordWidget;
 }
 
+class PasswordGeneratorWidget;
+
 class PasswordWidget : public QWidget
 {
     Q_OBJECT
@@ -48,6 +50,7 @@ public:
 
 signals:
     void textChanged(QString text);
+    void passwordGeneratorOpened(PasswordGeneratorWidget* generator);
     void requestPlaceholderResolution(const QString& rawText, QString& resolvedText);
 
 public slots:
