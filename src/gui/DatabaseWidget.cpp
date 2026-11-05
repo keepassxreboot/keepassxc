@@ -1496,6 +1496,15 @@ void DatabaseWidget::unlockDatabase(bool accepted)
             syncUnlockedDatabase(accepted);
             return;
         }
+        // The database was unlocked some other way while this dialog was open. The dialog
+        // holds a fresh copy from disk; replacing the open database with it would silently
+        // drop any unsaved changes.
+        if (!isLocked()) {
+            if (senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
+                emit requestGlobalAutoType(m_searchStringForAutoType);
+            }
+            return;
+        }
     }
 
     emit databaseAboutToUnlock();

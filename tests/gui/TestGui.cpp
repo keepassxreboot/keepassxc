@@ -1985,6 +1985,43 @@ void TestGui::testDatabaseLocking()
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
 }
 
+void TestGui::testUnlockDialogAfterUnlockKeepsChanges()
+{
+    // An unlock dialog (as raised by Secret Service, browser or Auto-Type) is still
+    // open when the database is unlocked from the main window and edited. Completing
+    // the stale dialog must not replace the open database with the copy on disk.
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    triggerAction("actionLockAllDatabases");
+    QVERIFY(m_dbWidget->isLocked());
+
+    m_tabWidget->unlockDatabaseInDialog(m_dbWidget, DatabaseOpenDialog::Intent::None);
+    auto* dialog = m_tabWidget->findChild<DatabaseOpenDialog*>();
+    QVERIFY(dialog);
+    QTRY_VERIFY(dialog->isVisible());
+
+    auto* unlockWidget = m_dbWidget->findChild<QWidget*>("databaseOpenWidget");
+    auto* mainPassword =
+        unlockWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QTest::keyClicks(mainPassword, "a");
+    QTest::keyClick(mainPassword, Qt::Key_Enter);
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+
+    auto db = m_dbWidget->database();
+    auto* entry = db->rootGroup()->entries().first();
+    entry->setTitle("Unsaved title");
+    QTRY_VERIFY(db->isModified());
+
+    auto* dialogPassword = dialog->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    dialogPassword->setFocus();
+    QTest::keyClicks(dialogPassword, "a");
+    QTest::keyClick(dialogPassword, Qt::Key_Enter);
+    QTRY_VERIFY(!dialog->isVisible());
+
+    QCOMPARE(m_dbWidget->database(), db);
+    QVERIFY(db->isModified());
+    QCOMPARE(db->rootGroup()->entries().first()->title(), QString("Unsaved title"));
+}
+
 void TestGui::testDragAndDropKdbxFiles()
 {
     const int openedDatabasesCount = m_tabWidget->count();
