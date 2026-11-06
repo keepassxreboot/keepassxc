@@ -146,6 +146,7 @@ void BrowserService::lockDatabase()
 
 void BrowserService::connectCloseSignals(const QDialog& dialog)
 {
+    connect(this, SIGNAL(databaseChanged()), &dialog, SLOT(reject()));
     connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &dialog, SLOT(reject()));
     connect(m_currentDatabaseWidget, SIGNAL(reloadBegin()), &dialog, SLOT(reject()));
     connect(m_currentDatabaseWidget,
@@ -1763,6 +1764,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 
 void BrowserService::activeDatabaseChanged(DatabaseWidget* dbWidget)
 {
+    emit databaseChanged();
     if (dbWidget) {
         if (dbWidget->isLocked()) {
             databaseLocked(dbWidget);

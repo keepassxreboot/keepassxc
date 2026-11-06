@@ -140,6 +140,7 @@ public:
 signals:
     void requestUnlock();
     void passwordGenerated(QLocalSocket* socket, const QString& password, const QString& nonce);
+    void databaseChanged();
 
 public slots:
     void databaseLocked(DatabaseWidget* dbWidget);
