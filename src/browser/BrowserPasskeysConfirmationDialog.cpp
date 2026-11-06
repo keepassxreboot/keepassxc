@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ void BrowserPasskeysConfirmationDialog::showEvent(QShowEvent* event)
 
 void BrowserPasskeysConfirmationDialog::registerCredential(const QString& username,
                                                            const QString& relyingParty,
-                                                           const QList<Entry*>& existingEntries,
+                                                           const QList<QPointer<Entry>>& existingEntries,
                                                            int timeout)
 {
     m_ui->firstLabel->setText(tr("Do you want to register a passkey for:"));
@@ -81,7 +81,7 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
     startCounter(timeout);
 }
 
-void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<Entry*>& entries,
+void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<QPointer<Entry>>& entries,
                                                                const QString& relyingParty,
                                                                int timeout)
 {
@@ -94,7 +94,7 @@ void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<Entry
     startCounter(timeout);
 }
 
-Entry* BrowserPasskeysConfirmationDialog::getSelectedEntry() const
+QPointer<Entry> BrowserPasskeysConfirmationDialog::getSelectedEntry() const
 {
     auto selectedItem = m_ui->credentialsTable->currentItem();
     return selectedItem ? m_entries[selectedItem->row()] : nullptr;
@@ -141,7 +141,7 @@ void BrowserPasskeysConfirmationDialog::updateTimeoutLabel()
     m_ui->timeoutLabel->setText(tr("Timeout in <b>%n</b> seconds...", "", m_ui->progressBar->maximum() - m_counter));
 }
 
-void BrowserPasskeysConfirmationDialog::updateEntriesToTable(const QList<Entry*>& entries)
+void BrowserPasskeysConfirmationDialog::updateEntriesToTable(const QList<QPointer<Entry>>& entries)
 {
     m_entries = entries;
     m_ui->credentialsTable->setRowCount(entries.count());

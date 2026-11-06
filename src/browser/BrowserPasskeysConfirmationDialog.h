@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #define KEEPASSXC_BROWSERPASSKEYSCONFIRMATIONDIALOG_H
 
 #include <QDialog>
+#include <QPointer>
 #include <QTableWidget>
 #include <QTimer>
 
@@ -39,10 +40,10 @@ public:
 
     void registerCredential(const QString& username,
                             const QString& relyingParty,
-                            const QList<Entry*>& existingEntries,
+                            const QList<QPointer<Entry>>& existingEntries,
                             int timeout);
-    void authenticateCredential(const QList<Entry*>& entries, const QString& relyingParty, int timeout);
-    Entry* getSelectedEntry() const;
+    void authenticateCredential(const QList<QPointer<Entry>>& entries, const QString& relyingParty, int timeout);
+    QPointer<Entry> getSelectedEntry() const;
     bool isPasskeyUpdated() const;
 
 protected:
@@ -56,11 +57,11 @@ private slots:
 private:
     void startCounter(int timeout);
     void updateTimeoutLabel();
-    void updateEntriesToTable(const QList<Entry*>& entries);
+    void updateEntriesToTable(const QList<QPointer<Entry>>& entries);
 
 private:
     QScopedPointer<Ui::BrowserPasskeysConfirmationDialog> m_ui;
-    QList<Entry*> m_entries;
+    QList<QPointer<Entry>> m_entries;
     QTimer m_timer;
     int m_counter;
     bool m_passkeyUpdated;
