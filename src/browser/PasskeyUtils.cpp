@@ -25,6 +25,7 @@
 
 #include <botan/kdf.h>
 
+#include <QCryptographicHash>
 #include <QList>
 #include <QUrl>
 #include <botan/mac.h>
@@ -532,7 +533,10 @@ PrfResult PasskeyUtils::getPrfResponse(const QJsonObject& extensionObject,
 // Salt must be: UTF8Encode("WebAuthn PRF") || 0x00 || eval.first)
 QByteArray PasskeyUtils::derivePrfSalt(const QByteArray& rawSalt) const
 {
-    return browserMessageBuilder()->getSha256Hash(SALT_PRF + QByteArray::fromHex("00") + rawSalt);
+    QByteArray input = SALT_PRF.toUtf8();
+    input.append('\0');
+    input.append(rawSalt);
+    return QCryptographicHash::hash(input, QCryptographicHash::Sha256);
 }
 
 QByteArray PasskeyUtils::computePrfValue(const QByteArray& secret, const QByteArray& salt) const
