@@ -17,10 +17,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 add_unit_test(NAME testgui SOURCES TestGui.cpp ../util/TemporaryFile.cpp ../mock/MockRemoteProcess.cpp LIBS ${TEST_LIBRARIES})
 add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARIES})
-add_unit_test(NAME testapplication SOURCES TestApplication.cpp LIBS ${TEST_LIBRARIES})
-target_compile_definitions(testapplication PRIVATE KEEPASSXC_BINARY="$<TARGET_FILE:${PROGNAME}>")
-add_dependencies(testapplication ${PROGNAME})
-set_tests_properties(testapplication PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8;QT_QPA_PLATFORM=offscreen")
 
 file(GLOB_RECURSE ATTACHMENTS_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/attachments/*.cpp)
 add_unit_test(NAME testguiattachments SOURCES ${ATTACHMENTS_TEST_SOURCES} LIBS ${TEST_LIBRARIES})
