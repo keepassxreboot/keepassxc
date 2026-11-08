@@ -121,6 +121,37 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *mv* [_options_] <__database__> <__entry__> <__group__>::
   Moves an entry to a new group.
 
+*mvdir* [_options_] <__database__> <__group__> <__destination__>::
+  Moves a group and its descendants to a new full path. The final path component
+  becomes the group's new name; for example, */Archive/Work* moves the group
+  under the existing *Archive* group and names it *Work*. Use */Work* to move a
+  group to the database root. The destination parent must exist, and the
+  destination must not name an existing group. Groups are not merged and
+  missing parents are not created. The final name must not match an existing
+  child of the resolved destination parent. The database root cannot be moved,
+  and a group cannot be moved into itself or one of its descendants. Empty and
+  slash-only source paths refer to the protected database root. *.* and *..*
+  are literal group names. Source lookup first uses KeePassXC's exact
+  group-path spelling, including separators stored in group names. If no exact
+  source path matches, repeated separators in the query are collapsed and
+  lookup retries against unchanged stored names. For example, */A* does not
+  select a group named *A/*; its exact source path is */A//*. A group named
+  *Slash/Name* has the same path spelling as a nested *Slash/Name* pair, so
+  that source path is rejected as ambiguous. Empty-named and slash-only groups
+  do not shadow the database root. Ambiguous source or destination-parent paths
+  are rejected.
+
+  Destination parsing is separate: repeated and trailing separators remain
+  accepted, empty path components are ignored, and the final non-empty
+  component is the new group name. Empty or slash-only destinations are invalid.
+  The new name is one component and cannot contain */*. A slash-containing
+  source name can be addressed, but cannot be preserved as the destination name.
+  If the destination's final components look like the source's separator-
+  containing name, the command rejects it instead of silently shortening the
+  name. Choose a different final name, such as */Other/Renamed*, to move it.
+  Cross-parent moves append the group after the destination parent's existing
+  children; renaming within the same parent preserves its sibling position.
+
 *open* [_options_] <__database__>::
   Opens the given database in a shell-style interactive mode.
   This is useful for performing multiple operations on a single database (e.g. *ls* followed by *show*).
