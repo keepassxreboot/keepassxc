@@ -95,6 +95,7 @@ void TestEntrySearcher::testSearch()
     auto e2111 = new Entry();
     e2111->setTitle("test search term test");
     e2111->setGroup(group2111);
+    e2111->setExcludeFromReports(true);
 
     auto e2111b = new Entry();
     e2111b->setNotes("test search test");
@@ -106,6 +107,7 @@ void TestEntrySearcher::testSearch()
     auto e3 = new Entry();
     e3->setUrl("test search term test");
     e3->attributes()->set("attr1", "attr33bute");
+    e3->setExcludeFromReports(true);
     e3->setGroup(group3);
 
     auto e3b = new Entry();
@@ -113,7 +115,9 @@ void TestEntrySearcher::testSearch()
     e3b->setUsername("test@email.com");
     e3b->setPassword("realpass");
     e3b->attributes()->set("attr2", "attr2bute");
+    e3b->setTags("ImportantTag");
     e3b->setGroup(group3);
+
 
     // Simple search term testing
     m_searchResult = m_entrySearcher.search("search", m_rootGroup);
@@ -209,6 +213,16 @@ void TestEntrySearcher::testSearch()
     m_searchResult = m_entrySearcher.search("attr[\\d]bute", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
     m_entrySearcher.setRegularExpr(false);
+
+    // Search for entries with/without tags
+    m_searchResult = m_entrySearcher.search("has:tag", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    m_searchResult = m_entrySearcher.search("!has:tag", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 5);
+
+    // Search for entries excluded from reports
+    m_searchResult = m_entrySearcher.search("is:excludedFromReports", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
 }
 
 void TestEntrySearcher::testAndConcatenationInSearch()

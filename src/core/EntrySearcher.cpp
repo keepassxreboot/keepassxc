@@ -221,6 +221,11 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                         break;
                     }
                 }
+            } else if (term.word.compare("excludedFromReports", Qt::CaseInsensitive) == 0) {
+                if (entry->excludeFromReports()) {
+                    found = true;
+                    break;
+                }
             }
             found = false;
             break;
@@ -233,6 +238,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                 break;
             } else if (term.word.compare("expiration", Qt::CaseInsensitive) == 0) {
                 found = entry->timeInfo().expires();
+                break;
+            } else if (term.word.compare("tag", Qt::CaseInsensitive) == 0) {
+                found = !entry->tagList().isEmpty();
                 break;
             }
             found = false;
