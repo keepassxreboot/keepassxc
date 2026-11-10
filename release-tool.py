@@ -679,6 +679,7 @@ class Build(Command):
         parser.add_argument('--with-tests', help='Build and run tests.', action='store_true')
         parser.add_argument('--minimal', help='Build with minimal feature set.', action='store_true')
         parser.add_argument('--build-qt', help='Build Qt6 dependency.', action='store_true')
+        parser.add_argument('--no-sbom', help='Skip SPDX SBOM generation', action='store_true')
         parser.add_argument('--override-version', help='Override displayed version number.')
         parser.add_argument('-p', '--platform-target', default=platform.machine().lower(),
                             help='Build target platform (default: %(default)s).', choices=_PLATFORM_TARGETS)
@@ -733,6 +734,8 @@ class Build(Command):
             '-DWITH_GUI_TESTS=' + with_tests,
             '-DKPXC_MINIMAL=' + minimal
         ]
+        kwargs['sbom'] = not kwargs.pop('no_sbom', False)
+        cmake_opts.append('-DWITH_SBOM=' + ('ON' if kwargs['sbom'] else 'OFF'))
 
         if not kwargs['use_system_deps'] and not docker_image:
             cmake_opts.append(f'-DCMAKE_TOOLCHAIN_FILE={self._get_vcpkg_toolchain_file()}')
@@ -786,6 +789,16 @@ class Build(Command):
         return toolchain.resolve()
 
     @staticmethod
+    def _copy_sbom(build_dir, output_dir, artifact_name, generator=None):
+        suffix = f'-{generator}' if generator else ''
+        source = Path(build_dir) / f'keepassxc{suffix}.spdx.json'
+        if not source.is_file():
+            raise Error(f'Expected deployment SBOM was not generated: {source}')
+        destination = Path(output_dir) / f'{artifact_name}.spdx.json'
+        shutil.copy2(source, destination)
+        logger.info(f'Created SBOM: {destination}')
+
+    @staticmethod
     def _run_tests(cwd, ctest_cmd='ctest', parallelism=4, **run_kwargs):
         logger.info('Running tests...')
         _run([ctest_cmd, '-E', 'gui|cli', '--output-on-failure', '-j', str(parallelism)],
@@ -796,7 +809,7 @@ class Build(Command):
     # noinspection PyMethodMayBeStatic
     def build_windows(self, version, src_dir, output_dir, *, parallelism, cmake_opts, platform_target,
                       sign, sign_identity, sign_timestamp_url, with_tests, mingw, use_system_deps,
-                      build_qt, **_):
+                      build_qt, sbom=True, **_):
         platform_target = _map_platform_target(platform_target, 'amd64', 'arm64')
 
         # Setup build signing if requested
@@ -851,12 +864,16 @@ class Build(Command):
 
             artifacts = list(Path(build_dir).glob("*.zip")) + list(Path(build_dir).glob("*.msi"))
             for artifact in artifacts:
+                if sbom:
+                    self._copy_sbom(build_dir, output_dir, artifact.name,
+                                    'ZIP' if artifact.suffix == '.zip' else 'WIX')
                 artifact.replace(output_dir / artifact.name)
                 logger.info(f'Created artifact: {output_dir / artifact.name}')
 
     # noinspection PyMethodMayBeStatic
     def build_macos(self, version, src_dir, output_dir, *, use_system_deps, parallelism, cmake_opts,
-                    macos_target, platform_target, with_tests, sign, sign_identity, notarize, keychain_profile, **_):
+                    macos_target, platform_target, with_tests, sign, sign_identity, notarize, keychain_profile,
+                    sbom=True, **_):
         platform_target = _map_platform_target(platform_target, 'x86_64', 'arm64')
         if not use_system_deps:
             vcpkg_target = _map_platform_target(platform_target, 'x64', 'arm64')
@@ -886,7 +903,10 @@ class Build(Command):
 
             output_file = Path(build_dir) / f'KeePassXC-{version}.dmg'
             unsigned_suffix = '-unsigned' if not sign else ''
-            output_file.rename(output_dir / f'KeePassXC-{version}-{platform_target}{unsigned_suffix}.dmg')
+            artifact_name = f'KeePassXC-{version}-{platform_target}{unsigned_suffix}.dmg'
+            if sbom:
+                self._copy_sbom(build_dir, output_dir, artifact_name, 'DragNDrop')
+            output_file.rename(output_dir / artifact_name)
 
         if sign:
             logger.info('All done!')
@@ -927,7 +947,7 @@ class Build(Command):
         return outfile
 
     def build_linux(self, version, src_dir, output_dir, *, install_prefix, parallelism, cmake_opts, use_system_deps,
-                    platform_target, appimage, docker_image, with_tests, **_):
+                    platform_target, appimage, docker_image, with_tests, sbom=True, **_):
         platform_target = _map_platform_target(platform_target, 'amd64', 'aarch64')
         host_platform = _map_platform_target(platform.machine(), 'amd64', 'aarch64')
         if use_system_deps and platform_target != host_platform and not docker_image:
@@ -970,10 +990,12 @@ class Build(Command):
                 appimage_platform = _map_platform_target(platform_target, 'x86_64', 'aarch64')
                 self._build_linux_appimage(
                     version, src_dir, output_dir, app_dir, build_dir, install_prefix, appimage_platform,
-                    docker_args, fix_binfmt=bool(docker_image and platform_target != host_platform))
+                    docker_args, fix_binfmt=bool(docker_image and platform_target != host_platform), sbom=sbom)
+            elif sbom:
+                self._copy_sbom(build_dir, output_dir, app_dir.name)
 
     def _build_linux_appimage(self, version, src_dir, output_dir, app_dir, build_dir, install_prefix,
-                              platform_target, docker_args, fix_binfmt=False):
+                              platform_target, docker_args, fix_binfmt=False, sbom=True):
         if (app_dir / 'AppRun').exists():
             raise Error('AppDir has already been run through linuxdeploy! Please create a fresh AppDir and try again.')
 
@@ -1030,6 +1052,10 @@ class Build(Command):
         logger.debug('Running appimagetool...')
         appimage_name = f'KeePassXC-{version}-{platform_target}.AppImage'
         desktop_file.write_text(desktop_file.read_text().strip() + f'\nX-AppImage-Version={version}\n')
+        if sbom:
+            _run(['cmake', f'-DSBOM_DEPLOY_DIR={app_dir}', '-P',
+                  str(Path(build_dir) / 'GenerateSbom.cmake')], **run_args)
+            self._copy_sbom(build_dir, output_dir, appimage_name)
         _run([appimagetool.as_posix(),
               '--updateinformation=gh-releases-zsync|keepassxreboot|keepassxc|latest|' +
               f'KeePassXC-*-{platform_target}.AppImage.zsync',

@@ -35,7 +35,7 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
 
    To clone the project from Git, `cd` to a suitable location and run
 
-   ```
+   ```sh
    git clone https://github.com/keepassxreboot/keepassxc.git
    ```
 
@@ -43,13 +43,13 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
 
    To update the project from within the project's folder, you can run the following command:
 
-   ```
+   ```sh
    git pull
    ```
 
    For a stable build, it is recommended to check out the `latest` tag.
 
-   ```
+   ```sh
    git checkout latest
    cmake -B ./build
    cmake --build ./build
@@ -81,25 +81,26 @@ KeePassXC comes with a variety of build options that can turn on/off features. E
 -DKPXC_MINIMAL=[ON|OFF] Build KeePassXC with the minimal feature set required for basic usage (default: OFF)
 -DKPXC_FEATURE_BROWSER=[ON|OFF] Browser integration and passkeys support (default: ON)
 -DKPXC_FEATURE_SSHAGENT=[ON|OFF] SSH Agent integration (default: ON)
--DKPXC_FEATURE_FDOSECRETS=[ON|OFF] (Linux Only) freedesktop.org Secret Service integration; replace system keyring (default:ON)
-
+-DKPXC_FEATURE_FDOSECRETS=[ON|OFF] freedesktop.org Secret Service integration; replace system keyring (default: ON)
 -DKPXC_FEATURE_NETWORK=[ON|OFF] Include code that reaches out to external networks (e.g. downloading icons) (default: ON)
--DKPXC_FEATURE_UPDATES=[ON|OFF] Include automatic update checks; disable for managed distributions (requires networking) (default: ON)
+-DKPXC_FEATURE_UPDATES=[ON|OFF] Include automatic update checks; disable for managed distributions (default: ON)
 -DKPXC_FEATURE_DOCS=[ON|OFF] Build offline documentation; requires asciidoctor tool (default: ON)
 
--DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
--DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
+-DWITH_TESTS=[ON|OFF] Enable building of unit tests (default: ON)
+-DWITH_GUI_TESTS=[ON|OFF] Enable building of GUI tests (default: OFF)
 -DWITH_WARN_DEPRECATED=[ON|OFF] Development only: warn about deprecated methods, including Qt. (default: OFF)
--DWITH_ASAN=[ON|OFF] Enable/Disable address sanitizer checks (Linux / macOS only) (default: OFF)
--DWITH_COVERAGE=[ON|OFF] Enable/Disable coverage tests (GCC only) (default: OFF)
+-DWITH_ASAN=[ON|OFF] Enable address sanitizer checks (Linux / macOS only) (default: OFF)
+-DWITH_COVERAGE=[ON|OFF] Use to build with coverage tests (GCC only). (default: OFF)
 -DWITH_APP_BUNDLE=[ON|OFF] Enable Application Bundle for macOS (default: ON)
--DWITH_CCACHE=[ON|OFF] Use ccache for build speed optimization (default: OFF)
+-DWITH_CCACHE=[ON|OFF] Use ccache for build (default: OFF)
 -DWITH_X11=[ON|OFF] Enable building with X11 dependencies (default: ON)
+-DWITH_BUILD_QT=[ON|OFF] Build Qt6 as a dependency (default: OFF)
 
 -DKEEPASSXC_BUILD_TYPE=[Snapshot|Release] Set the build type to show/hide stability warnings (default: "Snapshot")
--DKEEPASSXC_DIST_TYPE=[Snap|AppImage|Flatpak|Native] Specify the distribution method (default: "Native")
 -DOVERRIDE_VERSION=[X.X.X] Specify a version number when building. Used with snapshot builds (default: "")
+-DKEEPASSXC_DIST_TYPE=[Native|Snap|AppImage|Flatpak] Specify the distribution method (default: "Native")
 -DGIT_HEAD_OVERRIDE=[XXXXXXX] Specify the 7 digit git commit ref for this build. Used with distribution builds (default: "")
+-DWITH_SBOM=[ON|OFF] Generate an SPDX SBOM of the deployment (requires Syft and Python spdx-tools) (default: OFF)
 ```
 
 Note: Even though you can build the application with all TCP/IP networking code disabled, we still require and link against
@@ -109,7 +110,7 @@ Qt6's network library to use local named pipes on all operating systems.
 
 After you have successfully built KeePassXC, install the binary by executing the following:
 
-```
+```sh
 sudo make install
 ```
 
@@ -119,28 +120,44 @@ You can create a package to redistribute KeePassXC (zip, deb, rpm, dmg, etc..). 
 
 To package using CMake, run the following command using whichever [generators](https://cmake.org/cmake/help/latest/manual/cpack-generators.7.html) you would like to package with.
 
-```
+```sh
 cpack -G "ZIP;WIX"
 ```
+
+### Software bill of materials (SBOM)
+
+Enable `-DWITH_SBOM=ON` to generate an SPDX 2.3 JSON document during deployment.  Install [Syft](https://github.com/anchore/syft) on PATH and Python 3.10 or newer with `python -m pip install 'spdx-tools>=0.8,<0.9'`. Use `-DSyft_EXECUTABLE=/path/to/syft` and `-DPython3_EXECUTABLE=/path/to/python` to select specific installations.
+
+The generator scans deployed files with Syft and uses CMake's exported link inputs to identify static libraries and vendored components during CMake install. Qt's own SBOMs are used when available (needs Qt 6.8+). Use a fresh, isolated target directory as installation prefix, because the scan covers the entire installation prefix.
+
+On Windows and macOS, CPack scans the deployment folder again after deployment and signing, and produces `keepassxc-<generator>.spdx.json` in the build directory. For an AppImage, linuxdeploy adds the runtime libraries outside CMake's install step, so set `SBOM_DEPLOY_DIR` to the AppDir and run the `sbom` target after linuxdeploy and library cleanup, before appimagetool:
+
+```sh
+cd build
+cmake -DWITH_SBOM=ON -DKEEPASSXC_DIST_TYPE=AppImage -DSBOM_DEPLOY_DIR=/absolute/path/to/AppDir ..
+cmake --build . --target sbom
+```
+
+`release-tool.py build <version>` generates an SBOM document by default and copies it into the release directory. Use `--no-sbom` to disable it. The exported SBOM document carries the same name as the generated release artifact, but with the extension `.spdx.json` appended.
 
 ## Testing
 
 You can perform tests on the built executables with:
 
-```
+```sh
 make test ARGS+="--output-on-failure"
 ```
 
 On Linux, if you are not currently running on an X Server or Wayland, run the tests as follows:
 
-```
+```sh
 make test ARGS+="-E test\(cli\|gui\) --output-on-failure"
 xvfb-run -e errors -a --server-args="-screen 0 1024x768x24" make test ARGS+="-R test\(cli\|gui\) --output-on-failure"
 ```
 
 Common parameters:
 
-```
+```sh
 CTEST_OUTPUT_ON_FAILURE=1
 ARGS+=-jX
 ARGS+="-E testgui"

@@ -47,6 +47,7 @@ option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 option(WITH_CCACHE "Use ccache for build" OFF)
 option(WITH_X11 "Enable building with X11 dependencies" ON)
 option(WITH_BUILD_QT "Build Qt6 as a dependency" OFF)
+option(WITH_SBOM "Generate an SPDX SBOM of the deployment (requires Syft and Python spdx-tools)" OFF)
 
 # Advanced Features Control
 option(KPXC_MINIMAL "Build KeePassXC with the minimal feature set required for basic usage" OFF)
@@ -582,6 +583,12 @@ if(UNIX AND NOT APPLE)
     # For PolKit QuickUnlock
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
         find_library(KEYUTILS_LIBRARIES NAMES keyutils REQUIRED)
+        # Static libusb needs its Linux backend dependency in the final link.
+        # Shared libusb already records that dependency itself.
+        if(LIBUSB_LIBRARIES MATCHES "\\.a$")
+            find_library(UDEV_LIBRARIES NAMES udev REQUIRED)
+            list(APPEND LIBUSB_LIBRARIES "${UDEV_LIBRARIES}")
+        endif()
     endif()
 endif()
 
@@ -597,7 +604,12 @@ else()
     include_directories(SYSTEM ${ZXCVBN_INCLUDE_DIR})
 endif()
 
-# Add KeePassXC sources and tests
+# Install target and keep a record for SBOM generation
+function(kpxc_install_target target)
+    install(TARGETS ${target} ${ARGN})
+    set_property(GLOBAL APPEND PROPERTY KEEPASSXC_INSTALLED_TARGETS ${target})
+endfunction()
+
 add_subdirectory(src)
 add_subdirectory(share)
 
@@ -608,6 +620,10 @@ endif()
 
 if(KPXC_FEATURE_DOCS)
     add_subdirectory(docs)
+endif()
+
+if(WITH_SBOM)
+    include(KPXCSbom)
 endif()
 
 # Print out summary information
