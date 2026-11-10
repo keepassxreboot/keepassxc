@@ -1019,6 +1019,8 @@ class Build(Command):
             f'appimagetool-{platform_target}.AppImage',
             docker_args, fix_binfmt)
         install_prefix = app_dir / install_prefix.lstrip('/')
+        # Create translation dir, before linuxdeploy links application translations here.
+        (install_prefix / 'translations').mkdir(parents=True, exist_ok=True)
         desktop_file = install_prefix / 'share/applications/org.keepassxc.KeePassXC.desktop'
         icon_file = install_prefix / 'share/icons/hicolor/256x256/apps/keepassxc.png'
         executables = (install_prefix / 'bin').glob('keepassxc*')
@@ -1040,6 +1042,11 @@ class Build(Command):
 
         logger.debug('Running linuxdeploy-plugin-qt...')
         _run([qt_plugin.as_posix(), f'--appdir={app_dir}'], **run_args)
+
+        # Appimagetool doesn't accept the top-level SVG icon, so symlink the PNG as well for .DirIcon creation.
+        root_icon = app_dir / 'keepassxc.png'
+        if not root_icon.exists():
+            root_icon.symlink_to(icon_file.relative_to(app_dir))
 
         # We need to remove libcrypto.so.* for TLS to work properly, but linuxdeploy's library
         # exclusion flags are broken. See: https://github.com/linuxdeploy/linuxdeploy-plugin-qt/issues/205
