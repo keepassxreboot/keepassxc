@@ -149,7 +149,7 @@ void PasskeyImportDialog::addEntries()
         if (!entry || entry->isRecycled()) {
             continue;
         }
-        entries.append({entry->resolveMultiplePlaceholders(entry->title()), entry->uuid()});
+        entries.append({entry->resolveMultiplePlaceholders(entry->title()) + " - " + entry->resolveMultiplePlaceholders(entry->username()), entry->uuid()});
     }
 
     // Sort entries by title
