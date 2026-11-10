@@ -23,12 +23,16 @@
 #include <QJsonObject>
 #include <QLineEdit>
 #include <QListView>
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QTableView>
 #include <QTest>
 #include <QToolBar>
 
+#include "browser/BrowserEntryConfig.h"
 #include "browser/BrowserService.h"
 #include "config-keepassx-tests.h"
 #include "crypto/Crypto.h"
@@ -243,6 +247,95 @@ void TestGuiBrowser::testGetDatabaseGroups()
     QCOMPARE(subGroups.count(), 1);
     auto subGroupObj = subGroups.at(0).toObject();
     QCOMPARE(subGroupObj["name"].toString(), QString("SubGroup"));
+}
+
+void TestGuiBrowser::testBrowserSession_data()
+{
+    QTest::addColumn<QString>("lockEvent");
+    QTest::newRow("lock-all") << QString("lock-all");
+    QTest::newRow("screen-lock") << QString("screen-lock");
+    QTest::newRow("proxy-disconnect") << QString("proxy-disconnect");
+}
+
+void TestGuiBrowser::testBrowserSession()
+{
+    QFETCH(QString, lockEvent);
+    const auto pairing = QStringLiteral("Test Browser");
+    const auto key = QStringLiteral("test-browser-pairing-key");
+    const auto clientKey = QStringLiteral("test-client-session");
+    m_db->metadata()->customData()->set(CustomData::getKeyWithPrefix(CustomData::BrowserKeyPrefix, pairing), key);
+
+    auto addLogin = [&](const QString& url, bool approve) {
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setTitle("Sample login");
+        entry->setUrl(url);
+        entry->setUsername("sample-user");
+        entry->setPassword("sample-password");
+        entry->setNotes("Sample private notes");
+        entry->setGroup(m_db->rootGroup());
+        if (approve) {
+            BrowserEntryConfig settings;
+            settings.allow(QUrl(url).host());
+            settings.save(entry);
+        }
+        return entry;
+    };
+    const auto firstUrl = QStringLiteral("https://first.example");
+    const auto secondUrl = QStringLiteral("https://second.example");
+    addLogin(firstUrl, true);
+    addLogin(secondUrl, true);
+    addLogin("https://unapproved.example", false);
+    addLogin("https://hidden.example", true)->customData()->set(BrowserService::OPTION_HIDE_ENTRY, TRUE_STR);
+    addLogin("https://http-auth.example", true)->customData()->set(BrowserService::OPTION_ONLY_HTTP_AUTH, TRUE_STR);
+    m_db->markAsClean();
+
+    QLocalServer server;
+    QVERIFY(server.listen("kpxc-test-" + QUuid::createUuid().toString(QUuid::Id128)));
+    QLocalSocket proxy;
+    proxy.connectToServer(server.serverName());
+    QVERIFY(proxy.waitForConnected());
+    QTRY_VERIFY(server.hasPendingConnections());
+    auto* socket = server.nextPendingConnection();
+
+    QVERIFY(!browserService()->startBrowserSession(socket, clientKey, {{pairing, "wrong-key"}}));
+    QTimer confirm;
+    connect(&confirm, &QTimer::timeout, this, [] {
+        if (auto* prompt = qobject_cast<QMessageBox*>(QApplication::activeModalWidget())) {
+            prompt->button(QMessageBox::Ok)->click();
+        }
+    });
+    confirm.start(25);
+    QVERIFY(browserService()->startBrowserSession(socket, clientKey, {{pairing, key}}));
+    confirm.stop();
+
+    QVERIFY(m_dbWidget->isLocked());
+    QVERIFY(m_db->rootGroup()->entriesRecursive().isEmpty());
+    QVERIFY(!browserService()->isDatabaseOpened());
+    auto login = [&](const QString& url, const QString& form) {
+        return browserService()->browserSessionLogin(socket, clientKey, url, form);
+    };
+    const QJsonObject expected{{"name", "Sample login"}, {"login", "sample-user"}, {"password", "sample-password"}};
+    QCOMPARE(login(firstUrl + "/login", firstUrl + "/submit"), expected);
+    QCOMPARE(login(secondUrl, secondUrl), expected);
+    QVERIFY(login(firstUrl, secondUrl).isEmpty());
+    QVERIFY(login(firstUrl + ":8443", firstUrl + ":8443").isEmpty());
+    QVERIFY(login("https://sub.first.example", "https://sub.first.example").isEmpty());
+    QVERIFY(login("https://unapproved.example", "https://unapproved.example").isEmpty());
+    QVERIFY(login("https://hidden.example", "https://hidden.example").isEmpty());
+    QVERIFY(login("https://http-auth.example", "https://http-auth.example").isEmpty());
+    QVERIFY(browserService()->browserSessionLogin(socket, "another-client", firstUrl, firstUrl).isEmpty());
+    QVERIFY(browserService()->browserSessionLogin(&proxy, clientKey, firstUrl, firstUrl).isEmpty());
+
+    if (lockEvent == "lock-all") {
+        m_mainWindow->lockAllDatabases();
+    } else if (lockEvent == "screen-lock") {
+        config()->set(Config::Security_LockDatabaseScreenLock, false);
+        QVERIFY(QMetaObject::invokeMethod(m_mainWindow.get(), "handleScreenLock", Qt::DirectConnection));
+    } else {
+        proxy.abort();
+    }
+    QTRY_VERIFY(login(firstUrl, firstUrl).isEmpty());
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)

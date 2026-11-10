@@ -49,6 +49,8 @@
 #include <QLocalSocket>
 #include <QLocale>
 #include <QProgressDialog>
+#include <QScopeGuard>
+#include <QScopedValueRollback>
 #include <QStringView>
 #include <QUrl>
 
@@ -58,6 +60,8 @@ static const QString KEEPASSXCBROWSER_GROUP_NAME = QStringLiteral("KeePassXC-Bro
 static const QString PASSKEYS_DEFAULT_GROUP_NAME = QStringLiteral("KeePassXC-Browser Passkeys");
 static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 static int KEEPASSXCBROWSER_PASSKEY_ICON = 13;
+static constexpr int BROWSER_SESSION_DURATION_MS = 15 * 60 * 1000;
+static constexpr int BROWSER_SESSION_PROMPT_TIMEOUT_MS = 80 * 1000;
 // These are for the settings and password conversion
 static const QString KEEPASSHTTP_NAME = QStringLiteral("KeePassHttp Settings");
 static const QString KEEPASSHTTP_GROUP_NAME = QStringLiteral("KeePassHttp Passwords");
@@ -83,6 +87,12 @@ BrowserService::BrowserService()
     connect(getMainWindow(), &MainWindow::databaseUnlocked, this, &BrowserService::databaseUnlocked);
     connect(getMainWindow(), &MainWindow::databaseLocked, this, &BrowserService::databaseLocked);
     connect(getMainWindow(), &MainWindow::activeDatabaseChanged, this, &BrowserService::activeDatabaseChanged);
+    connect(getMainWindow(), &MainWindow::browserSessionLockRequested, this, &BrowserService::stopBrowserSession);
+#ifdef Q_OS_MACOS
+    connect(macUtils(), &MacUtils::userSwitched, this, &BrowserService::stopBrowserSession);
+#endif
+    m_browserSessionTimer.setSingleShot(true);
+    connect(&m_browserSessionTimer, &QTimer::timeout, this, &BrowserService::stopBrowserSession);
     connect(getMainWindow(),
             &MainWindow::databaseUnlockDialogFinished,
             this,
@@ -106,6 +116,7 @@ void BrowserService::setEnabled(bool enabled)
 
         m_browserHost->start();
     } else {
+        stopBrowserSession();
         m_browserHost->stop();
     }
 }
@@ -139,9 +150,216 @@ bool BrowserService::openDatabase(bool triggerUnlock)
 
 void BrowserService::lockDatabase()
 {
+    stopBrowserSession();
     if (m_currentDatabaseWidget) {
         m_currentDatabaseWidget->lock();
     }
+}
+
+QString BrowserService::browserSessionOrigin(const QString& url)
+{
+    const QUrl parsed(url, QUrl::StrictMode);
+    if (!parsed.isValid() || parsed.scheme() != "https" || parsed.host().isEmpty()
+        || parsed.authority().contains('@')) {
+        return {};
+    }
+
+    QUrl origin;
+    origin.setScheme(parsed.scheme());
+    origin.setHost(parsed.host());
+    if (parsed.port(443) != 443) {
+        origin.setPort(parsed.port());
+    }
+    return QString::fromLatin1(origin.toEncoded());
+}
+
+QHash<QString, QJsonArray> BrowserService::browserSessionLogins(const QSharedPointer<Database>& db,
+                                                                const QString& pairingId)
+{
+    QHash<QString, QJsonArray> logins;
+    for (auto* group : db->rootGroup()->groupsRecursive(true)) {
+        const auto visibility = group->resolveCustomDataTriState(OPTION_HIDE_ENTRY);
+        const auto restrictedPairing = group->resolveCustomDataString(OPTION_RESTRICT_KEY);
+        if (group->isRecycled() || visibility == Group::Enable
+            || (!restrictedPairing.isEmpty() && restrictedPairing != pairingId)
+            || group->resolveCustomDataTriState(OPTION_ONLY_HTTP_AUTH) == Group::Enable) {
+            continue;
+        }
+
+        for (auto* entry : group->entries()) {
+            if (entry->isRecycled() || entry->isExpired() || entry->password().isEmpty()
+                || (visibility == Group::Inherit && entry->customData()->value(OPTION_HIDE_ENTRY) == TRUE_STR)
+                || entry->customData()->value(OPTION_ONLY_HTTP_AUTH) == TRUE_STR) {
+                continue;
+            }
+            const auto url = entry->url();
+            const auto origin = browserSessionOrigin(url);
+            if (origin.isEmpty() || checkAccess(entry, QUrl(url).host(), {}, {}) != Allowed) {
+                continue;
+            }
+
+            const auto login = entry->username();
+            const auto password = entry->password();
+            // Resolving a reference here could retain a secret from a different entry.
+            if (entry->resolveMultiplePlaceholders(login) != login
+                || entry->resolveMultiplePlaceholders(password) != password) {
+                continue;
+            }
+
+            logins[origin].append(QJsonObject{{"name", entry->title()}, {"login", login}, {"password", password}});
+        }
+    }
+    return logins;
+}
+
+bool BrowserService::startBrowserSession(QLocalSocket* socket, const QString& clientKey, const StringPairList& keyList)
+{
+    const auto dbWidget = m_currentDatabaseWidget;
+    const QPointer<QLocalSocket> clientSocket(socket);
+    if (!dbWidget || dbWidget->isLocked() || !clientSocket || m_dialogActive || m_startingBrowserSession
+        || m_browserSessionSocket) {
+        return false;
+    }
+
+    const auto db = dbWidget->database();
+    QString pairingId;
+    for (const auto& pair : keyList) {
+        const auto storedKey =
+            db->metadata()->customData()->value(CustomData::getKeyWithPrefix(CustomData::BrowserKeyPrefix, pair.first));
+        if (!storedKey.isEmpty() && storedKey == pair.second) {
+            pairingId = pair.first;
+            break;
+        }
+    }
+    if (pairingId.isEmpty()) {
+        return false;
+    }
+
+    QScopedValueRollback<bool> starting(m_startingBrowserSession, true);
+    const auto generation = m_browserSessionGeneration;
+    raiseWindow(true);
+    const auto restoreWindow = qScopeGuard([this] { hideWindow(); });
+    if (generation != m_browserSessionGeneration || !clientSocket || !dbWidget || dbWidget != m_currentDatabaseWidget
+        || dbWidget->isLocked() || db != dbWidget->database()) {
+        return false;
+    }
+
+    QMessageBox confirm(
+        QMessageBox::Question,
+        tr("Lock Database and Keep Browser Autofill"),
+        tr("Keep approved website logins available to the paired browser “%1” for up to 15 minutes? "
+           "The database will lock, and the browser will still be able to fill those usernames and passwords.")
+            .arg(pairingId),
+        QMessageBox::Ok | QMessageBox::Cancel,
+        getMainWindow());
+    confirm.setTextFormat(Qt::PlainText);
+    confirm.setDefaultButton(QMessageBox::Cancel);
+    connect(getMainWindow(), &MainWindow::browserSessionLockRequested, &confirm, &QDialog::reject);
+    connect(socket, &QLocalSocket::disconnected, &confirm, &QDialog::reject);
+    QTimer::singleShot(BROWSER_SESSION_PROMPT_TIMEOUT_MS, &confirm, &QDialog::reject);
+    if (confirm.exec() != QMessageBox::Ok || generation != m_browserSessionGeneration || !clientSocket || !dbWidget
+        || dbWidget != m_currentDatabaseWidget || dbWidget->isLocked() || db != dbWidget->database()) {
+        return false;
+    }
+
+    auto logins = browserSessionLogins(db, pairingId);
+    if (logins.isEmpty() || !dbWidget->lock() || !clientSocket || !dbWidget || dbWidget != m_currentDatabaseWidget
+        || clientSocket->state() != QLocalSocket::ConnectedState || generation != m_browserSessionGeneration) {
+        return false;
+    }
+
+    m_browserSessionLogins = std::move(logins);
+    m_browserSessionSocket = clientSocket;
+    m_browserSessionClientKey = clientKey;
+    m_browserSessionDatabase = dbWidget;
+    m_browserSessionDisconnected =
+        connect(socket, &QLocalSocket::disconnected, this, &BrowserService::stopBrowserSession);
+    m_browserSessionSocketDestroyed = connect(socket, &QObject::destroyed, this, &BrowserService::stopBrowserSession);
+    m_browserSessionDatabaseClosed = connect(dbWidget, &QObject::destroyed, this, &BrowserService::stopBrowserSession);
+    m_browserSessionDeadline = QDeadlineTimer(BROWSER_SESSION_DURATION_MS);
+    m_browserSessionTimer.start(BROWSER_SESSION_DURATION_MS);
+    emit browserSessionChanged(true);
+    return true;
+}
+
+bool BrowserService::ownsBrowserSession(QLocalSocket* socket, const QString& clientKey)
+{
+    if (!m_browserSessionSocket) {
+        return false;
+    }
+    if (m_browserSessionDeadline.hasExpired() || !m_browserSessionDatabase || !m_browserSessionDatabase->isLocked()) {
+        stopBrowserSession();
+        return false;
+    }
+    return socket == m_browserSessionSocket && clientKey == m_browserSessionClientKey;
+}
+
+void BrowserService::stopBrowserSession()
+{
+    ++m_browserSessionGeneration;
+    const bool wasActive = !m_browserSessionLogins.isEmpty();
+    m_browserSessionTimer.stop();
+    m_browserSessionLogins.clear();
+    m_browserSessionClientKey.clear();
+    m_browserSessionDatabase.clear();
+    disconnect(m_browserSessionDisconnected);
+    disconnect(m_browserSessionSocketDestroyed);
+    disconnect(m_browserSessionDatabaseClosed);
+    if (m_browserSessionSocket) {
+        auto socket = m_browserSessionSocket;
+        m_browserSessionSocket.clear();
+        m_browserHost->sendClientMessage(socket, {{"action", "browser-session-ended"}});
+    }
+    if (wasActive) {
+        emit browserSessionChanged(false);
+    }
+}
+
+QJsonObject BrowserService::browserSessionLogin(QLocalSocket* socket,
+                                                const QString& clientKey,
+                                                const QString& siteUrl,
+                                                const QString& formUrl)
+{
+    const auto origin = browserSessionOrigin(siteUrl);
+    if (origin.isEmpty() || origin != browserSessionOrigin(formUrl) || m_dialogActive
+        || !ownsBrowserSession(socket, clientKey)) {
+        return {};
+    }
+
+    auto it = m_browserSessionLogins.constFind(origin);
+    if (it == m_browserSessionLogins.constEnd()) {
+        return {};
+    }
+    if (it->size() == 1) {
+        return it->first().toObject();
+    }
+
+    QStringList labels;
+    for (const auto& login : *it) {
+        const auto entry = login.toObject();
+        labels.append(
+            tr("%1. %2 (%3)").arg(labels.size() + 1).arg(entry["name"].toString(), entry["login"].toString()));
+    }
+
+    QScopedValueRollback<bool> selecting(m_dialogActive, true);
+    raiseWindow();
+    const auto restoreWindow = qScopeGuard([this] { hideWindow(); });
+    if (!ownsBrowserSession(socket, clientKey)) {
+        return {};
+    }
+    QInputDialog select(getMainWindow());
+    select.setWindowTitle(tr("Choose Login"));
+    select.setLabelText(tr("Choose a login for %1").arg(origin));
+    select.setComboBoxItems(labels);
+    select.setOption(QInputDialog::UseListViewForComboBoxItems);
+    connect(getMainWindow(), &MainWindow::browserSessionLockRequested, &select, &QDialog::reject);
+    connect(this, &BrowserService::browserSessionChanged, &select, &QDialog::reject);
+    QTimer::singleShot(BROWSER_SESSION_PROMPT_TIMEOUT_MS, &select, &QDialog::reject);
+    if (select.exec() != QDialog::Accepted || !ownsBrowserSession(socket, clientKey)) {
+        return {};
+    }
+    const auto row = labels.indexOf(select.textValue());
+    return row < 0 ? QJsonObject{} : m_browserSessionLogins.value(origin).at(row).toObject();
 }
 
 QString BrowserService::getDatabaseHash(bool legacy)
@@ -1738,6 +1956,9 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
+        if (dbWidget == m_browserSessionDatabase) {
+            stopBrowserSession();
+        }
         if (m_bringToFrontRequested) {
             m_bringToFrontRequested = false;
             hideWindow();
@@ -1751,6 +1972,9 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 
 void BrowserService::activeDatabaseChanged(DatabaseWidget* dbWidget)
 {
+    if (m_browserSessionDatabase && dbWidget != m_browserSessionDatabase) {
+        stopBrowserSession();
+    }
     if (dbWidget) {
         if (dbWidget->isLocked()) {
             databaseLocked(dbWidget);
@@ -1784,6 +2008,7 @@ void BrowserService::processClientMessage(QLocalSocket* socket, const QJsonObjec
     }
 
     const auto& action = m_browserClients.value(clientID);
+    const QPointer<QLocalSocket> clientSocket(socket);
     auto response = action->processClientMessage(socket, message);
-    m_browserHost->sendClientMessage(socket, response);
+    m_browserHost->sendClientMessage(clientSocket, response);
 }

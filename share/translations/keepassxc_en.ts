@@ -1179,6 +1179,26 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Lock Database and Keep Browser Autofill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep approved website logins available to the paired browser “%1” for up to 15 minutes? The database will lock, and the browser will still be able to fill those usernames and passwords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1. %2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a login for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Register a new passkey to this entry:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6105,6 +6125,10 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;XML File…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock Browser Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

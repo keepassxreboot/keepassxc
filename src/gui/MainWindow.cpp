@@ -207,6 +207,10 @@ MainWindow::MainWindow()
 #ifdef KPXC_FEATURE_BROWSER
     connect(
         browserService(), &BrowserService::requestUnlock, m_ui->tabWidget, &DatabaseTabWidget::performBrowserUnlock);
+    auto* lockBrowserSession =
+        m_ui->menuFile->addAction(tr("Lock Browser Session"), browserService(), &BrowserService::stopBrowserSession);
+    lockBrowserSession->setVisible(false);
+    connect(browserService(), &BrowserService::browserSessionChanged, lockBrowserSession, &QAction::setVisible);
 #endif
 
 #ifdef KPXC_FEATURE_SSHAGENT
@@ -468,7 +472,7 @@ MainWindow::MainWindow()
     connect(
         m_ui->actionLockDatabase, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockAndSwitchToFirstUnlockedDatabase()));
     connect(m_ui->actionLockDatabaseToolbar, SIGNAL(triggered()), m_ui->actionLockDatabase, SIGNAL(triggered()));
-    connect(m_ui->actionLockAllDatabases, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockDatabases()));
+    connect(m_ui->actionLockAllDatabases, &QAction::triggered, this, &MainWindow::lockAllDatabases);
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(appExit()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryNew, SIGNAL(triggered()), SLOT(createEntry()));
@@ -1891,6 +1895,8 @@ void MainWindow::handleScreenLock()
 {
     if (config()->get(Config::Security_LockDatabaseScreenLock).toBool()) {
         lockAllDatabases();
+    } else {
+        emit browserSessionLockRequested();
     }
 }
 
@@ -1940,6 +1946,7 @@ void MainWindow::closeAllDatabases()
 
 void MainWindow::lockAllDatabases()
 {
+    emit browserSessionLockRequested();
     m_ui->tabWidget->lockDatabases();
 }
 

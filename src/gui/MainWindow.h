@@ -64,6 +64,7 @@ public:
     };
 
 signals:
+    void browserSessionLockRequested();
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
     void activeDatabaseChanged(DatabaseWidget* dbWidget);

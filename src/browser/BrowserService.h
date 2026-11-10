@@ -25,6 +25,10 @@
 #include "core/Entry.h"
 #include "gui/PasswordGeneratorWidget.h"
 
+#include <QDeadlineTimer>
+#include <QJsonArray>
+#include <QTimer>
+
 class QLocalSocket;
 
 typedef QPair<QString, QString> StringPair;
@@ -123,6 +127,11 @@ public:
     bool deleteEntry(const QString& uuid);
     void removePluginData(Entry* entry) const;
     QJsonArray findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound);
+    bool startBrowserSession(QLocalSocket* socket, const QString& clientKey, const StringPairList& keyList);
+    bool ownsBrowserSession(QLocalSocket* socket, const QString& clientKey);
+    void stopBrowserSession();
+    QJsonObject
+    browserSessionLogin(QLocalSocket* socket, const QString& clientKey, const QString& siteUrl, const QString& formUrl);
     void requestGlobalAutoType(const QString& search);
 
     static QString decodeCustomDataRestrictKey(const QString& key);
@@ -139,6 +148,7 @@ public:
 
 signals:
     void requestUnlock();
+    void browserSessionChanged(bool active);
     void passwordGenerated(QLocalSocket* socket, const QString& password, const QString& nonce);
 
 public slots:
@@ -180,6 +190,8 @@ private:
                                  const QString& formUrl,
                                  const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
+    static QString browserSessionOrigin(const QString& url);
+    QHash<QString, QJsonArray> browserSessionLogins(const QSharedPointer<Database>& db, const QString& pairingId);
     void allowEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm);
     void denyEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm);
     QJsonArray getChildrenFromGroup(Group* group);
@@ -216,6 +228,17 @@ private:
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
 
     bool m_dialogActive;
+    bool m_startingBrowserSession = false;
+    quint64 m_browserSessionGeneration = 0;
+    QHash<QString, QJsonArray> m_browserSessionLogins;
+    QPointer<QLocalSocket> m_browserSessionSocket;
+    QPointer<DatabaseWidget> m_browserSessionDatabase;
+    QString m_browserSessionClientKey;
+    QTimer m_browserSessionTimer;
+    QDeadlineTimer m_browserSessionDeadline;
+    QMetaObject::Connection m_browserSessionDisconnected;
+    QMetaObject::Connection m_browserSessionSocketDestroyed;
+    QMetaObject::Connection m_browserSessionDatabaseClosed;
     bool m_bringToFrontRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;

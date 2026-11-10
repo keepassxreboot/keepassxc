@@ -36,6 +36,9 @@ static const QString BROWSER_REQUEST_GENERATE_PASSWORD = QStringLiteral("generat
 static const QString BROWSER_REQUEST_GET_DATABASEHASH = QStringLiteral("get-databasehash");
 static const QString BROWSER_REQUEST_GET_DATABASE_GROUPS = QStringLiteral("get-database-groups");
 static const QString BROWSER_REQUEST_GET_LOGINS = QStringLiteral("get-logins");
+static const QString BROWSER_REQUEST_START_SESSION = QStringLiteral("start-browser-session");
+static const QString BROWSER_REQUEST_SESSION_LOGIN = QStringLiteral("get-browser-session-login");
+static const QString BROWSER_REQUEST_STOP_SESSION = QStringLiteral("stop-browser-session");
 static const QString BROWSER_REQUEST_GET_TOTP = QStringLiteral("get-totp");
 static const QString BROWSER_REQUEST_LOCK_DATABASE = QStringLiteral("lock-database");
 static const QString BROWSER_REQUEST_PASSKEYS_GET = QStringLiteral("passkeys-get");
@@ -59,6 +62,14 @@ QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJso
     const auto action = json.value("action").toString();
     if (action.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
+    }
+
+    if (action == BROWSER_REQUEST_START_SESSION || action == BROWSER_REQUEST_SESSION_LOGIN
+        || action == BROWSER_REQUEST_STOP_SESSION) {
+        return handleBrowserSession(socket, json, action);
+    }
+    if (action == BROWSER_REQUEST_CHANGE_PUBLIC_KEYS && browserService()->ownsBrowserSession(socket, m_publicKey)) {
+        browserService()->stopBrowserSession();
     }
 
     if (action.compare(BROWSER_REQUEST_CHANGE_PUBLIC_KEYS) != 0 && action.compare(BROWSER_REQUEST_REQUEST_AUTOTYPE) != 0
@@ -140,6 +151,7 @@ QJsonObject BrowserAction::handleChangePublicKeys(const QJsonObject& json, const
     auto response = browserMessageBuilder()->buildMessage(browserMessageBuilder()->incrementNonce(nonce));
     response["action"] = action;
     response["publicKey"] = keyPair.first;
+    response["browserSession"] = true;
 
     return response;
 }
@@ -256,6 +268,47 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     const Parameters params{
         {"count", entries.count()}, {"entries", entries}, {"hash", browserRequest.hash}, {"id", id}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
+}
+
+QJsonObject BrowserAction::handleBrowserSession(QLocalSocket* socket, const QJsonObject& json, const QString& action)
+{
+    if (m_clientPublicKey.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED);
+    }
+
+    const auto request = decodeRequest(json);
+    if (request.getString("action") != action) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    // Hold the transport identity across any nested dialogs.
+    const auto clientKey = m_publicKey;
+    if (action == BROWSER_REQUEST_START_SESSION) {
+        if (!m_associated || !browserService()->startBrowserSession(socket, clientKey, getConnectionKeys(request))) {
+            return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+        }
+        return buildResponse(action, request.incrementedNonce);
+    }
+
+    if (!browserService()->ownsBrowserSession(socket, clientKey)) {
+        return getErrorReply(action, ERROR_KEEPASS_DATABASE_NOT_OPENED);
+    }
+    if (action == BROWSER_REQUEST_STOP_SESSION) {
+        browserService()->stopBrowserSession();
+        return buildResponse(action, request.incrementedNonce);
+    }
+
+    const auto siteUrl = request.getString("url");
+    const auto formUrl = request.getString("submitUrl");
+    if (siteUrl.isEmpty() || siteUrl.size() > MaxUrlLength || formUrl.size() > MaxUrlLength) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
+    }
+    const auto entry = browserService()->browserSessionLogin(socket, clientKey, siteUrl, formUrl);
+    if (entry.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
+    }
+
+    return buildResponse(action, request.incrementedNonce, {{"entry", entry}});
 }
 
 QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action)

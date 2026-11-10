@@ -40,6 +40,8 @@ private slots:
     void testEntrySettings();
     void testAdditionalURLs();
     void testGetDatabaseGroups();
+    void testBrowserSession_data();
+    void testBrowserSession();
 
 private:
     void triggerAction(const QString& name);
