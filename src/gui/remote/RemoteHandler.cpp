@@ -25,6 +25,8 @@
 
 namespace
 {
+    const QString TEMP_DATABASE_PLACEHOLDER = QStringLiteral("{TEMP_DATABASE}");
+
     QString getTempFileLocation()
     {
         QString uuid = QUuid::createUuid().toString().remove(0, 1);
@@ -54,6 +56,14 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
         if (!params) {
             result.success = false;
             result.errorMessage = tr("Invalid download parameters provided.");
+            return result;
+        }
+        // The placeholder may appear in the command (e.g. scp) or in the input (e.g. sftp "get ... {TEMP_DATABASE}")
+        if (!params->downloadCommand.contains(TEMP_DATABASE_PLACEHOLDER)
+            && !params->downloadInput.contains(TEMP_DATABASE_PLACEHOLDER)) {
+            result.success = false;
+            result.errorMessage =
+                tr("Download command or input must contain %1 as the output path.").arg(TEMP_DATABASE_PLACEHOLDER);
             return result;
         }
 

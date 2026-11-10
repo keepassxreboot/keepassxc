@@ -63,6 +63,7 @@
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
 #include "gui/remote/RemoteHandler.h"
+#include "gui/remote/RemoteSettings.h"
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
@@ -411,7 +412,7 @@ void TestGui::prepareAndTriggerRemoteSync()
 
     auto downloadCommandEdit = dbSettingsDialog->findChild<QLineEdit*>("downloadCommand");
     QVERIFY(downloadCommandEdit);
-    downloadCommandEdit->setText("sftp user@server:Database.kdbx");
+    downloadCommandEdit->setText("sftp user@server:Database.kdbx {TEMP_DATABASE}");
 
     auto saveSettingsButton = dbSettingsDialog->findChild<QPushButton*>("saveSettingsButton");
     QVERIFY(saveSettingsButton);
@@ -492,12 +493,59 @@ void TestGui::testRemoteSyncDatabaseRequiresPassword()
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
 }
 
+void TestGui::testRemoteDownloadRequiresTempDatabase_data()
+{
+    QTest::addColumn<QString>("command");
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<bool>("expectSuccess");
+
+    QTest::newRow("placeholder in command") << "scp user@server:Database.kdbx {TEMP_DATABASE}" << "" << true;
+    QTest::newRow("placeholder in input") << "sftp user@server" << "get Database.kdbx {TEMP_DATABASE}" << true;
+    QTest::newRow("no placeholder") << "scp user@server:Database.kdbx /tmp/Database.kdbx" << "" << false;
+    QTest::newRow("no placeholder with input") << "sftp user@server" << "get Database.kdbx" << false;
+}
+
+void TestGui::testRemoteDownloadRequiresTempDatabase()
+{
+    QFETCH(QString, command);
+    QFETCH(QString, input);
+    QFETCH(bool, expectSuccess);
+
+    int processesCreated = 0;
+    RemoteHandler::setRemoteProcessFunc([&processesCreated](QObject* parent) {
+        ++processesCreated;
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    RemoteParams params;
+    params.downloadCommand = command;
+    params.downloadInput = input;
+    params.downloadTimeoutMsec = 1000;
+
+    RemoteHandler handler;
+    auto result = handler.download(&params);
+
+    QCOMPARE(result.success, expectSuccess);
+    if (expectSuccess) {
+        QCOMPARE(processesCreated, 1);
+        QVERIFY(result.errorMessage.isEmpty());
+        QVERIFY(QFileInfo(result.filePath).size() > 0);
+        QFile::remove(result.filePath);
+    } else {
+        // The command must be rejected before any process is started
+        QCOMPARE(processesCreated, 0);
+        QVERIFY(result.filePath.isEmpty());
+        QVERIFY(result.errorMessage.contains("{TEMP_DATABASE}"));
+    }
+}
+
 void TestGui::testOpenRemoteDatabase()
 {
     // close current database
     cleanup();
 
-    QString sourceToSync = "sftp user@server:Database.kdbx";
+    QString sourceToSync = "sftp user@server:Database.kdbx {TEMP_DATABASE}";
     RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
         return QScopedPointer<RemoteProcess>(
             new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));

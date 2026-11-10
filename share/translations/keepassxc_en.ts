@@ -9595,6 +9595,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Download command or input must contain {TEMP_DATABASE} as the output path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Command `%1` failed to download database.</source>
         <translation type="unfinished"></translation>
     </message>
