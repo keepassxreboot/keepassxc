@@ -556,7 +556,9 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
                         "fe80::1ff:fe23:4567:890a",
                         "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
                         "\"https://thisisatest.com/login.php\"", // Exact URL
-                        "https://*.good.test"};
+                        "https://*.good.test",
+                        "https://login.*.example.com",
+                        "https://10.1.*.3"};
 
     createEntries(urls, root, true);
     browserSettings()->setMatchUrlScheme(false);
@@ -647,6 +649,14 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     QCOMPARE(firstUrl(result[1]), QString("https://github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://github.com/*"));
     QCOMPARE(firstUrl(result[3]), QString("github.com/*")); // Defaults to https
+
+    // https://login.*.example.com must not match with https://notlogin.foo.example.com
+    result = m_browserService->searchEntries(db, "https://notlogin.foo.example.com", "");
+    QCOMPARE(result.length(), 0);
+
+    // https://10.1.*.3 must not match with https://110.1.2.3
+    result = m_browserService->searchEntries(db, " https://110.1.2.3", "");
+    QCOMPARE(result.length(), 0);
 }
 
 void TestBrowser::testInvalidEntries()

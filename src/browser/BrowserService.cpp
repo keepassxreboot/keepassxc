@@ -1590,7 +1590,7 @@ bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString
 
         // Parse against the real host if hostname is used
         if (hostnameUsed) {
-            re.append("$"); // Regex must not allow everything after the wildcard domains
+            re.prepend("^").append("$"); // Regex must not allow anything before or after the wildcard domains
         }
 
         return QRegularExpression(re).match(secondPart).hasMatch();
