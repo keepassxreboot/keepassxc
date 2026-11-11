@@ -75,6 +75,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     , m_generalUi(new Ui::ApplicationSettingsWidgetGeneral())
     , m_globalAutoTypeKey(static_cast<Qt::Key>(0))
     , m_globalAutoTypeModifiers(Qt::NoModifier)
+    , m_globalToggleWindowKey(static_cast<Qt::Key>(0))
+    , m_globalToggleWindowModifiers(Qt::NoModifier)
 {
     setHeadline(tr("Application Settings"));
     showApplyButton(false);
@@ -282,6 +284,30 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         m_generalUi->autoTypeShortcutWidget->setStyleSheet("");
     });
 
+    // Set toggle window shortcut when changed
+    const bool toggleWindowShortcutSupported = !osUtils->externalGlobalShortcutsConfigurator();
+    m_generalUi->toggleWindowShortcutLabel->setVisible(toggleWindowShortcutSupported);
+    m_generalUi->toggleWindowShortcutWidget->setVisible(toggleWindowShortcutSupported);
+    connect(m_generalUi->toggleWindowShortcutWidget,
+            &ShortcutWidget::shortcutChanged,
+            this,
+            [this](auto key, auto modifiers) {
+                QString error;
+                if (osUtils->registerGlobalShortcut(QStringLiteral("togglewindow"), key, modifiers, &error)) {
+                    m_generalUi->toggleWindowShortcutWidget->setStyleSheet("");
+                } else {
+                    QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
+                    StateColorPalette statePalette;
+                    auto color = statePalette.color(StateColorPalette::ColorRole::Error);
+                    m_generalUi->toggleWindowShortcutWidget->setStyleSheet(
+                        QString("QLineEdit { background: %1; }").arg(color.name()));
+                }
+            });
+    connect(m_generalUi->toggleWindowShortcutWidget, &ShortcutWidget::shortcutReset, this, [this] {
+        osUtils->unregisterGlobalShortcut(QStringLiteral("togglewindow"));
+        m_generalUi->toggleWindowShortcutWidget->setStyleSheet("");
+    });
+
     // Disable mouse wheel grab when scrolling
     // This prevents combo box and spinner values from changing without explicit focus
     auto mouseWheelFilter = new MouseWheelEventFilter(this);
@@ -455,6 +481,15 @@ void ApplicationSettingsWidget::loadSettings()
         autoTypeAskToggled(m_generalUi->autoTypeAskCheckBox->isChecked());
     }
 
+    m_globalToggleWindowKey = static_cast<Qt::Key>(config()->get(Config::GUI_GlobalToggleWindowKey).toInt());
+    m_globalToggleWindowModifiers =
+        static_cast<Qt::KeyboardModifiers>(config()->get(Config::GUI_GlobalToggleWindowModifiers).toInt());
+    if (!osUtils->externalGlobalShortcutsConfigurator() && m_globalToggleWindowKey > 0
+        && m_globalToggleWindowModifiers > 0) {
+        m_generalUi->toggleWindowShortcutWidget->setShortcut(m_globalToggleWindowKey, m_globalToggleWindowModifiers);
+    }
+    m_generalUi->toggleWindowShortcutWidget->setAttribute(Qt::WA_MacShowFocusRect, true);
+
     // Check for runtime TouchID availability.
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable()
                                              && !config()->isManaged(Config::Security_QuickUnlock));
@@ -553,6 +588,12 @@ void ApplicationSettingsWidget::saveSettings()
         config()->set(Config::AutoTypePreferDesktopPortals, preferDesktopPortals);
     }
 
+    if (!osUtils->externalGlobalShortcutsConfigurator()) {
+        config()->set(Config::GUI_GlobalToggleWindowKey, m_generalUi->toggleWindowShortcutWidget->key());
+        config()->set(Config::GUI_GlobalToggleWindowModifiers,
+                      static_cast<int>(m_generalUi->toggleWindowShortcutWidget->modifiers()));
+    }
+
     // Security: clear storage if related settings are disabled
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
         config()->remove(Config::LastDir);
@@ -644,6 +685,12 @@ void ApplicationSettingsWidget::reject()
     // register the old key again as it might have changed
     if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
         autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
+    }
+    if (m_globalToggleWindowKey > 0 && m_globalToggleWindowModifiers > 0) {
+        osUtils->registerGlobalShortcut(
+            QStringLiteral("togglewindow"), m_globalToggleWindowKey, m_globalToggleWindowModifiers);
+    } else {
+        osUtils->unregisterGlobalShortcut(QStringLiteral("togglewindow"));
     }
 }
 
