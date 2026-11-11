@@ -528,37 +528,35 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QStringList urls = {
-        "https://github.com/login_page/*",
-        "https://github.com/*/second",
-        "https://github.com/*",
-        "http://github.com/*",
-        "github.com/*", // Defaults to https
-        "https://*.github.com/*",
-        "https://subdomain.*.github.com/*/second",
-        "https://*.sub.github.com/*",
-        "https://********", // Invalid wildcard URL
-        "https://*.thub.com/", // Partial suffix URL
-        "https://subdomain.yes.github.com/*",
-        "https://example.com:8448/*",
-        "https://example.com/*/*",
-        "https://example.com/$/*",
-        "https://127.128.129.*:8448/",
-        "https://127.128.*/",
-        "https://127.160.*.2/login",
-        "http://[2001:db8:85a3:8d3:1319:8a2e:370:*]/",
-        "https://[2001:db8:85a3:8d3:*]:443/",
-        "fe80::1ff:fe23:4567:890a",
-        "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
-        "\"https://thisisatest.com/login.php\"", // Exact URL
-        "https://*.good.test",
-        "https://login.*.example.com",
-        "https://10.1.*.3",
-        "https://test.domain.com/*",
-        "https://second.domain.com/foo/*",
-        "https://third.domain.com/foo*", // Should match path "foo" and "foo/*"
-        "https://*.newexample.com"
-    };
+    QStringList urls = {"https://github.com/login_page/*",
+                        "https://github.com/*/second",
+                        "https://github.com/*",
+                        "http://github.com/*",
+                        "github.com/*", // Defaults to https
+                        "https://*.github.com/*",
+                        "https://subdomain.*.github.com/*/second",
+                        "https://*.sub.github.com/*",
+                        "https://********", // Invalid wildcard URL
+                        "https://*.thub.com/", // Partial suffix URL
+                        "https://subdomain.yes.github.com/*",
+                        "https://example.com:8448/*",
+                        "https://example.com/*/*",
+                        "https://example.com/$/*",
+                        "https://127.128.129.*:8448/",
+                        "https://127.128.*/",
+                        "https://127.160.*.2/login",
+                        "http://[2001:db8:85a3:8d3:1319:8a2e:370:*]/",
+                        "https://[2001:db8:85a3:8d3:*]:443/",
+                        "fe80::1ff:fe23:4567:890a",
+                        "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
+                        "\"https://thisisatest.com/login.php\"", // Exact URL
+                        "https://*.good.test",
+                        "https://login.*.example.com",
+                        "https://10.1.*.3",
+                        "https://test.domain.com/*",
+                        "https://second.domain.com/foo/*",
+                        "https://third.domain.com/foo*", // Should match path "foo" and "foo/*"
+                        "https://*.newexample.com"};
 
     createEntries(urls, root, true);
     browserSettings()->setMatchUrlScheme(false);
