@@ -1568,10 +1568,10 @@ bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString
             return true;
         }
 
-        // 1. Allow empty path "/" if the entry URL has none
+        // 1. Allow any path if the entry URL has none
         // 2. Allow "/*" path with no path in site URL
         if (!hostnameUsed
-            && ((firstPart.isEmpty() && secondPart == "/")
+            && (firstPart.isEmpty()
                 || (firstPart == QString("/%1").arg(UrlTools::URL_WILDCARD) && secondPart.isEmpty()))) {
             return true;
         }

@@ -556,7 +556,8 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
         "https://10.1.*.3",
         "https://test.domain.com/*",
         "https://second.domain.com/foo/*",
-        "https://third.domain.com/foo*" // Should match path "foo" and "foo/*"
+        "https://third.domain.com/foo*", // Should match path "foo" and "foo/*"
+        "https://*.newexample.com"
     };
 
     createEntries(urls, root, true);
@@ -691,6 +692,12 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     // https://10.1.*.3 must not match with https://110.1.2.3
     result = m_browserService->searchEntries(db, " https://110.1.2.3", "");
     QCOMPARE(result.length(), 0);
+
+    // Domain wildcards
+    // https://app.example.com/login should return "https://*.newexample.com"
+    result = m_browserService->searchEntries(db, "https://app.newexample.com/login", "");
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(firstUrl(result[0]), QString("https://*.newexample.com"));
 }
 
 void TestBrowser::testInvalidEntries()
