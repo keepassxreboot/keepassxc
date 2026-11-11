@@ -23,12 +23,15 @@
 #include <QNetworkReply>
 #include <QVariant>
 #endif
+#include "core/Tools.h"
+
 #include <QRegularExpression>
 #include <QUrl>
+#include <QUuid>
 
 #include <utility>
 
-const QString UrlTools::URL_WILDCARD = "1kpxcwc1";
+const QString UrlTools::URL_WILDCARD = Tools::uuidToHex(QUuid::createUuid());
 
 #if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
 QUrl UrlTools::getRedirectTarget(QNetworkReply* reply)
