@@ -43,6 +43,7 @@ private slots:
     void testObserverDeferredImport();
     void testSettingsSerialization();
     void testSettingsSerialization_data();
+    void testRecycledGroupIsNotShared();
 
 private:
     const QSharedPointer<Botan::RSA_PrivateKey> stubkey(int index = 0);
