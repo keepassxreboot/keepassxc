@@ -523,8 +523,8 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 
     additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org/", ""); // With slash at the end
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), QString("https://github.com/"));
+    QCOMPARE(additionalResult.length(), 1);
+    QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 }
 
 void TestBrowser::testSearchEntriesWithWildcardURLs()
