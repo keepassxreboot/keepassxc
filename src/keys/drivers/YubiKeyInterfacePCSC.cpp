@@ -746,7 +746,7 @@ YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
      *
      * In fact, the Yubikey always assumes the last byte (nr. 64)
      * and all bytes of the same value preceding it to be padding.
-     * This does not conform fully to PKCS7, because the the actual value
+     * This does not conform fully to PKCS7, because the actual value
      * of the padding bytes is ignored.
      */
     const int padLen = 64 - paddedChallenge.size();
