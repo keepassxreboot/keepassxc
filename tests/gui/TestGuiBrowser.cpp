@@ -39,6 +39,14 @@
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 
+#define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
+    bool dialogFinished = false;                                                                                       \
+    QTimer::singleShot(0, [&]() { TEST_CODE dialogFinished = true; })
+
+#define TEST_MODAL(TEST_CODE)                                                                                          \
+    TEST_MODAL_NO_WAIT(TEST_CODE);                                                                                     \
+    QTRY_VERIFY(dialogFinished)
+
 int main(int argc, char* argv[])
 {
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -243,6 +251,49 @@ void TestGuiBrowser::testGetDatabaseGroups()
     QCOMPARE(subGroups.count(), 1);
     auto subGroupObj = subGroups.at(0).toObject();
     QCOMPARE(subGroupObj["name"].toString(), QString("SubGroup"));
+}
+
+void TestGuiBrowser::testAccessConfirmDialogRejection()
+{
+    // Make sure auto-reload happens automatically
+    config()->set(Config::AutoReloadOnChange, true);
+
+    // Select entry
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    entryView->setFocus();
+    QVERIFY(entryView->hasFocus());
+
+    // Select the first entry in the database
+    QModelIndex entryItem = entryView->model()->index(0, 1);
+    Entry* entry = entryView->entryFromIndex(entryItem);
+
+    // Show browser access confirm dialog
+    // The entry URL is https://github.com/login
+    QList<Entry*> entries;
+    entries << entry;
+    EntryParameters entryParameters;
+    entryParameters.siteUrl = QString("https://github.com");
+
+    // Do this after the dialog is triggered
+    QTimer::singleShot(500, [&]() {
+        // Verify modal dialog is active
+        const auto accessDialog = m_dbWidget->findChild<BrowserAccessControlDialog*>();
+        QVERIFY(accessDialog->isVisible());
+
+        // Replace database
+        QVERIFY(m_dbFile->copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+        QApplication::processEvents();
+        QTRY_VERIFY(m_db != m_dbWidget->database());
+        m_db = m_dbWidget->database();
+    });
+
+    // Show the dialog
+    browserService()->confirmEntries(
+        entries, entryParameters, QString("https://github.com"), QString("https://github.com"), false);
+
+    // Check that the access confirm dialog no longer exists
+    auto browserAccessControlDialog = m_dbWidget->findChild<BrowserAccessControlDialog*>();
+    QCOMPARE(browserAccessControlDialog, nullptr);
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)
