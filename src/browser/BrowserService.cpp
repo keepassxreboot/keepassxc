@@ -1562,27 +1562,37 @@ bool BrowserService::handleURL(const QString& entryUrl,
 
 bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString& siteUrl)
 {
-    // firstPart is entry host or path, secondPart is site host or path
-    auto matchWithRegex = [](const QString& firstPart, const QString& secondPart, const bool hostnameUsed = false) {
-        if (firstPart == secondPart) {
+    // entryPart is entry host or path, secondPart is site host or path
+    auto matchWithRegex = [](QString entryPart, QString sitePart, const bool hostnameUsed = false) {
+        if (entryPart == sitePart) {
             return true;
+        }
+
+        // Handle empty paths as empty value
+        if (!hostnameUsed) {
+            if (entryPart == "/") {
+                entryPart.clear();
+            }
+            if (sitePart == "/") {
+                sitePart.clear();
+            }
+        }
+
+        // Compare hosts/paths directly if no wildcard is used
+        if (!entryPart.contains(UrlTools::URL_WILDCARD) && entryPart != sitePart) {
+            return false;
         }
 
         // 1. Allow any path if the entry URL has none
         // 2. Allow "/*" path with no path in site URL
         if (!hostnameUsed
-            && (firstPart.isEmpty()
-                || (firstPart == QString("/%1").arg(UrlTools::URL_WILDCARD) && secondPart.isEmpty()))) {
+            && (entryPart.isEmpty()
+                || (entryPart == QString("/%1").arg(UrlTools::URL_WILDCARD) && sitePart.isEmpty()))) {
             return true;
         }
 
-        // If there's no wildcard with hostname, just compare directly
-        if (hostnameUsed && !firstPart.contains(UrlTools::URL_WILDCARD) && firstPart != secondPart) {
-            return false;
-        }
-
         // Escape illegal characters
-        auto re = Tools::escapeRegex(firstPart);
+        auto re = Tools::escapeRegex(entryPart);
 
         // Regex must not allow anything before or after the wildcards
         re.prepend("^").append("$");
@@ -1590,7 +1600,7 @@ bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString
         // Replace all wildcards with actual regex
         re = re.replace(UrlTools::URL_WILDCARD, "(.*?)");
 
-        return QRegularExpression(re).match(secondPart).hasMatch();
+        return QRegularExpression(re).match(sitePart).hasMatch();
     };
 
     // Match hostname and path

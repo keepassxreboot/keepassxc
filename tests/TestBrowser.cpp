@@ -521,6 +521,10 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     auto additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org", "https://keepassxc.org");
     QCOMPARE(additionalResult.length(), 1);
     QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
+
+    additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org/", ""); // With slash at the end
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/"));
 }
 
 void TestBrowser::testSearchEntriesWithWildcardURLs()
@@ -556,7 +560,9 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
                         "https://test.domain.com/*",
                         "https://second.domain.com/foo/*",
                         "https://third.domain.com/foo*", // Should match path "foo" and "foo/*"
-                        "https://*.newexample.com"};
+                        "https://*.newexample.com/login",
+                        "https://*.anotherexample.com",
+                        "https://*.anotherexample.com/"};
 
     createEntries(urls, root, true);
     browserSettings()->setMatchUrlScheme(false);
@@ -692,10 +698,22 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     QCOMPARE(result.length(), 0);
 
     // Domain wildcards
-    // https://app.example.com/login should return "https://*.newexample.com"
+    // https://app.example.com/login should return "https://*.newexample.com/login"
     result = m_browserService->searchEntries(db, "https://app.newexample.com/login", "");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://*.newexample.com"));
+    QCOMPARE(firstUrl(result[0]), QString("https://*.newexample.com/login"));
+
+    // https://www.anotherexample.com/xyz should return nothing
+    result = m_browserService->searchEntries(db, "https://www.anotherexample.com/xyz", "");
+    QCOMPARE(result.length(), 0);
+
+    // https://www.anotherexample.com/ should return both https://*.example.com and https://*.example.com/
+    result = m_browserService->searchEntries(db, "https://www.anotherexample.com/", "");
+    QCOMPARE(result.length(), 2);
+
+    // https://www.anotherexample.com should return both https://*.example.com and https://*.example.com/
+    result = m_browserService->searchEntries(db, "https://www.anotherexample.com", "");
+    QCOMPARE(result.length(), 2);
 }
 
 void TestBrowser::testInvalidEntries()
