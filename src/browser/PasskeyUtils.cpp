@@ -22,8 +22,21 @@
 #include "core/Tools.h"
 #include "gui/UrlTools.h"
 
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QList>
 #include <QUrl>
+
+namespace
+{
+    // Escape a string for safe embedding in the hand-built clientDataJSON
+    QString jsonEscapeString(const QString& value)
+    {
+        // Reuse Qt's JSON encoder, then strip the array wrapper ["<escaped>"]
+        const auto encoded = QJsonDocument(QJsonArray{value}).toJson(QJsonDocument::Compact);
+        return QString::fromUtf8(encoded.mid(2, encoded.size() - 4));
+    }
+} // namespace
 
 Q_GLOBAL_STATIC(PasskeyUtils, s_passkeyUtils);
 
@@ -356,8 +369,11 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 // Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
+    // Field order is mandated by the spec, so the JSON is built by hand with escaped inputs
     return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
-        .arg((get ? QString("webauthn.get") : QString("webauthn.create")), publicKey["challenge"].toString(), origin);
+        .arg((get ? QString("webauthn.get") : QString("webauthn.create")),
+             jsonEscapeString(publicKey["challenge"].toString()),
+             jsonEscapeString(origin));
 }
 
 QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const

@@ -222,17 +222,19 @@ QString SymmetricCipher::modeToString(const Mode mode)
 
 int SymmetricCipher::defaultIvSize(Mode mode)
 {
+    // Standard nonce sizes used when generating a new random IV
     switch (mode) {
     case Aes128_CBC:
     case Aes256_CBC:
     case Aes128_CTR:
     case Aes256_CTR:
-    case Aes256_GCM:
     case Twofish_CBC:
         return 16;
-    case Salsa20:
+    case Aes256_GCM:
     case ChaCha20:
         return 12;
+    case Salsa20:
+        return 8;
     default:
         return -1;
     }

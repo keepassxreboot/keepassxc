@@ -20,6 +20,7 @@
 
 #include <QRegularExpression>
 #include <QSignalSpy>
+#include <QTemporaryDir>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
@@ -103,6 +104,27 @@ void TestDatabase::testSave()
     QVERIFY(QFile::exists(backupFilePath));
     QFile::remove(backupFilePath);
     QVERIFY(!QFile::exists(backupFilePath));
+}
+
+void TestDatabase::testSaveTempFileLongName()
+{
+    QTemporaryDir tempDir;
+    QVERIFY(tempDir.isValid());
+    // 250 bytes is a valid name on file systems with a 255 byte limit
+    const QString filePath = tempDir.filePath(QString(245, 'a') + ".kdbx");
+    QVERIFY(QFile::copy(dbFileName, filePath));
+    QVERIFY(QFile::setPermissions(filePath, QFile::ReadOwner | QFile::WriteOwner));
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    QString error;
+    QVERIFY2(db->open(filePath, key, &error), error.toLatin1());
+    db->metadata()->setName("test");
+    QVERIFY2(db->save(Database::TempFile, {}, &error), error.toLatin1());
+    QVERIFY(!db->isModified());
+    QCOMPARE(QDir(tempDir.path()).entryList(QDir::Files | QDir::Hidden), QStringList{QFileInfo(filePath).fileName()});
 }
 
 void TestDatabase::testSaveAs()
