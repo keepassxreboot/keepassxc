@@ -7436,6 +7436,14 @@ Do you want to overwrite it?</source>
         <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Close Password Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The generated password has not been applied yet and will be lost if you close the generator. Close anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordWidget</name>
