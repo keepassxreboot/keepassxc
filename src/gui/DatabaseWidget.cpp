@@ -686,6 +686,7 @@ void DatabaseWidget::moveEntryUp()
     if (currentEntry) {
         currentEntry->moveUp();
         m_entryView->setCurrentEntry(currentEntry);
+        m_entryView->scrollToEntry(currentEntry);
     }
 }
 
@@ -695,6 +696,7 @@ void DatabaseWidget::moveEntryDown()
     if (currentEntry) {
         currentEntry->moveDown();
         m_entryView->setCurrentEntry(currentEntry);
+        m_entryView->scrollToEntry(currentEntry);
     }
 }
 
