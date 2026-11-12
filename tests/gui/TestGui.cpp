@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
@@ -2565,6 +2565,63 @@ void TestGui::testDeleteEntryDuringModalDialog()
 
     // Verify entry was deleted normally
     QCOMPARE(entryView->model()->rowCount(), initialEntryCount - 1);
+}
+
+void TestGui::testPreviewCopySelection()
+{
+    // Copying a text selection from the entry preview must put the selected text on the
+    // clipboard. The username field (QLineEdit) and the additional attributes table
+    // (QTableWidget) have no built-in copy handling that runs through our clipboard
+    // wrapper, so they used to fall through to the "copy password" action instead.
+    addCannedEntries();
+
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    auto* preview = m_dbWidget->findChild<EntryPreviewWidget*>("previewWidget");
+    QVERIFY(preview);
+
+    // Select the "something 2" entry, which has a username and a password
+    for (int row = 0; row < entryView->model()->rowCount(); ++row) {
+        auto* candidate = entryView->entryFromIndex(entryView->model()->index(row, 1));
+        if (candidate && candidate->title() == "something 2") {
+            clickIndex(entryView->model()->index(row, 1), entryView, Qt::LeftButton);
+            break;
+        }
+    }
+    QVERIFY(entryView->currentEntry());
+
+    QClipboard* clipboard = QApplication::clipboard();
+
+    // --- QLineEdit: a text selection is copied ---
+    auto* usernameEdit = preview->findChild<QLineEdit*>("entryUsernameLabel");
+    QVERIFY(usernameEdit);
+    usernameEdit->setText("a.name@example.com");
+    usernameEdit->setFocus();
+    QTRY_VERIFY(usernameEdit->hasFocus());
+    usernameEdit->setSelection(0, 6);
+    QCOMPARE(usernameEdit->selectedText(), QString("a.name"));
+
+    clipboard->setText("dummy");
+    QVERIFY(m_dbWidget->copyFocusedTextSelection());
+    QCOMPARE(clipboard->text(), QString("a.name"));
+
+    // Without a selection nothing is copied here, so the shortcut falls through to the
+    // copy password action of the main window.
+    usernameEdit->deselect();
+    QVERIFY(usernameEdit->selectedText().isEmpty());
+    clipboard->setText("dummy");
+    QVERIFY(!m_dbWidget->copyFocusedTextSelection());
+    QCOMPARE(clipboard->text(), QString("dummy"));
+
+    // --- QAbstractItemView: nothing is copied from the entry list by this handler ---
+    // The entry list is an item view as well, but the copy shortcut there must keep
+    // copying the password, so the item view branch is limited to the preview.
+    entryView->setFocus();
+    QTRY_VERIFY(entryView->hasFocus());
+    QVERIFY(entryView->selectionModel()->hasSelection());
+
+    clipboard->setText("dummy");
+    QVERIFY(!m_dbWidget->copyFocusedTextSelection());
+    QCOMPARE(clipboard->text(), QString("dummy"));
 }
 
 void TestGui::addCannedEntries()
