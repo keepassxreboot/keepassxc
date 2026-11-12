@@ -29,16 +29,19 @@ BrowserPasskeysConfirmationDialog::BrowserPasskeysConfirmationDialog(QWidget* pa
     : QDialog(parent)
     , m_ui(new Ui::BrowserPasskeysConfirmationDialog())
     , m_passkeyUpdated(false)
+    , m_otherEntrySelected(false)
+    , m_hasSuggestions(false)
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
     m_ui->verticalLayout->setAlignment(Qt::AlignTop);
 
-    connect(m_ui->credentialsTable, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(accept()));
+    connect(m_ui->credentialsTable, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(handleDoubleClick()));
     connect(m_ui->confirmButton, SIGNAL(clicked()), SLOT(accept()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
     connect(m_ui->updateButton, SIGNAL(clicked()), SLOT(updatePasskey()));
+    connect(m_ui->otherEntryButton, SIGNAL(clicked()), SLOT(selectOtherEntry()));
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
@@ -57,12 +60,14 @@ void BrowserPasskeysConfirmationDialog::showEvent(QShowEvent* event)
 void BrowserPasskeysConfirmationDialog::registerCredential(const QString& username,
                                                            const QString& relyingParty,
                                                            const QList<Entry*>& existingEntries,
+                                                           const QList<Entry*>& suggestedEntries,
                                                            int timeout)
 {
     m_ui->firstLabel->setText(tr("Do you want to register a passkey for:"));
     m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
     m_ui->updateButton->setVisible(true);
+    m_ui->otherEntryButton->setVisible(false);
     m_ui->secondLabel->setText("");
 
     if (!existingEntries.isEmpty()) {
@@ -71,6 +76,14 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
         m_ui->updateButton->setText(tr("Update"));
         m_ui->confirmButton->setText(tr("Register new"));
         updateEntriesToTable(existingEntries);
+    } else if (!suggestedEntries.isEmpty()) {
+        m_hasSuggestions = true;
+        m_ui->secondLabel->setText(tr("Matching entries without a passkey were found.\n"
+                                      "Select one and press Add to entry, or register a new entry."));
+        m_ui->updateButton->setText(tr("Add to entry"));
+        m_ui->confirmButton->setText(tr("Register new"));
+        m_ui->otherEntryButton->setVisible(true);
+        updateEntriesToTable(suggestedEntries);
     } else {
         m_ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
         m_ui->confirmButton->setText(tr("Register"));
@@ -96,6 +109,10 @@ void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<Entry
 
 Entry* BrowserPasskeysConfirmationDialog::getSelectedEntry() const
 {
+    if (m_otherEntrySelected) {
+        return nullptr;
+    }
+
     auto selectedItem = m_ui->credentialsTable->currentItem();
     return selectedItem ? m_entries[selectedItem->row()] : nullptr;
 }
@@ -109,6 +126,23 @@ void BrowserPasskeysConfirmationDialog::updatePasskey()
 {
     m_passkeyUpdated = true;
     emit accept();
+}
+
+// No entry is returned as selected, so the caller lets the user choose any entry from the database
+void BrowserPasskeysConfirmationDialog::selectOtherEntry()
+{
+    m_otherEntrySelected = true;
+    updatePasskey();
+}
+
+void BrowserPasskeysConfirmationDialog::handleDoubleClick()
+{
+    // A suggested entry has no passkey yet, so double-click adds the passkey to it
+    if (m_hasSuggestions) {
+        updatePasskey();
+    } else {
+        accept();
+    }
 }
 
 void BrowserPasskeysConfirmationDialog::updateProgressBar()
@@ -154,7 +188,7 @@ void BrowserPasskeysConfirmationDialog::updateEntriesToTable(const QList<Entry*>
         m_ui->credentialsTable->setItem(row, 0, item);
 
         if (row == 0) {
-            item->setSelected(true);
+            m_ui->credentialsTable->setCurrentItem(item);
         }
 
         ++row;

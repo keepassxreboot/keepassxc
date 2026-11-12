@@ -663,10 +663,12 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     }
 
     const auto existingEntries = getPasskeyEntriesWithUserHandle(rpId, userId, keyList);
+    const auto suggestedEntries =
+        existingEntries.isEmpty() ? getPasskeySuggestedEntries(origin, keyList) : QList<Entry*>();
 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
-    confirmDialog.registerCredential(username, rpId, existingEntries, timeout);
+    confirmDialog.registerCredential(username, rpId, existingEntries, suggestedEntries, timeout);
 
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
@@ -1416,6 +1418,19 @@ QList<Entry*> BrowserService::getPasskeyEntriesWithUserHandle(const QString& rpI
     for (const auto& entry : searchEntries(rpId, "", keyList, true)) {
         if (entry->hasPasskey() && entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY) == rpId
             && entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE) == userId) {
+            entries << entry;
+        }
+    }
+
+    return entries;
+}
+
+// Returns entries matching the site URL that don't have a passkey yet
+QList<Entry*> BrowserService::getPasskeySuggestedEntries(const QString& origin, const StringPairList& keyList)
+{
+    QList<Entry*> entries;
+    for (const auto& entry : searchEntries(origin, "", keyList)) {
+        if (!entry->hasPasskey()) {
             entries << entry;
         }
     }
