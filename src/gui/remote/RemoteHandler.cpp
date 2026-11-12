@@ -25,8 +25,6 @@
 
 namespace
 {
-    const QString TEMP_DATABASE_PLACEHOLDER = QStringLiteral("{TEMP_DATABASE}");
-
     QString getTempFileLocation()
     {
         QString uuid = QUuid::createUuid().toString().remove(0, 1);
@@ -34,6 +32,8 @@ namespace
         return QDir::toNativeSeparators(QDir::temp().absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
     }
 } // namespace
+
+const QString RemoteHandler::TEMP_DATABASE_PLACEHOLDER = QStringLiteral("{TEMP_DATABASE}");
 
 std::function<QScopedPointer<RemoteProcess>(QObject*)> RemoteHandler::m_createRemoteProcess([](QObject* parent) {
     return QScopedPointer<RemoteProcess>(new RemoteProcess(parent));

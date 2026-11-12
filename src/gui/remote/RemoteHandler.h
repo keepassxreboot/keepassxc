@@ -41,6 +41,9 @@ public:
         QString stdError;
     };
 
+    // Placeholder in commands and input that is replaced with the temporary database location
+    static const QString TEMP_DATABASE_PLACEHOLDER;
+
     RemoteResult download(const RemoteParams* params);
     RemoteResult upload(const QString& filePath, const RemoteParams* params);
 
