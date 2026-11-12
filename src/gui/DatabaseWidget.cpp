@@ -25,6 +25,7 @@
 #include <QHostInfo>
 #include <QInputDialog>
 #include <QKeyEvent>
+#include <QLineEdit>
 #include <QPlainTextEdit>
 #include <QProcess>
 #include <QSplitter>
@@ -781,7 +782,54 @@ bool DatabaseWidget::copyFocusedTextSelection()
         return true;
     }
 
+    // Single line edits (e.g. the username field of the entry preview) also support
+    // selecting text. Like the widgets above, they don't route the copy through our
+    // clipboard handling, so Ctrl+C would otherwise fall through to the copy password
+    // action and end up clearing the clipboard instead of copying the selection.
+    const auto lineEdit = qobject_cast<QLineEdit*>(focusWidget());
+    if (lineEdit && lineEdit->hasSelectedText()) {
+        clipboard()->setText(lineEdit->selectedText(), clearClipboard);
+        return true;
+    }
+
+    // The entry preview's additional attributes table is a plain item view without any
+    // built-in copy support. Restrict this to views inside the preview: the entry list
+    // and the other database views are item views too, and there the copy shortcut must
+    // keep copying the password (or the entry's fields) as before.
+    if (const auto itemView = qobject_cast<QAbstractItemView*>(focusWidget())) {
+        if (m_previewView && m_previewView->isAncestorOf(itemView)) {
+            const auto indexes =
+                itemView->selectionModel() ? itemView->selectionModel()->selectedIndexes() : QModelIndexList();
+            if (!indexes.isEmpty()) {
+                clipboard()->setText(selectedItemViewText(indexes), clearClipboard);
+                return true;
+            }
+        }
+    }
+
     return false;
+}
+
+QString DatabaseWidget::selectedItemViewText(const QModelIndexList& indexes)
+{
+    // Rebuild the selected cells in visual order (top to bottom, left to right) so
+    // that the copied text keeps the layout of the view. Qt hands out the selection
+    // unordered and without the unselected cells in between.
+    QMap<int, QMap<int, QString>> rows;
+    for (const auto& index : indexes) {
+        rows[index.row()].insert(index.column(), index.data(Qt::DisplayRole).toString());
+    }
+
+    QStringList rowTexts;
+    for (const auto& row : rows) {
+        QStringList cells;
+        for (const auto& cell : row) {
+            cells << cell;
+        }
+        rowTexts << cells.join(" ");
+    }
+
+    return rowTexts.join("\n");
 }
 
 void DatabaseWidget::filterByTag()
