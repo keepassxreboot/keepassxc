@@ -121,15 +121,50 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->labelWordListWarning->setStyleSheet(QString("QLabel { color: %1; }").arg(color.name()));
 
     loadSettings();
+
+    // Everything below runs with the initial, automatically generated password; only
+    // later regenerations count as a user action that is worth confirming on close.
+    m_setupComplete = true;
 }
 
 PasswordGeneratorWidget::~PasswordGeneratorWidget() = default;
 
 void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {
-    // Emits closed signal when clicking X from title bar
+    // A spontaneous close event means the user closed the dialog through the window
+    // manager (title bar "X"). Only that path asks for confirmation; the dialog's own
+    // close/cancel button and the Escape shortcut close it silently, which is both what
+    // the issue asks for and what keeps the cancel button non-intrusive.
+    if (event->spontaneous() && !confirmDiscardPassword()) {
+        event->ignore();
+        return;
+    }
+
     emit closed();
     QWidget::closeEvent(event);
+}
+
+bool PasswordGeneratorWidget::confirmDiscardPassword()
+{
+    if (!hasUnappliedGeneratedPassword()) {
+        return true;
+    }
+
+    auto answer = MessageBox::question(this,
+                                       tr("Close Password Generator"),
+                                       tr("The generated password has not been applied yet and will be lost if you "
+                                          "close the generator. Close anyway?"),
+                                       MessageBox::Close | MessageBox::Cancel,
+                                       MessageBox::Cancel);
+    return answer != MessageBox::Cancel;
+}
+
+bool PasswordGeneratorWidget::hasUnappliedGeneratedPassword() const
+{
+    // Nothing is lost when the dialog is closed right after it opened, because it always
+    // starts with an automatically generated password. Only a password the user produced
+    // by explicitly regenerating it is worth asking about, and only if it was not applied.
+    return !m_standalone && m_passwordRegenerated && !m_passwordApplied && !m_ui->editNewPassword->text().isEmpty();
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
@@ -257,6 +292,12 @@ QString PasswordGeneratorWidget::getGeneratedPassword()
 
 void PasswordGeneratorWidget::regeneratePassword()
 {
+    if (m_setupComplete) {
+        // Any regeneration after the initial setup is a user action; the password the
+        // widget opens with is generated automatically and must not trigger the
+        // "unsaved password" confirmation when the user simply closes the dialog.
+        m_passwordRegenerated = true;
+    }
     if (m_ui->tabWidget->currentIndex() == Password) {
         if (m_passwordGenerator->isValid()) {
             m_ui->editNewPassword->setText(m_passwordGenerator->generatePassword());
@@ -330,6 +371,7 @@ void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
     m_passwordGenerated = true;
+    m_passwordApplied = true;
     emit appliedPassword(m_ui->editNewPassword->text());
     emit closed();
 }

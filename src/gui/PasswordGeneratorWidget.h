@@ -55,6 +55,7 @@ public:
     QString getGeneratedPassword();
     bool isPasswordVisible() const;
     bool isPasswordGenerated() const;
+    bool hasUnappliedGeneratedPassword() const;
 
     static PasswordGeneratorWidget* popupGenerator(QWidget* parent = nullptr);
 
@@ -86,8 +87,13 @@ private slots:
     void updateGenerator();
 
 private:
+    bool confirmDiscardPassword();
+
     bool m_standalone = false;
     bool m_passwordGenerated = false;
+    bool m_passwordApplied = false;
+    bool m_passwordRegenerated = false;
+    bool m_setupComplete = false;
     int m_firstCustomWordlistIndex;
 
     PasswordGenerator::CharClasses charClasses();
