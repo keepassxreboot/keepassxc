@@ -121,10 +121,6 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->labelWordListWarning->setStyleSheet(QString("QLabel { color: %1; }").arg(color.name()));
 
     loadSettings();
-
-    // Everything below runs with the initial, automatically generated password; only
-    // later regenerations count as a user action that is worth confirming on close.
-    m_setupComplete = true;
 }
 
 PasswordGeneratorWidget::~PasswordGeneratorWidget() = default;
@@ -161,10 +157,10 @@ bool PasswordGeneratorWidget::confirmDiscardPassword()
 
 bool PasswordGeneratorWidget::hasUnappliedGeneratedPassword() const
 {
-    // Nothing is lost when the dialog is closed right after it opened, because it always
-    // starts with an automatically generated password. Only a password the user produced
-    // by explicitly regenerating it is worth asking about, and only if it was not applied.
-    return !m_standalone && m_passwordRegenerated && !m_passwordApplied && !m_ui->editNewPassword->text().isEmpty();
+    // m_passwordGenerated is set once the user actually applies the password, so a
+    // non-empty password field together with this flag being false means the password
+    // the dialog currently shows was never accepted and would be lost on close.
+    return !m_standalone && !m_passwordGenerated && !m_ui->editNewPassword->text().isEmpty();
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
@@ -292,12 +288,6 @@ QString PasswordGeneratorWidget::getGeneratedPassword()
 
 void PasswordGeneratorWidget::regeneratePassword()
 {
-    if (m_setupComplete) {
-        // Any regeneration after the initial setup is a user action; the password the
-        // widget opens with is generated automatically and must not trigger the
-        // "unsaved password" confirmation when the user simply closes the dialog.
-        m_passwordRegenerated = true;
-    }
     if (m_ui->tabWidget->currentIndex() == Password) {
         if (m_passwordGenerator->isValid()) {
             m_ui->editNewPassword->setText(m_passwordGenerator->generatePassword());
@@ -371,7 +361,6 @@ void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
     m_passwordGenerated = true;
-    m_passwordApplied = true;
     emit appliedPassword(m_ui->editNewPassword->text());
     emit closed();
 }
