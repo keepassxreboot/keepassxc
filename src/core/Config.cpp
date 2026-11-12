@@ -30,7 +30,7 @@
 
 #include <algorithm>
 
-#define CONFIG_VERSION 2
+#define CONFIG_VERSION 3
 #define QS QStringLiteral
 
 enum ConfigType
@@ -477,14 +477,21 @@ void Config::migrate()
             continue;
         }
 
-        set(deprecationMap[setting], value);
+        // Migrate setting, but don't overwrite existing config values.
+        const auto target = deprecationMap[setting];
+        const auto targetName = configStrings[target].name;
+        if (!m_settings->contains(targetName) && !(m_localSettings && m_localSettings->contains(targetName))) {
+            set(target, value);
+        }
     }
 
     // Move local settings to separate file
     if (m_localSettings) {
         for (const auto& setting : asConst(configStrings)) {
             if (setting.type == Local && m_settings->contains(setting.name)) {
-                m_localSettings->setValue(setting.name, m_settings->value(setting.name));
+                if (!m_localSettings->contains(setting.name)) {
+                    m_localSettings->setValue(setting.name, m_settings->value(setting.name));
+                }
                 m_settings->remove(setting.name);
             }
         }
@@ -510,13 +517,21 @@ void Config::migrate()
         remove(GUI_ListViewState);
     }
 
-    // Migrate from boolean OpenURLOnDoubleClick to enum URLDoubleClickAction
-    if (m_settings->contains(configStrings[OpenURLOnDoubleClick].name)
-        && !m_settings->contains(configStrings[URLDoubleClickAction].name)) {
-        bool openUrlOnDoubleClick = get(OpenURLOnDoubleClick).toBool();
-        // Convert: true (open browser) -> 0, false (edit entry) -> 2
-        set(URLDoubleClickAction, openUrlOnDoubleClick ? 0 : 2);
-        // Keep the old setting for now for compatibility
+    if (previousVersion < 3) {
+        // 2.7.11 -- Migrate from boolean OpenURLOnDoubleClick to enum URLDoubleClickAction.
+        // Forgot to increase config version, so keep this under version 3.
+        if (m_settings->contains(configStrings[OpenURLOnDoubleClick].name)
+            && !m_settings->contains(configStrings[URLDoubleClickAction].name)) {
+            bool openUrlOnDoubleClick = get(OpenURLOnDoubleClick).toBool();
+            // Convert: true (open browser) -> 0, false (edit entry) -> 2
+            set(URLDoubleClickAction, openUrlOnDoubleClick ? 0 : 2);
+            // Keep the old setting for now for compatibility
+        }
+
+        // 2.8.1 -- Reset alternative saving method if Temporary File is selected.
+        if (!get(UseAtomicSaves).toBool() && !get(UseDirectWriteSaves).toBool()) {
+            set(UseAtomicSaves, true);
+        }
     }
 
     m_settings->setValue("ConfigVersion", CONFIG_VERSION);

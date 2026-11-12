@@ -27,7 +27,13 @@ private slots:
     void initTestCase();
 
     void testUpgrade();
+    void testDeprecatedSettingMigration_data();
+    void testDeprecatedSettingMigration();
+    void testLocalSettingMigration_data();
+    void testLocalSettingMigration();
     void testURLDoubleClickMigration();
+    void testSaveMethodMigration_data();
+    void testSaveMethodMigration();
 };
 
 #endif // KEEPASSX_TESTCONFIG_H
