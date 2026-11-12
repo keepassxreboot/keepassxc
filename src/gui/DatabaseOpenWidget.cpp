@@ -19,6 +19,7 @@
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
+#include "core/OfflineCache.h"
 #include "gui/FileDialog.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
@@ -247,6 +248,18 @@ void DatabaseOpenWidget::load(const QString& filename)
     QString error;
     m_db.reset(new Database());
     m_db->open(m_filename, nullptr, &error);
+
+    if (m_db->isWorkingOffline()) {
+        const auto cache = OfflineCache::forDatabase(m_filename);
+        const auto timestamp =
+            cache.lastSyncTime().toLocalTime().toString(QLocale().dateTimeFormat(QLocale::ShortFormat));
+        m_ui->messageWidget->showMessage(
+            tr("Original file is not reachable. Using the offline copy from %1.").arg(timestamp),
+            MessageWidget::Warning,
+            MessageWidget::DisableAutoHide);
+    } else {
+        m_ui->messageWidget->hide();
+    }
 
     m_ui->fileNameLabel->setRawText(m_filename);
 

@@ -406,6 +406,73 @@ add up to the specified amount at most.</string>
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="cloudOfflineGroupBox">
+     <property name="title">
+      <string>Offline Copy (Cloud / Network File)</string>
+     </property>
+     <layout class="QVBoxLayout" name="cloudOfflineLayout">
+      <item>
+       <widget class="QCheckBox" name="cloudFileCheckBox">
+        <property name="toolTip">
+         <string>Keeps an encrypted offline copy of this database on this computer. If the original file can't be reached, the offline copy opens instead and your changes are merged back once the original returns. This setting applies to this computer only.</string>
+        </property>
+        <property name="text">
+         <string>Treat as cloud / network file</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="cloudFileSuggestCheckBox">
+        <property name="toolTip">
+         <string>Saves this setting in the database file, so KeePassXC turns on cloud mode automatically on any computer that opens it for the first time. You can still turn it off per computer.</string>
+        </property>
+        <property name="text">
+         <string>Suggest this on other computers (stored in the database file)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="cloudOfflineActionsLayout">
+        <item>
+         <widget class="QLabel" name="cloudStatusLabel">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="cloudOfflineSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cloudSyncNowButton">
+          <property name="text">
+           <string>Sync now</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cloudShowVersionsButton">
+          <property name="text">
+           <string>Show backup versions…</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

@@ -115,6 +115,9 @@ add_unit_test(NAME testentry SOURCES TestEntry.cpp
 add_unit_test(NAME testmerge SOURCES TestMerge.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
+add_unit_test(NAME testofflinecache SOURCES TestOfflineCache.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testpasswordgenerator SOURCES TestPasswordGenerator.cpp
         LIBS ${TEST_LIBRARIES})
 

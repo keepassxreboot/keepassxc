@@ -18,6 +18,7 @@
 #include "FileWatcher.h"
 
 #include "core/AsyncTask.h"
+#include "core/OfflineCache.h"
 
 #ifdef Q_OS_LINUX
 #include <sys/statfs.h>
@@ -68,6 +69,18 @@ void FileWatcher::start(const QString& filePath, int checksumIntervalSeconds, in
     }
 
     m_ignoreFileChange = false;
+    m_waitingForReconnect = false;
+}
+
+void FileWatcher::startWaitingForReconnect(const QString& filePath, int intervalSeconds)
+{
+    stop();
+    m_filePath = filePath;
+    m_waitingForReconnect = true;
+    m_ignoreFileChange = false;
+    if (intervalSeconds > 0) {
+        m_fileChecksumTimer.start(intervalSeconds * 1000);
+    }
 }
 
 void FileWatcher::stop()
@@ -80,6 +93,7 @@ void FileWatcher::stop()
     m_fileChecksumTimer.stop();
     m_fileChangeDelayTimer.stop();
     m_paused = false;
+    m_waitingForReconnect = false;
 }
 
 void FileWatcher::pause()
@@ -116,6 +130,19 @@ void FileWatcher::checkFileChanged()
 
     // Prevent reentrance
     m_ignoreFileChange = true;
+
+    if (m_waitingForReconnect) {
+        const auto path = m_filePath;
+        AsyncTask::runThenCallback([path] { return OfflineCache::isOriginalFileReachable(path); },
+                                   this,
+                                   [this](bool reachable) {
+                                       if (reachable && m_waitingForReconnect) {
+                                           m_fileChangeDelayTimer.start(0);
+                                       }
+                                       m_ignoreFileChange = false;
+                                   });
+        return;
+    }
 
     AsyncTask::runThenCallback([this] { return calculateChecksum(); },
                                this,

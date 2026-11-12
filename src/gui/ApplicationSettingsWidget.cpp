@@ -29,6 +29,7 @@
 #include "config-keepassx.h"
 
 #include "autotype/AutoType.h"
+#include "core/OfflineCache.h"
 #include "core/Translator.h"
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
@@ -97,6 +98,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox},
         {Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox},
         {Config::BackupFilePathPattern, m_generalUi->backupFilePath},
+        {Config::OfflineCacheDir, m_generalUi->offlineCacheDirEdit},
+        {Config::OfflineCacheMaxVersions, m_generalUi->offlineCacheMaxVersionsSpinBox},
         {Config::UseAtomicSaves, m_generalUi->useAlternativeSaveCheckBox},
         {Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox},
         {Config::MinimizeAfterUnlock, m_generalUi->minimizeAfterUnlockCheckBox},
@@ -237,6 +240,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->importSettingsButton, SIGNAL(clicked()), SLOT(importSettings()));
     connect(m_generalUi->exportSettingsButton, SIGNAL(clicked()), SLOT(exportSettings()));
     connect(m_generalUi->backupFilePathPicker, SIGNAL(pressed()), SLOT(selectBackupDirectory()));
+    connect(m_generalUi->offlineCacheDirPicker, SIGNAL(pressed()), SLOT(selectOfflineCacheDirectory()));
     connect(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox, SIGNAL(toggled(bool)),
             SLOT(showExpiredEntriesOnDatabaseUnlockToggled(bool)));
     connect(m_generalUi->autoTypeAskCheckBox, SIGNAL(toggled(bool)),
@@ -286,11 +290,13 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     // This prevents combo box and spinner values from changing without explicit focus
     auto mouseWheelFilter = new MouseWheelEventFilter(this);
     m_generalUi->faviconTimeoutSpinBox->installEventFilter(mouseWheelFilter);
+    m_generalUi->offlineCacheMaxVersionsSpinBox->installEventFilter(mouseWheelFilter);
     m_generalUi->alternativeSaveComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->toolButtonStyleComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->languageComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->trayIconAppearance->installEventFilter(mouseWheelFilter);
     m_generalUi->fontSizeComboBox->installEventFilter(mouseWheelFilter);
+    m_generalUi->offlineCacheDirEdit->setPlaceholderText(OfflineCache::defaultBaseDir());
 
 #ifdef Q_OS_MACOS
     // The menubar is always shown on macOS, so hide the option to avoid confusion
@@ -748,5 +754,17 @@ void ApplicationSettingsWidget::selectBackupDirectory()
     if (!backupDirectory.isEmpty()) {
         m_generalUi->backupFilePath->setText(
             QDir(backupDirectory).filePath(config()->getDefault(Config::BackupFilePathPattern).toString()));
+    }
+}
+
+void ApplicationSettingsWidget::selectOfflineCacheDirectory()
+{
+    const QString initialDir = m_generalUi->offlineCacheDirEdit->text().trimmed().isEmpty()
+                                   ? OfflineCache::defaultBaseDir()
+                                   : m_generalUi->offlineCacheDirEdit->text().trimmed();
+    auto cacheDir = FileDialog::instance()->getExistingDirectory(
+        this, tr("Select offline copy storage directory"), initialDir);
+    if (!cacheDir.isEmpty()) {
+        m_generalUi->offlineCacheDirEdit->setText(cacheDir);
     }
 }

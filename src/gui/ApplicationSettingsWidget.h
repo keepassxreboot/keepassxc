@@ -70,6 +70,7 @@ private slots:
     void showExpiredEntriesOnDatabaseUnlockToggled(bool checked);
     void autoTypeAskToggled(bool checked);
     void selectBackupDirectory();
+    void selectOfflineCacheDirectory();
 
 private:
     QWidget* const m_secWidget;

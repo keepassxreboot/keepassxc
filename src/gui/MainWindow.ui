@@ -265,6 +265,9 @@
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuRemoteSync"/>
+    <addaction name="actionDatabaseCloudMode"/>
+    <addaction name="actionDatabaseCloudSyncNow"/>
+    <addaction name="actionDatabaseCloudVersions"/>
     <addaction name="actionImport"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>
@@ -1365,6 +1368,33 @@
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionDatabaseCloudMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Treat as Cloud / Network File</string>
+   </property>
+   <property name="toolTip">
+    <string>Keep an encrypted offline copy on this computer so you can open and edit this database when the cloud or network file is unreachable, and merge changes when it comes back.</string>
+   </property>
+  </action>
+  <action name="actionDatabaseCloudSyncNow">
+   <property name="text">
+    <string>Sync Offline Copy Now</string>
+   </property>
+   <property name="toolTip">
+    <string>Reconcile and sync the local offline copy with the original cloud / network database file.</string>
+   </property>
+  </action>
+  <action name="actionDatabaseCloudVersions">
+   <property name="text">
+    <string>Offline Backup Versions…</string>
+   </property>
+   <property name="toolTip">
+    <string>View, merge, or export local backup versions kept for this cloud / network database.</string>
    </property>
   </action>
  </widget>

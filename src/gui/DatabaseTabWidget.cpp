@@ -22,6 +22,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Merger.h"
+#include "core/OfflineCache.h"
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
@@ -162,17 +163,27 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     QFileInfo fileInfo(cleanFilePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
 
-    if (canonicalFilePath.isEmpty()) {
+    if (canonicalFilePath.isEmpty() && !OfflineCache::canFallbackToCache(cleanFilePath)) {
         emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(cleanFilePath),
                            MessageWidget::Error);
         return;
     }
 
+    const QString normalizedTarget = OfflineCache::normalizeFilePath(cleanFilePath);
     for (int i = 0, c = count(); i < c; ++i) {
         auto* dbWidget = databaseWidgetFromIndex(i);
         Q_ASSERT(dbWidget);
-        if (dbWidget
-            && dbWidget->database()->canonicalFilePath().compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0) {
+        if (!dbWidget) {
+            continue;
+        }
+        const QString existingCanonical = dbWidget->database()->canonicalFilePath();
+        const bool sameCanonical =
+            !canonicalFilePath.isEmpty() && existingCanonical.compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0;
+        const bool sameNormalized =
+            OfflineCache::normalizeFilePath(dbWidget->database()->filePath())
+                .compare(normalizedTarget, FILE_CASE_SENSITIVE)
+            == 0;
+        if (sameCanonical || sameNormalized) {
             dbWidget->performUnlockDatabase(password, keyfile);
             if (!inBackground) {
                 // switch to existing tab if file is already open
@@ -254,6 +265,12 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
             &DatabaseWidget::unlockDatabaseInDialogForSync,
             this,
             &DatabaseTabWidget::unlockDatabaseInDialogForSync);
+    connect(dbWidget, &DatabaseWidget::cloudStatusChanged, this, [this, dbWidget] {
+        updateTabName(indexOf(dbWidget));
+    });
+    connect(dbWidget, &DatabaseWidget::requestMergeDatabase, this, [this](const QString& path) {
+        mergeDatabase(path);
+    });
 }
 
 void DatabaseTabWidget::importFile()
@@ -668,6 +685,16 @@ QString DatabaseTabWidget::tabName(int index)
 
     if (dbWidget->database()->isTemporaryDatabase()) {
         tabName = tr("%1 [Temporary]", "Database tab name modifier").arg(tabName);
+    }
+
+    if (dbWidget->database()->isCloudModeEnabled()
+        || (!dbWidget->database()->isInitialized()
+            && OfflineCache::isCloudFilePath(dbWidget->database()->filePath()))) {
+        if (dbWidget->database()->isWorkingOffline()) {
+            tabName.append(QStringLiteral(" \u2601\u20e0"));
+        } else {
+            tabName.append(QStringLiteral(" \u2601"));
+        }
     }
 
     // needs to be last check, as MainWindow may remove the asterisk again

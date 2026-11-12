@@ -50,6 +50,7 @@ private slots:
     void setupPublicColorButton(const QColor& color);
     void pickPublicIcon();
     void setupPublicIconButton(int iconIndex);
+    void updateCloudStatusLabel();
 
 private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_ui;

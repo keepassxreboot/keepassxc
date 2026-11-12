@@ -82,15 +82,33 @@ private:
     bool backupDatabase(const QString& filePath, const QString& destinationFilePath);
     bool restoreDatabase(const QString& filePath, const QString& fromBackupFilePath);
     bool performSave(const QString& filePath, SaveAction flags, const QString& backupFilePath, QString* error);
+    bool openFileInternal(const QString& sourceFilePath,
+                          const QString& logicalFilePath,
+                          QSharedPointer<const CompositeKey> key,
+                          bool openedFromOfflineCache,
+                          QString* error);
 
 public:
     bool open(QSharedPointer<const CompositeKey> key, QString* error = nullptr);
     bool open(const QString& filePath, QSharedPointer<const CompositeKey> key, QString* error = nullptr);
+    bool openWithoutOfflineFallback(const QString& filePath,
+                                    QSharedPointer<const CompositeKey> key,
+                                    QString* error = nullptr);
     bool save(SaveAction action = Atomic, const QString& backupFilePath = QString(), QString* error = nullptr);
     bool saveAs(const QString& filePath,
                 SaveAction action = Atomic,
                 const QString& backupFilePath = QString(),
                 QString* error = nullptr);
+    bool isCloudModeEnabled() const;
+    bool isWorkingOffline() const;
+    void setWorkingOffline(bool offline);
+    bool mergedFromOfflineCacheOnOpen() const;
+    int mergedFromOfflineCacheCount() const;
+    bool offlineCacheNeedsManualMerge() const;
+    void clearOfflineCacheOpenFlags();
+    bool refreshOfflineCache(bool forceNewVersion = false, QString* error = nullptr);
+    bool reconcileOfflineCache(int* mergedChangesCount = nullptr, QString* error = nullptr);
+    void checkOriginalFileReachableAsync();
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
 
@@ -193,6 +211,8 @@ signals:
     void databaseFileChanged(bool triggeredBySave);
     void databaseNonDataChanged();
     void tagListUpdated();
+    void offlineStateChanged(bool workingOffline);
+    void cloudModeChanged();
 
 private:
     struct DatabaseData
@@ -255,6 +275,10 @@ private:
     bool m_hasNonDataChange = false;
     QString m_keyError;
     bool m_isTemporaryDatabase = false;
+    bool m_workingOffline = false;
+    bool m_mergedFromOfflineCacheOnOpen = false;
+    int m_mergedFromOfflineCacheCount = 0;
+    bool m_offlineCacheNeedsManualMerge = false;
 
     QStringList m_commonUsernames;
     QStringList m_tagList;

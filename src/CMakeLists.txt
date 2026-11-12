@@ -38,6 +38,7 @@ set(core_SOURCES
         core/Merger.cpp
         core/Metadata.cpp
         core/ModifiableObject.cpp
+        core/OfflineCache.cpp
         core/PasswordGenerator.cpp
         core/PasswordHealth.cpp
         core/PassphraseGenerator.cpp
