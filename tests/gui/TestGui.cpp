@@ -2567,6 +2567,55 @@ void TestGui::testDeleteEntryDuringModalDialog()
     QCOMPARE(entryView->model()->rowCount(), initialEntryCount - 1);
 }
 
+void TestGui::testPasswordGeneratorCloseConfirmation()
+{
+    // The generator asks for confirmation on close only when the user produced a password
+    // by explicitly regenerating it and did not apply it. Closing the dialog right after
+    // it opened must stay silent, because it always opens with a generated password.
+    //
+    // Only the state machine that drives the confirmation is asserted here: a spontaneous
+    // close (the title bar "X") cannot be synthesized in the test harness, so the modal
+    // dialog itself is not exercised.
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction);
+
+    QTest::mouseClick(toolBar->widgetForAction(entryNewAction), Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
+
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    auto* passwordEdit =
+        editEntryWidget->findChild<PasswordWidget*>("passwordEdit")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(passwordEdit);
+
+    QTest::mouseClick(passwordEdit, Qt::LeftButton);
+#ifdef Q_OS_MAC
+    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::MetaModifier);
+#else
+    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
+#endif
+
+    QPointer<PasswordGeneratorWidget> generator;
+    QTRY_VERIFY(generator = m_dbWidget->findChild<PasswordGeneratorWidget*>());
+
+    // The password the dialog opens with is generated automatically, so closing it does
+    // not discard a deliberate result and must not ask for confirmation.
+    QVERIFY(!generator->getGeneratedPassword().isEmpty());
+    QVERIFY(!generator->hasUnappliedGeneratedPassword());
+
+    // A password the user regenerated explicitly is worth confirming.
+    generator->regeneratePassword();
+    QVERIFY(generator->hasUnappliedGeneratedPassword());
+
+    // Closing through the dialog's own close/cancel path stays silent and closes it.
+    MessageBox::setNextAnswer(MessageBox::NoButton);
+    generator->close();
+    QApplication::processEvents();
+    QTRY_VERIFY(generator == nullptr);
+
+    MessageBox::setNextAnswer(MessageBox::NoButton);
+}
+
 void TestGui::addCannedEntries()
 {
     // Find buttons
