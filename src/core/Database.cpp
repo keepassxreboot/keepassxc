@@ -586,9 +586,7 @@ bool Database::performSave(const QString& filePath,
         });
         // Keep original permissions if available.
         const auto perm = info.exists() ? info.permissions() : QFile::ReadUser | QFile::WriteUser;
-        if (!sibling.setPermissions(perm)) {
-            return fail(sibling.errorString());
-        }
+        sibling.setPermissions(perm);
         if (!tempFile.reset()) {
             return fail(tempFile.errorString());
         }
