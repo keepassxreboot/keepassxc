@@ -19,6 +19,7 @@
 #include "NativeMessagingProxy.h"
 #include <QCoreApplication>
 
+#include <cstdlib>
 #include <iostream>
 
 #ifndef Q_OS_WIN
@@ -79,5 +80,10 @@ int main(int argc, char* argv[])
     SetConsoleCtrlHandler(static_cast<PHANDLER_ROUTINE>(ConsoleHandler), TRUE);
 #endif
     NativeMessagingProxy proxy;
-    return a.exec();
+    const int ret = a.exec();
+
+    // The stdin reader may still be blocked in a read that can't be interrupted portably,
+    // and there is nothing left to clean up, so exit without waiting for it.
+    std::cout.flush();
+    std::_Exit(ret);
 }
