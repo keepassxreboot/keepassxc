@@ -54,6 +54,7 @@ struct EntryParameters
     QString siteUrl;
     QString formUrl;
     bool httpAuth;
+    QSharedPointer<Totp::Settings> totp;
 };
 
 class DatabaseWidget;
