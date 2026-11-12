@@ -757,6 +757,10 @@
         <source>Hide notes in the entry preview panel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm closing the password generator with an unused password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AttachmentWidget</name>

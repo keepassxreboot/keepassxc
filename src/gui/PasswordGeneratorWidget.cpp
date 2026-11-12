@@ -160,7 +160,10 @@ bool PasswordGeneratorWidget::hasUnappliedGeneratedPassword() const
     // m_passwordGenerated is set once the user actually applies the password, so a
     // non-empty password field together with this flag being false means the password
     // the dialog currently shows was never accepted and would be lost on close.
-    return !m_standalone && !m_passwordGenerated && !m_ui->editNewPassword->text().isEmpty();
+    // Asking about it is opt-in: closing the generator is a frequent action and a
+    // confirmation on every close gets in the way (see the discussion in #10831).
+    return config()->get(Config::Security_ConfirmPasswordGeneratorClose).toBool() && !m_standalone
+           && !m_passwordGenerated && !m_ui->editNewPassword->text().isEmpty();
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
