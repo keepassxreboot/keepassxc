@@ -92,6 +92,10 @@ int main(int argc, char* argv[])
     app.setQuitOnLastWindowClosed(false);
     app.setAttribute(Qt::AA_Use96Dpi, true);
     app.applyTheme();
+    // Same minimum as main.cpp, every visible unlock widget keeps a pool thread busy with its hardware key listener
+    if (QThreadPool::globalInstance()->maxThreadCount() < 3) {
+        QThreadPool::globalInstance()->setMaxThreadCount(3);
+    }
     TestGui tc;
     QTEST_SET_MAIN_SOURCE_PATH
     return QTest::qExec(&tc, argc, argv);
