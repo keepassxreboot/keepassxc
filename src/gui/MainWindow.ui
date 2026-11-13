@@ -326,6 +326,7 @@
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryExpire"/>
     <addaction name="actionEntryClone"/>
+    <addaction name="actionEntryMerge"/>
     <addaction name="actionEntryDelete"/>
     <addaction name="separator"/>
     <addaction name="actionEntryMoveUp"/>
@@ -701,6 +702,14 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionEntryMerge">
+   <property name="text">
+    <string>&amp;Merge Entries…</string>
+   </property>
+   <property name="toolTip">
+    <string>Merge Selected Entries</string>
    </property>
   </action>
   <action name="actionEntryClone">
