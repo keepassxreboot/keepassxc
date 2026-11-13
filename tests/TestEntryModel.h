@@ -27,6 +27,7 @@ class TestEntryModel : public QObject
 private slots:
     void initTestCase();
     void test();
+    void testUnsavedEntryFont();
     void testAttachmentsModel();
     void testAttributesModel();
     void testDefaultIconModel();
