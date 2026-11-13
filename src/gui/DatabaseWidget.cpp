@@ -1793,10 +1793,10 @@ void DatabaseWidget::saveSearch(const QString& searchtext)
     dialog.setOkButtonText(tr("Save"));
     dialog.setLabelText(tr("Enter a unique name or overwrite an existing search from the list:"));
     dialog.setWindowTitle(tr("Save Search"));
-    dialog.exec();
+    int ret = dialog.exec();
 
     auto name = dialog.textValue();
-    if (!name.isEmpty()) {
+    if (ret == QDialog::Accepted && !name.isEmpty()) {
         m_db->metadata()->addSavedSearch(name, searchtext);
     }
 }
