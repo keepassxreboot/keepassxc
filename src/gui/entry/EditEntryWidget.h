@@ -107,6 +107,7 @@ private slots:
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
     void toggleCurrentAttributeVisibility();
+    void copyAttributeText();
     void updateAutoTypeEnabled();
     void openAutotypeHelp();
     void insertAutoTypeAssoc();
