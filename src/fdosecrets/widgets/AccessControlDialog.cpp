@@ -20,6 +20,7 @@
 #include "AccessControlDialog.h"
 #include "ui_AccessControlDialog.h"
 
+#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/widgets/RowButtonHelper.h"
 
@@ -40,6 +41,9 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     , m_rememberCheck()
     , m_model(new EntryModel(entries))
     , m_decisions()
+    , m_exePath(info.exePath())
+    , m_pid(info.pid)
+    , m_peerValid(info.valid)
 {
     if (parent) {
         // Force the creation of the QWindow, without this windowHandle() will return nullptr
@@ -81,8 +85,8 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     detailsButton->setCheckable(true);
 
     QString tooltip = QStringLiteral("<p align='justify'>%1</p>")
-                          .arg(tr("Your decision will be remembered for the duration while both the requesting client "
-                                  "AND KeePassXC are running."));
+                          .arg(tr("Your decision will be remembered permanently. The application's path and checksum "
+                                  "will be saved to your settings so future requests are automatically approved."));
 
     m_rememberCheck = new QCheckBox(tr("Remember"), this);
     m_rememberCheck->setObjectName("rememberCheck"); // for testing
@@ -194,6 +198,23 @@ void AccessControlDialog::dialogFinished(int result)
 
         auto undecided = result == AllowSelected && !selected;
         m_decisions.insert(uuid, undecided ? AuthDecision::Undecided : decision);
+    }
+
+    if (m_peerValid && !m_exePath.isEmpty()) {
+        bool allowedAny = (result == AllowAll);
+        if (!allowedAny && result == AllowSelected && m_rememberCheck && m_rememberCheck->isChecked()) {
+            for (auto dec : m_decisions.values()) {
+                if (dec == AuthDecision::Allowed) {
+                    allowedAny = true;
+                    break;
+                }
+            }
+        }
+        if (allowedAny) {
+            FdoSecrets::settings()->addAuthorizedClient(m_exePath, m_pid);
+        } else if (result == DenyAll) {
+            FdoSecrets::settings()->removeAuthorizedClient(m_exePath);
+        }
     }
 
     emit finished(m_decisions, futureDecision);
