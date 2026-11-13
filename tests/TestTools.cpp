@@ -18,9 +18,11 @@
 #include "TestTools.h"
 
 #include "core/Clock.h"
+#include "core/Resources.h"
 #include "core/Tools.h"
 #include "mock/MockClock.h"
 
+#include <QDir>
 #include <QFileInfo>
 #include <QRegularExpression>
 #include <QTest>
@@ -478,4 +480,12 @@ void TestTools::testEscapeAccelerators()
     QCOMPARE(Tools::escapeAccelerators("Accel&erator&"), "Accel&&erator&&");
     QCOMPARE(Tools::escapeAccelerators("Accel&&erator"), "Accel&&&&erator");
     QCOMPARE(Tools::escapeAccelerators("Some & text"), "Some && text");
+}
+
+void TestTools::testResourcesInit()
+{
+    auto* res = Resources::instance();
+    QVERIFY(res != nullptr);
+    QString dataPath = res->dataPath("");
+    QVERIFY(dataPath.isEmpty() || QDir::isAbsolutePath(dataPath));
 }
