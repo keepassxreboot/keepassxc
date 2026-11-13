@@ -40,6 +40,7 @@ private slots:
     void testResolveConflictEntry_KeepNewer();
     void testDeletionConflictEntry_Synchronized();
     void testDeletionConflictEntry_KeepNewer();
+    void testRemoteSyncPermanentDeletionPropagated();
     void testMoveEntry();
     void testMoveEntryPreserveChanges();
     void testMoveEntryIntoNewGroup();

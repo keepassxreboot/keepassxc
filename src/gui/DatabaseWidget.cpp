@@ -1450,6 +1450,12 @@ bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, Q
     emit updateSyncProgress(50, tr("Syncing..."));
     Merger firstMerge(m_db.data(), otherDb.data());
     Merger secondMerge(otherDb.data(), m_db.data());
+    // Remote sync is bidirectional replication of one database, so permanent
+    // deletions have to be applied in both directions. Without an explicit mode
+    // the root group falls back to KeepNewer and Merger::mergeDeletions() is a
+    // no-op, which resurrects entries that were deleted on purpose. (#14050)
+    firstMerge.setForcedMergeMode(Group::Synchronize);
+    secondMerge.setForcedMergeMode(Group::Synchronize);
     auto changeList = firstMerge.merge() + secondMerge.merge();
 
     if (!changeList.isEmpty()) {

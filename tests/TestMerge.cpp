@@ -1498,3 +1498,54 @@ Database* TestMerge::createTestDatabaseStructureClone(Database* source, int entr
     delete oldGroup;
     return db;
 }
+/**
+ * #14050 - Remote sync never propagates permanent deletions.
+ *
+ * Mirrors DatabaseWidget::syncWithDatabase(), which runs two Merger instances
+ * (local -> remote and remote -> local). Before the fix neither merger set a
+ * merge mode, so the root group fell back to KeepNewer and
+ * Merger::mergeDeletions() returned early: an entry permanently deleted on one
+ * side was resurrected from the other side on every sync.
+ */
+void TestMerge::testRemoteSyncPermanentDeletionPropagated()
+{
+    QScopedPointer<Database> local(createTestDatabase());
+    QScopedPointer<Database> remote(createTestDatabaseStructureClone(local.data(),
+                                                                     Entry::CloneNoFlags,
+                                                                     Group::CloneIncludeEntries));
+
+    local->metadata()->setRecycleBinEnabled(true);
+    remote->metadata()->setRecycleBinEnabled(true);
+
+    Entry* localEntry = local->rootGroup()->findEntryByPath("entry1");
+    QVERIFY(localEntry);
+    const QUuid uuid = localEntry->uuid();
+    QVERIFY(remote->rootGroup()->findEntryByUuid(uuid));
+
+    // Same order and direction as DatabaseWidget::syncWithDatabase()
+    auto sync = [](Database* a, Database* b) {
+        Merger first(a, b);
+        Merger second(b, a);
+        first.setForcedMergeMode(Group::Synchronize);
+        second.setForcedMergeMode(Group::Synchronize);
+        first.merge();
+        second.merge();
+    };
+
+    // Step 1: recycle locally, then sync
+    local->recycleEntry(localEntry);
+    m_clock->advanceMinute(1);
+    sync(local.data(), remote.data());
+
+    // Step 2: empty the recycle bin - a permanent deletion, recorded in DeletedObjects
+    local->emptyRecycleBin();
+    QVERIFY(!local->rootGroup()->findEntryByUuid(uuid));
+    QVERIFY(local->containsDeletedObject(uuid));
+
+    // Step 3: sync again. The deletion must win on both sides.
+    m_clock->advanceMinute(1);
+    sync(local.data(), remote.data());
+
+    QVERIFY(!local->rootGroup()->findEntryByUuid(uuid));
+    QVERIFY(!remote->rootGroup()->findEntryByUuid(uuid));
+}
