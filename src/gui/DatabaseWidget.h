@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include <QModelIndexList>
 #include <QStackedWidget>
 
 #include "core/Database.h"
@@ -298,6 +299,7 @@ private slots:
 
 private:
     int addChildWidget(QWidget* w);
+    QString selectedItemViewText(const QModelIndexList& indexes);
     void processAutoOpen();
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false, bool downloadInBackground = false);

@@ -72,6 +72,7 @@ private slots:
     void testShortcutConfig();
     void testMenuActionStates();
     void testDeleteEntryDuringModalDialog();
+    void testPreviewCopySelection();
 
 private:
     void addCannedEntries();
