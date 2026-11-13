@@ -82,7 +82,7 @@ private:
     bool m_darkTheme = false;
     QLockFile* m_lockFile;
     QLocalServer m_lockServer;
-    QString m_socketName;
+    QString m_socketFile;
 };
 
 #define kpxcApp qobject_cast<Application*>(Application::instance())

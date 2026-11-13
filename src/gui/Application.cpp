@@ -77,11 +77,9 @@ Application::Application(int& argc, char** argv)
 #endif
 
     QString lockName = identifier + QStringLiteral(".lock");
-    m_socketName = identifier + QStringLiteral(".socket");
+    QString socketName = identifier + QStringLiteral(".socket");
 
-    // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
-    // this and creates sockets in TempLocation, so let's be consistent.
-    m_lockFile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/" + lockName);
+    m_lockFile = new QLockFile(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) + "/" + lockName);
     m_lockFile->setStaleLockTime(0);
     m_lockFile->tryLock();
 
@@ -89,17 +87,19 @@ Application::Application(int& argc, char** argv)
     connect(&m_lockServer, SIGNAL(newConnection()), this, SIGNAL(anotherInstanceStarted()));
     connect(&m_lockServer, SIGNAL(newConnection()), this, SLOT(processIncomingConnection()));
 
+    m_socketFile = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) + "/" + socketName;
+
     switch (m_lockFile->error()) {
     case QLockFile::NoError:
         // No existing lock was found, start listener
-        m_lockServer.listen(m_socketName);
+        m_lockServer.listen(m_socketFile);
         break;
     case QLockFile::LockFailedError: {
         if (config()->get(Config::SingleInstance).toBool()) {
             // Attempt to connect to the existing instance
             QLocalSocket client;
             for (int i = 0; i < 3; ++i) {
-                client.connectToServer(m_socketName);
+                client.connectToServer(m_socketFile);
                 if (client.waitForConnected(WaitTimeoutMSec)) {
                     // Connection succeeded, this will raise the existing window if minimized
                     client.abort();
@@ -118,7 +118,7 @@ Application::Application(int& argc, char** argv)
                 m_lockFile->removeStaleLockFile();
                 m_lockFile->tryLock();
                 // start the listen server
-                m_lockServer.listen(m_socketName);
+                m_lockServer.listen(m_socketFile);
             }
         }
         break;
@@ -367,7 +367,7 @@ bool Application::isAlreadyRunning() const
 bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
 {
     QLocalSocket client;
-    client.connectToServer(m_socketName);
+    client.connectToServer(m_socketFile);
     const bool connected = client.waitForConnected(WaitTimeoutMSec);
     if (!connected) {
         return false;
@@ -398,7 +398,7 @@ bool Application::sendLockToInstance()
 {
     // Make a connection to avoid SIGSEGV
     QLocalSocket client;
-    client.connectToServer(m_socketName);
+    client.connectToServer(m_socketFile);
     const bool connected = client.waitForConnected(WaitTimeoutMSec);
     if (!connected) {
         return false;
