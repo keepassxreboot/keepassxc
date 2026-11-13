@@ -83,7 +83,9 @@ namespace Tools
         debugInfo.append("\n\n");
 
         QString extensions;
+#if !defined(Q_OS_HAIKU)
         extensions += "\n- " + QObject::tr("Auto-Type");
+#endif
         extensions += "\n- " + QObject::tr("KeeShare");
         extensions += "\n- " + QObject::tr("Hardware Keys");
 #if defined(Q_OS_MACOS) || defined(Q_CC_MSVC)
