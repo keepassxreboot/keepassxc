@@ -49,6 +49,7 @@
 #include "gui/TotpDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/TotpSetupDialog.h"
+#include "gui/UrlOverride.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
@@ -1001,7 +1002,13 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         return;
     }
 
-    QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
+    QString rawTemplate = entry->url();
+    const auto overrideCommand = UrlOverride::findCommand(rawTemplate);
+    if (!overrideCommand.isEmpty()) {
+        rawTemplate = overrideCommand;
+    }
+    QString cmdString = entry->resolveMultiplePlaceholders(rawTemplate);
+
     if (cmdString.startsWith("cmd://")) {
         // check if decision to execute command was stored
         bool launch = (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1");
@@ -1009,7 +1016,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         // otherwise ask user
         if (!launch && cmdString.length() > 6) {
             QString cmdTruncated =
-                entry->resolveMultiplePlaceholders(EntryPlaceholders::maskPasswordPlaceholders(entry->url()));
+                entry->resolveMultiplePlaceholders(EntryPlaceholders::maskPasswordPlaceholders(rawTemplate));
             cmdTruncated = cmdTruncated.mid(6);
             if (cmdTruncated.length() > 400) {
                 cmdTruncated = cmdTruncated.left(400) + " […]";
@@ -1040,7 +1047,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             QStringList cmdList = QProcess::splitCommand(cmd);
             if (!cmdList.isEmpty()) {
                 const QString program = cmdList.takeFirst();
-                QProcess::startDetached(program, cmdList);
+                UrlOverride::executeCommand(program, cmdList);
             }
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
@@ -1050,7 +1057,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     } else if (cmdString.startsWith("kdbx://")) {
         openDatabaseFromEntry(entry, false);
     } else {
-        QUrl url = QUrl::fromUserInput(entry->resolveMultiplePlaceholders(entry->url()));
+        QUrl url = QUrl::fromUserInput(cmdString);
         if (!url.isEmpty()) {
 #ifdef KEEPASSXC_DIST_APPIMAGE
             QProcess::execute("xdg-open", {url.toString(QUrl::FullyEncoded)});
