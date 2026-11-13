@@ -150,7 +150,7 @@ void BrowserPasskeysConfirmationDialog::updateEntriesToTable(const QList<QPointe
     int row = 0;
     for (const auto& entry : entries) {
         auto item = new QTableWidgetItem();
-        item->setText(entry->title() + " - " + entry->username());
+        item->setText(entry->resolveMultiplePlaceholders(entry->title()) + " - " + entry->resolveMultiplePlaceholders(entry->username()));
         m_ui->credentialsTable->setItem(row, 0, item);
 
         if (row == 0) {
