@@ -39,6 +39,7 @@
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "gui/ActionCollection.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
@@ -246,6 +247,8 @@ void TestGui::testCreateDatabase()
         auto memory = wizard->currentPage()->findChild<QSpinBox*>("memorySpinBox");
         QVERIFY(memory);
         QVERIFY(memory->isVisible());
+        // Values above the limit of the Argon2 implementation must not be offered
+        QCOMPARE(memory->maximum(), static_cast<int>(Argon2Kdf::toMebibytes(ARGON2_MAX_MEMORY)));
         QTest::mouseClick(memory, Qt::MouseButton::LeftButton);
         QTest::keyClick(memory, Qt::Key_A, Qt::ControlModifier);
         QTest::keyClicks(memory, "50");

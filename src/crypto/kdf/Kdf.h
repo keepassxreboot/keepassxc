@@ -39,7 +39,14 @@ public:
     virtual bool setSeed(const QByteArray& seed);
     virtual void randomizeSeed();
 
-    virtual bool processParameters(const QVariantMap& p) = 0;
+    /**
+     * Read the KDF parameters from a KDBX4+ parameter map.
+     *
+     * @param p variant map containing parameters
+     * @param error if not null, receives a description of why a parameter was rejected (may stay empty)
+     * @return true on success
+     */
+    virtual bool processParameters(const QVariantMap& p, QString* error = nullptr) = 0;
     virtual QVariantMap writeParameters() = 0;
     virtual bool transform(const QByteArray& raw, QByteArray& result) const = 0;
     virtual QSharedPointer<Kdf> clone() const = 0;

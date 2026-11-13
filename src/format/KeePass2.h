@@ -126,7 +126,7 @@ namespace KeePass2
     };
 
     QByteArray hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey);
-    QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
+    QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p, QString* error = nullptr);
     QVariantMap kdfToParameters(const QSharedPointer<Kdf>& kdf);
     QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
     ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);

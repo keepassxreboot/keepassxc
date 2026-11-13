@@ -69,6 +69,10 @@ private slots:
     void testCustomData();
     void testMinorVersionMismatchAfterSetKdf();
     void testChangeKdfDowngradesToKdbx3();
+    void testArgon2ParameterLimits();
+    void testArgon2InvalidParameters();
+    void testArgon2InvalidParameters_data();
+    void testArgon2InvalidParametersInHeader();
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H

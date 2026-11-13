@@ -56,6 +56,10 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
     connect(m_ui->compatibilitySelection, SIGNAL(currentIndexChanged(int)), SLOT(loadKdfAlgorithms()));
     m_ui->formatCannotBeChanged->setVisible(false);
 
+    // Don't offer values that the Argon2 implementation rejects
+    m_ui->memorySpinBox->setMaximum(static_cast<int>(Argon2Kdf::toMebibytes(ARGON2_MAX_MEMORY)));
+    m_ui->parallelismSpinBox->setMaximum(ARGON2_MAX_PARALLELISM);
+
     connect(m_ui->memorySpinBox, SIGNAL(valueChanged(int)), this, SLOT(memoryChanged(int)));
     connect(m_ui->parallelismSpinBox, SIGNAL(valueChanged(int)), this, SLOT(parallelismChanged(int)));
 
