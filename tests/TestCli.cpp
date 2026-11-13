@@ -20,12 +20,14 @@
 #include "config-keepassx-tests.h"
 #include "core/Bootstrap.h"
 #include "core/Config.h"
+#include "core/CustomData.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "keys/FileKey.h"
 #include "keys/drivers/YubiKey.h"
+#include "mock/MockClock.h"
 
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
@@ -47,6 +49,7 @@
 #include "cli/List.h"
 #include "cli/Merge.h"
 #include "cli/Move.h"
+#include "cli/MoveDir.h"
 #include "cli/Open.h"
 #include "cli/Remove.h"
 #include "cli/RemoveGroup.h"
@@ -56,6 +59,8 @@
 #include "cli/Utils.h"
 
 #include <QClipboard>
+#include <QFile>
+#include <QScopeGuard>
 #include <QSignalSpy>
 #include <QTest>
 #include <QtConcurrent>
@@ -242,13 +247,14 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("merge"));
     QVERIFY(Commands::getCommand("mkdir"));
     QVERIFY(Commands::getCommand("mv"));
+    QVERIFY(Commands::getCommand("mvdir"));
     QVERIFY(Commands::getCommand("open"));
     QVERIFY(Commands::getCommand("rm"));
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 26);
+    QCOMPARE(Commands::getCommands().size(), 27);
 }
 
 void TestCli::testInteractiveCommands()
@@ -273,6 +279,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("merge"));
     QVERIFY(Commands::getCommand("mkdir"));
     QVERIFY(Commands::getCommand("mv"));
+    QVERIFY(Commands::getCommand("mvdir"));
     QVERIFY(Commands::getCommand("open"));
     QVERIFY(Commands::getCommand("quit"));
     QVERIFY(Commands::getCommand("rm"));
@@ -280,7 +287,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(Commands::getCommand("search"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 26);
+    QCOMPARE(Commands::getCommands().size(), 27);
 }
 
 void TestCli::testAdd()
@@ -1873,6 +1880,899 @@ void TestCli::testMove()
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("General/Sample Entry");
     QVERIFY(entry);
+}
+
+static Group* addMoveDirGroup(Group* parent, const QString& name)
+{
+    auto* group = new Group();
+    group->setUuid(QUuid::createUuid());
+    group->setName(name);
+    group->setParent(parent);
+    return group;
+}
+
+static QList<QUuid> childUuids(const Group* group)
+{
+    QList<QUuid> uuids;
+    for (const Group* child : group->children()) {
+        uuids.append(child->uuid());
+    }
+    return uuids;
+}
+
+// Build ordinary-path fixtures without exercising mkdir for every mvdir case.
+bool TestCli::prepareMoveDirGroups(const QStringList& paths)
+{
+    auto db = readDatabase();
+    if (!db) {
+        return false;
+    }
+    for (const QString& path : paths) {
+        Group* parent = db->rootGroup();
+        for (const QString& name : path.split('/', Qt::SkipEmptyParts)) {
+            Group* child = nullptr;
+            for (Group* candidate : parent->children()) {
+                if (candidate->name() == name) {
+                    child = candidate;
+                    break;
+                }
+            }
+            if (!child) {
+                child = addMoveDirGroup(parent, name);
+            }
+            parent = child;
+        }
+    }
+    return db->save(Database::Atomic);
+}
+
+void TestCli::testMoveDir()
+{
+    MoveDir moveDirCmd;
+    QVERIFY(!moveDirCmd.name.isEmpty());
+    QVERIFY(moveDirCmd.getDescriptionLine().contains(moveDirCmd.name));
+
+    QVERIFY(prepareMoveDirGroups({"/Source", "/Source/Child", "/Archive"}));
+
+    Add addCmd;
+    setInput("a");
+    QCOMPARE(execCmd(addCmd, {"add", "-u", "preserved", m_dbFile->fileName(), "/Source/Child/Entry"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    m_stderr->readAll();
+    m_stdout->readAll();
+
+    auto originalDb = readDatabase();
+    QVERIFY(originalDb);
+    Group* originalSource = originalDb->rootGroup()->findGroupByPath("/Source");
+    Group* originalChild = originalDb->rootGroup()->findGroupByPath("/Source/Child");
+    Entry* originalEntry = originalDb->rootGroup()->findEntryByPath("/Source/Child/Entry");
+    Group* archive = originalDb->rootGroup()->findGroupByPath("/Archive");
+    QVERIFY(originalSource);
+    QVERIFY(originalChild);
+    QVERIFY(originalEntry);
+    QVERIFY(archive);
+
+    const QUuid sourceUuid = originalSource->uuid();
+    const QUuid childUuid = originalChild->uuid();
+    const QUuid entryUuid = originalEntry->uuid();
+    const QUuid customIconUuid = QUuid::createUuid();
+    const QByteArray customIconData("mvdir custom icon bytes");
+    originalDb->metadata()->addCustomIcon(customIconUuid, customIconData, "mvdir test icon");
+    originalSource->setNotes("group notes survive mvdir");
+    originalSource->setTags("group-tag");
+    originalSource->setAutoTypeEnabled(Group::Disable);
+    originalSource->setSearchingEnabled(Group::Disable);
+    originalSource->setDefaultAutoTypeSequence("{USERNAME}{TAB}{PASSWORD}{ENTER}");
+    originalSource->setIcon(customIconUuid);
+    originalSource->customData()->set("mvdir-test", "group custom data");
+    originalEntry->setPassword("current-secret");
+    originalEntry->setNotes("entry notes survive mvdir");
+    originalEntry->attributes()->set("Custom field", "custom value");
+    originalEntry->attachments()->set("mvdir.txt", QByteArray("attachment contents"));
+    originalEntry->setIcon(customIconUuid);
+    auto* historyEntry = originalEntry->clone(Entry::CloneNoFlags);
+    historyEntry->setPassword("previous-secret");
+    originalEntry->addHistoryItem(historyEntry);
+
+    auto* referenceEntry = new Entry();
+    referenceEntry->setUuid(QUuid::createUuid());
+    referenceEntry->setTitle("Reference to moved entry");
+    referenceEntry->setPassword(QString("{REF:P@I:%1}").arg(originalEntry->uuidToHex()));
+    referenceEntry->setGroup(archive);
+    auto* sameNameEntry = new Entry();
+    sameNameEntry->setUuid(QUuid::createUuid());
+    sameNameEntry->setTitle("Renamed");
+    sameNameEntry->setGroup(archive);
+    const QUuid sameNameEntryUuid = sameNameEntry->uuid();
+    QString saveError;
+    QVERIFY2(originalDb->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Source", "/Archive/Renamed"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully moved group /Source to /Archive/Renamed.\n"));
+
+    auto db = readDatabase();
+    QVERIFY(db->rootGroup()->findGroupByPath("/Archive/Renamed"));
+    QVERIFY(!db->rootGroup()->findGroupByPath("/Source"));
+    QVERIFY(db->rootGroup()->findGroupByPath("/Archive/Renamed/Child"));
+    auto* entry = db->rootGroup()->findEntryByPath("/Archive/Renamed/Child/Entry");
+    QVERIFY(entry);
+    auto* movedSource = db->rootGroup()->findGroupByPath("/Archive/Renamed");
+    auto* movedChild = db->rootGroup()->findGroupByPath("/Archive/Renamed/Child");
+    QCOMPARE(movedSource->uuid(), sourceUuid);
+    QCOMPARE(movedChild->uuid(), childUuid);
+    QCOMPARE(entry->uuid(), entryUuid);
+    QCOMPARE(entry->username(), QString("preserved"));
+    QCOMPARE(entry->password(), QString("current-secret"));
+    QCOMPARE(entry->notes(), QString("entry notes survive mvdir"));
+    QCOMPARE(entry->attributes()->value("Custom field"), QString("custom value"));
+    QCOMPARE(entry->attachments()->value("mvdir.txt"), QByteArray("attachment contents"));
+    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().first()->password(), QString("previous-secret"));
+    QCOMPARE(movedSource->notes(), QString("group notes survive mvdir"));
+    QCOMPARE(movedSource->tags(), QString("group-tag"));
+    QCOMPARE(movedSource->autoTypeEnabled(), Group::Disable);
+    QCOMPARE(movedSource->searchingEnabled(), Group::Disable);
+    QCOMPARE(movedSource->defaultAutoTypeSequence(), QString("{USERNAME}{TAB}{PASSWORD}{ENTER}"));
+    QCOMPARE(movedSource->iconUuid(), customIconUuid);
+    QCOMPARE(entry->iconUuid(), customIconUuid);
+    QVERIFY(db->metadata()->hasCustomIcon(customIconUuid));
+    QCOMPARE(db->metadata()->customIcon(customIconUuid).data, customIconData);
+    QCOMPARE(db->metadata()->customIcon(customIconUuid).name, QString("mvdir test icon"));
+    QCOMPARE(movedSource->customData()->value("mvdir-test"), QString("group custom data"));
+    QCOMPARE(db->rootGroup()->findEntryByPath("/Archive/Renamed")->uuid(), sameNameEntryUuid);
+    auto* movedReference = db->rootGroup()->findEntryByPath("/Archive/Reference to moved entry");
+    QVERIFY(movedReference);
+    QVERIFY(movedReference->hasReferencesTo(entryUuid));
+    QCOMPARE(movedReference->resolveMultiplePlaceholders(movedReference->password()), QString("current-secret"));
+
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", "-q", m_dbFile->fileName(), "/Archive/Renamed", "/Quiet"}), EXIT_SUCCESS);
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    db = readDatabase();
+    QVERIFY(db);
+    QCOMPARE(db->rootGroup()->findGroupByPath("/Quiet")->uuid(), sourceUuid);
+}
+
+void TestCli::testMoveDirOperations_data()
+{
+    QTest::addColumn<QString>("sourcePath");
+    QTest::addColumn<QString>("sourceStoragePath");
+    QTest::addColumn<QString>("destinationPath");
+    QTest::addColumn<QString>("destinationStoragePath");
+    QTest::addColumn<bool>("populated");
+    QTest::addColumn<bool>("sameParent");
+    QTest::addColumn<QString>("siblingPosition");
+
+    QTest::newRow("rename-first-sibling-preserves-order")
+        << QString("/Parent/First") << QString("/Parent/First") << QString("/Parent/RenamedFirst")
+        << QString("/Parent/RenamedFirst") << false << true << QString("first");
+    QTest::newRow("rename-middle-sibling-preserves-order")
+        << QString("/Parent/Middle") << QString("/Parent/Middle") << QString("/Parent/RenamedMiddle")
+        << QString("/Parent/RenamedMiddle") << false << true << QString("middle");
+    QTest::newRow("rename-last-sibling-preserves-order")
+        << QString("/Parent/Last") << QString("/Parent/Last") << QString("/Parent/RenamedLast")
+        << QString("/Parent/RenamedLast") << false << true << QString("last");
+    QTest::newRow("move-populated-to-root") << QString("/Parent/Source") << QString("/Parent/Source")
+                                            << QString("/Source") << QString("/Source") << true << false << QString();
+    QTest::newRow("move-only-to-nested-parent")
+        << QString("/Source") << QString("/Source") << QString("/Archive/Source") << QString("/Archive/Source") << true
+        << false << QString();
+    QTest::newRow("move-and-rename") << QString("/Source") << QString("/Source") << QString("/Archive/Renamed")
+                                     << QString("/Archive/Renamed") << true << false << QString();
+    QTest::newRow("move-empty-group") << QString("/Parent/Empty") << QString("/Parent/Empty")
+                                      << QString("/Archive/Empty") << QString("/Archive/Empty") << false << false
+                                      << QString();
+    QTest::newRow("case-only-rename") << QString("/Archive/Case") << QString("/Archive/Case")
+                                      << QString("/Archive/case") << QString("/Archive/case") << false << true
+                                      << QString();
+    QTest::newRow("normalize-repeated-separators")
+        << QString("/Parent//Source//") << QString("/Parent/Source") << QString("//Archive///Moved//")
+        << QString("/Archive/Moved") << true << false << QString();
+    QTest::newRow("paths-without-leading-separator")
+        << QString("Source") << QString("/Source") << QString("Archive/Bare") << QString("/Archive/Bare") << false
+        << false << QString();
+    QTest::newRow("dot-components-are-literal-names")
+        << QString("/Parent/../Source") << QString("/Parent/../Source") << QString("/Archive/./Moved")
+        << QString("/Archive/./Moved") << false << false << QString();
+    QTest::newRow("unicode-and-space-names")
+        << QString("/Parent With Space/Grüße") << QString("/Parent With Space/Grüße")
+        << QString("/Parent With Space/Zażółć") << QString("/Parent With Space/Zażółć") << false << true << QString();
+}
+
+void TestCli::testMoveDirOperations()
+{
+    QFETCH(QString, sourcePath);
+    QFETCH(QString, sourceStoragePath);
+    QFETCH(QString, destinationPath);
+    QFETCH(QString, destinationStoragePath);
+    QFETCH(bool, populated);
+    QFETCH(bool, sameParent);
+    QFETCH(QString, siblingPosition);
+
+    const QString sourceParentPath = sourceStoragePath.left(sourceStoragePath.lastIndexOf('/'));
+    const QString destinationParentPath = destinationStoragePath.left(destinationStoragePath.lastIndexOf('/'));
+    QStringList paths;
+    if (!sameParent) {
+        paths.append(destinationParentPath + "/ExistingDestinationChild");
+    }
+    if (!siblingPosition.isEmpty() && siblingPosition != "first") {
+        paths.append(sourceParentPath + "/Before");
+    }
+    paths.append(sourceStoragePath);
+    if (!siblingPosition.isEmpty() && siblingPosition != "last") {
+        paths.append(sourceParentPath + "/After");
+    }
+    paths.append("/Unrelated");
+    if (populated) {
+        paths.append(sourceStoragePath + "/Child");
+    }
+    QVERIFY(prepareMoveDirGroups(paths));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    Group* root = db->rootGroup();
+    Group* source = root->findGroupByPath(sourceStoragePath);
+    QVERIFY(source);
+    QHash<QUuid, QString> groupPathSuffixes;
+    for (Group* group : source->groupsRecursive(true)) {
+        groupPathSuffixes.insert(group->uuid(), group->fullPath().mid(source->fullPath().size()));
+    }
+    Group* unrelated = root->findGroupByPath("/Unrelated");
+    QVERIFY(unrelated);
+    const QUuid unrelatedUuid = unrelated->uuid();
+    Group* originalParent = source->parentGroup();
+    const QUuid originalParentUuid = originalParent->uuid();
+    const QUuid originalPreviousParentUuid = source->previousParentGroupUuid();
+    const QDateTime originalLocationChanged = source->timeInfo().locationChanged();
+    Group* originalDestinationParent = root->findGroupByPath(destinationParentPath);
+    QVERIFY(originalDestinationParent);
+    const QList<QUuid> originalDestinationChildOrder = childUuids(originalDestinationParent);
+    const bool movesToDifferentParent = originalDestinationParent != originalParent;
+    const QUuid sourceUuid = source->uuid();
+
+    MockClock::setup(new MockClock(2026, 11, 8, 12, 34, 56));
+    const auto restoreMockClock = qScopeGuard([] { MockClock::teardown(); });
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), sourcePath, destinationPath}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray(qPrintable(QString("Successfully moved group %1 to %2.\n").arg(sourcePath, destinationPath))));
+
+    db = readDatabase();
+    QVERIFY(db);
+    root = db->rootGroup();
+    const QString expectedFullPathPrefix = root->fullPath() + destinationStoragePath;
+    Group* moved = root->findGroupByPath(destinationStoragePath);
+    QVERIFY(moved);
+    QCOMPARE(moved->uuid(), sourceUuid);
+    Group* expectedParent = root->findGroupByPath(destinationParentPath);
+    QCOMPARE(moved->parentGroup(), expectedParent);
+    QList<QUuid> expectedDestinationChildOrder = originalDestinationChildOrder;
+    if (movesToDifferentParent) {
+        expectedDestinationChildOrder.append(sourceUuid);
+    }
+    QCOMPARE(childUuids(expectedParent), expectedDestinationChildOrder);
+    if (sameParent) {
+        QCOMPARE(moved->previousParentGroupUuid(), originalPreviousParentUuid);
+        QCOMPARE(moved->timeInfo().locationChanged(), originalLocationChanged);
+    } else {
+        QCOMPARE(moved->previousParentGroupUuid(), originalParentUuid);
+        QCOMPARE(moved->timeInfo().locationChanged(), MockClock::datetimeUtc(2026, 11, 8, 12, 34, 56));
+    }
+    if (sourceStoragePath != destinationStoragePath) {
+        QVERIFY(!root->findGroupByPath(sourceStoragePath));
+    }
+    for (auto iter = groupPathSuffixes.constBegin(); iter != groupPathSuffixes.constEnd(); ++iter) {
+        Group* group = root->findGroupByUuid(iter.key());
+        QVERIFY(group);
+        QCOMPARE(group->fullPath(), expectedFullPathPrefix + iter.value());
+    }
+    QCOMPARE(root->findGroupByPath("/Unrelated")->uuid(), unrelatedUuid);
+}
+
+void TestCli::testMoveDirRejected_data()
+{
+    QTest::addColumn<QString>("sourcePath");
+    QTest::addColumn<QString>("destinationPath");
+    QTest::addColumn<QString>("expectedError");
+
+    QTest::newRow("missing-source") << QString("/Missing") << QString("/Archive/New")
+                                    << QString("Could not find group with path /Missing.\n");
+    QTest::newRow("missing-destination-parent")
+        << QString("/Source") << QString("/Missing/New") << QString("Destination parent group Missing not found.\n");
+    QTest::newRow("existing-destination") << QString("/Source") << QString("/Archive/Existing")
+                                          << QString("Destination group /Archive/Existing already exists.\n");
+    QTest::newRow("existing-destination-with-path-alias")
+        << QString("/Source") << QString("/Archive//Existing///")
+        << QString("Destination group /Archive//Existing/// already exists.\n");
+    QTest::newRow("existing-descendant-destination") << QString("/Source") << QString("/Source/Child")
+                                                     << QString("Destination group /Source/Child already exists.\n");
+    QTest::newRow("exact-self-target") << QString("/Source") << QString("/Source")
+                                       << QString("Destination group /Source already exists.\n");
+    QTest::newRow("cycle-immediate-child") << QString("/Source") << QString("/Source/Child/Moved")
+                                           << QString("Cannot move a group into itself or one of its descendants.\n");
+    QTest::newRow("cycle-deep-descendant") << QString("/Source") << QString("/Source/Child/Deep/Moved")
+                                           << QString("Cannot move a group into itself or one of its descendants.\n");
+    QTest::newRow("root-protected") << QString("/") << QString("/RenamedRoot")
+                                    << QString("Cannot move root group from database.\n");
+    QTest::newRow("root-protected-repeated-slashes")
+        << QString("////") << QString("/RenamedRoot") << QString("Cannot move root group from database.\n");
+    QTest::newRow("empty-destination") << QString("/Source") << QString("")
+                                       << QString("Destination path  is invalid.\n");
+    QTest::newRow("slash-only-destination")
+        << QString("/Source") << QString("///") << QString("Destination path /// is invalid.\n");
+    QTest::newRow("similar-prefix-is-not-descendant") << QString("/A") << QString("/AB/Moved") << QString();
+}
+
+void TestCli::testMoveDirRejected()
+{
+    QFETCH(QString, sourcePath);
+    QFETCH(QString, destinationPath);
+    QFETCH(QString, expectedError);
+
+    QVERIFY(prepareMoveDirGroups({"/Source/Child/Deep", "/Archive/Existing", "/Unrelated", "/AB", "/A"}));
+
+    QFile databaseFile(m_dbFile->fileName());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    const int expectedResult = expectedError.isEmpty() ? EXIT_SUCCESS : EXIT_FAILURE;
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), sourcePath, destinationPath}), expectedResult);
+    m_stderr->readLine(); // Skip password prompt
+    const QByteArray commandError = m_stderr->readAll();
+    const QByteArray commandOutput = m_stdout->readAll();
+    if (expectedError.isEmpty()) {
+        QCOMPARE(commandError, QByteArray());
+        QVERIFY(commandOutput.startsWith("Successfully moved group /A to /AB/Moved."));
+    } else {
+        QCOMPARE(commandError, QByteArray(qPrintable(expectedError)));
+        QCOMPARE(commandOutput, QByteArray());
+    }
+
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray currentFile = databaseFile.readAll();
+    if (expectedError.isEmpty()) {
+        QVERIFY(currentFile != originalFile);
+    } else {
+        QCOMPARE(currentFile, originalFile);
+    }
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    if (!expectedError.isEmpty()) {
+        QVERIFY(db->rootGroup()->findGroupByPath("/Source"));
+        QVERIFY(!db->rootGroup()->findGroupByPath("/Archive/New"));
+        QVERIFY(!db->rootGroup()->findGroupByPath("/Archive/Existing/New"));
+    } else {
+        QVERIFY(db->rootGroup()->findGroupByPath("/AB/Moved"));
+        QVERIFY(!db->rootGroup()->findGroupByPath("/A"));
+    }
+}
+
+void TestCli::testMoveDirAmbiguousPaths()
+{
+    QVERIFY(prepareMoveDirGroups({"/Parent"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    Group* parent = db->rootGroup()->findGroupByPath("/Parent");
+    QVERIFY(parent);
+    Group* firstTwin = addMoveDirGroup(parent, "Twin");
+    addMoveDirGroup(parent, "Twin");
+    Group* slashNamedGroup = addMoveDirGroup(parent, "Slash/Name");
+    Group* slashGroup = addMoveDirGroup(parent, "Slash");
+    auto* nestedNameGroup = addMoveDirGroup(slashGroup, "Name");
+
+    const QUuid slashNamedUuid = slashNamedGroup->uuid();
+    const QUuid nestedNameUuid = nestedNameGroup->uuid();
+    QCOMPARE(parent->findGroupByPath("Twin"), firstTwin);
+    QCOMPARE(db->rootGroup()->findGroupByPath("/Parent/Slash/Name"), slashNamedGroup);
+    QString saveError;
+    QVERIFY2(db->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+
+    QFile databaseFile(m_dbFile->fileName());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Parent/Twin", "/MovedTwin"}), EXIT_FAILURE);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Group path /Parent/Twin is ambiguous.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Parent/Slash/Name", "/MovedSlashName"}),
+             EXIT_FAILURE);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Group path /Parent/Slash/Name is ambiguous.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Parent/Slash", "/Parent/Twin/Moved"}), EXIT_FAILURE);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Destination parent group Parent/Twin is ambiguous.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    QCOMPARE(databaseFile.readAll(), originalFile);
+
+    db = readDatabase();
+    QVERIFY(db);
+    QCOMPARE(db->rootGroup()->findGroupByPath("/Parent/Slash/Name")->uuid(), slashNamedUuid);
+    Group* nestedName = db->rootGroup()->findGroupByUuid(nestedNameUuid);
+    QVERIFY(nestedName);
+    QCOMPARE(nestedName->parentGroup()->name(), QString("Slash"));
+}
+
+void TestCli::testMoveDirStoredNameAliases_data()
+{
+    QTest::addColumn<QString>("destinationPath");
+    QTest::addColumn<QString>("storedName");
+    QTest::addColumn<QString>("sourcePath");
+    QTest::addColumn<QStringList>("siblingNames");
+    QTest::addColumn<QString>("expectedError");
+
+    QTest::newRow("normal-and-trailing-separator-siblings")
+        << QString("/Moved") << QString("A") << QString("/Parent/A") << QStringList{"A/"} << QString();
+    QTest::newRow("trailing-separator-does-not-alias-normal-name")
+        << QString("/Moved") << QString("A/") << QString("/Parent/A") << QStringList{}
+        << QString("Could not find group with path /Parent/A.\n");
+    QTest::newRow("trailing-separator-exact-spelling")
+        << QString("/Moved") << QString("A/") << QString("/Parent/A//") << QStringList{} << QString();
+    QTest::newRow("leading-separator-in-stored-name")
+        << QString("/Moved") << QString("/Leading") << QString("/Parent//Leading") << QStringList{} << QString();
+    QTest::newRow("doubled-separator-in-stored-name") << QString("/Moved") << QString("Double//Inner")
+                                                      << QString("/Parent/Double//Inner") << QStringList{} << QString();
+    QTest::newRow("trailing-separator-name-cannot-be-silently-shortened")
+        << QString("/Other/A//") << QString("A/") << QString("/Parent/A//") << QStringList{}
+        << QString("Destination path cannot preserve a group name containing '/'; choose a different final name.\n");
+    QTest::newRow("slash-name-can-be-addressed-and-renamed")
+        << QString("/Other/Renamed") << QString("Slash/Name") << QString("/Parent/Slash/Name") << QStringList{}
+        << QString();
+    QTest::newRow("trailing-separator-sibling-does-not-collide-with-destination")
+        << QString("/Parent/A") << QString("Source") << QString("/Parent/Source") << QStringList{"A/"} << QString();
+}
+
+void TestCli::testMoveDirStoredNameAliases()
+{
+    QFETCH(QString, destinationPath);
+    QFETCH(QString, storedName);
+    QFETCH(QString, sourcePath);
+    QFETCH(QStringList, siblingNames);
+    QFETCH(QString, expectedError);
+
+    QVERIFY(prepareMoveDirGroups({"/Parent", "/Other"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    Group* parent = db->rootGroup()->findGroupByPath("/Parent");
+    QVERIFY(parent);
+    Group* source = addMoveDirGroup(parent, storedName);
+    const QUuid sourceUuid = source->uuid();
+    const QUuid parentUuid = parent->uuid();
+    QHash<QString, QUuid> siblingUuids;
+    for (const QString& name : siblingNames) {
+        siblingUuids.insert(name, addMoveDirGroup(parent, name)->uuid());
+    }
+    QString saveError;
+    QVERIFY2(db->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+
+    QFile databaseFile(m_dbFile->fileName());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), sourcePath, destinationPath}),
+             expectedError.isEmpty() ? EXIT_SUCCESS : EXIT_FAILURE);
+    m_stderr->readLine(); // Skip password prompt
+    if (expectedError.isEmpty()) {
+        QCOMPARE(m_stderr->readAll(), QByteArray());
+        QCOMPARE(
+            m_stdout->readAll(),
+            QByteArray(qPrintable(QString("Successfully moved group %1 to %2.\n").arg(sourcePath, destinationPath))));
+    } else {
+        QCOMPARE(m_stderr->readAll(), QByteArray(qPrintable(expectedError)));
+        QCOMPARE(m_stdout->readAll(), QByteArray());
+    }
+
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    if (expectedError.isEmpty()) {
+        QVERIFY(databaseFile.readAll() != originalFile);
+    } else {
+        QCOMPARE(databaseFile.readAll(), originalFile);
+    }
+
+    db = readDatabase();
+    QVERIFY(db);
+    Group* resolvedSource = db->rootGroup()->findGroupByUuid(sourceUuid);
+    QVERIFY(resolvedSource);
+    if (expectedError.isEmpty()) {
+        QCOMPARE(resolvedSource->name(), destinationPath.section('/', -1));
+        QCOMPARE(resolvedSource, db->rootGroup()->findGroupByPath(destinationPath));
+    } else {
+        QCOMPARE(resolvedSource->name(), storedName);
+        QCOMPARE(resolvedSource->parentGroup()->uuid(), parentUuid);
+    }
+    for (auto iter = siblingUuids.constBegin(); iter != siblingUuids.constEnd(); ++iter) {
+        Group* sibling = db->rootGroup()->findGroupByUuid(iter.value());
+        QVERIFY(sibling);
+        QCOMPARE(sibling->name(), iter.key());
+        QCOMPARE(sibling->parentGroup()->uuid(), parentUuid);
+    }
+}
+
+void TestCli::testMoveDirLiteralDoubleSeparatorAndFallback()
+{
+    QVERIFY(prepareMoveDirGroups({"/Parent"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    Group* parent = db->rootGroup()->findGroupByPath("/Parent");
+    QVERIFY(parent);
+    auto* literal = addMoveDirGroup(parent, "A//B");
+    auto* nestedA = addMoveDirGroup(parent, "A");
+    auto* nestedB = addMoveDirGroup(nestedA, "B");
+    const QUuid literalUuid = literal->uuid();
+    const QUuid nestedAUuid = nestedA->uuid();
+    const QUuid nestedBUuid = nestedB->uuid();
+    QString saveError;
+    QVERIFY2(db->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Parent/A//B", "/MovedLiteral"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully moved group /Parent/A//B to /MovedLiteral.\n"));
+
+    db = readDatabase();
+    QVERIFY(db);
+    Group* movedLiteral = db->rootGroup()->findGroupByUuid(literalUuid);
+    QVERIFY(movedLiteral);
+    QCOMPARE(movedLiteral->name(), QString("MovedLiteral"));
+    QCOMPARE(movedLiteral->parentGroup(), db->rootGroup());
+    QCOMPARE(db->rootGroup()->findGroupByUuid(nestedAUuid)->parentGroup(), db->rootGroup()->findGroupByPath("/Parent"));
+    QCOMPARE(db->rootGroup()->findGroupByUuid(nestedBUuid)->parentGroup()->uuid(), nestedAUuid);
+
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Parent/A///B", "/MovedNested"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully moved group /Parent/A///B to /MovedNested.\n"));
+
+    auto reopenedDb = readDatabase();
+    QVERIFY(reopenedDb);
+    movedLiteral = reopenedDb->rootGroup()->findGroupByUuid(literalUuid);
+    QVERIFY(movedLiteral);
+    QCOMPARE(movedLiteral->name(), QString("MovedLiteral"));
+    QCOMPARE(movedLiteral->parentGroup(), reopenedDb->rootGroup());
+    Group* movedNested = reopenedDb->rootGroup()->findGroupByUuid(nestedBUuid);
+    QVERIFY(movedNested);
+    QCOMPARE(movedNested->name(), QString("MovedNested"));
+    QCOMPARE(movedNested->parentGroup(), reopenedDb->rootGroup());
+    QCOMPARE(reopenedDb->rootGroup()->findGroupByUuid(nestedAUuid)->parentGroup(),
+             reopenedDb->rootGroup()->findGroupByPath("/Parent"));
+}
+
+void TestCli::testMoveDirDestinationChildCollisionWithStoredSeparator()
+{
+    QVERIFY(prepareMoveDirGroups({"/Source"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    auto* source = db->rootGroup()->findGroupByPath("/Source");
+    QVERIFY(source);
+    const QUuid sourceUuid = source->uuid();
+
+    auto* parent = addMoveDirGroup(db->rootGroup(), "A/");
+    const QUuid parentUuid = parent->uuid();
+    auto* existingChild = addMoveDirGroup(parent, "New");
+    const QUuid childUuid = existingChild->uuid();
+
+    QString saveError;
+    QVERIFY2(db->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+    QFile databaseFile(m_dbFile->fileName());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Source", "/A///New"}), EXIT_FAILURE);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Destination group /A///New already exists.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    QCOMPARE(databaseFile.readAll(), originalFile);
+
+    auto reopenedDb = readDatabase();
+    QVERIFY(reopenedDb);
+    Group* unchangedSource = reopenedDb->rootGroup()->findGroupByUuid(sourceUuid);
+    Group* unchangedParent = reopenedDb->rootGroup()->findGroupByUuid(parentUuid);
+    Group* unchangedChild = reopenedDb->rootGroup()->findGroupByUuid(childUuid);
+    QVERIFY(unchangedSource);
+    QVERIFY(unchangedParent);
+    QVERIFY(unchangedChild);
+    QCOMPARE(unchangedSource->name(), QString("Source"));
+    QCOMPARE(unchangedSource->parentGroup(), reopenedDb->rootGroup());
+    QCOMPARE(unchangedParent->name(), QString("A/"));
+    QCOMPARE(unchangedParent->parentGroup(), reopenedDb->rootGroup());
+    QCOMPARE(unchangedChild->name(), QString("New"));
+    QCOMPARE(unchangedChild->parentGroup(), unchangedParent);
+}
+
+void TestCli::testMoveDirRootResolutionWithSpecialNames()
+{
+    QVERIFY(prepareMoveDirGroups({"/Parent"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    Group* parent = db->rootGroup()->findGroupByPath("/Parent");
+    QVERIFY(parent);
+    Group* source = addMoveDirGroup(parent, "Source");
+    Group* emptyNamedGroup = addMoveDirGroup(parent, "");
+    Group* slashNamedGroup = addMoveDirGroup(parent, "/");
+    const QUuid sourceUuid = source->uuid();
+    const QUuid emptyNamedUuid = emptyNamedGroup->uuid();
+    const QUuid slashNamedUuid = slashNamedGroup->uuid();
+    const QUuid rootUuid = db->rootGroup()->uuid();
+    const QUuid parentUuid = parent->uuid();
+    QString saveError;
+    QVERIFY2(db->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+
+    QFile databaseFile(m_dbFile->fileName());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "///", "/RootRenamed"}), EXIT_FAILURE);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray("Cannot move root group from database.\n"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    QCOMPARE(databaseFile.readAll(), originalFile);
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Parent/Source", "/Moved"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully moved group /Parent/Source to /Moved.\n"));
+
+    db = readDatabase();
+    QVERIFY(db);
+    QCOMPARE(db->rootGroup()->uuid(), rootUuid);
+    QCOMPARE(db->rootGroup()->findGroupByPath("/Moved")->uuid(), sourceUuid);
+    Group* movedEmptyNamed = db->rootGroup()->findGroupByUuid(emptyNamedUuid);
+    Group* movedSlashNamed = db->rootGroup()->findGroupByUuid(slashNamedUuid);
+    QVERIFY(movedEmptyNamed);
+    QVERIFY(movedSlashNamed);
+    QCOMPARE(movedEmptyNamed->name(), QString());
+    QCOMPARE(movedSlashNamed->name(), QString("/"));
+    QCOMPARE(movedEmptyNamed->parentGroup()->uuid(), parentUuid);
+    QCOMPARE(movedSlashNamed->parentGroup()->uuid(), parentUuid);
+}
+
+void TestCli::testMoveDirRecycleBin()
+{
+    QVERIFY(prepareMoveDirGroups({"/Archive"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    auto* recycledGroup = addMoveDirGroup(db->rootGroup(), "Previously recycled group");
+    const QUuid recycledGroupUuid = recycledGroup->uuid();
+    db->recycleGroup(recycledGroup);
+
+    auto* templatesGroup = addMoveDirGroup(db->rootGroup(), "Templates");
+    const QUuid templatesGroupUuid = templatesGroup->uuid();
+    db->metadata()->setEntryTemplatesGroup(templatesGroup);
+
+    Group* recycleBin = db->metadata()->recycleBin();
+    QVERIFY(recycleBin);
+    const QUuid recycleBinUuid = recycleBin->uuid();
+    const QString recycleBinPath = "/" + recycleBin->name();
+    QString saveError;
+    QVERIFY2(db->save(Database::Atomic, {}, &saveError), qPrintable(saveError));
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), recycleBinPath, "/Archive/Trash"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    m_stdout->readAll();
+
+    db = readDatabase();
+    QVERIFY(db);
+    recycleBin = db->metadata()->recycleBin();
+    QVERIFY(recycleBin);
+    QCOMPARE(recycleBin->uuid(), recycleBinUuid);
+    QCOMPARE(recycleBin, db->rootGroup()->findGroupByUuid(recycleBinUuid));
+    QCOMPARE(db->rootGroup()->findGroupByPath("/Archive/Trash"), recycleBin);
+    Group* movedRecycledGroup = db->rootGroup()->findGroupByUuid(recycledGroupUuid);
+    QVERIFY(movedRecycledGroup);
+    QCOMPARE(movedRecycledGroup->parentGroup(), recycleBin);
+    QVERIFY(movedRecycledGroup->isRecycled());
+
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Templates", "/Archive/TemplateShelf"}),
+             EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    m_stdout->readAll();
+
+    db = readDatabase();
+    QVERIFY(db);
+    const Group* movedTemplatesGroup = db->metadata()->entryTemplatesGroup();
+    QVERIFY(movedTemplatesGroup);
+    QCOMPARE(movedTemplatesGroup->uuid(), templatesGroupUuid);
+    QCOMPARE(movedTemplatesGroup, db->rootGroup()->findGroupByPath("/Archive/TemplateShelf"));
+}
+
+void TestCli::testMoveDirSaveFailureRestoresInteractiveState()
+{
+    QVERIFY(prepareMoveDirGroups({"/Source", "/Source/Child", "/Archive", "/Other"}));
+
+    Add addCmd;
+    setInput("a");
+    QCOMPARE(execCmd(addCmd, {"add", "-u", "rollback-content", m_dbFile->fileName(), "/Source/Child/Entry"}),
+             EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    m_stderr->readAll();
+    m_stdout->readAll();
+
+    MoveDir moveDirCmd;
+    setInput("a");
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", m_dbFile->fileName(), "/Source", "/Archive/Source"}), EXIT_SUCCESS);
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    m_stdout->readAll();
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    const QString databasePath = m_dbFile->fileName();
+
+    QFile databaseFile(databasePath);
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+
+    Entry* originalEntry = db->rootGroup()->findEntryByPath("/Archive/Source/Child/Entry");
+    QVERIFY(originalEntry);
+    originalEntry->setPassword("rollback-secret");
+    originalEntry->setNotes("rollback notes survive retry");
+    db->rootGroup()->findGroupByPath("/Archive/Source")->setNotes("unsaved group changes survive rollback");
+    db->metadata()->customData()->set("mvdir-rollback-test", "preserve me");
+
+    Group* root = db->rootGroup();
+    Group* source = root->findGroupByPath("/Archive/Source");
+    QVERIFY(source);
+    const QUuid originalEntryUuid = originalEntry->uuid();
+    Group* originalParent = source->parentGroup();
+    const int originalIndex = originalParent->children().indexOf(source);
+    const QUuid originalUuid = source->uuid();
+    const TimeInfo originalTimeInfo = source->timeInfo();
+    const QUuid originalPreviousParentUuid = source->previousParentGroupUuid();
+    CustomData originalMetadataCustomData;
+    originalMetadataCustomData.copyDataFrom(db->metadata()->customData());
+    const QList<QUuid> originalOrder = childUuids(originalParent);
+    QVERIFY(db->isModified());
+
+    // A missing parent provides a deterministic save failure without changing the vault file.
+    db->setFilePath(databasePath + "/missing/failed.kdbx");
+    moveDirCmd.currentDatabase = db;
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", "/Archive/Source", "/Other/Renamed"}), EXIT_FAILURE);
+    const QByteArray errorOutput = m_stderr->readAll();
+    QVERIFY(errorOutput.contains("Writing the database failed"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    db->setFilePath(databasePath);
+    root = db->rootGroup();
+    source = root->findGroupByPath("/Archive/Source");
+    QVERIFY(source);
+    QCOMPARE(source->uuid(), originalUuid);
+    QCOMPARE(source->parentGroup(), originalParent);
+    QCOMPARE(originalParent->children().indexOf(source), originalIndex);
+    QCOMPARE(source->timeInfo(), originalTimeInfo);
+    QCOMPARE(source->previousParentGroupUuid(), originalPreviousParentUuid);
+    QCOMPARE(root->findGroupByPath("/Other/Renamed"), nullptr);
+    QCOMPARE(source->notes(), QString("unsaved group changes survive rollback"));
+    QVERIFY(*db->metadata()->customData() == originalMetadataCustomData);
+    Entry* rolledBackEntry = root->findEntryByPath("/Archive/Source/Child/Entry");
+    QVERIFY(rolledBackEntry);
+    QCOMPARE(rolledBackEntry->uuid(), originalEntryUuid);
+    QCOMPARE(rolledBackEntry->username(), QString("rollback-content"));
+    QCOMPARE(rolledBackEntry->password(), QString("rollback-secret"));
+    QCOMPARE(rolledBackEntry->notes(), QString("rollback notes survive retry"));
+    QCOMPARE(childUuids(originalParent), originalOrder);
+    QVERIFY(db->isModified());
+
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    QCOMPARE(databaseFile.readAll(), originalFile);
+    databaseFile.close();
+
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", "/Archive/Source", "/Other/Renamed"}), EXIT_SUCCESS);
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), QByteArray("Successfully moved group /Archive/Source to /Other/Renamed.\n"));
+    QVERIFY(!db->isModified());
+    auto reopenedDb = readDatabase();
+    QVERIFY(reopenedDb);
+    for (const auto& savedDb : {db, reopenedDb}) {
+        Group* savedGroup = savedDb->rootGroup()->findGroupByPath("/Other/Renamed");
+        QVERIFY(savedGroup);
+        QCOMPARE(savedGroup->uuid(), originalUuid);
+        QCOMPARE(savedGroup->notes(), QString("unsaved group changes survive rollback"));
+        Entry* savedEntry = savedDb->rootGroup()->findEntryByPath("/Other/Renamed/Child/Entry");
+        QVERIFY(savedEntry);
+        QCOMPARE(savedEntry->uuid(), originalEntryUuid);
+        QCOMPARE(savedEntry->username(), QString("rollback-content"));
+        QCOMPARE(savedEntry->password(), QString("rollback-secret"));
+        QCOMPARE(savedEntry->notes(), QString("rollback notes survive retry"));
+        QCOMPARE(savedDb->metadata()->customData()->value("mvdir-rollback-test"), QString("preserve me"));
+    }
+}
+
+void TestCli::testMoveDirRenameSaveFailureRestoresState()
+{
+    QVERIFY(prepareMoveDirGroups({"/Parent", "/Parent/Before", "/Parent/Source", "/Parent/After"}));
+
+    auto db = readDatabase();
+    QVERIFY(db);
+    Group* source = db->rootGroup()->findGroupByPath("/Parent/Source");
+    QVERIFY(source);
+    const QUuid sourceUuid = source->uuid();
+    Group* originalParent = source->parentGroup();
+    const QUuid parentUuid = originalParent->uuid();
+    const QUuid previousParentUuid = source->previousParentGroupUuid();
+    const TimeInfo originalTimeInfo = source->timeInfo();
+    const QList<QUuid> originalOrder = childUuids(originalParent);
+    db->metadata()->customData()->set("rename-rollback-test", "preserve metadata");
+    QVERIFY(db->save(Database::Atomic));
+    CustomData originalMetadata;
+    originalMetadata.copyDataFrom(db->metadata()->customData());
+
+    QFile databaseFile(m_dbFile->fileName());
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    const QByteArray originalFile = databaseFile.readAll();
+    databaseFile.close();
+    QVERIFY(!db->isModified());
+
+    const QString databasePath = m_dbFile->fileName();
+    db->setFilePath(databasePath + "/missing/failed.kdbx");
+    MoveDir moveDirCmd;
+    moveDirCmd.currentDatabase = db;
+    QCOMPARE(execCmd(moveDirCmd, {"mvdir", "/Parent/Source", "/Parent/Renamed"}), EXIT_FAILURE);
+    QVERIFY(m_stderr->readAll().contains("Writing the database failed"));
+    QCOMPARE(m_stdout->readAll(), QByteArray());
+
+    db->setFilePath(databasePath);
+    source = db->rootGroup()->findGroupByUuid(sourceUuid);
+    QVERIFY(source);
+    QCOMPARE(source->name(), QString("Source"));
+    QCOMPARE(source->parentGroup()->uuid(), parentUuid);
+    QCOMPARE(source->uuid(), sourceUuid);
+    QCOMPARE(source->previousParentGroupUuid(), previousParentUuid);
+    QCOMPARE(source->timeInfo(), originalTimeInfo);
+    QCOMPARE(*db->metadata()->customData(), originalMetadata);
+    QVERIFY(!db->isModified());
+    QCOMPARE(childUuids(originalParent), originalOrder);
+    QCOMPARE(db->rootGroup()->findGroupByPath("/Parent/Renamed"), nullptr);
+    QVERIFY(databaseFile.open(QIODevice::ReadOnly));
+    QCOMPARE(databaseFile.readAll(), originalFile);
 }
 
 void TestCli::testRemove()

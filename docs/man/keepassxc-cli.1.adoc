@@ -121,6 +121,11 @@ It provides the ability to query and modify the entries of a KeePass database, d
 *mv* [_options_] <__database__> <__entry__> <__group__>::
   Moves an entry to a new group.
 
+*mvdir* [_options_] <__database__> <__group__> <__destination__>::
+  Moves or renames a group and its descendants.
+  The destination is the full new group path, its parent must exist and the destination must be unique. For example, */Archive/Work* moves the group under *Archive* and names it *Work*.
+  The root group cannot be moved, and a group cannot be moved into its own subtree.
+
 *open* [_options_] <__database__>::
   Opens the given database in a shell-style interactive mode.
   This is useful for performing multiple operations on a single database (e.g. *ls* followed by *show*).
