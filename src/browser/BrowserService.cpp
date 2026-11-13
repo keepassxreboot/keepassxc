@@ -899,9 +899,16 @@ void BrowserService::addEntry(const EntryParameters& entryParameters,
         return;
     }
 
+    // Set title from parameters. If empty, use host of site URL, and append port if found.
+    auto title = entryParameters.title;
+    if (title.isEmpty()) {
+        const auto siteUrl = QUrl(entryParameters.siteUrl);
+        title = siteUrl.host() + (siteUrl.port() != -1 ? QString(":%1").arg(siteUrl.port()) : "");
+    }
+
     auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
-    entry->setTitle(entryParameters.title.isEmpty() ? QUrl(entryParameters.siteUrl).host() : entryParameters.title);
+    entry->setTitle(title);
     entry->setUrl(entryParameters.siteUrl);
     entry->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
     entry->setUsername(entryParameters.login);
