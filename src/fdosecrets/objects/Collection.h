@@ -145,6 +145,7 @@ namespace FdoSecrets
         void cleanupConnections();
 
         bool backendLocked() const;
+        bool collectionLocked() const;
 
         /**
          * Check if the backend is a valid object, send error reply if not.
