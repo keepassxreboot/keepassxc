@@ -41,5 +41,7 @@ const QDBusArgument& operator>>(const QDBusArgument& argument, PolkitAuthorizati
     argument.beginStructure();
     argument >> res.is_authorized >> res.is_challenge >> res.details;
     argument.endStructure();
+    // Record user cancellation
+    res.is_canceled = !res.details.value("polkit.dismissed").isEmpty();
     return argument;
 }

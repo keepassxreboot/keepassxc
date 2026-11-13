@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>364</width>
-    <height>505</height>
+    <width>479</width>
+    <height>540</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -133,7 +133,7 @@
       <item row="0" column="2">
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -168,7 +168,7 @@
       <item>
        <widget class="QCheckBox" name="quickUnlockCheckBox">
         <property name="text">
-         <string>Enable database quick unlock (Touch ID / Windows Hello)</string>
+         <string>Enable database Quick Unlock via fingerprint or user password</string>
         </property>
        </widget>
       </item>
@@ -259,10 +259,10 @@
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
+      <enum>QSizePolicy::Policy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

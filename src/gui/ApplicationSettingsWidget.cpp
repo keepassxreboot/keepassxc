@@ -296,8 +296,12 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     // The menubar is always shown on macOS, so hide the option to avoid confusion
     m_generalUi->menubarShowCheckBox->setVisible(false);
     m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(true);
+    m_secUi->quickUnlockCheckBox->setText(tr("Enable database Quick Unlock via TouchID or user password"));
 #else
     m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(false);
+#endif
+#ifdef Q_OS_WIN
+    m_secUi->quickUnlockCheckBox->setText(tr("Enable database Quick Unlock via Windows Hello"));
 #endif
 
 #ifdef KPXC_FEATURE_UPDATES

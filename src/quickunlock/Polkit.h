@@ -32,8 +32,8 @@ public:
     bool isAvailable() const override;
     QString errorString() const override;
 
-    bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
-    bool getKey(const QUuid& dbUuid, QByteArray& key) override;
+    KeyStatus setKey(const QUuid& dbUuid, const QByteArray& key) override;
+    KeyStatus getKey(const QUuid& dbUuid, QByteArray& key) override;
     bool hasKey(const QUuid& dbUuid) const override;
 
     void reset(const QUuid& dbUuid) override;
