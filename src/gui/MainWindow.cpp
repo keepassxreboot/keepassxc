@@ -629,8 +629,16 @@ MainWindow::MainWindow()
     }
 #endif
 
-    connect(qApp, SIGNAL(anotherInstanceStarted()), this, SLOT(bringToFront()));
-    connect(qApp, SIGNAL(applicationActivated()), this, SLOT(bringToFront()));
+    const auto bringMainWindowToFront = [this] {
+#ifdef Q_OS_MACOS
+        if (autoType()->isSelectDialogVisible()) {
+            return;
+        }
+#endif
+        bringToFront();
+    };
+    connect(kpxcApp, &Application::anotherInstanceStarted, this, bringMainWindowToFront);
+    connect(kpxcApp, &Application::applicationActivated, this, bringMainWindowToFront);
     connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
     connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
 

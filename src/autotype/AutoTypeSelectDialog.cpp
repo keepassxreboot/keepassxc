@@ -53,6 +53,10 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     // Places the window on the active (virtual) desktop instead of where the main window is.
     setAttribute(Qt::WA_X11BypassTransientForHint);
     setWindowFlags((windowFlags() | Qt::WindowStaysOnTopHint) & ~Qt::WindowContextHelpButtonHint);
+#ifdef Q_OS_MACOS
+    // AppKit's reopen handling ignores NSPanel, which Qt uses for dialogs.
+    setWindowFlags((windowFlags() & ~Qt::WindowType_Mask) | Qt::Window);
+#endif
     setWindowIcon(icons()->applicationIcon());
 
     buildActionMenu();

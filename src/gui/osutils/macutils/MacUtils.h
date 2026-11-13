@@ -47,6 +47,7 @@ public:
     bool raiseWindow(WId pid);
     bool raiseLastActiveWindow();
     bool raiseOwnWindow();
+    void activateWindow(QWindow* window);
     bool hideOwnWindow();
     bool isHidden();
     bool enableAccessibility();
