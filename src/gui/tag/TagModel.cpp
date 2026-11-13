@@ -69,7 +69,7 @@ void TagModel::updateTagList()
     m_tagListStart = m_tagList.size();
     for (auto tag : m_db->tagList()) {
         auto escapedTag = tag;
-        escapedTag.replace("\"", "\\\"");
+        escapedTag.replace("\"", "\\\"").replace("\\", "\\\\");
         m_tagList << qMakePair(tag, QString("tag:\"%1\"").arg(escapedTag));
     }
 

@@ -282,7 +282,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         // Quoted string group
         term.word = result.captured(3);
         // Unescape quotes
-        term.word.replace("\\\"", "\"");
+        term.word.replace("\\\"", "\"").replace("\\\\", "\\");
 
         // If empty, use the unquoted string group
         if (term.word.isEmpty()) {
