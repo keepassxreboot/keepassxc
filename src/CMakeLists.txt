@@ -222,10 +222,14 @@ if(APPLE)
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
             gui/osutils/macutils/AppKit.h
-            quickunlock/TouchID.mm)
+            quickunlock/TouchID.mm
+            autofill/AutoFill.h
+            autofill/AutoFill.mm
+            autofill/AutoFillProtocol.h)
 
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
     set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
+    set_source_files_properties(autofill/AutoFill.mm PROPERTY COMPILE_FLAGS "-fobjc-arc")
 endif()
 
 if(UNIX AND NOT APPLE)
@@ -378,7 +382,7 @@ target_link_libraries(keepassxc_gui
         ${sshagent_LIB})
 
 if(APPLE)
-    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
+    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit -framework AuthenticationServices")
     if(Qt6MacExtras_FOUND)
         target_link_libraries(keepassxc_gui Qt6::MacExtras)
     endif()
@@ -647,3 +651,50 @@ endif()
 # The install commands in this subdirectory will be executed after all the install commands in the
 # current scope are ran. It is required for correct functioning of macdeployqt.
 add_subdirectory(post_install)
+
+if(APPLE AND WITH_APP_BUNDLE)
+    set(AUTOFILL_TARGET "keepassxc-autofill")
+    set(MACOSX_EXTENSION_BUNDLE_ID "org.keepassxc.keepassxc.autofill")
+
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/autofill/mac/Info.plist.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/autofill/mac/Info.plist"
+        @ONLY
+    )
+
+    add_executable(${AUTOFILL_TARGET}
+        autofill/AutoFillProtocol.h
+        autofill/CredentialProviderViewController.h
+        autofill/CredentialProviderViewController.mm
+    )
+
+    set_target_properties(${AUTOFILL_TARGET} PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+        MACOSX_BUNDLE TRUE
+        BUNDLE_EXTENSION "appex"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/autofill/mac/Info.plist"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "${MACOSX_EXTENSION_BUNDLE_ID}"
+        MACOSX_BUNDLE_BUNDLE_NAME "KeePassXC AutoFill"
+    )
+
+    target_compile_options(${AUTOFILL_TARGET} PRIVATE "-fobjc-arc" "-fapplication-extension")
+    target_link_options(${AUTOFILL_TARGET} PRIVATE "-fapplication-extension" "-Wl,-e,_NSExtensionMain")
+
+    target_link_libraries(${AUTOFILL_TARGET}
+        "-lextension"
+        "-framework AuthenticationServices"
+        "-framework AppKit"
+        "-framework Foundation"
+    )
+
+    add_dependencies(${PROGNAME} ${AUTOFILL_TARGET})
+    add_custom_command(TARGET ${PROGNAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_BUNDLE_CONTENT_DIR:${PROGNAME}>/PlugIns"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "$<TARGET_BUNDLE_DIR:${AUTOFILL_TARGET}>"
+            "$<TARGET_BUNDLE_CONTENT_DIR:${PROGNAME}>/PlugIns/${AUTOFILL_TARGET}.appex"
+        COMMENT "Embedding AutoFill extension into app bundle"
+    )
+endif()
