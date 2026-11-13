@@ -378,6 +378,14 @@ void TestKeePass2Format::testXmlBroken_data()
     QTest::newRow("BrokenDeletedObjects            (not strict)") << "BrokenDeletedObjects"            << false << false;
     QTest::newRow("BrokenDifferentEntryHistoryUuid     (strict)") << "BrokenDifferentEntryHistoryUuid" << true  << true;
     QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
+    QTest::newRow("BrokenProtectedValue                (strict)") << "BrokenProtectedValue"            << true  << true;
+    QTest::newRow("BrokenProtectedValue            (not strict)") << "BrokenProtectedValue"            << false << true;
+    QTest::newRow("BrokenDuplicateGroupUuid            (strict)") << "BrokenDuplicateGroupUuid"        << true  << true;
+    QTest::newRow("BrokenDuplicateGroupUuid        (not strict)") << "BrokenDuplicateGroupUuid"        << false << false;
+    QTest::newRow("BrokenDuplicateEntryUuid            (strict)") << "BrokenDuplicateEntryUuid"        << true  << true;
+    QTest::newRow("BrokenDuplicateEntryUuid        (not strict)") << "BrokenDuplicateEntryUuid"        << false << false;
+    QTest::newRow("BrokenDateTime                      (strict)") << "BrokenDateTime"                  << true  << true;
+    QTest::newRow("BrokenDateTime                  (not strict)") << "BrokenDateTime"                  << false << false;
 }
 // clang-format on
 
@@ -487,6 +495,111 @@ void TestKeePass2Format::testXmlRepairUuidHistoryItem()
     QVERIFY(!entry->uuid().isNull());
     QVERIFY(!historyItem->uuid().isNull());
     QCOMPARE(historyItem->uuid(), entry->uuid());
+}
+
+void TestKeePass2Format::testXmlDuplicateGroupUuids()
+{
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDuplicateGroupUuid");
+    QVERIFY(QFile::exists(xmlFile));
+    bool hasError;
+    QString errorString;
+    auto db = readXml(xmlFile, false, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
+    }
+    QVERIFY(!hasError);
+
+    // Groups with duplicate uuids must not be merged into each other
+    QSet<QUuid> uuids;
+    for (const Group* group : db->rootGroup()->groupsRecursive(true)) {
+        uuids.insert(group->uuid());
+    }
+    QCOMPARE(uuids.size(), 6);
+
+    Group* root = db->rootGroup();
+    QCOMPARE(root->children().size(), 2);
+    Group* groupA = root->children().at(0);
+    Group* groupB = root->children().at(1);
+    QCOMPARE(groupA->name(), QString("A"));
+    QCOMPARE(groupB->name(), QString("B"));
+    QCOMPARE(groupA->uuid(), QUuid::fromRfc4122("1111111111111111"));
+    QCOMPARE(groupB->uuid(), QUuid::fromRfc4122("2222222222222222"));
+
+    QCOMPARE(groupA->children().size(), 1);
+    QCOMPARE(groupA->children().at(0)->name(), QString("A2"));
+    QCOMPARE(groupB->children().size(), 1);
+    Group* groupC = groupB->children().at(0);
+    QCOMPARE(groupC->name(), QString("C"));
+    QCOMPARE(groupC->children().size(), 1);
+    QCOMPARE(groupC->children().at(0)->name(), QString("B2"));
+}
+
+void TestKeePass2Format::testXmlDuplicateEntryUuids()
+{
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDuplicateEntryUuid");
+    QVERIFY(QFile::exists(xmlFile));
+    bool hasError;
+    QString errorString;
+    auto db = readXml(xmlFile, false, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
+    }
+    QVERIFY(!hasError);
+
+    // Entries with duplicate uuids must not overwrite each other
+    QList<Entry*> rootEntries = db->rootGroup()->entries();
+    QCOMPARE(rootEntries.size(), 1);
+    QCOMPARE(rootEntries.at(0)->title(), QString("Entry1"));
+    QCOMPARE(rootEntries.at(0)->uuid(), QUuid::fromRfc4122("1111111111111111"));
+
+    QCOMPARE(db->rootGroup()->children().size(), 1);
+    QList<Entry*> groupEntries = db->rootGroup()->children().at(0)->entries();
+    QCOMPARE(groupEntries.size(), 1);
+    QCOMPARE(groupEntries.at(0)->title(), QString("Entry2"));
+    QVERIFY(!groupEntries.at(0)->uuid().isNull());
+    QVERIFY(groupEntries.at(0)->uuid() != rootEntries.at(0)->uuid());
+}
+
+void TestKeePass2Format::testXmlDeepGroupNesting()
+{
+    auto readNestedGroups = [this](int depth, QString& errorString) {
+        QByteArray xml = "<KeePassFile><Root>";
+        xml += QByteArray("<Group><Name>Group</Name>").repeated(depth);
+        xml += QByteArray("</Group>").repeated(depth);
+        xml += "</Root></KeePassFile>";
+        QBuffer buffer(&xml);
+        buffer.open(QIODevice::ReadOnly);
+        bool hasError;
+        readXml(&buffer, false, hasError, errorString);
+        return hasError;
+    };
+
+    QString errorString;
+    QVERIFY2(!readNestedGroups(1000, errorString), qPrintable(errorString));
+    QVERIFY(readNestedGroups(1001, errorString));
+    // Must not exhaust the stack
+    QVERIFY(readNestedGroups(200000, errorString));
+}
+
+void TestKeePass2Format::testXmlInvalidDateTime()
+{
+    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDateTime");
+    QVERIFY(QFile::exists(xmlFile));
+    bool hasError;
+    QString errorString;
+    auto db = readXml(xmlFile, false, hasError, errorString);
+    if (hasError) {
+        qWarning("Database read error: %s", qPrintable(errorString));
+    }
+    QVERIFY(!hasError);
+
+    QList<Entry*> entries = db->rootGroup()->entries();
+    QCOMPARE(entries.size(), 1);
+    const TimeInfo timeInfo = entries.at(0)->timeInfo();
+    QCOMPARE(timeInfo.lastModificationTime(), QDateTime(QDate(9999, 12, 31), QTime(23, 59, 59), Qt::UTC));
+    // Out of range values must be replaced with a representable date
+    QVERIFY(!timeInfo.creationTime().toString(Qt::ISODate).isEmpty());
+    QVERIFY(!timeInfo.lastAccessTime().toString(Qt::ISODate).isEmpty());
 }
 
 void TestKeePass2Format::testReadBackTargetDb()

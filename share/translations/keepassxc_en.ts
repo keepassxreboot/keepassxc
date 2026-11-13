@@ -5314,7 +5314,15 @@ Line %2, column %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Maximum group depth exceeded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Null group uuid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate group uuid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5343,6 +5351,10 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Null entry uuid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate entry uuid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5375,6 +5387,10 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected protected value in unencrypted XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
