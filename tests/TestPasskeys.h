@@ -36,6 +36,7 @@ private slots:
     void testLoadingECPrivateKeyFromPem();
     void testLoadingRSAPrivateKeyFromPem();
     void testCreatingAttestationObjectWithEC();
+    void testCreatingECPublicKeyWithLeadingZeros();
     void testCreatingAttestationObjectWithRSA();
     void testRegister();
     void testGet();
