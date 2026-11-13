@@ -38,7 +38,7 @@ public:
 
     bool isDarkMode() const override;
     bool isStatusBarDark() const override;
-    bool isLaunchAtStartupEnabled() const override;
+    bool isLaunchAtStartupEnabled() override;
     void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
     void setUserInputProtection(bool enable) override;
