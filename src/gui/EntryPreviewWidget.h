@@ -43,6 +43,7 @@ public slots:
     void setDatabaseMode(DatabaseWidget::Mode mode);
     void refresh();
     void clear();
+    void focusInner();
 
 signals:
     void entryUrlActivated(Entry* entry);

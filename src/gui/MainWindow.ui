@@ -394,6 +394,7 @@
     <addaction name="actionAllowScreenCapture"/>
     <addaction name="separator"/>
     <addaction name="actionShowPreviewPanel"/>
+    <addaction name="actionFocusPreviewPanel"/>
     <addaction name="actionShowGroupPanel"/>
     <addaction name="separator"/>
     <addaction name="actionShowMenubar"/>
@@ -1228,6 +1229,17 @@
    </property>
    <property name="toolTip">
     <string>Toggle Show Preview Panel</string>
+   </property>
+  </action>
+  <action name="actionFocusPreviewPanel">
+   <property name="text">
+    <string>Focus Preview Panel</string>
+   </property>
+   <property name="toolTip">
+    <string>Move focus into the entry preview panel</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
    </property>
   </action>
   <action name="actionAlwaysOnTop">
