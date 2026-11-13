@@ -32,6 +32,7 @@ public:
     static const QCommandLineOption AttributesOption;
     static const QCommandLineOption ProtectedAttributesOption;
     static const QCommandLineOption AttachmentsOption;
+    static const QCommandLineOption NetrcOption;
 };
 
 #endif // KEEPASSXC_SHOW_H
