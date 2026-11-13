@@ -137,25 +137,15 @@ void TestUrlTools::testIsUrlValidWithLooseComparison()
     urls["\"https://github.com/login\""] = true;
     urls["https://*.github.com/"] = true;
     urls["*.github.com"] = true;
-    urls["https://*.com"] = false;
     urls["https://*.computer.com"] = true; // TLD in domain (com) should not affect
     urls["\"\""] = false;
-    urls["\"*.example.com\""] = false;
-    urls["http://*"] = false;
+    urls["*.*"] = false;
     urls["*"] = false;
     urls["****"] = false;
-    urls["*.co.jp"] = false;
-    urls["*.com"] = false;
+    urls["**.com/**"] = false;
+    urls["\"*.example.com\""] = false;
     urls["*.computer.com"] = true;
     urls["*.computer.com/*com"] = true; // TLD in path should not affect this
-    urls["*com"] = false;
-    urls["*.com/"] = false;
-    urls["*.com/*"] = false;
-    urls["**.com/**"] = false;
-    urls["*.*"] = false;
-    urls["https://example.*"] = false;
-    urls["https://*.example.*"] = false;
-    urls["https://example.c*"] = false;
     urls["https://myowndomain:8000"] = true;
 
     QHashIterator<QString, bool> i(urls);
@@ -164,6 +154,31 @@ void TestUrlTools::testIsUrlValidWithLooseComparison()
         QCOMPARE(UrlTools::isUrlValid(i.key(), true), i.value());
     }
 }
+
+// URLs with wildcard TLDs are only rejected when browser integration is enabled
+// See implementation of UrlTools::isUrlValid()
+#if defined(KPXC_FEATURE_BROWSER)
+void TestUrlTools::testIsUrlValidWithLooseComparisonWildcardTld()
+{
+    QHash<QString, bool> urls;
+    urls["https://*.com"] = false;
+    urls["http://*"] = false;
+    urls["*.co.jp"] = false;
+    urls["*.com"] = false;
+    urls["*com"] = false;
+    urls["*.com/"] = false;
+    urls["*.com/*"] = false;
+    urls["https://example.*"] = false;
+    urls["https://*.example.*"] = false;
+    urls["https://example.c*"] = false;
+
+    QHashIterator<QString, bool> i(urls);
+    while (i.hasNext()) {
+        i.next();
+        QCOMPARE(UrlTools::isUrlValid(i.key(), true), i.value());
+    }
+}
+#endif
 
 void TestUrlTools::testDomainHasIllegalCharacters()
 {

@@ -33,6 +33,9 @@ private slots:
     void testIsUrlIdentical();
     void testIsUrlValid();
     void testIsUrlValidWithLooseComparison();
+#if defined(KPXC_FEATURE_BROWSER)
+    void testIsUrlValidWithLooseComparisonWildcardTld();
+#endif
     void testDomainHasIllegalCharacters();
 };
 #endif // KEEPASSXC_TESTURLTOOLS_H
