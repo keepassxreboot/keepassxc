@@ -799,7 +799,9 @@ void DatabaseWidget::setTag(QAction* action)
     auto tag = action->text();
     auto state = action->isChecked();
     for (auto entry : m_entryView->selectedEntries()) {
+        entry->beginUpdate();
         state ? entry->addTag(tag) : entry->removeTag(tag);
+        entry->endUpdate();
     }
 }
 
