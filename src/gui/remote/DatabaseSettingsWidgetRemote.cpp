@@ -18,6 +18,7 @@
 #include "DatabaseSettingsWidgetRemote.h"
 #include "ui_DatabaseSettingsWidgetRemote.h"
 
+#include "core/Database.h"
 #include "core/Global.h"
 #include "core/Metadata.h"
 
@@ -188,12 +189,12 @@ void DatabaseSettingsWidgetRemote::testDownload()
     params->downloadInput = m_ui->inputForDownload->toPlainText();
     params->downloadTimeoutMsec = m_ui->downloadTimeoutSec->value() * 1000;
 
-    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     if (params->downloadCommand.isEmpty()) {
         m_ui->messageWidget->showMessage(tr("Download command cannot be empty."), MessageWidget::Warning);
         return;
     }
 
+    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     RemoteHandler::RemoteResult result = remoteHandler->download(params);
     if (!result.success) {
         m_ui->messageWidget->showMessage(tr("Download failed with error: %1").arg(result.errorMessage),
@@ -202,10 +203,25 @@ void DatabaseSettingsWidgetRemote::testDownload()
     }
 
     if (!QFile::exists(result.filePath)) {
-        m_ui->messageWidget->showMessage(tr("Download finished, but file %1 could not be found.").arg(result.filePath),
+        m_ui->messageWidget->showMessage(tr("Command finished, but downloaded file does not exist."),
                                          MessageWidget::Error);
         return;
     }
 
+    QString error;
+    if (!hasValidPublicHeader(result.filePath, &error)) {
+        m_ui->messageWidget->showMessage(
+            tr("Downloaded file is not a KeePass file or it's an unsupported version: %1").arg(error),
+            MessageWidget::Error);
+        return;
+    }
+
     m_ui->messageWidget->showMessage(tr("Download successful."), MessageWidget::Positive);
+}
+
+bool DatabaseSettingsWidgetRemote::hasValidPublicHeader(QString& filePath, QString* error)
+{
+    // Read public headers
+    QScopedPointer<Database> db(new Database());
+    return db->open(filePath, nullptr, error);
 }
