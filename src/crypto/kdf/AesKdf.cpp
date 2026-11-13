@@ -36,8 +36,10 @@ AesKdf::AesKdf(bool legacyKdbx3)
 {
 }
 
-bool AesKdf::processParameters(const QVariantMap& p)
+bool AesKdf::processParameters(const QVariantMap& p, QString* error)
 {
+    Q_UNUSED(error);
+
     bool ok;
     int rounds = p.value(KeePass2::KDFPARAM_AES_ROUNDS).toInt(&ok);
     if (!ok || !setRounds(rounds)) {

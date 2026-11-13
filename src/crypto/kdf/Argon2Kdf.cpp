@@ -68,8 +68,8 @@ quint64 Argon2Kdf::memory() const
 
 bool Argon2Kdf::setMemory(quint64 kibibytes)
 {
-    // MIN=8KB; MAX=2,147,483,648KB
-    if (kibibytes >= 8 && kibibytes < (1ULL << 32)) {
+    // MIN=8KB; MAX=8GB (2GB on 32-bit platforms)
+    if (kibibytes >= ARGON2_MIN_MEMORY_PER_THREAD && kibibytes <= ARGON2_MAX_MEMORY) {
         m_memory = kibibytes;
         return true;
     }
@@ -84,8 +84,8 @@ quint32 Argon2Kdf::parallelism() const
 
 bool Argon2Kdf::setParallelism(quint32 threads)
 {
-    // MIN=1; MAX=16,777,215
-    if (threads >= 1 && threads < (1 << 24)) {
+    // MIN=1; MAX=128
+    if (threads >= 1 && threads <= ARGON2_MAX_PARALLELISM) {
         m_parallelism = threads;
         return true;
     }
@@ -93,7 +93,7 @@ bool Argon2Kdf::setParallelism(quint32 threads)
     return false;
 }
 
-bool Argon2Kdf::processParameters(const QVariantMap& p)
+bool Argon2Kdf::processParameters(const QVariantMap& p, QString* error)
 {
     QByteArray salt = p.value(KeePass2::KDFPARAM_ARGON2_SALT).toByteArray();
     if (!setSeed(salt)) {
@@ -108,11 +108,32 @@ bool Argon2Kdf::processParameters(const QVariantMap& p)
 
     quint32 lanes = p.value(KeePass2::KDFPARAM_ARGON2_PARALLELISM).toUInt(&ok);
     if (!ok || !setParallelism(lanes)) {
+        if (ok && error && lanes > ARGON2_MAX_PARALLELISM) {
+            *error = QObject::tr("Argon2 parallelism of %1 threads exceeds the supported maximum of %2 threads.")
+                         .arg(lanes)
+                         .arg(ARGON2_MAX_PARALLELISM);
+        }
         return false;
     }
 
     quint64 memory = p.value(KeePass2::KDFPARAM_ARGON2_MEMORY).toULongLong(&ok) / 1024ULL;
     if (!ok || !setMemory(memory)) {
+        if (ok && error && memory > ARGON2_MAX_MEMORY) {
+            // Round up, so that a value just above the maximum is not displayed as the maximum itself
+            *error = QObject::tr("Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.")
+                         .arg(toMebibytes(memory + 1023))
+                         .arg(toMebibytes(ARGON2_MAX_MEMORY));
+        }
+        return false;
+    }
+
+    if (memory < ARGON2_MIN_MEMORY_PER_THREAD * lanes) {
+        if (error) {
+            *error = QObject::tr("Argon2 memory of %1 KiB is too low for %2 threads, at least %3 KiB are required.")
+                         .arg(memory)
+                         .arg(lanes)
+                         .arg(ARGON2_MIN_MEMORY_PER_THREAD * lanes);
+        }
         return false;
     }
 

@@ -19,6 +19,7 @@
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
@@ -655,4 +656,128 @@ void TestKdbx4Format::testChangeKdfDowngradesToKdbx3()
     QVERIFY(reader.readDatabase(&buffer, key, &reopened));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1);
     QCOMPARE(reopened.kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
+}
+
+void TestKdbx4Format::testArgon2ParameterLimits()
+{
+    Argon2Kdf kdf(Argon2Kdf::Type::Argon2id);
+
+    // The limits are those of Botan's Argon2 implementation
+    QVERIFY(kdf.setMemory(ARGON2_MAX_MEMORY));
+    QCOMPARE(kdf.memory(), ARGON2_MAX_MEMORY);
+    QVERIFY(!kdf.setMemory(ARGON2_MAX_MEMORY + 1));
+    QCOMPARE(kdf.memory(), static_cast<quint64>(ARGON2_DEFAULT_MEMORY));
+    QVERIFY(kdf.setMemory(ARGON2_MIN_MEMORY_PER_THREAD));
+    QVERIFY(!kdf.setMemory(ARGON2_MIN_MEMORY_PER_THREAD - 1));
+
+    QVERIFY(kdf.setParallelism(ARGON2_MAX_PARALLELISM));
+    QCOMPARE(kdf.parallelism(), ARGON2_MAX_PARALLELISM);
+    QVERIFY(!kdf.setParallelism(ARGON2_MAX_PARALLELISM + 1));
+    QCOMPARE(kdf.parallelism(), static_cast<quint32>(ARGON2_DEFAULT_PARALLELISM));
+    QVERIFY(!kdf.setParallelism(0));
+
+    // The lowest memory accepted for the maximum number of threads must be usable
+    kdf.setRounds(1);
+    kdf.randomizeSeed();
+    QVERIFY(kdf.setParallelism(ARGON2_MAX_PARALLELISM));
+    QVERIFY(kdf.setMemory(ARGON2_MIN_MEMORY_PER_THREAD * ARGON2_MAX_PARALLELISM));
+    QByteArray result;
+    QVERIFY(kdf.transform(QByteArray(32, 'x'), result));
+}
+
+void TestKdbx4Format::testArgon2InvalidParameters()
+{
+    QFETCH(quint64, memoryKib);
+    QFETCH(quint32, parallelism);
+    QFETCH(bool, valid);
+    QFETCH(QString, expectedError);
+
+    Argon2Kdf source(Argon2Kdf::Type::Argon2d);
+    source.randomizeSeed();
+    auto params = source.writeParameters();
+    params.insert(KeePass2::KDFPARAM_ARGON2_MEMORY, memoryKib * 1024);
+    params.insert(KeePass2::KDFPARAM_ARGON2_PARALLELISM, parallelism);
+
+    QString error;
+    auto kdf = KeePass2::kdfFromParameters(params, &error);
+    QCOMPARE(!kdf.isNull(), valid);
+    QCOMPARE(error, expectedError);
+
+    // The error string is optional
+    QCOMPARE(!KeePass2::kdfFromParameters(params).isNull(), valid);
+}
+
+void TestKdbx4Format::testArgon2InvalidParameters_data()
+{
+    QTest::addColumn<quint64>("memoryKib");
+    QTest::addColumn<quint32>("parallelism");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<QString>("expectedError");
+
+    const auto maxMemoryMib = Argon2Kdf::toMebibytes(ARGON2_MAX_MEMORY);
+
+    QTest::newRow("Defaults") << quint64(ARGON2_DEFAULT_MEMORY) << quint32(ARGON2_DEFAULT_PARALLELISM) << true
+                              << QString();
+    QTest::newRow("Maximum memory") << ARGON2_MAX_MEMORY << quint32(1) << true << QString();
+    QTest::newRow("Maximum parallelism") << quint64(ARGON2_DEFAULT_MEMORY) << ARGON2_MAX_PARALLELISM << true
+                                         << QString();
+    QTest::newRow("Minimum memory for maximum parallelism")
+        << ARGON2_MIN_MEMORY_PER_THREAD * ARGON2_MAX_PARALLELISM << ARGON2_MAX_PARALLELISM << true << QString();
+    QTest::newRow("Memory above maximum") << 2 * ARGON2_MAX_MEMORY << quint32(1) << false
+                                          << QString("Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.")
+                                                 .arg(2 * maxMemoryMib)
+                                                 .arg(maxMemoryMib);
+    QTest::newRow("Memory just above maximum")
+        << ARGON2_MAX_MEMORY + 1 << quint32(1) << false
+        << QString("Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.")
+               .arg(maxMemoryMib + 1)
+               .arg(maxMemoryMib);
+    QTest::newRow("Parallelism above maximum")
+        << quint64(ARGON2_DEFAULT_MEMORY) << ARGON2_MAX_PARALLELISM + 1 << false
+        << QString("Argon2 parallelism of 129 threads exceeds the supported maximum of 128 threads.");
+    QTest::newRow("Memory too low for parallelism")
+        << quint64(1000) << ARGON2_MAX_PARALLELISM << false
+        << QString("Argon2 memory of 1000 KiB is too low for 128 threads, at least 1024 KiB are required.");
+    // Parameters that are invalid for other reasons keep the generic error of the caller
+    QTest::newRow("No parallelism") << quint64(ARGON2_DEFAULT_MEMORY) << quint32(0) << false << QString();
+    QTest::newRow("No memory") << quint64(0) << quint32(1) << false << QString();
+}
+
+void TestKdbx4Format::testArgon2InvalidParametersInHeader()
+{
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
+
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D).staticCast<Argon2Kdf>();
+    kdf->setRounds(1);
+    QVERIFY(kdf->setMemory(1024));
+    QVERIFY(kdf->setParallelism(2));
+
+    Database db;
+    db.setKey(key, true, true);
+    QVERIFY(db.changeKdf(kdf));
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, &db));
+
+    // Raise the parallelism in the KDF parameters of the header above the limit, as a database
+    // saved by an application with higher limits would have it: UInt32 entry "P" of the variant map
+    QByteArray data = buffer.data();
+    // Type UInt32 (04), key length 1, key "P" (50), value length 4
+    const QByteArray entry = QByteArray::fromHex("04010000005004000000");
+    const int pos = data.indexOf(entry + QByteArray::fromHex("02000000"));
+    QVERIFY(pos > 0);
+    data.replace(pos + entry.size(), 4, QByteArray::fromHex("81000000"));
+
+    QBuffer modified(&data);
+    modified.open(QBuffer::ReadOnly);
+    KeePass2Reader reader;
+    Database reopened;
+    QVERIFY(!reader.readDatabase(&modified, key, &reopened));
+    QVERIFY(reader.hasError());
+    QCOMPARE(reader.errorString(),
+             QString("Invalid key derivation function (KDF) parameters: "
+                     "Argon2 parallelism of 129 threads exceeds the supported maximum of 128 threads."));
 }
