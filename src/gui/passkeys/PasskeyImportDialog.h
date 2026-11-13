@@ -52,6 +52,8 @@ public:
 private:
     void addDatabases();
 
+    class GroupModelNoRecycle;
+
 signals:
     void updateEntries();
     void updateGroups();
@@ -61,10 +63,11 @@ private slots:
     void addGroups();
     void changeDatabase(int index);
     void changeEntry(int index);
-    void changeGroup(int index);
+    void onGroupSelectionChanged();
 
 private:
     QScopedPointer<Ui::PasskeyImportDialog> m_ui;
+    QScopedPointer<GroupModelNoRecycle> m_groupModel;
     QSharedPointer<Database> m_selectedDatabase;
     QUuid m_selectedDatabaseUuid;
     QUuid m_selectedEntryUuid;
