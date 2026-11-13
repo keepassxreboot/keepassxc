@@ -34,6 +34,7 @@ private slots:
 
     void testCustomCharacterSet_data();
     void testCustomCharacterSet();
+    void testNonBmpCharacters();
     void testCharClasses_data();
     void testCharClasses();
     void testLookalikeExclusion_data();
