@@ -2762,7 +2762,8 @@ void DatabaseWidget::processAutoOpen()
     }
 
     for (const auto* entry : autoopenGroup->entries()) {
-        if (entry->url().isEmpty() || (entry->password().isEmpty() && entry->username().isEmpty())) {
+        if (entry->isExpired() || entry->url().isEmpty()
+            || (entry->password().isEmpty() && entry->username().isEmpty())) {
             continue;
         }
 
