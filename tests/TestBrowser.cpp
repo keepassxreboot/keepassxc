@@ -23,6 +23,7 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "gui/UrlTools.h"
 
 #include <QJsonObject>
 #include <QTest>
@@ -527,6 +528,7 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 }
 
+// Tests wildcards through the whole entry search pipeline using searchEntries()
 void TestBrowser::testSearchEntriesWithWildcardURLs()
 {
     auto db = QSharedPointer<Database>::create();
@@ -599,121 +601,96 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     QCOMPARE(firstUrl(result[1]), QString("https://subdomain.*.github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://subdomain.yes.github.com/*"));
 
-    // https://test.domain.com/ with any path (or without a path) should match https://test.domain.com/*
-    QString urlToCompare = "https://test.domain.com/*";
-    result = m_browserService->searchEntries(db, "https://test.domain.com/other_page/third", "");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-    result = m_browserService->searchEntries(db, "https://test.domain.com", ""); // Without slash at the end
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-    result = m_browserService->searchEntries(db, "https://test.domain.com/", ""); // With slash at the end
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-
-    // https://second.domain.com/foo/ with any path (or without a path) should match https://second.domain.com/foo/*
-    urlToCompare = "https://second.domain.com/foo/*";
-    result = m_browserService->searchEntries(db, "https://second.domain.com/foo/third/", "");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-    result = m_browserService->searchEntries(db, "https://second.domain.com/foo", ""); // Without slash at the end
-    QCOMPARE(result.length(), 0); // Not a path. In the URL this is specified as "/foo/*"
-    result = m_browserService->searchEntries(db, "https://second.domain.com/foo/", ""); // With slash at the end
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-
-    // "Should match path "foo" and "foo/*"
-    urlToCompare = "https://third.domain.com/foo*";
-    result = m_browserService->searchEntries(db, "https://third.domain.com/foo/third", "");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-    result = m_browserService->searchEntries(db, "https://third.domain.com/foo", ""); // Without slash at the end
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-    result = m_browserService->searchEntries(db, "https://third.domain.com/foo/", ""); // With slash at the end
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), urlToCompare);
-
-    result = m_browserService->searchEntries(
-        db, "https://example.com:8448/login/page", "https://example.com:8448/login/page");
-    QCOMPARE(result.length(), 2);
-    QCOMPARE(firstUrl(result[0]), QString("https://example.com:8448/*"));
-    QCOMPARE(firstUrl(result[1]), QString("https://example.com/*/*"));
-
-    result = m_browserService->searchEntries(
-        db, "https://example.com:8449/login/page", "https://example.com:8449/login/page");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://example.com/*/*"));
-
-    result =
-        m_browserService->searchEntries(db, "https://example.com/$/login_page", "https://example.com/$/login_page");
-    QCOMPARE(result.length(), 2);
-    QCOMPARE(firstUrl(result[0]), QString("https://example.com/*/*"));
-    QCOMPARE(firstUrl(result[1]), QString("https://example.com/$/*"));
-
-    result = m_browserService->searchEntries(db, "https://127.128.129.130:8448/", "https://127.128.129.130:8448/");
-    QCOMPARE(result.length(), 2);
-
-    result = m_browserService->searchEntries(db, "https://127.128.129.130/", "https://127.128.129.130/");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://127.128.*/"));
-
-    result = m_browserService->searchEntries(db, "https://127.1.129.130/", "https://127.1.129.130/");
-    QCOMPARE(result.length(), 0);
-
-    result = m_browserService->searchEntries(db, "https://127.160.8.2/login", "https://127.160.8.2/login");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://127.160.*.2/login"));
-
     // Exact URL
     result =
         m_browserService->searchEntries(db, "https://thisisatest.com/login.php", "https://thisisatest.com/login.php");
     QCOMPARE(result.length(), 1);
     QCOMPARE(firstUrl(result[0]), QString("\"https://thisisatest.com/login.php\""));
 
-    // Wildcard domains
-    // https://*.good.test must not match with https://www.good.test.evil.test/
-    result = m_browserService->searchEntries(db, "https://very.good.test/", "");
-    QCOMPARE(result.length(), 1);
-    result = m_browserService->searchEntries(db, "https://www.good.test.evil.test/", "");
-    QCOMPARE(result.length(), 0);
-
     // With scheme matching enabled
     browserSettings()->setMatchUrlScheme(true);
     result = m_browserService->searchEntries(
         db, "https://github.com/login_page/second", "https://github.com/login_page/second");
-
     QCOMPARE(result.length(), 4);
     QCOMPARE(firstUrl(result[0]), QString("https://github.com/login_page/*"));
     QCOMPARE(firstUrl(result[1]), QString("https://github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://github.com/*"));
     QCOMPARE(firstUrl(result[3]), QString("github.com/*")); // Defaults to https
+}
+
+// Isolated tests for handleURLWithWildcards()
+void TestBrowser::testHandleURLWithWildcards()
+{
+    auto createUrl = [](QString url) { return QUrl::fromUserInput(url.replace("*", UrlTools::URL_WILDCARD)); };
+
+    // https://test.domain.com/ with any path (or without a path) should match https://test.domain.com/*
+    auto entryUrl = createUrl("https://test.domain.com/*");
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://test.domain.com/other_page/third"));
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://test.domain.com"));
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://test.domain.com/"));
+
+    // https://second.domain.com/foo/ with any path (or without a path) should match https://second.domain.com/foo/*
+    entryUrl = createUrl("https://second.domain.com/foo/*");
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://second.domain.com/foo/third/"));
+    QVERIFY(!m_browserService->handleURLWithWildcards(entryUrl, "https://second.domain.com/foo"));
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://second.domain.com/foo/"));
+
+    // "Should match path "foo" and "foo/*"
+    entryUrl = createUrl("https://third.domain.com/foo*");
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://third.domain.com/foo/third"));
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://third.domain.com/foo"));
+    QVERIFY(m_browserService->handleURLWithWildcards(entryUrl, "https://third.domain.com/foo/"));
+
+    auto urlToCompare = QString("https://example.com:8448/login/page");
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://example.com:8448/*"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://example.com/*/*"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://example.com/*/*"),
+                                                     "https://example.com:8449/login/page")); // With port
+
+    urlToCompare = QString("https://example.com/$/login_page");
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://example.com/*/*"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://example.com/$/*"), urlToCompare));
+
+    // IP addresses and ports
+    urlToCompare = QString("https://127.128.129.130:8448/");
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://127.128.129.*:8448/"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://127.128.*/"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://127.128.*/"), "https://127.128.129.130/"));
+    QVERIFY(!m_browserService->handleURLWithWildcards(createUrl("https://127.128.*/"), "https://127.1.129.130/"));
+    QVERIFY(
+        m_browserService->handleURLWithWildcards(createUrl("https://127.160.*.2/login"), "https://127.160.8.2/login"));
+
+    // Wildcard domains
+    // https://*.good.test must not match with https://www.good.test.evil.test/
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl(" https://*.good.test"), "https://very.good.test/"));
+    QVERIFY(!m_browserService->handleURLWithWildcards(createUrl(" https://*.good.test"),
+                                                      "https://www.good.test.evil.test/"));
 
     // https://login.*.example.com must not match with https://notlogin.foo.example.com
-    result = m_browserService->searchEntries(db, "https://notlogin.foo.example.com", "");
-    QCOMPARE(result.length(), 0);
+    QVERIFY(!m_browserService->handleURLWithWildcards(createUrl("https://login.*.example.com"),
+                                                      "https://notlogin.foo.example.com"));
 
     // https://10.1.*.3 must not match with https://110.1.2.3
-    result = m_browserService->searchEntries(db, " https://110.1.2.3", "");
-    QCOMPARE(result.length(), 0);
+    QVERIFY(!m_browserService->handleURLWithWildcards(createUrl("https://10.1.*.3"), "https://110.1.2.32"));
 
     // Domain wildcards
     // https://app.example.com/login should return "https://*.newexample.com/login"
-    result = m_browserService->searchEntries(db, "https://app.newexample.com/login", "");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://*.newexample.com/login"));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://*.newexample.com/login"),
+                                                     "https://app.example.com/login"));
 
     // https://www.anotherexample.com/xyz should return nothing
-    result = m_browserService->searchEntries(db, "https://www.anotherexample.com/xyz", "");
-    QCOMPARE(result.length(), 0);
+    QVERIFY(!m_browserService->handleURLWithWildcards(createUrl("https://www.anotherexample.com/xyz"),
+                                                      "https://*.example.com/"));
 
     // https://www.anotherexample.com/ should return both https://*.example.com and https://*.example.com/
-    result = m_browserService->searchEntries(db, "https://www.anotherexample.com/", "");
-    QCOMPARE(result.length(), 2);
+    urlToCompare = QString("https://www.anotherexample.com/");
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://*.anotherexample.com"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://*.anotherexample.com/"), urlToCompare));
 
     // https://www.anotherexample.com should return both https://*.example.com and https://*.example.com/
-    result = m_browserService->searchEntries(db, "https://www.anotherexample.com", "");
-    QCOMPARE(result.length(), 2);
+    urlToCompare = QString("https://www.anotherexample.com");
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://www.anotherexample.com"), urlToCompare));
+    QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://www.anotherexample.com/"), urlToCompare));
 }
 
 void TestBrowser::testInvalidEntries()
