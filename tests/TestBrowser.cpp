@@ -23,6 +23,7 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "gui/UrlTools.h"
 
 #include <QJsonObject>
 #include <QTest>
@@ -521,37 +522,49 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     auto additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org", "https://keepassxc.org");
     QCOMPARE(additionalResult.length(), 1);
     QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
+
+    additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org/", ""); // With slash at the end
+    QCOMPARE(additionalResult.length(), 1);
+    QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 }
 
+// Tests wildcards through the whole entry search pipeline using searchEntries()
 void TestBrowser::testSearchEntriesWithWildcardURLs()
 {
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QStringList urls = {
-        "https://github.com/login_page/*",
-        "https://github.com/*/second",
-        "https://github.com/*",
-        "http://github.com/*",
-        "github.com/*", // Defaults to https
-        "https://*.github.com/*",
-        "https://subdomain.*.github.com/*/second",
-        "https://*.sub.github.com/*",
-        "https://********", // Invalid wildcard URL
-        "https://*.thub.com/", // Partial suffix URL
-        "https://subdomain.yes.github.com/*",
-        "https://example.com:8448/*",
-        "https://example.com/*/*",
-        "https://example.com/$/*",
-        "https://127.128.129.*:8448/",
-        "https://127.128.*/",
-        "https://127.160.*.2/login",
-        "http://[2001:db8:85a3:8d3:1319:8a2e:370:*]/",
-        "https://[2001:db8:85a3:8d3:*]:443/",
-        "fe80::1ff:fe23:4567:890a",
-        "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
-        "\"https://thisisatest.com/login.php\"" // Exact URL
-    };
+    QStringList urls = {"https://github.com/login_page/*",
+                        "https://github.com/*/second",
+                        "https://github.com/*",
+                        "http://github.com/*",
+                        "github.com/*", // Defaults to https
+                        "https://*.github.com/*",
+                        "https://subdomain.*.github.com/*/second",
+                        "https://*.sub.github.com/*",
+                        "https://********", // Invalid wildcard URL
+                        "https://*.thub.com/", // Partial suffix URL
+                        "https://subdomain.yes.github.com/*",
+                        "https://example.com:8448/*",
+                        "https://example.com/*/*",
+                        "https://example.com/$/*",
+                        "https://127.128.129.*:8448/",
+                        "https://127.128.*/",
+                        "https://127.160.*.2/login",
+                        "http://[2001:db8:85a3:8d3:1319:8a2e:370:*]/",
+                        "https://[2001:db8:85a3:8d3:*]:443/",
+                        "fe80::1ff:fe23:4567:890a",
+                        "2001-db8-85a3-8d3-1319-8a2e-370-7348.ipv6-literal.net",
+                        "\"https://thisisatest.com/login.php\"", // Exact URL
+                        "https://*.good.test",
+                        "https://login.*.example.com",
+                        "https://10.1.*.3",
+                        "https://test.domain.com/*",
+                        "https://second.domain.com/foo/*",
+                        "https://third.domain.com/foo*", // Should match path "foo" and "foo/*"
+                        "https://*.newexample.com/login",
+                        "https://*.anotherexample.com",
+                        "https://*.anotherexample.com/"};
 
     createEntries(urls, root, true);
     browserSettings()->setMatchUrlScheme(false);
@@ -588,37 +601,6 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     QCOMPARE(firstUrl(result[1]), QString("https://subdomain.*.github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://subdomain.yes.github.com/*"));
 
-    result = m_browserService->searchEntries(
-        db, "https://example.com:8448/login/page", "https://example.com:8448/login/page");
-    QCOMPARE(result.length(), 2);
-    QCOMPARE(firstUrl(result[0]), QString("https://example.com:8448/*"));
-    QCOMPARE(firstUrl(result[1]), QString("https://example.com/*/*"));
-
-    result = m_browserService->searchEntries(
-        db, "https://example.com:8449/login/page", "https://example.com:8449/login/page");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://example.com/*/*"));
-
-    result =
-        m_browserService->searchEntries(db, "https://example.com/$/login_page", "https://example.com/$/login_page");
-    QCOMPARE(result.length(), 2);
-    QCOMPARE(firstUrl(result[0]), QString("https://example.com/*/*"));
-    QCOMPARE(firstUrl(result[1]), QString("https://example.com/$/*"));
-
-    result = m_browserService->searchEntries(db, "https://127.128.129.130:8448/", "https://127.128.129.130:8448/");
-    QCOMPARE(result.length(), 2);
-
-    result = m_browserService->searchEntries(db, "https://127.128.129.130/", "https://127.128.129.130/");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://127.128.*/"));
-
-    result = m_browserService->searchEntries(db, "https://127.1.129.130/", "https://127.1.129.130/");
-    QCOMPARE(result.length(), 0);
-
-    result = m_browserService->searchEntries(db, "https://127.160.8.2/login", "https://127.160.8.2/login");
-    QCOMPARE(result.length(), 1);
-    QCOMPARE(firstUrl(result[0]), QString("https://127.160.*.2/login"));
-
     // Exact URL
     result =
         m_browserService->searchEntries(db, "https://thisisatest.com/login.php", "https://thisisatest.com/login.php");
@@ -629,12 +611,192 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     browserSettings()->setMatchUrlScheme(true);
     result = m_browserService->searchEntries(
         db, "https://github.com/login_page/second", "https://github.com/login_page/second");
-
     QCOMPARE(result.length(), 4);
     QCOMPARE(firstUrl(result[0]), QString("https://github.com/login_page/*"));
     QCOMPARE(firstUrl(result[1]), QString("https://github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://github.com/*"));
     QCOMPARE(firstUrl(result[3]), QString("github.com/*")); // Defaults to https
+}
+void TestBrowser::testHandleURL_data()
+{
+    QTest::addColumn<QString>("entryUrl");
+    QTest::addColumn<QString>("siteUrl");
+    QTest::addColumn<QString>("formUrl");
+    QTest::addColumn<bool>("omitWwwSubdomain");
+    QTest::addColumn<bool>("allowWildcards");
+    QTest::addColumn<bool>("match");
+
+    auto pattern = "https://example.com";
+    auto siteUrl = "https://example.com/";
+
+    // Reject invalid URLs
+    QTest::newRow("empty entry URL") << "" << siteUrl << siteUrl << false << false << false;
+    QTest::newRow("illegal entry character")
+        << "https://example.com/<login>" << siteUrl << siteUrl << false << false << false;
+
+    // Non-wildcard matching ignores path
+    QTest::addRow("ignore path %s %d", pattern, 0) << pattern << pattern << pattern << true << false << true;
+    QTest::addRow("ignore path %s %d", pattern, 1)
+        << pattern << QString(pattern) + "/" << pattern << true << false << true;
+    QTest::addRow("ignore path %s %d", pattern, 2)
+        << pattern << QString(pattern) + "/foobar" << pattern << true << false << true;
+    QTest::addRow("ignore path %s %d", pattern, 3)
+        << pattern << QString(pattern) + "/*" << pattern << true << false << true;
+
+    // Strip www
+    pattern = "https://www.example.com/";
+    QTest::newRow("strip www") << pattern << siteUrl << siteUrl << true << false << true;
+    QTest::newRow("no strip www") << pattern << siteUrl << siteUrl << false << false << false;
+
+    // Non-wildcard URLs match all subdomains
+    pattern = "https://example.com/";
+    siteUrl = "https://www.example.com/";
+    QTest::newRow("match www subdomain") << pattern << siteUrl << siteUrl << false << false << true;
+    siteUrl = "https://abc.example.com/";
+    QTest::newRow("match other subdomain") << pattern << siteUrl << siteUrl << false << false << true;
+
+    // Host must not match parent or unrelated suffixes / prefixes
+    siteUrl = "https://example.com/";
+    QTest::newRow("reject parent domain")
+        << "https://login.example.com/" << siteUrl << siteUrl << false << false << false;
+    QTest::newRow("reject hostname prefix")
+        << pattern << "https://notexample.com/" << siteUrl << false << false << false;
+    QTest::newRow("reject hostname suffix")
+        << pattern << "https://example.com.evil.org/" << siteUrl << false << false << false;
+
+    // Explicit port must match
+    siteUrl = "https://example.com:8443/";
+    QTest::newRow("same port") << "https://example.com:8443/" << siteUrl << siteUrl << false << false << true;
+    QTest::newRow("different port") << "https://example.com:9443/" << siteUrl << siteUrl << false << false << false;
+
+    // Wildcard URLs have strict subdomain and path matching
+    pattern = "https://example.com/*";
+    siteUrl = "https://abc.example.com/";
+    QTest::newRow("wildcard strict domain") << pattern << siteUrl << siteUrl << false << true << false;
+
+    pattern = "https://*.example.com/*";
+    QTest::newRow("wildcard subdomain") << pattern << siteUrl << siteUrl << false << true << true;
+
+    pattern = "https://*.example.com/";
+    siteUrl = "https://abc.example.com/abc";
+    QTest::newRow("wildcard strict path") << pattern << siteUrl << siteUrl << false << true << false;
+
+    pattern = "\"https://example.com/login\"";
+    siteUrl = "https://example.com/login";
+    QTest::newRow("quoted exact URL") << pattern << siteUrl << siteUrl << false << true << true;
+    QTest::newRow("quoted different path")
+        << pattern << "https://example.com/other" << siteUrl << false << true << false;
+
+    // Unrelated form URLs must be rejected
+    pattern = "https://example.com/";
+    QTest::newRow("related form URL") << pattern << "https://other.example.com/" << pattern << false << false << true;
+    QTest::newRow("unrelated form URL") << pattern << "https://other.example.org/" << pattern << false << false
+                                        << false;
+
+    // Local pages require a match between page and form url
+    siteUrl = "file:///tmp/login.html";
+    QTest::newRow("local page matching form URL") << pattern << siteUrl << pattern << false << false << true;
+    QTest::newRow("local page different form URL") << siteUrl << siteUrl << pattern << false << false << false;
+    QTest::newRow("local page empty form URL") << siteUrl << siteUrl << "" << false << false << false;
+}
+
+void TestBrowser::testHandleURL()
+{
+    QFETCH(QString, entryUrl);
+    QFETCH(QString, siteUrl);
+    QFETCH(QString, formUrl);
+    QFETCH(bool, omitWwwSubdomain);
+    QFETCH(bool, allowWildcards);
+    QFETCH(bool, match);
+
+    QVERIFY(m_browserService->handleURL(entryUrl, siteUrl, formUrl, omitWwwSubdomain, allowWildcards) == match);
+}
+
+void TestBrowser::testHandleURLWithWildcards_data()
+{
+    QTest::addColumn<QString>("entryUrl");
+    QTest::addColumn<QString>("siteUrl");
+    QTest::addColumn<bool>("match");
+
+    auto entryUrl = "https://test.domain.com/*";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << "https://test.domain.com/other_page/third" << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://test.domain.com" << true;
+    QTest::addRow("%s %d", entryUrl, 2) << entryUrl << "https://test.domain.com/" << true;
+
+    // https://second.domain.com/foo/ with any path (or without a path) should match https://second.domain.com/foo/*
+    entryUrl = "https://second.domain.com/foo/*";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << "https://second.domain.com/foo/third/" << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://second.domain.com/foo" << false;
+    QTest::addRow("%s %d", entryUrl, 2) << entryUrl << "https://second.domain.com/foo/" << true;
+
+    // "Should match path "foo" and "foo/*"
+    entryUrl = "https://third.domain.com/foo*";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << "https://third.domain.com/foo/third" << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://third.domain.com/foo" << true;
+    QTest::addRow("%s %d", entryUrl, 2) << entryUrl << "https://third.domain.com/foo/" << true;
+
+    auto siteUrl = "https://example.com:8448/login/page";
+    QTest::newRow("https://example.com:8448/*") << "https://example.com:8448/*" << siteUrl << true;
+
+    entryUrl = "https://example.com/*/*";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << siteUrl << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://example.com:8449/login/page" << true; // With port
+    siteUrl = "https://example.com/$/login_page";
+    QTest::addRow("%s %d", entryUrl, 2) << entryUrl << siteUrl << true;
+    QTest::newRow("https://example.com/$/*") << "https://example.com/$/*" << siteUrl << true;
+
+    // IP addresses and ports
+    siteUrl = "https://127.128.129.130:8448/";
+    QTest::newRow("https://127.128.129.*:8448/") << "https://127.128.129.*:8448/" << siteUrl << true;
+    entryUrl = "https://127.128.*/";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << siteUrl << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://127.128.129.130/" << true;
+    QTest::addRow("%s %d", entryUrl, 2) << entryUrl << "https://127.1.129.130/" << false;
+    QTest::newRow("https://127.160.*.2/login") << "https://127.160.*.2/login" << "https://127.160.8.2/login" << true;
+
+    // Wildcard domains
+    // https://*.good.test must not match with https://www.good.test.evil.test/
+    entryUrl = " https://*.good.test";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << "https://very.good.test/" << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://www.good.test.evil.test/" << false;
+
+    // https://login.*.example.com must not match with https://notlogin.foo.example.com
+    QTest::newRow("https://login.*.example.com")
+        << "https://login.*.example.com" << "https://notlogin.foo.example.com" << false;
+
+    // https://10.1.*.3 must not match with https://110.1.2.3
+    QTest::newRow("https://10.1.*.3") << "https://10.1.*.3" << "https://110.1.2.32" << false;
+
+    // Domain wildcards
+    // https://app.newexample.com/login should return "https://*.newexample.com/login"
+    QTest::newRow("https://*.newexample.com/login")
+        << "https://*.newexample.com/login" << "https://app.newexample.com/login" << true;
+
+    // https://www.anotherexample.com/xyz should return nothing
+    QTest::newRow("https://www.anotherexample.com/xyz")
+        << "https://www.anotherexample.com/xyz" << "https://*.example.com/" << false;
+
+    // https://www.anotherexample.com/ should return both https://*.example.com and https://*.example.com/
+    entryUrl = "https://*.anotherexample.com";
+    siteUrl = "https://www.anotherexample.com/";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << siteUrl << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << siteUrl << true;
+
+    // https://www.anotherexample.com should return both https://*.example.com and https://*.example.com/
+    entryUrl = "https://www.anotherexample.com";
+    siteUrl = "https://www.anotherexample.com";
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << siteUrl << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << siteUrl << true;
+}
+
+void TestBrowser::testHandleURLWithWildcards()
+{
+    QFETCH(QString, entryUrl);
+    QFETCH(QString, siteUrl);
+    QFETCH(bool, match);
+
+    auto entryQUrl = QUrl::fromUserInput(entryUrl.replace("*", UrlTools::URL_WILDCARD));
+    QVERIFY(m_browserService->handleURLWithWildcards(entryQUrl, siteUrl) == match);
 }
 
 void TestBrowser::testInvalidEntries()
@@ -676,17 +838,16 @@ void TestBrowser::testSubdomainsAndPaths()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QStringList urls = {
-        "https://www.github.com/login/page.xml",
-        "https://login.github.com/",
-        "https://github.com",
-        "http://www.github.com",
-        "http://login.github.com/pathtonowhere",
-        ".github.com", // Invalid URL
-        "www.github.com/",
-        "https://github", // Invalid URL
-        "https://hub.com" // Should not return
-    };
+    QStringList urls = {"https://www.github.com/login/page.xml",
+                        "https://login.github.com/",
+                        "https://github.com",
+                        "http://www.github.com",
+                        "http://login.github.com/pathtonowhere",
+                        ".github.com", // Invalid URL
+                        "www.github.com/",
+                        "https://github", // Invalid URL
+                        "https://hub.com", // Should not return
+                        "https://login.example.com"};
 
     createEntries(urls, root);
 
@@ -712,6 +873,11 @@ void TestBrowser::testSubdomainsAndPaths()
     QCOMPARE(result[1]->url(), QString("https://github.com"));
     QCOMPARE(result[2]->url(), QString("http://www.github.com"));
     QCOMPARE(result[3]->url(), QString("www.github.com/"));
+
+    // Check subdomain matching. "notlogin." should not match with "login."
+    QCOMPARE(m_browserService->searchEntries(db, "https://login.example.com", "").length(), 1);
+    QCOMPARE(m_browserService->searchEntries(db, "https://another.login.example.com", "").length(), 1);
+    QCOMPARE(m_browserService->searchEntries(db, "https://notlogin.example.com", "").length(), 0);
 
     // With scheme matching there should be only 1 result
     browserSettings()->setMatchUrlScheme(true);

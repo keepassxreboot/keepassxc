@@ -1492,6 +1492,17 @@ bool BrowserService::handleURL(const QString& entryUrl,
         return false;
     }
 
+    // Check for illegal characters
+    QRegularExpression re("[<>\\^`{|}]");
+    if (re.match(entryUrl).hasMatch()) {
+        return false;
+    }
+
+    // Make a direct compare if a local file is used
+    if (siteUrl.startsWith("file://")) {
+        return entryUrl == formUrl;
+    }
+
     bool isWildcardUrl = false;
     auto tempUrl = entryUrl;
 
@@ -1510,7 +1521,7 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     QUrl entryQUrl;
-    if (entryUrl.contains("://")) {
+    if (entryUrl.contains(QRegularExpression("^[a-zA-Z][\\w+.-]*://"))) {
         entryQUrl = tempUrl;
     } else {
         entryQUrl = QUrl::fromUserInput(tempUrl);
@@ -1522,16 +1533,12 @@ bool BrowserService::handleURL(const QString& entryUrl,
 
     // Remove WWW subdomain from matching if group setting is enabled
     if (omitWwwSubdomain && entryQUrl.host().startsWith("www.")) {
-        entryQUrl.setHost(entryQUrl.host().remove("www."));
-    }
-
-    // Make a direct compare if a local file is used
-    if (siteUrl.startsWith("file://")) {
-        return entryUrl == formUrl;
+        entryQUrl.setHost(entryQUrl.host().remove(0, 4));
     }
 
     // URL host validation fails
-    if (entryQUrl.host().isEmpty()) {
+    const auto entryUrlHost = entryQUrl.host();
+    if (entryUrlHost.isEmpty()) {
         return false;
     }
 
@@ -1547,24 +1554,19 @@ bool BrowserService::handleURL(const QString& entryUrl,
         return false;
     }
 
-    // Check for illegal characters
-    QRegularExpression re("[<>\\^`{|}]");
-    if (re.match(entryUrl).hasMatch()) {
-        return false;
-    }
-
     // Use wildcard matching instead
     if (isWildcardUrl) {
         return handleURLWithWildcards(entryQUrl, siteUrl);
     }
 
     // Match the base domain
-    if (UrlTools::getBaseDomainFromUrl(siteQUrl.host()) != UrlTools::getBaseDomainFromUrl(entryQUrl.host())) {
+    const auto siteUrlHost = siteQUrl.host();
+    if (UrlTools::getBaseDomainFromUrl(siteUrlHost) != UrlTools::getBaseDomainFromUrl(entryUrlHost)) {
         return false;
     }
 
     // Match the subdomains with the limited wildcard
-    if (siteQUrl.host().endsWith(entryQUrl.host())) {
+    if (siteUrlHost == entryUrlHost || siteUrlHost.endsWith(QString(".%1").arg(entryUrlHost))) {
         return true;
     }
 
@@ -1573,32 +1575,45 @@ bool BrowserService::handleURL(const QString& entryUrl,
 
 bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString& siteUrl)
 {
-    auto matchWithRegex = [&](QString firstPart, const QString& secondPart, bool hostnameUsed = false) {
-        if (firstPart == secondPart) {
+    // entryPart is entry host or path, secondPart is site host or path
+    auto matchWithRegex = [](QString entryPart, QString sitePart, const bool hostnameUsed = false) {
+        if (entryPart == sitePart) {
             return true;
         }
 
-        // If there's no wildcard with hostname, just compare directly
-        if (hostnameUsed && !firstPart.contains(UrlTools::URL_WILDCARD) && firstPart != secondPart) {
+        // Handle empty paths as empty value
+        if (!hostnameUsed) {
+            if (entryPart == "/") {
+                entryPart.clear();
+            }
+            if (sitePart == "/") {
+                sitePart.clear();
+            }
+        }
+
+        // Compare hosts/paths directly if no wildcard is used
+        if (!entryPart.contains(UrlTools::URL_WILDCARD) && entryPart != sitePart) {
             return false;
         }
 
+        // 1. Allow any path if the entry URL has none
+        // 2. Allow "/*" path with no path in site URL
+        if (!hostnameUsed
+            && (entryPart.isEmpty()
+                || (entryPart == QString("/%1").arg(UrlTools::URL_WILDCARD) && sitePart.isEmpty()))) {
+            return true;
+        }
+
         // Escape illegal characters
-        auto re = Tools::escapeRegex(firstPart);
+        auto re = Tools::escapeRegex(entryPart);
 
-        if (hostnameUsed) {
-            // Replace all host parts with wildcards
-            re = re.replace(QString("%1.").arg(UrlTools::URL_WILDCARD), "(.*?)\\.");
-        }
+        // Regex must not allow anything before or after the wildcards
+        re.prepend("^").append("$");
 
-        // Append a + to the end of regex to match all paths after the last asterisk
-        if (re.endsWith(UrlTools::URL_WILDCARD)) {
-            re.append("+");
-        }
-
-        // Replace any remaining wildcards for paths
+        // Replace all wildcards with actual regex
         re = re.replace(UrlTools::URL_WILDCARD, "(.*?)");
-        return QRegularExpression(re).match(secondPart).hasMatch();
+
+        return QRegularExpression(re).match(sitePart).hasMatch();
     };
 
     // Match hostname and path
