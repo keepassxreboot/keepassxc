@@ -1387,10 +1387,8 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
-#ifdef WITH_XC_KEESHARE
         // Disable KeeShare while merging to avoid conflicts with incoming changes
         KeeShare::instance()->setSharingEnabled(m_db, false);
-#endif
 
         auto* mergeDialog = new MergeDialog(srcDb, m_db, this);
         connect(mergeDialog, &MergeDialog::databaseMerged, [this](bool changed) {
@@ -1405,9 +1403,7 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             if (result == QDialog::Rejected) {
                 showMessage(tr("Merge canceled, no changes were made."), MessageWidget::Information);
             }
-#ifdef WITH_XC_KEESHARE
             KeeShare::instance()->setSharingEnabled(m_db, true);
-#endif
         });
         mergeDialog->open();
     }
