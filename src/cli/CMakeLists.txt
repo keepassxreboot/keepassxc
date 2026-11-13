@@ -69,7 +69,7 @@ add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
         PRIVATE ${GPGERROR_LIBRARIES} cli keepassxc_core line_reader)
 
-install(TARGETS keepassxc-cli
+kpxc_install_target(keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
 

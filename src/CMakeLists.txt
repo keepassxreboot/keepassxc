@@ -389,6 +389,8 @@ endif()
 if(UNIX AND NOT APPLE)
     target_link_libraries(keepassxc_core Qt6::DBus ${LIBUSB_LIBRARIES})
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        # Explicit Udev linking is required on Linux when building with a
+        # static libusb (such as the one vcpkg ships).
         target_link_libraries(keepassxc_core ${KEYUTILS_LIBRARIES})
     endif()
     if(WITH_X11)
@@ -473,10 +475,13 @@ elseif(APPLE AND WITH_APP_BUNDLE)
     set(CPACK_SYSTEM_NAME "OSX")
     set(CPACK_STRIP_FILES ON)
     set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}")
+    if(WITH_SBOM)
+        list(APPEND CPACK_PRE_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/GenerateSbom.cmake")
+    endif()
     include(CPack)
 endif()
 
-install(TARGETS ${PROGNAME}
+kpxc_install_target(${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
@@ -552,6 +557,9 @@ if(WIN32)
         message(FATAL_ERROR
                 "Unsupported Windows package architecture: "
                 "${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} (${CMAKE_SYSTEM_PROCESSOR})")
+    endif()
+    if(WITH_SBOM)
+        list(APPEND CPACK_PRE_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/GenerateSbom.cmake")
     endif()
     include(CPack)
 

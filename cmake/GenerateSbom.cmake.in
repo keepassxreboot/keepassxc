@@ -1,0 +1,44 @@
+set(_sbom_output "@CMAKE_BINARY_DIR@/keepassxc.spdx.json")
+if(CPACK_TEMPORARY_INSTALL_DIRECTORY)
+    set(SBOM_DEPLOY_DIR "${CPACK_TEMPORARY_INSTALL_DIRECTORY}")
+    # CPack's component staging directory is not part of the shipped DMG.
+    if(IS_DIRECTORY "${SBOM_DEPLOY_DIR}/ALL_IN_ONE")
+        string(APPEND SBOM_DEPLOY_DIR "/ALL_IN_ONE")
+    endif()
+    set(_sbom_output "@CMAKE_BINARY_DIR@/keepassxc-${CPACK_GENERATOR}.spdx.json")
+elseif(NOT SBOM_DEPLOY_DIR AND CMAKE_INSTALL_PREFIX)
+    set(SBOM_DEPLOY_DIR "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}")
+endif()
+if(NOT SBOM_DEPLOY_DIR)
+    message(FATAL_ERROR "Set SBOM_DEPLOY_DIR to the deployed folder")
+endif()
+
+set(_sbom_config "@CMAKE_BUILD_TYPE@")
+if(NOT "@CMAKE_CONFIGURATION_TYPES@" STREQUAL "")
+    foreach(variable SBOM_CONFIG CMAKE_INSTALL_CONFIG_NAME CPACK_BUILD_CONFIG)
+        if(${variable})
+            set(_sbom_config "${${variable}}")
+            break()
+        endif()
+    endforeach()
+endif()
+set(_sbom_debug)
+string(TOLOWER "${_sbom_config}" _sbom_config_lower)
+if(_sbom_config_lower MATCHES "^(debug|relwithdebinfo)$")
+    set(_sbom_debug --debug)
+endif()
+execute_process(
+    COMMAND [==[@Python3_EXECUTABLE@]==] [==[@CMAKE_SOURCE_DIR@/utils/generate-sbom.py]==]
+        --syft [==[@Syft_EXECUTABLE@]==]
+        --deploy-dir "${SBOM_DEPLOY_DIR}" --output "${_sbom_output}"
+        --version [==[@KEEPASSXC_VERSION@]==]
+        ${_sbom_debug}
+        --link-inputs "@CMAKE_BINARY_DIR@/sbom-link-inputs-${_sbom_config}.txt"
+        --qt-prefix [==[@Qt6_PREFIX@]==] --qt-version [==[@Qt6Core_VERSION@]==]
+        --vcpkg-installed [==[@VCPKG_INSTALLED_DIR@]==] --triplet [==[@VCPKG_TARGET_TRIPLET@]==]
+    RESULT_VARIABLE _sbom_result
+)
+if(NOT _sbom_result EQUAL 0)
+    message(FATAL_ERROR "Deployment SBOM generation failed (${_sbom_result})")
+endif()
+message(STATUS "Generated SBOM: ${_sbom_output}")
