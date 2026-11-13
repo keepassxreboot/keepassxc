@@ -98,6 +98,9 @@ namespace Totp
 
     bool hasCustomSettings(const QSharedPointer<Totp::Settings>& settings);
 
+    Totp::Algorithm getHashTypeByName(const QString& name);
+    QString getNameForHashType(const Totp::Algorithm hashType);
+
     QList<QPair<QString, QString>> supportedEncoders();
     QList<QPair<QString, Algorithm>> supportedAlgorithms();
 
