@@ -631,13 +631,17 @@ void TestBrowser::testHandleURL_data()
 
     // Reject invalid URLs
     QTest::newRow("empty entry URL") << "" << siteUrl << siteUrl << false << false << false;
-    QTest::newRow("illegal entry character") << "https://example.com/<login>" << siteUrl << siteUrl << false << false << false;
+    QTest::newRow("illegal entry character")
+        << "https://example.com/<login>" << siteUrl << siteUrl << false << false << false;
 
     // Non-wildcard matching ignores path
     QTest::addRow("ignore path %s %d", pattern, 0) << pattern << pattern << pattern << true << false << true;
-    QTest::addRow("ignore path %s %d", pattern, 1) << pattern << QString(pattern) + "/" << pattern << true << false << true;
-    QTest::addRow("ignore path %s %d", pattern, 2) << pattern << QString(pattern) + "/foobar" << pattern << true << false << true;
-    QTest::addRow("ignore path %s %d", pattern, 3) << pattern << QString(pattern) + "/*" << pattern << true << false << true;
+    QTest::addRow("ignore path %s %d", pattern, 1)
+        << pattern << QString(pattern) + "/" << pattern << true << false << true;
+    QTest::addRow("ignore path %s %d", pattern, 2)
+        << pattern << QString(pattern) + "/foobar" << pattern << true << false << true;
+    QTest::addRow("ignore path %s %d", pattern, 3)
+        << pattern << QString(pattern) + "/*" << pattern << true << false << true;
 
     // Strip www
     pattern = "https://www.example.com/";
@@ -653,9 +657,12 @@ void TestBrowser::testHandleURL_data()
 
     // Host must not match parent or unrelated suffixes / prefixes
     siteUrl = "https://example.com/";
-    QTest::newRow("reject parent domain") << "https://login.example.com/" << siteUrl << siteUrl << false << false << false;
-    QTest::newRow("reject hostname prefix") << pattern << "https://notexample.com/" << siteUrl << false << false << false;
-    QTest::newRow("reject hostname suffix") << pattern << "https://example.com.evil.org/" << siteUrl << false << false << false;
+    QTest::newRow("reject parent domain")
+        << "https://login.example.com/" << siteUrl << siteUrl << false << false << false;
+    QTest::newRow("reject hostname prefix")
+        << pattern << "https://notexample.com/" << siteUrl << false << false << false;
+    QTest::newRow("reject hostname suffix")
+        << pattern << "https://example.com.evil.org/" << siteUrl << false << false << false;
 
     // Explicit port must match
     siteUrl = "https://example.com:8443/";
@@ -677,12 +684,14 @@ void TestBrowser::testHandleURL_data()
     pattern = "\"https://example.com/login\"";
     siteUrl = "https://example.com/login";
     QTest::newRow("quoted exact URL") << pattern << siteUrl << siteUrl << false << true << true;
-    QTest::newRow("quoted different path") << pattern << "https://example.com/other" << siteUrl << false << true << false;
+    QTest::newRow("quoted different path")
+        << pattern << "https://example.com/other" << siteUrl << false << true << false;
 
     // Unrelated form URLs must be rejected
     pattern = "https://example.com/";
     QTest::newRow("related form URL") << pattern << "https://other.example.com/" << pattern << false << false << true;
-    QTest::newRow("unrelated form URL") << pattern << "https://other.example.org/" << pattern << false << false << false;
+    QTest::newRow("unrelated form URL") << pattern << "https://other.example.org/" << pattern << false << false
+                                        << false;
 
     // Local pages require a match between page and form url
     siteUrl = "file:///tmp/login.html";
@@ -748,21 +757,24 @@ void TestBrowser::testHandleURLWithWildcards_data()
     // Wildcard domains
     // https://*.good.test must not match with https://www.good.test.evil.test/
     entryUrl = " https://*.good.test";
-    QTest::addRow("%s %d", entryUrl, 0)<< entryUrl << "https://very.good.test/" << true;
-    QTest::addRow("%s %d", entryUrl, 1)<< entryUrl << "https://www.good.test.evil.test/" << false;
+    QTest::addRow("%s %d", entryUrl, 0) << entryUrl << "https://very.good.test/" << true;
+    QTest::addRow("%s %d", entryUrl, 1) << entryUrl << "https://www.good.test.evil.test/" << false;
 
     // https://login.*.example.com must not match with https://notlogin.foo.example.com
-    QTest::newRow("https://login.*.example.com") << "https://login.*.example.com" << "https://notlogin.foo.example.com" << false;
+    QTest::newRow("https://login.*.example.com")
+        << "https://login.*.example.com" << "https://notlogin.foo.example.com" << false;
 
     // https://10.1.*.3 must not match with https://110.1.2.3
     QTest::newRow("https://10.1.*.3") << "https://10.1.*.3" << "https://110.1.2.32" << false;
 
     // Domain wildcards
     // https://app.newexample.com/login should return "https://*.newexample.com/login"
-    QTest::newRow("https://*.newexample.com/login") << "https://*.newexample.com/login" << "https://app.newexample.com/login" << true;
+    QTest::newRow("https://*.newexample.com/login")
+        << "https://*.newexample.com/login" << "https://app.newexample.com/login" << true;
 
     // https://www.anotherexample.com/xyz should return nothing
-    QTest::newRow("https://www.anotherexample.com/xyz") << "https://www.anotherexample.com/xyz" << "https://*.example.com/" << false;
+    QTest::newRow("https://www.anotherexample.com/xyz")
+        << "https://www.anotherexample.com/xyz" << "https://*.example.com/" << false;
 
     // https://www.anotherexample.com/ should return both https://*.example.com and https://*.example.com/
     entryUrl = "https://*.anotherexample.com";
