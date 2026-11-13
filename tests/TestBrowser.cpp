@@ -674,9 +674,9 @@ void TestBrowser::testHandleURLWithWildcards()
     QVERIFY(!m_browserService->handleURLWithWildcards(createUrl("https://10.1.*.3"), "https://110.1.2.32"));
 
     // Domain wildcards
-    // https://app.example.com/login should return "https://*.newexample.com/login"
+    // https://app.newexample.com/login should return "https://*.newexample.com/login"
     QVERIFY(m_browserService->handleURLWithWildcards(createUrl("https://*.newexample.com/login"),
-                                                     "https://app.example.com/login"));
+                                                     "https://app.newexample.com/login"));
 
     // https://www.anotherexample.com/xyz should return nothing
     QVERIFY(!m_browserService->handleURLWithWildcards(createUrl("https://www.anotherexample.com/xyz"),
