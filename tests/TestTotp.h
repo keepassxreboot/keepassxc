@@ -29,6 +29,8 @@ private slots:
     void initTestCase();
     void testParseSecret();
     void testTotpCode();
+    void testInvalidKey_data();
+    void testInvalidKey();
     void testSteamTotp();
     void testEntryHistory();
     void testKeePass2();
