@@ -393,6 +393,8 @@ image::database_security.png[]
 image::database_security_credentials.png[]
 +
 WARNING: Consider creating a backup of your YubiKey. Please refer to <<Creating a YubiKey backup>>
++
+TIP: To set a minimum password quality requirement, open the local configuration file and set `Security\DatabasePasswordMinimumQuality` to a value between `1` (Poor) and `4` (Excellent).
 
 5. Encryption settings allow you to change the average time it takes to encrypt and decrypt the database. The longer time that is chosen, the harder it will be to brute force attack your database. *We recommend a setting of one second.*
 +
