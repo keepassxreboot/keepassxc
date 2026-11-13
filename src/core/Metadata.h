@@ -47,6 +47,8 @@ public:
         QDateTime descriptionChanged;
         QString defaultUserName;
         QDateTime defaultUserNameChanged;
+        QString defaultSearch;
+        QDateTime defaultSearchChanged;
         int maintenanceHistoryDays;
         QString color;
         bool recycleBinEnabled;
@@ -85,6 +87,8 @@ public:
     QDateTime descriptionChanged() const;
     QString defaultUserName() const;
     QDateTime defaultUserNameChanged() const;
+    QString defaultSearch() const;
+    QDateTime defaultSearchChanged() const;
     QDateTime settingsChanged() const;
     int maintenanceHistoryDays() const;
     QString color() const;
@@ -124,6 +128,8 @@ public:
     void setDescriptionChanged(const QDateTime& value);
     void setDefaultUserName(const QString& value);
     void setDefaultUserNameChanged(const QDateTime& value);
+    void setDefaultSearch(const QString& value);
+    void setDefaultSearchChanged(const QDateTime& value);
     void setSettingsChanged(const QDateTime& value);
     void setMaintenanceHistoryDays(int value);
     void setColor(const QString& value);
