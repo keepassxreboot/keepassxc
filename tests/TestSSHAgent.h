@@ -18,6 +18,7 @@
 #ifndef TESTSSHAGENT_H
 #define TESTSSHAGENT_H
 
+#include "core/Database.h"
 #include "sshagent/OpenSSHKey.h"
 #include "util/TemporaryFile.h"
 #include <QProcess>
@@ -33,6 +34,9 @@ private slots:
     void testConfiguration();
     void testIdentity();
     void testRemoveOnClose();
+    void testRemoveOnLockAfterReload();
+    void testReaddOnUnlockAfterReload();
+    void testTwoOpenCopiesShareKeys();
     void testLifetimeConstraint();
     void testConfirmConstraint();
     void testToOpenSSHKey();
@@ -45,6 +49,10 @@ private:
     QScopedPointer<TemporaryFile> m_agentSocketFile;
     QString m_agentSocketFileName;
     QProcess m_agentProcess;
+    void writeKeyDatabase(const QString& filePath);
+    QSharedPointer<Database> loadKeyDatabase(const QString& filePath);
+
+    QByteArray m_keyData;
     OpenSSHKey m_key;
     QUuid m_uuid;
 };
