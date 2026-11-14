@@ -87,7 +87,7 @@ void ReportsWidgetStatistics::calculateStats()
     addStatsRow(tr("Database name"), m_db->metadata()->name());
     addStatsRow(tr("Description"), m_db->metadata()->description());
     addStatsRow(tr("Location"), m_db->filePath());
-    addStatsRow(tr("Database created"), Clock::toString(m_db->rootGroup()->timeInfo().creationTime()));
+    addStatsRow(tr("Database created"), Clock::toString(m_db->rootGroup()->timeInfo().creationTime().toLocalTime()));
     addStatsRow(tr("Last saved"), Clock::toString(stats->modified));
     addStatsRow(tr("Unsaved changes"),
                 m_db->isModified() ? tr("yes") : tr("no"),

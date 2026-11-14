@@ -53,8 +53,8 @@ int DatabaseInfo::executeWithDatabase(QSharedPointer<Database> database, QShared
 
     DatabaseStats stats(database);
     out << QObject::tr("Location") << ": " << database->filePath() << Qt::endl;
-    out << QObject::tr("Database created") << ": " << Clock::toString(database->rootGroup()->timeInfo().creationTime())
-        << Qt::endl;
+    out << QObject::tr("Database created") << ": "
+        << Clock::toString(database->rootGroup()->timeInfo().creationTime().toLocalTime()) << Qt::endl;
     out << QObject::tr("Last saved") << ": " << Clock::toString(stats.modified) << Qt::endl;
     out << QObject::tr("Unsaved changes") << ": " << (database->isModified() ? QObject::tr("yes") : QObject::tr("no"))
         << Qt::endl;
