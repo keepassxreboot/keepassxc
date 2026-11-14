@@ -321,6 +321,13 @@ MainWindow::MainWindow()
     shortcut = new QShortcut(dbTabModifier | Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
+    // The shortcuts above are not configurable, so they cannot be assigned to an action
+    for (const auto qshortcut : findChildren<QShortcut*>(QString(), Qt::FindDirectChildrenOnly)) {
+        for (const auto& key : qshortcut->keys()) {
+            ActionCollection::instance()->addReservedShortcut(key);
+        }
+    }
+
     m_ui->actionDatabaseNew->setIcon(icons()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(icons()->icon("document-open"));
     m_ui->menuRecentDatabases->setIcon(icons()->icon("document-open-recent"));

@@ -9426,6 +9426,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Shortcut %1 is reserved by KeePassXC and cannot be assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
         <translation type="unfinished"></translation>
     </message>

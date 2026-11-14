@@ -117,3 +117,15 @@ QAction* ActionCollection::isConflictingShortcut(const QAction* action, const QK
 
     return nullptr;
 }
+
+void ActionCollection::addReservedShortcut(const QKeySequence& seq)
+{
+    if (!seq.isEmpty() && !m_reservedShortcuts.contains(seq)) {
+        m_reservedShortcuts.append(seq);
+    }
+}
+
+bool ActionCollection::isReservedShortcut(const QKeySequence& seq) const
+{
+    return !seq.isEmpty() && m_reservedShortcuts.contains(seq);
+}

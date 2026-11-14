@@ -50,12 +50,17 @@ public:
     // Check if any action conflicts with @p seq and return the conflicting action
     QAction* isConflictingShortcut(const QAction* action, const QKeySequence& seq) const;
 
+    // Shortcuts handled outside of this collection (e.g. by a QShortcut) cannot be assigned to an action
+    void addReservedShortcut(const QKeySequence& seq);
+    bool isReservedShortcut(const QKeySequence& seq) const;
+
 public slots:
     void restoreShortcuts();
     void saveShortcuts();
 
 private:
     QList<QAction*> m_actions;
+    QList<QKeySequence> m_reservedShortcuts;
 };
 
 #endif

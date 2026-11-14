@@ -194,6 +194,14 @@ private:
             return;
         }
 
+        if (ActionCollection::instance()->isReservedShortcut(change)) {
+            MessageBox::warning(
+                this,
+                QObject::tr("Shortcut Conflict"),
+                QObject::tr("Shortcut %1 is reserved by KeePassXC and cannot be assigned.").arg(change.toString()));
+            return;
+        }
+
         auto conflict = ActionCollection::instance()->isConflictingShortcut(action, change);
         bool hasConflict = false;
         if (conflict) {

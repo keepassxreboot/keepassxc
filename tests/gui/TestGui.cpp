@@ -2201,6 +2201,12 @@ void TestGui::testShortcutConfig()
     QTest::keyClick(m_mainWindow.data(), Qt::Key_M, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
     QVERIFY(!v);
     disconnect(a, nullptr, nullptr, nullptr);
+
+    // Shortcuts handled by a QShortcut in the main window are reserved
+    QVERIFY(ActionCollection::instance()->isReservedShortcut(QKeySequence(Qt::CTRL | Qt::Key_M)));
+    QVERIFY(ActionCollection::instance()->isReservedShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_M)));
+    QVERIFY(!ActionCollection::instance()->isReservedShortcut(newSeq));
+    QVERIFY(!ActionCollection::instance()->isReservedShortcut(QKeySequence()));
 }
 
 void TestGui::testAutoType()
