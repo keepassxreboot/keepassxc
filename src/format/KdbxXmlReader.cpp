@@ -448,7 +448,7 @@ void KdbxXmlReader::parseCustomDataItem(CustomData* customData)
     }
 
     if (keySet && valueSet) {
-        customData->set(key, item);
+        customData->set(key, item, false); // loading must not update timestamps
         return;
     }
 
