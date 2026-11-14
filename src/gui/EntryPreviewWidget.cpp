@@ -508,7 +508,8 @@ void EntryPreviewWidget::updateGroupGeneralTab()
     m_ui->groupAutotypeLabel->setText(autotypeText);
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
-    const QString expiresText = groupTime.expires() ? Clock::toString(groupTime.expiryTime()) : tr("Never");
+    const QString expiresText =
+        groupTime.expires() ? Clock::toString(groupTime.expiryTime().toLocalTime()) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 
     if (config()->get(Config::Security_HideNotes).toBool()) {
