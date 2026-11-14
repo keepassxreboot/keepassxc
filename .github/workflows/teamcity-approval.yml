@@ -1,0 +1,51 @@
+# The `Approve TeamCity builds` workflow uses the start of the repository's CodeQL
+# pull request workflow as a proxy for GitHub Actions approval. GitHub does not
+# provide a specific workflow event for the **Approve workflows to run** button:
+# the proxy also runs when GitHub starts a PR workflow automatically, including
+# for contributors who do not require manual approval. It does not record who
+# pressed the button. Enable it only if that behavior is acceptable.
+
+# Create the repository secret `TEAMCITY_APPROVAL_TOKEN` using a TeamCity service
+# account eligible under the KeePassXC project's untrusted-build approval rules.
+# Give it only the access needed to view the build queue and approve those builds.
+# The workflow submits one vote per matching build; any additional TeamCity
+# approval rules still apply.
+
+# The workflow checks open PRs against the triggering workflow's head repository,
+# branch and SHA. It approves only builds in the KeePassXC project waiting for
+# approval with the same PR reference, revision and PR URL. It uses trusted
+# default-branch code and does not check out the PR or consume its artifacts.
+# It polls for eight minutes to allow TeamCity to enqueue builds. Builds queued
+# later require separate approval or a rerun of the CodeQL workflow.
+
+name: "Approve TeamCity builds"
+
+on:
+  workflow_run:
+    workflows: ["CodeQL"]
+    types: [in_progress]
+
+permissions:
+  actions: read
+  contents: read
+  pull-requests: read
+
+jobs:
+  approve:
+    if: >-
+      github.repository == 'keepassxreboot/keepassxc' &&
+      github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout trusted workflow code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Approve matching TeamCity builds
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TEAMCITY_TOKEN: ${{ secrets.TEAMCITY_APPROVAL_TOKEN }}
+        run: node .github/scripts/teamcity-approval.js
