@@ -285,7 +285,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("username"), Field::Username}, // username before url to capture u:<word>
         {QStringLiteral("url"), Field::Url},
         {QStringLiteral("group"), Field::Group},
-        {QStringLiteral("tag"), Field::Tag},
+        {QStringLiteral("tags"), Field::Tag},
         {QStringLiteral("is"), Field::Is},
         {QStringLiteral("has"), Field::Has},
         {QStringLiteral("uuid"), Field::Uuid}};
