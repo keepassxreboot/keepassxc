@@ -14,6 +14,7 @@ if(KPXC_FEATURE_FDOSECRETS)
         # prompt dialog
         widgets/AccessControlDialog.cpp
         widgets/FooterTableView.cpp
+        widgets/NoteLabel.cpp
 
         # setting storage
         FdoSecretsSettings.cpp
