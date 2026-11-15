@@ -328,21 +328,21 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
       <item>
        <widget class="QCheckBox" name="autoSyncOnSave">
         <property name="text">
-         <string>Sync when the database is saved</string>
+         <string>Sync when the database is saved manually</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="autoSyncOnClose">
         <property name="text">
-         <string>Sync when the database is closed with unsaved changes</string>
+         <string>Sync when the database is closed or locked</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="autoSyncHint">
         <property name="text">
-         <string>Automatic sync runs the configured commands without you invoking them. Verify a command manually before enabling it for automation.</string>
+         <string>Automatic sync runs the configured commands without you invoking them. Verify a command manually before enabling it for automation. Changes saved by KeePassXC on its own are synced when the database is closed or locked.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

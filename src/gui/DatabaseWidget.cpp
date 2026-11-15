@@ -1340,6 +1340,9 @@ QString DatabaseWidget::remoteSyncStatusText() const
     if (m_lastRemoteSyncFailed) {
         return tr("Remote sync failed (%1)").arg(m_lastRemoteSyncProfile);
     }
+    if (m_remoteAutomation->isEnabled() && m_remoteAutomation->hasUnsyncedChanges()) {
+        return tr("Local changes waiting for remote sync");
+    }
     if (!m_lastRemoteSyncTime.isValid()) {
         return {};
     }
