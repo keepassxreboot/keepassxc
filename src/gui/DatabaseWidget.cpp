@@ -2269,10 +2269,11 @@ bool DatabaseWidget::lock()
     // unlock view. Echo its result there so the notification does not disappear with the
     // view switch - success and failure use the same UX.
     if (syncBeforeLock != m_remoteSyncCount && !m_lastRemoteSyncMessage.isEmpty()) {
+        // Failures stay until dismissed, successes fade like anywhere else
         m_databaseOpenWidget->showMessage(m_lastRemoteSyncMessage,
                                           m_lastRemoteSyncFailed ? MessageWidget::MessageType::Error
                                                                  : MessageWidget::MessageType::Positive,
-                                          0);
+                                          m_lastRemoteSyncFailed ? 0 : MessageWidget::DefaultAutoHideTimeout);
     }
 
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());
