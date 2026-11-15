@@ -888,6 +888,18 @@ void TestGui::testRemoteSyncAutomationLocalRemoteFile()
     }
     // The banner is still shown after the database locked
     QVERIFY(!banner->isHidden());
+
+    // Locking replaces the main view with the unlock view; a widget that is merely not
+    // explicitly hidden is not necessarily visible on screen. Check what the user sees.
+    MessageWidget* visibleBanner = nullptr;
+    for (auto* widget : m_dbWidget->findChildren<MessageWidget*>()) {
+        if (widget->isVisible() && widget->text().contains("Remote sync")) {
+            visibleBanner = widget;
+            break;
+        }
+    }
+    QVERIFY2(visibleBanner, "remote sync failure must still be visible after locking");
+    QVERIFY(visibleBanner->text().contains("status code: 3"));
     QCOMPARE(m_dbWidget->remoteSyncStatus(), QString::fromUtf8("\xE2\x9A\xA0"));
 
     // Bring the "NAS" back and sync again: the persistent error banner must be replaced
