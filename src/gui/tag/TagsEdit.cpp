@@ -23,6 +23,7 @@
 */
 
 #include "TagsEdit.h"
+#include "TagStyle.h"
 #include "gui/MainWindow.h"
 #include <QAbstractItemView>
 #include <QApplication>
@@ -45,7 +46,7 @@ namespace
     constexpr int tag_v_spacing = 2;
     constexpr int tag_h_spacing = 3;
 
-    constexpr QMargins tag_inner(5, 3, 4, 3);
+    constexpr QMargins tag_inner = TagStyle::Margins;
 
     constexpr int tag_cross_width = 5;
     constexpr float tag_cross_radius = tag_cross_width / 2;
@@ -177,10 +178,8 @@ struct TagsEdit::Impl
 
             // draw tag rect
             auto palette = getMainWindow()->palette();
-            QPainterPath path;
-            auto cornerRadius = 4;
-            path.addRoundedRect(i_r, cornerRadius, cornerRadius);
-            p.fillPath(path, palette.brush(QPalette::ColorGroup::Inactive, QPalette::ColorRole::Highlight));
+            auto cornerRadius = TagStyle::CornerRadius;
+            TagStyle::paintTag(p, i_r, TagStyle::fill(palette));
 
             // draw text
             p.drawText(text_pos, it->text);

@@ -169,6 +169,8 @@ set(gui_SOURCES
         gui/group/GroupModel.cpp
         gui/group/GroupView.cpp
         gui/tag/TagModel.cpp
+        gui/tag/TagLabel.cpp
+        gui/tag/TagStyle.cpp
         gui/tag/TagView.cpp
         gui/tag/TagsEdit.cpp
         gui/databasekey/KeyComponentWidget.cpp
