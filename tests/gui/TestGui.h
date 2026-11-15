@@ -78,6 +78,9 @@ private slots:
     void testDeleteEntryDuringModalDialog();
     void unlockTestDatabase();
     void testRemoteSyncAutomationOnCloseDiscard();
+    void testRemoteSyncAutomationManualSaveThenClose();
+    void testRemoteSyncAutomationAutoSaveFlushesOnClose();
+    void testRemoteSyncAutomationCloseAfterSync();
     void testRemoteSyncAutomationOnCloseAutoSave();
     void testRemoteSyncAutomationOnClose();
     void testRemoteSyncAutomationOnLockCancel();

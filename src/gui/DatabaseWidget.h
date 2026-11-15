@@ -348,6 +348,9 @@ private:
     bool m_lastRemoteSyncFailed = false;
     QDateTime m_lastRemoteSyncTime;
     bool m_remoteSyncSaveGuard = false;
+    // Set when a save is started by the application (autosave, non-data auto-save,
+    // settings persistence) instead of by the user pressing Save.
+    bool m_automaticSaveInProgress = false;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;

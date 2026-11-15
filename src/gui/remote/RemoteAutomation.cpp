@@ -143,6 +143,21 @@ bool RemoteAutomation::requestSync(RemoteAutomation::Trigger trigger)
     return true;
 }
 
+void RemoteAutomation::markLocalChange()
+{
+    m_unsyncedChanges = true;
+}
+
+void RemoteAutomation::markSynced()
+{
+    m_unsyncedChanges = false;
+}
+
+bool RemoteAutomation::hasUnsyncedChanges() const
+{
+    return m_unsyncedChanges;
+}
+
 void RemoteAutomation::beginSync()
 {
     m_syncInProgress = true;

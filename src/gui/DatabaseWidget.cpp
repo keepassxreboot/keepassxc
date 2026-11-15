@@ -1237,6 +1237,7 @@ void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::Remot
         m_lastRemoteSyncTime = QDateTime::currentDateTime();
         m_lastRemoteSyncMessage = tr("Remote sync '%1' completed successfully!").arg(params->name);
         m_lastRemoteSyncFailed = false;
+        m_remoteAutomation->markSynced();
         emit databaseSyncCompleted(params->name);
         showMessage(m_lastRemoteSyncMessage, MessageWidget::Positive, false);
     } else {
@@ -1262,9 +1263,15 @@ void DatabaseWidget::triggerRemoteAutomation(RemoteAutomation::Trigger trigger)
     // by the remote settings dialog (or by another client) since this widget was created.
     m_remoteAutomation->load();
 
-    // A save performed by a running sync is not a new change that needs syncing
-    if (m_remoteSyncSaveGuard) {
+    // A save performed by a running sync is not a new change that needs syncing.
+    // Only the save trigger is swallowed; open and close triggers are unaffected.
+    if (trigger == RemoteAutomation::Save && m_remoteSyncSaveGuard) {
         m_remoteSyncSaveGuard = false;
+        return;
+    }
+
+    // Closing a database that has not changed since the last sync has nothing to push.
+    if (trigger == RemoteAutomation::Close && !m_remoteAutomation->hasUnsyncedChanges()) {
         return;
     }
 
@@ -1432,7 +1439,17 @@ void DatabaseWidget::connectDatabaseSignals()
         m_db.data(),
         &Database::databaseSaved,
         this,
-        [this]() { triggerRemoteAutomation(RemoteAutomation::Save); },
+        [this]() {
+            const bool automatic = m_automaticSaveInProgress;
+            m_automaticSaveInProgress = false;
+            // An automatic save is not a user action: it does not start a sync on its
+            // own. It is recorded as an unsynced local change and flushed by the close
+            // trigger, which avoids a sync for every single change when autosave is on.
+            if (automatic) {
+                return;
+            }
+            triggerRemoteAutomation(RemoteAutomation::Save);
+        },
         Qt::QueuedConnection);
     connect(
         this, &DatabaseWidget::databaseUnlocked, this, [this]() { triggerRemoteAutomation(RemoteAutomation::Open); });
@@ -1980,6 +1997,7 @@ void DatabaseWidget::onDatabaseModified()
         return;
     }
     if (!m_blockAutoSave && autosaveAfterEveryChangeConfig) {
+        m_automaticSaveInProgress = true;
         save();
     } else {
         // Only block once, then reset
@@ -1996,6 +2014,7 @@ void DatabaseWidget::onAutosaveDelayTimeout()
         return;
     }
     if (!m_blockAutoSave) {
+        m_automaticSaveInProgress = true;
         save();
     } else {
         // Only block once, then reset
@@ -2195,6 +2214,7 @@ bool DatabaseWidget::lock()
         // Attempt to save on exit, but don't block locking if it fails
         if (config()->get(Config::AutoSaveOnExit).toBool()
             || config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+            m_automaticSaveInProgress = true;
             saved = save();
 
             if (!saved) {
@@ -2242,7 +2262,13 @@ bool DatabaseWidget::lock()
     } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
         // Silently auto-save non-data changes, ignore errors
         QString errorMessage;
+        m_automaticSaveInProgress = true;
         performSave(errorMessage);
+        triggerRemoteAutomation(RemoteAutomation::Close);
+    } else if (m_remoteAutomation->hasUnsyncedChanges()) {
+        // Nothing left to save, but an earlier local save never reached the remote
+        // copy (for example the user saved manually while the On save trigger is off).
+        // triggerRemoteAutomation loads the config and checks the On close setting.
         triggerRemoteAutomation(RemoteAutomation::Close);
     }
 
@@ -2771,6 +2797,11 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
         ok = m_db->save(saveAction, backupFilePath, &errorMessage);
     } else {
         ok = m_db->saveAs(fileName, saveAction, backupFilePath, &errorMessage);
+    }
+
+    if (ok) {
+        // The local file is now newer than the remote copy
+        m_remoteAutomation->markLocalChange();
     }
 
     // Return control

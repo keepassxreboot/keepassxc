@@ -83,11 +83,20 @@ public:
     bool hasPendingSync() const;
     void clearPendingSync();
 
+    /**
+     * The local file was written since the last successful sync. The close trigger
+     * uses this so a manual save followed by closing still reaches the remote copy.
+     */
+    void markLocalChange();
+    void markSynced();
+    bool hasUnsyncedChanges() const;
+
 private:
     QSharedPointer<Database> m_db;
     Config m_config;
     bool m_syncInProgress = false;
     bool m_pendingSync = false;
+    bool m_unsyncedChanges = false;
 };
 
 #endif // KEEPASSXC_REMOTEAUTOMATION_H

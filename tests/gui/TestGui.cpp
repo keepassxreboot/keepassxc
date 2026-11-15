@@ -734,13 +734,20 @@ void TestGui::testRemoteSyncAutomationAfterEveryChange()
             new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
     });
 
-    setupRemoteAutomation("autoCommand", true, false, true, false);
+    // Automatic saves do not sync on their own; they are flushed when the database
+    // is closed, so enabling "On save" with autosave does not run the script for
+    // every single change.
+    setupRemoteAutomation("autoCommand", true, false, true, true);
 
     QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
 
     config()->set(Config::AutoSaveAfterEveryChange, true);
     m_db->metadata()->setAutosaveDelayMin(0);
     m_db->markAsModified();
+    QTRY_VERIFY(!m_db->isModified());
+    QCOMPARE(syncSpy.count(), 0);
+
+    QVERIFY(m_dbWidget->lock());
     QTRY_COMPARE(syncSpy.count(), 1);
     config()->set(Config::AutoSaveAfterEveryChange, false);
 }
@@ -994,6 +1001,79 @@ void TestGui::testRemoteSyncAutomationOnClose()
     }
     QVERIFY2(visibleBanner, "sync result must still be visible after locking");
     QVERIFY(visibleBanner->text().contains("completed successfully"));
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationManualSaveThenClose()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    // On open and On close enabled, On save disabled
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    QVERIFY(m_dbWidget->save());
+    QTRY_VERIFY(!m_db->isModified());
+    QCOMPARE(syncSpy.count(), 0);
+
+    // The database is clean, but the local file is newer than the remote copy:
+    // closing has to flush it.
+    QVERIFY(m_dbWidget->lock());
+    QTRY_COMPARE(syncSpy.count(), 1);
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationAutoSaveFlushesOnClose()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    const bool previousAutoSave = config()->get(Config::AutoSaveAfterEveryChange).toBool();
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    QTRY_VERIFY(!m_db->isModified());
+    // An automatic save does not start a sync on its own
+    QCOMPARE(syncSpy.count(), 0);
+
+    QVERIFY(m_dbWidget->lock());
+    QTRY_COMPARE(syncSpy.count(), 1);
+
+    unlockTestDatabase();
+    config()->set(Config::AutoSaveAfterEveryChange, previousAutoSave);
+}
+
+void TestGui::testRemoteSyncAutomationCloseAfterSync()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, true, true);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    QVERIFY(m_dbWidget->save());
+    QTRY_COMPARE(syncSpy.count(), 1);
+
+    // Nothing changed since that sync, closing must not run the script again
+    QVERIFY(m_dbWidget->lock());
+    QTRY_COMPARE(syncSpy.count(), 1);
 
     unlockTestDatabase();
 }
