@@ -27,12 +27,12 @@ class Database;
  * Per-database configuration and runtime state for automatic remote syncing.
  *
  * The configuration is stored in the database metadata custom data under
- * KPXC_REMOTE_SYNC_AUTOMATION and is marked protected, so a merge never removes it.
- * Note that the merge engine still transfers custom-data values, see issue #14020:
- * full per-client isolation of these settings requires the merge-side fix.
+ * KPXC_REMOTE_SYNC_AUTOMATION and is marked protected so that a merge treats it
+ * as local-only. The merge engine does not yet honour that for custom-data values
+ * (issue #14020); preserving it across a sync requires the merge-side fix.
  *
  * The runtime state guarantees that at most one sync per database is in flight.
- * Triggers that arrive while a sync is running are collapsed into a single
+ * Moments that arrive while a sync is running are collapsed into a single
  * pending follow-up instead of being queued one by one.
  */
 class RemoteAutomation
