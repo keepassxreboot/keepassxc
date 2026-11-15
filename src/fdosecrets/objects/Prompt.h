@@ -178,9 +178,19 @@ namespace FdoSecrets
         void itemRetired(Item* item);
         void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results, AuthDecision forFutureEntries);
         void unlockItems();
+        void askNextAccessRequest();
 
         QList<QPointer<Collection>> m_collections;
         QHash<Collection*, QList<QPointer<Item>>> m_items;
+        // the entries of one collection the user has to be asked about
+        struct AccessRequest
+        {
+            QPointer<Collection> collection;
+            QHash<QUuid, QPointer<Item>> items;
+        };
+        // waiting for their access dialog, shown one collection at a time
+        QList<AccessRequest> m_accessRequests;
+        // the entries of the access dialog currently open
         QHash<QUuid, QPointer<Item>> m_entryToItems;
 
         // collections whose doUnlock was issued and whose outcome is still awaited

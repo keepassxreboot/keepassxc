@@ -873,6 +873,169 @@ void TestGuiFdoSecrets::testServiceUnlockItemsConcurrentLock()
     }
 }
 
+void TestGuiFdoSecrets::testAccessControlPerDatabaseDismissed()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    QTemporaryDir dir;
+    VERIFY(dir.isValid());
+    const QString otherFile = dir.path() + QStringLiteral("/other-database.kdbx");
+    VERIFY(m_dbFile->copy(otherFile));
+    m_tabWidget->addDatabaseTab(otherFile, false, "a");
+
+    auto service = enableService();
+    VERIFY(service);
+    DBUS_GET(colls, service->collections());
+    COMPARE(colls.size(), 2);
+    QList<QDBusObjectPath> itemPaths;
+    for (const auto& collPath : asConst(colls)) {
+        auto item = getFirstItem(getProxy<CollectionProxy>(collPath));
+        VERIFY(item);
+        itemPaths << QDBusObjectPath(item->path());
+    }
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock(itemPaths));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    // dismissing the question about one database
+    QPointer<AccessControlDialog> first = findAccessControlDialog();
+    VERIFY(first);
+    first->reject();
+    processEvents();
+
+    // does not withdraw the one about the other
+    QPointer<AccessControlDialog> second = findAccessControlDialog();
+    VERIFY(second);
+    VERIFY(second != first);
+    COMPARE(spyPromptCompleted.count(), 0);
+    second->findChild<QCheckBox*>("rememberCheck")->setChecked(false);
+    second->done(AccessControlDialog::AllowSelected);
+
+    // the prompt reports what was unlocked, and that not everything was
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    auto args = spyPromptCompleted.takeFirst();
+    COMPARE(args.count(), 2);
+    COMPARE(args.at(0).toBool(), true);
+    COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)).size(), 1);
+}
+
+void TestGuiFdoSecrets::testAccessControlPerDatabaseLocked()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    QTemporaryDir dir;
+    VERIFY(dir.isValid());
+    const QString otherFile = dir.path() + QStringLiteral("/other-database.kdbx");
+    VERIFY(m_dbFile->copy(otherFile));
+    m_tabWidget->addDatabaseTab(otherFile, false, "a");
+    QPointer<DatabaseWidget> otherWidget = m_tabWidget->currentDatabaseWidget();
+    VERIFY(otherWidget != m_dbWidget);
+
+    auto service = enableService();
+    VERIFY(service);
+    DBUS_GET(colls, service->collections());
+    COMPARE(colls.size(), 2);
+    QList<QDBusObjectPath> itemPaths;
+    for (const auto& collPath : asConst(colls)) {
+        auto item = getFirstItem(getProxy<CollectionProxy>(collPath));
+        VERIFY(item);
+        itemPaths << QDBusObjectPath(item->path());
+    }
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock(itemPaths));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    QPointer<AccessControlDialog> first = findAccessControlDialog();
+    VERIFY(first);
+    // databases are asked about in the order of their names
+    const auto askingOther = QStringLiteral("other-database") < QFileInfo(m_dbFile->fileName()).completeBaseName();
+
+    // the database still waiting for its turn locks
+    if (askingOther) {
+        VERIFY(m_dbWidget->lock());
+        m_db.reset();
+    } else {
+        VERIFY(otherWidget->lock());
+    }
+    processEvents();
+
+    // the open question is unaffected
+    VERIFY(first);
+    VERIFY(first->isVisible());
+    first->findChild<QCheckBox*>("rememberCheck")->setChecked(false);
+    first->done(AccessControlDialog::AllowSelected);
+    processEvents();
+
+    // and nothing is asked about entries that are gone
+    VERIFY(!findAccessControlDialog());
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    auto args = spyPromptCompleted.takeFirst();
+    COMPARE(args.count(), 2);
+    COMPARE(args.at(0).toBool(), true);
+    COMPARE(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)).size(), 1);
+}
+
+void TestGuiFdoSecrets::testAccessControlPerDatabaseSameEntry()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    // two databases holding entries with the same uuids
+    QTemporaryDir dir;
+    VERIFY(dir.isValid());
+    const QString otherFile = dir.path() + QStringLiteral("/other-database.kdbx");
+    VERIFY(m_dbFile->copy(otherFile));
+    m_tabWidget->addDatabaseTab(otherFile, false, "a");
+
+    auto service = enableService();
+    VERIFY(service);
+    DBUS_GET(colls, service->collections());
+    COMPARE(colls.size(), 2);
+    QList<QSharedPointer<ItemProxy>> items;
+    QList<QDBusObjectPath> itemPaths;
+    for (const auto& collPath : asConst(colls)) {
+        auto item = getFirstItem(getProxy<CollectionProxy>(collPath));
+        VERIFY(item);
+        items << item;
+        itemPaths << QDBusObjectPath(item->path());
+    }
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock(itemPaths));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    // allow the entry once in the database asked about first, and leave the
+    // question about the other unanswered
+    QPointer<AccessControlDialog> first = findAccessControlDialog();
+    VERIFY(first);
+    first->findChild<QCheckBox*>("rememberCheck")->setChecked(false);
+    first->done(AccessControlDialog::AllowSelected);
+    processEvents();
+    QPointer<AccessControlDialog> second = findAccessControlDialog();
+    VERIFY(second);
+    VERIFY(second != first);
+    second->reject();
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+
+    // each answer holds for its own entry only
+    auto args = spyPromptCompleted.takeFirst();
+    const auto unlockedPaths = getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1));
+    COMPARE(unlockedPaths.size(), 1);
+    for (const auto& item : asConst(items)) {
+        DBUS_COMPARE(item->locked(), item->path() != unlockedPaths.first().path());
+    }
+}
+
 void TestGuiFdoSecrets::testAccessControlClientDisconnects()
 {
     FdoSecrets::settings()->setConfirmAccessItem(true);
@@ -1516,7 +1679,7 @@ void TestGuiFdoSecrets::testItemReplaceExistingLocked()
         auto entry = itemObj->backend();
         VERIFY(entry);
         FdoSecrets::settings()->setConfirmAccessItem(true);
-        m_client->setItemAuthorized(entry->uuid(), AuthDecision::Undecided);
+        m_client->setItemAuthorized(entry, AuthDecision::Undecided);
         DBUS_COMPARE(item->locked(), true);
     }
 
@@ -1691,7 +1854,7 @@ void TestGuiFdoSecrets::testItemLockState()
     }
 
     // item is unlocked if the client is authorized
-    m_client->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
+    m_client->setItemAuthorized(entry, AuthDecision::Allowed);
     DBUS_COMPARE(item->locked(), false);
     DBUS_VERIFY(item->GetSecret(QDBusObjectPath(sess->path())));
     DBUS_VERIFY(item->SetSecret(encrypted));

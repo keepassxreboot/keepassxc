@@ -77,6 +77,9 @@ private slots:
     void testServiceUnlockItems();
     void testServiceUnlockItemsIncludeFutureEntries();
     void testServiceUnlockItemsConcurrentLock();
+    void testAccessControlPerDatabaseDismissed();
+    void testAccessControlPerDatabaseLocked();
+    void testAccessControlPerDatabaseSameEntry();
     void testAccessControlClientDisconnects();
     void testServiceLock();
     void testServiceLockConcurrent();

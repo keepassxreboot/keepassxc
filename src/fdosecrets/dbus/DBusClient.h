@@ -19,11 +19,14 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 #define KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 
+#include <QPair>
 #include <QPointer>
 #include <QSet>
 #include <QUuid>
 
 #include "core/Global.h"
+
+class Entry;
 
 namespace FdoSecrets
 {
@@ -139,22 +142,22 @@ namespace FdoSecrets
         /**
          * Check if the item is known in this client's auth list
          */
-        bool itemKnown(const QUuid& uuid) const;
+        bool itemKnown(const Entry* entry) const;
 
         /**
-         * Check if client may access item identified by @a uuid.
+         * Check if client may access item backed by @a entry.
          */
-        bool itemAuthorized(const QUuid& uuid) const;
+        bool itemAuthorized(const Entry* entry) const;
 
         /**
-         * Check if client may access item identified by @a uuid, and also reset any once auth.
+         * Check if client may access item backed by @a entry, and also reset any once auth.
          */
-        bool itemAuthorizedResetOnce(const QUuid& uuid);
+        bool itemAuthorizedResetOnce(const Entry* entry);
 
         /**
-         * Authorize client to access item identified by @a uuid.
+         * Authorize client to access item backed by @a entry.
          */
-        void setItemAuthorized(const QUuid& uuid, AuthDecision auth);
+        void setItemAuthorized(const Entry* entry, AuthDecision auth);
 
         /**
          * Authorize client to access all items.
@@ -178,11 +181,16 @@ namespace FdoSecrets
 
         AuthDecision m_authorizedAll{AuthDecision::Undecided};
 
-        QSet<QUuid> m_allowed{};
-        QSet<QUuid> m_denied{};
+        // An entry is identified by its database together with its own uuid:
+        // copies of a database hold entries with the same uuids.
+        using ItemKey = QPair<QUuid, QUuid>;
+        static ItemKey itemKey(const Entry* entry);
 
-        QSet<QUuid> m_allowedOnce{};
-        QSet<QUuid> m_deniedOnce{};
+        QSet<ItemKey> m_allowed{};
+        QSet<ItemKey> m_denied{};
+
+        QSet<ItemKey> m_allowedOnce{};
+        QSet<ItemKey> m_deniedOnce{};
     };
 
     using DBusClientPtr = QSharedPointer<DBusClient>;

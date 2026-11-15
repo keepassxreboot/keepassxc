@@ -18,6 +18,8 @@
 
 #include "DBusClient.h"
 
+#include "core/Database.h"
+#include "core/Entry.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
@@ -71,14 +73,22 @@ namespace FdoSecrets
         return exePath;
     }
 
-    bool DBusClient::itemKnown(const QUuid& uuid) const
+    DBusClient::ItemKey DBusClient::itemKey(const Entry* entry)
     {
-        return m_authorizedAll != AuthDecision::Undecided || m_allowed.contains(uuid) || m_allowedOnce.contains(uuid)
-               || m_denied.contains(uuid) || m_deniedOnce.contains(uuid);
+        const auto db = entry->database();
+        return {db ? db->uuid() : QUuid(), entry->uuid()};
     }
 
-    bool DBusClient::itemAuthorized(const QUuid& uuid) const
+    bool DBusClient::itemKnown(const Entry* entry) const
     {
+        const auto key = itemKey(entry);
+        return m_authorizedAll != AuthDecision::Undecided || m_allowed.contains(key) || m_allowedOnce.contains(key)
+               || m_denied.contains(key) || m_deniedOnce.contains(key);
+    }
+
+    bool DBusClient::itemAuthorized(const Entry* entry) const
+    {
+        const auto key = itemKey(entry);
         if (!FdoSecrets::settings()->confirmAccessItem()) {
             // everyone is authorized if this is not enabled
             return true;
@@ -93,11 +103,11 @@ namespace FdoSecrets
         }
 
         // individual decisions
-        if (m_deniedOnce.contains(uuid) || m_denied.contains(uuid)) {
+        if (m_deniedOnce.contains(key) || m_denied.contains(key)) {
             // explicitly denied
             return false;
         }
-        if (m_allowedOnce.contains(uuid) || m_allowed.contains(uuid)) {
+        if (m_allowedOnce.contains(key) || m_allowed.contains(key)) {
             // explicitly allowed
             return true;
         }
@@ -105,33 +115,35 @@ namespace FdoSecrets
         return false;
     }
 
-    bool DBusClient::itemAuthorizedResetOnce(const QUuid& uuid)
+    bool DBusClient::itemAuthorizedResetOnce(const Entry* entry)
     {
-        auto auth = itemAuthorized(uuid);
-        m_deniedOnce.remove(uuid);
-        m_allowedOnce.remove(uuid);
+        const auto key = itemKey(entry);
+        auto auth = itemAuthorized(entry);
+        m_deniedOnce.remove(key);
+        m_allowedOnce.remove(key);
         return auth;
     }
 
-    void DBusClient::setItemAuthorized(const QUuid& uuid, AuthDecision auth)
+    void DBusClient::setItemAuthorized(const Entry* entry, AuthDecision auth)
     {
-        // uuid should only be in exactly one set at any time
-        m_allowed.remove(uuid);
-        m_allowedOnce.remove(uuid);
-        m_denied.remove(uuid);
-        m_deniedOnce.remove(uuid);
+        const auto key = itemKey(entry);
+        // an entry should only be in exactly one set at any time
+        m_allowed.remove(key);
+        m_allowedOnce.remove(key);
+        m_denied.remove(key);
+        m_deniedOnce.remove(key);
         switch (auth) {
         case AuthDecision::Allowed:
-            m_allowed.insert(uuid);
+            m_allowed.insert(key);
             break;
         case AuthDecision::AllowedOnce:
-            m_allowedOnce.insert(uuid);
+            m_allowedOnce.insert(key);
             break;
         case AuthDecision::Denied:
-            m_denied.insert(uuid);
+            m_denied.insert(key);
             break;
         case AuthDecision::DeniedOnce:
-            m_deniedOnce.insert(uuid);
+            m_deniedOnce.insert(key);
             break;
         default:
             break;

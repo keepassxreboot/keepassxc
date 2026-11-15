@@ -31,6 +31,8 @@
 #include <QTimer>
 #include <QWindow>
 
+#include <algorithm>
+
 namespace FdoSecrets
 {
     const PromptResult PromptResult::Pending{PromptResult::AsyncPending};
@@ -374,6 +376,13 @@ namespace FdoSecrets
                 p = nullptr;
             }
         }
+        for (auto& request : m_accessRequests) {
+            for (auto& p : request.items) {
+                if (p == item) {
+                    p = nullptr;
+                }
+            }
+        }
     }
 
     void UnlockPrompt::unlockItems()
@@ -390,30 +399,63 @@ namespace FdoSecrets
             return;
         }
 
-        // flatten to list of entries
-        QList<Entry*> entries;
-        QSet<Collection*> collections;
+        // sort out which entries the user has to be asked about, per collection:
+        // the question is put for one database at a time
         for (auto collIt = m_items.constBegin(); collIt != m_items.constEnd(); ++collIt) {
+            AccessRequest request{collIt.key(), {}};
             for (const auto& item : collIt.value()) {
                 if (!item) {
                     m_numRejected += 1;
                     continue;
                 }
                 auto entry = item->backend();
-                auto uuid = entry->uuid();
-                if (client->itemKnown(uuid) || !FdoSecrets::settings()->confirmAccessItem()) {
-                    if (!client->itemAuthorized(uuid)) {
+                if (client->itemKnown(entry) || !FdoSecrets::settings()->confirmAccessItem()) {
+                    if (!client->itemAuthorized(entry)) {
                         m_numRejected += 1;
                     }
                     // Already saw this entry
                     continue;
                 }
-                m_entryToItems[uuid] = item;
-                entries << entry;
-                collections << collIt.key();
+                request.items.insert(entry->uuid(), item);
+            }
+            if (!request.items.isEmpty()) {
+                m_accessRequests << request;
             }
         }
-        if (!entries.isEmpty()) {
+        // a stable order for the user, whatever order the client named the items in
+        std::sort(m_accessRequests.begin(), m_accessRequests.end(), [](const auto& lhs, const auto& rhs) {
+            return lhs.collection->name() < rhs.collection->name();
+        });
+        askNextAccessRequest();
+    }
+
+    void UnlockPrompt::askNextAccessRequest()
+    {
+        auto client = m_client.lock();
+        if (!client) {
+            // client already gone
+            return;
+        }
+
+        // one dialog at a time; the next one is shown when this one concludes,
+        // unless the prompt was dismissed meanwhile
+        while (!isFinished() && !m_accessRequests.isEmpty()) {
+            const auto request = m_accessRequests.takeFirst();
+            // entries may have retired while earlier dialogs were open
+            m_entryToItems.clear();
+            QList<Entry*> entries;
+            for (auto it = request.items.constBegin(); it != request.items.constEnd(); ++it) {
+                if (!it.value()) {
+                    m_numRejected += 1;
+                    continue;
+                }
+                m_entryToItems.insert(it.key(), it.value());
+                entries << it.value()->backend();
+            }
+            if (!request.collection || entries.isEmpty()) {
+                continue;
+            }
+
             QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
             auto ac = new AccessControlDialog(
                 findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
@@ -428,18 +470,19 @@ namespace FdoSecrets
             // the dialog is asking about entries that do not survive the database
             // locking or closing. Withdraw the question in that case, as if the
             // user rejected it.
-            for (const auto& coll : collections) {
-                connect(coll, &Collection::collectionLockChanged, ac, [ac](bool locked) {
-                    if (locked) {
-                        ac->reject();
-                    }
-                });
-                connect(coll, &Collection::collectionAboutToDelete, ac, &AccessControlDialog::reject);
-            }
+            connect(request.collection, &Collection::collectionLockChanged, ac, [ac](bool locked) {
+                if (locked) {
+                    ac->reject();
+                }
+            });
+            connect(request.collection, &Collection::collectionAboutToDelete, ac, &AccessControlDialog::reject);
             ac->open();
-        } else {
-            itemUnlockFinished({}, AuthDecision::Undecided);
+            return;
         }
+
+        // if anything is not unlocked, treat the whole prompt as dismissed
+        // so the client has a chance to handle the error
+        finishPrompt(m_numRejected > 0);
     }
 
     void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions, AuthDecision forFutureEntries)
@@ -465,9 +508,10 @@ namespace FdoSecrets
             }
 
             // set auth
-            client->setItemAuthorized(uuid, it.value());
+            auto entry = item->backend();
+            client->setItemAuthorized(entry, it.value());
 
-            if (client->itemAuthorized(uuid)) {
+            if (client->itemAuthorized(entry)) {
                 m_unlocked += item->objectPath();
             } else {
                 m_numRejected += 1;
@@ -476,9 +520,7 @@ namespace FdoSecrets
         if (forFutureEntries != AuthDecision::Undecided) {
             client->setAllAuthorized(forFutureEntries);
         }
-        // if anything is not unlocked, treat the whole prompt as dismissed
-        // so the client has a chance to handle the error
-        finishPrompt(m_numRejected > 0);
+        askNextAccessRequest();
     }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)
