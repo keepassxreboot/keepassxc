@@ -37,6 +37,7 @@ public:
         Notes,
         AttributeKV,
         Attachment,
+        AttachmentContent,
         AttributeValue,
         Group,
         Tag,
