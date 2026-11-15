@@ -79,6 +79,12 @@ namespace FdoSecrets
         m_scheduled = true;
 
         QWeakPointer<DBusClient> weak = client;
+        // nobody is left to answer once the client is gone
+        connect(dbus().data(), &DBusMgr::clientDisconnected, this, [this, weak](const DBusClientPtr& gone) {
+            if (gone == weak.lock()) {
+                finishPrompt(true);
+            }
+        });
         // execute the actual prompt method in event loop to avoid block this method
         QTimer::singleShot(0, this, [this, weak, windowId]() {
             auto c = weak.lock();
@@ -105,6 +111,11 @@ namespace FdoSecrets
     QVariant PromptBase::currentResult() const
     {
         return "";
+    }
+
+    bool PromptBase::isFinished() const
+    {
+        return m_signalSent;
     }
 
     void PromptBase::finishPrompt(bool dismissed)
@@ -408,6 +419,12 @@ namespace FdoSecrets
                 findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
             connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
+            // a dismissed prompt takes its question back
+            connect(this, &PromptBase::completed, ac, [ac]() {
+                if (ac->isVisible()) {
+                    ac->reject();
+                }
+            });
             // the dialog is asking about entries that do not survive the database
             // locking or closing. Withdraw the question in that case, as if the
             // user rejected it.
@@ -427,6 +444,10 @@ namespace FdoSecrets
 
     void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions, AuthDecision forFutureEntries)
     {
+        if (isFinished()) {
+            // dismissed while the dialog was open: its answer is void
+            return;
+        }
         auto client = m_client.lock();
         if (!client) {
             // client already gone
