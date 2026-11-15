@@ -158,29 +158,23 @@ namespace FdoSecrets
         virtual QString exeHash(int depth, const QString& algo);
 
         /**
-         * Check if the item is known in this client's auth list
+         * This connection's decision for the item, with denials taking
+         * precedence. Undecided when the client was never asked. This is raw
+         * connection state: whether the client may actually access an item is
+         * answered only by Service::authDecision(), which layers this over the
+         * decisions persisted in the item's database.
          */
-        bool itemKnown(const Entry* entry) const;
+        AuthDecision connectionDecision(const Entry* entry) const;
 
         /**
-         * Check if client may access item backed by @a entry.
+         * Consume any once decision for @a entry.
          */
-        bool itemAuthorized(const Entry* entry) const;
+        void resetOnce(const Entry* entry);
 
         /**
-         * Check if client may access item backed by @a entry, and also reset any once auth.
+         * Record this connection's decision for the item backed by @a entry.
          */
-        bool itemAuthorizedResetOnce(const Entry* entry);
-
-        /**
-         * Authorize client to access item backed by @a entry.
-         */
-        void setItemAuthorized(const Entry* entry, AuthDecision auth);
-
-        /**
-         * Authorize client to access all items.
-         */
-        void setAllAuthorized(AuthDecision authorized);
+        void setConnectionDecision(const Entry* entry, AuthDecision auth);
 
         /**
          * Forget all previous authorization.
@@ -196,8 +190,6 @@ namespace FdoSecrets
     private:
         QPointer<DBusMgr> m_dbus;
         PeerInfo m_process;
-
-        AuthDecision m_authorizedAll{AuthDecision::Undecided};
 
         // An entry is identified by its database together with its own uuid:
         // copies of a database hold entries with the same uuids.

@@ -28,6 +28,7 @@
 class AccessControlDialog;
 class MainWindow;
 class Database;
+class Entry;
 class DatabaseTabWidget;
 class DatabaseWidget;
 class TemporaryFile;
@@ -77,10 +78,22 @@ private slots:
     void testServiceUnlockItems();
     void testServiceUnlockItemsIncludeFutureEntries();
     void testServiceUnlockItemsConcurrentLock();
+    void testServicePersistedAuthorization();
+    void testServicePersistedAllEntries();
+    void testAccessControlPersist();
+    void testAccessControlPersistAllEntries();
+    void testAccessControlInterpreter();
+    void testAccessControlFingerprintChanged();
+    void testAccessControlUncheckedEntry();
+    void testAccessControlFutureCoversAll();
+    void testAccessControlPerDatabase();
     void testAccessControlPerDatabaseDismissed();
     void testAccessControlPerDatabaseLocked();
     void testAccessControlPerDatabaseSameEntry();
     void testAccessControlClientDisconnects();
+    void testAccessControlLongCommandLine();
+    void testAccessControlRememberWithoutExecutable();
+    void testAccessControlEntryRemovedWhileAsking();
     void testServiceLock();
     void testServiceLockConcurrent();
 
@@ -117,6 +130,7 @@ private:
     bool driveNewDatabaseWizard();
     bool driveAccessControlDialog(bool remember = true, bool includeFutureEntries = false);
     AccessControlDialog* findAccessControlDialog();
+    bool clickAccessControlRow(AccessControlDialog* dlg, const QUuid& uuid);
     bool waitForSignal(QSignalSpy& spy, int expectedCount);
 
     void processEvents();
@@ -127,6 +141,7 @@ private:
     QSharedPointer<SessionProxy> openSession(const QSharedPointer<ServiceProxy>& service, const QString& algo);
     QSharedPointer<CollectionProxy> getDefaultCollection(const QSharedPointer<ServiceProxy>& service);
     QSharedPointer<ItemProxy> getFirstItem(const QSharedPointer<CollectionProxy>& coll);
+    Entry* entryForItem(const QSharedPointer<ItemProxy>& item);
     QSharedPointer<ItemProxy> createItem(const QSharedPointer<SessionProxy>& sess,
                                          const QSharedPointer<CollectionProxy>& coll,
                                          const QString& label,

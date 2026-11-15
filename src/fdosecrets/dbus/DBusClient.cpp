@@ -116,52 +116,33 @@ namespace FdoSecrets
         return {db ? db->uuid() : QUuid(), entry->uuid()};
     }
 
-    bool DBusClient::itemKnown(const Entry* entry) const
+    AuthDecision DBusClient::connectionDecision(const Entry* entry) const
     {
         const auto key = itemKey(entry);
-        return m_authorizedAll != AuthDecision::Undecided || m_allowed.contains(key) || m_allowedOnce.contains(key)
-               || m_denied.contains(key) || m_deniedOnce.contains(key);
+        // individual decisions, denials take precedence
+        if (m_deniedOnce.contains(key)) {
+            return AuthDecision::DeniedOnce;
+        }
+        if (m_denied.contains(key)) {
+            return AuthDecision::Denied;
+        }
+        if (m_allowedOnce.contains(key)) {
+            return AuthDecision::AllowedOnce;
+        }
+        if (m_allowed.contains(key)) {
+            return AuthDecision::Allowed;
+        }
+        return AuthDecision::Undecided;
     }
 
-    bool DBusClient::itemAuthorized(const Entry* entry) const
+    void DBusClient::resetOnce(const Entry* entry)
     {
         const auto key = itemKey(entry);
-        if (!FdoSecrets::settings()->confirmAccessItem()) {
-            // everyone is authorized if this is not enabled
-            return true;
-        }
-
-        // check if we have catch-all decision
-        if (m_authorizedAll == AuthDecision::Allowed) {
-            return true;
-        }
-        if (m_authorizedAll == AuthDecision::Denied) {
-            return false;
-        }
-
-        // individual decisions
-        if (m_deniedOnce.contains(key) || m_denied.contains(key)) {
-            // explicitly denied
-            return false;
-        }
-        if (m_allowedOnce.contains(key) || m_allowed.contains(key)) {
-            // explicitly allowed
-            return true;
-        }
-        // haven't asked, not authorized by default
-        return false;
-    }
-
-    bool DBusClient::itemAuthorizedResetOnce(const Entry* entry)
-    {
-        const auto key = itemKey(entry);
-        auto auth = itemAuthorized(entry);
         m_deniedOnce.remove(key);
         m_allowedOnce.remove(key);
-        return auth;
     }
 
-    void DBusClient::setItemAuthorized(const Entry* entry, AuthDecision auth)
+    void DBusClient::setConnectionDecision(const Entry* entry, AuthDecision auth)
     {
         const auto key = itemKey(entry);
         // an entry should only be in exactly one set at any time
@@ -187,21 +168,8 @@ namespace FdoSecrets
         }
     }
 
-    void DBusClient::setAllAuthorized(AuthDecision authorized)
-    {
-        // once variants doesn't make sense here
-        if (authorized == AuthDecision::AllowedOnce) {
-            authorized = AuthDecision::Allowed;
-        }
-        if (authorized == AuthDecision::DeniedOnce) {
-            authorized = AuthDecision::Denied;
-        }
-        m_authorizedAll = authorized;
-    }
-
     void DBusClient::clearAuthorization()
     {
-        m_authorizedAll = AuthDecision::Undecided;
         m_allowed.clear();
         m_allowedOnce.clear();
         m_denied.clear();

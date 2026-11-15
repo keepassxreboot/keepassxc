@@ -25,6 +25,7 @@
 
 #include "FdoSecretsSettings.h"
 #include "core/Entry.h"
+#include "fdosecrets/ClientAuth.h"
 #include "gui/MessageBox.h"
 
 #include <QThread>
@@ -400,7 +401,9 @@ namespace FdoSecrets
         }
 
         // sort out which entries the user has to be asked about, per collection:
-        // the question is put for one database at a time
+        // decisions are stored in the database an entry belongs to, and whether
+        // the client is known is a per database fact, so each database gets a
+        // dialog of its own
         for (auto collIt = m_items.constBegin(); collIt != m_items.constEnd(); ++collIt) {
             AccessRequest request{collIt.key(), {}};
             for (const auto& item : collIt.value()) {
@@ -409,14 +412,12 @@ namespace FdoSecrets
                     continue;
                 }
                 auto entry = item->backend();
-                if (client->itemKnown(entry) || !FdoSecrets::settings()->confirmAccessItem()) {
-                    if (!client->itemAuthorized(entry)) {
-                        m_numRejected += 1;
-                    }
-                    // Already saw this entry
-                    continue;
+                const auto decision = service()->authDecision(client, entry);
+                if (decision == AuthDecision::Undecided) {
+                    request.items.insert(entry->uuid(), item);
+                } else if (!decisionAllows(decision)) {
+                    m_numRejected += 1;
                 }
-                request.items.insert(entry->uuid(), item);
             }
             if (!request.items.isEmpty()) {
                 m_accessRequests << request;
@@ -456,9 +457,29 @@ namespace FdoSecrets
                 continue;
             }
 
-            QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
-            auto ac = new AccessControlDialog(
-                findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
+            // A record whose hash no longer matches identifies the client but
+            // must be decided again; the dialog shows the change. Either way a
+            // remembered decision is stored under that record.
+            const auto res = resolveClient(entries.first()->database(), *client);
+            FingerprintChangeInfo fingerprintChange;
+            if (res.fingerprintChanged) {
+                fingerprintChange.mismatchedDepths = res.mismatchedDepths;
+                fingerprintChange.authorizedOn = res.changed.created;
+            }
+            KnownClientInfo known;
+            const auto& record = res.record.isValid() ? res.record : res.changed;
+            if (const auto rule = record.isValid() ? record.identifyingRule(*client) : nullptr) {
+                known = KnownClientInfo{record.name, record.created, *rule};
+            }
+
+            auto ac = new AccessControlDialog(findWindow(m_windowId),
+                                              entries,
+                                              request.collection->name(),
+                                              client->name(),
+                                              client->processInfo(),
+                                              AuthOption::Persist,
+                                              fingerprintChange,
+                                              known);
             connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
             // a dismissed prompt takes its question back
@@ -485,7 +506,10 @@ namespace FdoSecrets
         finishPrompt(m_numRejected > 0);
     }
 
-    void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions, AuthDecision forFutureEntries)
+    void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions,
+                                          AuthDecision forFutureEntries,
+                                          bool persist,
+                                          const QSet<int>& matchDepths)
     {
         if (isFinished()) {
             // dismissed while the dialog was open: its answer is void
@@ -497,6 +521,15 @@ namespace FdoSecrets
             qDebug() << "DBus client gone before item unlocking finish";
             return;
         }
+        // one identity record per involved database, created or updated on first use
+        QHash<Database*, DBusClientId> recordIds;
+        const auto ensureRecord = [&](Database* db) {
+            auto idIt = recordIds.find(db);
+            if (idIt == recordIds.end()) {
+                idIt = recordIds.insert(db, upsertClientRecord(db, *client, matchDepths));
+            }
+            return idIt.value();
+        };
         for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
             const auto& uuid = it.key();
             // get back the corresponding item
@@ -507,18 +540,39 @@ namespace FdoSecrets
                 continue;
             }
 
-            // set auth
+            auto decision = it.value();
             auto entry = item->backend();
-            client->setItemAuthorized(entry, it.value());
+            if (persist && (decision == AuthDecision::Allowed || decision == AuthDecision::Denied)) {
+                const auto id = ensureRecord(entry->database());
+                if (!id.isNull()) {
+                    // stored in the database; the read path finds it there, no
+                    // connection local state needed
+                    setEntryClientDecision(entry, id, decision);
+                } else {
+                    // nothing to anchor an identity record on: degrade to a once
+                    // decision instead of inventing a connection lifetime tier
+                    decision = decision == AuthDecision::Allowed ? AuthDecision::AllowedOnce : AuthDecision::DeniedOnce;
+                    client->setConnectionDecision(entry, decision);
+                }
+            } else {
+                client->setConnectionDecision(entry, decision);
+            }
 
-            if (client->itemAuthorized(entry)) {
+            if (decisionAllows(decision)) {
                 m_unlocked += item->objectPath();
             } else {
                 m_numRejected += 1;
             }
         }
-        if (forFutureEntries != AuthDecision::Undecided) {
-            client->setAllAuthorized(forFutureEntries);
+        if (forFutureEntries != AuthDecision::Undecided && persist) {
+            // the catch-all lives in the identity record of each involved database
+            for (auto dbIt = recordIds.constBegin(); dbIt != recordIds.constEnd(); ++dbIt) {
+                auto record = loadClientRecord(dbIt.key(), dbIt.value());
+                if (record.isValid()) {
+                    record.allEntries = forFutureEntries;
+                    saveClientRecord(dbIt.key(), record);
+                }
+            }
         }
         askNextAccessRequest();
     }
