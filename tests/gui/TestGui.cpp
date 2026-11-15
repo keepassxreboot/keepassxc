@@ -978,6 +978,17 @@ void TestGui::testRemoteSyncAutomationOnClose()
     QVERIFY(!m_dbWidget->remoteSyncStatus().isEmpty());
     QVERIFY(m_tabWidget->tabText(0).contains(m_dbWidget->remoteSyncStatus()));
 
+    // ... and the result is still visible on the unlock view after locking
+    MessageWidget* visibleBanner = nullptr;
+    for (auto* widget : m_dbWidget->findChildren<MessageWidget*>()) {
+        if (widget->isVisible() && widget->text().contains("Remote sync")) {
+            visibleBanner = widget;
+            break;
+        }
+    }
+    QVERIFY2(visibleBanner, "sync result must still be visible after locking");
+    QVERIFY(visibleBanner->text().contains("completed successfully"));
+
     unlockTestDatabase();
 }
 

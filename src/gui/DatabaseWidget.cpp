@@ -1226,20 +1226,21 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
 
 void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
 {
+    ++m_remoteSyncCount;
     setDisabled(false);
     emit updateSyncProgress(-1, "");
     if (result.success) {
         m_lastRemoteSyncProfile = params->name;
-        m_lastRemoteSyncError.clear();
         m_lastRemoteSyncTime = QDateTime::currentDateTime();
+        m_lastRemoteSyncMessage = tr("Remote sync '%1' completed successfully!").arg(params->name);
         m_lastRemoteSyncFailed = false;
         emit databaseSyncCompleted(params->name);
-        showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
+        showMessage(m_lastRemoteSyncMessage, MessageWidget::Positive, false);
     } else {
         m_lastRemoteSyncFailed = true;
-        m_lastRemoteSyncError = tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage);
+        m_lastRemoteSyncMessage = tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage);
         emit databaseSyncFailed(params->name, result.errorMessage);
-        showErrorMessage(m_lastRemoteSyncError);
+        showErrorMessage(m_lastRemoteSyncMessage);
     }
 
     m_remoteAutomation->endSync();
@@ -2130,6 +2131,8 @@ bool DatabaseWidget::lock()
         return isLocked();
     }
 
+    const int syncBeforeLock = m_remoteSyncCount;
+
     // ignore when reloading
     if (m_reloading) {
         return false;
@@ -2247,11 +2250,14 @@ bool DatabaseWidget::lock()
     clearAllWidgets();
     switchToOpenDatabase(m_db->filePath());
 
-    // A sync triggered by the close action ran in the main view, which clearAllWidgets()
-    // has just replaced with the unlock view. Repeat the failure on that view so the
-    // notification does not disappear with the view switch.
-    if (m_lastRemoteSyncFailed && !m_lastRemoteSyncError.isEmpty()) {
-        m_databaseOpenWidget->showMessage(m_lastRemoteSyncError, MessageWidget::MessageType::Error, 0);
+    // Any sync ran in the main view, which clearAllWidgets() has just replaced with the
+    // unlock view. Echo its result there so the notification does not disappear with the
+    // view switch - success and failure use the same UX.
+    if (syncBeforeLock != m_remoteSyncCount && !m_lastRemoteSyncMessage.isEmpty()) {
+        m_databaseOpenWidget->showMessage(m_lastRemoteSyncMessage,
+                                          m_lastRemoteSyncFailed ? MessageWidget::MessageType::Error
+                                                                 : MessageWidget::MessageType::Positive,
+                                          0);
     }
 
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());

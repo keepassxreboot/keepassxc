@@ -342,7 +342,8 @@ private:
     QScopedPointer<RemoteSettings> m_remoteSettings;
     QScopedPointer<RemoteAutomation> m_remoteAutomation;
     QString m_lastRemoteSyncProfile;
-    QString m_lastRemoteSyncError;
+    QString m_lastRemoteSyncMessage;
+    int m_remoteSyncCount = 0;
     bool m_lastRemoteSyncFailed = false;
     QDateTime m_lastRemoteSyncTime;
     bool m_remoteSyncSaveGuard = false;
