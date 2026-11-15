@@ -245,6 +245,9 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
             SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseSyncCompleted(QString)), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseSyncFailed(QString, QString)), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseSyncInProgress()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateLastDatabases()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
@@ -668,6 +671,12 @@ QString DatabaseTabWidget::tabName(int index)
 
     if (dbWidget->database()->isTemporaryDatabase()) {
         tabName = tr("%1 [Temporary]", "Database tab name modifier").arg(tabName);
+    }
+
+    // Automatic/manual remote sync status, e.g. "⇄ 14:32" while the tab is open
+    const auto syncStatus = dbWidget->remoteSyncStatus();
+    if (!syncStatus.isEmpty()) {
+        tabName.append(QStringLiteral(" %1").arg(syncStatus));
     }
 
     // needs to be last check, as MainWindow may remove the asterisk again

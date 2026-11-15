@@ -21,7 +21,11 @@
 
 #include <QCheckBox>
 #include <QClipboard>
+#include <QComboBox>
 #include <QDialog>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -32,10 +36,12 @@
 #include <QSignalSpy>
 #include <QSpinBox>
 #include <QTableWidget>
+#include <QTemporaryDir>
 #include <QTest>
 #include <QToolBar>
 
 #include "config-keepassx-tests.h"
+#include "core/CustomData.h"
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -62,6 +68,7 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
+#include "gui/remote/RemoteAutomation.h"
 #include "gui/remote/RemoteHandler.h"
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
@@ -490,6 +497,522 @@ void TestGui::testRemoteSyncDatabaseRequiresPassword()
     QCOMPARE(m_db->rootGroup()->children().at(6)->entries().size(), 1);
     // the General group contains one entry merged from the other db
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+}
+
+void TestGui::setupRemoteAutomation(const QString& name,
+                                    bool enabled,
+                                    bool onOpen,
+                                    bool onSave,
+                                    bool onClose,
+                                    const QString& downloadCommand,
+                                    const QString& uploadCommand)
+{
+    triggerAction("actionDatabaseSettings");
+
+    auto dbSettingsDialog = m_dbWidget->findChild<DatabaseSettingsDialog*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->showRemoteSettings();
+
+    auto nameEdit = dbSettingsDialog->findChild<QLineEdit*>("nameLineEdit");
+    QVERIFY(nameEdit);
+    nameEdit->setText(name);
+
+    auto downloadCommandEdit = dbSettingsDialog->findChild<QLineEdit*>("downloadCommand");
+    QVERIFY(downloadCommandEdit);
+    downloadCommandEdit->setText(downloadCommand);
+
+    auto uploadCommandEdit = dbSettingsDialog->findChild<QLineEdit*>("uploadCommand");
+    QVERIFY(uploadCommandEdit);
+    uploadCommandEdit->setText(uploadCommand);
+
+    auto saveSettingsButton = dbSettingsDialog->findChild<QPushButton*>("saveSettingsButton");
+    QVERIFY(saveSettingsButton);
+    QTest::mouseClick(saveSettingsButton, Qt::LeftButton);
+
+    auto automationEnabled = dbSettingsDialog->findChild<QCheckBox*>("autoSyncEnabled");
+    QVERIFY(automationEnabled);
+    automationEnabled->setChecked(enabled);
+
+    auto profileCombo = dbSettingsDialog->findChild<QComboBox*>("autoSyncProfile");
+    QVERIFY(profileCombo);
+    profileCombo->setCurrentText(name);
+
+    auto onOpenCheckbox = dbSettingsDialog->findChild<QCheckBox*>("autoSyncOnOpen");
+    QVERIFY(onOpenCheckbox);
+    onOpenCheckbox->setChecked(onOpen);
+
+    auto onSaveCheckbox = dbSettingsDialog->findChild<QCheckBox*>("autoSyncOnSave");
+    QVERIFY(onSaveCheckbox);
+    onSaveCheckbox->setChecked(onSave);
+
+    auto onCloseCheckbox = dbSettingsDialog->findChild<QCheckBox*>("autoSyncOnClose");
+    QVERIFY(onCloseCheckbox);
+    onCloseCheckbox->setChecked(onClose);
+
+    auto okButton = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox")->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QTest::mouseClick(okButton, Qt::LeftButton);
+}
+
+void TestGui::testRemoteSyncAutomationDisabledByDefault()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", false, false, false, false);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    m_db->metadata()->setName("Automation test");
+    QVERIFY(m_db->isModified());
+    QVERIFY(m_db->save());
+    QApplication::processEvents();
+
+    QCOMPARE(syncSpy.count(), 0);
+}
+
+void TestGui::testRemoteSyncAutomationOnSave()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, true, false);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    m_db->metadata()->setName("Automation test 2");
+    QVERIFY(m_db->isModified());
+    QVERIFY(m_db->save());
+    QTRY_COMPARE(syncSpy.count(), 1);
+
+    // Automation is stored per database and is protected from being merged
+    QVERIFY(m_db->metadata()->customData()->contains(CustomData::RemoteSyncAutomation));
+    QVERIFY(m_db->metadata()->customData()->isProtected(CustomData::RemoteSyncAutomation));
+    QVERIFY(m_db->metadata()->customData()->value(CustomData::RemoteSyncAutomation).contains("autoCommand"));
+
+    // Do not leak the automation into the following tests
+    triggerAction("actionDatabaseSettings");
+    auto dbSettingsDialog = m_dbWidget->findChild<DatabaseSettingsDialog*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->showRemoteSettings();
+    auto automationEnabled = dbSettingsDialog->findChild<QCheckBox*>("autoSyncEnabled");
+    QVERIFY(automationEnabled);
+    automationEnabled->setChecked(false);
+    MessageBox::setNextAnswer(MessageBox::Save);
+    auto okButton = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox")->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
+    QVERIFY(!m_db->metadata()->customData()->value(CustomData::RemoteSyncAutomation).contains("\"enabled\":true"));
+}
+
+void TestGui::testRemoteSyncAutomationPolicy()
+{
+    QSharedPointer<Database> db = QSharedPointer<Database>::create();
+    RemoteAutomation automation(db);
+
+    RemoteAutomation::Config config;
+    config.enabled = true;
+    config.profile = "nas";
+    config.onSave = true;
+    automation.setConfig(config);
+
+    QVERIFY(automation.isEnabled());
+    QVERIFY(!automation.triggerEnabled(RemoteAutomation::Open));
+    QVERIFY(automation.triggerEnabled(RemoteAutomation::Save));
+
+    // The first trigger starts a sync, further ones collapse into one follow-up
+    QVERIFY(automation.requestSync(RemoteAutomation::Save));
+    automation.beginSync();
+    QVERIFY(!automation.requestSync(RemoteAutomation::Save));
+    QVERIFY(!automation.requestSync(RemoteAutomation::Close));
+    QVERIFY(automation.hasPendingSync());
+    automation.endSync();
+    QVERIFY(automation.hasPendingSync());
+    automation.clearPendingSync();
+    QVERIFY(!automation.hasPendingSync());
+
+    // Survives a reload from the database metadata
+    RemoteAutomation reloaded(db);
+    QVERIFY(reloaded.isEnabled());
+    QCOMPARE(reloaded.config().profile, QStringLiteral("nas"));
+
+    // No profile means no automation
+    automation.disable();
+    QVERIFY(!automation.isEnabled());
+    QVERIFY(!automation.requestSync(RemoteAutomation::Save));
+}
+
+void TestGui::testRemoteSyncAutomationPersisted()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("persistCommand", true, false, false, true);
+
+    // Configuring remote sync must mark the database as modified, otherwise the
+    // configuration is silently dropped when the database is closed without saving.
+    QVERIFY(m_db->isModified());
+    QVERIFY(m_db->save());
+
+    // Re-opening the file must still show the automation configuration
+    Database reloaded;
+    QString error;
+    QVERIFY(reloaded.open(m_dbFilePath, m_db->key(), &error));
+    const auto stored = reloaded.metadata()->customData()->value(CustomData::RemoteSyncAutomation);
+    QVERIFY(stored.contains("\"enabled\":true"));
+    QVERIFY(stored.contains("persistCommand"));
+    QVERIFY(reloaded.metadata()->customData()->isProtected(CustomData::RemoteSyncAutomation));
+
+    // Turn it off again so the following tests are not affected
+    triggerAction("actionDatabaseSettings");
+    auto dbSettingsDialog = m_dbWidget->findChild<DatabaseSettingsDialog*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->showRemoteSettings();
+    auto automationEnabled = dbSettingsDialog->findChild<QCheckBox*>("autoSyncEnabled");
+    QVERIFY(automationEnabled);
+    automationEnabled->setChecked(false);
+    MessageBox::setNextAnswer(MessageBox::Save);
+    auto okButton = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox")->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
+    QVERIFY(m_db->save());
+}
+
+void TestGui::testRemoteSyncAutomationOnLockCancel()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+
+    // The user cancels the lock -> nothing is saved, therefore nothing is synced
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    QVERIFY(!m_dbWidget->lock());
+    QVERIFY(!m_dbWidget->isLocked());
+    QCOMPARE(syncSpy.count(), 0);
+}
+
+void TestGui::testRemoteSyncAutomationNoChanges()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+    QVERIFY(m_db->save());
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    // Nothing to save -> no close trigger -> no sync
+    QVERIFY(m_dbWidget->lock());
+    QCOMPARE(syncSpy.count(), 0);
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationAfterEveryChange()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, true, false);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    m_db->metadata()->setAutosaveDelayMin(0);
+    m_db->markAsModified();
+    QTRY_COMPARE(syncSpy.count(), 1);
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+}
+
+void TestGui::testRemoteSyncAutomationProfileMissing()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    // Another client removed the profile this database's automation points to
+    m_db->metadata()->customData()->set(CustomData::RemoteSyncAutomation,
+                                        "{\"enabled\":true,\"profile\":\"gone\",\"onOpen\":false,"
+                                        "\"onSave\":false,\"onClose\":true}");
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(m_dbWidget->lock());
+
+    QCOMPARE(syncSpy.count(), 0);
+    unlockTestDatabase();
+    QVERIFY(m_db->metadata()->customData()->value(CustomData::RemoteSyncAutomation).contains("\"enabled\":false"));
+}
+
+void TestGui::testRemoteSyncAutomationSyncFailure()
+{
+    // Real RemoteProcess; the command fails with the same exit code the NAS script uses
+    RemoteHandler::setRemoteProcessFunc(
+        [](QObject* parent) { return QScopedPointer<RemoteProcess>(new RemoteProcess(parent)); });
+
+    setupRemoteAutomation("failCommand", true, false, false, true, "false");
+
+    QSignalSpy failSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncFailed);
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(m_dbWidget->lock());
+
+    QCOMPARE(syncSpy.count(), 0);
+    QCOMPARE(failSpy.count(), 1);
+    // The script's exit code must reach the user-facing message
+    const QString failureMessage = failSpy[0][1].toString();
+    QVERIFY(failureMessage.contains("status code: 1"));
+    // The tab keeps a marker so the failure is not lost when the database locks
+    QCOMPARE(m_dbWidget->remoteSyncStatus(), QString::fromUtf8("\xE2\x9A\xA0"));
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationLocalRemoteFile()
+{
+    // End-to-end automation against a real RemoteProcess and a real database on disk,
+    // with a shell script as the "NAS" transport (no network share required).
+    RemoteHandler::setRemoteProcessFunc(
+        [](QObject* parent) { return QScopedPointer<RemoteProcess>(new RemoteProcess(parent)); });
+
+    QTemporaryDir tmp;
+    QVERIFY(tmp.isValid());
+    const QString remoteDb = QDir(tmp.path()).filePath("remote.kdbx");
+    const QString script = QDir(tmp.path()).filePath("sync.sh");
+
+    QFile scriptFile(script);
+    QVERIFY(scriptFile.open(QIODevice::WriteOnly | QIODevice::Text));
+    scriptFile.write(QStringLiteral("#!/bin/sh\n"
+                                    "mode=\"$1\"\n"
+                                    "temp=\"$2\"\n"
+                                    "remote=\"$3\"\n"
+                                    "if [ \"$mode\" = download ]; then\n"
+                                    "    if [ ! -f \"$remote\" ]; then\n"
+                                    "        echo \"db file missing on NAS: $remote\" >&2\n"
+                                    "        exit 3\n"
+                                    "    fi\n"
+                                    "    cp \"$remote\" \"$temp\"\n"
+                                    "    exit 0\n"
+                                    "fi\n"
+                                    "cp \"$temp\" \"$remote\"\n"
+                                    "exit 0\n")
+                         .toUtf8());
+    scriptFile.close();
+    QVERIFY(QFile::setPermissions(script, QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner));
+
+    setupRemoteAutomation("localNAS",
+                          true,
+                          false,
+                          false,
+                          true,
+                          QStringLiteral("sh %1 download {TEMP_DATABASE} %2").arg(script, remoteDb),
+                          QStringLiteral("sh %1 upload {TEMP_DATABASE} %2").arg(script, remoteDb));
+
+    // Seed the "NAS" with the current database so both sides share the same key
+    QVERIFY(m_db->save());
+    QVERIFY(QFile::copy(m_db->filePath(), remoteDb));
+
+    auto* marker = new Entry();
+    marker->setTitle("SyncMarker");
+    m_db->rootGroup()->addEntry(marker);
+    auto localKey = m_db->key();
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(m_dbWidget->lock());
+    QCOMPARE(syncSpy.count(), 1);
+
+    // The upload really produced a database KeePassXC can open, holding the merged entry
+    QString error;
+    Database remote;
+    QVERIFY2(remote.open(remoteDb, localKey, &error), error.toUtf8().constData());
+    bool markerUploaded = false;
+    for (const auto* entry : remote.rootGroup()->entries()) {
+        if (entry->title() == "SyncMarker") {
+            markerUploaded = true;
+            break;
+        }
+    }
+    QVERIFY2(markerUploaded,
+             qPrintable(QStringLiteral("remote has %1 entries").arg(remote.rootGroup()->entries().size())));
+
+    // Now the "NAS" file is gone: the sync must fail, and the banner must survive the lock
+    unlockTestDatabase();
+    QVERIFY(QFile::remove(remoteDb));
+    m_db->markAsModified();
+
+    QSignalSpy failSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncFailed);
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(m_dbWidget->lock());
+    QCOMPARE(failSpy.count(), 1);
+    // Exit code 3 is what the sync script returns when the remote file is gone.
+    // PR #13779 additionally appends the script's stderr; asserted separately below.
+    QVERIFY(failSpy[0][1].toString().contains("status code: 3"));
+
+    MessageWidget* banner = nullptr;
+    for (auto* w : m_dbWidget->findChildren<MessageWidget*>()) {
+        if (w->text().contains("Remote sync")) {
+            banner = w;
+            break;
+        }
+    }
+    QVERIFY(banner);
+    QVERIFY(banner->text().contains("status code: 3"));
+    // PR #13779 appends the command's stderr on a second line; without it only the
+    // exit code is reported. Assert the detail whenever it is available.
+    if (banner->text().contains('\n')) {
+        QVERIFY(banner->text().contains("db file missing on NAS"));
+    }
+    // The banner is still shown after the database locked
+    QVERIFY(!banner->isHidden());
+    QCOMPARE(m_dbWidget->remoteSyncStatus(), QString::fromUtf8("\xE2\x9A\xA0"));
+
+    // Bring the "NAS" back and sync again: the persistent error banner must be replaced
+    // by the success message and the tab marker must return to the normal one.
+    unlockTestDatabase();
+    QVERIFY(QFile::copy(m_db->filePath(), remoteDb));
+    m_db->markAsModified();
+
+    QSignalSpy okSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(m_dbWidget->lock());
+    QTRY_COMPARE(okSpy.count(), 1);
+    QVERIFY(!banner->text().contains("status code: 3"));
+    QVERIFY(banner->text().contains("completed"));
+    QVERIFY(m_dbWidget->remoteSyncStatus().startsWith(QString::fromUtf8("\xE2\x87\x84")));
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationNonDataChange()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+    QVERIFY(m_db->save());
+
+    config()->set(Config::AutoSaveNonDataChanges, true);
+    auto* root = m_db->rootGroup();
+    root->setExpanded(!root->isExpanded());
+    QVERIFY(m_db->hasNonDataChanges());
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    QVERIFY(m_dbWidget->lock());
+    QCOMPARE(syncSpy.count(), 1);
+
+    config()->set(Config::AutoSaveNonDataChanges, false);
+    unlockTestDatabase();
+}
+
+void TestGui::unlockTestDatabase()
+{
+    auto* openWidget = m_dbWidget->findChild<QWidget*>("databaseOpenWidget");
+    QVERIFY(openWidget);
+    auto* editPassword = openWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(editPassword);
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    // lock() replaces the database object, the test must use the current one
+    m_db = m_dbWidget->database();
+}
+
+void TestGui::testRemoteSyncAutomationOnClose()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    QVERIFY(m_db->isModified());
+
+    // The user explicitly saves on close -> the close trigger runs the sync
+    MessageBox::setNextAnswer(MessageBox::Save);
+    QVERIFY(m_dbWidget->lock());
+    QTRY_COMPARE(syncSpy.count(), 1);
+
+    // The last sync is visible in the tab name
+    QVERIFY(!m_dbWidget->remoteSyncStatus().isEmpty());
+    QVERIFY(m_tabWidget->tabText(0).contains(m_dbWidget->remoteSyncStatus()));
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationOnCloseDiscard()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    QSignalSpy discardSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    QVERIFY(m_db->isModified());
+
+    // The user discards the changes on close -> nothing may be synced
+    MessageBox::setNextAnswer(MessageBox::Discard);
+    QVERIFY(m_dbWidget->lock());
+    QCOMPARE(discardSpy.count(), 0);
+
+    unlockTestDatabase();
+}
+
+void TestGui::testRemoteSyncAutomationOnCloseAutoSave()
+{
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
+        return QScopedPointer<RemoteProcess>(
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
+    });
+
+    setupRemoteAutomation("autoCommand", true, false, false, true);
+
+    QSignalSpy syncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+    m_db->markAsModified();
+    QVERIFY(m_db->isModified());
+
+    // Default behaviour: the save on lock happens without asking, the close
+    // trigger must still run the sync.
+    config()->set(Config::AutoSaveOnExit, true);
+    QVERIFY(m_dbWidget->lock());
+    config()->set(Config::AutoSaveOnExit, false);
+    QTRY_COMPARE(syncSpy.count(), 1);
+
+    unlockTestDatabase();
 }
 
 void TestGui::testOpenRemoteDatabase()
