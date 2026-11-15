@@ -135,6 +135,7 @@ public:
     void syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params);
     QList<RemoteParams*> getRemoteParams() const;
     QString remoteSyncStatus() const;
+    QString remoteSyncStatusText() const;
 
 signals:
     // relayed Database signals

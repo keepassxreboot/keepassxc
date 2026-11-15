@@ -588,6 +588,11 @@ void TestGui::testRemoteSyncAutomationOnSave()
     QVERIFY(m_db->save());
     QTRY_COMPARE(syncSpy.count(), 1);
 
+    // The status bar carries the last successful sync; it is reachable even when only
+    // one database is open and the tab bar is hidden
+    QTRY_VERIFY(m_statusBarLabel->text().contains("Last synced"));
+    QVERIFY(m_statusBarLabel->text().contains("autoCommand"));
+
     // Automation is stored per database and is protected from being merged
     QVERIFY(m_db->metadata()->customData()->contains(CustomData::RemoteSyncAutomation));
     QVERIFY(m_db->metadata()->customData()->isProtected(CustomData::RemoteSyncAutomation));
@@ -787,6 +792,7 @@ void TestGui::testRemoteSyncAutomationSyncFailure()
     QVERIFY(failureMessage.contains("status code: 1"));
     // The tab keeps a marker so the failure is not lost when the database locks
     QCOMPARE(m_dbWidget->remoteSyncStatus(), QString::fromUtf8("\xE2\x9A\xA0"));
+    QVERIFY(m_dbWidget->remoteSyncStatusText().contains("failed"));
 
     unlockTestDatabase();
 }
