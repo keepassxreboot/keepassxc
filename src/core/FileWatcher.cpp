@@ -42,21 +42,17 @@ void FileWatcher::start(const QString& filePath, int checksumIntervalSeconds, in
 {
     stop();
 
+    m_isNetworkFileSystem = false;
 #if defined(Q_OS_LINUX)
+    // Detect network file systems, inotify does not report changes made remotely on these mounts
     const unsigned long NFS_SUPER_MAGIC = 0x6969;
     const unsigned long CIFS_SUPER_MAGIC = 0xFF534D42;
     const unsigned long SMB2_SUPER_MAGIC = 0xFE534D42;
-    const int NETWORK_FS_CHECKSUM_INTERVAL = 2;
     struct statfs statfsBuf;
-    bool isNetworkFs = true;
 
     if (!statfs(filePath.toLocal8Bit().constData(), &statfsBuf)) {
         const auto fsType = static_cast<unsigned long>(statfsBuf.f_type);
-        isNetworkFs = (fsType == NFS_SUPER_MAGIC || fsType == CIFS_SUPER_MAGIC || fsType == SMB2_SUPER_MAGIC);
-    }
-
-    if (isNetworkFs && checksumIntervalSeconds > NETWORK_FS_CHECKSUM_INTERVAL) {
-        checksumIntervalSeconds = NETWORK_FS_CHECKSUM_INTERVAL;
+        m_isNetworkFileSystem = fsType == NFS_SUPER_MAGIC || fsType == CIFS_SUPER_MAGIC || fsType == SMB2_SUPER_MAGIC;
     }
 #endif
 
@@ -66,11 +62,17 @@ void FileWatcher::start(const QString& filePath, int checksumIntervalSeconds, in
     // Handle file checksum
     m_fileChecksumSizeBytes = checksumSizeKibibytes * 1024;
     m_fileChecksum = calculateChecksum();
-    if (checksumIntervalSeconds > 0) {
-        m_fileChecksumTimer.start(checksumIntervalSeconds * 1000);
-    }
+    setChecksumIntervalSeconds(checksumIntervalSeconds);
 
     m_ignoreFileChange = false;
+}
+
+void FileWatcher::setChecksumIntervalSeconds(int intervalSeconds)
+{
+    m_fileChecksumTimer.stop();
+    if (!m_filePath.isEmpty() && intervalSeconds > 0) {
+        m_fileChecksumTimer.start(intervalSeconds * 1000);
+    }
 }
 
 void FileWatcher::stop()
@@ -109,6 +111,16 @@ bool FileWatcher::shouldIgnoreChanges()
 bool FileWatcher::hasSameFileChecksum()
 {
     return calculateChecksum() == m_fileChecksum;
+}
+
+bool FileWatcher::isChecksumTimerActive() const
+{
+    return m_fileChecksumTimer.isActive();
+}
+
+bool FileWatcher::isNetworkFileSystem() const
+{
+    return m_isNetworkFileSystem;
 }
 
 void FileWatcher::checkFileChanged()

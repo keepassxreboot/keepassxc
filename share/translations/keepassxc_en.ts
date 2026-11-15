@@ -668,6 +668,15 @@
         <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Check for file changes every</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <comment>Periodic file change check is disabled</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>

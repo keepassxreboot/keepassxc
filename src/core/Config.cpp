@@ -60,6 +60,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::OpenPreviousDatabasesOnStartup,{QS("OpenPreviousDatabasesOnStartup"), Roaming, true}},
     {Config::AutoSaveAfterEveryChange,{QS("AutoSaveAfterEveryChange"), Roaming, true}},
     {Config::AutoReloadOnChange,{QS("AutoReloadOnChange"), Roaming, true}},
+    {Config::FileChangeCheckInterval,{QS("FileChangeCheckInterval"), Roaming, 30}},
     {Config::AutoSaveOnExit,{QS("AutoSaveOnExit"), Roaming, true}},
     {Config::AutoSaveNonDataChanges,{QS("AutoSaveNonDataChanges"), Roaming, true}},
     {Config::BackupBeforeSave,{QS("BackupBeforeSave"), Roaming, false}},

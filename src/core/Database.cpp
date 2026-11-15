@@ -19,6 +19,7 @@
 #include "Database.h"
 
 #include "core/AsyncTask.h"
+#include "core/Config.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
 #include "crypto/Random.h"
@@ -71,6 +72,11 @@ Database::Database()
         updateCustomAttributeKeys();
     });
     connect(m_fileWatcher, &FileWatcher::fileChanged, this, [this] { emit databaseFileChanged(false); });
+    connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
+        if (key == Config::FileChangeCheckInterval) {
+            m_fileWatcher->setChecksumIntervalSeconds(config()->get(key).toInt());
+        }
+    });
 
     // static uuid map
     s_uuidMap.insert(m_uuid, this);
@@ -189,7 +195,7 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     markAsClean();
 
     emit databaseOpened();
-    m_fileWatcher->start(canonicalFilePath(), 30, 1);
+    m_fileWatcher->start(canonicalFilePath(), config()->get(Config::FileChangeCheckInterval).toInt(), 1);
     setEmitModified(true);
 
     return true;
@@ -346,7 +352,7 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         }
 #endif
         m_ignoreFileChangesUntilSaved = false;
-        m_fileWatcher->start(realFilePath, 30, 1);
+        m_fileWatcher->start(realFilePath, config()->get(Config::FileChangeCheckInterval).toInt(), 1);
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
         markAsModified();

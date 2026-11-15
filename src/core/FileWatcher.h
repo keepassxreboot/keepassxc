@@ -30,9 +30,12 @@ public:
     ~FileWatcher() override;
 
     void start(const QString& path, int checksumIntervalSeconds = 0, int checksumSizeKibibytes = -1);
+    void setChecksumIntervalSeconds(int intervalSeconds);
     void stop();
 
     bool hasSameFileChecksum();
+    bool isChecksumTimerActive() const;
+    bool isNetworkFileSystem() const;
 
 signals:
     void fileChanged(const QString& path);
@@ -57,6 +60,7 @@ private:
     int m_fileChecksumSizeBytes = -1;
     bool m_ignoreFileChange = false;
     bool m_paused = false;
+    bool m_isNetworkFileSystem = false;
 };
 
 #endif // KEEPASSXC_FILEWATCHER_H

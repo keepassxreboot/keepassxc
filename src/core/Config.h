@@ -41,6 +41,7 @@ public:
         OpenPreviousDatabasesOnStartup,
         AutoSaveAfterEveryChange,
         AutoReloadOnChange,
+        FileChangeCheckInterval,
         AutoSaveOnExit,
         AutoSaveNonDataChanges,
         BackupBeforeSave,

@@ -37,6 +37,7 @@ private slots:
     void testEmptyRecycleBinWithHierarchicalData();
     void testCustomIcons();
     void testExternallyModified();
+    void testFileChangeCheckInterval();
     void testCustomAttributeKeys();
 };
 
