@@ -143,13 +143,20 @@ void PasskeyImportDialog::addEntries()
         return;
     }
 
-    // Collect all entries in the group and resolve the title
+    // Collect all entries in the group and resolve the title and username
     QList<QPair<QString, QUuid>> entries;
     for (const auto entry : group->entries()) {
         if (!entry || entry->isRecycled()) {
             continue;
         }
-        entries.append({entry->resolveMultiplePlaceholders(entry->title()), entry->uuid()});
+
+        auto displayTitle = entry->resolveMultiplePlaceholders(entry->title());
+        const auto username = entry->resolveMultiplePlaceholders(entry->username());
+        if (!username.isEmpty()) {
+            displayTitle += QStringLiteral(" - ") + username;
+        }
+
+        entries.append({displayTitle, entry->uuid()});
     }
 
     // Sort entries by title
