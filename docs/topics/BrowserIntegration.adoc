@@ -24,6 +24,16 @@ You can download the KeePassXC-Browser extension from your web browser. To downl
 
 2. Click the button to install/add the extension to the browser. Accept any confirmation dialogs.
 
+==== Installing via Linux package manager (Debian/Ubuntu)
+On Debian, Ubuntu, and derivative distributions, you can also install the extension from the official system repositories:
+
+[source,bash]
+----
+sudo apt install webext-keepassxc-browser
+----
+
+The package installs the extension files system-wide into `/usr/share/mozilla/extensions/`. The extension version provided by the package depends on your distribution release. After installation, restart your browser and continue with the configuration steps below.
+
 TIP: For the most up-to-date troubleshooting advice on all platforms, please read our https://github.com/keepassxreboot/keepassxc-browser/wiki/Troubleshooting-guide[Troubleshooting Guide].
 
 // tag::advanced[]
