@@ -298,6 +298,14 @@ void EntryView::setCurrentEntry(Entry* entry)
     }
 }
 
+void EntryView::scrollToEntry(Entry* entry)
+{
+    auto index = indexFromEntry(entry);
+    if (index.isValid()) {
+        scrollTo(index, QAbstractItemView::EnsureVisible);
+    }
+}
+
 Entry* EntryView::entryFromIndex(const QModelIndex& index)
 {
     if (index.isValid()) {

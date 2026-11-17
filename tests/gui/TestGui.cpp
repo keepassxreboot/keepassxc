@@ -2567,6 +2567,37 @@ void TestGui::testDeleteEntryDuringModalDialog()
     QCOMPARE(entryView->model()->rowCount(), initialEntryCount - 1);
 }
 
+void TestGui::testMoveEntryKeepsVisible()
+{
+    // Moving an entry with "move up" must scroll the entry list so that the moved
+    // entry stays visible instead of disappearing out of view.
+    addCannedEntries();
+
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    auto* actionMoveUp = m_mainWindow->findChild<QAction*>("actionEntryMoveUp");
+    QVERIFY(actionMoveUp);
+
+    const int lastRow = entryView->model()->rowCount() - 1;
+    QVERIFY(lastRow > 0);
+    auto* lastEntry = entryView->entryFromIndex(entryView->model()->index(lastRow, 1));
+    QVERIFY(lastEntry);
+    clickIndex(entryView->model()->index(lastRow, 1), entryView, Qt::LeftButton);
+    QCOMPARE(entryView->currentEntry(), lastEntry);
+
+    // Move the entry to the top of the list
+    actionMoveUp->trigger();
+    QApplication::processEvents();
+    actionMoveUp->trigger();
+    QApplication::processEvents();
+
+    // The moved entry is still current and its row is inside the viewport
+    QCOMPARE(entryView->currentEntry(), lastEntry);
+    auto rect = entryView->visualRect(entryView->indexFromEntry(lastEntry));
+    QVERIFY(rect.isValid());
+    QVERIFY(rect.top() >= 0);
+    QVERIFY(rect.bottom() <= entryView->viewport()->height());
+}
+
 void TestGui::addCannedEntries()
 {
     // Find buttons

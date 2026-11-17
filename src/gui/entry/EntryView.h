@@ -38,6 +38,7 @@ public:
     void setModel(QAbstractItemModel* model) override;
     Entry* currentEntry();
     void setCurrentEntry(Entry* entry);
+    void scrollToEntry(Entry* entry);
     QList<Entry*> selectedEntries();
     Entry* entryFromIndex(const QModelIndex& index);
     QModelIndex indexFromEntry(Entry* entry);
