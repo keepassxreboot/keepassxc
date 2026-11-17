@@ -239,7 +239,7 @@ public:
 
 signals:
     /**
-     * Emitted when a default attribute has been changed.
+     * Emitted when an entry attribute has been changed.
      */
     void entryDataChanged(Entry* entry);
 

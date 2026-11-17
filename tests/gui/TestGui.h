@@ -25,6 +25,7 @@
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
+class EntryView;
 class QAbstractItemView;
 
 class TestGui : public QObject
@@ -38,6 +39,10 @@ private slots:
     void cleanupTestCase();
 
     void testSettingsDefaultTabOrder();
+    void testCustomColumns();
+    void testCustomColumnMenu();
+    void testCustomColumnStateFallback();
+    void testCustomColumnStateFallback_data();
     void testCreateDatabase();
     void testMergeDatabase();
     void testRemoteSyncDatabaseSameKey();
@@ -74,6 +79,7 @@ private slots:
     void testDeleteEntryDuringModalDialog();
 
 private:
+    void toggleCustomColumn(EntryView* view, const QString& name);
     void addCannedEntries();
     void checkDatabase(const QString& filePath, const QString& expectedDbName);
     void checkDatabase(const QString& filePath = {});

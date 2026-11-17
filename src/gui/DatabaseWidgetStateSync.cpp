@@ -156,7 +156,7 @@ void DatabaseWidgetStateSync::updateSplitterSizes()
  */
 void DatabaseWidgetStateSync::updateViewState()
 {
-    if (m_blockUpdates) {
+    if (m_blockUpdates || m_activeDbWidget->isLocked()) {
         return;
     }
 

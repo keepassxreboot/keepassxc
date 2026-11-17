@@ -101,6 +101,41 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
     endResetModel();
 }
 
+QStringList EntryModel::customColumns() const
+{
+    return m_customColumns;
+}
+
+void EntryModel::setCustomColumns(const QStringList& customColumns)
+{
+    auto columns = customColumns;
+    columns.removeDuplicates();
+    columns.removeIf(
+        [](const QString& column) { return column.isEmpty() || EntryAttributes::isDefaultAttribute(column); });
+    for (int column = m_customColumns.size() - 1; column >= 0; --column) {
+        if (columns.contains(m_customColumns.at(column))) {
+            continue;
+        }
+        beginRemoveColumns({}, CustomAttribute + column, CustomAttribute + column);
+        m_customColumns.removeAt(column);
+        endRemoveColumns();
+    }
+    int first = 0;
+    while (first < m_customColumns.size() && first < columns.size() && m_customColumns.at(first) == columns.at(first)) {
+        ++first;
+    }
+    if (first < m_customColumns.size()) {
+        beginRemoveColumns({}, CustomAttribute + first, columnCount() - 1);
+        m_customColumns.erase(m_customColumns.begin() + first, m_customColumns.end());
+        endRemoveColumns();
+    }
+    if (first < columns.size()) {
+        beginInsertColumns({}, CustomAttribute + first, CustomAttribute + columns.size() - 1);
+        m_customColumns = columns;
+        endInsertColumns();
+    }
+}
+
 int EntryModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid()) {
@@ -117,7 +152,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 17;
+    return CustomAttribute + m_customColumns.size();
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -128,6 +163,16 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
     Entry* entry = entryFromIndex(index);
     EntryAttributes* attr = entry->attributes();
+
+    if (index.column() >= CustomAttribute && (role == Qt::DisplayRole || role == Qt::UserRole)) {
+        const auto name = m_customColumns.at(index.column() - CustomAttribute);
+        const auto value = entry->resolveMultiplePlaceholders(attr->value(name));
+        if (role == Qt::DisplayRole && !value.isEmpty() && attr->isProtected(name)
+            && config()->get(Config::GUI_HidePasswords).toBool()) {
+            return HiddenContentDisplay;
+        }
+        return value;
+    }
 
     if (role == Qt::DisplayRole) {
         QString result;
@@ -370,6 +415,10 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
 {
     Q_UNUSED(orientation);
 
+    if (section >= CustomAttribute && section < columnCount() && role == Qt::DisplayRole) {
+        return m_customColumns.at(section - CustomAttribute);
+    }
+
     if (role == Qt::DisplayRole) {
         switch (section) {
         case ParentGroup:
@@ -593,7 +642,7 @@ void EntryModel::onConfigChanged(Config::ConfigKey key)
         emit dataChanged(index(0, Username), index(rowCount() - 1, Username), {Qt::DisplayRole});
         break;
     case Config::GUI_HidePasswords:
-        emit dataChanged(index(0, Password), index(rowCount() - 1, Password), {Qt::DisplayRole});
+        emit dataChanged(index(0, Password), index(rowCount() - 1, columnCount() - 1), {Qt::DisplayRole});
         break;
     default:
         break;

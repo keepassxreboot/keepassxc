@@ -4565,6 +4565,10 @@ Would you like to overwrite the existing attachment?</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Additional attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExportDialog</name>
