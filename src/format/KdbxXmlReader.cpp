@@ -30,6 +30,9 @@
 #define qsv QStringView
 
 #define UUID_LENGTH 16
+#define MAX_GROUP_DEPTH 1000
+// Seconds from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z
+#define MAX_DATETIME_SECS Q_INT64_C(315537897599)
 
 /**
  * @param version KDBX version
@@ -492,6 +495,14 @@ Group* KdbxXmlReader::parseGroup()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == qsv(u"Group"));
 
+    // Prevent stack exhaustion from excessively nested groups
+    if (m_groupDepth >= MAX_GROUP_DEPTH) {
+        raiseError(tr("Maximum group depth exceeded"));
+        m_xml.skipCurrentElement();
+        return nullptr;
+    }
+    ++m_groupDepth;
+
     auto group = new Group();
     group->setUpdateTimeinfo(false);
     QList<Group*> children;
@@ -506,7 +517,14 @@ Group* KdbxXmlReader::parseGroup()
                 } else {
                     group->setUuid(QUuid::createUuid());
                 }
+            } else if (m_parsedGroupUuids.contains(uuid)) {
+                // Merging duplicates would corrupt the group tree, potentially making a group its own ancestor
+                if (m_strictMode) {
+                    raiseError(tr("Duplicate group uuid"));
+                }
+                group->setUuid(QUuid::createUuid());
             } else {
+                m_parsedGroupUuids.insert(uuid);
                 group->setUuid(uuid);
             }
             continue;
@@ -634,6 +652,7 @@ Group* KdbxXmlReader::parseGroup()
         entry->setGroup(group, false);
     }
 
+    --m_groupDepth;
     return group;
 }
 
@@ -705,7 +724,16 @@ Entry* KdbxXmlReader::parseEntry(bool history)
                 } else {
                     entry->setUuid(QUuid::createUuid());
                 }
+            } else if (!history && m_parsedEntryUuids.contains(uuid)) {
+                // Merging duplicates would silently overwrite the previous entry
+                if (m_strictMode) {
+                    raiseError(tr("Duplicate entry uuid"));
+                }
+                entry->setUuid(QUuid::createUuid());
             } else {
+                if (!history) {
+                    m_parsedEntryUuids.insert(uuid);
+                }
                 entry->setUuid(uuid);
             }
             continue;
@@ -1032,6 +1060,11 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     QString value = m_xml.readElementText();
 
     if (isProtected && !value.isEmpty()) {
+        if (!m_randomStream) {
+            raiseError(tr("Unexpected protected value in unencrypted XML"));
+            return {};
+        }
+
         QByteArray ciphertext = QByteArray::fromBase64(value.toLatin1());
         bool ok;
         QByteArray plaintext = m_randomStream->process(ciphertext, &ok);
@@ -1070,7 +1103,9 @@ QDateTime KdbxXmlReader::readDateTime()
     if (Tools::isBase64(str.toLatin1())) {
         QByteArray secsBytes = QByteArray::fromBase64(str.toUtf8()).leftJustified(8, '\0', true).left(8);
         qint64 secs = Endian::bytesToSizedInt<quint64>(secsBytes, KeePass2::BYTEORDER);
-        return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
+        if (secs >= 0 && secs <= MAX_DATETIME_SECS) {
+            return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
+        }
     }
 
     QDateTime dt = Clock::parse(str, Qt::ISODate);
@@ -1148,6 +1183,11 @@ QByteArray KdbxXmlReader::readBinary()
     QByteArray data = QByteArray::fromBase64(value.toLatin1());
 
     if (isProtected && !data.isEmpty()) {
+        if (!m_randomStream) {
+            raiseError(tr("Unexpected protected value in unencrypted XML"));
+            return {};
+        }
+
         bool ok;
         QByteArray plaintext = m_randomStream->process(data, &ok);
         if (!ok) {

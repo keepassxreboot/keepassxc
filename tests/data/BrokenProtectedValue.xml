@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<KeePassFile>
+	<Root>
+		<Group>
+			<UUID>lmU+9n0aeESKZvcEze+bRg==</UUID>
+			<Name>Test</Name>
+			<Entry>
+				<UUID>MTExMTExMTExMTExMTExMQ==</UUID>
+				<String>
+					<Key>Password</Key>
+					<Value Protected="True">QUFBQQ==</Value>
+				</String>
+				<Binary>
+					<Key>attachment</Key>
+					<Value Protected="True">QUFBQQ==</Value>
+				</Binary>
+			</Entry>
+		</Group>
+	</Root>
+</KeePassFile>
