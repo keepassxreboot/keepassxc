@@ -1752,8 +1752,7 @@ We recommend you update your KeePassXC installation.</source>
 av en nyare version av KeePassXC.
 
 Du kan försöka öppna den i alla fall, men den kanske
-inte är komplett och att spara ändringar kan medföra
-dataförluster.
+inte är komplett och att spara ändringar kan medföra dataförluster.
 
 Vi rekommenderar att du uppgraderar din KeePassXC-installation.</translation>
     </message>
@@ -5882,7 +5881,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Öppna databas…</translation>
+        <translation>Ö&amp;ppna databas…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
@@ -5986,7 +5985,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>&amp;Öppna URL</translation>
+        <translation>Ö&amp;ppna URL</translation>
     </message>
     <message>
         <source>&amp;Lock Database</source>
@@ -6050,7 +6049,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>T&amp;öm papperskorg</translation>
+        <translation>Tö&amp;m papperskorg</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
