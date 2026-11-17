@@ -1032,12 +1032,16 @@ void MainWindow::updateToolbarSeparatorVisibility()
 void MainWindow::updateWindowTitle()
 {
     QString customWindowTitlePart;
+    QString windowFilePath;
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
     int tabWidgetIndex = m_ui->tabWidget->currentIndex();
     bool isModified = m_ui->tabWidget->isModified(tabWidgetIndex);
 
     if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
         customWindowTitlePart = m_ui->tabWidget->tabName(tabWidgetIndex);
+        if (auto* dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)) {
+            windowFilePath = dbWidget->database()->filePath();
+        }
         if (isModified && customWindowTitlePart.endsWith("*")) {
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
         }
@@ -1055,6 +1059,8 @@ void MainWindow::updateWindowTitle()
         windowTitle = QString("%1[*] - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
+    // On macOS this enables the proxy icon and the Cmd+click path menu in the title bar
+    setWindowFilePath(windowFilePath);
     setWindowTitle(windowTitle);
     setWindowModified(isModified);
 
