@@ -450,3 +450,172 @@ void TestEntrySearcher::testTotpSearch()
     QVERIFY(!m_searchResult.contains(entry2));
     QVERIFY(!m_searchResult.contains(entry3));
 }
+
+void TestEntrySearcher::testAllTextSearch()
+{
+    // Verify the behavior of the "all:..." search prefix.
+    // We search for 'fa' and ensure the matches we want are found and
+    // the ones we do not want (such as matching by UUID) are not.
+
+    // First, some negative tests, for things that are *not* matched by "all:xxx" queries.
+
+    // An "all:xxx" query does not search UUIDs.
+    auto entryUuidMatchOnly = new Entry();
+    entryUuidMatchOnly->setGroup(m_rootGroup);
+    QUuid matchingUuid("{fa000000-0000-0000-0000-000000000000}");
+    entryUuidMatchOnly->setUuid(matchingUuid);
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+    // Empty query matches everything (eg: an empty title)
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    // An "all:xxx" query does not search attachments.
+    auto entryAttachmentMatchOnly = new Entry();
+    entryAttachmentMatchOnly->setGroup(m_rootGroup);
+    entryAttachmentMatchOnly->attachments()->set("matching fake key", "fake payload");
+
+    // Confirm our attachment *is* found via an "attach:xxx" query, so we
+    // know it is set up right.
+    m_searchResult = m_entrySearcher.search("attach:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    // But it is not found via "all:"
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    // Empty "all:" query finds both entries, now.
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    // Password is not matched by 'all:' queries.
+    auto entryPasswordMatchOnly = new Entry();
+    entryPasswordMatchOnly->setGroup(m_rootGroup);
+    entryPasswordMatchOnly->setPassword("fabulous matching password");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+
+    // Now we do various positive tests, for all the fields that
+    // the "all:xxx" query is expected to check.
+
+    // Title
+    auto entryTitleMatch = new Entry();
+    entryTitleMatch->setGroup(m_rootGroup);
+    entryTitleMatch->setTitle("fabulous matching title");
+
+    auto entryTitleNoMatch = new Entry();
+    entryTitleNoMatch->setGroup(m_rootGroup);
+    entryTitleNoMatch->setTitle("non-matching title");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 5);
+
+    // Username
+    auto entryUserMatch = new Entry();
+    entryUserMatch->setGroup(m_rootGroup);
+    entryUserMatch->setUsername("matching fabulous user");
+
+    auto entryUserNoMatch = new Entry();
+    entryUserNoMatch->setGroup(m_rootGroup);
+    entryUserNoMatch->setUsername("non-matching user");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 7);
+
+    // Url
+    auto entryUrlMatch = new Entry();
+    entryUrlMatch->setGroup(m_rootGroup);
+    entryUrlMatch->setUrl("fabulous matching URL");
+
+    auto entryUrlNoMatch = new Entry();
+    entryUrlNoMatch->setGroup(m_rootGroup);
+    entryUrlNoMatch->setUrl("non-matching URL");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 9);
+
+    // Tags
+    auto entryTagMatch = new Entry();
+    entryTagMatch->setGroup(m_rootGroup);
+    entryTagMatch->addTag("xyz");
+    entryTagMatch->addTag("fabulous-matching-tag");
+    entryTagMatch->addTag("pqr");
+
+    auto entryTagNoMatch = new Entry();
+    entryTagNoMatch->setGroup(m_rootGroup);
+    entryTagNoMatch->addTag("xyz");
+    entryTagNoMatch->addTag("pqr");
+
+    // Note: the plain "fa" query fails for tags, even though it matches a
+    // prefix. This is because QStringList::indexOf(regex) always does an exact
+    // match, wheras all other cases do "anywhere in the string" matches. Perhaps
+    // worth changing.
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+    m_searchResult = m_entrySearcher.search("all:fa*", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 4);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 11);
+
+    // Notes
+    auto entryNotesMatch = new Entry();
+    entryNotesMatch->setGroup(m_rootGroup);
+    entryNotesMatch->setNotes("matching fabulous notes");
+
+    auto entryNotesNoMatch = new Entry();
+    entryNotesNoMatch->setGroup(m_rootGroup);
+    entryNotesNoMatch->setNotes("non-matching notes bla bla");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 4);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 13);
+
+    // Attribute keys
+    auto entryAttrKeyMatch = new Entry();
+    entryAttrKeyMatch->setGroup(m_rootGroup);
+    entryAttrKeyMatch->attributes()->set("fabulousMatchingKey", "non-matching value");
+
+    auto entryAttrKeyNoMatch = new Entry();
+    entryAttrKeyNoMatch->setGroup(m_rootGroup);
+    entryAttrKeyNoMatch->attributes()->set("nonMatchingKey", "non-matching value");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 5);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 15);
+
+    // Attribute values
+    auto entryAttrValueMatch = new Entry();
+    entryAttrValueMatch->setGroup(m_rootGroup);
+    entryAttrValueMatch->attributes()->set("nonMatchingKey", "fabulous matching value");
+    entryAttrValueMatch->setTitle("entryAttrValueMatch");
+
+    auto entryAttrValueNoMatch = new Entry();
+    entryAttrValueNoMatch->setGroup(m_rootGroup);
+    entryAttrValueNoMatch->attributes()->set("nonMatchingKey", "non-matching value");
+    entryAttrValueNoMatch->setTitle("entryAttrValueNoMatch");
+
+    m_searchResult = m_entrySearcher.search("all:fa", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 6);
+
+    m_searchResult = m_entrySearcher.search("all:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 17);
+}

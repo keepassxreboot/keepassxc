@@ -42,13 +42,14 @@ public:
         Tag,
         Is,
         Has,
-        Uuid
+        Uuid,
+        All
     };
 
     struct SearchTerm
     {
         Field field;
-        // only used when field == Field::AttributeValue
+        // only used for some field types
         QString word;
         QRegularExpression regex;
         bool exclude;
