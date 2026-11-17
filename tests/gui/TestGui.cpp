@@ -47,6 +47,7 @@
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "gui/MessageWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #include "gui/SearchWidget.h"
@@ -1983,6 +1984,36 @@ void TestGui::testDatabaseLocking()
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+}
+
+void TestGui::testRefusedLockIsReported()
+{
+    // Start editing an entry and change it, so lock() asks "Discard changes and lock anyway?"
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
+    triggerAction("actionEntryEdit");
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QTest::keyClicks(editEntryWidget->findChild<QLineEdit*>("titleEdit"), "_test");
+    QVERIFY(m_dbWidget->isEditWidgetModified());
+
+    auto* globalMessage = m_mainWindow->findChild<MessageWidget*>("globalMessageWidget");
+    QVERIFY(globalMessage);
+    auto lockMessageShown = [globalMessage] {
+        return globalMessage->isVisible() && globalMessage->text() == "The database was not locked.";
+    };
+    QVERIFY(!lockMessageShown());
+
+    // Cancel at the question: the lock is refused, the caller learns it, and the window says so
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    QVERIFY(!m_mainWindow->lockAllDatabases());
+    QVERIFY(!m_dbWidget->isLocked());
+    QTRY_VERIFY(lockMessageShown());
+
+    // Discard: the lock goes through and reports that
+    MessageBox::setNextAnswer(MessageBox::Discard);
+    QVERIFY(m_mainWindow->lockAllDatabases());
+    QVERIFY(m_dbWidget->isLocked());
 }
 
 void TestGui::testDragAndDropKdbxFiles()

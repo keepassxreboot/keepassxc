@@ -723,6 +723,7 @@ bool DatabaseTabWidget::lockDatabases()
 {
     int numLocked = 0;
     int c = count();
+    DatabaseWidget* refused = nullptr;
     for (int i = 0; i < c; ++i) {
         auto dbWidget = databaseWidgetFromIndex(i);
         if (dbWidget->lock()) {
@@ -731,7 +732,18 @@ bool DatabaseTabWidget::lockDatabases()
                 // If we locked a database without a file close the tab
                 closeDatabaseTab(dbWidget);
             }
+        } else if (!refused) {
+            refused = dbWidget;
         }
+    }
+
+    // Say so when a database stays unlocked: the callers that asked for the lock
+    // (the menu action, the idle and screen-lock triggers, the D-Bus method) do
+    // not show anything themselves, so without this the refusal is silent. The
+    // global bar, because the database's own bar is hidden while an entry is edited.
+    if (refused) {
+        setCurrentWidget(refused);
+        emit messageGlobal(tr("The database was not locked."), MessageWidget::Warning);
     }
 
     return numLocked == c;
