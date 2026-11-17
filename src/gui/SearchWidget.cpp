@@ -50,7 +50,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(updateSaveButtonVisibility()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
-    connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
+    connect(m_ui->searchOptionsIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
     connect(m_ui->saveIcon, &QAction::triggered, this, [this] { emit saveSearch(m_ui->searchEdit->text()); });
     connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
     connect(m_clearSearchTimer, SIGNAL(timeout()), SLOT(clearSearch()));
@@ -62,9 +62,17 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_ui->searchEdit->installEventFilter(this);
 
     m_searchMenu = new QMenu(this);
+    m_actionIncludeProtected = m_searchMenu->addAction(tr("Include protected fields"), this, SLOT(updateIncludeProtected()));
+    m_actionIncludeProtected->setObjectName("actionSearchIncludeProtected");
+    m_actionIncludeProtected->setCheckable(true);
+
     m_actionCaseSensitive = m_searchMenu->addAction(tr("Case sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
+
+    m_actionRegularExpr = m_searchMenu->addAction(tr("Regular expression"), this, SLOT(updateRegularExpr()));
+    m_actionRegularExpr->setObjectName("actionSearchRegularExpr");
+    m_actionRegularExpr->setCheckable(true);
 
     m_actionLimitGroup = m_searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
     m_actionLimitGroup->setObjectName("actionSearchLimitGroup");
@@ -77,8 +85,12 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionWaitForEnter->setCheckable(true);
     m_actionWaitForEnter->setChecked(config()->get(Config::GUI_SearchWaitForEnter).toBool());
 
+    // Just an icon, not connected to any action
     m_ui->searchIcon->setIcon(icons()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
+
+    m_ui->searchOptionsIcon->setIcon(icons()->icon("system-search-options"));
+    m_ui->searchEdit->addAction(m_ui->searchOptionsIcon, QLineEdit::TrailingPosition);
 
     m_ui->helpIcon->setIcon(icons()->icon("system-help"));
     m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
@@ -153,6 +165,8 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     // Connects basically only to the current DatabaseWidget, but allows to switch between instances!
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(saveSearch(QString)), SLOT(saveSearch(QString)));
+    mx.connect(this, SIGNAL(includeProtectedChanged(bool)), SLOT(setSearchIncludeProtected(bool)));
+    mx.connect(this, SIGNAL(regularExprChanged(bool)), SLOT(setSearchRegularExpr(bool)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
@@ -170,6 +184,8 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
         // Set current search text from this database
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
         // Enforce search policy
+        emit includeProtectedChanged(m_actionIncludeProtected->isChecked());
+        emit regularExprChanged(m_actionRegularExpr->isChecked());
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
     } else {
@@ -200,6 +216,16 @@ void SearchWidget::resetSearchClearTimer()
     }
 }
 
+void SearchWidget::updateIncludeProtected()
+{
+    emit includeProtectedChanged(m_actionIncludeProtected->isChecked());
+}
+
+void SearchWidget::updateRegularExpr()
+{
+    emit regularExprChanged(m_actionRegularExpr->isChecked());
+}
+
 void SearchWidget::updateCaseSensitive()
 {
     emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
@@ -209,6 +235,18 @@ void SearchWidget::updateLimitGroup()
 {
     config()->set(Config::SearchLimitGroup, m_actionLimitGroup->isChecked());
     emit limitGroupChanged(m_actionLimitGroup->isChecked());
+}
+
+void SearchWidget::setIncludeProtected(bool state)
+{
+    m_actionIncludeProtected->setChecked(state);
+    updateIncludeProtected();
+}
+
+void SearchWidget::setRegularExpr(bool state)
+{
+    m_actionRegularExpr->setChecked(state);
+    updateRegularExpr();
 }
 
 void SearchWidget::setCaseSensitive(bool state)
@@ -247,7 +285,9 @@ void SearchWidget::toggleHelp()
 
 void SearchWidget::showSearchMenu()
 {
-    m_searchMenu->exec(m_ui->searchEdit->mapToGlobal(m_ui->searchEdit->rect().bottomLeft()));
+    // Right-align search options menu with search bar
+    const auto pos = m_ui->searchEdit->rect().bottomRight() - QPoint(m_searchMenu->sizeHint().width(), 0);
+    m_searchMenu->exec(m_ui->searchEdit->mapToGlobal(pos));
 }
 
 void SearchWidget::onReturnPressed()
