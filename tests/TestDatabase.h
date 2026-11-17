@@ -38,6 +38,7 @@ private slots:
     void testCustomIcons();
     void testExternallyModified();
     void testCustomAttributeKeys();
+    void testModifiedDuringSave();
 };
 
 #endif // KEEPASSX_TESTDATABASE_H

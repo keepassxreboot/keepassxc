@@ -32,6 +32,7 @@
 #include <QRegularExpression>
 #include <QSaveFile>
 #include <QTemporaryFile>
+#include <QThread>
 #include <QTimer>
 
 #include <algorithm>
@@ -332,10 +333,16 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     bool isHidden = fileInfo.isHidden();
 #endif
 
+    // Events keep being processed while we wait, so the database can change after it was written
+    m_modifiedDuringSave = false;
     bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
     if (ok) {
         setFilePath(filePath);
         markAsClean();
+        if (m_modifiedDuringSave) {
+            // The change may be missing from the file, keep it pending
+            markAsModified();
+        }
         if (isNewFile) {
             QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
         }
@@ -1081,6 +1088,10 @@ bool Database::hasNonDataChanges() const
 void Database::markAsModified()
 {
     m_modified = true;
+    // The save worker re-keys the database while writing it, that change is part of the file
+    if (QThread::currentThread() == thread()) {
+        m_modifiedDuringSave = true;
+    }
     if (modifiedSignalEnabled() && !m_modifiedTimer.isActive()) {
         // Small time delay prevents numerous consecutive saves due to repeated signals
         startModifiedTimer();
