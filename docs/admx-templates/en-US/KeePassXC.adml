@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>KeePassXC</displayName>
+  <description>Machine-wide policies for selected KeePassXC settings.</description>
+  <resources>
+    <stringTable>
+      <string id="SUPPORTED">KeePassXC 2.8.0 or later</string>
+      <string id="Category_KeePassXC">KeePassXC</string>
+      <string id="Category_General">General</string>
+      <string id="Category_PasswordGenerator">Password Generator</string>
+      <string id="Category_GUI">Graphical User Interface</string>
+      <string id="Category_Security">Security</string>
+      <string id="Category_Browser">Browser Integration</string>
+      <string id="Category_SSHAgent">SSH Agent</string>
+
+      <string id="BoolExplain">Enforces this KeePassXC setting for all users through HKLM\SOFTWARE\Policies\KeePassXC or its corresponding section subkey.
+
+Enabled: writes REG_DWORD 1 and enforces true.
+Disabled: writes REG_DWORD 0 and enforces false.
+Not Configured: removes the policy override.
+
+An enforced setting cannot be changed in the KeePassXC user interface. The registry value name matches the INI setting name. General settings are stored directly under the policy root; other sections use matching subkeys.</string>
+      <string id="TextExplain">Enforces this KeePassXC setting for all users.
+
+Enabled: writes the entered text as REG_SZ.
+Disabled or Not Configured: removes the policy override.
+
+No default text is supplied. Enter a value supported by KeePassXC. An enforced setting cannot be changed in the KeePassXC user interface.
+
+Registry: HKLM\SOFTWARE\Policies\KeePassXC, under the corresponding INI section subkey, using the INI setting name as the value name.</string>
+      <string id="DecimalExplain">Enforces this KeePassXC setting for all users.
+
+Enabled: writes the entered number as REG_DWORD.
+Disabled or Not Configured: removes the policy override.
+
+No explicit numeric default is supplied. Windows may initially display zero in the numeric control. Enter an appropriate value before applying the policy. The template does not validate application-specific limits.
+
+An enforced setting cannot be changed in the KeePassXC user interface.
+
+Registry: HKLM\SOFTWARE\Policies\KeePassXC, under the corresponding INI section subkey, using the INI setting name as the value name.</string>
+
+      <string id="UpdateCheckMessageShown">Update check message shown</string>
+      <string id="PasswordGenerator_ExcludedChars">Excluded characters</string>
+      <string id="GUI_CheckForUpdates">Check for updates</string>
+      <string id="Security_LockDatabaseScreenLock">Lock database when the screen is locked</string>
+      <string id="Security_LockDatabaseIdleSeconds">Lock databases after inactivity of X Seconds</string>
+      <string id="Security_ClearClipboardTimeout">Clear clipboard timeout (seconds)</string>
+      <string id="Browser_Enabled">Enable browser integration</string>
+      <string id="SSHAgent_UsePageant">Use Pageant</string>
+      <string id="SSHAgent_UseOpenSSH">Use OpenSSH</string>
+      <string id="SSHAgent_Enabled">Enable SSH agent integration</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="PasswordGenerator_ExcludedChars_Pres">
+        <textBox refId="PasswordGenerator_ExcludedChars_Elem">
+          <label>Characters to exclude:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Security_ClearClipboardTimeout_Pres">
+        <decimalTextBox refId="Security_ClearClipboardTimeout_Elem" spinStep="1">Clipboard timeout in seconds:</decimalTextBox>
+      </presentation>
+      <presentation id="Security_LockDatabaseIdleSeconds_Pres">
+        <decimalTextBox refId="Security_LockDatabaseIdleSeconds_Elem" spinStep="1">Inactivity timeout in seconds:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

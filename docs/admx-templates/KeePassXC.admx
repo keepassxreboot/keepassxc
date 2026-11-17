@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions revision="1.0" schemaVersion="1.0">
+  <policyNamespaces>
+    <target prefix="KeePassXC" namespace="KeePassXC.Policies.KeePassXC"/>
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0"/>
+  <supportedOn>
+    <definitions>
+      <definition name="SUPPORTED_KEEPASSXC_2_8_0"
+                  displayName="$(string.SUPPORTED)"/>
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category name="KeePassXC" displayName="$(string.Category_KeePassXC)"/>
+    <category name="General" displayName="$(string.Category_General)">
+      <parentCategory ref="KeePassXC"/>
+    </category>
+    <category name="PasswordGenerator" displayName="$(string.Category_PasswordGenerator)">
+      <parentCategory ref="KeePassXC"/>
+    </category>
+    <category name="GUI" displayName="$(string.Category_GUI)">
+      <parentCategory ref="KeePassXC"/>
+    </category>
+    <category name="Security" displayName="$(string.Category_Security)">
+      <parentCategory ref="KeePassXC"/>
+    </category>
+    <category name="Browser" displayName="$(string.Category_Browser)">
+      <parentCategory ref="KeePassXC"/>
+    </category>
+    <category name="SSHAgent" displayName="$(string.Category_SSHAgent)">
+      <parentCategory ref="KeePassXC"/>
+    </category>
+  </categories>
+  <policies>
+    <!-- General settings map to the registry root, not a General subkey. -->
+    <policy name="UpdateCheckMessageShown" class="Machine"
+            displayName="$(string.UpdateCheckMessageShown)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC" valueName="UpdateCheckMessageShown">
+      <parentCategory ref="General"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+
+    <!-- PasswordGenerator -->
+    <policy name="PasswordGenerator_ExcludedChars" class="Machine"
+            displayName="$(string.PasswordGenerator_ExcludedChars)"
+            explainText="$(string.TextExplain)"
+            key="SOFTWARE\Policies\KeePassXC\PasswordGenerator"
+            presentation="$(presentation.PasswordGenerator_ExcludedChars_Pres)">
+      <parentCategory ref="PasswordGenerator"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <elements>
+        <text id="PasswordGenerator_ExcludedChars_Elem"
+              valueName="ExcludedChars" required="true"/>
+      </elements>
+    </policy>
+
+    <!-- GUI -->
+    <policy name="GUI_CheckForUpdates" class="Machine"
+            displayName="$(string.GUI_CheckForUpdates)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC\GUI" valueName="CheckForUpdates">
+      <parentCategory ref="GUI"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+
+    <!-- Security -->
+    <policy name="Security_LockDatabaseScreenLock" class="Machine"
+            displayName="$(string.Security_LockDatabaseScreenLock)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC\Security" valueName="LockDatabaseScreenLock">
+      <parentCategory ref="Security"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+
+    <policy name="Security_LockDatabaseIdleSeconds" class="Machine"
+            displayName="$(string.Security_LockDatabaseIdleSeconds)"
+            explainText="$(string.DecimalExplain)"
+            key="SOFTWARE\Policies\KeePassXC\Security"
+            presentation="$(presentation.Security_LockDatabaseIdleSeconds_Pres)">
+      <parentCategory ref="Security"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <elements>
+        <decimal id="Security_LockDatabaseIdleSeconds_Elem"
+                 valueName="LockDatabaseIdleSeconds" required="true"/>
+      </elements>
+    </policy>
+    <policy name="Security_ClearClipboardTimeout" class="Machine"
+            displayName="$(string.Security_ClearClipboardTimeout)"
+            explainText="$(string.DecimalExplain)"
+            key="SOFTWARE\Policies\KeePassXC\Security"
+            presentation="$(presentation.Security_ClearClipboardTimeout_Pres)">
+      <parentCategory ref="Security"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <elements>
+        <decimal id="Security_ClearClipboardTimeout_Elem"
+                 valueName="ClearClipboardTimeout" required="true"/>
+      </elements>
+    </policy>
+
+    <!-- Browser -->
+    <policy name="Browser_Enabled" class="Machine"
+            displayName="$(string.Browser_Enabled)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC\Browser" valueName="Enabled">
+      <parentCategory ref="Browser"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+
+
+    <!-- SSHAgent -->
+    <policy name="SSHAgent_UsePageant" class="Machine"
+            displayName="$(string.SSHAgent_UsePageant)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC\SSHAgent" valueName="UsePageant">
+      <parentCategory ref="SSHAgent"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+    <policy name="SSHAgent_UseOpenSSH" class="Machine"
+            displayName="$(string.SSHAgent_UseOpenSSH)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC\SSHAgent" valueName="UseOpenSSH">
+      <parentCategory ref="SSHAgent"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+    <policy name="SSHAgent_Enabled" class="Machine"
+            displayName="$(string.SSHAgent_Enabled)"
+            explainText="$(string.BoolExplain)"
+            key="SOFTWARE\Policies\KeePassXC\SSHAgent" valueName="Enabled">
+      <parentCategory ref="SSHAgent"/>
+      <supportedOn ref="SUPPORTED_KEEPASSXC_2_8_0"/>
+      <enabledValue><decimal value="1"/></enabledValue>
+      <disabledValue><decimal value="0"/></disabledValue>
+    </policy>
+  </policies>
+</policyDefinitions>
