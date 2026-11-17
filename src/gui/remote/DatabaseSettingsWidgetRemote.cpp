@@ -18,6 +18,7 @@
 #include "DatabaseSettingsWidgetRemote.h"
 #include "ui_DatabaseSettingsWidgetRemote.h"
 
+#include "core/Database.h"
 #include "core/Global.h"
 #include "core/Metadata.h"
 
@@ -30,6 +31,7 @@
 DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
     : DatabaseSettingsWidget(parent)
     , m_remoteSettings(new RemoteSettings(nullptr, this))
+    , m_remoteAutomation(new RemoteAutomation(nullptr))
     , m_ui(new Ui::DatabaseSettingsWidgetRemote())
 {
     m_ui->setupUi(this);
@@ -52,6 +54,15 @@ DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
     connect(m_ui->uploadCommand, &QLineEdit::textChanged, setModified);
     connect(m_ui->inputForUpload, &QPlainTextEdit::textChanged, setModified);
     connect(m_ui->uploadTimeoutSec, QOverload<int>::of(&QSpinBox::valueChanged), setModified);
+
+    connect(m_ui->autoSyncEnabled, &QCheckBox::toggled, this, [this](bool) {
+        m_modified = true;
+        updateAutomationControls();
+    });
+    connect(m_ui->autoSyncProfile, &QComboBox::currentTextChanged, this, [this](const QString&) { m_modified = true; });
+    connect(m_ui->autoSyncOnOpen, &QCheckBox::toggled, this, [this](bool) { m_modified = true; });
+    connect(m_ui->autoSyncOnSave, &QCheckBox::toggled, this, [this](bool) { m_modified = true; });
+    connect(m_ui->autoSyncOnClose, &QCheckBox::toggled, this, [this](bool) { m_modified = true; });
 }
 
 DatabaseSettingsWidgetRemote::~DatabaseSettingsWidgetRemote() = default;
@@ -60,7 +71,9 @@ void DatabaseSettingsWidgetRemote::initialize()
 {
     clearFields();
     m_remoteSettings->setDatabase(m_db);
+    m_remoteAutomation->setDatabase(m_db);
     updateSettingsList();
+    loadAutomation();
     if (m_ui->settingsListWidget->count() > 0) {
         m_ui->settingsListWidget->setCurrentRow(0);
         m_ui->removeSettingsButton->setEnabled(true);
@@ -88,8 +101,24 @@ bool DatabaseSettingsWidgetRemote::saveSettings()
         }
     }
 
+    applyAutomationConfig();
     m_remoteSettings->saveSettings();
+    // Remote settings and the automation config live in the database metadata. Mark the
+    // database as modified so they are written to disk with the next save instead of
+    // being silently dropped when the database is discarded or closed without saving.
+    m_db->markAsModified();
     return true;
+}
+
+void DatabaseSettingsWidgetRemote::applyAutomationConfig()
+{
+    RemoteAutomation::Config config;
+    config.enabled = m_ui->autoSyncEnabled->isChecked();
+    config.profile = m_ui->autoSyncProfile->currentText();
+    config.onOpen = m_ui->autoSyncOnOpen->isChecked();
+    config.onSave = m_ui->autoSyncOnSave->isChecked();
+    config.onClose = m_ui->autoSyncOnClose->isChecked();
+    m_remoteAutomation->setConfig(config);
 }
 
 void DatabaseSettingsWidgetRemote::saveCurrentSettings()
@@ -109,8 +138,18 @@ void DatabaseSettingsWidgetRemote::saveCurrentSettings()
     params->uploadInput = m_ui->inputForUpload->toPlainText();
     params->uploadTimeoutMsec = m_ui->uploadTimeoutSec->value() * 1000;
 
+    // Follow the automation profile when it is renamed instead of losing it
+    const auto automationProfile = m_remoteAutomation->config().profile;
+    const bool renamed = !m_currentProfileName.isEmpty() && m_currentProfileName != params->name;
+
     m_remoteSettings->addRemoteParams(params);
+    if (renamed && automationProfile == m_currentProfileName) {
+        RemoteAutomation::Config config = m_remoteAutomation->config();
+        config.profile = params->name;
+        m_remoteAutomation->setConfig(config);
+    }
     updateSettingsList();
+    refreshAutomationProfiles();
 
     auto item = findItemByName(name);
     m_ui->settingsListWidget->setCurrentItem(item);
@@ -125,8 +164,15 @@ QListWidgetItem* DatabaseSettingsWidgetRemote::findItemByName(const QString& nam
 
 void DatabaseSettingsWidgetRemote::removeCurrentSettings()
 {
-    m_remoteSettings->removeRemoteParams(m_ui->nameLineEdit->text());
+    const QString name = m_ui->nameLineEdit->text();
+    m_remoteSettings->removeRemoteParams(name);
+    if (m_remoteAutomation->config().profile == name) {
+        // The profile used by automation no longer exists. Do not silently fall
+        // back to another profile, disable automation instead.
+        m_remoteAutomation->disable();
+    }
     updateSettingsList();
+    refreshAutomationProfiles();
     if (!m_remoteSettings->getAllRemoteParams().empty()) {
         m_ui->settingsListWidget->setCurrentRow(0);
         m_ui->removeSettingsButton->setEnabled(true);
@@ -143,6 +189,7 @@ void DatabaseSettingsWidgetRemote::editCurrentSettings()
     }
 
     QString name = m_ui->settingsListWidget->currentItem()->text();
+    m_currentProfileName = name;
     auto* params = m_remoteSettings->getRemoteParams(name);
     if (!params) {
         return;
@@ -168,8 +215,60 @@ void DatabaseSettingsWidgetRemote::updateSettingsList()
     }
 }
 
+void DatabaseSettingsWidgetRemote::loadAutomation()
+{
+    const auto config = m_remoteAutomation->config();
+
+    m_ui->autoSyncProfile->blockSignals(true);
+    m_ui->autoSyncProfile->clear();
+    for (const auto* params : m_remoteSettings->getAllRemoteParams()) {
+        m_ui->autoSyncProfile->addItem(params->name);
+    }
+    const int index = m_ui->autoSyncProfile->findText(config.profile);
+    if (index >= 0) {
+        m_ui->autoSyncProfile->setCurrentIndex(index);
+    }
+    m_ui->autoSyncProfile->blockSignals(false);
+
+    m_ui->autoSyncEnabled->setChecked(config.enabled && index >= 0);
+    m_ui->autoSyncOnOpen->setChecked(config.onOpen);
+    m_ui->autoSyncOnSave->setChecked(config.onSave);
+    m_ui->autoSyncOnClose->setChecked(config.onClose);
+
+    updateAutomationControls();
+}
+
+void DatabaseSettingsWidgetRemote::refreshAutomationProfiles()
+{
+    const QString current = m_ui->autoSyncProfile->currentText();
+
+    m_ui->autoSyncProfile->blockSignals(true);
+    m_ui->autoSyncProfile->clear();
+    for (const auto* params : m_remoteSettings->getAllRemoteParams()) {
+        m_ui->autoSyncProfile->addItem(params->name);
+    }
+    const int index = m_ui->autoSyncProfile->findText(current);
+    if (index >= 0) {
+        m_ui->autoSyncProfile->setCurrentIndex(index);
+    }
+    m_ui->autoSyncProfile->blockSignals(false);
+
+    updateAutomationControls();
+}
+
+void DatabaseSettingsWidgetRemote::updateAutomationControls()
+{
+    const bool enabled = m_ui->autoSyncEnabled->isChecked();
+    m_ui->autoSyncProfile->setEnabled(enabled && m_ui->autoSyncProfile->count() > 0);
+    m_ui->autoSyncOnOpen->setEnabled(enabled);
+    m_ui->autoSyncOnSave->setEnabled(enabled);
+    m_ui->autoSyncOnClose->setEnabled(enabled);
+    m_ui->autoSyncHint->setVisible(enabled);
+}
+
 void DatabaseSettingsWidgetRemote::clearFields()
 {
+    m_currentProfileName.clear();
     m_ui->nameLineEdit->setText("");
     m_ui->downloadCommand->setText("");
     m_ui->inputForDownload->setPlainText("");

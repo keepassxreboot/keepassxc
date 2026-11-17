@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QBoxLayout>
 #include <QCheckBox>
+#include <QDebug>
 #include <QDesktopServices>
 #include <QHostInfo>
 #include <QInputDialog>
@@ -93,6 +94,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_tagView(new TagView(this))
     , m_saveAttempts(0)
     , m_remoteSettings(new RemoteSettings(m_db, this))
+    , m_remoteAutomation(new RemoteAutomation(m_db))
     , m_entrySearcher(new EntrySearcher(false))
 {
     Q_ASSERT(m_db);
@@ -490,6 +492,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     m_groupView->changeDatabase(m_db);
     m_tagView->setDatabase(m_db);
     m_remoteSettings->setDatabase(m_db);
+    m_remoteAutomation->setDatabase(m_db);
 
     // Restore the new parent group pointer, if not found default to the root group
     // this prevents data loss when merging a database while creating a new entry
@@ -1152,6 +1155,10 @@ int DatabaseWidget::addChildWidget(QWidget* w)
 
 void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 {
+    // One sync per database at a time. Anything triggered while this sync is
+    // running collapses into a single follow-up sync.
+    m_remoteAutomation->beginSync();
+
     setDisabled(true);
     emit databaseSyncInProgress();
 
@@ -1215,15 +1222,127 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
 
 void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
 {
+    ++m_remoteSyncCount;
     setDisabled(false);
     emit updateSyncProgress(-1, "");
+    // End the in-flight state before notifying, otherwise observers still see
+    // "sync in progress" while the result is being reported.
+    m_remoteAutomation->endSync();
     if (result.success) {
+        m_lastRemoteSyncProfile = params->name;
+        m_lastRemoteSyncTime = QDateTime::currentDateTime();
+        m_lastRemoteSyncMessage = tr("Remote sync '%1' completed successfully!").arg(params->name);
+        m_lastRemoteSyncFailed = false;
+        m_remoteAutomation->markSynced();
         emit databaseSyncCompleted(params->name);
-        showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
+        showMessage(m_lastRemoteSyncMessage, MessageWidget::Positive, false);
     } else {
+        m_lastRemoteSyncFailed = true;
+        m_lastRemoteSyncMessage = tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage);
         emit databaseSyncFailed(params->name, result.errorMessage);
-        showErrorMessage(tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage));
+        showErrorMessage(m_lastRemoteSyncMessage);
     }
+
+    if (m_remoteAutomation->hasPendingSync()) {
+        // Triggers that arrived while this sync was running are collapsed into
+        // one follow-up. Skip it when nothing changed since this sync.
+        m_remoteAutomation->clearPendingSync();
+        if (result.success && m_db->isModified()) {
+            QTimer::singleShot(0, this, [this]() { runPendingRemoteSync(); });
+        }
+    }
+}
+
+void DatabaseWidget::triggerRemoteAutomation(RemoteAutomation::Trigger trigger)
+{
+    // The configuration is stored in the database metadata and may have been changed
+    // by the remote settings dialog (or by another client) since this widget was created.
+    m_remoteAutomation->load();
+
+    // A save performed by a running sync is not a new change that needs syncing.
+    // Only the save trigger is swallowed; open and close triggers are unaffected.
+    if (trigger == RemoteAutomation::Save && m_remoteSyncSaveGuard) {
+        m_remoteSyncSaveGuard = false;
+        return;
+    }
+
+    // Closing a database that has not changed since the last sync has nothing to push.
+    if (trigger == RemoteAutomation::Close && !m_remoteAutomation->hasUnsyncedChanges()) {
+        return;
+    }
+
+    // Remote sync needs an unlocked database
+    if (isLocked()) {
+        return;
+    }
+
+    if (!m_remoteAutomation->requestSync(trigger)) {
+        return;
+    }
+
+    const auto profile = m_remoteAutomation->config().profile;
+    m_remoteSettings->loadSettings();
+    auto* params = m_remoteSettings->getRemoteParams(profile);
+    if (!params) {
+        // The profile disappeared (for example removed by another client).
+        // Never fall back to a different profile.
+        m_remoteAutomation->disable();
+        // Persist the disabled state, otherwise it is silently lost on the next save
+        m_db->markAsModified();
+        QString errorMessage;
+        performSave(errorMessage);
+        showMessage(tr("Automatic remote sync disabled: profile \"%1\" no longer exists.").arg(profile),
+                    MessageWidget::Warning);
+        return;
+    }
+
+    syncWithRemote(params);
+}
+
+void DatabaseWidget::runPendingRemoteSync()
+{
+    if (!m_remoteAutomation->isEnabled() || m_remoteAutomation->syncInProgress()) {
+        return;
+    }
+
+    auto* params = m_remoteSettings->getRemoteParams(m_remoteAutomation->config().profile);
+    if (!params) {
+        m_remoteAutomation->disable();
+        return;
+    }
+
+    syncWithRemote(params);
+}
+
+QString DatabaseWidget::remoteSyncStatus() const
+{
+    if (m_remoteAutomation->syncInProgress()) {
+        return QStringLiteral("\xC2\xB7");
+    }
+    if (m_lastRemoteSyncFailed) {
+        return QStringLiteral("\u26A0"); // the last sync failed
+    }
+    if (!m_lastRemoteSyncTime.isValid()) {
+        return {};
+    }
+    return tr("\xE2\x87\x84 %1").arg(m_lastRemoteSyncTime.toString("hh:mm"));
+}
+
+QString DatabaseWidget::remoteSyncStatusText() const
+{
+    if (m_remoteAutomation->syncInProgress()) {
+        return tr("Remote sync in progress\u2026");
+    }
+    if (m_lastRemoteSyncFailed) {
+        return tr("Remote sync failed (%1)").arg(m_lastRemoteSyncProfile);
+    }
+    if (m_remoteAutomation->isEnabled() && m_remoteAutomation->hasUnsyncedChanges()) {
+        return tr("Local changes waiting for remote sync");
+    }
+    if (!m_lastRemoteSyncTime.isValid()) {
+        return {};
+    }
+    return tr("Last synced %1 via %2").arg(m_lastRemoteSyncTime.toString("hh:mm"), m_lastRemoteSyncProfile);
 }
 
 QList<RemoteParams*> DatabaseWidget::getRemoteParams() const
@@ -1315,6 +1434,24 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), &Database::modified, this, &DatabaseWidget::databaseModified);
     connect(m_db.data(), &Database::modified, this, &DatabaseWidget::onDatabaseModified);
     connect(m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::databaseSaved);
+    connect(
+        m_db.data(),
+        &Database::databaseSaved,
+        this,
+        [this]() {
+            const bool automatic = m_automaticSaveInProgress;
+            m_automaticSaveInProgress = false;
+            // An automatic save is not a user action: it does not start a sync on its
+            // own. It is recorded as an unsynced local change and flushed by the close
+            // trigger, which avoids a sync for every single change when autosave is on.
+            if (automatic) {
+                return;
+            }
+            triggerRemoteAutomation(RemoteAutomation::Save);
+        },
+        Qt::QueuedConnection);
+    connect(
+        this, &DatabaseWidget::databaseUnlocked, this, [this]() { triggerRemoteAutomation(RemoteAutomation::Open); });
     connect(m_db.data(), &Database::databaseFileChanged, this, &DatabaseWidget::reloadDatabaseFile);
     connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::databaseNonDataChanged);
     connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::onDatabaseNonDataChanged);
@@ -1458,6 +1595,8 @@ bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, Q
             error = tr("Error while saving database %1: %2").arg(m_db->filePath(), error);
             return false;
         }
+        // This save belongs to the sync itself and must not start another sync
+        m_remoteSyncSaveGuard = true;
         if (!otherDb->save(Database::Atomic, {}, &error)) {
             error = tr("Error while saving database %1: %2").arg(otherDb->filePath(), error);
             return false;
@@ -1857,6 +1996,7 @@ void DatabaseWidget::onDatabaseModified()
         return;
     }
     if (!m_blockAutoSave && autosaveAfterEveryChangeConfig) {
+        m_automaticSaveInProgress = true;
         save();
     } else {
         // Only block once, then reset
@@ -1873,6 +2013,7 @@ void DatabaseWidget::onAutosaveDelayTimeout()
         return;
     }
     if (!m_blockAutoSave) {
+        m_automaticSaveInProgress = true;
         save();
     } else {
         // Only block once, then reset
@@ -2023,6 +2164,8 @@ bool DatabaseWidget::lock()
         return isLocked();
     }
 
+    const int syncBeforeLock = m_remoteSyncCount;
+
     // ignore when reloading
     if (m_reloading) {
         return false;
@@ -2070,6 +2213,7 @@ bool DatabaseWidget::lock()
         // Attempt to save on exit, but don't block locking if it fails
         if (config()->get(Config::AutoSaveOnExit).toBool()
             || config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+            m_automaticSaveInProgress = true;
             saved = save();
 
             if (!saved) {
@@ -2103,15 +2247,29 @@ bool DatabaseWidget::lock()
                     m_attemptingLock = false;
                     return false;
                 }
+                // The user explicitly saved on close, honour the automation here.
+                triggerRemoteAutomation(RemoteAutomation::Close);
             } else if (result == MessageBox::Cancel) {
                 m_attemptingLock = false;
                 return false;
             }
+        } else {
+            // The database was saved automatically (AutoSaveOnExit / AutoSaveAfterEveryChange).
+            // Closing the database is still a close trigger; the queued save trigger is
+            // swallowed because the database is locked by the time it runs.
+            triggerRemoteAutomation(RemoteAutomation::Close);
         }
     } else if (m_db->hasNonDataChanges() && config()->get(Config::AutoSaveNonDataChanges).toBool()) {
         // Silently auto-save non-data changes, ignore errors
         QString errorMessage;
+        m_automaticSaveInProgress = true;
         performSave(errorMessage);
+        triggerRemoteAutomation(RemoteAutomation::Close);
+    } else if (m_remoteAutomation->hasUnsyncedChanges()) {
+        // Nothing left to save, but an earlier local save never reached the remote
+        // copy (for example the user saved manually while the On save trigger is off).
+        // triggerRemoteAutomation loads the config and checks the On close setting.
+        triggerRemoteAutomation(RemoteAutomation::Close);
     }
 
     if (m_groupView->currentGroup()) {
@@ -2132,6 +2290,17 @@ bool DatabaseWidget::lock()
     endSearch();
     clearAllWidgets();
     switchToOpenDatabase(m_db->filePath());
+
+    // Any sync ran in the main view, which clearAllWidgets() has just replaced with the
+    // unlock view. Echo its result there so the notification does not disappear with the
+    // view switch - success and failure use the same UX.
+    if (syncBeforeLock != m_remoteSyncCount && !m_lastRemoteSyncMessage.isEmpty()) {
+        // Failures stay until dismissed, successes fade like anywhere else
+        m_databaseOpenWidget->showMessage(m_lastRemoteSyncMessage,
+                                          m_lastRemoteSyncFailed ? MessageWidget::MessageType::Error
+                                                                 : MessageWidget::MessageType::Positive,
+                                          m_lastRemoteSyncFailed ? 0 : MessageWidget::DefaultAutoHideTimeout);
+    }
 
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());
     newDb->open(nullptr);
@@ -2628,6 +2797,11 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
         ok = m_db->save(saveAction, backupFilePath, &errorMessage);
     } else {
         ok = m_db->saveAs(fileName, saveAction, backupFilePath, &errorMessage);
+    }
+
+    if (ok) {
+        // The local file is now newer than the remote copy
+        m_remoteAutomation->markLocalChange();
     }
 
     // Return control

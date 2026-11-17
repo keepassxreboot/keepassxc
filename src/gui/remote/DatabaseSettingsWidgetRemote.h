@@ -19,6 +19,7 @@
 #define KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H
 
 #include "gui/dbsettings/DatabaseSettingsWidget.h"
+#include "gui/remote/RemoteAutomation.h"
 
 #include <QListWidgetItem>
 #include <QPointer>
@@ -55,9 +56,15 @@ private:
     void updateSettingsList();
     QListWidgetItem* findItemByName(const QString& name);
     void clearFields();
+    void loadAutomation();
+    void refreshAutomationProfiles();
+    void updateAutomationControls();
+    void applyAutomationConfig();
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
+    QScopedPointer<RemoteAutomation> m_remoteAutomation;
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
+    QString m_currentProfileName;
     bool m_modified = false;
 };
 

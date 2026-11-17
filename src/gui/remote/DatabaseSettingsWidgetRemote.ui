@@ -22,7 +22,7 @@
     <height>0</height>
    </size>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,3,0">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -287,6 +287,67 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
          </widget>
         </item>
        </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="autoSyncGroupBox">
+     <property name="title">
+      <string>Automatic Sync</string>
+     </property>
+     <layout class="QVBoxLayout" name="autoSyncLayout">
+      <item>
+       <widget class="QCheckBox" name="autoSyncEnabled">
+        <property name="text">
+         <string>Enable automatic remote sync</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="autoSyncProfileLayout">
+        <item>
+         <widget class="QLabel" name="autoSyncProfileLabel">
+          <property name="text">
+           <string>Sync profile:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="autoSyncProfile"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="autoSyncOnOpen">
+        <property name="text">
+         <string>Sync when the database is opened</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="autoSyncOnSave">
+        <property name="text">
+         <string>Sync when the database is saved manually</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="autoSyncOnClose">
+        <property name="text">
+         <string>Sync when the database is closed or locked</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="autoSyncHint">
+        <property name="text">
+         <string>Automatic sync runs the configured commands without you invoking them. Verify a command manually before enabling it for automation. Changes saved by KeePassXC on its own are synced when the database is closed or locked.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

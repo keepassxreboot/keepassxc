@@ -42,6 +42,10 @@ private slots:
     void testMergeDatabase();
     void testRemoteSyncDatabaseSameKey();
     void testRemoteSyncDatabaseRequiresPassword();
+    void testRemoteSyncAutomationDisabledByDefault();
+    void testRemoteSyncAutomationOnSave();
+    void testRemoteSyncAutomationPolicy();
+    void testRemoteSyncAutomationPersisted();
     void testOpenRemoteDatabase();
     void testAutoreloadDatabase();
     void testTabs();
@@ -72,6 +76,20 @@ private slots:
     void testShortcutConfig();
     void testMenuActionStates();
     void testDeleteEntryDuringModalDialog();
+    void unlockTestDatabase();
+    void testRemoteSyncAutomationOnCloseDiscard();
+    void testRemoteSyncAutomationManualSaveThenClose();
+    void testRemoteSyncAutomationAutoSaveFlushesOnClose();
+    void testRemoteSyncAutomationCloseAfterSync();
+    void testRemoteSyncAutomationOnCloseAutoSave();
+    void testRemoteSyncAutomationOnClose();
+    void testRemoteSyncAutomationOnLockCancel();
+    void testRemoteSyncAutomationNoChanges();
+    void testRemoteSyncAutomationAfterEveryChange();
+    void testRemoteSyncAutomationProfileMissing();
+    void testRemoteSyncAutomationSyncFailure();
+    void testRemoteSyncAutomationNonDataChange();
+    void testRemoteSyncAutomationLocalRemoteFile();
 
 private:
     void addCannedEntries();
@@ -91,6 +109,13 @@ private:
     void checkSaveDatabase();
     void checkStatusBarText(const QString& textFragment);
     void prepareAndTriggerRemoteSync();
+    void setupRemoteAutomation(const QString& name,
+                               bool enabled,
+                               bool onOpen,
+                               bool onSave,
+                               bool onClose,
+                               const QString& downloadCommand = "sftp user@server:Database.kdbx",
+                               const QString& uploadCommand = "sftp user@server:Database.kdbx");
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<QLabel> m_statusBarLabel;

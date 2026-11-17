@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include <QDateTime>
 #include <QStackedWidget>
 
 #include "core/Database.h"
@@ -26,6 +27,7 @@
 #include "core/Metadata.h"
 #include "gui/MessageWidget.h"
 #include "gui/entry/EntryModel.h"
+#include "remote/RemoteAutomation.h"
 #include "remote/RemoteHandler.h"
 
 class DatabaseOpenDialog;
@@ -47,6 +49,7 @@ class TagView;
 class ElidedLabel;
 class RemoteSettings;
 struct RemoteParams;
+class RemoteAutomation;
 
 namespace Ui
 {
@@ -131,6 +134,8 @@ public:
     void syncWithRemote(const RemoteParams* params);
     void syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params);
     QList<RemoteParams*> getRemoteParams() const;
+    QString remoteSyncStatus() const;
+    QString remoteSyncStatusText() const;
 
 signals:
     // relayed Database signals
@@ -290,6 +295,8 @@ private slots:
     bool syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error);
     void uploadAndFinishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
     void finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
+    void triggerRemoteAutomation(RemoteAutomation::Trigger trigger);
+    void runPendingRemoteSync();
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile(bool triggeredBySave);
@@ -334,6 +341,16 @@ private:
     bool m_attemptingLock = false;
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
+    QScopedPointer<RemoteAutomation> m_remoteAutomation;
+    QString m_lastRemoteSyncProfile;
+    QString m_lastRemoteSyncMessage;
+    int m_remoteSyncCount = 0;
+    bool m_lastRemoteSyncFailed = false;
+    QDateTime m_lastRemoteSyncTime;
+    bool m_remoteSyncSaveGuard = false;
+    // Set when a save is started by the application (autosave, non-data auto-save,
+    // settings persistence) instead of by the user pressing Save.
+    bool m_automaticSaveInProgress = false;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;

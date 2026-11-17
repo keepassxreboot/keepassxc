@@ -422,6 +422,10 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(databaseModified()), this, SLOT(updateEntryCountLabel()));
     m_actionMultiplexer.connect(SIGNAL(searchModeActivated()), this, SLOT(updateEntryCountLabel()));
     m_actionMultiplexer.connect(SIGNAL(listModeActivated()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncInProgress()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncCompleted(QString)), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(
+        SIGNAL(databaseSyncFailed(QString, const QString)), this, SLOT(updateEntryCountLabel()));
 
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
@@ -1602,7 +1606,14 @@ void MainWindow::updateEntryCountLabel()
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget && dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode) {
         int numEntries = dbWidget->entryView()->model()->rowCount();
-        m_statusBarLabel->setText(tr("%1 Entry(s)", "", numEntries).arg(numEntries));
+        QString status = tr("%1 Entry(s)", "", numEntries).arg(numEntries);
+        // The tab bar is hidden when only one database is open, so the remote sync
+        // status is also shown here where it is always reachable.
+        const auto syncStatus = dbWidget->remoteSyncStatusText();
+        if (!syncStatus.isEmpty()) {
+            status += " \u2014 " + syncStatus;
+        }
+        m_statusBarLabel->setText(status);
     } else {
         m_statusBarLabel->setText("");
     }
