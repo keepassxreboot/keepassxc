@@ -5118,6 +5118,10 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Invalid key derivation function (KDF) parameters: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Legacy header fields found in KDBX4 file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8905,6 +8909,18 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 parallelism of %1 threads exceeds the supported maximum of %2 threads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 memory of %1 KiB is too low for %2 threads, at least %3 KiB are required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

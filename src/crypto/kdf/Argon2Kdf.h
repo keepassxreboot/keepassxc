@@ -25,6 +25,13 @@ constexpr auto ARGON2_DEFAULT_ROUNDS = 10;
 constexpr auto ARGON2_DEFAULT_MEMORY = 1 << 16;
 constexpr auto ARGON2_DEFAULT_PARALLELISM = 4;
 
+// Limits enforced by Botan's Argon2 implementation, which rejects anything outside of them.
+// Maximum memory in KiB: 8 GiB, or 2 GiB on 32-bit platforms
+constexpr quint64 ARGON2_MAX_MEMORY = (sizeof(size_t) == 4 ? 2ULL : 8ULL) << 20;
+constexpr quint32 ARGON2_MAX_PARALLELISM = 128;
+// Minimum memory in KiB for every thread
+constexpr quint64 ARGON2_MIN_MEMORY_PER_THREAD = 8;
+
 class Argon2Kdf : public Kdf
 {
 public:
@@ -36,7 +43,7 @@ public:
 
     Argon2Kdf(Type type);
 
-    bool processParameters(const QVariantMap& p) override;
+    bool processParameters(const QVariantMap& p, QString* error = nullptr) override;
     QVariantMap writeParameters() override;
     bool transform(const QByteArray& raw, QByteArray& result) const override;
     QSharedPointer<Kdf> clone() const override;
