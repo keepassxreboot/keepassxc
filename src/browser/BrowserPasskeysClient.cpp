@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,14 +41,14 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
 
     // Check validity of some basic values
     const auto checkResultError = passkeyUtils()->checkLimits(publicKeyOptions);
-    if (checkResultError > 0) {
+    if (checkResultError > PASSKEYS_SUCCESS) {
         return checkResultError;
     }
 
     // Get effective domain
     QString effectiveDomain;
     const auto effectiveDomainResponse = passkeyUtils()->getEffectiveDomain(origin, &effectiveDomain);
-    if (effectiveDomainResponse > 0) {
+    if (effectiveDomainResponse > PASSKEYS_SUCCESS) {
         return effectiveDomainResponse;
     }
 
@@ -56,7 +56,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     QString rpId;
     const auto rpName = publicKeyOptions["rp"]["name"].toString();
     const auto rpIdResponse = passkeyUtils()->validateRpId(publicKeyOptions["rp"]["id"], effectiveDomain, &rpId);
-    if (rpIdResponse > 0) {
+    if (rpIdResponse > PASSKEYS_SUCCESS) {
         return rpIdResponse;
     }
 
@@ -100,6 +100,15 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
 
     // Extensions
     auto extensionObject = publicKeyOptions["extensions"].toObject();
+    if (extensionObject.contains("prf")) {
+        const auto prfObject = extensionObject["prf"].toObject();
+        if (prfObject.contains("evalByCredential")) {
+            // This is not supported at registration
+            return ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_SUPPORTED;
+        }
+    }
+
+    // Parse extension data
     const auto extensionData = passkeyUtils()->buildExtensionData(extensionObject);
     const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData.extensionData);
 
@@ -112,6 +121,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     credentialCreationOptions["credTypesAndPubKeyAlgs"] = pubKeyCredParams;
     credentialCreationOptions["excludeCredentials"] = publicKeyOptions["excludeCredentials"];
     credentialCreationOptions["extensions"] = extensions;
+    credentialCreationOptions["prfSecret"] = extensionData.prfSecret;
     credentialCreationOptions["residentKey"] = isResidentKeyRequired;
     credentialCreationOptions["rp"] = QJsonObject({{"id", rpId}, {"name", rpName}});
     credentialCreationOptions["user"] = publicKeyOptions["user"];
@@ -119,7 +129,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     credentialCreationOptions["userVerification"] = isUserVerificationRequired;
 
     *result = credentialCreationOptions;
-    return 0;
+    return PASSKEYS_SUCCESS;
 }
 
 // Use an existing credential
@@ -135,21 +145,19 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
     // Get effective domain
     QString effectiveDomain;
     const auto effectiveDomainResponse = passkeyUtils()->getEffectiveDomain(origin, &effectiveDomain);
-    if (effectiveDomainResponse > 0) {
+    if (effectiveDomainResponse > PASSKEYS_SUCCESS) {
         return effectiveDomainResponse;
     }
 
     // Validate RP ID
     QString rpId;
     const auto rpIdResponse = passkeyUtils()->validateRpId(publicKeyOptions["rpId"], effectiveDomain, &rpId);
-    if (rpIdResponse > 0) {
+    if (rpIdResponse > PASSKEYS_SUCCESS) {
         return rpIdResponse;
     }
 
     // Extensions
     auto extensionObject = publicKeyOptions["extensions"].toObject();
-    const auto extensionData = passkeyUtils()->buildExtensionData(extensionObject);
-    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData.extensionData);
 
     // clientDataJson
     const auto clientDataJson = passkeyUtils()->buildClientDataJson(publicKeyOptions, origin, true);
@@ -161,15 +169,20 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
     }
     const auto isUserVerificationRequired = passkeyUtils()->isUserVerificationRequired(publicKeyOptions);
 
+    // Checks for evalByCredential in PRF extension object
+    const auto checkEvalByCredential = passkeyUtils()->checkPrfEvalByCredential(publicKeyOptions, extensionObject);
+    if (checkEvalByCredential > PASSKEYS_SUCCESS) {
+        return checkEvalByCredential;
+    }
+
     QJsonObject assertionOptions;
     assertionOptions["allowCredentials"] = publicKeyOptions["allowCredentials"];
     assertionOptions["clientDataJson"] = clientDataJson;
-    assertionOptions["clientExtensionResults"] = extensionData.extensionObject;
-    assertionOptions["extensions"] = extensions;
+    assertionOptions["extensionsObject"] = extensionObject;
     assertionOptions["rpId"] = rpId;
     assertionOptions["userPresence"] = true;
     assertionOptions["userVerification"] = isUserVerificationRequired;
 
     *result = assertionOptions;
-    return 0;
+    return PASSKEYS_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,7 +68,8 @@ void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
  *      "url": <URL>,
  *      "userHandle": <user handle>,
  *      "credentialId": <generated credential id>,
- *      "username:" <username>
+ *      "username": <username>,
+ *      "prfSecret": <generated secret for PRF>
  * }
  */
 void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& folder)
@@ -101,6 +102,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     passkeyObject["credentialId"] = passkeyUtils()->getCredentialIdFromEntry(entry);
     passkeyObject["userHandle"] = entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE);
     passkeyObject["privateKey"] = entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM);
+    passkeyObject["prfSecret"] = entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_PRF);
 
     QJsonDocument document(passkeyObject);
     if (passkeyFile.write(document.toJson()) < 0) {

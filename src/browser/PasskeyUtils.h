@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QObject>
+#include <QPair>
 #include <QStringList>
 
 #include "BrowserCbor.h"
@@ -34,6 +35,13 @@ struct ExtensionResult
 {
     QByteArray extensionData;
     QJsonObject extensionObject;
+    QString prfSecret;
+};
+
+struct PrfResult
+{
+    QJsonObject response;
+    QString secret;
 };
 
 class PasskeyUtils : public QObject
@@ -48,6 +56,7 @@ public:
     int checkLimits(const QJsonObject& pkOptions) const;
     bool checkCredentialCreationOptions(const QJsonObject& credentialCreationOptions) const;
     bool checkCredentialAssertionOptions(const QJsonObject& assertionOptions) const;
+    int checkPrfEvalByCredential(const QJsonObject& assertionOptions, const QJsonObject& extensionObject) const;
     int getEffectiveDomain(const QString& origin, QString* result) const;
     int validateRpId(const QJsonValue& rpIdValue, const QString& effectiveDomain, QString* result) const;
     QString parseAttestation(const QString& attestation) const;
@@ -57,17 +66,26 @@ public:
     bool isResidentKeyRequired(const QJsonObject& authenticatorSelection) const;
     bool isUserVerificationRequired(const QJsonObject& authenticatorSelection) const;
     bool isOriginAllowedWithLocalhost(bool allowLocalhostWithPasskeys, const QString& origin) const;
-    ExtensionResult buildExtensionData(QJsonObject& extensionObject) const;
+    ExtensionResult buildExtensionData(QJsonObject& extensionObject,
+                                       const QString& prfSecret = {},
+                                       const QStringList& allowCredentials = {}) const;
     QString buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
     QStringList getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const;
     QString getCredentialIdFromEntry(const Entry* entry) const;
     QString getUsernameFromEntry(const Entry* entry) const;
+    QPair<QByteArray, QByteArray> getPrfSaltsFromResponse(const QJsonObject& prfObject,
+                                                          const QStringList& allowCredentials) const;
+    PrfResult getPrfResponse(const QJsonObject& extensionObject,
+                             const QString& prfSecret,
+                             const QStringList& allowCredentials = {}) const;
 
 private:
     Q_DISABLE_COPY(PasskeyUtils);
 
     bool isRegistrableDomainSuffix(const QString& hostSuffixString, const QString& originalHost) const;
     bool isDomain(const QString& hostName) const;
+    QByteArray derivePrfSalt(const QByteArray& rawSalt) const;
+    QByteArray computePrfValue(const QByteArray& secret, const QByteArray& salt) const;
 
     friend class TestPasskeys;
 
