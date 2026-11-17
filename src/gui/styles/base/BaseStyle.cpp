@@ -382,7 +382,7 @@ namespace Phantom
         };
 
         using PhSwatchPtr = QExplicitlySharedDataPointer<PhSwatch>;
-        using PhCacheEntry = QPair<uint, PhSwatchPtr>;
+        using PhCacheEntry = QPair<size_t, PhSwatchPtr>;
         enum : int
         {
             Num_ColorCacheEntries = 10,
@@ -489,37 +489,8 @@ namespace Phantom
         // special path for that.)
         inline quint64 fastfragile_hash_qpalette(const QPalette& p)
         {
-            union
-            {
-                qint64 i;
-                quint64 u;
-            } x;
-            x.i = p.cacheKey();
-            // QPalette::ColorGroup has range 0..5 (inclusive), so it only uses 3 bits.
-            // The high 32 bits in QPalette::cacheKey() are a global incrementing serial
-            // number for the QPalette creation. We don't store (2^29-1) things in our
-            // cache, and I doubt that many will ever be created in a real application
-            // while also retaining some of them across such a broad time range, so it's
-            // really unlikely that repurposing these top 3 bits to also include the
-            // QPalette::currentColorGroup() (which the cacheKey doesn't include for some
-            // reason...) will generate a collision.
-            //
-            // This may not be true in the future if the way the QPalette::cacheKey() is
-            // generated changes. If that happens, change to use the definition of
-            // `fastfragile_hash_qpalette` below, which is less likely to collide with an
-            // arbitrarily numbered key but also does more work.
-
-            // Use this definition here if the contents/layout of QPalette::cacheKey()
-            // (as in, the C++ code in qpalette.cpp) are changed. We'll also put a Qt6
-            // guard for it, so that it will default to a more safe definition on the
-            // next guaranteed big breaking change for Qt. A warning will hopefully get
-            // someone to double-check it at some point in the future.
-            // #warning "Verify contents and layout of QPalette::cacheKey() have not changed"
-            QtPrivate::QHashCombine c;
-            uint h = qHash(p.currentColorGroup());
-            h = c(h, static_cast<uint>(x.u & 0xFFFFFFFFu));
-            h = c(h, static_cast<uint>((x.u >> 32) & 0xFFFFFFFFu));
-            return h;
+            // QPalette::cacheKey() does not include the current color group, so mix it in
+            return qHashMulti(0, p.currentColorGroup(), p.cacheKey());
         }
 
         // This hash function is for when we want an actual accurate hash of a
@@ -530,23 +501,17 @@ namespace Phantom
         // this actually happens a lot! We'll do the hashing ourselves. Also, we're not
         // interested in all of the colors, only some of them, and we ignore
         // pens/brushes.
-        uint accurate_hash_qpalette(const QPalette& p)
+        size_t accurate_hash_qpalette(const QPalette& p)
         {
-            // Probably shouldn't use this, could replace with our own guy. It's not a
-            // great hasher anyway.
-            QtPrivate::QHashCombine c;
-            uint h = qHash(p.currentColorGroup());
-            QPalette::ColorRole const roles[] = {QPalette::Window,
-                                                 QPalette::Button,
-                                                 QPalette::Base,
-                                                 QPalette::Text,
-                                                 QPalette::WindowText,
-                                                 QPalette::Highlight,
-                                                 QPalette::HighlightedText};
-            for (auto role : roles) {
-                h = c(h, p.color(role).rgb());
-            }
-            return h;
+            return qHashMulti(0,
+                              p.currentColorGroup(),
+                              p.color(QPalette::Window).rgb(),
+                              p.color(QPalette::Button).rgb(),
+                              p.color(QPalette::Base).rgb(),
+                              p.color(QPalette::Text).rgb(),
+                              p.color(QPalette::WindowText).rgb(),
+                              p.color(QPalette::Highlight).rgb(),
+                              p.color(QPalette::HighlightedText).rgb());
         }
 
         Q_NEVER_INLINE PhSwatchPtr
@@ -557,7 +522,7 @@ namespace Phantom
             // Calculate our hash key from the QPalette's current ColorGroup and the
             // actual RGBA values that we use. We have to mix the ColorGroup in
             // ourselves, because QPalette does not account for it in the cache key.
-            uint key = accurate_hash_qpalette(qpalette);
+            size_t key = accurate_hash_qpalette(qpalette);
             int n = cacheCount;
             int idx = -1;
             for (int i = 0; i < n; ++i) {
