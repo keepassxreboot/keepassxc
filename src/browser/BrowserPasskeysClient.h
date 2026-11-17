@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,9 +31,14 @@ public:
     ~BrowserPasskeysClient() = default;
     static BrowserPasskeysClient* instance();
 
-    int
-    getCredentialCreationOptions(const QJsonObject& publicKeyOptions, const QString& origin, QJsonObject* result) const;
-    int getAssertionOptions(const QJsonObject& publicKeyOptions, const QString& origin, QJsonObject* result) const;
+    int getCredentialCreationOptions(const QJsonObject& publicKeyOptions,
+                                     const QString& origin,
+                                     const QStringList& relatedOrigins,
+                                     QJsonObject* result) const;
+    int getAssertionOptions(const QJsonObject& publicKeyOptions,
+                            const QString& origin,
+                            const QStringList& relatedOrigins,
+                            QJsonObject* result) const;
 
 private:
     Q_DISABLE_COPY(BrowserPasskeysClient);

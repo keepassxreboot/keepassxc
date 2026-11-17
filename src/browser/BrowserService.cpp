@@ -645,6 +645,7 @@ QString BrowserService::getKey(const QString& id)
 // Passkey registration
 QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
                                                        const QString& origin,
+                                                       const QStringList& relatedOrigins,
                                                        const QString& groupName,
                                                        const StringPairList& keyList)
 {
@@ -654,9 +655,9 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     }
 
     QJsonObject credentialCreationOptions;
-    const auto pkOptionsResult =
-        browserPasskeysClient()->getCredentialCreationOptions(publicKeyOptions, origin, &credentialCreationOptions);
-    if (pkOptionsResult > 0 || credentialCreationOptions.isEmpty()) {
+    const auto pkOptionsResult = browserPasskeysClient()->getCredentialCreationOptions(
+        publicKeyOptions, origin, relatedOrigins, &credentialCreationOptions);
+    if (pkOptionsResult != PASSKEYS_SUCCESS || credentialCreationOptions.isEmpty()) {
         return getPasskeyError(pkOptionsResult);
     }
 
@@ -747,6 +748,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
 // Passkey authentication
 QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                              const QString& origin,
+                                                             const QStringList& relatedOrigins,
                                                              const StringPairList& keyList)
 {
     auto db = getDatabase();
@@ -756,8 +758,8 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
 
     QJsonObject assertionOptions;
     const auto assertionResult =
-        browserPasskeysClient()->getAssertionOptions(publicKeyOptions, origin, &assertionOptions);
-    if (assertionResult > 0 || assertionOptions.isEmpty()) {
+        browserPasskeysClient()->getAssertionOptions(publicKeyOptions, origin, relatedOrigins, &assertionOptions);
+    if (assertionResult != PASSKEYS_SUCCESS || assertionOptions.isEmpty()) {
         return getPasskeyError(assertionResult);
     }
 

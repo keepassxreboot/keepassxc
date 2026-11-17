@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace UrlTools
 {
 #if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
     QUrl getRedirectTarget(QNetworkReply* reply);
-    QString getBaseDomainFromUrl(const QString& url);
+    QString getBaseDomainFromUrl(const QString& url, bool returnOnlyLabel = false);
     QString getTopLevelDomainFromUrl(const QString& url);
     bool isIpAddress(const QString& host);
 #endif
