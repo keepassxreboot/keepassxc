@@ -30,6 +30,7 @@ protected:
 
 signals:
     void screenLocked();
+    void screenUnlocked();
 };
 
 #endif // SCREENLOCKLISTENERPRIVATE_H

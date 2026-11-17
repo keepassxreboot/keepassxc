@@ -589,6 +589,7 @@ MainWindow::MainWindow()
 #ifndef Q_OS_HAIKU
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+    connect(m_screenLockListener, SIGNAL(screenUnlocked()), SLOT(handleScreenUnlock()));
 #endif
 
     // Tray Icon setup
@@ -1892,6 +1893,14 @@ void MainWindow::handleScreenLock()
     if (config()->get(Config::Security_LockDatabaseScreenLock).toBool()) {
         lockAllDatabases();
     }
+}
+
+void MainWindow::handleScreenUnlock()
+{
+    // The tray icon may have been changed while the system was going to sleep or the
+    // session was locked. The system tray does not always pick up that change, so refresh
+    // the icon once the system is back. Wait a moment to give the system tray time to settle.
+    QTimer::singleShot(1000, this, &MainWindow::updateTrayIcon);
 }
 
 QStringList MainWindow::kdbxFilesFromUrls(const QList<QUrl>& urls)
