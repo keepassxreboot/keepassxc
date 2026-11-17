@@ -85,7 +85,7 @@ bool CustomData::containsValue(const QString& value) const
     return false;
 }
 
-void CustomData::set(const QString& key, CustomDataItem item)
+void CustomData::set(const QString& key, CustomDataItem item, bool updateTimestamp)
 {
     bool addAttribute = !m_data.contains(key);
     bool changeValue = !addAttribute && (m_data.value(key).value != item.value);
@@ -94,12 +94,14 @@ void CustomData::set(const QString& key, CustomDataItem item)
         emit aboutToBeAdded(key);
     }
 
-    if (!item.lastModified.isValid()) {
+    if (updateTimestamp && !item.lastModified.isValid()) {
         item.lastModified = Clock::currentDateTimeUtc();
     }
     if (addAttribute || changeValue) {
         m_data.insert(key, item);
-        updateLastModified();
+        if (updateTimestamp) {
+            updateLastModified();
+        }
         emitModified();
     }
 

@@ -18,6 +18,7 @@
 #include "TestKdbx4.h"
 
 #include "config-keepassx-tests.h"
+#include "core/Merger.h"
 #include "core/Metadata.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
@@ -610,6 +611,42 @@ void TestKdbx4Format::testCustomData()
     auto* newEntry = newDb->rootGroup()->children()[0]->entries()[0];
     QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
     QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
+}
+
+void TestKdbx4Format::testCustomDataLastModifiedPreservationOnLoad()
+{
+    auto* clock = new MockClock(2026, 11, 8, 13, 27, 40);
+    MockClock::setup(clock);
+
+    Database olderDb;
+    QVERIFY(olderDb.setKey(QSharedPointer<CompositeKey>::create(), false, true));
+    olderDb.metadata()->customData()->set("item", "foo");
+    const auto oldLastModified = olderDb.metadata()->customData()->lastModified();
+
+    QBuffer buffer;
+    QVERIFY(buffer.open(QIODevice::ReadWrite));
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, &olderDb));
+
+    clock->advanceSecond(1);
+    Database newerDb;
+    QVERIFY(newerDb.setKey(QSharedPointer<CompositeKey>::create(), false, true));
+    newerDb.metadata()->customData()->set(CustomData::RemoteProgramSettings, "bar");
+    const auto newLastModified = newerDb.metadata()->customData()->lastModified();
+    QVERIFY(newLastModified > oldLastModified);
+
+    clock->advanceSecond(1);
+    buffer.seek(0);
+    KeePass2Reader reader;
+    auto loadedDb = QSharedPointer<Database>::create();
+    QVERIFY(reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create(), loadedDb.data()));
+    QCOMPARE(loadedDb->metadata()->customData()->lastModified(), oldLastModified);
+    QVERIFY(!loadedDb->metadata()->customData()->contains(CustomData::RemoteProgramSettings));
+
+    Merger newerToLoadedMerger(&newerDb, loadedDb.data());
+    newerToLoadedMerger.merge();
+    QCOMPARE(loadedDb->metadata()->customData()->value(CustomData::RemoteProgramSettings), QString("bar"));
+    QVERIFY(loadedDb->metadata()->customData()->lastModified() >= newLastModified);
 }
 
 void TestKdbx4Format::testMinorVersionMismatchAfterSetKdf()

@@ -67,6 +67,7 @@ private slots:
     void testUpgradeMasterKeyIntegrity_data();
     void testAttachmentIndexStability();
     void testCustomData();
+    void testCustomDataLastModifiedPreservationOnLoad();
     void testMinorVersionMismatchAfterSetKdf();
     void testChangeKdfDowngradesToKdbx3();
 };
