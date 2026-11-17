@@ -212,7 +212,7 @@ void TestEntrySearcher::testAllAttributesAreSearched()
 
 void TestEntrySearcher::testSearchTermParser()
 {
-    // Test standard search terms
+    // Test quote search terms
     m_entrySearcher.parseSearchTerms("-test \"quoted \\\"string\\\"\"  user:user pass:\"test me\" noquote  ");
     auto terms = m_entrySearcher.m_searchTerms;
 
@@ -234,6 +234,15 @@ void TestEntrySearcher::testSearchTermParser()
 
     QCOMPARE(terms[4].field, EntrySearcher::Field::Undefined);
     QCOMPARE(terms[4].word, QString("noquote"));
+
+    // Test backslash search terms
+    m_entrySearcher.parseSearchTerms("\\ \\\\");
+    auto backslashTerms = m_entrySearcher.m_searchTerms;
+
+    QCOMPARE(backslashTerms.length(), 2);
+
+    QCOMPARE(backslashTerms[0].word, QString("\\"));
+    QCOMPARE(backslashTerms[1].word, QString("\\\\"));
 
     // Test wildcard and regex search terms
     m_entrySearcher.parseSearchTerms("+url:*.google.com *user:\\d+\\w{2}");
