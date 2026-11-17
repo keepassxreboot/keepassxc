@@ -358,13 +358,11 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     if (config()->get(Config::Security_HidePasswordPreviewPanel).toBool()) {
         // Hide password
         setPasswordVisible(false);
-        // Show the password toggle button if there are dots in the label
-        m_ui->togglePasswordButton->setVisible(!m_currentEntry->password().isEmpty());
         m_ui->togglePasswordButton->setChecked(false);
     } else {
         // Show password
         setPasswordVisible(true);
-        m_ui->togglePasswordButton->setVisible(false);
+        m_ui->togglePasswordButton->setChecked(true);
     }
 
     auto hasNotes = !m_currentEntry->notes().isEmpty();
