@@ -190,6 +190,12 @@ void Application::applyTheme()
         // because Qt 5.x does not support it
 #if defined(Q_OS_WIN)
         m_darkTheme = false;
+        // The Windows 11 style does not adapt the alternate row color to high contrast
+        // palettes, which leaves every other row light with light text. The Windows Vista
+        // style derives that color from the base color, so fall back to it in that case.
+        if (winUtils()->isHighContrastMode() && style()->name() == QStringLiteral("windows11")) {
+            setStyle(QStringLiteral("windowsvista"));
+        }
 #else
         m_darkTheme = osUtils->isDarkMode();
 #endif
