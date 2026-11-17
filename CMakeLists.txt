@@ -446,7 +446,8 @@ set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
 if(UNIX AND NOT APPLE)
     find_package(Qt6 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
 elseif(APPLE)
-    find_package(Qt6 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
+    find_package(Qt6 COMPONENTS ${QT_COMPONENTS} REQUIRED
+        PATHS
             /usr/local/opt/qt/lib/cmake
             /usr/local/Cellar/qt/*/lib/cmake
             /opt/homebrew/opt/qt/lib/cmake
