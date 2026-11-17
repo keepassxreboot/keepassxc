@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Fixes
+- macOS: Focus the Auto-Type selection window when invoked from a password field, without restoring a hidden or minimized main window [#9168, #7722]
+
 ## 2.8.0-beta1 (2026-09-23)
 
 ### New Features

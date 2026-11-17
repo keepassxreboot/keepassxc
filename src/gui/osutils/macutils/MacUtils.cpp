@@ -78,6 +78,11 @@ bool MacUtils::raiseOwnWindow()
     return m_appkit->activateProcess(m_appkit->ownProcessId());
 }
 
+void MacUtils::activateWindow(QWindow* window)
+{
+    m_appkit->activateWindow(window);
+}
+
 bool MacUtils::raiseLastActiveWindow()
 {
     return m_appkit->activateProcess(m_appkit->lastActiveProcessId());
