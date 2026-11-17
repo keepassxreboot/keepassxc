@@ -873,6 +873,62 @@ void TestGuiFdoSecrets::testServiceUnlockItemsConcurrentLock()
     }
 }
 
+void TestGuiFdoSecrets::testServiceUnlockItemsClientDisconnects()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+
+    DBUS_COMPARE(item->locked(), true);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+    COMPARE(unlocked, {});
+
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    // drive the prompt to show the access confirmation dialog, but do not answer it
+    DBUS_VERIFY(prompt->Prompt(""));
+    processEvents();
+
+    QPointer<AccessControlDialog> dlg;
+    for (auto w : QApplication::topLevelWidgets()) {
+        auto acd = qobject_cast<AccessControlDialog*>(w);
+        if (acd && acd->isVisible()) {
+            dlg = acd;
+            break;
+        }
+    }
+    VERIFY(dlg);
+
+    // the client goes away while its question is still on screen
+    emit m_plugin->dbus()->clientDisconnected(m_client);
+    processEvents();
+
+    // nobody is left to answer for: the dialog withdraws itself
+    bool dialogWithdrawn = !dlg || !dlg->isVisible();
+    if (dlg) {
+        dlg->reject();
+        processEvents();
+    }
+    VERIFY(dialogWithdrawn);
+
+    // and the prompt completes as dismissed instead of staying on the bus
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), true);
+    }
+}
+
 void TestGuiFdoSecrets::testServiceLock()
 {
     auto service = enableService();
