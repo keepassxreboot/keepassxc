@@ -23,6 +23,7 @@
 #include <QAtomicInt>
 #include <QFuture>
 #include <QSet>
+#include <QThreadPool>
 #include <QWidget>
 
 class QUuid;
@@ -48,6 +49,8 @@ signals:
 private:
     void* m_ctx;
     QSet<Handle> m_callbackHandles;
+    // handleUsbEvents() runs until deregistration, keep it off the global thread pool
+    QThreadPool m_usbEventsPool;
     QFuture<void> m_usbEvents;
     QAtomicInt m_completed;
 };
