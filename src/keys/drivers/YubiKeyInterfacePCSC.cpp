@@ -46,6 +46,8 @@ typedef long RETVAL;
 #define SCardListReaders SCardListReadersA
 #define SCardStatus SCardStatusA
 #define SCardConnect SCardConnectA
+
+#define LPWSTR char *
 #endif
 
 // This namescape contains static wrappers for the smart card API
@@ -114,7 +116,7 @@ namespace
         }
         char* mszReaders = new char[dwReaders + 2];
 
-        rv = SCardListReaders(context, nullptr, mszReaders, &dwReaders);
+        rv = SCardListReaders(context, nullptr, static_cast<LPWSTR>(mszReaders), &dwReaders);
         if (rv == SCARD_S_SUCCESS) {
             char* readhead = mszReaders;
             // Names are separated by a null byte
@@ -150,7 +152,7 @@ namespace
         uint8_t pbAtr[MAX_ATR_SIZE] = {0}; // ATR record
         SCUINT dwAtrLen = sizeof(pbAtr); // ATR record size
 
-        auto rv = SCardStatus(handle, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
+        auto rv = SCardStatus(handle, static_cast<LPWSTR>(pbReader), &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
         if (rv == SCARD_S_SUCCESS) {
             switch (dwProt) {
             case SCARD_PROTOCOL_T0:
@@ -438,7 +440,7 @@ namespace
             SCARDHANDLE hCard;
             SCUINT dwActiveProtocol = SCARD_PROTOCOL_UNDEFINED;
             rv = SCardConnect(context,
-                              reader_name.toStdString().c_str(),
+                              static_cast<const LPWSTR>(reader_name.toStdString().c_str()),
                               SCARD_SHARE_SHARED,
                               SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
                               &hCard,
@@ -453,7 +455,7 @@ namespace
                 uint8_t pbAtr[MAX_ATR_SIZE] = {0};
                 SCUINT dwAtrLen = sizeof(pbAtr);
 
-                rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
+                rv = SCardStatus(hCard, static_cast<LPWSTR>(pbReader), &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
                 if (rv == SCARD_S_SUCCESS && (dwProt == SCARD_PROTOCOL_T0 || dwProt == SCARD_PROTOCOL_T1)) {
                     // Find which AID to use
                     SCardAID satr;
@@ -575,7 +577,7 @@ YubiKey::KeyMap YubiKeyInterfacePCSC::findValidKeys(int& connectedKeys)
         SCARDHANDLE hCard;
         SCUINT dwActiveProtocol = SCARD_PROTOCOL_UNDEFINED;
         auto rv = SCardConnect(m_sc_context,
-                               reader_name.toStdString().c_str(),
+                               static_cast<const LPWSTR>(reader_name.toStdString().c_str()),
                                SCARD_SHARE_SHARED,
                                SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1,
                                &hCard,
@@ -596,7 +598,7 @@ YubiKey::KeyMap YubiKeyInterfacePCSC::findValidKeys(int& connectedKeys)
         uint8_t pbAtr[MAX_ATR_SIZE] = {0};
         SCUINT dwAtrLen = sizeof(pbAtr);
 
-        rv = SCardStatus(hCard, pbReader, &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
+        rv = SCardStatus(hCard, static_cast<LPWSTR>(pbReader), &dwReaderLen, &dwState, &dwProt, pbAtr, &dwAtrLen);
         if (rv != SCARD_S_SUCCESS || (dwProt != SCARD_PROTOCOL_T0 && dwProt != SCARD_PROTOCOL_T1)) {
             // Could not read the ATR record or the protocol is not supported
             continue;
