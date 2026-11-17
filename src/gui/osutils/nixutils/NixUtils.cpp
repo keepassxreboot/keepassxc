@@ -193,7 +193,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
     options["autostart"] = QVariant(enable);
     options["reason"] = QVariant("Launch KeePassXC at startup");
     int token = QRandomGenerator::global()->bounded(1000, 9999);
-    options["handle_token"] = QVariant(QString("org/keepassxc/KeePassXC/%1").arg(token));
+    options["handle_token"] = QVariant(QString("keepassxc_%1").arg(token));
 
     msg << "" << options;
 
