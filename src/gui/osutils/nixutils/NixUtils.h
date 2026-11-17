@@ -20,11 +20,13 @@
 
 #include "gui/osutils/OSUtilsBase.h"
 #include <QAbstractNativeEventFilter>
+#include <QHash>
+#include <QPointer>
 #include <QSharedPointer>
-#include <QtDBus/QDBusVariant>
 
 class GlobalShortcutsPortal;
 class RemoteDesktopPortal;
+class SettingsPortal;
 
 class NixUtils : public OSUtilsBase, QAbstractNativeEventFilter
 {
@@ -63,12 +65,12 @@ public:
 
     GlobalShortcutsPortal* globalShortcutsPortal();
     RemoteDesktopPortal* remoteDesktopPortal();
+    SettingsPortal* settingsPortal();
 
 public slots:
     void configureGlobalShortcut(const QString& name) override;
 
 private slots:
-    void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
     void launchAtStartupRequested(uint response, const QVariantMap& results);
 
 private:
@@ -89,21 +91,9 @@ private:
     };
     QHash<QString, QSharedPointer<globalShortcut>> m_globalShortcuts;
 
-    // defined as per "org.freedesktop.appearance color-scheme" spec in
-    // https://github.com/flatpak/xdg-desktop-portal/blob/d7a304a00697d7d608821253cd013f3b97ac0fb6/data/org.freedesktop.impl.portal.Settings.xml#L33-L45
-    enum ColorschemePref
-    {
-        PreferNone,
-        PreferDark,
-        PreferLight
-    };
-    ColorschemePref m_systemColorschemePref = ColorschemePref::PreferNone;
-    bool m_systemColorschemePrefExists = false;
-
-    void setColorScheme(QDBusVariant value);
-
     GlobalShortcutsPortal* m_globalShortcutsPortal = nullptr;
     RemoteDesktopPortal* m_remoteDesktopPortal = nullptr;
+    SettingsPortal* m_settingsPortal = nullptr;
 
     Q_DISABLE_COPY(NixUtils)
 };

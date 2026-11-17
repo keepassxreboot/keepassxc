@@ -20,6 +20,7 @@
 #include "autotype/AutoType.h"
 #include "gui/osutils/nixutils/GlobalShortcutsPortal.h"
 #include "gui/osutils/nixutils/RemoteDesktopPortal.h"
+#include "gui/osutils/nixutils/SettingsPortal.h"
 
 #include "config-keepassx.h"
 #include "core/Config.h"
@@ -28,7 +29,6 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDBusInterface>
-#include <QDBusReply>
 #include <QDebug>
 #include <QDir>
 #include <QMimeData>
@@ -83,20 +83,11 @@ NixUtils::NixUtils(QObject* parent)
     }
 #endif
 
-    // notify about system color scheme changes
-    QDBusConnection sessionBus = QDBusConnection::sessionBus();
-    sessionBus.connect("org.freedesktop.portal.Desktop",
-                       "/org/freedesktop/portal/desktop",
-                       "org.freedesktop.portal.Settings",
-                       "SettingChanged",
-                       this,
-                       SLOT(handleColorSchemeChanged(QString, QString, QDBusVariant)));
-
-    QDBusInterface desktopPortal(
-        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings");
-    QDBusReply<QDBusVariant> reply = desktopPortal.call("ReadOne", "org.freedesktop.appearance", "color-scheme");
-    if (reply.isValid()) {
-        setColorScheme(reply.value());
+    // The portals are lazy-loaded; initialize them here so the members are
+    // guaranteed to exist for pure query methods like isDarkMode()
+    settingsPortal();
+    if (externalGlobalShortcutsConfigurator()) {
+        globalShortcutsPortal();
     }
 }
 
@@ -105,8 +96,8 @@ NixUtils::~NixUtils() = default;
 bool NixUtils::isDarkMode() const
 {
     // prefer freedesktop "org.freedesktop.appearance color-scheme" setting
-    if (m_systemColorschemePrefExists) {
-        return m_systemColorschemePref == ColorschemePref::PreferDark;
+    if (m_settingsPortal->hasColorScheme()) {
+        return m_settingsPortal->colorScheme() == SettingsPortal::ColorschemePref::PreferDark;
     }
 
     if (!qApp || !qApp->style()) {
@@ -254,11 +245,6 @@ void NixUtils::setUserInputProtection(bool enable)
 void NixUtils::registerNativeEventFilter()
 {
     qApp->installNativeEventFilter(this);
-
-    if (externalGlobalShortcutsConfigurator()) {
-        // The portal is lazy-loaded and loading it here will initialize it early
-        globalShortcutsPortal();
-    }
 }
 
 bool NixUtils::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result)
@@ -441,20 +427,6 @@ bool NixUtils::isClipboardAvailable()
            && remoteDesktopPortal()->isClipboardAvailable();
 }
 
-void NixUtils::handleColorSchemeChanged(QString ns, QString key, QDBusVariant value)
-{
-    if (ns == "org.freedesktop.appearance" && key == "color-scheme") {
-        setColorScheme(value);
-    }
-}
-
-void NixUtils::setColorScheme(QDBusVariant value)
-{
-    m_systemColorschemePref = static_cast<ColorschemePref>(value.variant().toInt());
-    m_systemColorschemePrefExists = true;
-    emit interfaceThemeChanged();
-}
-
 quint64 NixUtils::getProcessStartTime() const
 {
     QString processStatPath = QString("/proc/%1/stat").arg(QCoreApplication::applicationPid());
@@ -534,6 +506,18 @@ RemoteDesktopPortal* NixUtils::remoteDesktopPortal()
     }
 
     return m_remoteDesktopPortal;
+}
+
+SettingsPortal* NixUtils::settingsPortal()
+{
+    if (!m_settingsPortal) {
+        m_settingsPortal = new SettingsPortal(this);
+        connect(m_settingsPortal, &SettingsPortal::colorSchemeChanged, this, [this](SettingsPortal::ColorschemePref) {
+            emit interfaceThemeChanged();
+        });
+    }
+
+    return m_settingsPortal;
 }
 
 void NixUtils::configureGlobalShortcut(const QString& name)
