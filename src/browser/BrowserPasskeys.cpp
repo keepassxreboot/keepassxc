@@ -260,10 +260,20 @@ AttestationKeyPair BrowserPasskeys::buildCredentialPrivateKey(int alg, const Tes
                                          : Botan::BigInt(0);
                 Botan::ECDSA_PrivateKey privateKey(*randomGen()->getRng(), Botan::EC_Group("secp256r1"), keyData);
                 const auto& publicPoint = privateKey.public_point();
-                auto x = publicPoint.get_affine_x();
-                auto y = publicPoint.get_affine_y();
-                firstPart = bigIntToQByteArray(x);
-                secondPart = bigIntToQByteArray(y);
+                const auto x = publicPoint.get_affine_x();
+                const auto y = publicPoint.get_affine_y();
+
+                // COSE EC2 coordinates must be encoded at the full field size, keeping leading zeros
+                const auto fieldBytes = (privateKey.domain().get_p_bits() + 7) / 8;
+#ifdef WITH_BOTAN3
+                const auto xBytes = x.serialize(fieldBytes);
+                const auto yBytes = y.serialize(fieldBytes);
+#else
+                const auto xBytes = Botan::BigInt::encode_1363(x, fieldBytes);
+                const auto yBytes = Botan::BigInt::encode_1363(y, fieldBytes);
+#endif
+                firstPart = browserMessageBuilder()->getQByteArray(xBytes.data(), xBytes.size());
+                secondPart = browserMessageBuilder()->getQByteArray(yBytes.data(), yBytes.size());
 
                 auto publicKey =
                     Botan::ECDSA_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
