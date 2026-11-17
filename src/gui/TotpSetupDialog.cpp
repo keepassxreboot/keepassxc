@@ -47,8 +47,9 @@ void TotpSetupDialog::saveSettings()
     // Convert user input to all uppercase and remove '='
     auto key = m_ui->seedEdit->text().toUpper().remove(" ").remove("=").trimmed().toLatin1();
     auto sanitizedKey = Base32::sanitizeInput(key);
-    // Use startsWith to ignore added '=' for padding at the end
-    if (!sanitizedKey.startsWith(key)) {
+    // Use startsWith to ignore added '=' for padding at the end, and reject
+    // keys made of Base32 characters that still cannot be decoded (e.g., wrong length)
+    if (!sanitizedKey.startsWith(key) || (!key.isEmpty() && Base32::decode(sanitizedKey).isEmpty())) {
         MessageBox::information(this,
                                 tr("Invalid TOTP Secret"),
                                 tr("You have entered an invalid secret key. The key must be in Base32 format.\n"
