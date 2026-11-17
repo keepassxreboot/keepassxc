@@ -145,6 +145,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox},
         {Config::Security_HideTotpPreviewPanel, m_secUi->hideTotpCheckBox},
         {Config::Security_HideNotes, m_secUi->hideNotesCheckBox},
+        {Config::Security_ConfirmPasswordGeneratorClose, m_secUi->confirmPasswordGeneratorCloseCheckBox},
         {Config::Security_NoConfirmMoveEntryToRecycleBin, m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox},
         {Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox},
         {Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox},

@@ -237,6 +237,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="confirmPasswordGeneratorCloseCheckBox">
+        <property name="text">
+         <string>Confirm closing the password generator with an unused password</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

@@ -127,9 +127,43 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget() = default;
 
 void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {
-    // Emits closed signal when clicking X from title bar
+    // A spontaneous close event means the user closed the dialog through the window
+    // manager (title bar "X"). Only that path asks for confirmation; the dialog's own
+    // close/cancel button and the Escape shortcut close it silently, which is both what
+    // the issue asks for and what keeps the cancel button non-intrusive.
+    if (event->spontaneous() && !confirmDiscardPassword()) {
+        event->ignore();
+        return;
+    }
+
     emit closed();
     QWidget::closeEvent(event);
+}
+
+bool PasswordGeneratorWidget::confirmDiscardPassword()
+{
+    if (!hasUnappliedGeneratedPassword()) {
+        return true;
+    }
+
+    auto answer = MessageBox::question(this,
+                                       tr("Close Password Generator"),
+                                       tr("The generated password has not been applied yet and will be lost if you "
+                                          "close the generator. Close anyway?"),
+                                       MessageBox::Close | MessageBox::Cancel,
+                                       MessageBox::Cancel);
+    return answer != MessageBox::Cancel;
+}
+
+bool PasswordGeneratorWidget::hasUnappliedGeneratedPassword() const
+{
+    // m_passwordGenerated is set once the user actually applies the password, so a
+    // non-empty password field together with this flag being false means the password
+    // the dialog currently shows was never accepted and would be lost on close.
+    // Asking about it is opt-in: closing the generator is a frequent action and a
+    // confirmation on every close gets in the way (see the discussion in #10831).
+    return config()->get(Config::Security_ConfirmPasswordGeneratorClose).toBool() && !m_standalone
+           && !m_passwordGenerated && !m_ui->editNewPassword->text().isEmpty();
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)

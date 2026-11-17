@@ -757,6 +757,10 @@
         <source>Hide notes in the entry preview panel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm closing the password generator with an unused password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AttachmentWidget</name>
@@ -7434,6 +7438,14 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Password Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The generated password has not been applied yet and will be lost if you close the generator. Close anyway?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
