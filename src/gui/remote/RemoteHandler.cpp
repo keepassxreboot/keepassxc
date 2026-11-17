@@ -31,6 +31,19 @@ namespace
         uuid.chop(1);
         return QDir::toNativeSeparators(QDir::temp().absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
     }
+
+    QString processDetail(const RemoteHandler::RemoteResult& result)
+    {
+        QString detail = result.stdError.trimmed();
+        if (detail.isEmpty()) {
+            detail = result.stdOutput.trimmed();
+        }
+        if (detail.size() > 500) {
+            detail.truncate(500);
+            detail += QStringLiteral("…");
+        }
+        return detail;
+    }
 } // namespace
 
 std::function<QScopedPointer<RemoteProcess>(QObject*)> RemoteHandler::m_createRemoteProcess([](QObject* parent) {
@@ -70,7 +83,6 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
         bool finished = remoteProcess->waitForFinished(params->downloadTimeoutMsec);
         int statusCode = remoteProcess->exitCode();
 
-        // TODO: For future use
         result.stdOutput = remoteProcess->readOutput();
         result.stdError = remoteProcess->readError();
 
@@ -85,9 +97,11 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
                 result.filePath = filePath;
             }
         } else if (finished) {
+            const QString detail = processDetail(result);
             result.success = false;
             result.errorMessage =
-                tr("Command `%1` exited with status code: %2").arg(params->downloadCommand).arg(statusCode);
+                tr("Command `%1` exited with status code: %2").arg(params->downloadCommand).arg(statusCode)
+                + (detail.isEmpty() ? QString() : tr("\n%1").arg(detail));
         } else {
             remoteProcess->kill();
             result.success = false;
@@ -121,17 +135,18 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
         bool finished = remoteProcess->waitForFinished(params->uploadTimeoutMsec);
         int statusCode = remoteProcess->exitCode();
 
-        // TODO: For future use
         result.stdOutput = remoteProcess->readOutput();
         result.stdError = remoteProcess->readError();
 
         if (finished && statusCode == 0) {
             result.success = true;
         } else if (finished) {
+            const QString detail = processDetail(result);
             result.success = false;
             result.errorMessage = tr("Failed to upload merged database. Command `%1` exited with status code: %2")
                                       .arg(params->uploadCommand)
-                                      .arg(statusCode);
+                                      .arg(statusCode)
+                                      + (detail.isEmpty() ? QString() : tr("\n%1").arg(detail));
         } else {
             remoteProcess->kill();
             result.success = false;
