@@ -65,6 +65,15 @@ Application::Application(int& argc, char** argv)
     registerUnixSignals();
 #endif
 
+    connect(osUtils, &OSUtilsBase::interfaceThemeChanged, this, [this]() {
+        if (config()->get(Config::GUI_ApplicationTheme).toString() != "classic") {
+            applyTheme();
+        }
+    });
+}
+
+void Application::initializeSingleInstance()
+{
     // Build identifier
     auto identifier = QStringLiteral("keepassxc");
     auto username = Tools::cleanUsername();
@@ -127,12 +136,6 @@ Application::Application(int& argc, char** argv)
         qWarning()
             << QObject::tr("The lock file could not be created. Single-instance mode disabled.").toUtf8().constData();
     }
-
-    connect(osUtils, &OSUtilsBase::interfaceThemeChanged, this, [this]() {
-        if (config()->get(Config::GUI_ApplicationTheme).toString() != "classic") {
-            applyTheme();
-        }
-    });
 }
 
 Application::~Application()

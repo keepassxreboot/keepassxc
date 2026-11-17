@@ -45,6 +45,7 @@ public:
     static void applyFontSize();
 
     void applyTheme();
+    void initializeSingleInstance();
 
     bool event(QEvent* event) override;
     bool isAlreadyRunning() const;

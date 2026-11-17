@@ -124,6 +124,8 @@ int main(int argc, char** argv)
         return EXIT_SUCCESS;
     }
 
+    app.initializeSingleInstance();
+
     // Process config file options early
     if (parser.isSet(configOption) || parser.isSet(localConfigOption)) {
         Config::createConfigFromFile(parser.value(configOption), parser.value(localConfigOption));
