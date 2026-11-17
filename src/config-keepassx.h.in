@@ -14,6 +14,7 @@
 
 /* Build Scope */
 #cmakedefine WITH_X11
+#cmakedefine WITH_KEYUTILS
 #cmakedefine WITH_BOTAN3
 
 /* Advanced Features */
