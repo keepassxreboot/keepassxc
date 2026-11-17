@@ -43,6 +43,7 @@ private slots:
     void testDecryptUTF8();
     void testParseECDSASecurityKey();
     void testParseED25519SecurityKey();
+    void testParseMLDSA44Ed25519();
 };
 
 #endif // TESTOPENSSHKEY_H
