@@ -27,6 +27,7 @@
 #include <QRegularExpression>
 #include <QSignalSpy>
 #include <QTest>
+#include <QThread>
 
 QTEST_GUILESS_MAIN(TestYubiKeyChallengeResponse)
 
@@ -56,6 +57,43 @@ void TestYubiKeyChallengeResponse::testDetectDevices()
         QVERIFY(displayName.contains(QString::number(i.key().first)));
         QVERIFY(displayName.contains(QString::number(i.key().second)));
     }
+}
+
+void TestYubiKeyChallengeResponse::testDetectDevicesAsync()
+{
+    // Scan results are read on the GUI thread, so they must be published there and never on
+    // the worker thread doing the scan. This doesn't need a connected key.
+    auto yk = YubiKey::instance();
+    QSignalSpy spy(yk, &YubiKey::detectComplete);
+    QThread* emittingThread = nullptr;
+    QObject context;
+    connect(
+        yk,
+        &YubiKey::detectComplete,
+        &context,
+        [&] { emittingThread = QThread::currentThread(); },
+        Qt::DirectConnection);
+
+    // A second request while a scan is running is ignored
+    yk->findValidKeysAsync();
+    yk->findValidKeysAsync();
+    QVERIFY(spy.wait());
+    QTest::qWait(100);
+    QCOMPARE(spy.count(), 1);
+    QCOMPARE(emittingThread, yk->thread());
+
+    // A synchronous scan announces its result too
+    spy.clear();
+    yk->findValidKeys();
+    QCOMPARE(spy.count(), 1);
+
+    // An async scan that finishes after a newer synchronous one doesn't overwrite its results
+    spy.clear();
+    yk->findValidKeysAsync();
+    yk->findValidKeys();
+    QCOMPARE(spy.count(), 1);
+    QTest::qWait(200);
+    QCOMPARE(spy.count(), 1);
 }
 
 /**
