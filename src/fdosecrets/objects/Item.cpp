@@ -88,7 +88,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        locked = locked || !client->itemAuthorized(m_backend->uuid());
+        locked = locked || !decisionAllows(service()->authDecision(client, m_backend));
         return {};
     }
 
@@ -271,7 +271,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!client->itemAuthorizedResetOnce(backend()->uuid())) {
+        if (!decisionAllows(service()->consumeAuthDecision(client, backend()))) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 
@@ -297,7 +297,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        if (!client->itemAuthorizedResetOnce(backend()->uuid())) {
+        if (!decisionAllows(service()->consumeAuthDecision(client, backend()))) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
 

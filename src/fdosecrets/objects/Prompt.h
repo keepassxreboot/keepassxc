@@ -111,6 +111,8 @@ namespace FdoSecrets
         QWindow* findWindow(const QString& windowId);
         Service* service() const;
         void finishPrompt(bool dismissed);
+        /// Whether the prompt already completed, by its own course or by being dismissed.
+        bool isFinished() const;
 
     private:
         bool m_signalSent = false;
@@ -174,11 +176,24 @@ namespace FdoSecrets
         void collectionUnlockFinished(bool accepted);
         void collectionRetired(Collection* coll);
         void itemRetired(Item* item);
-        void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results, AuthDecision forFutureEntries);
+        void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results,
+                                AuthDecision forFutureEntries,
+                                bool persist,
+                                const QSet<int>& matchDepths);
         void unlockItems();
+        void askNextAccessRequest();
 
         QList<QPointer<Collection>> m_collections;
         QHash<Collection*, QList<QPointer<Item>>> m_items;
+        // the entries of one collection the user has to be asked about
+        struct AccessRequest
+        {
+            QPointer<Collection> collection;
+            QHash<QUuid, QPointer<Item>> items;
+        };
+        // waiting for their access dialog, shown one collection at a time
+        QList<AccessRequest> m_accessRequests;
+        // the entries of the access dialog currently open
         QHash<QUuid, QPointer<Item>> m_entryToItems;
 
         // collections whose doUnlock was issued and whose outcome is still awaited

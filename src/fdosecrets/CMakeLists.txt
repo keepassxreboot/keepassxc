@@ -10,12 +10,19 @@ if(KPXC_FEATURE_FDOSECRETS)
 
         # per database settings page
         widgets/DatabaseSettingsWidgetFdoSecrets.cpp
+        widgets/ClientAuthModels.cpp
+        widgets/ClientRecordDialog.cpp
 
         # prompt dialog
         widgets/AccessControlDialog.cpp
+        widgets/FooterTableView.cpp
+        widgets/NoteLabel.cpp
 
         # setting storage
         FdoSecretsSettings.cpp
+
+        # persisted client authorization
+        ClientAuth.cpp
 
         # dbus objects
         dbus/DBusClient.cpp

@@ -51,12 +51,19 @@ class OpenSSHKey;
 #ifdef KPXC_FEATURE_BROWSER
 class EntryURLModel;
 #endif
+#ifdef KPXC_FEATURE_FDOSECRETS
+namespace FdoSecrets
+{
+    class EntryClientDecisionsModel;
+}
+#endif
 
 namespace Ui
 {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetAutoType;
     class EditEntryWidgetBrowser;
+    class EditEntryWidgetFdoSecrets;
     class EditEntryWidgetSSHAgent;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
@@ -85,6 +92,7 @@ public:
         AutoType,
         Browser,
         SSHAgent,
+        FdoSecrets,
         Properties,
         History
     };
@@ -140,6 +148,11 @@ private slots:
     void copyPublicKey();
     void generatePrivateKey();
 #endif
+#ifdef KPXC_FEATURE_FDOSECRETS
+    void addFdoSecretsDecision();
+    void removeFdoSecretsDecision();
+    void updateFdoSecretsButtons();
+#endif
 #ifdef KPXC_FEATURE_BROWSER
     void updateBrowserModified();
     void updateBrowser();
@@ -160,6 +173,13 @@ private:
 #endif
 #ifdef KPXC_FEATURE_SSHAGENT
     void setupSSHAgent();
+#endif
+#ifdef KPXC_FEATURE_FDOSECRETS
+    void setupFdoSecrets();
+    /// Repopulate the page from the staged customData, e.g. after loading an entry
+    void setFdoSecretsForms();
+    /// Keep an allow/deny editor open on every row, so decisions are editable in place
+    void openFdoSecretsEditors();
 #endif
     void setupProperties();
     void setupHistory();
@@ -193,6 +213,9 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetSSHAgent> m_sshAgentUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
     const QScopedPointer<Ui::EditEntryWidgetBrowser> m_browserUi;
+#ifdef KPXC_FEATURE_FDOSECRETS
+    const QScopedPointer<Ui::EditEntryWidgetFdoSecrets> m_fdoSecretsUi;
+#endif
     const QScopedPointer<EntryAttachments> m_attachments;
     const QScopedPointer<CustomData> m_customData;
 
@@ -207,6 +230,10 @@ private:
     bool m_browserSettingsChanged;
     QWidget* const m_browserWidget;
     EntryURLModel* const m_additionalURLsDataModel;
+#endif
+#ifdef KPXC_FEATURE_FDOSECRETS
+    QWidget* const m_fdoSecretsWidget;
+    FdoSecrets::EntryClientDecisionsModel* const m_fdoSecretsModel;
 #endif
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;

@@ -2,100 +2,190 @@
 <ui version="4.0">
  <class>AccessControlDialog</class>
  <widget class="QDialog" name="AccessControlDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>405</width>
-    <height>252</height>
-   </rect>
-  </property>
   <property name="windowTitle">
-   <string>KeePassXC -  Access Request</string>
+   <string>KeePassXC - Access Request</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="MessageWidget" name="exePathWarn" native="true">
-     <property name="text" stdset="0">
-      <string>Non-existing/inaccessible executable path. Please double-check the client is legit.</string>
+    <widget class="QFrame" name="clientFrame">
+     <property name="autoFillBackground">
+      <bool>true</bool>
      </property>
-     <property name="closeButtonVisible" stdset="0">
-      <bool>false</bool>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="appLabel">
-     <property name="font">
-      <font>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="detailsContainer" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QHBoxLayout" name="clientFrameLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
-       <widget class="QTreeWidget" name="procTree">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QWidget" name="clientAccent" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>4</width>
+          <height>0</height>
+         </size>
         </property>
-        <property name="uniformRowHeights">
+        <property name="maximumSize">
+         <size>
+          <width>4</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
          <bool>true</bool>
         </property>
-        <property name="animated">
-         <bool>true</bool>
-        </property>
-        <property name="allColumnsShowFocus">
-         <bool>true</bool>
-        </property>
-        <attribute name="headerStretchLastSection">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>PID</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Executable</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Command Line</string>
-         </property>
-        </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="clientContents" native="true">
+        <layout class="QVBoxLayout" name="clientLayout">
+         <item>
+          <layout class="QVBoxLayout" name="clientIdentityLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="clientTitleLayout">
+             <item>
+              <widget class="ElidedLabel" name="clientLabel">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="elideMode">
+                <enum>Qt::ElideRight</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="TagLabel" name="stateLabel"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="ElidedLabel" name="pathLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="elideMode">
+              <enum>Qt::ElideMiddle</enum>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="NoteLabel" name="knownFact" native="true">
+          </widget>
+         </item>
+         <item>
+          <widget class="NoteLabel" name="changedFact" native="true">
+           <property name="warning" stdset="0">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="NoteLabel" name="invalidPathFact" native="true">
+           <property name="text" stdset="0">
+            <string>Unverified executable: its path does not exist or cannot be accessed.</string>
+           </property>
+           <property name="warning" stdset="0">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="NoteLabel" name="genericFact" native="true">
+           <property name="text" stdset="0">
+            <string>General purpose tool: acts for whatever program invokes it.</string>
+           </property>
+           <property name="warning" stdset="0">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="itemsTable">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QTreeWidget" name="procTree">
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <property name="animated">
+      <bool>true</bool>
+     </property>
+     <property name="allColumnsShowFocus">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerStretchLastSection">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Match</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>PID</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Executable</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Command Line</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="appLabel"/>
+   </item>
+   <item>
+    <widget class="FooterTableView" name="itemsTable">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -117,13 +207,144 @@
      <attribute name="horizontalHeaderVisible">
       <bool>false</bool>
      </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="futureFooter" native="true">
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <layout class="QVBoxLayout" name="futureFooterLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="Line" name="futureLine">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="futureCheckLayout">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>3</number>
+        </property>
+        <property name="rightMargin">
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>3</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="futureCheck">
+          <property name="font">
+           <font>
+            <italic>true</italic>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>The decision also covers every other entry this client asks for, including entries created later.</string>
+          </property>
+          <property name="text">
+           <string>… and all entries requested in the future</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="rememberLayout">
+     <item>
+      <widget class="QCheckBox" name="rememberCheck">
+       <property name="toolTip">
+        <string>&lt;p align='justify'&gt;Store the decision in the database. It applies to this client until removed, even across restarts, and can be managed in the database's Secret Service settings.&lt;/p&gt;</string>
+       </property>
+       <property name="text">
+        <string>&amp;Remember</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="recognitionNote">
+       <property name="textFormat">
+        <enum>Qt::RichText</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="rememberSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="consequencesLayout">
+     <item>
+      <widget class="NoteLabel" name="acceptChangeNote" native="true">
+       <property name="text" stdset="0">
+        <string>Changed executable: gets accepted as this client.</string>
+       </property>
+       <property name="warning" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="NoteLabel" name="genericNote" native="true">
+       <property name="warning" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="detailsButton">
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="buttonSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
        <property name="standardButtons">
@@ -137,9 +358,24 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MessageWidget</class>
+   <class>ElidedLabel</class>
+   <extends>QLabel</extends>
+   <header>gui/widgets/ElidedLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TagLabel</class>
+   <extends>QLabel</extends>
+   <header>gui/tag/TagLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FooterTableView</class>
+   <extends>QTableView</extends>
+   <header>fdosecrets/widgets/FooterTableView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>NoteLabel</class>
    <extends>QWidget</extends>
-   <header>gui/MessageWidget.h</header>
+   <header>fdosecrets/widgets/NoteLabel.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
