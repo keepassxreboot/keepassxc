@@ -275,7 +275,21 @@ namespace FdoSecrets
             return ret;
         }
 
-        while (unlockedColls.isEmpty() && settings()->unlockBeforeSearch()) {
+        auto anyBackendLocked = [this]() {
+            for (const auto& coll : asConst(m_collections)) {
+                if (auto* db = coll->backend(); db && db->isLocked()) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        // unlockedColls.isEmpty() can be true even when no DatabaseWidget is
+        // locked: a collection that is still being populated counts as locked,
+        // while its database is already on its way to being unlocked. Don't
+        // open the unlock dialog in that case - populate finishes on its own
+        // and the client's next call returns real data.
+        while (unlockedColls.isEmpty() && settings()->unlockBeforeSearch() && anyBackendLocked()) {
             // enable compatibility mode by making sure at least one database is unlocked
             QEventLoop loop;
             bool wasAccepted = false;
