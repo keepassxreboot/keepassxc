@@ -26,6 +26,7 @@
 #include "core/Database.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
+#include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "crypto/Random.h"
 #include "crypto/kdf/AesKdf.h"
@@ -359,6 +360,53 @@ void TestSharing::testSettingsSerialization_data()
     QTest::newRow("3") << true << true << KeeShareSettings::Certificate() << KeeShareSettings::Key();
     QTest::newRow("4") << false << true << certificate0 << key0;
     QTest::newRow("5") << false << false << certificate0 << key0;
+}
+
+void TestSharing::testRecycledGroupIsNotShared()
+{
+    Database db;
+    db.metadata()->setRecycleBinEnabled(true);
+
+    auto shared = new Group();
+    shared->setName("shared");
+    shared->setParent(db.rootGroup());
+
+    auto inner = new Group();
+    inner->setName("inner");
+    inner->setParent(shared);
+
+    KeeShareSettings::Reference reference;
+    reference.type = KeeShareSettings::ExportTo;
+    reference.path = "/tmp/shared.kdbx";
+    KeeShare::setReferenceTo(shared, reference);
+
+    // A group that is actively shared reports its reference and is considered shared.
+    QVERIFY(shared->isRecycled() == false);
+    QVERIFY(KeeShare::isShared(shared));
+    QVERIFY(KeeShare::referenceOf(shared).isValid());
+    QVERIFY(KeeShare::referenceOf(shared).isExporting());
+
+    // Deleting the group moves it (and its children) into the recycle bin. The sharing
+    // reference is intentionally kept on the group so that restoring it brings the share
+    // back, but it must not be exported while the group is deleted.
+    db.recycleGroup(shared);
+    QVERIFY(shared->isRecycled());
+    QVERIFY(inner->isRecycled());
+    QVERIFY(!KeeShare::isShared(shared));
+    QVERIFY(!KeeShare::isShared(inner));
+    QVERIFY(KeeShare::referenceOf(shared).isNull());
+    QVERIFY(KeeShare::referenceOf(inner).isNull());
+    QVERIFY(!KeeShare::isEnabled(shared));
+
+    // Restoring the group from the recycle bin must bring the share back. This also
+    // verifies that the reference is still stored on the group and was not dropped.
+    shared->setParent(db.rootGroup());
+    QVERIFY(!shared->isRecycled());
+    QVERIFY(KeeShare::isShared(shared));
+    QVERIFY(KeeShare::referenceOf(shared).isValid());
+
+    // A null group must not be reported as shared either.
+    QVERIFY(!KeeShare::isShared(nullptr));
 }
 
 const QSharedPointer<Botan::RSA_PrivateKey> TestSharing::stubkey(int index)

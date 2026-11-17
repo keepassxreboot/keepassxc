@@ -79,12 +79,18 @@ void KeeShare::setOwn(const KeeShareSettings::Own& own)
 
 bool KeeShare::isShared(const Group* group)
 {
-    return group && group->customData()->contains(KeeShare_Reference);
+    return group && group->isRecycled() == false && group->customData()->contains(KeeShare_Reference);
 }
 
 KeeShareSettings::Reference KeeShare::referenceOf(const Group* group)
 {
     static const KeeShareSettings::Reference s_emptyReference;
+    // Groups in the recycle bin keep their sharing reference so that restoring them
+    // brings the share back, but they must not be exported or imported while they
+    // are deleted. Reporting an empty reference here disables every consumer at once.
+    if (!group || group->isRecycled()) {
+        return s_emptyReference;
+    }
     const CustomData* customData = group->customData();
     if (!customData->contains(KeeShare_Reference)) {
         return s_emptyReference;
