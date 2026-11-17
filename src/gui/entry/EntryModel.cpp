@@ -326,6 +326,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         if (entry->isExpired()) {
             font.setStrikeOut(true);
         }
+        if (entry->hasUnsavedChanges()) {
+            font.setItalic(true);
+        }
         return font;
     } else if (role == Qt::ForegroundRole) {
 
@@ -360,6 +363,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     } else if (role == Qt::ToolTipRole) {
         if (index.column() == PasswordStrength && !entry->password().isEmpty() && !entry->excludeFromReports()) {
             return entry->passwordHealth()->scoreReason();
+        } else if (index.column() == Title && entry->hasUnsavedChanges()) {
+            return tr("This entry has unsaved changes");
         }
     }
 
