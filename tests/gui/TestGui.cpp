@@ -32,6 +32,7 @@
 #include <QSignalSpy>
 #include <QSpinBox>
 #include <QTableWidget>
+#include <QTemporaryDir>
 #include <QTest>
 #include <QToolBar>
 
@@ -65,6 +66,8 @@
 #include "gui/remote/RemoteHandler.h"
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
+#include "keeshare/KeeShare.h"
+#include "keeshare/KeeShareSettings.h"
 #include "keys/FileKey.h"
 #include "mock/MockRemoteProcess.h"
 
@@ -350,6 +353,30 @@ void TestGui::testCreateDatabase()
 
 void TestGui::testMergeDatabase()
 {
+    // Two exports to the same path make KeeShare report an error
+    KeeShareSettings::Active inactive;
+    KeeShare::setActive(inactive);
+
+    KeeShareSettings::Reference reference;
+    reference.type = KeeShareSettings::ExportTo;
+    reference.path = "same-share.kdbx";
+
+    auto* firstShareGroup = new Group();
+    firstShareGroup->setUuid(QUuid::createUuid());
+    firstShareGroup->setName("Share one");
+    firstShareGroup->setParent(m_db->rootGroup());
+    reference.uuid = firstShareGroup->uuid();
+    KeeShare::setReferenceTo(firstShareGroup, reference);
+
+    auto* secondShareGroup = new Group();
+    secondShareGroup->setUuid(QUuid::createUuid());
+    secondShareGroup->setName("Share two");
+    secondShareGroup->setParent(m_db->rootGroup());
+    reference.uuid = secondShareGroup->uuid();
+    KeeShare::setReferenceTo(secondShareGroup, reference);
+
+    QSignalSpy sharingSpy(KeeShare::instance(), &KeeShare::sharingMessage);
+
     // It is safe to ignore the warning this line produces
     QSignalSpy dbMergeSpy(m_dbWidget.data(), SIGNAL(databaseMerged(QSharedPointer<Database>)));
     QApplication::processEvents();
@@ -379,6 +406,16 @@ void TestGui::testMergeDatabase()
     }
 
     QVERIFY(mergeDialog);
+
+    // KeeShare is paused while the merge dialog is open
+    KeeShareSettings::Active active;
+    active.out = true;
+    KeeShare::setActive(active);
+    QCOMPARE(sharingSpy.count(), 0);
+    KeeShare::setActive(inactive);
+    delete firstShareGroup;
+    delete secondShareGroup;
+
     QTest::keyClick(mergeDialog, Qt::Key_Enter);
 
     QTRY_COMPARE(dbMergeSpy.count(), 1);
@@ -392,6 +429,71 @@ void TestGui::testMergeDatabase()
     QCOMPARE(m_db->rootGroup()->children().at(6)->entries().size(), 1);
     // the General group contains one entry merged from the other db
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+}
+
+void TestGui::testMergeDatabaseKeeShareAutosave()
+{
+    // The share file has an entry that the merged group doesn't have yet
+    QTemporaryDir tempDir;
+    QVERIFY(tempDir.isValid());
+    const auto sharePath = tempDir.filePath("share.kdbx");
+    const auto sourcePath = tempDir.filePath("source.kdbx");
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    Database shareDb;
+    shareDb.setKey(key);
+    auto* sharedEntry = new Entry();
+    sharedEntry->setUuid(QUuid::createUuid());
+    sharedEntry->setTitle("Shared entry");
+    sharedEntry->setGroup(shareDb.rootGroup());
+    QVERIFY(shareDb.saveAs(sharePath));
+
+    Database sourceDb;
+    sourceDb.setKey(key);
+    auto* sharedGroup = new Group();
+    sharedGroup->setUuid(QUuid::createUuid());
+    sharedGroup->setName("Shared");
+    sharedGroup->setParent(sourceDb.rootGroup());
+    KeeShareSettings::Reference reference;
+    reference.type = KeeShareSettings::SynchronizeWith;
+    reference.uuid = sharedGroup->uuid();
+    reference.path = sharePath;
+    reference.password = "a";
+    KeeShare::setReferenceTo(sharedGroup, reference);
+    QVERIFY(sourceDb.saveAs(sourcePath));
+
+    KeeShareSettings::Active active;
+    active.in = true;
+    active.out = true;
+    KeeShare::setActive(active);
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    QSignalSpy dbSavedSpy(m_db.data(), &Database::databaseSaved);
+
+    fileDialog()->setNextFileName(sourcePath);
+    triggerAction("actionDatabaseMerge");
+
+    QWidget* editPasswordMerge;
+    QTRY_VERIFY((editPasswordMerge = QApplication::focusWidget()) && editPasswordMerge->objectName() == "passwordEdit");
+    QTest::keyClicks(editPasswordMerge, "a");
+    QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
+
+    QWidget* mergeDialog;
+    QTRY_VERIFY((mergeDialog = m_dbWidget->findChild<QWidget*>("MergeDialog")));
+    QTest::keyClick(mergeDialog, Qt::Key_Enter);
+
+    // Autosave after the merge must keep the entry in the share file
+    QTRY_VERIFY(!dbSavedSpy.isEmpty());
+    QTRY_VERIFY(!m_db->isModified());
+    Database exportedDb;
+    QVERIFY(exportedDb.open(sharePath, key));
+    QCOMPARE(exportedDb.rootGroup()->entries().size(), 1);
+    auto* mergedGroup = m_db->rootGroup()->findGroupByUuid(sharedGroup->uuid());
+    QVERIFY(mergedGroup);
+    QCOMPARE(mergedGroup->entries().size(), 1);
+
+    KeeShare::setActive(KeeShareSettings::Active());
+    config()->set(Config::AutoSaveAfterEveryChange, false);
 }
 
 void TestGui::prepareAndTriggerRemoteSync()

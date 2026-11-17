@@ -63,7 +63,14 @@ ShareObserver::~ShareObserver()
 
 void ShareObserver::setEnabled(bool enabled)
 {
+    if (m_enabled == enabled) {
+        return;
+    }
     m_enabled = enabled;
+    if (m_enabled) {
+        // Import the shares again before a save can export over them
+        handleDatabaseChanged();
+    }
 }
 
 void ShareObserver::deinitialize()
