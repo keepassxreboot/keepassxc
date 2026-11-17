@@ -24,13 +24,15 @@
 # https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Native_messaging
 
 # Chromium, Google Chrome, Vivaldi & Brave
-readonly arg1='chrome-extension://oboonakemofpalcgghocfoadofidjkkk'
+readonly chromeOrigin='chrome-extension://oboonakemofpalcgghocfoadofidjkkk/'
+# Microsoft Edge
+readonly edgeOrigin='chrome-extension://pdffhmdngciaglkoonimfcmckehcpafo/'
 # Firefox & Tor Browser
-readonly arg2='keepassxc-browser@keepassxc.org'
+readonly firefoxExtension='keepassxc-browser@keepassxc.org'
 
-# Check arguments to see if this was a proxy launch from the browser
-# Use =~ to account for minor variations in the chrome extension
-if [[ "$1" =~ "$arg1" || "$2" == "$arg2" ]]; then
+# Check arguments to see if this was a proxy launch from the browser.
+# Chromium passes the same origin as in allowed_origins of the native messaging manifest.
+if [[ "$1" == "$chromeOrigin" || "$1" == "$edgeOrigin" || "$2" == "$firefoxExtension" ]]; then
     exec keepassxc-proxy "$@"
 elif [[ "$1" == "cli" ]]; then
     exec keepassxc-cli "${@:2}"
