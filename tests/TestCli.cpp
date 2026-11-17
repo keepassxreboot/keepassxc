@@ -57,6 +57,7 @@
 
 #include <QClipboard>
 #include <QSignalSpy>
+#include <QStandardPaths>
 #include <QTest>
 #include <QtConcurrent>
 #include <qglobal.h>
@@ -630,9 +631,15 @@ void TestCli::testAttachmentRemove()
 
 void TestCli::testClip()
 {
-    if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+    const auto env = QProcessEnvironment::systemEnvironment();
+    if (env.contains("WAYLAND_DISPLAY")) {
         QSKIP("Clip test skipped due to QClipboard and Wayland issues on Linux");
     }
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+    if (!env.contains("DISPLAY") || QStandardPaths::findExecutable("xclip").isEmpty()) {
+        QSKIP("Clip test skipped due to missing X display or xclip");
+    }
+#endif
 
     QClipboard* clipboard = QGuiApplication::clipboard();
     clipboard->clear();
@@ -646,10 +653,6 @@ void TestCli::testClip()
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0"});
     QString errorOutput(m_stderr->readAll());
 
-    if (errorOutput.contains("Unable to start program")
-        || errorOutput.contains("No program defined for clipboard manipulation")) {
-        QSKIP("Clip test skipped due to missing clipboard tool");
-    }
     QVERIFY(!errorOutput.contains("All clipping programs failed"));
 
     m_stderr->readLine(); // Skip password prompt
