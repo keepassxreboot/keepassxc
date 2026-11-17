@@ -40,7 +40,7 @@ public:
     void reset() override;
 
 private:
-    bool m_available;
+    bool m_available = false;
     QString m_error;
     QHash<QUuid, QByteArray> m_encryptedMasterKeys;
 

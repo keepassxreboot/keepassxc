@@ -27,6 +27,13 @@
 #include <QtDBus>
 #include <botan/mem_ops.h>
 #include <cerrno>
+#include <fcntl.h>
+#include <linux/magic.h>
+#include <linux/openat2.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/vfs.h>
+#include <unistd.h>
 
 extern "C" {
 #include <keyutils.h>
@@ -37,6 +44,89 @@ const QString polkit_object = "/org/freedesktop/PolicyKit1/Authority";
 
 namespace
 {
+    /**
+     * Check whether the UID mapping is the host UID mapping or whether we are running in an unprivileged user
+     * namespace that could remap UID 0. Also verify the mapping has not been replaced with a bind mount.
+     */
+    bool verifyHostUidMapping()
+    {
+        struct stat st = {};
+        int procFd = open("/proc", O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
+        if (procFd < 0) {
+            return false;
+        }
+        if (fstat(procFd, &st) != 0) {
+            close(procFd);
+            return false;
+        }
+
+        // Check that /proc is the root inode and has procfs fs type.
+        struct statfs fs = {};
+        if (st.st_ino != 1 || fstatfs(procFd, &fs) != 0 || fs.f_type != PROC_SUPER_MAGIC) {
+            close(procFd);
+            return false;
+        }
+
+        // Open host UID mapping from /proc/self/uid_map via openat2, rejecting symlinks and bind mounts.
+        int mapFd = -1;
+        open_how how = {};
+        how.flags = O_RDONLY | O_CLOEXEC;
+        how.resolve = RESOLVE_BENEATH | RESOLVE_NO_XDEV | RESOLVE_NO_MAGICLINKS;
+        mapFd = syscall(SYS_openat2, procFd, "self/uid_map", &how, sizeof(how));
+        close(procFd);
+        if (mapFd < 0) {
+            return false;
+        }
+        QFile map;
+        if (!map.open(mapFd, QIODevice::ReadOnly, QFileDevice::AutoCloseHandle)) {
+            close(mapFd);
+            return false;
+        }
+
+        // Read UID mappings. Fail if not all mappings are available, if the kernel does not
+        // support openat2 (before Linux 5.6), or if blocked otherwise.
+        // 0 0 = starting UID in this namespace and in parent
+        // 4294967295 = 2^32 - 1 = number of available UIDs (will be smaller in a user namespace)
+        return map.readAll().simplified() == "0 0 4294967295";
+    }
+
+    /**
+     * Open system bus from /run/dbus/system_bus_socket securely.
+     *
+     * The path is hard-coded to avoid reconfiguration, as the ::systemBus() method could be overridden
+     * through an environment variable to return an alternative bus path. This bus could have an application
+     * pretending to be polkit running on it, which could approve every authentication request.
+     *
+     * Most Linux distros place the system bus at this exact path, so it is hard-coded.
+     * For any other distros, this path will need to be patched before compilation.
+     *
+     * Returns a named file descriptor to the open socket. Bind mounts and symlinks under /run are rejected.
+     */
+    int openSystemBusSocketSecurely()
+    {
+        int runFd = open("/run", O_PATH | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
+        if (runFd < 0) {
+            return -1;
+        }
+
+        // Open system bus socket, but reject symlinks and bind mounts.
+        open_how how = {};
+        how.flags = O_PATH | O_CLOEXEC;
+        how.resolve = RESOLVE_BENEATH | RESOLVE_NO_XDEV | RESOLVE_NO_SYMLINKS;
+        int socketFd = syscall(SYS_openat2, runFd, "dbus/system_bus_socket", &how, sizeof(how));
+        close(runFd);
+
+        struct stat st = {};
+        if (socketFd < 0) {
+            return -1;
+        }
+        if (fstat(socketFd, &st) != 0 || !S_ISSOCK(st.st_mode)) {
+            close(socketFd);
+            return -1;
+        }
+        return socketFd;
+    }
+
     QString getKeyName(const QUuid& dbUuid)
     {
         static const QString keyPrefix = "keepassxc_polkit_keys_";
@@ -46,27 +136,32 @@ namespace
 
 Polkit::Polkit()
 {
+    if (!verifyHostUidMapping()) {
+        qWarning() << "polkit: Cannot verify the host UID mapping; quick unlock is disabled";
+        return;
+    }
+
     PolkitSubject::registerMetaType();
     PolkitAuthorizationResults::registerMetaType();
 
-    /* Note we explicitly use our own dbus path here, as the ::systemBus() method could be overridden
-       through an environment variable to return an alternative bus path. This bus could have an application
-       pretending to be polkit running on it, which could approve every authentication request
-
-       Most Linux distros place the system bus at this exact path, so it is hard-coded.
-       For any other distros, this path will need to be patched before compilation.
-    */
+    // Connect to the system bus socket through a securely established file descriptor.
+    int socketFd = openSystemBusSocketSecurely();
+    if (socketFd < 0) {
+        qWarning()
+            << "polkit: Cannot open the system bus without crossing mounts or symlinks; quick unlock is disabled";
+        return;
+    }
     QDBusConnection bus =
-        QDBusConnection::connectToBus("unix:path=/run/dbus/system_bus_socket", "keepassxc_polkit_dbus");
+        QDBusConnection::connectToBus(QString("unix:path=/proc/self/fd/%1").arg(socketFd), "keepassxc_polkit_dbus");
+    close(socketFd);
 
     m_available = bus.isConnected();
     if (!m_available) {
-        qDebug() << "polkit: Failed to connect to system dbus (this may be due to a non-standard dbus path)";
+        qWarning() << "polkit: Failed to connect to system dbus; quick unlock is disabled";
         return;
     }
 
     m_available = bus.interface()->isServiceRegistered(polkit_service);
-
     if (!m_available) {
         qDebug() << "polkit: Polkit is not registered on dbus";
         return;
