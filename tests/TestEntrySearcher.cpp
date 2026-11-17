@@ -100,16 +100,20 @@ void TestEntrySearcher::testSearch()
     e2111b->setNotes("test search test");
     e2111b->setUsername("user123");
     e2111b->setPassword("testpass");
+    e2111b->attachments()->set("firstattach.txt", QByteArray("search term"));
     e2111b->setGroup(group2111);
 
     auto e3 = new Entry();
     e3->setUrl("test search term test");
+    e3->attachments()->set("firstattach.txt", QByteArray("term"));
+    e3->attachments()->set("textattach.txt", QByteArray("textcontent of attachment"));
     e3->setGroup(group3);
 
     auto e3b = new Entry();
     e3b->setTitle("test search test 123");
     e3b->setUsername("test@email.com");
     e3b->setPassword("realpass");
+    e3b->attachments()->set("pdfattach.pdf", QByteArray("%PDF-1.7 pdfcontent"));
     e3b->setGroup(group3);
 
     // Simple search term testing
@@ -167,6 +171,31 @@ void TestEntrySearcher::testSearch()
     // Parent group has search disabled
     m_searchResult = m_entrySearcher.search("search term", group11);
     QCOMPARE(m_searchResult.count(), 0);
+
+    // e2111b and e3 with text attachment, but e3b without. Attachment content search only for text mime type
+    QVERIFY(Tools::isTextMimeType(Tools::getMimeType(e2111b->attachments()->value("firstattach.txt"))));
+    QVERIFY(Tools::isTextMimeType(Tools::getMimeType(e3->attachments()->value("firstattach.txt"))));
+    QVERIFY(Tools::isTextMimeType(Tools::getMimeType(e3->attachments()->value("textattach.txt"))));
+    QVERIFY(!Tools::isTextMimeType(Tools::getMimeType(e3b->attachments()->value("pdfattach.pdf"))));
+
+    m_searchResult = m_entrySearcher.search("content", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search("in_attachment:content", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("in_attachment:\"ent of att\"", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    // Add large attachment to entry
+    QByteArray largeContent(10 * 1024 * 1024, 'a');
+    largeContent.replace(0, 10, "start_term");
+    largeContent.replace(largeContent.size() - 8, 8, "end_term");
+    e2111->attachments()->set("large_attachment.txt", largeContent);
+    m_searchResult = m_entrySearcher.search("in_attachment:start_term", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    m_searchResult = m_entrySearcher.search("in_attachment:end_term", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
 }
 
 void TestEntrySearcher::testAndConcatenationInSearch()

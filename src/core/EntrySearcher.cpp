@@ -182,6 +182,21 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         case Field::Attachment:
             found = !attachments.filter(term.regex).empty();
             break;
+        case Field::AttachmentContent:
+            found = false;
+            for (const auto& key : attachments) {
+                const QByteArray data = entry->attachments()->value(key);
+                // Only search text attachments
+                if (!Tools::isTextMimeType(Tools::getMimeType(data))) {
+                    continue;
+                }
+                const QString content = QString::fromUtf8(data);
+                if (term.regex.match(content).hasMatch()) {
+                    found = true;
+                    break;
+                }
+            }
+            break;
         case Field::AttributeValue:
             if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
                 continue;
@@ -257,6 +272,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
 {
     static const QList<QPair<QString, Field>> fieldnames{
         {QStringLiteral("attachment"), Field::Attachment},
+        {QStringLiteral("in_attachment"), Field::AttachmentContent},
         {QStringLiteral("attribute"), Field::AttributeKV},
         {QStringLiteral("notes"), Field::Notes},
         {QStringLiteral("pw"), Field::Password},
