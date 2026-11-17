@@ -42,6 +42,8 @@ private slots:
     void testMergeDatabase();
     void testRemoteSyncDatabaseSameKey();
     void testRemoteSyncDatabaseRequiresPassword();
+    void testRemoteDownloadRequiresTempDatabase();
+    void testRemoteDownloadRequiresTempDatabase_data();
     void testOpenRemoteDatabase();
     void testAutoreloadDatabase();
     void testTabs();
