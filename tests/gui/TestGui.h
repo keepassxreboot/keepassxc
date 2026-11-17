@@ -45,6 +45,8 @@ private slots:
     void testOpenRemoteDatabase();
     void testAutoreloadDatabase();
     void testTabs();
+    void testWindowFilePath();
+    void testWindowFilePathClearsOnSettingsScreen();
     void testEditEntry();
     void testSearchEditEntry();
     void testAddEntry();
