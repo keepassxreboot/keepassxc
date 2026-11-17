@@ -146,6 +146,8 @@ public:
     const QStringList& customAttributeKeys() const;
     const QStringList& tagList() const;
     void removeTag(const QString& tag);
+    bool hasTag(const QString& tag);
+    bool renameTag(const QString& oldTag, const QString& newTag, QString* error);
 
     QSharedPointer<const CompositeKey> key() const;
     bool setKey(const QSharedPointer<const CompositeKey>& key,
