@@ -95,6 +95,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::AutoSaveAfterEveryChange, m_generalUi->autoSaveAfterEveryChangeCheckBox},
         {Config::AutoSaveOnExit, m_generalUi->autoSaveOnExitCheckBox},
         {Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox},
+        {Config::FileChangeCheckInterval, m_generalUi->fileChangeCheckIntervalSpinBox},
         {Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox},
         {Config::BackupFilePathPattern, m_generalUi->backupFilePath},
         {Config::UseAtomicSaves, m_generalUi->useAlternativeSaveCheckBox},

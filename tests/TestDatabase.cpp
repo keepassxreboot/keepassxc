@@ -19,10 +19,13 @@
 #include "TestDatabase.h"
 
 #include <QRegularExpression>
+#include <QScopeGuard>
 #include <QSignalSpy>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
+#include "core/Config.h"
+#include "core/FileWatcher.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -306,6 +309,42 @@ void TestDatabase::testExternallyModified()
     QVERIFY(db->save(Database::Atomic, {}, &error));
     // ignoreFileChangesUntilSaved should reset after save
     QVERIFY(db->ignoreFileChangesUntilSaved() == false);
+}
+
+void TestDatabase::testFileChangeCheckInterval()
+{
+    const auto previousInterval = config()->get(Config::FileChangeCheckInterval);
+    auto restoreInterval =
+        qScopeGuard([previousInterval] { config()->set(Config::FileChangeCheckInterval, previousInterval); });
+
+    // A zero interval disables polling when the database is opened.
+    config()->set(Config::FileChangeCheckInterval, 0);
+
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.copyFromFile(dbFileName));
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    QString error;
+    QVERIFY(db->open(tempFile.fileName(), key, &error));
+
+    auto fileWatcher = db->findChild<FileWatcher*>();
+    QVERIFY(fileWatcher);
+    QVERIFY(!fileWatcher->isChecksumTimerActive());
+
+    // Changes to the global preference should update already-open databases.
+    config()->set(Config::FileChangeCheckInterval, 1);
+    QVERIFY(fileWatcher->isChecksumTimerActive());
+
+    config()->set(Config::FileChangeCheckInterval, 0);
+    QVERIFY(!fileWatcher->isChecksumTimerActive());
+
+    // Saving restarts the watcher and should preserve the current setting.
+    db->metadata()->setName("test");
+    QVERIFY2(db->save(Database::Atomic, {}, &error), error.toLatin1());
+    QVERIFY(!fileWatcher->isChecksumTimerActive());
 }
 
 void TestDatabase::testCustomAttributeKeys()
