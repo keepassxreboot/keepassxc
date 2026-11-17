@@ -14,6 +14,8 @@ The KeePassXC-Browser extension is available on the following web browsers:
 
 NOTE: On Linux, Flatpak and Snap based browsers are generally not supported. Ubuntu's Firefox Snap is currently the only known exception. 
 
+NOTE: On macOS, Safari and other native applications can use system-wide AutoFill without a browser extension. See <<_macos_autofill_integration,macOS AutoFill Integration>>.
+
 === Install the Browser Extension
 You can download the KeePassXC-Browser extension from your web browser. To download the KeePassXC-Browser extension, perform the following steps:
 

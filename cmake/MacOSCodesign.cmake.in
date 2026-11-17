@@ -20,6 +20,7 @@ if(NOT CPACK_PACKAGE_FILES)     # PRE_BUILD: Sign binaries
     set(PROGNAME "@PROGNAME@")
     set(CODESIGN_IDENTITY "@WITH_XC_CODESIGN_IDENTITY@")
     set(ENTITLEMENTS @MACOSX_BUNDLE_APPLE_ENTITLEMENTS@)
+    set(EXTENSION_ENTITLEMENTS "@CMAKE_SOURCE_DIR@/src/autofill/mac/MacAutoFill.entitlements")
     set(APP_DIR "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/${PROGNAME}.app")
 
     if(NOT CODESIGN_IDENTITY)
@@ -43,9 +44,25 @@ if(NOT CPACK_PACKAGE_FILES)     # PRE_BUILD: Sign binaries
         message(FATAL_ERROR "Signing binaries failed: ${SIGN_ERROR}")
     endif()
 
-    # (Re-)Sign main executable with --entitlements
+    # (Re-)Sign AutoFill extension with its entitlements before sealing main bundle
+    if(EXISTS "${APP_DIR}/Contents/PlugIns/keepassxc-autofill.appex")
+        execute_process(
+            COMMAND xcrun codesign --sign=${CODESIGN_IDENTITY} --force --options=runtime --entitlements=${EXTENSION_ENTITLEMENTS} "${APP_DIR}/Contents/PlugIns/keepassxc-autofill.appex"
+            RESULT_VARIABLE SIGN_RESULT
+            OUTPUT_VARIABLE SIGN_OUTPUT
+            ERROR_VARIABLE SIGN_ERROR
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_STRIP_TRAILING_WHITESPACE
+            ECHO_OUTPUT_VARIABLE
+        )
+        if (NOT SIGN_RESULT EQUAL 0)
+            message(FATAL_ERROR "Signing AutoFill extension failed: ${SIGN_ERROR}")
+        endif()
+    endif()
+
+    # (Re-)Sign main executable and app bundle with --entitlements
     execute_process(
-        COMMAND xcrun codesign --sign=${CODESIGN_IDENTITY} --force --options=runtime --entitlements=${ENTITLEMENTS} "${APP_DIR}/Contents/MacOS/${PROGNAME}"
+        COMMAND xcrun codesign --sign=${CODESIGN_IDENTITY} --force --options=runtime --entitlements=${ENTITLEMENTS} "${APP_DIR}/Contents/MacOS/${PROGNAME}" "${APP_DIR}"
         RESULT_VARIABLE SIGN_RESULT
         OUTPUT_VARIABLE SIGN_OUTPUT
         ERROR_VARIABLE SIGN_ERROR

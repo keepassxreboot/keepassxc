@@ -39,6 +39,8 @@ include::topics/AutoType.adoc[tags=*]
 
 include::topics/SecretService.adoc[tags=*]
 
+include::topics/macOSAutoFill.adoc[tags=*]
+
 include::topics/SSHAgent.adoc[tags=*]
 
 include::topics/AdminOptions.adoc[tags=*]
