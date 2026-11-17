@@ -1675,6 +1675,38 @@ Backup database located at %2</source>
         <source>No file path was provided.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Could not obtain descriptor for syncing file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error syncing file (error code: %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error syncing file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not replace file (error code: %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Original database backup kept at %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not replace file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database file is read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not create a named temporary file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
