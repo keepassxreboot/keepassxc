@@ -31,6 +31,9 @@ private slots:
     void testMergeIntoNew();
     void testMergeNoChanges();
     void testMergeCustomData();
+    void testRemoteSyncSettingsNotOverwritten();
+    void testRemoteSyncSettingsTwoClients();
+    void testRemoteSyncSettingsRelayReset();
     void testResolveConflictNewer();
     void testResolveConflictExisting();
     void testResolveGroupConflictOlder();

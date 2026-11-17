@@ -18,6 +18,7 @@
 #include "TestMerge.h"
 #include "mock/MockClock.h"
 
+#include "core/CustomData.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
@@ -136,6 +137,111 @@ void TestMerge::testMergeCustomData()
 
     QCOMPARE(changes.size(), 1);
     QCOMPARE(dbDestination->metadata()->customData()->value("TEST_CUSTOM_DATA"), QString("TESTING"));
+}
+
+/**
+ * Remote sync (DatabaseWidget::syncWithDatabase) performs two merges:
+ *   firstMerge : local  -> remote
+ *   secondMerge: remote -> local
+ *
+ * Per-database remote sync settings (KPXC_REMOTE_SYNC_SETTINGS) describe the
+ * local client's download/upload commands. They are client-specific and must
+ * never travel to another client, otherwise a peer holding an empty list ("[]")
+ * silently wipes the settings of every other client.
+ */
+void TestMerge::testRemoteSyncSettingsNotOverwritten()
+{
+    QScopedPointer<Database> localDb(createTestDatabase());
+    QScopedPointer<Database> remoteDb(
+        createTestDatabaseStructureClone(localDb.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    const QString localSettings =
+        "[{\"name\":\"nas-sync\",\"downloadCommand\":\"/local/bin/sync.sh download {TEMP_DATABASE}\","
+        "\"uploadCommand\":\"/local/bin/sync.sh upload {TEMP_DATABASE}\"}]";
+
+    // Local client has a configured sync profile.
+    localDb->metadata()->customData()->set(CustomData::RemoteProgramSettings, localSettings);
+
+    // The remote (NAS) copy predates the profile and carries an empty list.
+    remoteDb->metadata()->customData()->set(CustomData::RemoteProgramSettings, "[]");
+
+    // Make the remote database appear newer, exactly as happens during a sync,
+    // because the remote temporary database is opened after the local one.
+    m_clock->advanceSecond(1);
+    remoteDb->metadata()->customData()->set("REMOTE_ONLY_MARKER", "newer");
+
+    // Replicate syncWithDatabase()
+    Merger firstMerge(localDb.data(), remoteDb.data());
+    Merger secondMerge(remoteDb.data(), localDb.data());
+    firstMerge.merge();
+    secondMerge.merge();
+
+    // The local client must keep its own sync settings.
+    QCOMPARE(localDb->metadata()->customData()->value(CustomData::RemoteProgramSettings), localSettings);
+    // The remote copy must not acquire the local client's private commands.
+    QVERIFY(!remoteDb->metadata()->customData()->contains(CustomData::RemoteProgramSettings)
+            || remoteDb->metadata()->customData()->value(CustomData::RemoteProgramSettings) == "[]");
+}
+
+/**
+ * Helper: replicate DatabaseWidget::syncWithDatabase() exactly.
+ */
+static void syncPair(QSharedPointer<Database>& local, QSharedPointer<Database>& remote)
+{
+    Merger firstMerge(local.data(), remote.data());
+    Merger secondMerge(remote.data(), local.data());
+    firstMerge.merge();
+    secondMerge.merge();
+}
+
+/**
+ * macOS and Windows both sync to one NAS database. No third-party client.
+ * Each client's remote sync commands are client-specific (paths, executables),
+ * so they must never travel to another client.
+ */
+void TestMerge::testRemoteSyncSettingsTwoClients()
+{
+    const QString settingsMac =
+        "[{\"name\":\"sync-nas\",\"downloadCommand\":\"/mac/bin/sync.sh download {TEMP_DATABASE}\"}]";
+    const QString settingsWin =
+        "[{\"name\":\"sync-nas\",\"downloadCommand\":\"C:\\bin\\sync.bat download {TEMP_DATABASE}\"}]";
+
+    QSharedPointer<Database> mac(createTestDatabase());
+    mac->metadata()->customData()->set(CustomData::RemoteProgramSettings, settingsMac);
+
+    m_clock->advanceSecond(1);
+    QSharedPointer<Database> win(createTestDatabase());
+    win->metadata()->customData()->set(CustomData::RemoteProgramSettings, settingsWin);
+
+    m_clock->advanceSecond(1);
+    QSharedPointer<Database> nas(createTestDatabase());
+
+    auto dump=[&](const char* tag){
+        fprintf(stderr, "%-12s MAC=%s | WIN=%s | NAS=%s\n", tag,
+            mac->metadata()->customData()->value(CustomData::RemoteProgramSettings).toUtf8().constData(),
+            win->metadata()->customData()->value(CustomData::RemoteProgramSettings).toUtf8().constData(),
+            nas->metadata()->customData()->value(CustomData::RemoteProgramSettings).toUtf8().constData());
+    };
+    dump("start");
+    syncPair(mac, nas); dump("mac sync 1");
+    m_clock->advanceSecond(1);
+    syncPair(win, nas); dump("win sync 2");
+    m_clock->advanceSecond(1);
+    syncPair(mac, nas); dump("mac sync 3");
+
+    const QString macSettings = mac->metadata()->customData()->value(CustomData::RemoteProgramSettings);
+    const QString winSettings = win->metadata()->customData()->value(CustomData::RemoteProgramSettings);
+    const QString nasSettings = nas->metadata()->customData()->value(CustomData::RemoteProgramSettings);
+
+    fprintf(stderr, "MAC: %s\nWIN: %s\nNAS: %s\n",
+            macSettings.toUtf8().constData(), winSettings.toUtf8().constData(),
+            nasSettings.toUtf8().constData());
+
+    // Each client keeps its own commands.
+    QCOMPARE(macSettings, settingsMac);
+    QCOMPARE(winSettings, settingsWin);
+    // The relay database never carries a client's private commands.
+    QVERIFY(nasSettings.isEmpty() || nasSettings == "[]");
 }
 
 /**
@@ -1497,4 +1603,43 @@ Database* TestMerge::createTestDatabaseStructureClone(Database* source, int entr
                                                                 static_cast<Group::CloneFlag>(groupFlags)));
     delete oldGroup;
     return db;
+}
+
+/**
+ * The NAS relay is reset and saved. That single save wipes every client.
+ */
+void TestMerge::testRemoteSyncSettingsRelayReset()
+{
+    const QString settingsMac =
+        "[{\"name\":\"sync-nas\",\"downloadCommand\":\"/mac/bin/sync.sh download {TEMP_DATABASE}\"}]";
+    const QString settingsWin =
+        "[{\"name\":\"sync-nas\",\"downloadCommand\":\"C:\\bin\\sync.bat download {TEMP_DATABASE}\"}]";
+
+    QSharedPointer<Database> mac(createTestDatabase());
+    mac->metadata()->customData()->set(CustomData::RemoteProgramSettings, settingsMac);
+    m_clock->advanceSecond(1);
+    QSharedPointer<Database> win(createTestDatabase());
+    win->metadata()->customData()->set(CustomData::RemoteProgramSettings, settingsWin);
+    m_clock->advanceSecond(1);
+    QSharedPointer<Database> nas(createTestDatabase());
+
+    auto dump=[&](const char* tag){
+        auto len=[](const QSharedPointer<Database>& d){
+            return d->metadata()->customData()->value(CustomData::RemoteProgramSettings).size();
+        };
+        fprintf(stderr, "%-18s MAC=%2d  WIN=%2d  NAS=%2d\n", tag, len(mac), len(win), len(nas));
+    };
+
+    syncPair(mac, nas); dump("1 mac syncs");
+    syncPair(win, nas); dump("2 win syncs");
+
+    m_clock->advanceSecond(1);
+    nas->metadata()->customData()->set(CustomData::RemoteProgramSettings, "[]");
+    dump("3 NAS saved []");
+
+    syncPair(mac, nas); dump("4 mac syncs");
+    syncPair(win, nas); dump("5 win syncs");
+
+    QCOMPARE(mac->metadata()->customData()->value(CustomData::RemoteProgramSettings), settingsMac);
+    QCOMPARE(win->metadata()->customData()->value(CustomData::RemoteProgramSettings), settingsWin);
 }
