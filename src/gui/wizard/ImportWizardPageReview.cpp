@@ -44,7 +44,7 @@ struct RemoteParams;
 ImportWizardPageReview::ImportWizardPageReview(QWidget* parent)
     : QWizardPage(parent)
     , m_ui(new Ui::ImportWizardPageReview)
-    , m_remoteHandler(new RemoteHandler(this))
+    , m_remoteHandler(new RemoteHandler())
 {
 }
 
