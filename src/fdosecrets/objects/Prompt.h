@@ -111,6 +111,8 @@ namespace FdoSecrets
         QWindow* findWindow(const QString& windowId);
         Service* service() const;
         void finishPrompt(bool dismissed);
+        /// Whether the prompt already completed, by its own course or by being dismissed.
+        bool isFinished() const;
 
     private:
         bool m_signalSent = false;

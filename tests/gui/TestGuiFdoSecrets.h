@@ -25,6 +25,7 @@
 #include "fdosecrets/dbus/DBusTypes.h"
 #include "gui/MessageBox.h"
 
+class AccessControlDialog;
 class MainWindow;
 class Database;
 class DatabaseTabWidget;
@@ -76,6 +77,7 @@ private slots:
     void testServiceUnlockItems();
     void testServiceUnlockItemsIncludeFutureEntries();
     void testServiceUnlockItemsConcurrentLock();
+    void testAccessControlClientDisconnects();
     void testServiceLock();
     void testServiceLockConcurrent();
 
@@ -111,6 +113,7 @@ private:
     bool driveUnlockDialog(DatabaseWidget* target = nullptr);
     bool driveNewDatabaseWizard();
     bool driveAccessControlDialog(bool remember = true, bool includeFutureEntries = false);
+    AccessControlDialog* findAccessControlDialog();
     bool waitForSignal(QSignalSpy& spy, int expectedCount);
 
     void processEvents();

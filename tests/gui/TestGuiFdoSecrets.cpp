@@ -873,6 +873,41 @@ void TestGuiFdoSecrets::testServiceUnlockItemsConcurrentLock()
     }
 }
 
+void TestGuiFdoSecrets::testAccessControlClientDisconnects()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    QPointer<AccessControlDialog> dlg = findAccessControlDialog();
+    VERIFY(dlg);
+
+    // the client goes away while the user is being asked
+    m_client->disconnectDBus();
+    processEvents();
+
+    // the question is withdrawn and the prompt ends as dismissed
+    VERIFY(!dlg || !dlg->isVisible());
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    auto args = spyPromptCompleted.takeFirst();
+    COMPARE(args.at(0).toBool(), true);
+    VERIFY(getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1)).isEmpty());
+
+    m_plugin->dbus()->overrideClient(m_client);
+}
+
 void TestGuiFdoSecrets::testServiceLock()
 {
     auto service = enableService();
@@ -1964,6 +1999,21 @@ TestGuiFdoSecrets::encryptPassword(QByteArray value, QString contentType, const 
     ss.value = std::move(value);
     ss.session = QDBusObjectPath(sess->path());
     return m_clientCipher->encrypt(ss.unmarshal(m_plugin->dbus())).marshal();
+}
+
+AccessControlDialog* TestGuiFdoSecrets::findAccessControlDialog()
+{
+    processEvents();
+    for (auto w : QApplication::topLevelWidgets()) {
+        if (!w->isWindow()) {
+            continue;
+        }
+        auto dlg = qobject_cast<AccessControlDialog*>(w);
+        if (dlg && dlg->isVisible()) {
+            return dlg;
+        }
+    }
+    return nullptr;
 }
 
 bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember, bool includeFutureEntries)
