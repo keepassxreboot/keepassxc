@@ -43,6 +43,7 @@
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
+#include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
@@ -66,6 +67,7 @@
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 #include "mock/MockRemoteProcess.h"
 
 #define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
@@ -1983,6 +1985,109 @@ void TestGui::testDatabaseLocking()
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+}
+
+static QByteArray readFile(const QString& filePath)
+{
+    QFile file(filePath);
+    return file.open(QIODevice::ReadOnly) ? file.readAll() : QByteArray();
+}
+
+// Another copy changes the master password, as another device would
+static bool changePasswordElsewhere(const QString& filePath)
+{
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    auto other = QSharedPointer<Database>::create();
+    if (!other->open(filePath, key)) {
+        return false;
+    }
+    auto newKey = QSharedPointer<CompositeKey>::create();
+    newKey->addKey(QSharedPointer<PasswordKey>::create("b"));
+    other->setKey(newKey);
+    return other->save(Database::DirectWrite);
+}
+
+// The dialog a reload shows when it cannot open the file with the credentials it holds
+static DatabaseOpenDialog* visibleReloadDialog()
+{
+    for (auto* candidate : QApplication::topLevelWidgets()) {
+        auto* dialog = qobject_cast<DatabaseOpenDialog*>(candidate);
+        if (dialog && dialog->isVisible()) {
+            return dialog;
+        }
+    }
+    return nullptr;
+}
+
+void TestGui::testLockWhileReloadNeedsCredentials()
+{
+    config()->set(Config::AutoReloadOnChange, true);
+    config()->set(Config::AutoSaveOnExit, true);
+
+    // Expanding a group is a non-data change, which does not stop the lock
+    m_db->rootGroup()->setExpanded(!m_db->rootGroup()->isExpanded());
+    // So the reload asks how to proceed before it asks for credentials
+    MessageBox::setNextAnswer(MessageBox::Merge);
+    QVERIFY(changePasswordElsewhere(m_dbFilePath));
+    QPointer<DatabaseOpenDialog> dialog;
+    QTRY_VERIFY_WITH_TIMEOUT((dialog = visibleReloadDialog()), 10000);
+    const auto fileBefore = readFile(m_dbFilePath);
+
+    // Nothing is unsaved, so the lock cancels the reload instead of being refused
+    QVERIFY(m_dbWidget->lock());
+    QVERIFY(m_dbWidget->isLocked());
+    QTRY_VERIFY(!dialog || !dialog->isVisible());
+    // and does not save this copy over the newer file
+    QCOMPARE(readFile(m_dbFilePath), fileBefore);
+
+    // Unlocking reads the file from disk, with the new password
+    auto* unlockDatabaseWidget = m_dbWidget->findChild<QWidget*>("databaseOpenWidget");
+    auto* editPassword =
+        unlockDatabaseWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    QVERIFY(editPassword);
+    QTest::keyClicks(editPassword, "b");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+    QTRY_VERIFY(!m_dbWidget->isLocked());
+    m_db = m_dbWidget->database();
+}
+
+void TestGui::testLockWhileReloadNeedsCredentialsWithUnsavedChanges()
+{
+    config()->set(Config::AutoReloadOnChange, true);
+
+    m_db->metadata()->setName("unsaved change");
+    MessageBox::setNextAnswer(MessageBox::Merge);
+    QVERIFY(changePasswordElsewhere(m_dbFilePath));
+    QPointer<DatabaseOpenDialog> dialog;
+    QTRY_VERIFY_WITH_TIMEOUT((dialog = visibleReloadDialog()), 10000);
+
+    // Locking now would lose the unsaved change, so the lock is still refused
+    QVERIFY(!m_dbWidget->lock());
+    QVERIFY(!m_dbWidget->isLocked());
+    QVERIFY(dialog && dialog->isVisible());
+
+    dialog->reject();
+    QTRY_VERIFY(!dialog || !dialog->isVisible());
+}
+
+void TestGui::testLockWhileReloadNeedsCredentialsAfterDiscard()
+{
+    config()->set(Config::AutoReloadOnChange, true);
+    config()->set(Config::AutoSaveOnExit, true);
+
+    m_db->metadata()->setName("unsaved change");
+    // The user chose to discard the unsaved change, so the lock has nothing to lose
+    MessageBox::setNextAnswer(MessageBox::Discard);
+    QVERIFY(changePasswordElsewhere(m_dbFilePath));
+    QPointer<DatabaseOpenDialog> dialog;
+    QTRY_VERIFY_WITH_TIMEOUT((dialog = visibleReloadDialog()), 10000);
+    const auto fileBefore = readFile(m_dbFilePath);
+
+    QVERIFY(m_dbWidget->lock());
+    QVERIFY(m_dbWidget->isLocked());
+    QTRY_VERIFY(!dialog || !dialog->isVisible());
+    QCOMPARE(readFile(m_dbFilePath), fileBefore);
 }
 
 void TestGui::testDragAndDropKdbxFiles()
