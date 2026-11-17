@@ -65,6 +65,7 @@ void Metadata::init()
     m_data.nameChanged = now;
     m_data.descriptionChanged = now;
     m_data.defaultUserNameChanged = now;
+    m_data.defaultSearchChanged = now;
     m_recycleBinChanged = now;
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
@@ -148,6 +149,16 @@ QString Metadata::defaultUserName() const
 QDateTime Metadata::defaultUserNameChanged() const
 {
     return m_data.defaultUserNameChanged;
+}
+
+QString Metadata::defaultSearch() const
+{
+    return m_data.defaultSearch;
+}
+
+QDateTime Metadata::defaultSearchChanged() const
+{
+    return m_data.defaultSearchChanged;
 }
 
 int Metadata::maintenanceHistoryDays() const
@@ -329,6 +340,17 @@ void Metadata::setDefaultUserNameChanged(const QDateTime& value)
 {
     Q_ASSERT(value.timeSpec() == Qt::UTC);
     m_data.defaultUserNameChanged = value;
+}
+
+void Metadata::setDefaultSearch(const QString& value)
+{
+    set(m_data.defaultSearch, value, m_data.defaultSearchChanged);
+}
+
+void Metadata::setDefaultSearchChanged(const QDateTime& value)
+{
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
+    m_data.defaultSearchChanged = value;
 }
 
 void Metadata::setMaintenanceHistoryDays(int value)
