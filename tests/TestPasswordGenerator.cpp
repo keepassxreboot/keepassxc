@@ -80,6 +80,27 @@ void TestPasswordGenerator::testCustomCharacterSet()
     QVERIFY(expected.match(password).hasMatch());
 }
 
+void TestPasswordGenerator::testNonBmpCharacters()
+{
+    // U+1F600 and U+1F601 share the same high surrogate
+    const QString grinning = QString::fromUtf8("\U0001F600");
+    const QString beaming = QString::fromUtf8("\U0001F601");
+
+    m_generator.setCharClasses(PasswordGenerator::NoClass);
+    m_generator.setCustomCharacterSet(grinning + beaming + "a");
+    m_generator.setExcludedCharacterSet(beaming);
+    m_generator.setLength(2000);
+
+    QVERIFY(m_generator.isValid());
+    const QString password = m_generator.generatePassword();
+    const auto codePoints = password.toUcs4();
+    QCOMPARE(codePoints.size(), 2000);
+    for (char32_t codePoint : codePoints) {
+        QVERIFY(codePoint == 0x1F600 || codePoint == U'a');
+    }
+    QVERIFY(password.contains(grinning));
+}
+
 void TestPasswordGenerator::testCharClasses_data()
 {
     QTest::addColumn<PasswordGenerator::CharClasses>("activeCharacterClasses");
