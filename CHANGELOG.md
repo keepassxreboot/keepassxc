@@ -19,7 +19,7 @@
 ### Security Fixes
 - Fix use-after-free when importing crafted KDB files (CVE-2026-69150; Credits: A. Ramos (@aramosf)) [#13500]
 - Browser: Prevent entry reference injection when creating or updating entries via browser extension (CVE-PENDING; Credits: Davonte (@BadPingHere)) [#13580, #13670, #13688]
-- Browser: Fix out-of-bounds writes when encrypting and decrypting native messaging messages (CVE-PENDING; Credits: @sigure21) [#13679]
+- Browser: Fix out-of-bounds writes when encrypting and decrypting native messaging messages (CVE-2026-118673; Credits: @sigure21) [#13679]
 - Windows: Randomize shared memory mapping names when sending SSH keys to Pageant (CVE-PENDING; Credits: NATO Cyber Security Centre (NCSC), Viktor Markopoulos NCIA/NCSC) [#13680]
 - Fix integer overflow and out-of-bounds read in legacy KDB importer (CVE-PENDING; Credits: NATO Cyber Security Centre (NCSC), Viktor Markopoulos NCIA/NCSC) [#13682]
 - Secret Service: Exclude protected attributes from attribute listings (Credits: Koda Reef (@kodareef5)) [#13674]
