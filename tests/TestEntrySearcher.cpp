@@ -94,6 +94,8 @@ void TestEntrySearcher::testSearch()
 
     auto e2111 = new Entry();
     e2111->setTitle("test search term test");
+    e2111->setUrl("loginpage.com");
+    e2111->attributes()->set("KP2A_URL_1", "alternative.com");
     e2111->setGroup(group2111);
 
     auto e2111b = new Entry();
@@ -167,6 +169,15 @@ void TestEntrySearcher::testSearch()
     // Parent group has search disabled
     m_searchResult = m_entrySearcher.search("search term", group11);
     QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search("url:loginpage.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("url:alternative.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("alternative.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
 }
 
 void TestEntrySearcher::testAndConcatenationInSearch()

@@ -153,6 +153,16 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         hierarchy = entry->group()->hierarchy().join('/').prepend("/");
     }
 
+    // Search all urls including additional ones
+    const auto urlMatch = [&](const SearchTerm& term) {
+        for (const auto& url : entry->getAllUrls()) {
+            if (term.regex.match(url).hasMatch()) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     // By default, empty term matches every entry.
     // However when skipping protected fields, we will reject everything instead
     bool found = !m_skipProtected;
@@ -171,7 +181,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
             break;
         case Field::Url:
-            found = term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch();
+            found = urlMatch(term);
             break;
         case Field::Notes:
             found = term.regex.match(entry->notes()).hasMatch();
@@ -235,7 +245,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             // Terms without a specific field try to match title, username, url, and notes
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
-                    || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
+                    || urlMatch(term)
                     || entry->tagList().indexOf(term.regex) != -1 || term.regex.match(entry->notes()).hasMatch();
         }
 
