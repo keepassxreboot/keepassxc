@@ -55,7 +55,7 @@ public:
 
     void registerNativeEventFilter() override;
 
-    void configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu);
+    void configureMacMenus(QMainWindow* mainWindow, QMenu* viewMenu);
 
     bool registerGlobalShortcut(const QString& name,
                                 Qt::Key key,
