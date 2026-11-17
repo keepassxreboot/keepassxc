@@ -264,7 +264,8 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
  *
  * @param key identity / key to add
  * @param settings constraints (lifetime, confirm), remove-on-lock
- * @param databaseUuid database that owns the key for remove-on-lock
+ * @param databaseUuid database that owns the key for remove-on-lock: its root group uuid,
+ *                     which is stored in the file and survives a reload (Database::uuid() does not)
  * @return true on success
  */
 bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, const QUuid& databaseUuid)
@@ -535,7 +536,7 @@ void SSHAgent::databaseLocked(const QSharedPointer<Database>& db)
 
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
-        if (it.value().first != db->uuid()) {
+        if (it.value().first != db->rootGroup()->uuid()) {
             ++it;
             continue;
         }
@@ -578,7 +579,7 @@ void SSHAgent::databaseUnlocked(const QSharedPointer<Database>& db)
 
         // Add key to agent; ignore errors if we have previously added the key
         bool known_key = m_addedKeys.contains(key);
-        if (!addIdentity(key, settings, db->uuid()) && !known_key) {
+        if (!addIdentity(key, settings, db->rootGroup()->uuid()) && !known_key) {
             emit error(m_error);
         }
     }
