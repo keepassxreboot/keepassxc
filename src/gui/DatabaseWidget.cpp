@@ -206,6 +206,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
     connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
     connect(m_previewView, SIGNAL(copyTextRequested(const QString&)), SLOT(setClipboardTextAndMinimize(const QString&)));
+    connect(m_previewView, SIGNAL(tagSearchRequested(QString)), this, SIGNAL(requestSearch(QString)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
     connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
