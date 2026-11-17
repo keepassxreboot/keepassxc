@@ -68,10 +68,13 @@ bool ScreenLockListenerWin::nativeEventFilter(const QByteArray& eventType, void*
                         emit screenLocked();
                         return true;
                     }
+                    emit screenUnlocked();
                 }
             } else if (m->wParam == PBT_APMSUSPEND) {
                 emit screenLocked();
                 return true;
+            } else if (m->wParam == PBT_APMRESUMEAUTOMATIC || m->wParam == PBT_APMRESUMESUSPEND) {
+                emit screenUnlocked();
             }
         }
         if (m->message == WM_WTSSESSION_CHANGE) {
@@ -82,6 +85,9 @@ bool ScreenLockListenerWin::nativeEventFilter(const QByteArray& eventType, void*
             if (m->wParam == WTS_SESSION_LOCK) {
                 emit screenLocked();
                 return true;
+            }
+            if (m->wParam == WTS_CONSOLE_CONNECT || m->wParam == WTS_SESSION_UNLOCK) {
+                emit screenUnlocked();
             }
         }
     }

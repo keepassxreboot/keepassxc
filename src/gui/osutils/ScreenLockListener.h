@@ -31,6 +31,7 @@ public:
 
 signals:
     void screenLocked();
+    void screenUnlocked();
 
 private:
     ScreenLockListenerPrivate* m_listener;

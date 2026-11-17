@@ -143,6 +143,7 @@ private slots:
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void processTrayIconTrigger();
     void handleScreenLock();
+    void handleScreenUnlock();
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();
     void selectPreviousDatabaseTab();
