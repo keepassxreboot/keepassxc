@@ -68,7 +68,7 @@ bool DesktopPortal::isCurrentSession(const QDBusObjectPath& sessionHandle) const
 }
 
 // Implements only 0.9+ requests where the path is known before making the call
-QString DesktopPortal::portalRequest(const std::function<void(uint, const QVariantMap&)>& handler)
+QString DesktopPortal::portalRequest(QObject* parent, const std::function<void(uint, const QVariantMap&)>& handler)
 {
     static uint next;
     auto bus = QDBusConnection::sessionBus();
@@ -78,7 +78,7 @@ QString DesktopPortal::portalRequest(const std::function<void(uint, const QVaria
     QStringList path;
     path << "" << "org" << "freedesktop" << "portal" << "desktop" << "request" << sender << token;
 
-    auto req = new OrgFreedesktopPortalRequestInterface("org.freedesktop.portal.Desktop", path.join('/'), bus, this);
+    auto req = new OrgFreedesktopPortalRequestInterface("org.freedesktop.portal.Desktop", path.join('/'), bus, parent);
     connect(req, &OrgFreedesktopPortalRequestInterface::Response, req, handler);
     connect(req, &OrgFreedesktopPortalRequestInterface::Response, req, &QObject::deleteLater);
 
