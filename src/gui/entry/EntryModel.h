@@ -19,7 +19,9 @@
 #define KEEPASSX_ENTRYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QList>
 #include <QPixmap>
+#include <QPointer>
 #include <QSet>
 
 #include "core/Config.h"
@@ -81,18 +83,20 @@ private slots:
     void entryAboutToMoveDown(int row);
     void entryMovedDown();
     void entryDataChanged(Entry* entry);
+    void groupAdded();
 
     void onConfigChanged(Config::ConfigKey key);
 
 private:
     void severConnections();
     void makeConnections(const Group* group);
+    void reloadGroup(Group* group);
 
     bool m_backgroundColorVisible = true;
-    Group* m_group;
+    QPointer<Group> m_group;
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
-    QSet<const Group*> m_allGroups;
+    QList<QPointer<const Group>> m_allGroups;
 
     const QString HiddenContentDisplay;
 };

@@ -63,16 +63,53 @@ void EntryModel::setGroup(Group* group)
         return;
     }
 
+    reloadGroup(group);
+}
+
+void EntryModel::reloadGroup(Group* group)
+{
+    if (!group) {
+        return;
+    }
+
     beginResetModel();
 
     severConnections();
 
     m_group = group;
     m_allGroups.clear();
-    m_entries = group->entries();
-    m_orgEntries.clear();
 
-    makeConnections(group);
+    // Check if we should show subgroup entries
+    if (config()->get(Config::GUI_ShowSubgroupEntries).toBool()) {
+        m_entries = group->entriesRecursive();
+
+        // When showing subgroup entries, we need to connect to all groups
+        // that contain the entries being displayed
+        for (const auto& entry : asConst(m_entries)) {
+            if (entry->group() && !m_allGroups.contains(entry->group())) {
+                m_allGroups.append(entry->group());
+            }
+        }
+
+        // Always include the current group itself to handle new entries added directly to it
+        if (!m_allGroups.contains(group)) {
+            m_allGroups.append(group);
+        }
+
+        // Connect to all groups that have entries in the view (or could have entries)
+        for (const auto& groupToConnect : m_allGroups) {
+            if (groupToConnect) {
+                makeConnections(groupToConnect);
+            }
+        }
+
+        // Also connect to groupAdded signal from the main group to detect new subgroups
+        connect(group, &Group::groupAdded, this, &EntryModel::groupAdded);
+    } else {
+        m_entries = group->entries();
+        makeConnections(group);
+    }
+    m_orgEntries.clear();
 
     endResetModel();
 }
@@ -89,13 +126,15 @@ void EntryModel::setEntries(const QList<Entry*>& entries)
     m_orgEntries = entries;
 
     for (const auto entry : asConst(m_entries)) {
-        if (entry->group()) {
-            m_allGroups.insert(entry->group());
+        if (entry->group() && !m_allGroups.contains(entry->group())) {
+            m_allGroups.append(entry->group());
         }
     }
 
-    for (const auto group : m_allGroups) {
-        makeConnections(group);
+    for (const auto& group : m_allGroups) {
+        if (group) {
+            makeConnections(group);
+        }
     }
 
     endResetModel();
@@ -527,7 +566,12 @@ void EntryModel::entryAdded(Entry* entry)
     }
 
     if (m_group) {
-        m_entries = m_group->entries();
+        // Check if we should show subgroup entries
+        if (config()->get(Config::GUI_ShowSubgroupEntries).toBool()) {
+            m_entries = m_group->entriesRecursive();
+        } else {
+            m_entries = m_group->entries();
+        }
     }
     endInsertRows();
 }
@@ -543,7 +587,12 @@ void EntryModel::entryAboutToRemove(Entry* entry)
 void EntryModel::entryRemoved()
 {
     if (m_group) {
-        m_entries = m_group->entries();
+        // Check if we should show subgroup entries
+        if (config()->get(Config::GUI_ShowSubgroupEntries).toBool()) {
+            m_entries = m_group->entriesRecursive();
+        } else {
+            m_entries = m_group->entries();
+        }
     }
     endRemoveRows();
 }
@@ -559,7 +608,12 @@ void EntryModel::entryAboutToMoveUp(int row)
 void EntryModel::entryMovedUp()
 {
     if (m_group) {
-        m_entries = m_group->entries();
+        // Check if we should show subgroup entries
+        if (config()->get(Config::GUI_ShowSubgroupEntries).toBool()) {
+            m_entries = m_group->entriesRecursive();
+        } else {
+            m_entries = m_group->entries();
+        }
     }
     endMoveRows();
 }
@@ -575,7 +629,12 @@ void EntryModel::entryAboutToMoveDown(int row)
 void EntryModel::entryMovedDown()
 {
     if (m_group) {
-        m_entries = m_group->entries();
+        // Check if we should show subgroup entries
+        if (config()->get(Config::GUI_ShowSubgroupEntries).toBool()) {
+            m_entries = m_group->entriesRecursive();
+        } else {
+            m_entries = m_group->entries();
+        }
     }
     endMoveRows();
 }
@@ -586,6 +645,16 @@ void EntryModel::entryDataChanged(Entry* entry)
     emit dataChanged(index(row, 0), index(row, columnCount() - 1));
 }
 
+void EntryModel::groupAdded()
+{
+    // When a new subgroup is added to the current group and we're showing subgroup entries,
+    // we need to refresh our connections to include the new subgroup
+    if (m_group && config()->get(Config::GUI_ShowSubgroupEntries).toBool()) {
+        // Refresh the entry list and connections to include new subgroups
+        reloadGroup(m_group);
+    }
+}
+
 void EntryModel::onConfigChanged(Config::ConfigKey key)
 {
     switch (key) {
@@ -594,6 +663,12 @@ void EntryModel::onConfigChanged(Config::ConfigKey key)
         break;
     case Config::GUI_HidePasswords:
         emit dataChanged(index(0, Password), index(rowCount() - 1, Password), {Qt::DisplayRole});
+        break;
+    case Config::GUI_ShowSubgroupEntries:
+        // Refresh the entry list when the subgroup setting changes
+        if (m_group) {
+            reloadGroup(m_group);
+        }
         break;
     default:
         break;
@@ -606,8 +681,17 @@ void EntryModel::severConnections()
         disconnect(m_group, nullptr, this, nullptr);
     }
 
-    for (const Group* group : asConst(m_allGroups)) {
-        disconnect(group, nullptr, this, nullptr);
+    // Use an iterator to safely remove null pointers while iterating
+    auto it = m_allGroups.begin();
+    while (it != m_allGroups.end()) {
+        if (*it) {
+            // Group is still valid, disconnect from it
+            disconnect(*it, nullptr, this, nullptr);
+            ++it;
+        } else {
+            // Group has been deleted, remove the null pointer
+            it = m_allGroups.erase(it);
+        }
     }
 }
 
