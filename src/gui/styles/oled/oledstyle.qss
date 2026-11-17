@@ -1,0 +1,61 @@
+/* OLED pure-black theme — View → Theme → Dark (OLED) */
+
+DatabaseWidget:!active,
+DatabaseWidget #groupView:!active, DatabaseWidget #tagView:!active,
+EntryPreviewWidget *:!active[blendIn="true"] {
+    background-color: #000000;
+}
+
+DatabaseWidget:disabled,
+DatabaseWidget #groupView:disabled, DatabaseWidget #tagView:disabled,
+EntryPreviewWidget *:disabled[blendIn="true"] {
+    background-color: #0A0A0A;
+}
+
+QMenu {
+    border: 1px solid #1A1A1A;
+    background-color: #000000;
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: #1A1A1A;
+}
+
+QPushButton:!default:hover {
+    background: #1A1A1A;
+}
+
+QPushButton:default:hover, QPushButton:checked:hover {
+    background: #2E7D32;
+}
+
+QToolTip {
+    color: #D0D0D0;
+    background-color: #0D1F0D;
+    border: 1px solid #1B5E20;
+}
+
+QGroupBox {
+    background-color: #0A0A0A;
+}
+
+QToolBar {
+    background-color: #000000;
+    border: none;
+}
+
+QStatusBar {
+    background-color: #000000;
+}
+
+QHeaderView::section {
+    background-color: #0A0A0A;
+    border: 1px solid #1A1A1A;
+}
+
+QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QComboBox {
+    background-color: #0A0A0A;
+    border: 1px solid #1A1A1A;
+    selection-background-color: #1B5E20;
+}
