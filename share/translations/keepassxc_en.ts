@@ -668,6 +668,14 @@
         <source>Show autocomplete suggestions for username and additional attributes</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Global shortcut to show or hide window:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Global shortcut to show or hide window</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>

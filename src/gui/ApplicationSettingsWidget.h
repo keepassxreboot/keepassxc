@@ -80,6 +80,8 @@ private:
     QSet<Config::ConfigKey> m_configValueInverted;
     Qt::Key m_globalAutoTypeKey;
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
+    Qt::Key m_globalToggleWindowKey;
+    Qt::KeyboardModifiers m_globalToggleWindowModifiers;
     class ExtraPage;
     QList<ExtraPage> m_extraPages;
 };

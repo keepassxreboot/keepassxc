@@ -111,6 +111,8 @@ public:
         GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
         GUI_FontSizeOffset,
         GUI_XDPGlobalShortcutsConfigured,
+        GUI_GlobalToggleWindowKey,
+        GUI_GlobalToggleWindowModifiers,
 
         GUI_MainWindowGeometry,
         GUI_MainWindowState,

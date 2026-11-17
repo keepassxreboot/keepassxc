@@ -263,6 +263,24 @@ MainWindow::MainWindow()
         autoType()->registerGlobalShortcut(globalAutoTypeKey, globalAutoTypeModifiers);
     }
 
+    connect(
+        osUtils,
+        &OSUtilsBase::globalShortcutTriggered,
+        this,
+        [this](const QString& name) {
+            if (name == QLatin1String("togglewindow")) {
+                bringToFrontOrHide();
+            }
+        },
+        Qt::QueuedConnection);
+    Qt::Key globalToggleWindowKey = static_cast<Qt::Key>(config()->get(Config::GUI_GlobalToggleWindowKey).toInt());
+    Qt::KeyboardModifiers globalToggleWindowModifiers =
+        static_cast<Qt::KeyboardModifiers>(config()->get(Config::GUI_GlobalToggleWindowModifiers).toInt());
+    if (globalToggleWindowKey > 0 && globalToggleWindowModifiers > 0) {
+        osUtils->registerGlobalShortcut(
+            QStringLiteral("togglewindow"), globalToggleWindowKey, globalToggleWindowModifiers);
+    }
+
     m_ui->toolbarSeparator->setVisible(false);
     m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
 
@@ -1817,6 +1835,15 @@ void MainWindow::minimizeOrHide()
 void MainWindow::toggleWindow()
 {
     if (isVisible() && !isMinimized()) {
+        hideWindow();
+    } else {
+        bringToFront();
+    }
+}
+
+void MainWindow::bringToFrontOrHide()
+{
+    if (isVisible() && !isMinimized() && isActiveWindow()) {
         hideWindow();
     } else {
         bringToFront();

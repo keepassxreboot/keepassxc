@@ -91,6 +91,7 @@ public slots:
     void hideWindow();
     void minimizeOrHide();
     void toggleWindow();
+    void bringToFrontOrHide();
     void bringToFront();
     bool isMinimizedToSystemTray();
     void closeAllDatabases();
