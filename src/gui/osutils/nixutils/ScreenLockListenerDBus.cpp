@@ -17,6 +17,11 @@
 
 #include "ScreenLockListenerDBus.h"
 
+#include "core/Config.h"
+#include "gui/DatabaseWidget.h"
+#include "gui/MainWindow.h"
+
+#include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDebug>
 #include <QProcessEnvironment>
@@ -24,6 +29,8 @@
 ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
     : ScreenLockListenerPrivate(parent)
 {
+    m_mainWindow = qobject_cast<MainWindow*>(parent);
+
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     QDBusConnection systemBus = QDBusConnection::systemBus();
 
@@ -78,6 +85,12 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
                        "Locked", // signal name
                        this, // receiver
                        SLOT(unityLocked()));
+
+    connect(m_mainWindow, &MainWindow::databaseUnlocked, this, &ScreenLockListenerDBus::refreshInhibitor);
+    connect(m_mainWindow, &MainWindow::databaseLocked, this, &ScreenLockListenerDBus::refreshInhibitor);
+    connect(config(), &Config::changed, this, &ScreenLockListenerDBus::refreshInhibitor);
+
+    refreshInhibitor();
 }
 
 void ScreenLockListenerDBus::login1SessionObjectReceived(QDBusMessage response)
@@ -126,4 +139,59 @@ void ScreenLockListenerDBus::freedesktopScreenSaver(bool status)
     if (status) {
         emit screenLocked();
     }
+}
+
+void ScreenLockListenerDBus::refreshInhibitor()
+{
+    const bool hold = config()->get(Config::Security_LockDatabaseScreenLock).toBool() && anyDatabaseUnlocked();
+
+    if (hold && !m_pipeFd.isValid()) {
+        acquireInhibitor();
+    } else if (!hold && m_pipeFd.isValid()) {
+        releaseInhibitor();
+    }
+}
+
+bool ScreenLockListenerDBus::anyDatabaseUnlocked() const
+{
+    if (!m_mainWindow) {
+        return false;
+    }
+    for (const auto* dbWidget : m_mainWindow->getOpenDatabases()) {
+        if (dbWidget && !dbWidget->isLocked()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void ScreenLockListenerDBus::acquireInhibitor()
+{
+    QDBusInterface loginManager("org.freedesktop.login1", // service
+                                "/org/freedesktop/login1", // path
+                                "org.freedesktop.login1.Manager", // interface
+                                QDBusConnection::systemBus());
+    if (!loginManager.isValid()) {
+        qWarning() << "org.freedesktop.login1.Manager is not available, sleep inhibitor not acquired";
+        return;
+    }
+
+    const QDBusMessage reply =
+        loginManager.call("Inhibit",
+                          QLatin1String("sleep"), // what
+                          QLatin1String("KeePassXC"), // who
+                          QLatin1String("Waiting for open databases to lock before sleep"), // why
+                          QLatin1String("delay")); // mode
+    if (reply.type() == QDBusMessage::ErrorMessage) {
+        qWarning() << "Failed to acquire sleep inhibitor:" << reply.errorMessage();
+        return;
+    }
+
+    m_pipeFd = reply.arguments().at(0).value<QDBusUnixFileDescriptor>();
+}
+
+void ScreenLockListenerDBus::releaseInhibitor()
+{
+    // Closing the pipe fd releases the inhibitor in logind
+    m_pipeFd = QDBusUnixFileDescriptor();
 }
