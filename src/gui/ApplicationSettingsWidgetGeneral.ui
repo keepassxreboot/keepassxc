@@ -1580,11 +1580,38 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabUrlOverrides">
+      <attribute name="title">
+       <string>URL Overrides</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="urlOverridesLayout">
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="UrlOverrideWidget" name="urlOverrideWidget" native="true"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>UrlOverrideWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/UrlOverrideWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>ShortcutWidget</class>
    <extends>QLineEdit</extends>

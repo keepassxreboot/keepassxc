@@ -463,6 +463,8 @@ void ApplicationSettingsWidget::loadSettings()
     hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());
     showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
 
+    m_generalUi->urlOverrideWidget->loadSettings();
+
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
@@ -565,6 +567,8 @@ void ApplicationSettingsWidget::saveSettings()
         config()->remove(Config::LastKeyFiles);
         config()->remove(Config::LastChallengeResponse);
     }
+
+    m_generalUi->urlOverrideWidget->saveSettings();
 
     // Save settings for additional pages
     for (const ExtraPage& page : asConst(m_extraPages)) {

@@ -144,6 +144,8 @@ set(gui_SOURCES
         gui/TotpExportSettingsDialog.cpp
         gui/DatabaseOpenDialog.cpp
         gui/URLEdit.cpp
+        gui/UrlOverride.cpp
+        gui/UrlOverrideWidget.cpp
         gui/UrlTools.cpp
         gui/WelcomeWidget.cpp
         gui/csvImport/CsvImportWidget.cpp

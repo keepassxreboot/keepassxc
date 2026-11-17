@@ -36,6 +36,7 @@ namespace UrlTools
     bool isUrlIdentical(QString first, QString second);
     bool isUrlValid(const QString& urlField, bool looseComparison = false);
     bool domainHasIllegalCharacters(const QString& domain);
+    QString normalizeScheme(const QString& scheme);
 
     extern const QString URL_WILDCARD;
 } // namespace UrlTools
