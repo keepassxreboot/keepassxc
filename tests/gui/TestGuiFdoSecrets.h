@@ -99,6 +99,8 @@ private slots:
 
     void testAlias();
     void testDefaultAliasAlwaysPresent();
+    void testAliasObjectPathAccessible();
+    void testAliasObjectPathAfterClosingPreviousOwner();
 
     void testExposeSubgroup();
     void testModifyingExposedGroup();

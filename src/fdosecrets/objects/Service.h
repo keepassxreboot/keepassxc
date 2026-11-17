@@ -146,6 +146,8 @@ namespace FdoSecrets
     private:
         bool initialize();
 
+        friend class DBusMgr;
+
         /**
          * Find collection by alias name
          * @param alias
