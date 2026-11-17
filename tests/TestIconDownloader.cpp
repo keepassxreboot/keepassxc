@@ -97,6 +97,10 @@ void TestIconDownloader::testIconDownloader_data()
         << QStringList{"https://user:password@de.login.keepassxc.org/favicon.ico",
                        "https://user:password@keepassxc.org/favicon.ico",
                        "https://keepassxc.org/favicon.ico"};
+    QTest::newRow("Raw IPv6 with schema")
+        << "https://[2001:db8::1]" << QStringList{"https://[2001:db8::1]/favicon.ico"};
+    QTest::newRow("Raw IPv6 with schema and port")
+        << "https://[2001:db8::1]:8080" << QStringList{"https://[2001:db8::1]:8080/favicon.ico"};
     QTest::newRow("Raw IP with username and password")
         << "https://user:password@134.130.155.184" << QStringList{"https://user:password@134.130.155.184/favicon.ico"};
     QTest::newRow("Relative path should be preserved")
