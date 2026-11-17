@@ -43,7 +43,7 @@ Copyright: 2012 - 2015, Lars Bilke
 License: BSD-3-clause
 
 Files: cmake/FindBotan.cmake
-Copyright: none
+Copyright: 2026, Adrien Ollier
 License: LGPL-2.1
 
 Files: cmake/GenerateProductVersion.cmake
