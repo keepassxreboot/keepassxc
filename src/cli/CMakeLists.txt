@@ -38,6 +38,7 @@ set(cli_SOURCES
         List.cpp
         Merge.cpp
         Move.cpp
+        MoveDir.cpp
         Open.cpp
         Remove.cpp
         RemoveGroup.cpp

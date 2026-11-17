@@ -34,6 +34,7 @@ private:
     readDatabase(const QString& filename = {}, const QString& pw = {}, const QString& keyfile = {});
     int execCmd(Command& cmd, const QStringList& args) const;
     bool isTotp(const QString& value);
+    bool prepareMoveDirGroups(const QStringList& paths);
     void setInput(const QString& input);
     void setInput(const QStringList& input);
 
@@ -72,6 +73,20 @@ private slots:
     void testMerge();
     void testMergeWithKeys();
     void testMove();
+    void testMoveDir();
+    void testMoveDirOperations_data();
+    void testMoveDirOperations();
+    void testMoveDirRejected_data();
+    void testMoveDirRejected();
+    void testMoveDirAmbiguousPaths();
+    void testMoveDirStoredNameAliases_data();
+    void testMoveDirStoredNameAliases();
+    void testMoveDirLiteralDoubleSeparatorAndFallback();
+    void testMoveDirDestinationChildCollisionWithStoredSeparator();
+    void testMoveDirRootResolutionWithSpecialNames();
+    void testMoveDirRecycleBin();
+    void testMoveDirSaveFailureRestoresInteractiveState();
+    void testMoveDirRenameSaveFailureRestoresState();
     void testOpen();
     void testRemove();
     void testRemoveGroup();
