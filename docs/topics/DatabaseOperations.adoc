@@ -274,6 +274,7 @@ The following fields can be searched along with their abbreviated name in parent
 * Notes (n)
 * Attribute names and values (attr)
 * Attachment (attach)
+* Content of text attachments (in_attachment)
 * Group (g)
 * Tags (tag)
 * Entry State (is:expired, is:weak)
