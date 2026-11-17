@@ -21,7 +21,6 @@
 #include "networking/NetworkManager.h"
 
 #include <QBuffer>
-#include <QHostInfo>
 #include <QImageReader>
 #include <QNetworkReply>
 
@@ -72,14 +71,9 @@ void IconDownloader::setUrl(const QString& entryUrl)
 
     QString fullyQualifiedDomain = url.host();
 
-    // Determine if host portion of URL is an IP address by resolving it and
-    // searching for a match with the returned address(es).
-    bool hostIsIp = false;
-    QList<QHostAddress> hostAddresses = QHostInfo::fromName(fullyQualifiedDomain).addresses();
-    hostIsIp =
-        std::any_of(hostAddresses.begin(), hostAddresses.end(), [&fullyQualifiedDomain](const QHostAddress& addr) {
-            return addr.toString() == fullyQualifiedDomain;
-        });
+    // Determine if host portion of URL is an IP address. This must not resolve the
+    // host name, as a blocking DNS lookup would freeze the UI.
+    const bool hostIsIp = UrlTools::isIpAddress(fullyQualifiedDomain);
 
     // Determine the second-level domain, if available
     QString secondLevelDomain;
