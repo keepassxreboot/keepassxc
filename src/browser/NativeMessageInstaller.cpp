@@ -239,6 +239,11 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     } else if (browser == SupportedBrowsers::FIREFOX) {
+        // Like Firefox, move to $XDG_CONFIG_HOME/mozilla only when ~/.mozilla does not exist
+        if (!QDir(QDir::homePath() + QStringLiteral("/.mozilla")).exists()) {
+            return QStringLiteral("%1/mozilla/native-messaging-hosts/%2.json")
+                .arg(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation), HOST_NAME);
+        }
         basePath = QDir::homePath();
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);

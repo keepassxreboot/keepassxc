@@ -59,6 +59,7 @@ private slots:
     void testBrowserHostMessaging();
     void testBrowserHostFragmentedMessaging();
     void testBrowserHostCoalescedMessaging();
+    void testFirefoxNativeMessagePath();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root, bool additionalUrl = false) const;
