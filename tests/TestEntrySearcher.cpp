@@ -188,9 +188,9 @@ void TestEntrySearcher::testSearch()
     QCOMPARE(m_searchResult.count(), 1);
 
     // Add large attachment to entry
-    QByteArray largeContent(10*1024*1024, 'a');
+    QByteArray largeContent(10 * 1024 * 1024, 'a');
     largeContent.replace(0, 10, "start_term");
-    largeContent.replace(largeContent.size()-8, 8, "end_term");
+    largeContent.replace(largeContent.size() - 8, 8, "end_term");
     e2111->attachments()->set("large_attachment.txt", largeContent);
     m_searchResult = m_entrySearcher.search("in_attachment:start_term", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
