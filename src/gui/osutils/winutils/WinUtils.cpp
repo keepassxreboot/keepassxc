@@ -116,7 +116,7 @@ bool WinUtils::isStatusBarDark() const
     return settings.value("SystemUsesLightTheme", 0).toInt() == 0;
 }
 
-bool WinUtils::isLaunchAtStartupEnabled() const
+bool WinUtils::isLaunchAtStartupEnabled()
 {
     return QSettings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat)
         .contains(qAppName());
