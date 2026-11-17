@@ -27,8 +27,8 @@ public:
     bool isAvailable() const override;
     QString errorString() const override;
 
-    bool setKey(const QUuid& dbUuid, const QByteArray& passwordKey) override;
-    bool getKey(const QUuid& dbUuid, QByteArray& passwordKey) override;
+    KeyStatus setKey(const QUuid& dbUuid, const QByteArray& passwordKey) override;
+    KeyStatus getKey(const QUuid& dbUuid, QByteArray& passwordKey) override;
     bool hasKey(const QUuid& dbUuid) const override;
 
     void reset(const QUuid& dbUuid) override;
@@ -38,12 +38,13 @@ private:
     static bool isWatchAvailable();
     static bool isTouchIdAvailable();
     static bool isPasswordFallbackPossible();
-    bool setKey(const QUuid& dbUuid, const QByteArray& passwordKey, const bool ignoreTouchID);
+    KeyStatus setKey(const QUuid& dbUuid, const QByteArray& passwordKey, const bool ignoreTouchID);
 
     static void deleteKeyEntry(const QString& accountName);
     static QString databaseKeyName(const QUuid& dbUuid);
 
     QHash<QUuid, QByteArray> m_encryptedMasterKeys;
+    QString m_error;
 };
 
 #endif // KEEPASSXC_TOUCHID_H

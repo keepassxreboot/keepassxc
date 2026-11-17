@@ -32,6 +32,12 @@ class KeyFileEditWidget;
 class YubiKeyEditWidget;
 class QPushButton;
 
+class Database;
+namespace Ui
+{
+    class DatabaseSettingsWidgetDatabaseKey;
+}
+
 class DatabaseSettingsWidgetDatabaseKey : public DatabaseSettingsWidget
 {
     Q_OBJECT
@@ -67,6 +73,7 @@ private:
                            QSharedPointer<ChallengeResponseKey>& oldKey);
 
     bool m_isDirty = false;
+    const QScopedPointer<Ui::DatabaseSettingsWidgetDatabaseKey> m_ui;
     const QPointer<QPushButton> m_additionalKeyOptionsToggle;
     const QPointer<QWidget> m_additionalKeyOptions;
     const QPointer<PasswordEditWidget> m_passwordEditWidget;
