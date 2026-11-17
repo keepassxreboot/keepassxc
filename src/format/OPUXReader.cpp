@@ -127,6 +127,11 @@ namespace
                 name = QString("%1_%2").arg(prefix, name);
 
                 const auto valueMap = fieldMap.value("value").toMap();
+                if (valueMap.isEmpty()) {
+                    qWarning("Skipping 1PUX field \"%s\" without a value", qPrintable(name));
+                    continue;
+                }
+
                 const auto key = valueMap.firstKey();
                 if (key == "totp") {
                     auto totp = valueMap.value(key).toString();
@@ -285,7 +290,14 @@ QSharedPointer<Database> OPUXReader::convert(const QString& path)
     db->rootGroup()->setName(QObject::tr("1Password Import"));
     const auto json = QJsonDocument::fromJson(data);
 
-    const auto account = json.object().value("accounts").toArray().first().toObject();
+    const auto accounts = json.object().value("accounts").toArray();
+    if (accounts.isEmpty()) {
+        m_error = QObject::tr("Invalid 1PUX file format: Missing accounts");
+        unzClose(uf);
+        return {};
+    }
+
+    const auto account = accounts.first().toObject();
     const auto vaults = account.value("vaults").toArray();
 
     for (const auto& vault : vaults) {
