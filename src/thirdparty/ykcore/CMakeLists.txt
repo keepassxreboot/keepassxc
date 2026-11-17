@@ -42,3 +42,9 @@ elseif(APPLE)
     target_sources(ykcore PRIVATE ykcore_osx.c)
     target_link_libraries(ykcore PUBLIC "-framework IOKit -framework Foundation")
 endif()
+
+# Based on yubikey-personalization 1.20.0, including the upstream macOS fix
+# 7ee7b11 (2020-09-21), with KeePassXC API/backend changes and warning fixes.
+set_target_properties(ykcore PROPERTIES
+    VERSION "1.20.0+keepassxc"
+    SBOM_SOURCE_PATH src/thirdparty/ykcore/ykcore.c)

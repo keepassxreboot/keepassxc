@@ -25,7 +25,7 @@ if(KPXC_FEATURE_BROWSER)
 
     add_executable(keepassxc-proxy ${proxy_SOURCES})
     target_link_libraries(keepassxc-proxy proxy_alloc Qt6::Core Qt6::Network)
-    install(TARGETS keepassxc-proxy
+    kpxc_install_target(keepassxc-proxy
             BUNDLE DESTINATION . COMPONENT Runtime
             RUNTIME DESTINATION ${PROXY_INSTALL_DIR} COMPONENT Runtime)
 
