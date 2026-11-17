@@ -258,6 +258,7 @@
     <addaction name="separator"/>
     <addaction name="actionDatabaseSettings"/>
     <addaction name="actionDatabaseSecurity"/>
+    <addaction name="actionRemoteSync"/>
     <addaction name="actionReports"/>
     <addaction name="separator"/>
     <addaction name="actionPasskeys"/>
@@ -645,6 +646,14 @@
    </property>
    <property name="toolTip">
     <string>Show Database Security</string>
+   </property>
+  </action>
+  <action name="actionRemoteSync">
+   <property name="text">
+    <string>Remote &amp;Sync…</string>
+   </property>
+   <property name="toolTip">
+    <string>Run Database Remote Sync</string>
    </property>
   </action>
   <action name="actionReports">

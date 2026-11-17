@@ -595,6 +595,11 @@ void DatabaseTabWidget::showDatabaseSecurity()
     currentDatabaseWidget()->switchToDatabaseSecurity();
 }
 
+void DatabaseTabWidget::showRemoteSync()
+{
+    currentDatabaseWidget()->switchToRemoteSettings();
+}
+
 #ifdef KPXC_FEATURE_BROWSER
 void DatabaseTabWidget::showPasskeys()
 {
