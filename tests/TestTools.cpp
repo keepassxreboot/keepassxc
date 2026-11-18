@@ -92,6 +92,30 @@ void TestTools::testIsAsciiString()
     QVERIFY(Tools::isAsciiString("-!&5a?`~"));
     QVERIFY(!Tools::isAsciiString("Štest"));
     QVERIFY(!Tools::isAsciiString("Ãß"));
+    QVERIFY(Tools::isAsciiString(""));
+}
+
+void TestTools::testStripDiacritics()
+{
+    QFETCH(QString, input);
+    QFETCH(QString, expected);
+
+    QCOMPARE(Tools::stripDiacritics(input), expected);
+}
+
+void TestTools::testStripDiacritics_data()
+{
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("Empty") << QString() << QString();
+    QTest::newRow("ASCII unchanged") << QString("plain ASCII 123 !?") << QString("plain ASCII 123 !?");
+    QTest::newRow("Precomposed lowercase") << QString::fromUtf8("ação café naïve") << QString("acao cafe naive");
+    QTest::newRow("Precomposed uppercase") << QString::fromUtf8("ÉCOLE ÀÖÑ") << QString("ECOLE AON");
+    QTest::newRow("Decomposed combining marks") << QString("cafe") + QChar(0x0301) << QString("cafe");
+    QTest::newRow("Stacked combining marks") << QString("a") + QChar(0x0301) + QChar(0x0323) << QString("a");
+    QTest::newRow("Non-decomposable letters kept") << QString::fromUtf8("ß ø ł æ") << QString::fromUtf8("ß ø ł æ");
+    QTest::newRow("Non-Latin script") << QString::fromUtf8("Ελλάδα") << QString::fromUtf8("Ελλαδα");
 }
 
 void TestTools::testEnvSubstitute()
