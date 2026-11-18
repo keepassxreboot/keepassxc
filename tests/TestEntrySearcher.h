@@ -41,6 +41,8 @@ private slots:
     void testSkipProtected();
     void testUUIDSearch();
     void testTotpSearch();
+    void testAccentInsensitiveSearch();
+    void testSearchTermDefaultsAccentSensitive();
 
 private:
     Group* m_rootGroup;
