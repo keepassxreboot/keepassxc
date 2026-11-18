@@ -86,6 +86,7 @@ Examples: +
 |{DELAY X}     |Pause typing for X milliseconds
 |{CLEARFIELD}  |Clear the input field
 |{PICKCHARS}   |Pick specific password characters from a dialog
+|{PICKCHARS:ATTRIBUTE_NAME}   |Pick specific characters in the given attribute from a dialog
 |===
 
 [grid=rows, frame=none, width=90%]
