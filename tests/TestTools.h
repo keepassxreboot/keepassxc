@@ -30,6 +30,8 @@ private slots:
     void testIsHex();
     void testIsBase64();
     void testIsAsciiString();
+    void testStripDiacritics();
+    void testStripDiacritics_data();
     void testEnvSubstitute();
     void testValidUuid();
     void testBackupFilePatternSubstitution_data();
