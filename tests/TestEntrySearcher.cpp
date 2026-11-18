@@ -537,3 +537,22 @@ void TestEntrySearcher::testAccentInsensitiveSearch()
     QVERIFY(m_searchResult.contains(entry2));
     m_entrySearcher.setCaseSensitive(false);
 }
+
+void TestEntrySearcher::testSearchTermDefaultsAccentSensitive()
+{
+    auto entry = new Entry();
+    entry->setGroup(m_rootGroup);
+    entry->attributes()->set("service", QString::fromUtf8("café"));
+
+    EntrySearcher::SearchTerm term{};
+    term.field = EntrySearcher::Field::AttributeValue;
+    term.word = "service";
+    term.exclude = false;
+    term.regex = Tools::convertToRegex(QString::fromUtf8("café"),
+                                       Tools::RegexConvertOpts::EXACT_MATCH | Tools::RegexConvertOpts::CASE_SENSITIVE
+                                           | Tools::RegexConvertOpts::ESCAPE_REGEX);
+
+    m_searchResult = m_entrySearcher.search({term}, m_rootGroup, true);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry));
+}
