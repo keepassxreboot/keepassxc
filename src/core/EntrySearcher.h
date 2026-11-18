@@ -52,7 +52,7 @@ public:
         QString word;
         QRegularExpression regex;
         bool exclude;
-        bool accentSensitive;
+        bool accentSensitive = true;
     };
 
     explicit EntrySearcher(bool caseSensitive = false, bool skipProtected = false);
