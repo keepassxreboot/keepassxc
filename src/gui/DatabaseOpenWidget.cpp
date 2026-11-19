@@ -121,8 +121,8 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     });
 
     // QuickUnlock actions
-    connect(m_ui->quickUnlockButton, &QPushButton::pressed, this, [this] { openDatabase(); });
-    connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
+    connect(m_ui->quickUnlockButton, &QPushButton::clicked, this, [this] { openDatabase(); });
+    connect(m_ui->resetQuickUnlockButton, &QPushButton::clicked, this, [this] { resetQuickUnlock(); });
     m_ui->resetQuickUnlockButton->setShortcut(Qt::Key_Escape);
 }
 
