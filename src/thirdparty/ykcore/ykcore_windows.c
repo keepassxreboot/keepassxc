@@ -87,6 +87,11 @@ void * _ykusb_open_device(const int* vendor_ids, size_t vids_len, const int *pro
             HIDD_ATTRIBUTES devInfo;
 			m_handle = CreateFile(pi->DevicePath, GENERIC_WRITE,
 					      FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
+			/* Non-admin users may be denied write access to keyboard-class HID devices.
+			 * Feature reports (all we use) work with zero access rights, like hidapi does. */
+			if (m_handle == INVALID_HANDLE_VALUE)
+				m_handle = CreateFile(pi->DevicePath, 0,
+						      FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, 0, 0);
 			if (m_handle != INVALID_HANDLE_VALUE && HidD_GetAttributes(m_handle, &devInfo)) {
                 for (size_t k = 0; k < vids_len; k++) {
                     bool vid_match = devInfo.VendorID == vendor_ids[k];
@@ -98,7 +103,8 @@ void * _ykusb_open_device(const int* vendor_ids, size_t vids_len, const int *pro
                     }
                 }
 			}
-            CloseHandle (m_handle);
+            if (m_handle != INVALID_HANDLE_VALUE)
+                CloseHandle (m_handle);
 		}
 		free (pi);
 	}
