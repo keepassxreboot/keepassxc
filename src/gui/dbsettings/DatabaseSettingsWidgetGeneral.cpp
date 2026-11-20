@@ -24,9 +24,12 @@
 #include <QListView>
 
 #include "core/Clock.h"
+#include "core/CustomData.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/OfflineCache.h"
 #include "gui/DatabaseIcons.h"
+#include "gui/DatabaseWidget.h"
 #include "gui/IconModels.h"
 #include "gui/MessageBox.h"
 
@@ -44,6 +47,32 @@ DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
     connect(m_ui->historyMaxItemsCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->autosaveDelayCheckBox, SIGNAL(toggled(bool)), m_ui->autosaveDelaySpinBox, SLOT(setEnabled(bool)));
+
+    connect(m_ui->cloudFileCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
+        if (checked && !m_ui->cloudFileSuggestCheckBox->isChecked() && m_db
+            && OfflineCache::localOverride(m_db->filePath()) == OfflineCache::Override::Unset) {
+            m_ui->cloudFileSuggestCheckBox->setChecked(true);
+        }
+        updateCloudStatusLabel();
+    });
+    connect(m_ui->cloudSyncNowButton, &QPushButton::clicked, this, [this] {
+        for (QWidget* w = parentWidget(); w; w = w->parentWidget()) {
+            if (auto* dbWidget = qobject_cast<DatabaseWidget*>(w)) {
+                dbWidget->syncOfflineCacheNow();
+                updateCloudStatusLabel();
+                break;
+            }
+        }
+    });
+    connect(m_ui->cloudShowVersionsButton, &QPushButton::clicked, this, [this] {
+        for (QWidget* w = parentWidget(); w; w = w->parentWidget()) {
+            if (auto* dbWidget = qobject_cast<DatabaseWidget*>(w)) {
+                dbWidget->showOfflineBackupVersions();
+                updateCloudStatusLabel();
+                break;
+            }
+        }
+    });
 }
 
 DatabaseSettingsWidgetGeneral::~DatabaseSettingsWidgetGeneral() = default;
@@ -86,6 +115,18 @@ void DatabaseSettingsWidgetGeneral::initialize()
         m_ui->autosaveDelayCheckBox->setChecked(false);
         m_ui->autosaveDelaySpinBox->setEnabled(false);
     }
+
+    const bool hasFilePath = !m_db->filePath().isEmpty() && !m_db->isTemporaryDatabase();
+    m_ui->cloudOfflineGroupBox->setEnabled(hasFilePath);
+    const bool suggestedInDb =
+        meta->customData() && meta->customData()->value(CustomData::CloudFile) == QStringLiteral("true");
+    m_ui->cloudFileSuggestCheckBox->blockSignals(true);
+    m_ui->cloudFileCheckBox->blockSignals(true);
+    m_ui->cloudFileSuggestCheckBox->setChecked(suggestedInDb);
+    m_ui->cloudFileCheckBox->setChecked(m_db->isCloudModeEnabled());
+    m_ui->cloudFileCheckBox->blockSignals(false);
+    m_ui->cloudFileSuggestCheckBox->blockSignals(false);
+    updateCloudStatusLabel();
 }
 
 void DatabaseSettingsWidgetGeneral::uninitialize()
@@ -173,7 +214,70 @@ bool DatabaseSettingsWidgetGeneral::saveSettings()
         }
     }
 
+    if (!m_db->filePath().isEmpty() && !m_db->isTemporaryDatabase()) {
+        const bool wantCloud = m_ui->cloudFileCheckBox->isChecked();
+        const bool wantSuggest = m_ui->cloudFileSuggestCheckBox->isChecked();
+        const bool wasSuggest =
+            meta->customData()->value(CustomData::CloudFile) == QStringLiteral("true");
+        if (wantSuggest != wasSuggest) {
+            if (wantSuggest) {
+                meta->customData()->set(CustomData::CloudFile, QStringLiteral("true"));
+            } else {
+                meta->customData()->remove(CustomData::CloudFile);
+            }
+        }
+
+        auto cache = OfflineCache::forDatabase(m_db->filePath());
+        cache.setSuggestedByDatabase(wantSuggest);
+
+        if (wantCloud) {
+            OfflineCache::setLocalOverride(m_db->filePath(), OfflineCache::Override::Enabled);
+            m_db->refreshOfflineCache(false);
+        } else {
+            if (cache.hasCacheFile() || !cache.versions().isEmpty()) {
+                auto res = MessageBox::question(
+                    this,
+                    tr("Delete Offline Copy and Backups?"),
+                    tr("Do you want to delete the local offline copy and backup versions for this database from this "
+                       "computer?"),
+                    MessageBox::Delete | MessageBox::No,
+                    MessageBox::No);
+                if (res == MessageBox::Delete) {
+                    cache.removeAll();
+                }
+            }
+            OfflineCache::setLocalOverride(m_db->filePath(), OfflineCache::Override::Disabled);
+            m_db->setWorkingOffline(false);
+        }
+        emit m_db->cloudModeChanged();
+    }
+
     return true;
+}
+
+void DatabaseSettingsWidgetGeneral::updateCloudStatusLabel()
+{
+    if (!m_db || m_db->filePath().isEmpty()) {
+        m_ui->cloudStatusLabel->setText(tr("Save the database to a file first to enable an offline copy."));
+        m_ui->cloudSyncNowButton->setEnabled(false);
+        m_ui->cloudShowVersionsButton->setEnabled(false);
+        return;
+    }
+
+    const auto cache = OfflineCache::forDatabase(m_db->filePath());
+    const bool enabled = m_ui->cloudFileCheckBox->isChecked();
+    m_ui->cloudSyncNowButton->setEnabled(enabled);
+    m_ui->cloudShowVersionsButton->setEnabled(enabled || !cache.versions().isEmpty());
+
+    if (!enabled) {
+        m_ui->cloudStatusLabel->setText(tr("Offline copy is disabled on this computer."));
+    } else if (m_db->isWorkingOffline()) {
+        m_ui->cloudStatusLabel->setText(tr("Working offline. Changes are saved locally."));
+    } else if (cache.hasCacheFile()) {
+        m_ui->cloudStatusLabel->setText(tr("Offline copy is up to date."));
+    } else {
+        m_ui->cloudStatusLabel->setText(tr("Offline copy will be created when settings are saved."));
+    }
 }
 
 void DatabaseSettingsWidgetGeneral::pickPublicColor()

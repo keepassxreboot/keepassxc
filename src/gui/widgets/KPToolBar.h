@@ -33,20 +33,32 @@ public:
     explicit KPToolBar(QWidget* parent = nullptr);
     ~KPToolBar() override = default;
 
+    enum class CloudState
+    {
+        None,    // regular database, nothing is painted
+        Online,  // cloud / network file, original is reachable
+        Offline  // cloud / network file, working from the offline copy
+    };
+
     bool isExpanded();
     bool canExpand();
 
+    CloudState cloudState() const;
+
 public slots:
     void setExpanded(bool state);
+    void setCloudState(KPToolBar::CloudState state);
 
 protected:
     bool event(QEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
 private:
     void init();
 
     QTimer m_expandTimer;
     QPointer<QAbstractButton> m_expandButton;
+    CloudState m_cloudState = CloudState::None;
 };
 
 #endif // KEEPASSXC_KPTOOLBAR_H

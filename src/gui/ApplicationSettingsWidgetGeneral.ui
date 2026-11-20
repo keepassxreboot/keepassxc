@@ -526,6 +526,83 @@
                 </item>
                </layout>
               </item>
+              <item>
+               <layout class="QHBoxLayout" name="offlineCacheDirLayout">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="offlineCacheDirLabel">
+                  <property name="text">
+                   <string>Offline copy folder (cloud / network files):</string>
+                  </property>
+                  <property name="buddy">
+                   <cstring>offlineCacheDirEdit</cstring>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="offlineCacheDirEdit">
+                  <property name="toolTip">
+                   <string>Local folder where encrypted offline copies and backup versions are stored for databases with &quot;Treat as cloud / network file&quot; enabled.</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="offlineCacheDirPicker">
+                  <property name="text">
+                   <string>Choose folder...</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="offlineCacheVersionsLayout">
+                <property name="spacing">
+                 <number>6</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="offlineCacheMaxVersionsLabel">
+                  <property name="text">
+                   <string>Backup versions to keep per cloud / network file:</string>
+                  </property>
+                  <property name="buddy">
+                   <cstring>offlineCacheMaxVersionsSpinBox</cstring>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="offlineCacheMaxVersionsSpinBox">
+                  <property name="focusPolicy">
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>50</number>
+                  </property>
+                  <property name="value">
+                   <number>10</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="offlineCacheVersionsSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
              </layout>
             </widget>
            </item>

@@ -30,6 +30,7 @@ public:
     ~FileWatcher() override;
 
     void start(const QString& path, int checksumIntervalSeconds = 0, int checksumSizeKibibytes = -1);
+    void startWaitingForReconnect(const QString& path, int intervalSeconds = 30);
     void stop();
 
     bool hasSameFileChecksum();
@@ -57,6 +58,7 @@ private:
     int m_fileChecksumSizeBytes = -1;
     bool m_ignoreFileChange = false;
     bool m_paused = false;
+    bool m_waitingForReconnect = false;
 };
 
 #endif // KEEPASSXC_FILEWATCHER_H

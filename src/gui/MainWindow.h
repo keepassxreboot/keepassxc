@@ -153,6 +153,7 @@ private slots:
     void updateTrayIcon();
     void updateProgressBar(int percentage, QString message);
     void updateEntryCountLabel();
+    void updateCloudModeVisuals();
     void focusSearchWidget();
     void enableMenuAndToolbar();
     void disableMenuAndToolbar();

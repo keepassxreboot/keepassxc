@@ -21,12 +21,15 @@
 #include "core/AsyncTask.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
+#include "core/Merger.h"
+#include "core/OfflineCache.h"
 #include "crypto/Random.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "streams/HashingStream.h"
 
+#include <QDir>
 #include <QFileInfo>
 #include <QJsonObject>
 #include <QRegularExpression>
@@ -130,6 +133,8 @@ bool Database::open(QSharedPointer<const CompositeKey> key, QString* error)
  */
 bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, QString* error)
 {
+    clearOfflineCacheOpenFlags();
+
     if (filePath.isEmpty()) {
         if (error) {
             *error = tr("No file path was provided.");
@@ -137,24 +142,100 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
         return false;
     }
 
-    QFile dbFile(filePath);
+    const bool canFallback = OfflineCache::canFallbackToCache(filePath);
+    if (canFallback && !OfflineCache::isOriginalFileReachable(filePath)) {
+        const auto cache = OfflineCache::forDatabase(filePath);
+        return openFileInternal(cache.cacheFilePath(), filePath, std::move(key), true, error);
+    }
+
+    if (!openFileInternal(filePath, filePath, key, false, error)) {
+        if (canFallback) {
+            // Fall back to the cache if the original file is unreadable or has a corrupted/partial header
+            Database headerCheck;
+            if (!headerCheck.openFileInternal(filePath, filePath, nullptr, false, nullptr)) {
+                const auto cache = OfflineCache::forDatabase(filePath);
+                return openFileInternal(cache.cacheFilePath(), filePath, std::move(key), true, error);
+            }
+        }
+        return false;
+    }
+
+    if (key) {
+        const bool suggestedInDb =
+            m_metadata && m_metadata->customData()
+            && m_metadata->customData()->value(CustomData::CloudFile) == QStringLiteral("true");
+        if (suggestedInDb || OfflineCache::isCloudDatabase(this)) {
+            auto cache = OfflineCache::forDatabase(filePath);
+            cache.setSuggestedByDatabase(suggestedInDb);
+        }
+
+        if (isCloudModeEnabled()) {
+            auto cache = OfflineCache::forDatabase(filePath);
+            const auto realPath = canonicalFilePath().isEmpty() ? filePath : canonicalFilePath();
+            if (cache.isDirty() && cache.hasCacheFile()) {
+                Database cachedDb;
+                if (cachedDb.openWithoutOfflineFallback(cache.cacheFilePath(), key)) {
+                    cache.addVersion(realPath, OfflineCache::fingerprint(this), true);
+                    cache.addVersion(cache.cacheFilePath(), OfflineCache::fingerprint(&cachedDb), true);
+                    Merger merger(&cachedDb, this);
+                    const auto changes = merger.merge();
+                    m_mergedFromOfflineCacheOnOpen = true;
+                    m_mergedFromOfflineCacheCount = changes.size();
+                    m_ignoreFileChangesUntilSaved = true;
+                    save(Atomic, {}, nullptr);
+                } else {
+                    const auto nowStr = QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs);
+                    cache.addVersion(cache.cacheFilePath(),
+                                     {QStringLiteral("key-mismatch-") + nowStr,
+                                      QStringLiteral("key-mismatch-") + nowStr},
+                                     true);
+                    m_offlineCacheNeedsManualMerge = true;
+                }
+            } else {
+                cache.addVersion(realPath, OfflineCache::fingerprint(this), false);
+                cache.storeCopyOf(realPath);
+                cache.setDirty(false);
+            }
+        }
+    }
+
+    return true;
+}
+
+bool Database::openWithoutOfflineFallback(const QString& filePath,
+                                          QSharedPointer<const CompositeKey> key,
+                                          QString* error)
+{
+    clearOfflineCacheOpenFlags();
+    return openFileInternal(filePath, filePath, std::move(key), false, error);
+}
+
+bool Database::openFileInternal(const QString& sourceFilePath,
+                                const QString& logicalFilePath,
+                                QSharedPointer<const CompositeKey> key,
+                                bool openedFromOfflineCache,
+                                QString* error)
+{
+    if (sourceFilePath.isEmpty()) {
+        if (error) {
+            *error = tr("No file path was provided.");
+        }
+        return false;
+    }
+
+    QFile dbFile(sourceFilePath);
     if (!dbFile.exists()) {
         if (error) {
-            *error = tr("File %1 does not exist.").arg(filePath);
+            *error = tr("File %1 does not exist.").arg(sourceFilePath);
         }
         return false;
     }
 
     // Don't autodetect read-only mode, as it triggers an upstream bug.
     // See https://github.com/keepassxreboot/keepassxc/issues/803
-    // if (!readOnly && !dbFile.open(QIODevice::ReadWrite)) {
-    //     readOnly = true;
-    // }
-    //
-    // if (!dbFile.isOpen() && !dbFile.open(QIODevice::ReadOnly)) {
     if (!dbFile.open(QIODevice::ReadOnly)) {
         if (error) {
-            *error = tr("Unable to open file %1.").arg(filePath);
+            *error = tr("Unable to open file %1.").arg(sourceFilePath);
         }
         return false;
     }
@@ -163,16 +244,18 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
 
     // update the hash of the first block
     m_fileBlockHash.clear();
-    auto fileBlockData = dbFile.peek(kFileBlockToHashSizeBytes);
-    if (fileBlockData.size() != kFileBlockToHashSizeBytes) {
-        if (dbFile.size() >= kFileBlockToHashSizeBytes) {
-            if (error) {
-                *error = tr("Database file read error.");
+    if (!openedFromOfflineCache) {
+        auto fileBlockData = dbFile.peek(kFileBlockToHashSizeBytes);
+        if (fileBlockData.size() != kFileBlockToHashSizeBytes) {
+            if (dbFile.size() >= kFileBlockToHashSizeBytes) {
+                if (error) {
+                    *error = tr("Database file read error.");
+                }
+                return false;
             }
-            return false;
+        } else {
+            m_fileBlockHash = QCryptographicHash::hash(fileBlockData, QCryptographicHash::Md5);
         }
-    } else {
-        m_fileBlockHash = QCryptographicHash::hash(fileBlockData, QCryptographicHash::Md5);
     }
 
     KeePass2Reader reader;
@@ -183,13 +266,18 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
         return false;
     }
 
-    setFilePath(filePath);
+    setFilePath(logicalFilePath);
+    setWorkingOffline(openedFromOfflineCache);
     dbFile.close();
 
     markAsClean();
 
     emit databaseOpened();
-    m_fileWatcher->start(canonicalFilePath(), 30, 1);
+    if (openedFromOfflineCache) {
+        m_fileWatcher->startWaitingForReconnect(logicalFilePath, 30);
+    } else {
+        m_fileWatcher->start(canonicalFilePath(), 30, 1);
+    }
     setEmitModified(true);
 
     return true;
@@ -284,11 +372,57 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         return false;
     }
 
+    const bool cloudMode = isCloudModeEnabled() && (filePath == m_data.filePath);
+    auto saveToOfflineCache = [&]() -> bool {
+        m_fileWatcher->stop();
+        int length = Random::instance()->randomUIntRange(64, 512);
+        m_metadata->customData()->set(CustomData::RandomSlug, Random::instance()->randomArray(length).toHex());
+        QMutexLocker cacheLocker(&m_saveMutex);
+        auto cache = OfflineCache::forDatabase(filePath);
+        QDir().mkpath(cache.directory());
+        bool cacheOk = AsyncTask::runAndWaitForFuture(
+            [&] { return performSave(cache.cacheFilePath(), Atomic, {}, error); });
+        if (cacheOk) {
+            m_fileBlockHash.clear();
+            cache.setSuggestedByDatabase(m_metadata->customData()->value(CustomData::CloudFile)
+                                         == QStringLiteral("true"));
+            cache.addVersion(cache.cacheFilePath(), OfflineCache::fingerprint(this), false);
+            cache.setDirty(true);
+            setFilePath(filePath);
+            markAsClean();
+            setWorkingOffline(true);
+            m_ignoreFileChangesUntilSaved = false;
+            m_fileWatcher->startWaitingForReconnect(filePath, 30);
+        } else {
+            markAsModified();
+        }
+        return cacheOk;
+    };
+
+    if (cloudMode && m_workingOffline) {
+        if (!OfflineCache::isOriginalFileReachable(filePath)) {
+            return saveToOfflineCache();
+        }
+        // The original file is reachable again while we were working offline.
+        if (receivers(SIGNAL(databaseFileChanged(bool))) > 0) {
+            const bool savedCache = saveToOfflineCache();
+            QMetaObject::invokeMethod(this, "databaseFileChanged", Qt::QueuedConnection, Q_ARG(bool, true));
+            return savedCache;
+        }
+        return reconcileOfflineCache(nullptr, error);
+    }
+
     // Make sure we don't overwrite external modifications unless explicitly allowed
     if (!m_ignoreFileChangesUntilSaved && !m_fileBlockHash.isEmpty() && filePath == m_data.filePath) {
+        if (cloudMode && !OfflineCache::isOriginalFileReachable(filePath)) {
+            return saveToOfflineCache();
+        }
         QFile dbFile(filePath);
         if (dbFile.exists()) {
             if (!dbFile.open(QIODevice::ReadOnly)) {
+                if (cloudMode) {
+                    return saveToOfflineCache();
+                }
                 if (error) {
                     *error = tr("Unable to open file %1.").arg(filePath);
                 }
@@ -311,6 +445,8 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
                 }
                 return false;
             }
+        } else if (cloudMode) {
+            return saveToOfflineCache();
         }
     }
 
@@ -321,9 +457,6 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     int length = Random::instance()->randomUIntRange(64, 512);
     m_metadata->customData()->set(CustomData::RandomSlug, Random::instance()->randomArray(length).toHex());
 
-    // Prevent destructive operations while saving
-    QMutexLocker locker(&m_saveMutex);
-
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
     bool isNewFile = !QFile::exists(realFilePath);
@@ -332,7 +465,12 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     bool isHidden = fileInfo.isHidden();
 #endif
 
-    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
+    bool ok = false;
+    {
+        // Prevent destructive operations while saving
+        QMutexLocker locker(&m_saveMutex);
+        ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
+    }
     if (ok) {
         setFilePath(filePath);
         markAsClean();
@@ -346,7 +484,18 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         }
 #endif
         m_ignoreFileChangesUntilSaved = false;
+        setWorkingOffline(false);
+        if (isCloudModeEnabled()) {
+            auto cache = OfflineCache::forDatabase(filePath);
+            cache.setSuggestedByDatabase(m_metadata->customData()->value(CustomData::CloudFile)
+                                         == QStringLiteral("true"));
+            cache.storeCopyOf(realFilePath);
+            cache.addVersion(realFilePath, OfflineCache::fingerprint(this), false);
+            cache.setDirty(false);
+        }
         m_fileWatcher->start(realFilePath, 30, 1);
+    } else if (cloudMode) {
+        return saveToOfflineCache();
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
         markAsModified();
@@ -583,6 +732,133 @@ void Database::releaseData()
 
     m_fileBlockHash.clear();
     m_ignoreFileChangesUntilSaved = false;
+    m_workingOffline = false;
+    clearOfflineCacheOpenFlags();
+}
+
+bool Database::isCloudModeEnabled() const
+{
+    return OfflineCache::isCloudDatabase(this);
+}
+
+bool Database::isWorkingOffline() const
+{
+    return m_workingOffline;
+}
+
+void Database::setWorkingOffline(bool offline)
+{
+    if (m_workingOffline != offline) {
+        m_workingOffline = offline;
+        emit offlineStateChanged(m_workingOffline);
+    }
+}
+
+bool Database::mergedFromOfflineCacheOnOpen() const
+{
+    return m_mergedFromOfflineCacheOnOpen;
+}
+
+int Database::mergedFromOfflineCacheCount() const
+{
+    return m_mergedFromOfflineCacheCount;
+}
+
+bool Database::offlineCacheNeedsManualMerge() const
+{
+    return m_offlineCacheNeedsManualMerge;
+}
+
+void Database::clearOfflineCacheOpenFlags()
+{
+    m_mergedFromOfflineCacheOnOpen = false;
+    m_mergedFromOfflineCacheCount = 0;
+    m_offlineCacheNeedsManualMerge = false;
+}
+
+bool Database::refreshOfflineCache(bool forceNewVersion, QString* error)
+{
+    if (!isInitialized() || m_data.filePath.isEmpty()) {
+        return false;
+    }
+
+    auto cache = OfflineCache::forDatabase(m_data.filePath);
+    cache.setSuggestedByDatabase(m_metadata && m_metadata->customData()
+                                 && m_metadata->customData()->value(CustomData::CloudFile) == QStringLiteral("true"));
+    if (!m_workingOffline && !isModified() && OfflineCache::isOriginalFileReachable(m_data.filePath)) {
+        const auto realPath = canonicalFilePath().isEmpty() ? m_data.filePath : canonicalFilePath();
+        if (!cache.storeCopyOf(realPath, error)) {
+            return false;
+        }
+        return cache.addVersion(realPath, OfflineCache::fingerprint(this), forceNewVersion, QDateTime::currentDateTime(), error);
+    }
+
+    QDir().mkpath(cache.directory());
+    const auto savedHash = m_fileBlockHash;
+    bool ok = false;
+    {
+        QMutexLocker locker(&m_saveMutex);
+        ok = AsyncTask::runAndWaitForFuture([&] { return performSave(cache.cacheFilePath(), Atomic, {}, error); });
+    }
+    m_fileBlockHash = savedHash;
+    if (!ok) {
+        return false;
+    }
+    return cache.addVersion(
+        cache.cacheFilePath(), OfflineCache::fingerprint(this), forceNewVersion, QDateTime::currentDateTime(), error);
+}
+
+bool Database::reconcileOfflineCache(int* mergedChangesCount, QString* error)
+{
+    if (!isInitialized() || m_data.filePath.isEmpty() || !OfflineCache::isOriginalFileReachable(m_data.filePath)) {
+        if (error) {
+            *error = tr("Original database file is not reachable.");
+        }
+        return false;
+    }
+
+    auto cache = OfflineCache::forDatabase(m_data.filePath);
+    QDir().mkpath(cache.directory());
+    {
+        QMutexLocker locker(&m_saveMutex);
+        const auto savedHash = m_fileBlockHash;
+        AsyncTask::runAndWaitForFuture([&] { return performSave(cache.cacheFilePath(), Atomic, {}, nullptr); });
+        m_fileBlockHash = savedHash;
+    }
+    cache.addVersion(cache.cacheFilePath(), OfflineCache::fingerprint(this), true);
+
+    Database originalDb;
+    if (!originalDb.openWithoutOfflineFallback(m_data.filePath, m_data.key, error)) {
+        return false;
+    }
+
+    const auto realPath = canonicalFilePath().isEmpty() ? m_data.filePath : canonicalFilePath();
+    cache.addVersion(realPath, OfflineCache::fingerprint(&originalDb), true);
+
+    Merger merger(&originalDb, this);
+    const auto originalToOffline = merger.merge();
+    if (mergedChangesCount) {
+        *mergedChangesCount = originalToOffline.size();
+    }
+
+    setWorkingOffline(false);
+    m_ignoreFileChangesUntilSaved = true;
+    return save(Atomic, {}, error);
+}
+
+void Database::checkOriginalFileReachableAsync()
+{
+    if (!m_workingOffline || m_data.filePath.isEmpty()) {
+        return;
+    }
+    const auto path = m_data.filePath;
+    AsyncTask::runThenCallback([path] { return OfflineCache::isOriginalFileReachable(path); },
+                               this,
+                               [this](bool reachable) {
+                                   if (reachable && m_workingOffline) {
+                                       emit databaseFileChanged(false);
+                                   }
+                               });
 }
 
 /**

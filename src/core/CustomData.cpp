@@ -27,6 +27,7 @@ const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 const QString CustomData::FdoSecretsExposedGroup = QStringLiteral("FDO_SECRETS_EXPOSED_GROUP");
 const QString CustomData::RandomSlug = QStringLiteral("KPXC_RANDOM_SLUG");
 const QString CustomData::RemoteProgramSettings = QStringLiteral("KPXC_REMOTE_SYNC_SETTINGS");
+const QString CustomData::CloudFile = QStringLiteral("KPXC_CLOUD_FILE");
 
 // Fallback item for return by reference
 static const CustomData::CustomDataItem NULL_ITEM{};

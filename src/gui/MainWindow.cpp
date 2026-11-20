@@ -39,6 +39,7 @@
 #include "Clipboard.h"
 #include "autotype/AutoType.h"
 #include "core/InactivityTimer.h"
+#include "core/OfflineCache.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
@@ -422,6 +423,9 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(databaseModified()), this, SLOT(updateEntryCountLabel()));
     m_actionMultiplexer.connect(SIGNAL(searchModeActivated()), this, SLOT(updateEntryCountLabel()));
     m_actionMultiplexer.connect(SIGNAL(listModeActivated()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(cloudStatusChanged()), this, SLOT(updateCloudModeVisuals()));
+    m_actionMultiplexer.connect(SIGNAL(cloudStatusChanged()), this, SLOT(updateEntryCountLabel()));
+    m_actionMultiplexer.connect(SIGNAL(cloudStatusChanged()), this, SLOT(updateMenuActionState()));
 
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
@@ -452,6 +456,10 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
+    m_actionMultiplexer.connect(m_ui->actionDatabaseCloudMode, SIGNAL(toggled(bool)), SLOT(toggleCloudMode(bool)));
+    m_actionMultiplexer.connect(m_ui->actionDatabaseCloudSyncNow, SIGNAL(triggered()), SLOT(syncOfflineCacheNow()));
+    m_actionMultiplexer.connect(
+        m_ui->actionDatabaseCloudVersions, SIGNAL(triggered()), SLOT(showOfflineBackupVersions()));
     connect(m_ui->actionDatabaseSettings, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(showDatabaseSettings(bool)));
     connect(m_ui->actionDatabaseSecurity, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSecurity()));
     connect(m_ui->actionReports, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(showDatabaseReports(bool)));
@@ -674,12 +682,13 @@ void MainWindow::restoreConfigState()
     if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
         const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
         for (const QString& filename : fileNames) {
-            if (!filename.isEmpty() && QFile::exists(filename)) {
+            if (!filename.isEmpty() && (QFile::exists(filename) || OfflineCache::canFallbackToCache(filename))) {
                 openDatabase(filename);
             }
         }
         auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
-        if (!lastActiveFile.isEmpty()) {
+        if (!lastActiveFile.isEmpty()
+            && (QFile::exists(lastActiveFile) || OfflineCache::canFallbackToCache(lastActiveFile))) {
             openDatabase(lastActiveFile);
         }
     }
@@ -1001,12 +1010,24 @@ void MainWindow::updateMenuActionState()
     m_ui->menuRemoteSync->setEnabled(inDatabase || inDatabaseSettings);
     m_ui->menuExport->setEnabled(inDatabase);
     m_ui->actionDatabaseMerge->setEnabled(inDatabase);
+
+    const bool hasPersistentDb =
+        databaseUnlocked && dbWidget && dbWidget->database() && !dbWidget->database()->isTemporaryDatabase();
+    const bool isCloudDb = hasPersistentDb && dbWidget->database()->isCloudModeEnabled();
+    m_ui->actionDatabaseCloudMode->blockSignals(true);
+    m_ui->actionDatabaseCloudMode->setEnabled(hasPersistentDb);
+    m_ui->actionDatabaseCloudMode->setChecked(isCloudDb);
+    m_ui->actionDatabaseCloudMode->blockSignals(false);
+    m_ui->actionDatabaseCloudSyncNow->setEnabled(isCloudDb);
+    m_ui->actionDatabaseCloudVersions->setEnabled(hasPersistentDb);
+
 #ifdef KPXC_FEATURE_BROWSER
     m_ui->actionPasskeys->setEnabled(inDatabase || inReports);
     m_ui->actionImportPasskey->setEnabled(inDatabase);
 #endif
 
     m_searchWidgetAction->setEnabled(inDatabase);
+    updateCloudModeVisuals();
 }
 
 void MainWindow::updateToolbarSeparatorVisibility()
@@ -1238,6 +1259,8 @@ void MainWindow::databaseStatusChanged(DatabaseWidget* dbWidget)
 {
     Q_UNUSED(dbWidget);
     updateTrayIcon();
+    updateCloudModeVisuals();
+    updateEntryCountLabel();
 }
 
 /**
@@ -1286,6 +1309,7 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
     updateEntryCountLabel();
+    updateCloudModeVisuals();
 
     // Clear the tags menu to prevent re-use between databases
     for (const auto action : m_ui->menuTags->actions()) {
@@ -1295,6 +1319,12 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
 bool MainWindow::event(QEvent* event)
 {
+    if (event->type() == QEvent::WindowActivate) {
+        auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        if (dbWidget && !dbWidget->isLocked() && dbWidget->database() && dbWidget->database()->isWorkingOffline()) {
+            dbWidget->database()->checkOriginalFileReachableAsync();
+        }
+    }
     if (event->type() == QEvent::ShortcutOverride) {
         const auto keyevent = static_cast<QKeyEvent*>(event);
         // Did we get a ShortcutOverride event with the same key sequence as the OS default
@@ -1600,11 +1630,40 @@ void MainWindow::updateProgressBar(int percentage, QString message)
 void MainWindow::updateEntryCountLabel()
 {
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    QStringList parts;
+    if (dbWidget && !dbWidget->isLocked() && dbWidget->database() && dbWidget->database()->isCloudModeEnabled()) {
+        OfflineCache cache(dbWidget->database()->filePath());
+        if (dbWidget->database()->isWorkingOffline()) {
+            parts << tr("Cloud mode: working offline, changes saved locally");
+        } else {
+            const QDateTime lastSync = cache.lastSyncTime();
+            if (lastSync.isValid()) {
+                parts << tr("Cloud mode: offline copy up to date (%1)").arg(lastSync.toLocalTime().toString("HH:mm"));
+            } else {
+                parts << tr("Cloud mode: offline copy enabled");
+            }
+        }
+    }
     if (dbWidget && dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode) {
         int numEntries = dbWidget->entryView()->model()->rowCount();
-        m_statusBarLabel->setText(tr("%1 Entry(s)", "", numEntries).arg(numEntries));
+        parts << tr("%1 Entry(s)", "", numEntries).arg(numEntries);
+    }
+    m_statusBarLabel->setText(parts.join(QStringLiteral("  |  ")));
+}
+
+void MainWindow::updateCloudModeVisuals()
+{
+    auto dbWidget =
+        (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen ? m_ui->tabWidget->currentDatabaseWidget() : nullptr);
+    if (!dbWidget || !dbWidget->database() || !dbWidget->database()->isCloudModeEnabled()) {
+        m_ui->toolBar->setCloudState(KPToolBar::CloudState::None);
+        return;
+    }
+
+    if (dbWidget->database()->isWorkingOffline()) {
+        m_ui->toolBar->setCloudState(KPToolBar::CloudState::Offline);
     } else {
-        m_statusBarLabel->setText("");
+        m_ui->toolBar->setCloudState(KPToolBar::CloudState::Online);
     }
 }
 
@@ -2074,6 +2133,9 @@ void MainWindow::initActionCollection()
                     m_ui->actionReports,
                     m_ui->actionPasskeys,
                     m_ui->actionDatabaseMerge,
+                    m_ui->actionDatabaseCloudMode,
+                    m_ui->actionDatabaseCloudSyncNow,
+                    m_ui->actionDatabaseCloudVersions,
                     m_ui->actionImportPasskey,
                     m_ui->actionImportCsv,
                     m_ui->actionImportOpVault,
