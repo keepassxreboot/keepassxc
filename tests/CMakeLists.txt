@@ -196,6 +196,9 @@ if(KPXC_FEATURE_NETWORK)
 
     add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp 
         LIBS ${TEST_LIBRARIES})
+
+    add_unit_test(NAME testwhisperclient SOURCES TestWhisperClient.cpp
+        LIBS ${TEST_LIBRARIES})
 endif()
 
 if(WITH_GUI_TESTS)

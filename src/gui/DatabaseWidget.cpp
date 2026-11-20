@@ -62,6 +62,7 @@
 
 #ifdef KPXC_FEATURE_NETWORK
 #include "gui/IconDownloaderDialog.h"
+#include "gui/entry/ShareEntryWhisperDialog.h"
 #endif
 
 #ifdef KPXC_FEATURE_SSHAGENT
@@ -737,6 +738,20 @@ void DatabaseWidget::copyURL()
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->url()));
     }
+}
+
+void DatabaseWidget::shareEntryViaWhisper()
+{
+#ifdef KPXC_FEATURE_NETWORK
+    auto currentEntry = currentSelectedEntry();
+    if (!currentEntry || !ShareEntryWhisperDialog::confirmConsent(this)) {
+        return;
+    }
+
+    auto shareDialog = new ShareEntryWhisperDialog(currentEntry, this);
+    connect(this, &DatabaseWidget::databaseLockRequested, shareDialog, &ShareEntryWhisperDialog::close);
+    shareDialog->open();
+#endif
 }
 
 void DatabaseWidget::copyNotes()

@@ -72,6 +72,10 @@
 #include "browser/BrowserService.h"
 #endif
 
+#ifdef KPXC_FEATURE_NETWORK
+#include "gui/WhisperSettingsPage.h"
+#endif
+
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "mainwindowadaptor.h"
 #endif
@@ -134,6 +138,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryCopyUsername);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
     m_entryContextMenu->addAction(m_ui->actionEntryCopyURL);
+    m_entryContextMenu->addAction(m_ui->actionEntryShareWhisper);
     m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
     m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
     m_entryContextMenu->addAction(m_ui->menuTags->menuAction());
@@ -203,6 +208,10 @@ MainWindow::MainWindow()
     initActionCollection();
 
     m_ui->settingsWidget->addSettingsPage(new ShortcutSettingsPage());
+
+#ifdef KPXC_FEATURE_NETWORK
+    m_ui->settingsWidget->addSettingsPage(new WhisperSettingsPage());
+#endif
 
 #ifdef KPXC_FEATURE_BROWSER
     connect(
@@ -368,6 +377,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setIcon(icons()->icon("username-copy"));
     m_ui->actionEntryCopyPassword->setIcon(icons()->icon("password-copy"));
     m_ui->actionEntryCopyURL->setIcon(icons()->icon("url-copy"));
+    m_ui->actionEntryShareWhisper->setIcon(icons()->icon("share-link"));
     m_ui->menuEntryCopyAttribute->setIcon(icons()->icon("attributes-copy"));
     m_ui->menuEntryTotp->setIcon(icons()->icon("totp"));
     m_ui->actionEntryTotp->setIcon(icons()->icon("totp"));
@@ -490,6 +500,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()), SLOT(copyUsername()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()), SLOT(copyPassword()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyURL, SIGNAL(triggered()), SLOT(copyURL()));
+    m_actionMultiplexer.connect(m_ui->actionEntryShareWhisper, SIGNAL(triggered()), SLOT(shareEntryViaWhisper()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyNotes, SIGNAL(triggered()), SLOT(copyNotes()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), SLOT(performAutoType()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoTypeSequence, SIGNAL(triggered()), SLOT(performAutoType()));
@@ -572,6 +583,7 @@ MainWindow::MainWindow()
 #ifndef KPXC_FEATURE_NETWORK
     m_ui->actionGroupDownloadFavicons->setVisible(false);
     m_ui->actionEntryDownloadIcon->setVisible(false);
+    m_ui->actionEntryShareWhisper->setVisible(false);
 #endif
 #ifndef KPXC_FEATURE_DOCS
     m_ui->actionGettingStarted->setVisible(false);
@@ -922,6 +934,7 @@ void MainWindow::updateMenuActionState()
     // from copying information from the currently selected cell in the entry view table.
     m_ui->actionEntryCopyPassword->setEnabled(singleEntryOrEditing);
     m_ui->actionEntryCopyURL->setEnabled(singleEntryOrEditing && dbWidget->currentEntryHasUrl());
+    m_ui->actionEntryShareWhisper->setEnabled(singleEntrySelected);
     m_ui->actionEntryCopyNotes->setEnabled(singleEntryOrEditing && dbWidget->currentEntryHasNotes());
     m_ui->menuEntryCopyAttribute->setEnabled(singleEntryOrEditing);
     m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
@@ -2090,6 +2103,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionEntryCopyUsername,
                     m_ui->actionEntryCopyPassword,
                     m_ui->actionEntryCopyURL,
+                    m_ui->actionEntryShareWhisper,
                     m_ui->actionEntryCopyTitle,
                     m_ui->actionEntryCopyNotes,
                     m_ui->actionEntryTotp,

@@ -187,6 +187,9 @@ public:
         KeeShare_Foreign,
         KeeShare_Active,
 
+        Whisper_ServerUrl,
+        Whisper_ConsentGiven,
+
         PasswordGenerator_LowerCase,
         PasswordGenerator_UpperCase,
         PasswordGenerator_Numbers,

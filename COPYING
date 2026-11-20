@@ -210,6 +210,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/remote-sync.svg
        share/icons/application/scalable/actions/reports.svg
        share/icons/application/scalable/actions/reports-exclude.svg
+       share/icons/application/scalable/actions/share-link.svg
        share/icons/application/scalable/actions/sort-alphabetical-ascending.svg
        share/icons/application/scalable/actions/sort-alphabetical-descending.svg
        share/icons/application/scalable/actions/statistics.svg

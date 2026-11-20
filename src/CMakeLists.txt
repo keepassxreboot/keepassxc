@@ -314,9 +314,13 @@ if(KPXC_FEATURE_NETWORK)
             networking/HibpDownloader.cpp
             networking/NetworkManager.cpp
             networking/UpdateChecker.cpp
+            networking/WhisperClient.cpp
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
-            gui/IconDownloaderDialog.cpp)
+            gui/IconDownloaderDialog.cpp
+            gui/entry/ShareEntryWhisperDialog.cpp
+            gui/WhisperSettingsWidget.cpp
+            gui/WhisperSettingsPage.cpp)
 endif()
 
 add_subdirectory(cli)

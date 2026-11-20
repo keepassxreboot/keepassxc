@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WhisperSettingsWidget</class>
+ <widget class="QWidget" name="WhisperSettingsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="serverGroupBox">
+     <property name="title">
+      <string>Whisper Server</string>
+     </property>
+     <layout class="QVBoxLayout" name="serverLayout">
+      <item>
+       <widget class="QLabel" name="serverDescriptionLabel">
+        <property name="text">
+         <string>Shared entries are encrypted on this device before upload, so the server only stores data it cannot read. Use the public server or your own self-hosted Whisper instance.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="serverUrlLayout">
+        <item>
+         <widget class="QLabel" name="serverUrlLabel">
+          <property name="text">
+           <string>Server URL:</string>
+          </property>
+          <property name="buddy">
+           <cstring>serverUrlLineEdit</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="serverUrlLineEdit">
+          <property name="placeholderText">
+           <string notr="true">https://</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="resetUrlButton">
+          <property name="text">
+           <string>Reset to default</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="confirmShareCheckBox">
+        <property name="text">
+         <string>Ask for confirmation before sharing an entry</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -195,6 +195,7 @@ public slots:
     void copyUsername();
     void copyPassword();
     void copyURL();
+    void shareEntryViaWhisper();
     void copyNotes();
     void copyAttribute(QAction* action);
     bool copyFocusedTextSelection();

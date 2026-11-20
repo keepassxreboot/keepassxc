@@ -953,6 +953,14 @@
     <string notr="true">Ctrl+U</string>
    </property>
   </action>
+  <action name="actionEntryShareWhisper">
+   <property name="text">
+    <string>&amp;Share via Whisper…</string>
+   </property>
+   <property name="toolTip">
+    <string>Create an encrypted share link via Whisper</string>
+   </property>
+  </action>
   <action name="actionEntryCopyNotes">
    <property name="text">
     <string>&amp;Notes</string>

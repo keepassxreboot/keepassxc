@@ -6513,6 +6513,14 @@ This version is not meant for production use.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>&amp;Share via Whisper…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create an encrypted share link via Whisper</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -9522,6 +9530,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Confirm Replace Entry References</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Whisper</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -10404,6 +10416,131 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>ShareEntryWhisperDialog</name>
+    <message>
+        <source>Share via Whisper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What to Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expires after:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Self-destruct after first read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t ask me again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected data is encrypted on this device before it is sent to %1. The decryption key stays in the link and never reaches the server, so anyone with the link can read the data until it expires, or until it is opened once if self-destruct is on.
+
+Whisper is a third-party service and is not affiliated with the KeePassXC project.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encrypted on this device. Only people with the link can read it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(empty)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>6 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>24 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>7 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open in Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sharing…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your link is ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anyone with this link can read the shared data. Send it over a channel you trust.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expires in %1 · Deleted after it is opened once</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expires in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link copied to clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
@@ -10697,6 +10834,44 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WhisperClient</name>
+    <message>
+        <source>The Whisper server URL must start with https://</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to encrypt the secret.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unexpected response from the Whisper server (HTTP %1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WhisperSettingsWidget</name>
+    <message>
+        <source>Whisper Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shared entries are encrypted on this device before upload, so the server only stores data it cannot read. Use the public server or your own self-hosted Whisper instance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset to default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask for confirmation before sharing an entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
