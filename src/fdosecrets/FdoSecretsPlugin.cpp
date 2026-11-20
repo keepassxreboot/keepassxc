@@ -59,6 +59,11 @@ void FdoSecretsPlugin::saveSettings(QWidget* widget)
 {
     qobject_cast<SettingsWidgetFdoSecrets*>(widget)->saveSettings();
     updateServiceState();
+    // Only a failed user-initiated enable turns the setting off; a failure at startup
+    // (e.g. another provider owns the bus name) must not silently wipe the user's choice.
+    if (FdoSecrets::settings()->isEnabled() && !m_secretService) {
+        FdoSecrets::settings()->setEnabled(false);
+    }
 }
 
 void FdoSecretsPlugin::updateServiceState()
@@ -67,7 +72,6 @@ void FdoSecretsPlugin::updateServiceState()
         if (!m_secretService && m_dbTabs) {
             m_secretService = Service::Create(this, m_dbTabs, m_dbus);
             if (!m_secretService) {
-                FdoSecrets::settings()->setEnabled(false);
                 return;
             }
             emit secretServiceStarted();
