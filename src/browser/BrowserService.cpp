@@ -439,6 +439,13 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         return {};
     }
 
+    // Only request access to the best matches among eligible entries.
+    if (browserSettings()->bestMatchOnly()) {
+        auto candidates = allowedEntries + entriesToConfirm;
+        const auto bestMatches = sortEntries(candidates, entryParameters.siteUrl, entryParameters.formUrl);
+        entriesToConfirm.removeIf([&bestMatches](Entry* entry) { return !bestMatches.contains(entry); });
+    }
+
     // Confirm entries
     auto selectedEntriesToConfirm =
         confirmEntries(entriesToConfirm, entryParameters, siteHost, formHost, entryParameters.httpAuth);
