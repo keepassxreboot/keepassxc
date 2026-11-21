@@ -30,6 +30,9 @@
 #include <QToolBar>
 
 #include "browser/BrowserService.h"
+#include "browser/BrowserSettings.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 #include "config-keepassx-tests.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseTabWidget.h"
@@ -294,6 +297,75 @@ void TestGuiBrowser::testAccessConfirmDialogRejection()
     // Check that the access confirm dialog no longer exists
     auto browserAccessControlDialog = m_dbWidget->findChild<BrowserAccessControlDialog*>();
     QCOMPARE(browserAccessControlDialog, nullptr);
+}
+
+void TestGuiBrowser::testBestMatchAccessDialog_data()
+{
+    QTest::addColumn<bool>("bestMatchOnly");
+    QTest::addColumn<int>("exactAccess");
+    QTest::addColumn<bool>("equalPriority");
+    QTest::addColumn<int>("expectedRows");
+    QTest::newRow("all-matches") << false << 0 << false << 2;
+    QTest::newRow("best-match") << true << 0 << false << 1;
+    QTest::newRow("denied-best-match") << true << 1 << false << 1;
+    QTest::newRow("allowed-best-match") << true << 2 << false << -1;
+    QTest::newRow("equal-matches") << true << 0 << true << 2;
+}
+
+void TestGuiBrowser::testBestMatchAccessDialog()
+{
+    QFETCH(bool, bestMatchOnly);
+    QFETCH(int, exactAccess);
+    QFETCH(bool, equalPriority);
+    QFETCH(int, expectedRows);
+
+    const auto previousBestMatchOnly = browserSettings()->bestMatchOnly();
+    browserSettings()->setBestMatchOnly(bestMatchOnly);
+    m_db->metadata()->customData()->set(CustomData::getKeyWithPrefix(CustomData::BrowserKeyPrefix, "test-browser"),
+                                        "test-key");
+
+    auto* parentEntry = new Entry();
+    parentEntry->setTitle("Parent domain");
+    parentEntry->setUrl("https://example.com/notes/private");
+    parentEntry->setGroup(m_db->rootGroup());
+    auto* exactEntry = new Entry();
+    exactEntry->setTitle("Exact URL");
+    exactEntry->setUrl("https://app.example.com/account/login");
+    exactEntry->setGroup(m_db->rootGroup());
+
+    EntryParameters parameters{};
+    parameters.siteUrl = exactEntry->url();
+    if (equalPriority) {
+        parentEntry->setUrl(exactEntry->url());
+    }
+    if (exactAccess == 1) {
+        browserService()->denyEntry(exactEntry, "app.example.com", "", "");
+    } else if (exactAccess == 2) {
+        browserService()->allowEntry(exactEntry, "app.example.com", "", "");
+    }
+
+    int rows = -1;
+    QString title;
+    QTimer dialogTimer;
+    dialogTimer.setSingleShot(true);
+    connect(&dialogTimer, &QTimer::timeout, [&]() {
+        auto* dialog = m_dbWidget->findChild<BrowserAccessControlDialog*>();
+        if (dialog) {
+            auto* table = dialog->findChild<QTableWidget*>("itemsTable");
+            rows = table->rowCount();
+            title = table->item(0, 0)->text();
+            dialog->reject();
+        }
+    });
+    dialogTimer.start(500);
+    auto result = browserService()->findEntries(parameters, {{"test-browser", "test-key"}}, nullptr);
+    browserSettings()->setBestMatchOnly(previousBestMatchOnly);
+
+    QCOMPARE(rows, expectedRows);
+    QCOMPARE(result.size(), exactAccess == 2 ? 1 : 0);
+    if (bestMatchOnly && expectedRows == 1) {
+        QCOMPARE(title, exactAccess == 1 ? parentEntry->title() : exactEntry->title());
+    }
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)

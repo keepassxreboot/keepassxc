@@ -41,6 +41,8 @@ private slots:
     void testAdditionalURLs();
     void testGetDatabaseGroups();
     void testAccessConfirmDialogRejection();
+    void testBestMatchAccessDialog_data();
+    void testBestMatchAccessDialog();
 
 private:
     void triggerAction(const QString& name);
