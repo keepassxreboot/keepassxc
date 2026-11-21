@@ -175,7 +175,7 @@
       <item>
        <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
         <property name="text">
-         <string>Lock databases when session is locked or lid is closed</string>
+         <string>Lock databases when session is locked or lid is closed. (Some screen savers might also lock the database)</string>
         </property>
        </widget>
       </item>
