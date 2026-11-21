@@ -1810,12 +1810,20 @@ void DatabaseWidget::deleteSearch(const QString& name)
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
+    // SearchWidget re-sends its options on every database switch,
+    // so only re-run the search if the option actually changed
+    if (m_entrySearcher->isCaseSensitive() == state) {
+        return;
+    }
     m_entrySearcher->setCaseSensitive(state);
     refreshSearch();
 }
 
 void DatabaseWidget::setSearchLimitGroup(bool state)
 {
+    if (m_searchLimitGroup == state) {
+        return;
+    }
     m_searchLimitGroup = state;
     refreshSearch();
 }

@@ -169,6 +169,8 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
     if (dbWidget) {
         // Set current search text from this database
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
+        // The database is already showing this search, do not run it again
+        m_searchTimer->stop();
         // Enforce search policy
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());

@@ -22,6 +22,7 @@
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDialog>
+#include <QHeaderView>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -1383,6 +1384,61 @@ void TestGui::testSearch()
     // Cancel search, should return to normal view
     QTest::keyClick(m_mainWindow.data(), Qt::Key_Escape);
     QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+}
+
+void TestGui::testSearchSwitchDatabase()
+{
+    // Add canned entries for consistent testing
+    addCannedEntries();
+
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    auto* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
+    auto* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    // Search the first database and sort the results by title, descending
+    searchTextEdit->clear();
+    QTest::keyClicks(searchTextEdit, "something");
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    // The search view state is shared by all tests, restore it at the end
+    const auto searchViewState = entryView->viewState();
+    entryView->sortByColumn(EntryModel::Title, Qt::DescendingOrder);
+    QCOMPARE(entryView->entryFromIndex(entryView->model()->index(0, 1))->title(), QString("something 3"));
+
+    // Select the second row, which is not the first entry in 'Group' order
+    auto* selectedEntry = entryView->entryFromIndex(entryView->model()->index(1, 1));
+    QCOMPARE(selectedEntry->title(), QString("something 2"));
+    entryView->setCurrentEntry(selectedEntry);
+    QCOMPARE(entryView->currentEntry(), selectedEntry);
+
+    // Open a second database and switch to it
+    TemporaryFile secondDbFile;
+    QVERIFY(secondDbFile.copyFromFile(QDir(KEEPASSX_TEST_DATA_DIR).absoluteFilePath("NewDatabase.kdbx")));
+    m_tabWidget->addDatabaseTab(secondDbFile.fileName(), false, "a");
+    QTRY_COMPARE(m_tabWidget->count(), 2);
+    QTRY_COMPARE(m_tabWidget->currentIndex(), 1);
+    QTRY_VERIFY(!m_tabWidget->databaseWidgetFromIndex(1)->isLocked());
+
+    // The search in the background database must keep its sort and selection
+    QCOMPARE(entryView->header()->sortIndicatorSection(), static_cast<int>(EntryModel::Title));
+    QCOMPARE(entryView->header()->sortIndicatorOrder(), Qt::DescendingOrder);
+    QCOMPARE(entryView->currentEntry(), selectedEntry);
+
+    // Switch back and give the search timer time to fire, it must not re-run the search
+    m_tabWidget->setCurrentIndex(0);
+    QTRY_COMPARE(searchTextEdit->text(), QString("something"));
+    QTest::qWait(1000);
+    QVERIFY(m_dbWidget->isSearchActive());
+    QCOMPARE(entryView->header()->sortIndicatorSection(), static_cast<int>(EntryModel::Title));
+    QCOMPARE(entryView->header()->sortIndicatorOrder(), Qt::DescendingOrder);
+    QCOMPARE(entryView->currentEntry(), selectedEntry);
+    entryView->setViewState(searchViewState);
+
+    // Close the second database
+    QVERIFY(m_tabWidget->closeDatabaseTab(1));
+    QTRY_COMPARE(m_tabWidget->count(), 1);
+    QCOMPARE(m_tabWidget->currentDatabaseWidget(), m_dbWidget.data());
 }
 
 void TestGui::testDeleteEntry()
