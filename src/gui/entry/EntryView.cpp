@@ -226,9 +226,13 @@ void EntryView::displaySearch(const QList<Entry*>& entries)
 
     setFirstEntryActive();
 
-    // Reset sort column to 'Group', overrides DatabaseWidgetStateSync
-    m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
-    sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
+    // Reset sort column to 'Group' when a search starts, overrides DatabaseWidgetStateSync.
+    // Keep the current sort when a search is re-run: the view may be on a background tab,
+    // where DatabaseWidgetStateSync does not restore the sort before the view is shown again.
+    if (!m_inSearchMode) {
+        m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
+        sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
+    }
 
     m_inSearchMode = true;
 }
