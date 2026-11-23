@@ -377,6 +377,7 @@ void DatabaseOpenWidget::openDatabase()
         if (!blockQuickUnlock && isQuickUnlockAvailable()) {
             auto keyData = databaseKey->serialize();
             getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
+            scrubKeyData(keyData);
             m_ui->messageWidget->hideMessage();
         }
 
@@ -431,6 +432,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
             return {};
         }
         databaseKey->setRawKey(keyData);
+        scrubKeyData(keyData);
         return databaseKey;
     }
 

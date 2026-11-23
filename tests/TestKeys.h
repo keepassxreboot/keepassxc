@@ -35,6 +35,7 @@ private slots:
     void testFileKeyHash();
     void testFileKeyError();
     void testCompositeKeyComponents();
+    void testCompositeKeySerialization();
     void benchmarkTransformKey();
 };
 

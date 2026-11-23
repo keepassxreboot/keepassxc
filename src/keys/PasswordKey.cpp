@@ -76,7 +76,9 @@ QByteArray PasswordKey::serialize() const
 {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << uuid().toRfc4122() << rawKey();
+    auto key = rawKey();
+    stream << uuid().toRfc4122() << key;
+    scrubKeyData(key);
     return data;
 }
 
@@ -88,4 +90,5 @@ void PasswordKey::deserialize(const QByteArray& data)
     if (uuid().toRfc4122() == uuidData) {
         setRawKey(key);
     }
+    scrubKeyData(key);
 }
