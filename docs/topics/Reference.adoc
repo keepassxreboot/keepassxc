@@ -145,4 +145,119 @@ ykpersonalize -2 -a -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible -oa
 
 You will be asked to enter the HMAC key you created earlier, copy/paste they key output in the first step. Repeat step 2 for your second YubiKey using the same HMAC key from before. We recommend storing your HMAC key in a safe place (e.g., printed on paper) in case you need to recreate another key.
 
+=== Importing an HMAC secret into a TPM2 (Linux)
+On Linux, KeePassXC can use an HMAC-SHA1 key stored in a TPM 2.0 chip as a challenge-response hardware key. This requires a KeePassXC build with TPM2 support, and the option _Enable TPM2 challenge-response keys_ must be ticked under _Application Settings_ -> _Security_ -> _Hardware Keys_. The steps below use the https://github.com/tpm2-software/tpm2-tools[tpm2-tools] CLI and need access to the TPM resource manager (`/dev/tpmrm0`, usually the `tss` group).
+
+WARNING: A TPM does not necessarily offer the same level of security as a YubiKey. A YubiKey is a separate physical device that you can unplug and keep with you, whereas a TPM is permanently part of the computer that most likely also holds your database file. Anyone or anything that can run code on the machine as your user (or as root) can ask the TPM to answer challenges, without needing to extract the secret, and no touch or other user presence is required. A TPM key therefore mainly protects against someone who obtains the database file (or a copy of it) _without_ access to this computer; it adds little against malware on the running system or against a local attacker. Setting a PIN/password on the key (see below) improves this, but a PIN that is typed into a compromised system can still be captured. In addition, the secret exists in plain text on the computer while you import it, so only do this on a machine you trust, and securely delete the temporary files afterwards. If you need protection against a compromised computer, prefer a hardware key such as a YubiKey or OnlyKey.
+
+==== Fixed 64-byte vs. variable length
+The mode is *not* stored in the TPM. The TPM holds a plain HMAC-SHA1 key and you choose the mode in KeePassXC from the hardware key list, which shows two entries for each key (for example `TPM2 0x81010004 - HMAC-SHA1 [Fixed 64-byte]` and `[Variable length (HMAC_LT64)]`). The two modes mimic the two ways a YubiKey slot can be programmed:
+
+[cols="1,3"]
+|===
+|Mode |Behavior
+
+|Fixed 64-byte
+|The challenge is padded to 64 bytes and all 64 bytes are HMAC'd. Matches a YubiKey slot written _without_ `-ohmac-lt64`.
+
+|Variable length (HMAC_LT64)
+|The challenge is padded to 64 bytes, then the trailing run of bytes equal to the last byte is removed before the HMAC is computed. Matches a YubiKey slot written _with_ `-ohmac-lt64`, as in <<Creating a YubiKey backup>>.
+|===
+
+The two modes produce different responses for the same secret. Always use the mode that was selected when the database key was created; the wrong mode yields a wrong response and the database will not open. If the same secret also lives on a YubiKey, pick the mode that matches how that YubiKey slot was programmed.
+
+==== Import steps
+1. Obtain the 20-byte HMAC secret. Either create a new one, or reuse the hex secret that is already on your YubiKey (see <<Creating a YubiKey backup>>) so both devices give identical responses:
++
+```
+openssl rand -hex 20 > secret.hex        # or put your existing hex secret in secret.hex
+xxd -r -p secret.hex > secret.bin
+```
+
+2. Create a primary (parent) key in the owner hierarchy:
++
+```
+tpm2_createprimary -C o -c primary.ctx
+```
+
+3. Import the secret as a keyed-hash HMAC-SHA1 key:
++
+```
+tpm2_import -C primary.ctx -G hmac:sha1 -i secret.bin -u key.pub -r key.priv -a "sign|userwithauth"
+```
++
+KeePassXC only lists keys that are HMAC (or null) scheme with SHA-1, have the `sign` and `userwithauth` attributes and no authorization policy. Keys that are bound to a policy are not supported at present (see <<Keys bound to PCR values or other policies>>). TPMs refuse to import a key marked `fixedtpm` or `fixedparent`, so these attributes cannot be set on an imported secret.
+
+4. Load the key and make it persistent at a free handle in the `0x81xxxxxx` range:
++
+```
+tpm2_load -C primary.ctx -u key.pub -r key.priv -c key.ctx
+tpm2_evictcontrol -C o -c key.ctx 0x81010004
+```
++
+You can list the handles already in use with `tpm2_getcap handles-persistent`.
+
+5. Verify the key against the expected responses (this works for both modes). The script below builds the message that is sent to the HMAC for a sample 32-byte challenge; set `mode` to `fixed` or `variable`:
++
+```
+python3 - <<'EOF' > msg.bin
+mode = "fixed"                      # or "variable"
+challenge = bytes(range(32))
+msg = challenge + bytes([64 - len(challenge)]) * (64 - len(challenge))
+if mode == "variable":
+    msg = msg.rstrip(msg[-1:])      # drop the trailing run of the last byte
+import sys; sys.stdout.buffer.write(msg)
+EOF
+tpm2_hmac -c 0x81010004 -g sha1 msg.bin | xxd -p
+openssl dgst -sha1 -mac HMAC -macopt hexkey:$(cat secret.hex) msg.bin
+```
++
+Both commands must print the same digest.
+
+6. Clean up the temporary files, keeping a copy of `secret.hex` somewhere safe (see below):
++
+```
+shred -u secret.bin key.priv key.pub key.ctx primary.ctx msg.bin
+```
+
+In KeePassXC, enable TPM2 keys in the settings, then choose the `TPM2 0x81010004` entry with the desired mode in the hardware key list and press refresh if it is not shown.
+
+==== PIN/password protected keys
+Add `-p <password>` to the `tpm2_import` command in step 3 to protect the key with an authorization value. The hardware key list then offers `PIN/password` entries for it and KeePassXC prompts for the value when needed. A TPM does not reveal whether a key has a PIN, so for keys that count failed attempts the list offers both a plain and a `PIN/password` entry for each mode. If you choose the plain entry for a key that has a PIN, the TPM refuses the empty password and this counts as one failed attempt; KeePassXC then tells you to choose the `PIN/password` entry. It can optionally be remembered until the database is locked or closed. Each wrong entry counts toward the TPM's dictionary-attack lockout (`tpm2_getcap properties-variable` shows `TPM2_PT_MAX_AUTH_FAIL`). KeePassXC reads the TPM's lockout counter and tells you after a wrong PIN whether the attempt was counted, how many failed attempts are allowed before lockout and how long until one is forgiven, and it warns you before prompting if the counter is already raised. Adding `noda` to the `-a` attributes exempts the key from the counter, which also lets KeePassXC tell by itself whether the key needs a PIN; this trades lockout protection for convenience.
+
+By default a PIN is only remembered if you tick _Remember until the database is locked or closed_ in the PIN dialog, and it is then forgotten as soon as the database is locked, so unlocking with Quick Unlock asks for it again. To keep the PIN for Quick Unlock, enable _Remember the TPM2 PIN/password for Quick Unlock_ in _Application Settings_ -> _Security_ -> _Hardware Keys_. The option can only be changed while Quick Unlock is available and enabled and TPM2 challenge-response keys are enabled; otherwise it is greyed out, with a note saying what is missing. With it enabled, the PIN you enter is remembered automatically (the PIN dialog shows the remember box ticked and greyed out, with a note that explains why, instead of asking) and is stored together with the Quick Unlock data, so it is protected the same way as the rest of it (on Linux it is encrypted and released only after you authenticate). It is removed when the database is closed or Quick Unlock is reset. If you change the option while a database is open, the stored Quick Unlock data is updated the next time you unlock: a PIN that you enter then is kept, and a PIN stored earlier is dropped when the option is off. Anyone who can pass the Quick Unlock check can therefore use the key without typing the PIN; leave the option off if that is not acceptable.
+
+For the CLI, `keepassxc-cli --yubikey` takes the slot `257` (fixed) or `258` (variable length), plus `512` for PIN-protected keys, and the persistent handle in decimal as serial, for example `258:2164326404` for `0x81010004` in variable-length mode.
+
+WARNING: The secret is bound to this TPM. If the TPM is cleared, reset, or the mainboard is replaced, the key is lost and a database that requires it can no longer be opened. Keep `secret.hex` offline (for example printed on paper), so that the key can be re-imported or written to a YubiKey.
+
+==== Keys bound to PCR values or other policies
+A TPM key can also be protected by an authorization *policy*, for example one that only allows its use while the PCR registers hold the expected values (the measured boot state, set up with `tpm2_policypcr`), optionally combined with a PIN (`tpm2_policyauthvalue`). *This is not supported at present.* KeePassXC cannot satisfy a policy, so it does not list such keys and never sends them a PIN. If a TPM holds only keys that cannot be used, the hardware key list says so, and a database that requires such a key reports that the key is bound to an authorization policy, which is not supported yet. Protect the key with a PIN/password (authValue, see above) instead.
+
+Do not set a policy on a key that you want to use with KeePassXC, not even in addition to `userwithauth`: a key with an authorization policy is skipped as a whole. Note that a PCR policy would also make the key stop working whenever firmware, the boot loader or the Secure Boot configuration change the PCR values.
+
+==== Removing a key from the TPM2
+1. Make sure no database still depends on the key. Open each database that uses it, go to _Database > Database Settings… > Security_ and remove the TPM2 challenge-response entry (or replace it with another credential), then save. A database that still requires the key cannot be opened once the key is gone, unless you re-import the same secret (see above).
+
+2. List the persistent handles and check that you are about to remove the right one:
++
+```
+tpm2_getcap handles-persistent
+tpm2_readpublic -c 0x81010004
+```
+
+3. Evict the key from the TPM. This only needs the owner hierarchy (add `-P <owner password>` if you have set one); the key's own PIN/password is not required:
++
+```
+tpm2_evictcontrol -C o -c 0x81010004
+```
++
+The command prints `action: evicted`, and the handle no longer shows up in `tpm2_getcap handles-persistent`.
+
+4. Press the refresh button next to the hardware key list in KeePassXC. The `TPM2 0x81010004` entries are gone.
+
+5. Securely delete any leftover files from the import (`key.pub`, `key.priv`, `key.ctx`, `secret.bin`, `secret.hex`). Evicting only removes the copy that is persistent in the TPM; as long as `key.pub` and `key.priv` exist, the same key can be loaded again under the same primary key and made persistent again, and `secret.hex` is the secret itself.
+
+WARNING: Evicting a key cannot be undone. If you do not keep a copy of the secret (or of `key.pub` and `key.priv`), the key and every database that still requires it are lost for good. You do not need to clear the whole TPM (`tpm2_clear`) to remove a single key; doing so would delete all keys, including ones used by other programs.
+
 // end::content[]

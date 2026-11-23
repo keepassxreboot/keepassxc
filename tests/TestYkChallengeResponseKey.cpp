@@ -19,6 +19,7 @@
 
 #include "TestYkChallengeResponseKey.h"
 
+#include "core/Config.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "keys/ChallengeResponseKey.h"
@@ -28,6 +29,8 @@
 #include <QSignalSpy>
 #include <QTest>
 
+#include <algorithm>
+
 QTEST_GUILESS_MAIN(TestYubiKeyChallengeResponse)
 
 void TestYubiKeyChallengeResponse::initTestCase()
@@ -35,6 +38,13 @@ void TestYubiKeyChallengeResponse::initTestCase()
     // crypto subsystem needs to be initialized for YubiKey testing
     QVERIFY(Crypto::init());
     QLocale::setDefault(QLocale::c());
+
+    // This test is about YubiKeys with a known secret. Use throw-away settings with TPM2 keys disabled, so
+    // that it neither depends on the user's settings nor ever challenges a TPM.
+    QVERIFY(m_configFile.open());
+    QVERIFY(m_localConfigFile.open());
+    Config::createConfigFromFile(m_configFile.fileName(), m_localConfigFile.fileName());
+    config()->set(Config::Security_EnableTpm2, false);
 
     if (!YubiKey::instance()->isInitialized()) {
         QSKIP("Unable to initialize YubiKey interface.");
@@ -50,6 +60,7 @@ void TestYubiKeyChallengeResponse::testDetectDevices()
     QRegularExpression exp{"\\w+\\s+\\[\\d+\\]\\s+-\\s+Slot\\s+\\d"};
 
     for (auto i = foundKeys.cbegin(); i != foundKeys.cend(); ++i) {
+        QVERIFY(!YubiKey::isTpmSlot(i.key()));
         const auto& displayName = i.value();
         auto match = exp.match(displayName);
         QVERIFY(match.hasMatch());
@@ -66,6 +77,8 @@ void TestYubiKeyChallengeResponse::testDetectDevices()
 void TestYubiKeyChallengeResponse::testKeyChallenge()
 {
     auto keys = YubiKey::instance()->foundKeys().keys();
+    keys.erase(std::remove_if(keys.begin(), keys.end(), [](const YubiKeySlot& k) { return YubiKey::isTpmSlot(k); }),
+               keys.end());
     if (keys.isEmpty()) {
         QSKIP("No YubiKey devices were detected.");
     }

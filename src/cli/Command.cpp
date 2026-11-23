@@ -68,7 +68,10 @@ const QCommandLineOption Command::NoPasswordOption =
 
 const QCommandLineOption Command::YubiKeyOption =
     QCommandLineOption(QStringList() << "y" << "yubikey",
-                       QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
+                       QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001). "
+                                   "For a TPM2 key use slot 257 (fixed 64-byte) or 258 (variable length), add 512 "
+                                   "if the key has a PIN/password (769/770), and the decimal persistent handle "
+                                   "as serial (e.g., 770:2164326402 for 0x81010002)."),
                        QObject::tr("slot[:serial]"));
 
 namespace

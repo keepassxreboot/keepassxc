@@ -26,6 +26,8 @@
 #include "keys/CompositeKey.h"
 #include "keys/drivers/YubiKeyInterfaceUSB.h"
 
+#include <botan/mem_ops.h>
+
 YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
     , m_compUi(new Ui::YubiKeyEditWidget())
@@ -46,7 +48,14 @@ bool YubiKeyEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 
     int selectionIndex = m_compUi->comboChallengeResponse->currentIndex();
     auto slot = m_compUi->comboChallengeResponse->itemData(selectionIndex).value<YubiKeySlot>();
-    key->addChallengeResponseKey(QSharedPointer<ChallengeResponseKey>::create(slot));
+    auto crKey = QSharedPointer<ChallengeResponseKey>::create(slot);
+    if (crKey->needsPin() && m_pendingRemember && !m_pendingPin.empty()) {
+        crKey->setCachedPin(m_pendingPin);
+    }
+    Botan::secure_scrub_memory(m_pendingPin.data(), m_pendingPin.capacity());
+    m_pendingPin.clear();
+    m_pendingRemember = false;
+    key->addChallengeResponseKey(crKey);
     return true;
 }
 
@@ -60,9 +69,40 @@ bool YubiKeyEditWidget::validate(QString& errorMessage) const
     // Perform a test challenge response
     int selectionIndex = m_compUi->comboChallengeResponse->currentIndex();
     auto slot = m_compUi->comboChallengeResponse->itemData(selectionIndex).value<YubiKeySlot>();
-    bool valid = AsyncTask::runAndWaitForFuture([&slot] { return YubiKey::instance()->testChallenge(slot); });
+    bool valid = false;
+    if (YubiKey::tpmSlotNeedsPin(slot)) {
+        // Keep asking until the PIN works, the user cancels, or the TPM reports something other than a wrong PIN
+        // (e.g. lockout). The TPM's own lockout protection limits the number of tries.
+        QString message = AsyncTask::runAndWaitForFuture([&slot] { return YubiKey::instance()->pinNotice(slot); });
+        while (!valid) {
+            Botan::secure_vector<char> pin;
+            bool remember = false;
+            if (!YubiKey::requestPin(slot, message, pin, remember)) {
+                errorMessage = tr("TPM2 PIN/password entry was cancelled.");
+                return false;
+            }
+            auto result = YubiKey::ChallengeResult::YCR_ERROR;
+            valid = AsyncTask::runAndWaitForFuture(
+                [&slot, &pin, &result] { return YubiKey::instance()->testChallenge(slot, nullptr, &pin, &result); });
+            if (valid) {
+                m_pendingPin = pin;
+                m_pendingRemember = remember;
+            } else if (result == YubiKey::ChallengeResult::YCR_AUTHFAILED) {
+                message = YubiKey::instance()->errorMessage();
+            } else {
+                errorMessage = YubiKey::instance()->errorMessage();
+                return false;
+            }
+        }
+    } else {
+        valid = AsyncTask::runAndWaitForFuture([&slot] { return YubiKey::instance()->testChallenge(slot); });
+    }
     if (!valid) {
-        errorMessage = tr("Selected hardware key slot does not support challenge-response!");
+        // TPM2 keys know what went wrong (for example a PIN is needed); say that instead of the generic text
+        errorMessage = YubiKey::isTpmSlot(slot) ? YubiKey::instance()->errorMessage() : QString();
+        if (errorMessage.isEmpty()) {
+            errorMessage = tr("Selected hardware key slot does not support challenge-response!");
+        }
     }
     return valid;
 }
@@ -161,9 +201,15 @@ void YubiKeyEditWidget::hardwareKeyResponse(bool found)
 
     if (!found) {
         m_compUi->yubikeyProgress->setVisible(false);
-        m_compUi->comboChallengeResponse->addItem(YubiKey::instance()->connectedKeys() > 0
-                                                      ? tr("Hardware keys found, but no slots are configured")
-                                                      : tr("No hardware keys detected"));
+        const auto unusableTpmKeys = YubiKey::instance()->unusableTpmKeysHint();
+        if (YubiKey::instance()->connectedKeys() > 0) {
+            m_compUi->comboChallengeResponse->addItem(
+                tr("Hardware keys found, but no slots are configured")
+                + (unusableTpmKeys.isEmpty() ? QString() : QStringLiteral(". ") + unusableTpmKeys));
+        } else {
+            m_compUi->comboChallengeResponse->addItem(unusableTpmKeys.isEmpty() ? tr("No hardware keys detected")
+                                                                                 : unusableTpmKeys);
+        }
         m_isDetected = false;
         return;
     }

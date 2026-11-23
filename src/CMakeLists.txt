@@ -89,6 +89,7 @@ set(core_SOURCES
         keys/drivers/YubiKeyInterface.cpp
         keys/drivers/YubiKeyInterfaceUSB.cpp
         keys/drivers/YubiKeyInterfacePCSC.cpp
+        keys/drivers/YubiKeyInterfaceTPM.cpp
         streams/HashedBlockStream.cpp
         streams/HashingStream.cpp
         streams/HmacBlockStream.cpp
@@ -174,6 +175,7 @@ set(gui_SOURCES
         gui/databasekey/KeyComponentWidget.cpp
         gui/databasekey/PasswordEditWidget.cpp
         gui/databasekey/YubiKeyEditWidget.cpp
+        gui/TpmPinDialog.cpp
         gui/databasekey/KeyFileEditWidget.cpp
         gui/dbsettings/DatabaseSettingsWidget.cpp
         gui/dbsettings/DatabaseSettingsDialog.cpp
@@ -338,6 +340,10 @@ if(KPXC_FEATURE_SSHAGENT)
     set(sshagent_LIB sshagent)
 endif()
 
+if(KPXC_FEATURE_TPM2)
+    set(tpm2_LIB PkgConfig::TSS2)
+endif()
+
 add_subdirectory(fdosecrets)
 if(KPXC_FEATURE_FDOSECRETS)
     set(fdosecrets_LIB fdosecrets)
@@ -358,6 +364,7 @@ target_link_libraries(keepassxc_core
         Qt6::Concurrent
         ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
+        ${tpm2_LIB}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${MINIZIP_LIBRARIES}

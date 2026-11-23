@@ -50,6 +50,8 @@ public:
 
     void addChallengeResponseKey(const QSharedPointer<ChallengeResponseKey>& key);
     const QList<QSharedPointer<ChallengeResponseKey>>& challengeResponseKeys() const;
+    void clearCachedSecrets() const;
+    bool quickUnlockDataOutdated() const;
 
     QByteArray serialize() const override;
     void deserialize(const QByteArray& data) override;

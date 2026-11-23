@@ -135,9 +135,15 @@ void DatabaseOpenWidget::toggleHardwareKeyComponent(bool state)
     m_ui->hardwareKeyCombo->setVisible(state && m_ui->hardwareKeyCombo->count() != 1);
 
     m_ui->noHardwareKeysFoundLabel->setVisible(!state && m_manualHardwareKeyRefresh);
-    m_ui->noHardwareKeysFoundLabel->setText(YubiKey::instance()->connectedKeys() > 0
-                                                ? tr("Hardware keys found, but no slots are configured.")
-                                                : tr("No hardware keys found."));
+    const auto unusableTpmKeys = YubiKey::instance()->unusableTpmKeysHint();
+    if (YubiKey::instance()->connectedKeys() > 0) {
+        m_ui->noHardwareKeysFoundLabel->setText(
+            tr("Hardware keys found, but no slots are configured.")
+            + (unusableTpmKeys.isEmpty() ? QString() : QStringLiteral(" ") + unusableTpmKeys));
+    } else {
+        m_ui->noHardwareKeysFoundLabel->setText(unusableTpmKeys.isEmpty() ? tr("No hardware keys found.")
+                                                                           : unusableTpmKeys);
+    }
 
     if (!state) {
         m_ui->useHardwareKeyCheckBox->setChecked(false);
@@ -329,7 +335,8 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 void DatabaseOpenWidget::openDatabase()
 {
     // Cache this variable for future use then reset
-    bool blockQuickUnlock = m_blockQuickUnlock || isOnQuickUnlockScreen();
+    const bool blockedByCaller = m_blockQuickUnlock;
+    const bool onQuickUnlockScreen = isOnQuickUnlockScreen();
     m_blockQuickUnlock = false;
 
     setUserInteractionLock(true);
@@ -374,7 +381,9 @@ void DatabaseOpenWidget::openDatabase()
         }
 
         // Save Quick Unlock credentials if available
-        if (!blockQuickUnlock && isQuickUnlockAvailable()) {
+        const bool dataOutdated = databaseKey->quickUnlockDataOutdated();
+        if (isQuickUnlockAvailable()
+            && shouldStoreQuickUnlockData(blockedByCaller, onQuickUnlockScreen, dataOutdated)) {
             auto keyData = databaseKey->serialize();
             getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
             m_ui->messageWidget->hideMessage();
@@ -610,6 +619,16 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
         m_ui->centralStack->setEnabled(true);
     }
     m_unlockingDatabase = state;
+}
+
+bool DatabaseOpenWidget::shouldStoreQuickUnlockData(bool blockedByCaller, bool onQuickUnlockScreen, bool dataOutdated)
+{
+    if (blockedByCaller) {
+        return false;
+    }
+    // Unlocking with the stored data normally leaves it alone (storing can ask the user to authenticate again),
+    // unless it is out of date, e.g. because a TPM2 PIN was remembered since it was stored
+    return !onQuickUnlockScreen || dataOutdated;
 }
 
 bool DatabaseOpenWidget::canPerformQuickUnlock() const

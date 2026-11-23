@@ -77,6 +77,29 @@ if(NOT UNIX OR APPLE OR HAIKU)
 	set(KPXC_FEATURE_FDOSECRETS OFF)
 endif()
 
+# TPM2 challenge-response is only available on Linux. KPXC_FEATURE_TPM2 is AUTO (default: use it if tpm2-tss is
+# found), ON (tpm2-tss is required) or OFF. The tpm2-tss lookup further below replaces it with a plain ON/OFF
+# value, so the rest of the build can treat it like every other boolean feature flag.
+if(UNIX AND NOT APPLE AND NOT HAIKU)
+    set(KPXC_FEATURE_TPM2 "AUTO" CACHE STRING
+        "Include TPM2 HMAC-SHA1 challenge-response support: AUTO (if tpm2-tss is found), ON (require tpm2-tss) or OFF")
+    set_property(CACHE KPXC_FEATURE_TPM2 PROPERTY STRINGS AUTO ON OFF)
+    string(TOUPPER "${KPXC_FEATURE_TPM2}" KPXC_TPM2_REQUEST)
+    # Accept the usual CMake boolean spellings as well
+    if(KPXC_TPM2_REQUEST MATCHES "^(1|ON|TRUE|YES|Y)$")
+        set(KPXC_TPM2_REQUEST ON)
+    elseif(KPXC_TPM2_REQUEST MATCHES "^(0|OFF|FALSE|NO|N)$")
+        set(KPXC_TPM2_REQUEST OFF)
+    elseif(NOT KPXC_TPM2_REQUEST STREQUAL "AUTO")
+        message(FATAL_ERROR "Invalid KPXC_FEATURE_TPM2 value '${KPXC_FEATURE_TPM2}', expected AUTO, ON or OFF")
+    endif()
+else()
+    set(KPXC_TPM2_REQUEST OFF)
+endif()
+if(KPXC_MINIMAL)
+    set(KPXC_TPM2_REQUEST OFF)
+endif()
+
 # Define feature summaries
 add_feature_info("Browser" KPXC_FEATURE_BROWSER "Browser integration and passkeys support")
 add_feature_info("SSH Agent" KPXC_FEATURE_SSHAGENT "SSH Agent integration")
@@ -573,6 +596,29 @@ include_directories(SYSTEM ${MINIZIP_INCLUDE_DIR})
 # Find PCSC and LibUSB for hardware key support
 find_package(PCSC REQUIRED)
 include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})
+
+if(KPXC_TPM2_REQUEST STREQUAL "OFF")
+    set(KPXC_FEATURE_TPM2 OFF)
+else()
+    find_package(PkgConfig)
+    if(PkgConfig_FOUND)
+        pkg_check_modules(TSS2 IMPORTED_TARGET tss2-esys tss2-tctildr tss2-mu)
+    endif()
+    if(TSS2_FOUND)
+        set(KPXC_FEATURE_TPM2 ON)
+    elseif(KPXC_TPM2_REQUEST STREQUAL "ON")
+        message(FATAL_ERROR "KPXC_FEATURE_TPM2=ON requires tpm2-tss (tss2-esys, tss2-tctildr, tss2-mu), "
+                            "which was not found. Install it or use -DKPXC_FEATURE_TPM2=AUTO or OFF.")
+    else()
+        message(STATUS "tpm2-tss (tss2-esys, tss2-tctildr, tss2-mu) not found, building without TPM2 support")
+        set(KPXC_FEATURE_TPM2 OFF)
+    endif()
+endif()
+
+# Must come after the tpm2-tss detection above, which may disable the feature
+if(UNIX AND NOT APPLE)
+    add_feature_info("TPM2 Keys" KPXC_FEATURE_TPM2 "TPM2 HMAC-SHA1 challenge-response via tpm2-tss")
+endif()
 
 if(UNIX AND NOT APPLE)
     find_library(LIBUSB_LIBRARIES NAMES usb-1.0 usb REQUIRED)

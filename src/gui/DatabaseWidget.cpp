@@ -2133,6 +2133,11 @@ bool DatabaseWidget::lock()
     clearAllWidgets();
     switchToOpenDatabase(m_db->filePath());
 
+    // Forget any remembered TPM2 PIN/password for this database
+    if (m_db->key()) {
+        m_db->key()->clearCachedSecrets();
+    }
+
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());
     newDb->open(nullptr);
     replaceDatabase(newDb);

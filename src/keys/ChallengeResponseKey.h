@@ -26,7 +26,7 @@ class ChallengeResponseKey : public Key
 {
 public:
     explicit ChallengeResponseKey(YubiKeySlot keySlot = {});
-    ~ChallengeResponseKey() override = default;
+    ~ChallengeResponseKey() override;
 
     QByteArray rawKey() const override;
     void setRawKey(const QByteArray&) override;
@@ -34,6 +34,19 @@ public:
 
     virtual bool challenge(const QByteArray& challenge);
     QString error() const;
+
+    // PIN/password handling for protected TPM2 keys
+    bool needsPin() const;
+    void setCachedPin(const Botan::secure_vector<char>& pin);
+    bool hasCachedPin() const;
+    void clearCachedPin();
+
+    /**
+     * @return true if the data Quick Unlock holds for this key no longer matches what it should hold now: a PIN was
+     * remembered that the stored data lacks, or the stored data contains a PIN that the current settings do not
+     * allow to keep. Quick Unlock data is then worth storing again.
+     */
+    bool quickUnlockDataOutdated() const;
 
     QByteArray serialize() const override;
     void deserialize(const QByteArray& data) override;
@@ -45,6 +58,9 @@ private:
 
     QString m_error;
     Botan::secure_vector<char> m_key;
+    // Only populated when the user opted to remember the PIN; wiped on lock/close
+    Botan::secure_vector<char> m_pin;
+    bool m_quickUnlockDataOutdated = false;
     YubiKeySlot m_keySlot;
 };
 

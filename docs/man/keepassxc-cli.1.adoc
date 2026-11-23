@@ -161,6 +161,7 @@ It provides the ability to query and modify the entries of a KeePass database, d
 
 *-y*, *--yubikey* <__slot[:serial]__>::
   Specifies a yubikey slot for unlocking the database.
+  For a TPM2 key (Linux) use slot 257 (fixed 64-byte) or 258 (variable length), add 512 for a key protected by a PIN/password, and give the persistent handle in decimal as serial (e.g. 258:2164326404 for 0x81010004).
   In a merge operation this option is used to specify the YubiKey slot for the first database.
 
 *-q*, *--quiet* <__path__>::

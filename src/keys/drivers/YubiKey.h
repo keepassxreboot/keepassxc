@@ -19,6 +19,8 @@
 #ifndef KEEPASSXC_YUBIKEY_H
 #define KEEPASSXC_YUBIKEY_H
 
+#include <functional>
+
 #include <QHash>
 #include <QMultiMap>
 #include <QMutex>
@@ -47,7 +49,61 @@ public:
         YCR_SUCCESS = 1,
         YCR_WOULDBLOCK = 2,
         YCR_KEYNOTFOUND = 3,
+        YCR_AUTHFAILED = 4, // TPM2 PIN/password was wrong
     };
+
+    /**
+     * TPM2 keys reuse YubiKeySlot: first = persistent TPM handle (0x81xxxxxx),
+     * second = TPM_SLOT_FLAG | mode. Slots 1 and 2 remain real YubiKey slots.
+     */
+    static constexpr int TPM_SLOT_FLAG = 0x100;
+    static constexpr int TPM_MODE_FIXED64 = 1;
+    static constexpr int TPM_MODE_VARIABLE = 2; // Yubico HMAC_LT64
+    static constexpr int TPM_PIN_FLAG = 0x200; // key is protected by a PIN/password (authValue)
+    static constexpr int TPM_MODE_MASK = 0xFF;
+    static bool isTpmSlot(const YubiKeySlot& slot)
+    {
+        return (slot.second & TPM_SLOT_FLAG) != 0;
+    }
+    static bool tpmSlotNeedsPin(const YubiKeySlot& slot)
+    {
+        return isTpmSlot(slot) && (slot.second & TPM_PIN_FLAG) != 0;
+    }
+    static int tpmMode(const YubiKeySlot& slot)
+    {
+        return slot.second & TPM_MODE_MASK;
+    }
+    static bool isValidTpmSlotValue(int slot)
+    {
+        const int mode = slot & TPM_MODE_MASK;
+        return (slot & TPM_SLOT_FLAG) && (slot & ~(TPM_SLOT_FLAG | TPM_PIN_FLAG | TPM_MODE_MASK)) == 0
+               && (mode == TPM_MODE_FIXED64 || mode == TPM_MODE_VARIABLE);
+    }
+
+    /**
+     * Callback used to ask the user for a TPM2 PIN/password. Installed by the GUI or CLI.
+     * @param slot key that needs the PIN
+     * @param message text to show with the prompt (previous failure, lockout warning); empty if none
+     * @param pin receives the PIN (UTF-8)
+     * @param remember receives whether the PIN may be cached until the database is locked/closed
+     * @return false if the user cancelled
+     */
+    using PinProvider = std::function<
+        bool(const YubiKeySlot& slot, const QString& message, Botan::secure_vector<char>& pin, bool& remember)>;
+    static void setPinProvider(PinProvider provider);
+
+    /**
+     * Encode a PIN as UTF-8 directly into secure (locked, zeroizing) memory, without an
+     * intermediate QByteArray.
+     */
+    static Botan::secure_vector<char> pinFromString(const QString& text);
+    static bool
+    requestPin(const YubiKeySlot& slot, const QString& message, Botan::secure_vector<char>& pin, bool& remember);
+
+    /**
+     * @return a warning about TPM lockout state to show before asking for the PIN, or an empty string
+     */
+    QString pinNotice(const YubiKeySlot& slot);
 
     static YubiKey* instance();
     bool isInitialized();
@@ -56,10 +112,22 @@ public:
     void findValidKeysAsync();
 
     KeyMap foundKeys();
+
+    /**
+     * @return after a key scan: why TPM2 keys that were found cannot be used (e.g. keys bound to a PCR policy,
+     * which is not supported), or an empty string
+     */
+    QString unusableTpmKeysHint() const;
     int connectedKeys();
 
-    ChallengeResult challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response);
-    bool testChallenge(YubiKeySlot slot, bool* wouldBlock = nullptr);
+    ChallengeResult challenge(YubiKeySlot slot,
+                              const QByteArray& challenge,
+                              Botan::secure_vector<char>& response,
+                              const Botan::secure_vector<char>* pin = nullptr);
+    bool testChallenge(YubiKeySlot slot,
+                       bool* wouldBlock = nullptr,
+                       const Botan::secure_vector<char>* pin = nullptr,
+                       ChallengeResult* result = nullptr);
 
     QString errorMessage();
 
@@ -85,6 +153,7 @@ signals:
 
 private:
     explicit YubiKey();
+    bool tpmEnabled() const;
 
     static YubiKey* m_instance;
 
@@ -98,6 +167,8 @@ private:
 
     KeyMap m_usbKeys;
     KeyMap m_pcscKeys;
+    KeyMap m_tpmKeys;
+    QString m_tpmKeysHint;
 
     int m_connectedKeys = 0;
 

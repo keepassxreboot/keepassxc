@@ -34,6 +34,8 @@
 #include <QFileInfo>
 #include <QProcess>
 
+#include <botan/mem_ops.h>
+
 namespace Utils
 {
     QTextStream STDOUT;
@@ -182,7 +184,7 @@ namespace Utils
             auto parts = yubiKeySlot.split(":");
             slot = parts[0].toInt(&ok);
 
-            if (!ok || (slot != 1 && slot != 2)) {
+            if (!ok || (slot != 1 && slot != 2 && !YubiKey::isValidTpmSlotValue(slot))) {
                 err << QObject::tr("Invalid YubiKey slot %1").arg(parts[0]) << Qt::endl;
                 return {};
             }
@@ -198,6 +200,22 @@ namespace Utils
             QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
                 err << QObject::tr("Please present or touch your YubiKey to continue.") << "\n\n" << Qt::flush;
             });
+
+            // TPM2 PIN/password prompt (never remembered; the CLI process is short-lived)
+            YubiKey::setPinProvider(
+                [&err, quiet](
+                    const YubiKeySlot& s, const QString& message, Botan::secure_vector<char>& pin, bool& remember) {
+                remember = false;
+                if (!message.isEmpty()) {
+                    err << message << Qt::endl;
+                }
+                err << QObject::tr("Enter PIN/password for TPM2 key 0x%1: ").arg(s.first, 8, 16, QLatin1Char('0'))
+                    << Qt::flush;
+                QString text = Utils::getPassword(quiet);
+                pin = YubiKey::pinFromString(text);
+                Botan::secure_scrub_memory(text.data(), static_cast<size_t>(text.size()) * sizeof(QChar));
+                return !pin.empty();
+                });
 
             auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
             compositeKey->addChallengeResponseKey(key);

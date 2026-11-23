@@ -241,6 +241,56 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="hardwareKeys">
+     <property name="title">
+      <string>Hardware Keys</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutHardwareKeys">
+      <item>
+       <widget class="QCheckBox" name="enableTpm2CheckBox">
+        <property name="toolTip">
+         <string>Offer TPM2 persistent HMAC-SHA1 keys (0x81xxxxxx) as challenge-response hardware keys</string>
+        </property>
+        <property name="text">
+         <string>Enable TPM2 challenge-response keys</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="quickUnlockTpm2PinCheckBox">
+        <property name="toolTip">
+         <string>Keep the TPM2 PIN/password you enter with the Quick Unlock data, so that unlocking with Quick Unlock does not ask for it again. It is removed when the database is closed or Quick Unlock is reset.</string>
+        </property>
+        <property name="text">
+         <string>Remember the TPM2 PIN/password for Quick Unlock</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="quickUnlockTpm2PinHintLabel">
+        <property name="visible">
+         <bool>false</bool>
+        </property>
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="indent">
+         <number>22</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="privacy">
      <property name="title">
       <string>Privacy</string>

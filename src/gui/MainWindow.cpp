@@ -47,12 +47,14 @@
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
 #include "gui/ShortcutSettingsPage.h"
+#include "gui/TpmPinDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/remote/RemoteSettings.h"
 #include "keeshare/KeeShare.h"
 #include "keeshare/SettingsPageKeeShare.h"
 #include "keys/drivers/YubiKey.h"
+#include "quickunlock/QuickUnlockInterface.h"
 
 #ifdef KPXC_FEATURE_UPDATES
 #include "gui/UpdateCheckDialog.h"
@@ -232,6 +234,17 @@ MainWindow::MainWindow()
     fdoSS->updateServiceState();
     m_ui->settingsWidget->addSettingsPage(fdoSS);
 #endif
+
+    YubiKey::setPinProvider(
+        [](const YubiKeySlot& slot, const QString& message, Botan::secure_vector<char>& pin, bool& remember) {
+            const auto name = QStringLiteral("0x%1").arg(slot.first, 8, 16, QLatin1Char('0'));
+            // With the Quick Unlock setting on, the PIN goes with the Quick Unlock data without asking each time
+            const bool keptForQuickUnlock = getQuickUnlock()->isAvailable()
+                                            && config()->get(Config::Security_QuickUnlock).toBool()
+                                            && config()->get(Config::Security_QuickUnlockTpm2Pin).toBool();
+            return TpmPinDialog::getPin(
+                QApplication::activeWindow(), name, message, pin, remember, keptForQuickUnlock);
+        });
 
     connect(YubiKey::instance(), SIGNAL(userInteractionRequest()), SLOT(showYubiKeyPopup()), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(challengeCompleted()), SLOT(hideYubiKeyPopup()), Qt::QueuedConnection);

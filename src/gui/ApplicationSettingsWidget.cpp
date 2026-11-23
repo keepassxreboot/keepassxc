@@ -148,6 +148,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         {Config::Security_NoConfirmMoveEntryToRecycleBin, m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox},
         {Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox},
         {Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox},
+        {Config::Security_EnableTpm2, m_secUi->enableTpm2CheckBox},
+        {Config::Security_QuickUnlockTpm2Pin, m_secUi->quickUnlockTpm2PinCheckBox},
 
         // Custom logic
         {Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox},
@@ -251,6 +253,9 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         m_generalUi->backupFilePath->setEnabled(enabled);
         m_generalUi->backupFilePathPicker->setEnabled(enabled);
     });
+    // Saving the TPM2 PIN only makes sense while Quick Unlock itself is available and enabled
+    connect(m_secUi->quickUnlockCheckBox, &QCheckBox::toggled, this, [this] { updateQuickUnlockTpm2PinState(); });
+    connect(m_secUi->enableTpm2CheckBox, &QCheckBox::toggled, this, [this] { updateQuickUnlockTpm2PinState(); });
     connect(m_secUi->clearClipboardCheckBox, &QCheckBox::toggled, this, [this](bool checked) {
         m_secUi->clearClipboardSpinBox->setEnabled(checked
                                                    && !config()->isManaged(Config::Security_ClearClipboardTimeout));
@@ -308,6 +313,10 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->checkUpdatesSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 #endif
 
+#ifndef KPXC_FEATURE_TPM2
+    m_secUi->hardwareKeys->setVisible(false);
+#endif
+
 #ifndef KPXC_FEATURE_NETWORK
     m_secUi->privacy->setVisible(false);
     m_generalUi->faviconTimeoutLabel->setVisible(false);
@@ -323,6 +332,41 @@ void ApplicationSettingsWidget::addSettingsPage(ISettingsPage* page)
     widget->setParent(this);
     m_extraPages.append(ExtraPage(page, widget));
     addPage(page->name(), page->icon(), widget);
+}
+
+QString ApplicationSettingsWidget::quickUnlockTpm2PinUnavailableReason(bool quickUnlockAvailable,
+                                                                       bool quickUnlockEnabled,
+                                                                       bool tpm2Enabled,
+                                                                       bool managed)
+{
+    if (managed) {
+        return tr("This setting is managed by your system administrator.");
+    }
+
+    QStringList reasons;
+    if (!quickUnlockAvailable) {
+        reasons << tr("Quick Unlock is not available on this system.");
+    } else if (!quickUnlockEnabled) {
+        reasons << tr("Quick Unlock is turned off.");
+    }
+    if (!tpm2Enabled) {
+        reasons << tr("TPM2 challenge-response keys are turned off.");
+    }
+    return reasons.join(QLatin1Char(' '));
+}
+
+void ApplicationSettingsWidget::updateQuickUnlockTpm2PinState()
+{
+    // Remembering the PIN for Quick Unlock needs both Quick Unlock and TPM2 keys. Say what is missing next to the
+    // greyed-out option, so that it does not look broken.
+    const auto reason =
+        quickUnlockTpm2PinUnavailableReason(getQuickUnlock()->isAvailable(),
+                                            m_secUi->quickUnlockCheckBox->isChecked(),
+                                            m_secUi->enableTpm2CheckBox->isChecked(),
+                                            config()->isManaged(Config::Security_QuickUnlockTpm2Pin));
+    m_secUi->quickUnlockTpm2PinCheckBox->setEnabled(reason.isEmpty());
+    m_secUi->quickUnlockTpm2PinHintLabel->setText(reason);
+    m_secUi->quickUnlockTpm2PinHintLabel->setVisible(!reason.isEmpty());
 }
 
 void ApplicationSettingsWidget::loadSettings()
@@ -458,6 +502,7 @@ void ApplicationSettingsWidget::loadSettings()
     // Check for runtime TouchID availability.
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable()
                                              && !config()->isManaged(Config::Security_QuickUnlock));
+    updateQuickUnlockTpm2PinState();
 
     minimizeAfterUnlockCheckBoxToggled(m_generalUi->minimizeAfterUnlockCheckBox->isChecked());
     hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());

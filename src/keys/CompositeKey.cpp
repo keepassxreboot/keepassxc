@@ -29,6 +29,8 @@
 #include <QDebug>
 #include <QIODevice>
 
+#include <algorithm>
+
 QUuid CompositeKey::UUID("76a7ae25-a542-4add-9849-7c06be945b94");
 
 CompositeKey::CompositeKey()
@@ -226,6 +228,27 @@ void CompositeKey::addChallengeResponseKey(const QSharedPointer<ChallengeRespons
 const QList<QSharedPointer<ChallengeResponseKey>>& CompositeKey::challengeResponseKeys() const
 {
     return m_challengeResponseKeys;
+}
+
+/**
+ * Wipe secrets cached for the lifetime of an unlocked database (e.g. TPM2 PINs).
+ * Must be called when the database is locked or closed.
+ */
+void CompositeKey::clearCachedSecrets() const
+{
+    for (const auto& key : m_challengeResponseKeys) {
+        key->clearCachedPin();
+    }
+}
+
+/**
+ * @return true if Quick Unlock data stored earlier for this key no longer matches what would be stored now
+ */
+bool CompositeKey::quickUnlockDataOutdated() const
+{
+    return std::any_of(m_challengeResponseKeys.begin(), m_challengeResponseKeys.end(), [](const auto& key) {
+        return key->quickUnlockDataOutdated();
+    });
 }
 
 QByteArray CompositeKey::serialize() const

@@ -21,6 +21,8 @@
 #include "KeyComponentWidget.h"
 #include "gui/osutils/DeviceListener.h"
 
+#include <botan/secmem.h>
+
 namespace Ui
 {
     class YubiKeyEditWidget;
@@ -56,6 +58,10 @@ private:
     QPointer<QWidget> m_compEditWidget;
     QPointer<DeviceListener> m_deviceListener;
     bool m_isDetected = false;
+
+    // PIN entered while validating a protected TPM2 key; handed to the new key if the user chose to remember it
+    mutable Botan::secure_vector<char> m_pendingPin;
+    mutable bool m_pendingRemember = false;
 };
 
 #endif // KEEPASSXC_YUBIKEYEDITWIDGET_H

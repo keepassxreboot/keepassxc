@@ -30,7 +30,11 @@ function(add_unit_test)
     add_executable(${TEST_NAME} ${TEST_SOURCES})
     target_link_libraries(${TEST_NAME} ${TEST_LIBS})
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_LAUNCHER} ${TEST_NAME})
-    set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8")
+    # TPM2TOOLS_TCTI points the TPM2 driver at a connection that cannot work, so that no test can ever reach a
+    # hardware TPM of the machine it runs on (wrong authorizations count towards its lockout protection),
+    # whatever the user's settings are. Tests that need a TPM set their own (software TPM) connection.
+    set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT
+        "LANG=en_US.UTF-8;TPM2TOOLS_TCTI=device:/nonexistent/no-hardware-tpm-in-unit-tests")
 endfunction()
 
 # Regression coverage for the Windows Arm64 windeployqt host-triplet resolution
@@ -147,6 +151,12 @@ add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
 
 add_unit_test(NAME testykchallengeresponsekey SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testtpm2 SOURCES TestTpm2.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testtpm2swtpm SOURCES TestTpm2Swtpm.cpp
+        LIBS Qt6::Network ${TEST_LIBRARIES})
 
 add_unit_test(NAME testsharing SOURCES TestSharing.cpp
         LIBS testsupport keeshare ${TEST_LIBRARIES})

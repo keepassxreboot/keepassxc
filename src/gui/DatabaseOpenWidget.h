@@ -58,6 +58,14 @@ public:
     void triggerQuickUnlock();
     void resetQuickUnlock();
 
+    /**
+     * Decide whether the Quick Unlock data is stored after a successful unlock.
+     * @param blockedByCaller the unlock was triggered with explicit credentials and must not touch Quick Unlock
+     * @param onQuickUnlockScreen the unlock was done with the stored Quick Unlock data
+     * @param dataOutdated the stored data no longer matches the key (e.g. a TPM2 PIN was remembered since)
+     */
+    static bool shouldStoreQuickUnlockData(bool blockedByCaller, bool onQuickUnlockScreen, bool dataOutdated);
+
 signals:
     void dialogFinished(bool accepted);
 

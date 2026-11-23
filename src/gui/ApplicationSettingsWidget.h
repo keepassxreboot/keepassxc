@@ -52,6 +52,15 @@ public:
     void addSettingsPage(ISettingsPage* page);
     void loadSettings();
 
+    /**
+     * Whether the option to remember the TPM2 PIN/password for Quick Unlock can be changed.
+     * @return an empty string if it can, otherwise a sentence telling the user why not
+     */
+    static QString quickUnlockTpm2PinUnavailableReason(bool quickUnlockAvailable,
+                                                       bool quickUnlockEnabled,
+                                                       bool tpm2Enabled,
+                                                       bool managed);
+
 signals:
     void settingsReset();
 
@@ -72,6 +81,8 @@ private slots:
     void selectBackupDirectory();
 
 private:
+    void updateQuickUnlockTpm2PinState();
+
     QWidget* const m_secWidget;
     QWidget* const m_generalWidget;
     const QScopedPointer<Ui::ApplicationSettingsWidgetSecurity> m_secUi;

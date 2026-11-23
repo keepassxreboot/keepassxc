@@ -20,6 +20,7 @@
 #define KEEPASSX_TESTYUBIKEYCHALRESP_H
 
 #include <QObject>
+#include <QTemporaryFile>
 
 class TestYubiKeyChallengeResponse : public QObject
 {
@@ -30,6 +31,10 @@ private slots:
 
     void testDetectDevices();
     void testKeyChallenge();
+
+private:
+    QTemporaryFile m_configFile;
+    QTemporaryFile m_localConfigFile;
 };
 
 #endif // KEEPASSX_TESTYUBIKEYCHALRESP_H

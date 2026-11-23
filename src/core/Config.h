@@ -143,6 +143,8 @@ public:
         Security_NoConfirmMoveEntryToRecycleBin,
         Security_EnableCopyOnDoubleClick,
         Security_QuickUnlock,
+        Security_EnableTpm2,
+        Security_QuickUnlockTpm2Pin,
         Security_DatabasePasswordMinimumQuality,
 
         Browser_Enabled,
