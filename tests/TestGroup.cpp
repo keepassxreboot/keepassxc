@@ -423,6 +423,91 @@ void TestGroup::testClone()
             != originalGroup->timeInfo().lastModificationTime());
 }
 
+void TestGroup::testCloneWithNewUuids()
+{
+    QScopedPointer<Database> db(new Database());
+
+    auto* group = new Group();
+    group->setParent(db->rootGroup());
+    group->setName("Group");
+
+    auto* entry = new Entry();
+    entry->setGroup(group);
+    entry->setTitle("EntryOld");
+    entry->beginUpdate();
+    entry->setTitle("Entry");
+    entry->endUpdate();
+
+    auto* subGroup = new Group();
+    subGroup->setParent(group);
+    subGroup->setName("SubGroup");
+
+    auto* subEntry = new Entry();
+    subEntry->setGroup(subGroup);
+    subEntry->setTitle("SubEntry");
+
+    // Give every group and entry its own recognizable dates
+    auto stamp = [](int day) {
+        const QDateTime base(QDate(2020, 1, day), QTime(12, 0, 0), Qt::UTC);
+        TimeInfo info;
+        info.setCreationTime(base);
+        info.setLastModificationTime(base.addSecs(60));
+        info.setLastAccessTime(base.addSecs(120));
+        info.setLocationChanged(base.addSecs(180));
+        info.setExpiryTime(base.addDays(30));
+        info.setExpires(true);
+        return info;
+    };
+    group->setTimeInfo(stamp(1));
+    entry->setTimeInfo(stamp(2));
+    subGroup->setTimeInfo(stamp(3));
+    subEntry->setTimeInfo(stamp(4));
+
+    const auto groupUuid = group->uuid();
+    const auto entryUuid = entry->uuid();
+    const auto subGroupUuid = subGroup->uuid();
+    const auto subEntryUuid = subEntry->uuid();
+
+    // Making sure the current time is not the same as the dates above
+    m_clock->advanceSecond(1);
+
+    QScopedPointer<Group> copy(group->cloneWithNewUuids());
+    QVERIFY(!copy->parentGroup());
+    QVERIFY(!copy->database());
+    QCOMPARE(copy->name(), QString("Group"));
+    QCOMPARE(copy->children().size(), 1);
+    QCOMPARE(copy->entries().size(), 1);
+
+    auto* copiedEntry = copy->entries().at(0);
+    auto* copiedSubGroup = copy->children().at(0);
+    QCOMPARE(copiedSubGroup->name(), QString("SubGroup"));
+    QCOMPARE(copiedSubGroup->entries().size(), 1);
+    auto* copiedSubEntry = copiedSubGroup->entries().at(0);
+    QCOMPARE(copiedEntry->title(), QString("Entry"));
+    QCOMPARE(copiedSubEntry->title(), QString("SubEntry"));
+
+    // Every group and entry has a new UUID, the original is untouched
+    QVERIFY(copy->uuid() != groupUuid);
+    QVERIFY(copiedEntry->uuid() != entryUuid);
+    QVERIFY(copiedSubGroup->uuid() != subGroupUuid);
+    QVERIFY(copiedSubEntry->uuid() != subEntryUuid);
+    QCOMPARE(group->uuid(), groupUuid);
+    QCOMPARE(entry->uuid(), entryUuid);
+    QCOMPARE(subGroup->uuid(), subGroupUuid);
+    QCOMPARE(subEntry->uuid(), subEntryUuid);
+
+    // All dates are kept, including the date of the last move
+    QVERIFY(copy->timeInfo() == stamp(1));
+    QVERIFY(copiedEntry->timeInfo() == stamp(2));
+    QVERIFY(copiedSubGroup->timeInfo() == stamp(3));
+    QVERIFY(copiedSubEntry->timeInfo() == stamp(4));
+
+    // The history of an entry comes along
+    QCOMPARE(copiedEntry->historyItems().size(), 1);
+    QCOMPARE(copiedEntry->historyItems().at(0)->title(), QString("EntryOld"));
+    QVERIFY(copiedEntry->historyItems().at(0)->timeInfo() == entry->historyItems().at(0)->timeInfo());
+}
+
 void TestGroup::testCopyCustomIcons()
 {
     QScopedPointer<Database> dbSource(new Database());
