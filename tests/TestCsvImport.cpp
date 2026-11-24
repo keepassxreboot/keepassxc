@@ -22,6 +22,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLabel>
 #include <QSet>
 #include <QTemporaryDir>
 #include <QTest>
@@ -591,10 +592,13 @@ void TestCsvImport::testUnusedColumnsAreKeptAsCustomFields()
     QVERIFY(db);
     const auto* entry = entryTitled(db, "Shop");
     QVERIFY(entry);
-    QCOMPARE(entry->attributes()->value("Folder"), QString("Home"));
-    QCOMPARE(entry->attributes()->value("Favorite"), QString("true"));
-    QVERIFY2(!entry->attributes()->hasKey("Empty"), "an empty cell must not make a custom field");
-    QCOMPARE(entry->attributes()->value("Title (CSV)"), QString("second title column"));
+    // an asterisk marks a column that was not recognised; the second "Title" column cannot replace the entry's title
+    QCOMPARE(entry->attributes()->value("Folder *"), QString("Home"));
+    QCOMPARE(entry->attributes()->value("Favorite *"), QString("true"));
+    QVERIFY2(!entry->attributes()->hasKey("Empty *"), "an empty cell must not make a custom field");
+    QCOMPARE(entry->title(), QString("Shop"));
+    QCOMPARE(entry->attributes()->value("Title *"), QString("second title column"));
+    QVERIFY2(widget.findChild<QLabel*>("labelKeepOtherColumnsNote"), "the form must explain the asterisk");
     QVERIFY2(widget.problems().isEmpty(), qPrintable(widget.problems().join("; ")));
 
     // Unticked: the columns are left out
@@ -627,8 +631,8 @@ void TestCsvImport::testUnusedColumnsOfAFileWithoutFieldNames()
     const auto* entry = entryTitled(db, "Shop");
     QVERIFY(entry);
     QCOMPARE(entry->password(), QString("pw"));
-    QCOMPARE(entry->attributes()->value("Column 4"), QString("extra one"));
-    QCOMPARE(entry->attributes()->value("Column 5"), QString("extra two"));
+    QCOMPARE(entry->attributes()->value("Column 4 *"), QString("extra one"));
+    QCOMPARE(entry->attributes()->value("Column 5 *"), QString("extra two"));
 }
 
 // Catches: files from earlier versions no longer importing: the 21 columns this program wrote before the newest ones
@@ -813,7 +817,7 @@ void TestCsvImport::testExactTextThatCannotBeUsed()
         const auto* entry = entryTitled(db, "remapped");
         QVERIFY(entry);
         QCOMPARE(entry->password(), QString("other pw"));
-        QCOMPARE(entry->attributes()->value("Password (CSV)"), QString("plain"));
+        QCOMPARE(entry->attributes()->value("Password *"), QString("plain"));
         QVERIFY2(widget.problems().join("\n").contains("exact text of \"Password\" was not used"),
                  qPrintable(widget.problems().join("\n")));
     }

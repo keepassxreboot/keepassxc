@@ -291,7 +291,8 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
             if (m_ui->checkBoxFieldNames->isChecked() && !table.isEmpty()) {
                 name = table.at(0).value(column).trimmed();
             }
-            otherColumns.append({column, name.isEmpty() ? tr("Column %1").arg(column) : name});
+            // the asterisk marks a column this program did not recognise (explained under the checkbox of the form)
+            otherColumns.append({column, (name.isEmpty() ? tr("Column %1").arg(column) : name) + QStringLiteral(" *")});
         }
     }
 

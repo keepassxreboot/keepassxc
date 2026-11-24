@@ -725,9 +725,25 @@
            <string>Columns of the file that are not used for any field above are kept as custom fields of each entry (empty cells are skipped). Untick this to leave them out.</string>
           </property>
           <property name="text">
-           <string>Keep unused columns as custom fields</string>
+           <string>Keep unused columns as custom fields (marked with *)</string>
           </property>
           <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0" colspan="2">
+         <widget class="QLabel" name="labelKeepOtherColumnsNote">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>* marks a column of your file that was not recognised. Its content is kept as an ordinary, visible custom field of the entry, so if it holds something secret (for example an old password) it will be shown on screen and written into exports. After importing, check these fields and delete or protect any you do not want shown.</string>
+          </property>
+          <property name="wordWrap">
            <bool>true</bool>
           </property>
          </widget>
