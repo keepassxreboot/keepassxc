@@ -74,6 +74,11 @@ ImportWizard::ImportIntoType ImportWizard::importIntoType()
     return static_cast<ImportIntoType>(field("ImportIntoType").toInt());
 }
 
+ImportWizard::ImportType ImportWizard::importType()
+{
+    return static_cast<ImportType>(field("ImportType").toInt());
+}
+
 QPair<QUuid, QUuid> ImportWizard::importInto()
 {
     auto list = field("ImportInto").toList();

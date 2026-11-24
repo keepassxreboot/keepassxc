@@ -62,6 +62,8 @@ public:
 
     ImportWizard::ImportIntoType importIntoType();
     QPair<QUuid, QUuid> importInto();
+    // what the user picked on the first page
+    ImportWizard::ImportType importType();
 
 private:
     QSharedPointer<Database> m_db;
