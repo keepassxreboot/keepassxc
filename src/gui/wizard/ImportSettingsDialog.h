@@ -35,7 +35,15 @@ class ImportSettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ImportSettingsDialog(const QList<DatabaseSettingChange>& changes, QWidget* parent = nullptr);
+    enum class Mode
+    {
+        OpenDatabase, // imported into a database that is open: nothing is ticked, the user's database stays as it is
+        NewDatabase // imported into a new database: everything is ticked, the file defines the new database
+    };
+
+    explicit ImportSettingsDialog(const QList<DatabaseSettingChange>& changes,
+                                  QWidget* parent = nullptr,
+                                  Mode mode = Mode::OpenDatabase);
     ~ImportSettingsDialog() override = default;
 
     // The settings the user ticked

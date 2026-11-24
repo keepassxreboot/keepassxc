@@ -37,24 +37,36 @@ namespace
     };
 } // namespace
 
-ImportSettingsDialog::ImportSettingsDialog(const QList<DatabaseSettingChange>& changes, QWidget* parent)
+ImportSettingsDialog::ImportSettingsDialog(const QList<DatabaseSettingChange>& changes, QWidget* parent, Mode mode)
     : QDialog(parent)
     , m_changes(changes)
     , m_table(new QTableWidget(changes.size(), ColumnCount, this))
 {
-    setWindowTitle(tr("Database settings in the file"));
+    const bool newDatabase = mode == Mode::NewDatabase;
+    setWindowTitle(newDatabase ? tr("Settings for the new database") : tr("Database settings in the file"));
     setModal(true);
 
-    auto* intro = new QLabel(tr("The file also holds settings of the database it came from. Importing into a database "
-                                "you already have adds the folders and entries and leaves your database's own "
-                                "settings as they are.\n\n"
-                                "The settings below are different in the file. Tick the ones you also want to apply; "
-                                "they replace your current values. Settings you leave unticked are not changed. "
-                                "Cancel stops the whole import and changes nothing."),
-                             this);
+    // Into a new database the file defines the new database, so everything starts ticked (a complete copy); into an
+    // open database the user's own settings stay as they are, so nothing starts ticked.
+    auto* intro = new QLabel(
+        newDatabase ? tr("The new database takes the folders and entries of the file. The file also holds settings of "
+                         "the database it came from, and they differ from the settings of your new database "
+                         "(including the name and description you just entered).\n\n"
+                         "Everything is ticked, so the file's values are used. Untick any setting you want to keep as "
+                         "it is in your new database. Cancel stops the import and no database is created.")
+                    : tr("The file also holds settings of the database it came from. Importing into a database "
+                         "you already have adds the folders and entries and leaves your database's own "
+                         "settings as they are.\n\n"
+                         "The settings below are different in the file. Tick the ones you also want to apply; "
+                         "they replace your current values. Settings you leave unticked are not changed. "
+                         "Cancel stops the whole import and changes nothing."),
+        this);
     intro->setWordWrap(true);
 
-    m_table->setHorizontalHeaderLabels({tr("Apply"), tr("Setting"), tr("Your database now"), tr("In the file")});
+    m_table->setHorizontalHeaderLabels({tr("Apply"),
+                                        tr("Setting"),
+                                        newDatabase ? tr("Your new database now") : tr("Your database now"),
+                                        tr("In the file")});
     m_table->verticalHeader()->setVisible(false);
     m_table->setSelectionMode(QAbstractItemView::NoSelection);
     m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -63,10 +75,9 @@ ImportSettingsDialog::ImportSettingsDialog(const QList<DatabaseSettingChange>& c
     for (int row = 0; row < changes.size(); ++row) {
         const auto& change = changes.at(row);
 
-        // Nothing is ticked at the start: nothing is overwritten unless the user chooses it
         auto* apply = new QTableWidgetItem();
         apply->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-        apply->setCheckState(Qt::Unchecked);
+        apply->setCheckState(newDatabase ? Qt::Checked : Qt::Unchecked);
 
         auto* setting = new QTableWidgetItem(change.note.isEmpty() ? change.label : change.label + "\n" + change.note);
         auto* current = new QTableWidgetItem(change.currentValue);

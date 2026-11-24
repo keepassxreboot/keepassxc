@@ -55,12 +55,24 @@ namespace DatabaseSettingsDiff
      *
      * @param importedGroups the folder of the file (by its UUID in the file) -> the folder that now exists in the open
      *                       database; needed for the recycle bin and templates folder
+     * @param keepFileDates  false (an open database): the user changes the setting now, so it is dated now. True (a new
+     *                       database that is a copy of the file): the dates the settings were changed on are taken from
+     *                       the file; they decide which side wins when databases are merged later.
      * @return the labels of the chosen changes that could not be applied (so that the user can be told)
      */
     QStringList apply(Database& open,
                       const Database& imported,
                       const QList<DatabaseSettingChange>& chosen,
-                      const QHash<QUuid, Group*>& importedGroups);
+                      const QHash<QUuid, Group*>& importedGroups,
+                      bool keepFileDates = false);
+
+    /**
+     * Use the folders and entries of the imported database as the content of a NEW database (its empty root folder is
+     * replaced by the root folder of the file), then apply the chosen settings. Call compare() first.
+     *
+     * @return the labels of the chosen changes that could not be applied
+     */
+    QStringList adoptImportedTree(Database& newDb, Database& imported, const QList<DatabaseSettingChange>& chosen);
 
     /**
      * Pairs every folder of a tree with its copy (made with Group::clone), by the folder's UUID before copying.

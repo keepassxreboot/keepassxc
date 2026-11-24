@@ -1230,3 +1230,249 @@ void TestXmlImport::testSettingsApplyRecycleBinAndTemplatesFolderAfterTheTreeMov
     QVERIFY(open.metadata()->entryTemplatesGroup());
     QCOMPARE(open.metadata()->entryTemplatesGroup()->name(), QString("Old templates"));
 }
+
+namespace
+{
+    struct FileForANewDatabase
+    {
+        QUuid entryUuid;
+        QUuid usedIcon;
+        QUuid unusedIcon;
+        QUuid deletedObject;
+        QByteArray attachment;
+        // The dates the file's settings were changed on: not "now", so a setter that stamps the current time shows
+        QDateTime nameChanged = QDateTime(QDate(2020, 1, 2), QTime(3, 4, 5), Qt::UTC);
+        QDateTime descriptionChanged = QDateTime(QDate(2020, 2, 3), QTime(4, 5, 6), Qt::UTC);
+        QDateTime defaultUserNameChanged = QDateTime(QDate(2020, 3, 4), QTime(5, 6, 7), Qt::UTC);
+        QDateTime recycleBinChanged = QDateTime(QDate(2020, 4, 5), QTime(6, 7, 8), Qt::UTC);
+        QDateTime entryTemplatesGroupChanged = QDateTime(QDate(2020, 5, 6), QTime(7, 8, 9), Qt::UTC);
+    };
+
+    // A database like the one an XML file comes from: its own root folder, an entry with an attachment and a custom
+    // icon, an icon nothing uses, a recycle bin folder and settings that differ from a new database
+    void fillSourceForANewDatabase(Database& source, FileForANewDatabase& file)
+    {
+        file.entryUuid = QUuid::createUuid();
+        file.usedIcon = QUuid::createUuid();
+        file.unusedIcon = QUuid::createUuid();
+        file.deletedObject = QUuid::createUuid();
+        file.attachment = incompressiblePayload(5000);
+
+        source.rootGroup()->setName("Work root");
+        source.rootGroup()->setNotes("Notes of the root folder");
+        auto* sub = addFolder(source, "Sub folder");
+        auto* entry = new Entry();
+        entry->setUuid(file.entryUuid);
+        entry->setGroup(sub);
+        entry->setTitle("Work entry");
+        entry->attachments()->set("file.bin", file.attachment);
+        source.metadata()->addCustomIcon(file.usedIcon, binaryPayload(300), "Icon of the entry");
+        entry->setIcon(file.usedIcon);
+        source.metadata()->addCustomIcon(file.unusedIcon, binaryPayload(400), "Icon that no entry uses");
+        source.metadata()->setRecycleBin(addFolder(source, "Old bin"));
+        source.metadata()->setEntryTemplatesGroup(addFolder(source, "Old templates"));
+        source.metadata()->setName("Work vault");
+        source.metadata()->setDescription("Team logins");
+        source.metadata()->setDefaultUserName("teamlead");
+        source.metadata()->setColor("#112233");
+        source.metadata()->setHistoryMaxItems(33);
+        source.metadata()->customData()->set("plugin-key", "plugin-value");
+        source.addDeletedObject(file.deletedObject);
+        // The setters above stamped the current time; put the file's dates back
+        source.metadata()->setNameChanged(file.nameChanged);
+        source.metadata()->setDescriptionChanged(file.descriptionChanged);
+        source.metadata()->setDefaultUserNameChanged(file.defaultUserNameChanged);
+        source.metadata()->setRecycleBinChanged(file.recycleBinChanged);
+        source.metadata()->setEntryTemplatesGroupChanged(file.entryTemplatesGroupChanged);
+    }
+
+    // A database read from a file has the per-attribute protection flags of the standard fields set according to the
+    // database's memory protection settings. Entries built in memory do not, so bring them in line (history included).
+    void syncProtectionFlags(Database& db)
+    {
+        const auto* meta = db.metadata();
+        const QList<QPair<QString, bool>> standard{{EntryAttributes::TitleKey, meta->protectTitle()},
+                                                   {EntryAttributes::UserNameKey, meta->protectUsername()},
+                                                   {EntryAttributes::PasswordKey, meta->protectPassword()},
+                                                   {EntryAttributes::URLKey, meta->protectUrl()},
+                                                   {EntryAttributes::NotesKey, meta->protectNotes()}};
+        for (auto* entry : db.rootGroup()->entriesRecursive(true)) {
+            for (const auto& item : standard) {
+                if (item.second) {
+                    entry->attributes()->set(item.first, entry->attributes()->value(item.first), true);
+                }
+            }
+        }
+    }
+} // namespace
+
+// Catches: the file's folders and entries (with attachments and icons) not arriving in the new database, a setting the
+// user did not choose being applied anyway (here: the name they typed in the new database wizard), or a chosen
+// setting being lost.
+void TestXmlImport::testNewDatabaseTakesTheFilesContentAndOnlyTheChosenSettings()
+{
+    Database source;
+    FileForANewDatabase file;
+    fillSourceForANewDatabase(source, file);
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    // What the new database wizard leaves behind: the name and description the user typed
+    Database newDb;
+    newDb.metadata()->setName("My typed name");
+    newDb.metadata()->setDescription("My typed description");
+
+    const auto changes = DatabaseSettingsDiff::compare(newDb, imported);
+    auto chosen = changes;
+    for (int i = chosen.size() - 1; i >= 0; --i) {
+        if (chosen.at(i).id == "name") {
+            chosen.removeAt(i); // the user keeps the name they typed
+        }
+    }
+    QVERIFY2(chosen.size() == changes.size() - 1, "the name was expected to be among the differences");
+
+    const auto notApplied = DatabaseSettingsDiff::adoptImportedTree(newDb, imported, chosen);
+    QVERIFY2(notApplied.isEmpty(), qPrintable(notApplied.join(", ")));
+
+    // The tree of the file, root folder included
+    QCOMPARE(newDb.rootGroup()->name(), QString("Work root"));
+    QCOMPARE(newDb.rootGroup()->notes(), QString("Notes of the root folder"));
+    auto* entry = newDb.rootGroup()->findEntryByUuid(file.entryUuid);
+    QVERIFY2(entry, "the entry of the file is missing");
+    QVERIFY2(entry->attachments()->value("file.bin") == file.attachment, "the attachment changed");
+    QVERIFY2(newDb.metadata()->hasCustomIcon(file.usedIcon), "the icon of the entry is missing");
+
+    // Only what was chosen
+    QCOMPARE(newDb.metadata()->name(), QString("My typed name"));
+    QCOMPARE(newDb.metadata()->description(), QString("Team logins"));
+    QCOMPARE(newDb.metadata()->historyMaxItems(), 33);
+    QCOMPARE(newDb.metadata()->customData()->value("plugin-key"), QString("plugin-value"));
+    QVERIFY(newDb.metadata()->hasCustomIcon(file.unusedIcon));
+    QVERIFY(newDb.containsDeletedObject(file.deletedObject));
+    QVERIFY(newDb.metadata()->recycleBin());
+    QCOMPARE(newDb.metadata()->recycleBin()->name(), QString("Old bin"));
+    QVERIFY2(newDb.rootGroup()->findGroupByUuid(newDb.metadata()->recycleBin()->uuid()),
+             "the recycle bin is not a folder of the new database");
+}
+
+// Catches: a complete copy (the reason to import into a new database) losing a setting when nothing is unticked.
+void TestXmlImport::testNewDatabaseGetsEverythingWhenNothingIsUnticked()
+{
+    Database source;
+    FileForANewDatabase file;
+    fillSourceForANewDatabase(source, file);
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    Database newDb;
+    newDb.metadata()->setName("My typed name");
+
+    const auto changes = DatabaseSettingsDiff::compare(newDb, imported);
+    const auto notApplied = DatabaseSettingsDiff::adoptImportedTree(newDb, imported, changes);
+    QVERIFY2(notApplied.isEmpty(), qPrintable(notApplied.join(", ")));
+
+    // Nothing the file offered is left behind: comparing again finds no difference
+    const auto remaining = DatabaseSettingsDiff::compare(newDb, imported);
+    QVERIFY2(remaining.isEmpty(), qPrintable("still different: " + sortedIds(remaining).join(", ")));
+}
+
+// Catches a loss that comparing the list again cannot see: the new database has to be a complete copy of the file, down
+// to every field of the metadata, the dates the settings were changed on (they decide which side wins when databases
+// are merged later), every folder, every entry with its history, and the deletion records. The file was written by a
+// database with a rich tree, and the comparison is the one the round trip test uses.
+void TestXmlImport::testNewDatabaseIsACompleteCopyOfTheFile()
+{
+    Database source;
+    FileForANewDatabase file;
+    fillSourceForANewDatabase(source, file);
+    // history on the entry, as a real file has
+    auto* entry = source.rootGroup()->findEntryByUuid(file.entryUuid);
+    QVERIFY(entry);
+    entry->beginUpdate();
+    entry->setPassword("changed password");
+    QVERIFY(entry->endUpdate());
+    QCOMPARE(entry->historyItems().size(), 1);
+    syncProtectionFlags(source);
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+    // The file really carries the old dates (otherwise this test proves nothing)
+    QCOMPARE(imported.metadata()->nameChanged(), file.nameChanged);
+
+    Database newDb;
+    newDb.metadata()->setName("My typed name");
+    newDb.metadata()->setDescription("My typed description");
+    const auto changes = DatabaseSettingsDiff::compare(newDb, imported);
+    const auto notApplied = DatabaseSettingsDiff::adoptImportedTree(newDb, imported, changes);
+    QVERIFY2(notApplied.isEmpty(), qPrintable(notApplied.join(", ")));
+
+    // Metadata, with the same comparison the round trip test uses
+    QVERIFY2(describeMetadataDifference(source.metadata(), newDb.metadata()) == "(unknown part)",
+             qPrintable("metadata differs: " + describeMetadataDifference(source.metadata(), newDb.metadata())));
+    QCOMPARE(newDb.metadata()->customData()->value("plugin-key"), QString("plugin-value"));
+
+    // The dates the settings were changed on come from the file, not from the moment of the import
+    QCOMPARE(newDb.metadata()->nameChanged(), file.nameChanged);
+    QCOMPARE(newDb.metadata()->descriptionChanged(), file.descriptionChanged);
+    QCOMPARE(newDb.metadata()->defaultUserNameChanged(), file.defaultUserNameChanged);
+    QCOMPARE(newDb.metadata()->recycleBinChanged(), file.recycleBinChanged);
+    QCOMPARE(newDb.metadata()->entryTemplatesGroupChanged(), file.entryTemplatesGroupChanged);
+
+    // Every folder
+    const auto sourceGroups = source.rootGroup()->groupsRecursive(true);
+    QCOMPARE(newDb.rootGroup()->groupsRecursive(true).size(), sourceGroups.size());
+    for (const auto* group : sourceGroups) {
+        const auto* other = group->uuid() == source.rootGroup()->uuid()
+                                ? newDb.rootGroup()
+                                : newDb.rootGroup()->findGroupByUuid(group->uuid());
+        QVERIFY2(other, qPrintable("folder missing: " + group->name()));
+        QVERIFY2(describeGroupDifference(group, other) == "(unknown part)",
+                 qPrintable("folder differs: " + group->name() + " -> " + describeGroupDifference(group, other)));
+    }
+
+    // Every entry, history included
+    const auto sourceEntries = source.rootGroup()->entriesRecursive();
+    QCOMPARE(newDb.rootGroup()->entriesRecursive().size(), sourceEntries.size());
+    for (const auto* sourceEntry : sourceEntries) {
+        const auto* other = newDb.rootGroup()->findEntryByUuid(sourceEntry->uuid());
+        QVERIFY2(other, qPrintable("entry missing: " + sourceEntry->title()));
+        QVERIFY2(sourceEntry->equals(other, CompareItemIgnoreMilliseconds),
+                 qPrintable("entry differs: " + sourceEntry->title() + " -> "
+                            + describeEntryDifference(sourceEntry, other)));
+    }
+
+    // Deletion records
+    QSet<QUuid> sourceDeleted;
+    for (const auto& record : source.deletedObjects()) {
+        sourceDeleted.insert(record.uuid);
+    }
+    QSet<QUuid> newDeleted;
+    for (const auto& record : newDb.deletedObjects()) {
+        newDeleted.insert(record.uuid);
+    }
+    QVERIFY2(!sourceDeleted.isEmpty() && newDeleted == sourceDeleted, "the deletion records were not kept");
+}
+
+// Guard: into an OPEN database the user really does change the setting now, so it is dated now. (Into a new database it
+// keeps the file's date; the two behaviours must not be mixed up.)
+void TestXmlImport::testSettingsAppliedToAnOpenDatabaseAreDatedNow()
+{
+    Database source;
+    FileForANewDatabase file;
+    fillSourceForANewDatabase(source, file);
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    Database open;
+    open.metadata()->setName("Personal");
+    const auto changes = DatabaseSettingsDiff::compare(open, imported);
+    DatabaseSettingsDiff::apply(open, imported, only(changes, {"name"}), {});
+
+    QCOMPARE(open.metadata()->name(), QString("Work vault"));
+    QVERIFY2(open.metadata()->nameChanged() > file.nameChanged,
+             qPrintable("dated " + open.metadata()->nameChanged().toString(Qt::ISODate)));
+}

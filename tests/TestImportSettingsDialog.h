@@ -30,6 +30,7 @@ private slots:
     void testReturnsOnlyTheTickedChanges();
     void testSelectAllAndSelectNone();
     void testNamesWhatIsNotOffered();
+    void testNewDatabaseModeStartsTicked();
 };
 
 #endif // KEEPASSXC_TESTIMPORTSETTINGSDIALOG_H

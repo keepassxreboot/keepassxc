@@ -127,6 +127,22 @@ void TestImportSettingsDialog::testSelectAllAndSelectNone()
     QCOMPARE(dialog.chosenChanges().size(), 0);
 }
 
+// Catches: a new database, which is meant to be a complete copy of the file, starting with settings left out; the user
+// must still be able to untick what they want to keep.
+void TestImportSettingsDialog::testNewDatabaseModeStartsTicked()
+{
+    ImportSettingsDialog dialog(sampleChanges(), nullptr, ImportSettingsDialog::Mode::NewDatabase);
+    auto* table = dialog.findChild<QTableWidget*>();
+    QVERIFY(table);
+    for (int row = 0; row < table->rowCount(); ++row) {
+        QCOMPARE(table->item(row, 0)->checkState(), Qt::Checked);
+    }
+    QCOMPARE(dialog.chosenChanges().size(), 3);
+
+    table->item(0, 0)->setCheckState(Qt::Unchecked);
+    QCOMPARE(idsOf(dialog.chosenChanges()), QStringList({"historyMaxItems", "customData:KPXC_BROWSER_laptop"}));
+}
+
 // Catches: things the file stores but that are not offered being skipped without a word.
 void TestImportSettingsDialog::testNamesWhatIsNotOffered()
 {

@@ -54,6 +54,12 @@ private slots:
     void testSettingsApplyChangesOnlyWhatWasChosen();
     void testSettingsApplyCarriesCustomDataIconsAndDeletionRecords();
     void testSettingsApplyRecycleBinAndTemplatesFolderAfterTheTreeMoved();
+
+    // Importing an XML file into a NEW database
+    void testNewDatabaseTakesTheFilesContentAndOnlyTheChosenSettings();
+    void testNewDatabaseGetsEverythingWhenNothingIsUnticked();
+    void testNewDatabaseIsACompleteCopyOfTheFile();
+    void testSettingsAppliedToAnOpenDatabaseAreDatedNow();
 };
 
 #endif // KEEPASSXC_TESTXMLIMPORT_H

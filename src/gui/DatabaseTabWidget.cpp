@@ -398,17 +398,28 @@ void DatabaseTabWidget::importFile()
             auto newDb = execNewDatabaseWizard();
             if (newDb) {
                 if (m_importWizard->importType() == ImportWizard::IMPORT_KEEPASSXML) {
-                    // Merging only carries over groups, entries and custom icons. Read the XML straight
-                    // into the new database instead, so that everything else comes along too: the database name and
-                    // description, history limits, memory protection, recycle bin and templates, default user name,
-                    // colour, database custom data, deleted objects and the root group's own settings. The
-                    // encryption settings and credentials chosen in the new database wizard are not part of an XML
-                    // export and stay as they are.
-                    QString error;
-                    if (!newDb->import(m_importWizard->importFile(), &error)) {
-                        emit messageGlobal(tr("Importing the XML file failed.").append("\n").append(error),
-                                           MessageWidget::Error);
-                        return;
+                    // Merging only carries over groups, entries and custom icons. The new database takes
+                    // the folders and entries of the file as they are, root folder included, and the user chooses
+                    // which of the file's database settings replace those of the new database: the name and
+                    // description typed in the new database wizard, history limits, memory protection, recycle bin
+                    // and templates folder, default user name, colour, database custom data, deletion records and
+                    // unused icons. Everything starts ticked, so the result is a complete copy unless the user
+                    // unticks something. The master key and encryption settings are not part of an XML export and
+                    // stay as chosen in the new database wizard.
+                    const auto changes = DatabaseSettingsDiff::compare(*newDb, *db);
+                    QList<DatabaseSettingChange> chosenSettings;
+                    if (!changes.isEmpty()) {
+                        ImportSettingsDialog settingsDialog(changes, this, ImportSettingsDialog::Mode::NewDatabase);
+                        if (settingsDialog.exec() != QDialog::Accepted) {
+                            // Cancelled: no database is created
+                            return;
+                        }
+                        chosenSettings = settingsDialog.chosenChanges();
+                    }
+                    const auto notApplied = DatabaseSettingsDiff::adoptImportedTree(*newDb, *db, chosenSettings);
+                    if (!notApplied.isEmpty()) {
+                        emit messageGlobal(tr("These settings could not be applied: %1").arg(notApplied.join(", ")),
+                                           MessageWidget::Warning);
                     }
                 } else {
                     // Merge the imported db into the new one

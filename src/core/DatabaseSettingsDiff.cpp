@@ -19,6 +19,7 @@
 
 #include <QObject>
 #include <QSet>
+#include <iterator>
 
 #include "core/CustomData.h"
 #include "core/Database.h"
@@ -273,7 +274,8 @@ namespace DatabaseSettingsDiff
     QStringList apply(Database& open,
                       const Database& imported,
                       const QList<DatabaseSettingChange>& chosen,
-                      const QHash<QUuid, Group*>& importedGroups)
+                      const QHash<QUuid, Group*>& importedGroups,
+                      bool keepFileDates)
     {
         QStringList notApplied;
         auto* meta = open.metadata();
@@ -283,10 +285,19 @@ namespace DatabaseSettingsDiff
             const auto& id = change.id;
             if (id == "name") {
                 meta->setName(theirs->name());
+                if (keepFileDates) {
+                    meta->setNameChanged(theirs->nameChanged());
+                }
             } else if (id == "description") {
                 meta->setDescription(theirs->description());
+                if (keepFileDates) {
+                    meta->setDescriptionChanged(theirs->descriptionChanged());
+                }
             } else if (id == "defaultUserName") {
                 meta->setDefaultUserName(theirs->defaultUserName());
+                if (keepFileDates) {
+                    meta->setDefaultUserNameChanged(theirs->defaultUserNameChanged());
+                }
             } else if (id == "color") {
                 meta->setColor(theirs->color());
             } else if (id == "maintenanceHistoryDays") {
@@ -317,8 +328,14 @@ namespace DatabaseSettingsDiff
                     notApplied << change.label;
                 } else if (id == "recycleBinGroup") {
                     meta->setRecycleBin(target);
+                    if (keepFileDates) {
+                        meta->setRecycleBinChanged(theirs->recycleBinChanged());
+                    }
                 } else {
                     meta->setEntryTemplatesGroup(target);
+                    if (keepFileDates) {
+                        meta->setEntryTemplatesGroupChanged(theirs->entryTemplatesGroupChanged());
+                    }
                 }
             } else if (id.startsWith(CustomDataPrefix)) {
                 const auto key = id.mid(CustomDataPrefix.size());
@@ -343,6 +360,26 @@ namespace DatabaseSettingsDiff
         return notApplied;
     }
 
+    QStringList adoptImportedTree(Database& newDb, Database& imported, const QList<DatabaseSettingChange>& chosen)
+    {
+        // Take the folders and entries out of the imported database
+        Group* importedRoot = imported.setRootGroup(new Group());
+
+        // The icons the tree uses travel with it
+        auto icons = importedRoot->customIconsRecursive();
+        for (auto it = icons.begin(); it != icons.end();) {
+            it = imported.metadata()->hasCustomIcon(*it) ? std::next(it) : icons.erase(it);
+        }
+        newDb.metadata()->copyCustomIcons(icons, imported.metadata());
+
+        // The root folder of the file replaces the empty root folder of the new database
+        delete newDb.setRootGroup(importedRoot);
+
+        // The folders are the same objects as in the file, so every folder maps to itself
+        // A new database that is a copy of the file keeps the dates the file's settings were changed on
+        return apply(newDb, imported, chosen, matchGroups(importedRoot, importedRoot), true);
+    }
+
     QHash<QUuid, Group*> matchGroups(const Group* original, Group* copy)
     {
         QHash<QUuid, Group*> result;
@@ -362,7 +399,7 @@ namespace DatabaseSettingsDiff
             QObject::tr("The name of the program that wrote the file"),
             QObject::tr("The date the master key of the file's database was last changed"),
             QObject::tr("Which folder was selected or visible last (screen position only)"),
-            QObject::tr("The dates settings were changed (they are set again for the settings you apply)"),
+            QObject::tr("The date the settings of the file's database as a whole were last changed"),
         };
     }
 } // namespace DatabaseSettingsDiff
