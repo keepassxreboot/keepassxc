@@ -72,6 +72,20 @@ add_unit_test(NAME testkdbx4 SOURCES TestKeePass2Format.cpp FailDevice.cpp mock/
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp mock/MockChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
 
+# Replaces the glibc allocator functions, which conflicts with the address sanitizer
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT WITH_ASAN)
+    include(CheckCXXSourceCompiles)
+    check_cxx_source_compiles("#include <features.h>
+        #ifndef __GLIBC__
+        #error not glibc
+        #endif
+        int main() { return 0; }" HAVE_GLIBC)
+    if(HAVE_GLIBC)
+        add_unit_test(NAME testkeyscrubbing SOURCES TestKeyScrubbing.cpp
+                LIBS ${TEST_LIBRARIES})
+    endif()
+endif()
+
 add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 

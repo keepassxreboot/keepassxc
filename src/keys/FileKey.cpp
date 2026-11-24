@@ -174,7 +174,9 @@ QByteArray FileKey::serialize() const
 {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << uuid().toRfc4122() << rawKey() << static_cast<qint32>(m_type) << m_file;
+    auto key = rawKey();
+    stream << uuid().toRfc4122() << key << static_cast<qint32>(m_type) << m_file;
+    scrubKeyData(key);
     return data;
 }
 
@@ -189,6 +191,7 @@ void FileKey::deserialize(const QByteArray& data)
         stream >> key >> type >> m_file;
 
         setRawKey(key);
+        scrubKeyData(key);
         m_type = static_cast<Type>(type);
     }
 }

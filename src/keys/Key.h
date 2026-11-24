@@ -19,7 +19,22 @@
 #ifndef KEEPASSX_KEY_H
 #define KEEPASSX_KEY_H
 
+#include <QByteArray>
 #include <QUuid>
+
+#include <botan/mem_ops.h>
+
+/**
+ * Securely wipe a byte array that held key material (e.g. serialized keys) before it is released.
+ * Only the buffer owned by @p data is wiped; any other implicitly shared copy is not touched.
+ */
+inline void scrubKeyData(QByteArray& data)
+{
+    if (!data.isEmpty()) {
+        Botan::secure_scrub_memory(data.data(), static_cast<size_t>(data.size()));
+    }
+    data.clear();
+}
 
 class Key
 {

@@ -30,6 +30,7 @@
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
+#include "keys/ChallengeResponseKey.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
@@ -219,6 +220,47 @@ void TestKeys::testFileKeyError()
     QVERIFY(!result);
     QVERIFY(!errorMsg.isEmpty());
     errorMsg = "";
+}
+
+void TestKeys::testCompositeKeySerialization()
+{
+    // This is the data Quick Unlock stores and later restores
+    auto passwordKey = QSharedPointer<PasswordKey>::create("password");
+    auto fileKey = QSharedPointer<FileKey>::create();
+    QString error;
+    fileKey->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"), &error);
+    QVERIFY2(error.isEmpty(), qPrintable(error));
+    const YubiKeySlot slot{1234u, 2};
+    auto challengeResponseKey = QSharedPointer<ChallengeResponseKey>::create(slot);
+
+    CompositeKey original;
+    original.addKey(passwordKey);
+    original.addKey(fileKey);
+    original.addChallengeResponseKey(challengeResponseKey);
+
+    const auto blob = original.serialize();
+    QVERIFY(!blob.isEmpty());
+
+    CompositeKey restored;
+    restored.setRawKey(blob);
+    QCOMPARE(restored.keys().size(), 2);
+    QCOMPARE(restored.challengeResponseKeys().size(), 1);
+
+    QCOMPARE(restored.getKey(PasswordKey::UUID)->rawKey(), passwordKey->rawKey());
+    auto restoredFileKey = restored.getKey(FileKey::UUID).dynamicCast<FileKey>();
+    QVERIFY(restoredFileKey);
+    QCOMPARE(restoredFileKey->rawKey(), fileKey->rawKey());
+    QCOMPARE(restoredFileKey->type(), fileKey->type());
+    QCOMPARE(restored.challengeResponseKeys().first()->slotData(), slot);
+
+    // Serializing and restoring must not disturb the source keys
+    QVERIFY(!passwordKey->rawKey().isEmpty());
+    QCOMPARE(original.serialize(), blob);
+
+    // The scrub helper wipes and empties a buffer
+    QByteArray secret(32, 'k');
+    scrubKeyData(secret);
+    QVERIFY(secret.isEmpty());
 }
 
 void TestKeys::benchmarkTransformKey()

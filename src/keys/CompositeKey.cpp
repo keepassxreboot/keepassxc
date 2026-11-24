@@ -235,10 +235,14 @@ QByteArray CompositeKey::serialize() const
     // Write Composite Key UUID then each sub-key UUID and data
     stream << uuid().toRfc4122();
     for (auto const& key : m_keys) {
-        stream << key->uuid().toRfc4122() << key->serialize();
+        auto keyData = key->serialize();
+        stream << key->uuid().toRfc4122() << keyData;
+        scrubKeyData(keyData);
     }
     for (auto const& key : m_challengeResponseKeys) {
-        stream << key->uuid().toRfc4122() << key->serialize();
+        auto keyData = key->serialize();
+        stream << key->uuid().toRfc4122() << keyData;
+        scrubKeyData(keyData);
     }
     return data;
 }
@@ -283,5 +287,8 @@ void CompositeKey::deserialize(const QByteArray& data)
             // Unsupported key type, discard key data
             stream >> keyData;
         }
+
+        // The sub-key data holds key material, do not leave it behind
+        scrubKeyData(keyData);
     }
 }
