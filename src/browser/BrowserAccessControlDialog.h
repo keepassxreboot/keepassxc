@@ -21,6 +21,7 @@
 
 #include <QDialog>
 #include <QTableWidget>
+#include <QUuid>
 
 class Entry;
 
@@ -36,6 +37,15 @@ enum SelectionType
     Disabled
 };
 
+struct EntryItem
+{
+    QUuid databaseUuid;
+    QUuid entryUuid;
+    QString title;
+    QString url;
+    QString username;
+};
+
 class BrowserAccessControlDialog : public QDialog
 {
     Q_OBJECT
@@ -44,7 +54,7 @@ public:
     explicit BrowserAccessControlDialog(QWidget* parent = nullptr);
     ~BrowserAccessControlDialog() override;
 
-    void setEntries(const QList<Entry*>& entriesToConfirm, const QString& urlString, bool httpAuth);
+    void setEntries(const QList<EntryItem>& entriesToConfirm, const QString& urlString, bool httpAuth);
     bool remember() const;
     QList<QTableWidgetItem*> getEntries(SelectionType selectionType) const;
 
@@ -58,7 +68,7 @@ private slots:
     void selectionChanged();
 
 private:
-    void addEntryToList(const Entry* entry, int row);
+    void addEntryToList(const EntryItem& entryItem, int row);
     bool areAllDisabled() const;
     QList<QTableWidgetItem*> getAllItems() const;
 

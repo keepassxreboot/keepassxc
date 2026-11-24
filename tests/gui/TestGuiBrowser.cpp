@@ -264,13 +264,20 @@ void TestGuiBrowser::testAccessConfirmDialogRejection()
     QVERIFY(entryView->hasFocus());
 
     // Select the first entry in the database
-    QModelIndex entryItem = entryView->model()->index(0, 1);
-    Entry* entry = entryView->entryFromIndex(entryItem);
+    QModelIndex entryModelItem = entryView->model()->index(0, 1);
+    Entry* entry = entryView->entryFromIndex(entryModelItem);
 
     // Show browser access confirm dialog
     // The entry URL is https://github.com/login
-    QList<Entry*> entries;
-    entries << entry;
+    QList<EntryItem> entries;
+    EntryItem entryItem;
+    entryItem.databaseUuid = entry->database()->uuid();
+    entryItem.entryUuid = entry->uuid();
+    entryItem.title = entry->resolveMultiplePlaceholders(entry->title());
+    entryItem.url = entry->resolveMultiplePlaceholders(entry->url());
+    entryItem.username = entry->resolveMultiplePlaceholders(entry->username());
+    entries << entryItem;
+
     EntryParameters entryParameters;
     entryParameters.siteUrl = QString("https://github.com");
 

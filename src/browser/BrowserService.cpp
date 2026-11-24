@@ -276,7 +276,7 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName,
                                            const QSharedPointer<Database>& selectedDb,
                                            bool isPasskeysGroup)
 {
-    if (groupName.isEmpty()) {
+    if (groupName.isEmpty() || m_dialogActive) {
         return {};
     }
 
@@ -300,13 +300,14 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName,
         return result;
     }
 
+    m_dialogActive = true;
     auto dialogResult = MessageBox::warning(m_currentDatabaseWidget,
                                             tr("KeePassXC - Create a new group"),
                                             tr("A request for creating a new group \"%1\" has been received.\n"
                                                "Do you want to create this group?\n")
                                                 .arg(groupName),
                                             MessageBox::Yes | MessageBox::No);
-
+    m_dialogActive = false;
     if (dialogResult != MessageBox::Yes) {
         return {};
     }
@@ -386,13 +387,23 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         *entriesFound = false;
     }
 
+    const auto getEntryItem = [](Entry* entry) {
+        EntryItem entryItem;
+        entryItem.databaseUuid = entry->database()->uuid();
+        entryItem.entryUuid = entry->uuid();
+        entryItem.title = entry->resolveMultiplePlaceholders(entry->title());
+        entryItem.url = entry->resolveMultiplePlaceholders(entry->url());
+        entryItem.username = entry->resolveMultiplePlaceholders(entry->username());
+        return entryItem;
+    };
+
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
     const QString siteHost = QUrl(entryParameters.siteUrl).host();
     const QString formHost = QUrl(entryParameters.formUrl).host();
 
     // Check entries for authorization
-    QList<Entry*> entriesToConfirm;
+    QList<EntryItem> entriesToConfirm;
     QList<Entry*> allowedEntries;
     for (auto* entry : searchEntries(entryParameters.siteUrl, entryParameters.formUrl, keyList)) {
         auto entryCustomData = entry->customData();
@@ -413,7 +424,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
 
         // HTTP Basic Auth always needs a confirmation
         if (!ignoreHttpAuth && entryParameters.httpAuth) {
-            entriesToConfirm.append(entry);
+            entriesToConfirm.append(getEntryItem(entry));
             continue;
         }
 
@@ -425,7 +436,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
             if (alwaysAllowAccess || (entryParameters.httpAuth && ignoreHttpAuth)) {
                 allowedEntries.append(entry);
             } else {
-                entriesToConfirm.append(entry);
+                entriesToConfirm.append(getEntryItem(entry));
             }
             break;
 
@@ -467,7 +478,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     return entries;
 }
 
-QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
+QList<Entry*> BrowserService::confirmEntries(QList<EntryItem>& entriesToConfirm,
                                              const EntryParameters& entryParameters,
                                              const QString& siteHost,
                                              const QString& formUrl,
@@ -477,13 +488,18 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
         return {};
     }
 
+    const auto getEntryFromDatabase = [](EntryItem& entryItem) {
+        auto* db = Database::databaseByUuid(entryItem.databaseUuid);
+        return db ? db->rootGroup()->findEntryByUuid(entryItem.entryUuid, true) : nullptr;
+    };
+
     m_dialogActive = true;
     updateWindowState();
     BrowserAccessControlDialog accessControlDialog(m_currentDatabaseWidget);
 
     connectCloseSignals(accessControlDialog);
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
-        auto entry = entriesToConfirm[item->row()];
+        const auto entry = getEntryFromDatabase(entriesToConfirm[item->row()]);
         denyEntry(entry, siteHost, formUrl, entryParameters.realm);
     });
 
@@ -495,7 +511,8 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
 
     // All are denied
     if (ret == QDialog::Rejected && remember) {
-        for (auto& entry : entriesToConfirm) {
+        for (auto& entryItem : entriesToConfirm) {
+            const auto entry = getEntryFromDatabase(entryItem);
             denyEntry(entry, siteHost, formUrl, entryParameters.realm);
         }
     }
@@ -504,19 +521,21 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
     if (ret == QDialog::Accepted) {
         auto selectedEntries = accessControlDialog.getEntries(SelectionType::Selected);
         for (auto& item : selectedEntries) {
-            auto entry = entriesToConfirm[item->row()];
-            allowedEntries.append(entry);
+            const auto entry = getEntryFromDatabase(entriesToConfirm[item->row()]);
+            if (entry) {
+                allowedEntries.append(entry);
 
-            if (remember) {
-                allowEntry(entry, siteHost, formUrl, entryParameters.realm);
+                if (remember) {
+                    allowEntry(entry, siteHost, formUrl, entryParameters.realm);
+                }
             }
         }
 
         // Remembered non-selected entries must be denied
         if (remember) {
             auto nonSelectedEntries = accessControlDialog.getEntries(SelectionType::NonSelected);
-            for (auto& item : nonSelectedEntries) {
-                auto entry = entriesToConfirm[item->row()];
+            for (const auto& item : nonSelectedEntries) {
+                const auto entry = getEntryFromDatabase(entriesToConfirm[item->row()]);
                 denyEntry(entry, siteHost, formUrl, entryParameters.realm);
             }
         }
@@ -524,8 +543,8 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
 
     // Handle disabled entries (returned Accept/Reject status does not matter)
     auto disabledEntries = accessControlDialog.getEntries(SelectionType::Disabled);
-    for (auto& item : disabledEntries) {
-        auto entry = entriesToConfirm[item->row()];
+    for (const auto& item : disabledEntries) {
+        const auto entry = getEntryFromDatabase(entriesToConfirm[item->row()]);
         denyEntry(entry, siteHost, formUrl, entryParameters.realm);
     }
 
@@ -582,7 +601,7 @@ bool BrowserService::isPasswordGeneratorRequested() const
 QString BrowserService::storeKey(const QString& key)
 {
     auto db = getDatabase();
-    if (!db) {
+    if (!db || m_dialogActive) {
         return {};
     }
 
@@ -591,6 +610,7 @@ QString BrowserService::storeKey(const QString& key)
     QString id;
 
     do {
+        m_dialogActive = true;
         QInputDialog keyDialog(m_currentDatabaseWidget);
         connectCloseSignals(keyDialog);
         keyDialog.setWindowTitle(tr("KeePassXC - New key association request"));
@@ -603,9 +623,10 @@ QString BrowserService::storeKey(const QString& key)
         keyDialog.show();
         keyDialog.activateWindow();
         keyDialog.raise();
-        auto ok = keyDialog.exec();
 
+        auto ok = keyDialog.exec();
         id = keyDialog.textValue();
+        m_dialogActive = false;
 
         if (ok != QDialog::Accepted || id.isEmpty() || !isDatabaseOpened()) {
             hideWindow();
@@ -856,12 +877,13 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     Q_UNUSED(rpName)
 
     Q_ASSERT(entry);
-    if (!entry) {
+    if (!entry || m_dialogActive) {
         return;
     }
 
     // Ask confirmation if entry already contains a Passkey
     if (entry->hasPasskey()) {
+        m_dialogActive = true;
         if (MessageBox::question(m_currentDatabaseWidget,
                                  tr("KeePassXC - Update passkey"),
                                  tr("Entry already has a passkey.\nDo you want to overwrite the passkey in %1 - %2?")
@@ -869,6 +891,7 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
                                  MessageBox::Overwrite | MessageBox::Cancel,
                                  MessageBox::Cancel)
             != MessageBox::Overwrite) {
+            m_dialogActive = false;
             return;
         }
     }
@@ -885,6 +908,7 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->addTag(tr("Passkey"));
 
     entry->endUpdate();
+    m_dialogActive = false;
 }
 
 void BrowserService::addEntry(const EntryParameters& entryParameters,
@@ -940,7 +964,7 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
 {
     // TODO: select database based on this key id
     auto db = selectedDatabase();
-    if (!db) {
+    if (!db || m_dialogActive) {
         return false;
     }
 
@@ -973,6 +997,7 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
         MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
             raiseWindow();
+            m_dialogActive = true;
             dialogResult = MessageBox::question(m_currentDatabaseWidget,
                                                 tr("KeePassXC - Update Entry"),
                                                 tr("Do you want to update the information in %1 - %2?")
@@ -994,11 +1019,16 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
         hideWindow();
     }
 
+    m_dialogActive = false;
     return result;
 }
 
 bool BrowserService::deleteEntry(const QString& uuid)
 {
+    if (m_dialogActive) {
+        return false;
+    }
+
     auto db = selectedDatabase();
     if (!db) {
         return false;
@@ -1009,12 +1039,14 @@ bool BrowserService::deleteEntry(const QString& uuid)
         return false;
     }
 
+    m_dialogActive = true;
     auto dialogResult = MessageBox::warning(m_currentDatabaseWidget,
                                             tr("KeePassXC - Delete entry"),
                                             tr("A request for deleting entry \"%1\" has been received.\n"
                                                "Do you want to delete the entry?\n")
                                                 .arg(entry->title()),
                                             MessageBox::Yes | MessageBox::No);
+    m_dialogActive = false;
     if (dialogResult != MessageBox::Yes) {
         return false;
     }
@@ -1172,6 +1204,10 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& entries, const QString&
 
 void BrowserService::allowEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm)
 {
+    if (!entry) {
+        return;
+    }
+
     BrowserEntryConfig config;
     config.load(entry);
     config.allow(siteHost);
@@ -1189,6 +1225,10 @@ void BrowserService::allowEntry(Entry* entry, const QString& siteHost, const QSt
 
 void BrowserService::denyEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm)
 {
+    if (!entry) {
+        return;
+    }
+
     BrowserEntryConfig config;
     config.load(entry);
     config.deny(siteHost);
