@@ -19,6 +19,9 @@
 #include "TestCsvExporter.h"
 
 #include <QBuffer>
+#include <QDir>
+#include <QFile>
+#include <QTemporaryDir>
 #include <QTest>
 
 #include "core/Group.h"
@@ -31,7 +34,8 @@ QTEST_GUILESS_MAIN(TestCsvExporter)
 
 const QString TestCsvExporter::ExpectedHeaderLine =
     QString("\"Group\",\"Title\",\"Username\",\"Password\",\"URL\",\"Notes\",\"TOTP\",\"Icon\",\"Last "
-            "Modified\",\"Created\"\n");
+            "Modified\",\"Created\",\"Tags\",\"Expires\",\"Expiry Time\",\"Last Accessed\",\"Location "
+            "Changed\",\"Usage Count\",\"UUID\",\"Custom Attributes\",\"Auto-Type\",\"Attachments\",\"History\"\n");
 
 void TestCsvExporter::init()
 {
@@ -79,6 +83,100 @@ void TestCsvExporter::testExport()
     exported.remove(expectedResult);
     QVERIFY(exported.contains("otpauth://"));
     QVERIFY(exported.contains(",\"5\","));
+}
+
+// the CSV carries the same entry data as the XML export, not only the ten basic columns
+void TestCsvExporter::testAllEntryData()
+{
+    auto* entry = new Entry();
+    entry->setGroup(m_db->rootGroup());
+    entry->setTitle("Full Entry");
+    entry->setPassword("current-secret");
+    entry->attributes()->set("Custom Field", "custom \"value\"");
+    entry->attributes()->set("Protected Field", "hidden", true);
+    entry->setTags("alpha;beta");
+    entry->setExpires(true);
+    entry->setExpiryTime(QDateTime(QDate(2030, 1, 2), QTime(3, 4, 5), Qt::UTC));
+    entry->setDefaultAutoTypeSequence("{USERNAME}{TAB}{PASSWORD}{ENTER}");
+    entry->autoTypeAssociations()->add({"Login - *", "{PASSWORD}"});
+    const QByteArray attachment("\x00\x01binary\xff", 9);
+    entry->attachments()->set("secret.bin", attachment);
+
+    // An earlier version of the entry ends up in the history
+    entry->beginUpdate();
+    entry->setPassword("old-secret");
+    entry->endUpdate();
+    entry->beginUpdate();
+    entry->setPassword("current-secret");
+    entry->endUpdate();
+    QVERIFY(!entry->historyItems().isEmpty());
+
+    const auto csv = m_csvExporter->exportDatabase(m_db);
+    QVERIFY(csv.startsWith(ExpectedHeaderLine));
+
+    // Custom attributes (including protected ones), tags, expiry and the UUID
+    QVERIFY(csv.contains("Custom Field"));
+    QVERIFY(csv.contains("custom \\\"\"value\\\"\"")); // JSON escaping, then CSV quote doubling
+    QVERIFY(csv.contains("Protected Field"));
+    QVERIFY(entry->tagList().size() == 2);
+    QVERIFY(csv.contains(QString("\"%1\"").arg(entry->tags()))); // comma separated, as Entry::tags() returns them
+    QVERIFY(csv.contains("\"true\",\"2030-01-02T03:04:05Z\""));
+    QVERIFY(csv.contains(entry->uuidToHex()));
+
+    // Auto-Type settings
+    QVERIFY(csv.contains("defaultSequence"));
+    QVERIFY(csv.contains("Login - *"));
+
+    // Attachments are base64 encoded, binary safe
+    QVERIFY(csv.contains(QString::fromLatin1(attachment.toBase64())));
+
+    // History keeps the previous password
+    QVERIFY(csv.contains("old-secret"));
+}
+
+// an entry without such data leaves the structured columns empty
+void TestCsvExporter::testPlainEntryLeavesStructuredColumnsEmpty()
+{
+    auto* entry = new Entry();
+    entry->setGroup(m_db->rootGroup());
+    entry->setTitle("Plain");
+
+    const auto csv = m_csvExporter->exportDatabase(m_db);
+    QVERIFY(csv.contains(",\"false\","));
+    QVERIFY(csv.trimmed().endsWith(",\"\",\"\",\"\",\"\""));
+}
+
+// failed writes are reported, and the previous file survives a failed export
+void TestCsvExporter::testWriteFailures()
+{
+    // Device that cannot be written to
+    QBuffer readOnly;
+    QByteArray data("x");
+    readOnly.setBuffer(&data);
+    QVERIFY(readOnly.open(QIODevice::ReadOnly));
+    QVERIFY(!m_csvExporter->exportDatabase(&readOnly, m_db));
+    QVERIFY(!m_csvExporter->errorString().isEmpty());
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("export.csv");
+
+    // Successful export replaces the file and leaves no temporary files behind
+    {
+        QFile existing(path);
+        QVERIFY(existing.open(QIODevice::WriteOnly));
+        existing.write("previous export");
+    }
+    QVERIFY(m_csvExporter->exportDatabase(path, m_db));
+    QFile written(path);
+    QVERIFY(written.open(QIODevice::ReadOnly));
+    QCOMPARE(QString::fromUtf8(written.readAll()), ExpectedHeaderLine);
+    written.close();
+    QCOMPARE(QDir(dir.path()).entryList(QDir::Files).size(), 1);
+
+    // Export into a path that cannot be opened fails without touching anything
+    QVERIFY(!m_csvExporter->exportDatabase(dir.filePath("missing-dir/export.csv"), m_db));
+    QVERIFY(!m_csvExporter->errorString().isEmpty());
 }
 
 void TestCsvExporter::testEmptyDatabase()

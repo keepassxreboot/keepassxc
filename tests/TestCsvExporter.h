@@ -37,6 +37,9 @@ private slots:
     void initTestCase();
     void cleanup();
     void testExport();
+    void testAllEntryData();
+    void testPlainEntryLeavesStructuredColumnsEmpty();
+    void testWriteFailures();
     void testEmptyDatabase();
     void testNestedGroups();
     void testRoundTripWithCustomRootName();

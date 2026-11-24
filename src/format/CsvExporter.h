@@ -23,6 +23,7 @@
 #include <QString>
 
 class Database;
+class Entry;
 class Group;
 class QIODevice;
 
@@ -36,6 +37,9 @@ public:
 
 private:
     QString exportGroup(const Group* group, QString groupPath = QString());
+    bool writeGroup(QIODevice* device, const Group* group, QString groupPath);
+    bool writeText(QIODevice* device, const QString& text);
+    QString exportEntry(const Entry* entry, const QString& groupPath);
     QString exportHeader();
     void addColumn(QString& str, const QString& column);
 
