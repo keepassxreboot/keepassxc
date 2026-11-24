@@ -713,6 +713,25 @@
           </property>
          </widget>
         </item>
+        <item row="7" column="0" colspan="2">
+         <widget class="QCheckBox" name="checkBoxKeepOtherColumns">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Columns of the file that are not used for any field above are kept as custom fields of each entry (empty cells are skipped). Untick this to leave them out.</string>
+          </property>
+          <property name="text">
+           <string>Keep unused columns as custom fields</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

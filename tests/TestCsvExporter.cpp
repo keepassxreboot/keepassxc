@@ -24,6 +24,8 @@
 #include <QTemporaryDir>
 #include <QTest>
 
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "core/Totp.h"
@@ -428,4 +430,79 @@ void TestCsvExporter::testAbsolutePaths()
     QCOMPARE(nameList.size(), 2);
     QCOMPARE(nameList.at(0), QString("Work"));
     QCOMPARE(nameList.at(1), QString("Subgroup1"));
+}
+
+// a database of plain entries: the only thing a CSV file cannot hold is the settings of the database itself
+void TestCsvExporter::testLossReportOfPlainData()
+{
+    auto* entry = new Entry();
+    entry->setGroup(m_db->rootGroup());
+    entry->setTitle("Plain");
+
+    const auto report = CsvExporter::lossReport(*m_db);
+    QVERIFY2(report.size() == 1, qPrintable(report.join("\n")));
+    QVERIFY(report.first().contains("settings of the database itself"));
+}
+
+// everything a CSV file cannot hold is named, with the folders and entries it concerns, and nothing else is
+void TestCsvExporter::testLossReportNamesWhatIsNotSaved()
+{
+    auto* root = m_db->rootGroup();
+    auto makeGroup = [root](const QString& name) {
+        auto* group = new Group();
+        group->setName(name);
+        group->setParent(root);
+        return group;
+    };
+    auto makeEntry = [](Group* group, const QString& title) {
+        auto* entry = new Entry();
+        entry->setGroup(group);
+        entry->setTitle(title);
+        return entry;
+    };
+
+    auto* work = makeGroup("Work");
+    work->setNotes("about work");
+    auto* merging = makeGroup("Merging"); // a merge mode of its own (the one in effect everywhere else is "keep newer")
+    merging->setMergeMode(Group::Synchronize);
+    makeEntry(merging, "in merging");
+    makeGroup("Old stuff"); // no entries
+    auto* slash = makeGroup("A/B");
+    auto* twinOne = makeGroup("Twin");
+    auto* twinTwo = makeGroup("Twin");
+    makeEntry(slash, "in slash");
+    makeEntry(twinOne, "in twin one");
+    makeEntry(twinTwo, "in twin two");
+    auto* bank = makeEntry(work, "Bank");
+    bank->setIcon(QUuid::createUuid()); // a picture of its own
+    auto* mail = makeEntry(work, "Mail");
+    mail->attachments()->set("a.bin", "data");
+    mail->beginUpdate();
+    mail->setUsername("changed"); // the older version keeps the attachment, which a CSV older version cannot hold
+    mail->endUpdate();
+    makeEntry(work, "Fine"); // nothing to say about this one
+
+    const auto report = CsvExporter::lossReport(*m_db);
+    auto lineWith = [&report](const QString& marker) {
+        for (const auto& line : report) {
+            if (line.contains(marker)) {
+                return line;
+            }
+        }
+        return QString();
+    };
+
+    QVERIFY(lineWith("settings of the database itself").size() > 0);
+    QVERIFY2(lineWith("empty folder").contains("Old stuff"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("keeps only its name").contains("Work"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("keeps only its name").contains("Merging"), qPrintable(report.join("\n")));
+    QVERIFY2(!lineWith("empty folder").contains("Work"), "a folder with entries is not empty");
+    QVERIFY2(lineWith("picture of their own").contains("Bank"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("also have attachments").contains("Mail"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("same name in the same place").contains("Twin"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("split into other folders").contains("A/B"), qPrintable(report.join("\n")));
+    for (const auto& line : report) {
+        QVERIFY2(!line.contains("Fine"), qPrintable("an entry with nothing to lose was named: " + line));
+    }
+    QCOMPARE(report.size(), 7);
 }

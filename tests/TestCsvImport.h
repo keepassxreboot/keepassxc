@@ -36,6 +36,17 @@ private slots:
     void testExactTextColumnStaysEmptyForOrdinaryText();
     void testWhichCharactersTheJsonStepKeeps_data();
     void testWhichCharactersTheJsonStepKeeps();
+
+    // Files from other programs and from earlier versions, and what is reported
+    void testUnusedColumnsAreKeptAsCustomFields();
+    void testUnusedColumnsOfAFileWithoutFieldNames();
+    void testFilesOfEarlierVersionsStillImport();
+    void testCellsThatCannotBeUnderstoodAreKeptAndReported();
+    void testExactTextThatCannotBeUsed();
+
+    // What the wizard does with the imported database
+    void testImportIntoANewDatabaseKeepsEverything();
+    void testCopyWithNewIdsKeepsEverything();
 };
 
 #endif // KEEPASSXC_TESTCSVIMPORT_H

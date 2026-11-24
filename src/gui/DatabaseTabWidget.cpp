@@ -489,6 +489,29 @@ void DatabaseTabWidget::exportToCsv()
         return;
     }
 
+    // a CSV file cannot hold everything a database holds (the settings of the database, folder settings,
+    // empty folders, pictures used as icons, ...). Say what, by name, before anything is saved, and offer the XML
+    // export, which keeps everything. The default answer is the one that loses nothing.
+    QString lossText = tr("A CSV file holds your entries, but not everything in the database:");
+    for (const auto& line : CsvExporter::lossReport(*db)) {
+        lossText.append("\n- ").append(line);
+    }
+    lossText.append("\n\n").append(
+        tr("The XML export keeps everything.\n\nYes: export to XML instead\nNo: save the CSV file anyway\nCancel: "
+           "export nothing"));
+    const auto lossAnswer = MessageBox::question(this,
+                                                 tr("CSV export does not keep everything"),
+                                                 lossText,
+                                                 MessageBox::Yes | MessageBox::No | MessageBox::Cancel,
+                                                 MessageBox::Yes);
+    if (lossAnswer == MessageBox::Yes) {
+        exportToXML();
+        return;
+    }
+    if (lossAnswer != MessageBox::No) {
+        return;
+    }
+
     if (!warnOnExport()) {
         return;
     }

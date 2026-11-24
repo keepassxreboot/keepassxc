@@ -46,6 +46,8 @@ private slots:
     void testRoundTripWithDefaultRootName();
     void testSingleLevelGroup();
     void testAbsolutePaths();
+    void testLossReportOfPlainData();
+    void testLossReportNamesWhatIsNotSaved();
 
 private:
     QSharedPointer<Database> m_db;

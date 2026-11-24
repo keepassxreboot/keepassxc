@@ -54,6 +54,15 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
         out << csvExporter.exportDatabase(database);
+        // say what a CSV file cannot hold (stderr, so it never mixes into the CSV on stdout)
+        if (!parser->isSet(Command::QuietOption)) {
+            err << QObject::tr("A CSV file does not hold everything in the database (use --format xml to keep "
+                               "everything):")
+                << Qt::endl;
+            for (const auto& line : CsvExporter::lossReport(*database)) {
+                err << "  - " << line << Qt::endl;
+            }
+        }
     } else if (format.startsWith(QStringLiteral("html"), Qt::CaseInsensitive)) {
         HtmlExporter htmlExporter;
         out << htmlExporter.exportDatabase(database);

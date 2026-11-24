@@ -17,6 +17,8 @@
 
 #include "TestCsvImport.h"
 
+#include <QCheckBox>
+#include <QComboBox>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -30,6 +32,7 @@
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
+#include "core/Merger.h"
 #include "core/Totp.h"
 #include "crypto/Crypto.h"
 #include "format/CsvExporter.h"
@@ -470,4 +473,339 @@ void TestCsvImport::testWhichCharactersTheJsonStepKeeps()
     // go.
     QEXPECT_FAIL("U+feff at the start", "Qt's JSON reader drops it; the CSV export works around that", Abort);
     QCOMPARE(escaped(parsed.object().value(value).toString()), escaped(value));
+}
+
+namespace
+{
+    // One CSV line from cells (every cell quoted, quotes doubled)
+    QByteArray csvLine(const QStringList& cells)
+    {
+        QStringList quoted;
+        for (const auto& cell : cells) {
+            quoted << "\"" + QString(cell).replace("\"", "\"\"") + "\"";
+        }
+        return quoted.join(",").toUtf8() + "\n";
+    }
+
+    // Loads a hand-written CSV file into the import form, as the import wizard does. The form stays with the caller so
+    // that its settings can be changed before the database is built and its problems read afterwards.
+    bool loadText(CsvImportWidget& widget, QTemporaryDir& dir, const QByteArray& text)
+    {
+        const auto path = dir.filePath("hand-written.csv");
+        if (!writeFile(path, text)) {
+            return false;
+        }
+        widget.load(path);
+        return true;
+    }
+
+    const Entry* entryTitled(const QSharedPointer<Database>& db, const QString& title)
+    {
+        for (const auto* entry : db->rootGroup()->entriesRecursive()) {
+            if (entry->title() == title) {
+                return entry;
+            }
+        }
+        return nullptr;
+    }
+} // namespace
+
+// Catches: columns of another program's file that the form has no field for being dropped, or kept under a name that
+// replaces a field the entry already has. The box can be unticked to leave them out.
+void TestCsvImport::testUnusedColumnsAreKeptAsCustomFields()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    CsvImportWidget widget;
+    QVERIFY(loadText(widget,
+                     dir,
+                     csvLine({"Group", "Title", "Username", "Password", "Folder", "Favorite", "Empty", "Title"})
+                         + csvLine({"Web", "Shop", "me", "pw", "Home", "true", "", "second title column"})));
+    auto db = widget.buildDatabase();
+    QVERIFY(db);
+    const auto* entry = entryTitled(db, "Shop");
+    QVERIFY(entry);
+    QCOMPARE(entry->attributes()->value("Folder"), QString("Home"));
+    QCOMPARE(entry->attributes()->value("Favorite"), QString("true"));
+    QVERIFY2(!entry->attributes()->hasKey("Empty"), "an empty cell must not make a custom field");
+    QCOMPARE(entry->attributes()->value("Title (CSV)"), QString("second title column"));
+    QVERIFY2(widget.problems().isEmpty(), qPrintable(widget.problems().join("; ")));
+
+    // Unticked: the columns are left out
+    auto* keep = widget.findChild<QCheckBox*>("checkBoxKeepOtherColumns");
+    QVERIFY(keep);
+    QVERIFY2(keep->isChecked(), "the columns must be kept unless the person unticks the box");
+    keep->setChecked(false);
+    db = widget.buildDatabase();
+    QVERIFY(db);
+    entry = entryTitled(db, "Shop");
+    QVERIFY(entry);
+    QVERIFY(entry->attributes()->customKeys().isEmpty());
+}
+
+// Catches: a file without field names losing its unused columns, or the names differing from the form's drop-down
+// lists ("Column 0", "Column 1", ...).
+void TestCsvImport::testUnusedColumnsOfAFileWithoutFieldNames()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    CsvImportWidget widget;
+    QVERIFY(loadText(widget, dir, csvLine({"Web", "Shop", "me", "pw", "extra one", "extra two"})));
+    widget.findChild<QCheckBox*>("checkBoxFieldNames")->setChecked(false);
+    widget.findChild<QComboBox*>("groupCombo")->setCurrentIndex(1);
+    widget.findChild<QComboBox*>("titleCombo")->setCurrentIndex(2);
+    widget.findChild<QComboBox*>("usernameCombo")->setCurrentIndex(3);
+    widget.findChild<QComboBox*>("passwordCombo")->setCurrentIndex(4);
+    const auto db = widget.buildDatabase();
+    QVERIFY(db);
+    const auto* entry = entryTitled(db, "Shop");
+    QVERIFY(entry);
+    QCOMPARE(entry->password(), QString("pw"));
+    QCOMPARE(entry->attributes()->value("Column 4"), QString("extra one"));
+    QCOMPARE(entry->attributes()->value("Column 5"), QString("extra two"));
+}
+
+// Catches: files from earlier versions no longer importing: the 21 columns this program wrote before the newest ones
+// were added, and the ten columns of the original export.
+void TestCsvImport::testFilesOfEarlierVersionsStillImport()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+
+    {
+        CsvImportWidget widget;
+        const auto header =
+            csvLine({"Group",       "Title",         "Username",         "Password",    "URL",  "Notes",
+                     "TOTP",        "Icon",          "Last Modified",    "Created",     "Tags", "Expires",
+                     "Expiry Time", "Last Accessed", "Location Changed", "Usage Count", "UUID", "Custom Attributes",
+                     "Auto-Type",   "Attachments",   "History"});
+        const auto row =
+            csvLine({"Web",
+                     "Shop",
+                     "me",
+                     "pw",
+                     "https://x",
+                     "n",
+                     "",
+                     "5",
+                     "2020-01-02T03:04:05Z",
+                     "2019-01-02T03:04:05Z",
+                     "a",
+                     "true",
+                     "2031-02-03T04:05:06Z",
+                     "2025-03-04T05:06:07Z",
+                     "2021-09-08T07:06:05Z",
+                     "42",
+                     "00112233445566778899aabbccddeeff",
+                     "{\"Plain\":\"v\"}",
+                     "{\"enabled\":false,\"obfuscation\":1,\"defaultSequence\":\"{PASSWORD}\",\"associations\":[]}",
+                     "{\"a.txt\":\"aGk=\"}",
+                     "[{\"title\":\"Old\",\"username\":\"u\",\"password\":\"old pw\",\"url\":\"\",\"notes\":\"\","
+                     "\"modified\":\"2018-05-06T07:08:09Z\"}]"});
+        QVERIFY(loadText(widget, dir, header + row));
+        const auto db = widget.buildDatabase();
+        QVERIFY(db);
+        QVERIFY2(widget.problems().isEmpty(), qPrintable(widget.problems().join("; ")));
+        const auto* entry = entryTitled(db, "Shop");
+        QVERIFY(entry);
+        QCOMPARE(entry->uuidToHex(), QString("00112233445566778899aabbccddeeff"));
+        QCOMPARE(entry->attributes()->value("Plain"), QString("v"));
+        QVERIFY(!entry->attributes()->isProtected("Plain"));
+        QCOMPARE(entry->attachments()->value("a.txt"), QByteArray("hi"));
+        QVERIFY(!entry->autoTypeEnabled());
+        QCOMPARE(entry->autoTypeObfuscation(), 1);
+        QCOMPARE(entry->defaultAutoTypeSequence(), QString("{PASSWORD}"));
+        QCOMPARE(entry->iconNumber(), 5);
+        QCOMPARE(entry->timeInfo().usageCount(), 42);
+        QVERIFY(entry->timeInfo().expires());
+        QCOMPARE(entry->timeInfo().lastModificationTime().toSecsSinceEpoch(),
+                 QDateTime(QDate(2020, 1, 2), QTime(3, 4, 5), Qt::UTC).toSecsSinceEpoch());
+        QCOMPARE(entry->historyItems().size(), 1);
+        QCOMPARE(entry->historyItems().at(0)->password(), QString("old pw"));
+    }
+
+    {
+        CsvImportWidget widget;
+        const auto header = csvLine(
+            {"Group", "Title", "Username", "Password", "URL", "Notes", "TOTP", "Icon", "Last Modified", "Created"});
+        const auto row =
+            csvLine({"Web", "Plain", "me", "pw", "https://y", "note", "", "3", "1577934245", "2019-01-02T03:04:05Z"});
+        QVERIFY(loadText(widget, dir, header + row));
+        const auto db = widget.buildDatabase();
+        QVERIFY(db);
+        QVERIFY2(widget.problems().isEmpty(), qPrintable(widget.problems().join("; ")));
+        const auto* entry = entryTitled(db, "Plain");
+        QVERIFY(entry);
+        QCOMPARE(entry->url(), QString("https://y"));
+        QCOMPARE(entry->iconNumber(), 3);
+        QCOMPARE(entry->timeInfo().lastModificationTime().toSecsSinceEpoch(), qint64(1577934245));
+        QVERIFY(entry->attributes()->customKeys().isEmpty());
+        QVERIFY(entry->historyItems().isEmpty());
+    }
+}
+
+// Catches: a cell that cannot be understood being dropped without a word, or not reported. Each one must be kept as a
+// custom field with its original text and named in the problems the person is shown.
+void TestCsvImport::testCellsThatCannotBeUnderstoodAreKeptAndReported()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    CsvImportWidget widget;
+    const QString id = "00112233445566778899aabbccddeeff";
+    const auto header = csvLine({"Group",
+                                 "Title",
+                                 "Username",
+                                 "Password",
+                                 "UUID",
+                                 "Expiry Time",
+                                 "Custom Attributes",
+                                 "Attachments",
+                                 "Protected Attributes"});
+    const auto rows =
+        csvLine({"Web",
+                 "bad cells",
+                 "",
+                 "",
+                 id,
+                 "not a date",
+                 "{not json",
+                 "{\"x.bin\":\"***not base64***\"}",
+                 "[not json"})
+        + csvLine({"Web", "same id", "", "", id, "", "{\"Title\":\"clash\",\"Notes\":\"clash2\"}", "", ""})
+        + csvLine({"Web", "bad id", "", "", "xyz", "", "", "", ""});
+    QVERIFY(loadText(widget, dir, header + rows));
+    const auto db = widget.buildDatabase();
+    QVERIFY(db);
+    QCOMPARE(db->rootGroup()->entriesRecursive().size(), 3);
+
+    const auto* bad = entryTitled(db, "bad cells");
+    QVERIFY(bad);
+    QCOMPARE(bad->uuidToHex(), id);
+    QCOMPARE(bad->attributes()->value("Custom Attributes (CSV text that was not understood)"), QString("{not json"));
+    QCOMPARE(bad->attributes()->value("Attachment x.bin (CSV text that was not understood)"),
+             QString("***not base64***"));
+    QCOMPARE(bad->attributes()->value("Protected Attributes (CSV text that was not understood)"), QString("[not json"));
+
+    const auto* same = entryTitled(db, "same id");
+    QVERIFY(same);
+    QVERIFY2(!same->uuid().isNull() && same->uuidToHex() != id, "a repeated id must give the entry a new one");
+    QCOMPARE(same->attributes()->value("Title (CSV)"), QString("clash"));
+    QCOMPARE(same->attributes()->value("Notes (CSV)"), QString("clash2"));
+
+    const auto* invalid = entryTitled(db, "bad id");
+    QVERIFY(invalid);
+    QVERIFY(!invalid->uuid().isNull());
+
+    const auto problems = widget.problems().join("\n");
+    for (const QString& expected : QStringList{"Row 2 (bad cells)",
+                                               "not a valid date",
+                                               "attachment \"x.bin\"",
+                                               "Row 3 (same id)",
+                                               "appears more than once",
+                                               "Row 4 (bad id)",
+                                               "is not valid",
+                                               "custom field \"Title\""}) {
+        QVERIFY2(problems.contains(expected), qPrintable("not reported: " + expected + "\nreported:\n" + problems));
+    }
+}
+
+// Catches: the exact text of a cell being lost when its column cannot be read or the field was taken from another
+// column
+void TestCsvImport::testExactTextThatCannotBeUsed()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+
+    {
+        CsvImportWidget widget;
+        QVERIFY(loadText(widget,
+                         dir,
+                         csvLine({"Group", "Title", "Username", "Password", "Exact Text"})
+                             + csvLine({"Web", "readable", "u", "pw?", "{\"Password\":\"pw\\ud83d\"}"})
+                             + csvLine({"Web", "unreadable", "u", "pw?", "not json"})));
+        const auto db = widget.buildDatabase();
+        QVERIFY(db);
+        QCOMPARE(entryTitled(db, "readable")->password(), QString("pw") + QChar(0xD83D));
+        const auto* unreadable = entryTitled(db, "unreadable");
+        QCOMPARE(unreadable->password(), QString("pw?"));
+        QCOMPARE(unreadable->attributes()->value("Exact Text (CSV text that was not understood)"), QString("not json"));
+        QVERIFY2(widget.problems().join("\n").contains("exact text of some cells could not be read"),
+                 qPrintable(widget.problems().join("\n")));
+    }
+
+    {
+        // The person took the password from another column: the exact text belongs to the column of the same name and
+        // must not replace it; the unused "Password" column is kept
+        CsvImportWidget widget;
+        QVERIFY(loadText(widget,
+                         dir,
+                         csvLine({"Group", "Title", "Username", "Password", "Other", "Exact Text"})
+                             + csvLine({"Web", "remapped", "u", "plain", "other pw", "{\"Password\":\"exact\"}"})));
+        widget.findChild<QComboBox*>("passwordCombo")->setCurrentIndex(5); // 0 = not present, 1 = first column
+        const auto db = widget.buildDatabase();
+        QVERIFY(db);
+        const auto* entry = entryTitled(db, "remapped");
+        QVERIFY(entry);
+        QCOMPARE(entry->password(), QString("other pw"));
+        QCOMPARE(entry->attributes()->value("Password (CSV)"), QString("plain"));
+        QVERIFY2(widget.problems().join("\n").contains("exact text of \"Password\" was not used"),
+                 qPrintable(widget.problems().join("\n")));
+    }
+}
+
+// Catches: the new-database import (the wizard merges the imported database into the new one) losing entry ids, older
+// versions, attachments, custom fields or the browser data of an entry. The same calls as DatabaseTabWidget makes.
+void TestCsvImport::testImportIntoANewDatabaseKeepsEverything()
+{
+    auto source = QSharedPointer<Database>::create();
+    auto* work = new Group();
+    work->setName("Work");
+    work->setParent(source->rootGroup());
+    auto* rich = addRichEntry(work, "Rich entry");
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto imported = exportAndImport(source, dir);
+    QVERIFY(imported);
+
+    auto newDb = QSharedPointer<Database>::create();
+    Merger merger(imported.data(), newDb.data());
+    merger.setSkipDatabaseCustomData(true);
+    merger.merge();
+    newDb->rootGroup()->setName(imported->rootGroup()->name());
+    newDb->rootGroup()->setNotes(imported->rootGroup()->notes());
+
+    const auto* found = newDb->rootGroup()->findEntryByUuid(rich->uuid());
+    QVERIFY2(found, "the entry is missing from the new database");
+    const auto problems = differences(rich, found);
+    QVERIFY2(problems.isEmpty(), qPrintable(problems.join("; ")));
+}
+
+// Catches: the copy that is made when the file's ids already exist in an open database (the file was exported from that
+// database) losing anything but the ids, dates included. The same function as DatabaseTabWidget uses.
+void TestCsvImport::testCopyWithNewIdsKeepsEverything()
+{
+    auto source = QSharedPointer<Database>::create();
+    auto* work = new Group();
+    work->setName("Work");
+    work->setParent(source->rootGroup());
+    auto* rich = addRichEntry(work, "Rich entry");
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto imported = exportAndImport(source, dir);
+    QVERIFY(imported);
+
+    std::unique_ptr<Group> copy(imported->rootGroup()->cloneWithNewUuids());
+    const auto copied = copy->entriesRecursive();
+    QCOMPARE(copied.size(), 1);
+    const auto* found = copied.first();
+    QVERIFY2(found->uuid() != rich->uuid() && !found->uuid().isNull(), "the copy must have a new id");
+    for (const auto* item : found->historyItems()) {
+        QCOMPARE(item->uuid(), found->uuid());
+    }
+    // everything else is the same (the ids of the older versions follow the entry's new id)
+    for (const auto& problem : differences(rich, found)) {
+        QVERIFY2(problem == "entry id" || problem.endsWith(": entry id"), qPrintable("lost in the copy: " + problem));
+    }
 }

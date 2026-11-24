@@ -270,6 +270,31 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
     }
     QSet<QUuid> usedIds;
 
+    // a column of the file that no field of the form uses (and that is not one of the export's own columns
+    // above) is kept as a custom field named like the column, unless the person unticked the box. Without this a file
+    // from another program lost every column the form has no field for. The names are the ones the drop-down lists
+    // show.
+    QList<std::pair<int, QString>> otherColumns;
+    if (m_ui->checkBoxKeepOtherColumns->isChecked()) {
+        QSet<int> usedColumns;
+        for (const auto* combo : m_combos) {
+            usedColumns.insert(combo->currentIndex() - 1);
+        }
+        for (const int column : extraColumns) {
+            usedColumns.insert(column);
+        }
+        for (int column = 0; column < m_parserModel->parser()->getCsvCols(); ++column) {
+            if (usedColumns.contains(column)) {
+                continue;
+            }
+            QString name;
+            if (m_ui->checkBoxFieldNames->isChecked() && !table.isEmpty()) {
+                name = table.at(0).value(column).trimmed();
+            }
+            otherColumns.append({column, name.isEmpty() ? tr("Column %1").arg(column) : name});
+        }
+    }
+
     // a cell whose text a CSV file cannot carry (half of an emoji) holds a replacement character, and its
     // exact text is in the column "Exact Text". That text is used instead of the cell's, for the fields that were taken
     // from the column of the same name; if the person chose another column for the field, the cell is not used and the
@@ -411,6 +436,13 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
             }
         }
         CsvExtraColumns::apply(entry, timeInfo, cells, usedIds, rowLabel, m_problems);
+
+        for (const auto& other : otherColumns) {
+            const auto text = tableRow.value(other.first);
+            if (!text.isEmpty()) {
+                CsvExtraColumns::addCustomField(entry, other.second, text, false);
+            }
+        }
 
         entry->setTimeInfo(timeInfo);
     }

@@ -21,6 +21,7 @@
 
 #include <QSharedPointer>
 #include <QString>
+#include <QStringList>
 
 class Database;
 class Entry;
@@ -34,6 +35,11 @@ public:
     bool exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db);
     QString exportDatabase(const QSharedPointer<const Database>& db);
     QString errorString() const;
+
+    // what a CSV file cannot hold of this database, one sentence each, naming the folders and entries
+    // affected. To be read by the person before the file is saved. The first sentence (the settings of the database
+    // itself) is always there. Nothing is changed.
+    static QStringList lossReport(const Database& db);
 
 private:
     QString exportGroup(const Group* group, QString groupPath = QString());

@@ -963,10 +963,10 @@
   </action>
   <action name="actionExportCsv">
    <property name="text">
-    <string>&amp;CSV File…</string>
+    <string>&amp;CSV File (lossy)…</string>
    </property>
    <property name="toolTip">
-    <string>Export to CSV</string>
+    <string>Export to CSV. A CSV file cannot hold everything in the database; the XML export keeps everything.</string>
    </property>
   </action>
   <action name="actionExportHtml">
