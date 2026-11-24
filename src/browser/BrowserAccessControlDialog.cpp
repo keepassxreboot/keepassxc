@@ -53,7 +53,7 @@ void BrowserAccessControlDialog::showEvent(QShowEvent* event)
     GuiTools::centerWidgetOnActiveScreen(this);
 }
 
-void BrowserAccessControlDialog::setEntries(const QList<Entry*>& entriesToConfirm,
+void BrowserAccessControlDialog::setEntries(const QList<EntryItem>& entriesToConfirm,
                                             const QString& urlString,
                                             bool httpAuth)
 {
@@ -81,20 +81,17 @@ void BrowserAccessControlDialog::setEntries(const QList<Entry*>& entriesToConfir
     m_ui->allowButton->setFocus();
 }
 
-void BrowserAccessControlDialog::addEntryToList(const Entry* entry, int row)
+void BrowserAccessControlDialog::addEntryToList(const EntryItem& entryItem, int row)
 {
     const auto titleItem = new QTableWidgetItem();
-    const auto entryTitle = entry->resolveMultiplePlaceholders(entry->title());
-    const auto entryUrl = entry->resolveMultiplePlaceholders(entry->url());
-    titleItem->setText(entryTitle);
-    titleItem->setToolTip(entryUrl);
+    titleItem->setText(entryItem.title);
+    titleItem->setToolTip(entryItem.url);
     titleItem->setData(Qt::UserRole, row);
     titleItem->setFlags(titleItem->flags() | Qt::ItemIsSelectable);
     m_ui->itemsTable->setItem(row, 0, titleItem);
 
     const auto usernameItem = new QTableWidgetItem();
-    const auto entryUsername = entry->resolveMultiplePlaceholders(entry->username());
-    usernameItem->setText(entryUsername);
+    usernameItem->setText(entryItem.username);
     usernameItem->setData(Qt::UserRole, row);
     m_ui->itemsTable->setItem(row, 1, usernameItem);
 

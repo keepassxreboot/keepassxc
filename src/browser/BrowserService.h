@@ -176,7 +176,7 @@ private:
     QList<Entry*>
     searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList, bool passkey = false);
     QList<Entry*> sortEntries(QList<Entry*>& entries, const QString& siteUrl, const QString& formUrl);
-    QList<Entry*> confirmEntries(QList<Entry*>& entriesToConfirm,
+    QList<Entry*> confirmEntries(QList<EntryItem>& entriesToConfirm,
                                  const EntryParameters& entryParameters,
                                  const QString& siteHost,
                                  const QString& formUrl,
