@@ -173,6 +173,25 @@ namespace
         return true;
     }
 
+    // The auto-type settings of an entry or of an older version, as the export writes them
+    void restoreAutoType(Entry* entry, const QJsonObject& settings)
+    {
+        if (settings.contains("enabled")) {
+            entry->setAutoTypeEnabled(settings.value("enabled").toBool(true));
+        }
+        if (settings.contains("obfuscation")) {
+            entry->setAutoTypeObfuscation(settings.value("obfuscation").toInt(0));
+        }
+        if (settings.contains("defaultSequence")) {
+            entry->setDefaultAutoTypeSequence(valueText(settings.value("defaultSequence")));
+        }
+        for (const auto& association : settings.value("associations").toArray()) {
+            const auto object = association.toObject();
+            entry->autoTypeAssociations()->add(
+                {valueText(object.value("window")), valueText(object.value("sequence"))});
+        }
+    }
+
     void applyHistory(Entry* entry,
                       const TimeInfo& timeInfo,
                       const QString& text,
@@ -219,17 +238,88 @@ namespace
                 }
             }
 
+            // Everything else an older version holds. Files written before these keys existed have none of them, and
+            // the older versions then get what a new entry has. All of this comes before the times are set: setting
+            // a value stamps the entry as modified now.
+            const QString olderLabel = QString("%1: older version %2").arg(rowLabel).arg(number);
+            if (snapshot.contains("icon")) {
+                item->setIcon(snapshot.value("icon").toInt(Entry::DefaultIconNumber));
+            }
+            if (snapshot.contains("tags")) {
+                item->setTags(valueText(snapshot.value("tags")));
+            }
+            if (snapshot.contains("foregroundColor")) {
+                item->setForegroundColor(valueText(snapshot.value("foregroundColor")));
+            }
+            if (snapshot.contains("backgroundColor")) {
+                item->setBackgroundColor(valueText(snapshot.value("backgroundColor")));
+            }
+            if (snapshot.contains("overrideUrl")) {
+                item->setOverrideUrl(valueText(snapshot.value("overrideUrl")));
+            }
+            item->setExcludeFromReports(snapshot.value("excludeFromReports").toBool(false));
+            if (snapshot.value("autoType").isObject()) {
+                restoreAutoType(item, snapshot.value("autoType").toObject());
+            }
+            const auto olderData = snapshot.value("customData").toObject();
+            for (auto it = olderData.constBegin(); it != olderData.constEnd(); ++it) {
+                item->customData()->set(it.key(), valueText(it.value()));
+            }
+            const auto olderAttachments = snapshot.value("attachments").toObject();
+            for (auto it = olderAttachments.constBegin(); it != olderAttachments.constEnd(); ++it) {
+                if (it.value().isNull()) {
+                    // the same attachment as the entry's own
+                    if (entry->attachments()->hasKey(it.key())) {
+                        item->attachments()->set(it.key(), entry->attachments()->value(it.key()));
+                    } else {
+                        problems << QString("%1: the attachment \"%2\" is not in the entry; it was not restored")
+                                        .arg(olderLabel, it.key());
+                    }
+                    continue;
+                }
+                const auto decoded = QByteArray::fromBase64Encoding(valueText(it.value()).trimmed().toLatin1(),
+                                                                    QByteArray::Base64Encoding
+                                                                        | QByteArray::AbortOnBase64DecodingErrors);
+                if (decoded) {
+                    item->attachments()->set(it.key(), decoded.decoded);
+                } else {
+                    problems << QString("%1: the attachment \"%2\" is not valid base64 and was kept as a custom field")
+                                    .arg(olderLabel, it.key());
+                    CsvExtraColumns::addCustomField(item,
+                                                    "Attachment " + it.key() + " (CSV text that was not understood)",
+                                                    valueText(it.value()),
+                                                    false);
+                }
+            }
+
             TimeInfo times;
             times.setCreationTime(timeInfo.creationTime());
+            times.setLocationChanged(timeInfo.locationChanged());
             QDateTime modified;
             if (!parseTime(valueText(snapshot.value("modified")), modified)) {
                 modified = timeInfo.lastModificationTime();
-                problems << QString("%1: older version %2 has no valid date; the date of the entry was used")
-                                .arg(rowLabel)
-                                .arg(number);
+                problems << QString("%1 has no valid date; the date of the entry was used").arg(olderLabel);
             }
             times.setLastModificationTime(modified);
             times.setLastAccessTime(modified);
+            auto optionalTime = [&](const char* key, auto setter) {
+                if (!snapshot.contains(key)) {
+                    return;
+                }
+                QDateTime parsed;
+                if (parseTime(valueText(snapshot.value(key)), parsed)) {
+                    setter(parsed);
+                } else {
+                    problems << QString("%1: \"%2\" is not a valid date (%3)")
+                                    .arg(olderLabel, valueText(snapshot.value(key)), key);
+                }
+            };
+            optionalTime("created", [&times](const QDateTime& t) { times.setCreationTime(t); });
+            optionalTime("accessed", [&times](const QDateTime& t) { times.setLastAccessTime(t); });
+            optionalTime("locationChanged", [&times](const QDateTime& t) { times.setLocationChanged(t); });
+            optionalTime("expiryTime", [&times](const QDateTime& t) { times.setExpiryTime(t); });
+            times.setExpires(snapshot.value("expires").toBool(false));
+            times.setUsageCount(snapshot.value("usageCount").toInt(0));
             item->setTimeInfo(times);
 
             entry->addHistoryItem(item);
@@ -395,20 +485,7 @@ void CsvExtraColumns::apply(Entry* entry,
     if (hasCell(ColAutoType)) {
         QJsonObject settings;
         if (parseObject(cell(ColAutoType), settings)) {
-            if (settings.contains("enabled")) {
-                entry->setAutoTypeEnabled(settings.value("enabled").toBool(true));
-            }
-            if (settings.contains("obfuscation")) {
-                entry->setAutoTypeObfuscation(settings.value("obfuscation").toInt(0));
-            }
-            if (settings.contains("defaultSequence")) {
-                entry->setDefaultAutoTypeSequence(valueText(settings.value("defaultSequence")));
-            }
-            for (const auto& association : settings.value("associations").toArray()) {
-                const auto object = association.toObject();
-                entry->autoTypeAssociations()->add(
-                    {valueText(object.value("window")), valueText(object.value("sequence"))});
-            }
+            restoreAutoType(entry, settings);
         } else {
             problems << QString("%1: the auto-type settings could not be read and were kept as a custom field")
                             .arg(rowLabel);

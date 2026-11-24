@@ -195,6 +195,61 @@ namespace
             if (!hidden.isEmpty()) {
                 snapshot.insert("protectedAttributes", hidden);
             }
+
+            // an older version holds everything the entry had at the time, so the rest of it is written
+            // too. What a new entry has anyway is left out, so an older version that never differed stays small, and
+            // a file written before these keys existed imports with those defaults.
+            const auto& times = item->timeInfo();
+            snapshot.insert("created", isoTime(times.creationTime()));
+            snapshot.insert("accessed", isoTime(times.lastAccessTime()));
+            snapshot.insert("locationChanged", isoTime(times.locationChanged()));
+            snapshot.insert("expiryTime", isoTime(times.expiryTime()));
+            if (times.expires()) {
+                snapshot.insert("expires", true);
+            }
+            if (times.usageCount() != 0) {
+                snapshot.insert("usageCount", times.usageCount());
+            }
+            if (item->iconNumber() != Entry::DefaultIconNumber) {
+                snapshot.insert("icon", item->iconNumber());
+            }
+            if (!item->tags().isEmpty()) {
+                snapshot.insert("tags", item->tags());
+            }
+            if (!item->foregroundColor().isEmpty()) {
+                snapshot.insert("foregroundColor", item->foregroundColor());
+            }
+            if (!item->backgroundColor().isEmpty()) {
+                snapshot.insert("backgroundColor", item->backgroundColor());
+            }
+            if (!item->overrideUrl().isEmpty()) {
+                snapshot.insert("overrideUrl", item->overrideUrl());
+            }
+            if (item->excludeFromReports()) {
+                snapshot.insert("excludeFromReports", true);
+            }
+            const auto itemAutoType = autoTypeSettings(item);
+            if (!itemAutoType.isEmpty()) {
+                snapshot.insert("autoType", itemAutoType);
+            }
+            const auto itemCustomData = customData(item);
+            if (!itemCustomData.isEmpty()) {
+                snapshot.insert("customData", itemCustomData);
+            }
+            // Attachments: one that is the same as the entry's own attachment of that name is written as null (the
+            // import takes it from the entry), so a large attachment is not repeated for every older version
+            QJsonObject olderAttachments;
+            for (const auto& name : item->attachments()->keys()) {
+                const auto data = item->attachments()->value(name);
+                if (entry->attachments()->hasKey(name) && entry->attachments()->value(name) == data) {
+                    olderAttachments.insert(name, QJsonValue::Null);
+                } else {
+                    olderAttachments.insert(name, QString::fromLatin1(data.toBase64()));
+                }
+            }
+            if (!olderAttachments.isEmpty()) {
+                snapshot.insert("attachments", olderAttachments);
+            }
             snapshots.append(snapshot);
         }
         return snapshots;
@@ -257,13 +312,19 @@ namespace
                || hasOwnData(group->customData());
     }
 
-    // An older version of an entry keeps title, user name, password, URL, notes, custom fields and the date in a CSV
-    // file
-    bool olderVersionHasMore(const Entry* item)
+    // The only thing of an entry that a CSV file cannot carry is a picture it uses as its icon (the file has the number
+    // of a standard icon); older versions of the entry can use one as well
+    bool usesPictureAsIcon(const Entry* entry)
     {
-        return !item->attachments()->keys().isEmpty() || !item->tags().isEmpty() || !item->overrideUrl().isEmpty()
-               || !item->foregroundColor().isEmpty() || !item->backgroundColor().isEmpty() || !item->iconUuid().isNull()
-               || !item->autoTypeAssociations()->getAll().isEmpty();
+        if (!entry->iconUuid().isNull()) {
+            return true;
+        }
+        for (const Entry* item : entry->historyItems()) {
+            if (!item->iconUuid().isNull()) {
+                return true;
+            }
+        }
+        return false;
     }
 } // namespace
 
@@ -304,16 +365,9 @@ QStringList CsvExporter::lossReport(const Database& db)
     }
 
     QStringList entriesWithPicture;
-    QStringList entriesWithRicherHistory;
     for (const Entry* entry : db.rootGroup()->entriesRecursive()) {
-        if (!entry->iconUuid().isNull()) {
+        if (usesPictureAsIcon(entry)) {
             entriesWithPicture << entry->title();
-        }
-        for (const Entry* item : entry->historyItems()) {
-            if (olderVersionHasMore(item)) {
-                entriesWithRicherHistory << entry->title();
-                break;
-            }
         }
     }
 
@@ -331,19 +385,11 @@ QStringList CsvExporter::lossReport(const Database& db)
                       .arg(namesText(foldersWithSettings));
     }
     if (!entriesWithPicture.isEmpty()) {
-        report << QObject::tr("%n entry(ies) use a picture of their own as icon; only the number of a standard icon is "
-                              "saved: %1.",
+        report << QObject::tr("%n entry(ies) (or older versions of them) use a picture of their own as icon; only the "
+                              "number of a standard icon is saved: %1.",
                               "",
                               entriesWithPicture.size())
                       .arg(namesText(entriesWithPicture));
-    }
-    if (!entriesWithRicherHistory.isEmpty()) {
-        report << QObject::tr("Older versions of an entry keep only title, user name, password, URL, notes, custom "
-                              "fields and date. Older versions of %n entry(ies) also have attachments, tags, colours "
-                              "or other settings that are not saved: %1.",
-                              "",
-                              entriesWithRicherHistory.size())
-                      .arg(namesText(entriesWithRicherHistory));
     }
     if (!joinedFolders.isEmpty()) {
         report << QObject::tr("Folders with the same name in the same place are joined into one when the file is "

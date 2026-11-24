@@ -43,6 +43,8 @@ private slots:
     void testFilesOfEarlierVersionsStillImport();
     void testCellsThatCannotBeUnderstoodAreKeptAndReported();
     void testExactTextThatCannotBeUsed();
+    void testAnAttachmentIsNotRepeatedInEveryOlderVersion();
+    void testOlderVersionDataThatCannotBeUnderstood();
 
     // What the wizard does with the imported database
     void testImportIntoANewDatabaseKeepsEverything();

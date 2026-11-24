@@ -476,10 +476,12 @@ void TestCsvExporter::testLossReportNamesWhatIsNotSaved()
     auto* bank = makeEntry(work, "Bank");
     bank->setIcon(QUuid::createUuid()); // a picture of its own
     auto* mail = makeEntry(work, "Mail");
-    mail->attachments()->set("a.bin", "data");
+    mail->attachments()->set("a.bin", "data"); // (an older version keeps attachments, tags and the like in a CSV file)
+    mail->setIcon(QUuid::createUuid());
     mail->beginUpdate();
-    mail->setUsername("changed"); // the older version keeps the attachment, which a CSV older version cannot hold
+    mail->setUsername("changed"); // the older version uses a picture as icon, which a CSV file cannot hold
     mail->endUpdate();
+    mail->setIcon(Entry::DefaultIconNumber); // the entry itself does not
     makeEntry(work, "Fine"); // nothing to say about this one
 
     const auto report = CsvExporter::lossReport(*m_db);
@@ -498,11 +500,11 @@ void TestCsvExporter::testLossReportNamesWhatIsNotSaved()
     QVERIFY2(lineWith("keeps only its name").contains("Merging"), qPrintable(report.join("\n")));
     QVERIFY2(!lineWith("empty folder").contains("Work"), "a folder with entries is not empty");
     QVERIFY2(lineWith("picture of their own").contains("Bank"), qPrintable(report.join("\n")));
-    QVERIFY2(lineWith("also have attachments").contains("Mail"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("picture of their own").contains("Mail"), qPrintable(report.join("\n")));
     QVERIFY2(lineWith("same name in the same place").contains("Twin"), qPrintable(report.join("\n")));
     QVERIFY2(lineWith("split into other folders").contains("A/B"), qPrintable(report.join("\n")));
     for (const auto& line : report) {
         QVERIFY2(!line.contains("Fine"), qPrintable("an entry with nothing to lose was named: " + line));
     }
-    QCOMPARE(report.size(), 7);
+    QCOMPARE(report.size(), 6);
 }
