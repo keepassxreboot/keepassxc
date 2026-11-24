@@ -31,6 +31,13 @@
 
 #define UUID_LENGTH 16
 
+namespace
+{
+    // <Group> is parsed recursively. Real databases are a few levels deep; this only exists so that a
+    // crafted file (e.g. a plain XML import) cannot exhaust the stack.
+    constexpr int MaxGroupDepth = 256;
+} // namespace
+
 /**
  * @param version KDBX version
  */
@@ -99,6 +106,11 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
     m_randomStream = randomStream;
     m_headerHash.clear();
 
+    // per-read state
+    m_parsedGroups.clear();
+    m_groupDepth = 0;
+    m_warnings.clear();
+
     m_tmpParent.reset(new Group());
 
     bool rootGroupParsed = false;
@@ -134,6 +146,8 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
 
     if (!unmappedKeys.isEmpty()) {
         qWarning("Unmapped keys left.");
+        // the attachments below end up empty; let the caller tell the user instead of failing silently
+        m_warnings.append(tr("Some attachments refer to content that is not in the file. They were imported empty."));
     }
 
     for (const QString& key : unusedKeys) {
@@ -177,6 +191,11 @@ void KdbxXmlReader::setStrictMode(bool strictMode)
 bool KdbxXmlReader::hasError() const
 {
     return m_error || m_xml.hasError();
+}
+
+QStringList KdbxXmlReader::warnings() const
+{
+    return m_warnings;
 }
 
 QString KdbxXmlReader::errorString() const
@@ -492,6 +511,14 @@ Group* KdbxXmlReader::parseGroup()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == qsv(u"Group"));
 
+    // bound the recursion depth, see MaxGroupDepth
+    if (m_groupDepth >= MaxGroupDepth) {
+        raiseError(tr("Groups are nested too deeply"));
+        m_xml.skipCurrentElement();
+        return nullptr;
+    }
+    ++m_groupDepth;
+
     auto group = new Group();
     group->setUpdateTimeinfo(false);
     QList<Group*> children;
@@ -617,6 +644,17 @@ Group* KdbxXmlReader::parseGroup()
     }
 
     if (!group->uuid().isNull()) {
+        // getGroup() returns the group that already owns a UUID. If a second <Group> carries the same UUID
+        // (corrupt or hostile file) it would be handed back as its own parent or ancestor and the tree would become a
+        // loop. The first group keeps its UUID, every later one gets a fresh one so nothing is dropped or merged.
+        if (m_parsedGroups.contains(group->uuid())) {
+            if (m_strictMode) {
+                raiseError(tr("Duplicate group uuid"));
+            }
+            group->setUuid(QUuid::createUuid());
+        }
+        m_parsedGroups.insert(group->uuid());
+
         Group* tmpGroup = group;
         group = getGroup(tmpGroup->uuid());
         group->copyDataFrom(tmpGroup);
@@ -634,6 +672,7 @@ Group* KdbxXmlReader::parseGroup()
         entry->setGroup(group, false);
     }
 
+    --m_groupDepth;
     return group;
 }
 
@@ -1032,6 +1071,13 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     QString value = m_xml.readElementText();
 
     if (isProtected && !value.isEmpty()) {
+        // a standalone XML file (import) has no inner stream cipher to decrypt this with
+        if (!m_randomStream) {
+            value.clear();
+            raiseError(tr("Protected values cannot be decrypted without the original database."));
+            return value;
+        }
+
         QByteArray ciphertext = QByteArray::fromBase64(value.toLatin1());
         bool ok;
         QByteArray plaintext = m_randomStream->process(ciphertext, &ok);
@@ -1148,6 +1194,13 @@ QByteArray KdbxXmlReader::readBinary()
     QByteArray data = QByteArray::fromBase64(value.toLatin1());
 
     if (isProtected && !data.isEmpty()) {
+        // see readString()
+        if (!m_randomStream) {
+            data.clear();
+            raiseError(tr("Protected values cannot be decrypted without the original database."));
+            return data;
+        }
+
         bool ok;
         QByteArray plaintext = m_randomStream->process(data, &ok);
         if (!ok) {

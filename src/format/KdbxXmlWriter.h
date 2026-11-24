@@ -45,6 +45,12 @@ public:
     void writeDatabase(const QString& filename, Database* db);
     void disableInnerStreamProtection(bool disable);
     bool innerStreamProtectionDisabled() const;
+    // also write the attachment pool (Meta/Binaries) for KDBX 4+ so a standalone XML export contains the
+    // attachment content. KDBX 4 files keep attachments in the inner header, which a bare XML export does not have.
+    void setWriteBinaryPool(bool enable);
+    // write carriage returns as character references. A raw CR is normalized to LF by every XML parser, so
+    // Windows line breaks in notes would silently change in an XML export.
+    void setPreserveCarriageReturns(bool enable);
     bool hasError();
     QString errorString();
 
@@ -69,6 +75,7 @@ private:
     void writeAutoTypeAssoc(const AutoTypeAssociations::Association& assoc);
     void writeEntryHistory(const Entry* entry);
 
+    void writeText(const QString& text);
     void writeString(const QString& qualifiedName, const QString& string);
     void writeNumber(const QString& qualifiedName, int number);
     void writeBool(const QString& qualifiedName, bool b);
@@ -86,6 +93,8 @@ private:
     const quint32 m_kdbxVersion;
 
     bool m_innerStreamProtectionDisabled = false;
+    bool m_writeBinaryPool = false;
+    bool m_preserveCarriageReturns = false;
 
     QXmlStreamWriter m_xml;
     QPointer<const Database> m_db;

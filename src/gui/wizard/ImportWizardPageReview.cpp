@@ -89,6 +89,9 @@ void ImportWizardPageReview::initializePage()
     case ImportWizard::IMPORT_PROTONPASS:
         m_db = importProtonPass(filename);
         break;
+    case ImportWizard::IMPORT_KEEPASSXML:
+        m_db = importKeePassXml(filename);
+        break;
     case ImportWizard::IMPORT_REMOTE:
         m_db = importRemote(field("DownloadCommand").toString(),
                             field("DownloadInput").toString(),
@@ -232,6 +235,23 @@ QSharedPointer<Database> ImportWizardPageReview::importProtonPass(const QString&
     auto db = reader.convert(filename);
     if (reader.hasError()) {
         m_ui->messageWidget->showMessage(reader.errorString(), KMessageWidget::Error, -1);
+    }
+    return db;
+}
+
+// XML export (Database -> Export -> XML) of a KeePass 2 / KeePassXC database
+QSharedPointer<Database> ImportWizardPageReview::importKeePassXml(const QString& filename)
+{
+    auto db = QSharedPointer<Database>::create();
+    QString error;
+    QStringList warnings;
+    if (!db->import(filename, &error, &warnings)) {
+        m_ui->messageWidget->showMessage(error, KMessageWidget::Error, -1);
+        // Do not hand a half-read database to the wizard
+        return {};
+    }
+    if (!warnings.isEmpty()) {
+        m_ui->messageWidget->showMessage(warnings.join("\n"), KMessageWidget::Warning, -1);
     }
     return db;
 }

@@ -23,6 +23,8 @@
 
 #include <QCoreApplication>
 #include <QMultiHash>
+#include <QSet>
+#include <QStringList>
 #include <QStringView>
 #include <QXmlStreamReader>
 
@@ -55,6 +57,9 @@ public:
 
     bool strictMode() const;
     void setStrictMode(bool strictMode);
+
+    // non-fatal problems found while reading (e.g. attachments whose content is missing from the file)
+    QStringList warnings() const;
 
 protected:
     typedef QPair<QString, QString> StringPair;
@@ -109,6 +114,11 @@ protected:
     QScopedPointer<Group> m_tmpParent;
     QHash<QUuid, Group*> m_groups;
     QHash<QUuid, Entry*> m_entries;
+
+    // groups whose <Group> element was already parsed, and the current nesting depth of <Group> elements
+    QSet<QUuid> m_parsedGroups;
+    int m_groupDepth = 0;
+    QStringList m_warnings;
 
     QHash<QString, QByteArray> m_binaryPool;
     QMultiHash<QString, QPair<Entry*, QString>> m_binaryMap;

@@ -18,10 +18,13 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
+#include <QSaveFile>
 #include <QTabBar>
+#include <iterator>
 
 #include "autotype/AutoType.h"
 #include "core/Merger.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
@@ -283,6 +286,40 @@ void DatabaseTabWidget::importFile()
                     if (group) {
                         // Extract the root group from the import database
                         auto importGroup = db->setRootGroup(new Group());
+
+                        // An XML export keeps the UUIDs of everything it contains. Importing it into a
+                        // database that already has any of them (for example the database it was exported from)
+                        // would create duplicate UUIDs, which are silently merged or lost the next time the database
+                        // is opened. In that case import a copy with fresh UUIDs; times and history are kept.
+                        if (m_importWizard->importType() == ImportWizard::IMPORT_KEEPASSXML) {
+                            auto* targetDb = dbWidget->database().data();
+                            auto collides = [&](const QUuid& uuid) {
+                                return targetDb->rootGroup()->findGroupByUuid(uuid)
+                                       || targetDb->rootGroup()->findEntryByUuid(uuid)
+                                       || targetDb->containsDeletedObject(uuid);
+                            };
+                            bool uuidInUse = false;
+                            for (const auto* importedGroup : importGroup->groupsRecursive(true)) {
+                                uuidInUse = uuidInUse || collides(importedGroup->uuid());
+                            }
+                            for (const auto* importedEntry : importGroup->entriesRecursive()) {
+                                uuidInUse = uuidInUse || collides(importedEntry->uuid());
+                            }
+                            if (uuidInUse) {
+                                auto* copy = importGroup->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory,
+                                                                Group::CloneNewUuid | Group::CloneIncludeEntries);
+                                delete importGroup;
+                                importGroup = copy;
+                            }
+                        }
+
+                        // setParent() only copies the icon of the moved group itself. Nested groups and
+                        // entries (e.g. from an XML import) would otherwise lose their custom icons.
+                        auto customIcons = importGroup->customIconsRecursive();
+                        for (auto it = customIcons.begin(); it != customIcons.end();) {
+                            it = db->metadata()->hasCustomIcon(*it) ? std::next(it) : customIcons.erase(it);
+                        }
+                        dbWidget->database()->metadata()->copyCustomIcons(customIcons, db->metadata());
                         importGroup->setParent(group);
                         setCurrentIndex(i);
                         return;
@@ -300,13 +337,28 @@ void DatabaseTabWidget::importFile()
             // Start the new database wizard with the imported database
             auto newDb = execNewDatabaseWizard();
             if (newDb) {
-                // Merge the imported db into the new one
-                Merger merger(db.data(), newDb.data());
-                merger.setSkipDatabaseCustomData(true);
-                merger.merge();
-                // Transfer the root group data
-                newDb->rootGroup()->setName(db->rootGroup()->name());
-                newDb->rootGroup()->setNotes(db->rootGroup()->notes());
+                if (m_importWizard->importType() == ImportWizard::IMPORT_KEEPASSXML) {
+                    // Merging only carries over groups, entries and custom icons. Read the XML straight
+                    // into the new database instead, so that everything else comes along too: the database name and
+                    // description, history limits, memory protection, recycle bin and templates, default user name,
+                    // colour, database custom data, deleted objects and the root group's own settings. The
+                    // encryption settings and credentials chosen in the new database wizard are not part of an XML
+                    // export and stay as they are.
+                    QString error;
+                    if (!newDb->import(m_importWizard->importFile(), &error)) {
+                        emit messageGlobal(tr("Importing the XML file failed.").append("\n").append(error),
+                                           MessageWidget::Error);
+                        return;
+                    }
+                } else {
+                    // Merge the imported db into the new one
+                    Merger merger(db.data(), newDb.data());
+                    merger.setSkipDatabaseCustomData(true);
+                    merger.merge();
+                    // Transfer the root group data
+                    newDb->rootGroup()->setName(db->rootGroup()->name());
+                    newDb->rootGroup()->setNotes(db->rootGroup()->notes());
+                }
                 // Show the new database
                 auto dbWidget = new DatabaseWidget(newDb, this);
                 addDatabaseTab(dbWidget);
@@ -546,18 +598,35 @@ void DatabaseTabWidget::exportToXML()
 
     FileDialog::saveLastDir("xml", fileName, true);
 
+    // any failure must stop here. The old code showed the error and then still truncated the target file and
+    // wrote whatever it had, and it never checked whether the data was written completely.
     QByteArray xmlData;
     QString err;
     if (!db->extract(xmlData, &err)) {
         emit messageGlobal(tr("Writing the XML file failed").append("\n").append(err), MessageWidget::Error);
+        return;
     }
 
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+    // Write to a temporary file and replace the target only when everything was written, so an interruption or a full
+    // disk cannot leave a truncated export in place of the previous file.
+    QSaveFile file(fileName);
+    file.setDirectWriteFallback(true);
+    if (!file.open(QIODevice::WriteOnly)) {
         emit messageGlobal(tr("Writing the XML file failed").append("\n").append(file.errorString()),
                            MessageWidget::Error);
+        return;
     }
-    file.write(xmlData);
+    if (file.write(xmlData) != xmlData.size()) {
+        const auto reason = file.errorString();
+        file.cancelWriting();
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(reason), MessageWidget::Error);
+        return;
+    }
+    if (!file.commit()) {
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(file.errorString()),
+                           MessageWidget::Error);
+        return;
+    }
 }
 
 bool DatabaseTabWidget::warnOnExport()

@@ -73,9 +73,14 @@ int Import::execute(const QStringList& arguments)
     }
 
     QString errorMessage;
-    if (!db->import(xmlExportPath, &errorMessage)) {
+    QStringList warnings;
+    if (!db->import(xmlExportPath, &errorMessage, &warnings)) {
         err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
+    }
+    // surface non-fatal problems (e.g. attachments that had no content in the export)
+    for (const auto& warning : asConst(warnings)) {
+        err << QObject::tr("Warning: %1").arg(warning) << Qt::endl;
     }
 
     if (!db->saveAs(dbPath, Database::Atomic, {}, &errorMessage)) {

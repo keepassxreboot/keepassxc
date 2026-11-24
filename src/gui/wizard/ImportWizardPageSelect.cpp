@@ -40,6 +40,8 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     new QListWidgetItem(icons()->icon("proton"), tr("Proton Pass (.json)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("web"), tr("Remote Database (.kdbx)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("object-locked"), tr("KeePass 1 Database (.kdb)"), m_ui->importTypeList);
+    // lossless counterpart of Database -> Export -> XML
+    new QListWidgetItem(icons()->icon("document-import"), tr("KeePass XML Export (.xml)"), m_ui->importTypeList);
 
     m_ui->importTypeList->item(0)->setData(Qt::UserRole, ImportWizard::IMPORT_CSV);
     m_ui->importTypeList->item(1)->setData(Qt::UserRole, ImportWizard::IMPORT_OPUX);
@@ -48,6 +50,7 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     m_ui->importTypeList->item(4)->setData(Qt::UserRole, ImportWizard::IMPORT_PROTONPASS);
     m_ui->importTypeList->item(5)->setData(Qt::UserRole, ImportWizard::IMPORT_REMOTE);
     m_ui->importTypeList->item(6)->setData(Qt::UserRole, ImportWizard::IMPORT_KEEPASS1);
+    m_ui->importTypeList->item(7)->setData(Qt::UserRole, ImportWizard::IMPORT_KEEPASSXML);
 
     connect(m_ui->importTypeList, &QListWidget::currentItemChanged, this, &ImportWizardPageSelect::itemSelected);
     m_ui->importTypeList->setCurrentRow(0);
@@ -135,6 +138,7 @@ void ImportWizardPageSelect::itemSelected(QListWidgetItem* current, QListWidgetI
     case ImportWizard::IMPORT_CSV:
     case ImportWizard::IMPORT_OPUX:
     case ImportWizard::IMPORT_PROTONPASS:
+    case ImportWizard::IMPORT_KEEPASSXML:
         setCredentialState(false);
         setDownloadCommand(false);
         break;
@@ -308,6 +312,8 @@ QString ImportWizardPageSelect::importFileFilter()
         return QString("%1 (*.opvault)").arg(tr("1Password Vault"));
     case ImportWizard::IMPORT_KEEPASS1:
         return QString("%1 (*.kdb)").arg(tr("KeePass1 Database"));
+    case ImportWizard::IMPORT_KEEPASSXML:
+        return QString("%1 (*.xml);;%2 (*)").arg(tr("KeePass XML Export"), tr("All files"));
     default:
         return {};
     }

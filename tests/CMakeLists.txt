@@ -145,6 +145,10 @@ add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
         LIBS ${TEST_LIBRARIES})
 
+# XML export/import round trip and hostile XML input
+add_unit_test(NAME testxmlimport SOURCES TestXmlImport.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testykchallengeresponsekey SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
 

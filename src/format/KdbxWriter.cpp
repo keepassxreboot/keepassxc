@@ -74,6 +74,10 @@ void KdbxWriter::extractDatabase(QByteArray& xmlOutput, Database* db)
     KdbxXmlWriter::BinaryIdxMap idxMap;
     KdbxXmlWriter writer(db->formatVersion(), idxMap);
     writer.disableInnerStreamProtection(true);
+    // include attachment content; previously only names with a dangling Ref were written for KDBX 4
+    writer.setWriteBinaryPool(true);
+    // keep Windows line breaks (CR LF) in notes and other text
+    writer.setPreserveCarriageReturns(true);
     writer.writeDatabase(&buffer, db);
 }
 

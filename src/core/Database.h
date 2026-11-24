@@ -92,7 +92,8 @@ public:
                 const QString& backupFilePath = QString(),
                 QString* error = nullptr);
     bool extract(QByteArray&, QString* error = nullptr);
-    bool import(const QString& xmlExportPath, QString* error = nullptr);
+    // warnings (optional) receives non-fatal problems, e.g. attachments without content
+    bool import(const QString& xmlExportPath, QString* error = nullptr, QStringList* warnings = nullptr);
 
     quint32 formatVersion() const;
     void setFormatVersion(quint32 version);

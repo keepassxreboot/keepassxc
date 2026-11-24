@@ -69,9 +69,19 @@ bool ImportWizard::validateCurrentPage()
     return ret;
 }
 
+QString ImportWizard::importFile()
+{
+    return field("ImportFile").toString();
+}
+
 ImportWizard::ImportIntoType ImportWizard::importIntoType()
 {
     return static_cast<ImportIntoType>(field("ImportIntoType").toInt());
+}
+
+ImportWizard::ImportType ImportWizard::importType()
+{
+    return static_cast<ImportType>(field("ImportType").toInt());
 }
 
 QPair<QUuid, QUuid> ImportWizard::importInto()

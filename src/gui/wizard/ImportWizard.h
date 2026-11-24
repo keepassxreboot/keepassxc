@@ -51,6 +51,7 @@ public:
         IMPORT_PROTONPASS,
         IMPORT_KEEPASS1,
         IMPORT_REMOTE,
+        IMPORT_KEEPASSXML, // XML export of a KeePass 2 / KeePassXC database
     };
 
     enum ImportIntoType
@@ -60,8 +61,12 @@ public:
         TEMPORARY_DATABASE,
     };
 
+    // the file the user picked on the first page
+    QString importFile();
     ImportWizard::ImportIntoType importIntoType();
     QPair<QUuid, QUuid> importInto();
+    // what the user picked on the first page
+    ImportWizard::ImportType importType();
 
 private:
     QSharedPointer<Database> m_db;

@@ -56,7 +56,8 @@ void KdbxXmlWriter::writeDatabase(QIODevice* device,
     m_xml.setAutoFormatting(true);
     m_xml.setAutoFormattingIndent(-1); // 1 tab
 
-    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
+    // m_writeBinaryPool makes a KDBX 4 XML export carry its attachments (see setWriteBinaryPool)
+    if (m_kdbxVersion < KeePass2::FILE_VERSION_4 || m_writeBinaryPool) {
         fillBinaryIdxMap();
     }
 
@@ -163,7 +164,7 @@ void KdbxXmlWriter::writeMetadata()
     if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
         writeDateTime("SettingsChanged", m_meta->settingsChanged());
     }
-    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
+    if (m_kdbxVersion < KeePass2::FILE_VERSION_4 || m_writeBinaryPool) {
         writeBinaries();
     }
     writeCustomData(m_meta->customData(), true);
@@ -449,7 +450,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         }
 
         if (!value.isEmpty()) {
-            m_xml.writeCharacters(stripInvalidXml10Chars(value));
+            writeText(value);
         }
         m_xml.writeEndElement();
 
@@ -526,7 +527,29 @@ void KdbxXmlWriter::writeString(const QString& qualifiedName, const QString& str
     if (string.isEmpty()) {
         m_xml.writeEmptyElement(qualifiedName);
     } else {
-        m_xml.writeTextElement(qualifiedName, stripInvalidXml10Chars(string));
+        m_xml.writeStartElement(qualifiedName);
+        writeText(string);
+        m_xml.writeEndElement();
+    }
+}
+
+// text content, optionally keeping carriage returns (see setPreserveCarriageReturns)
+void KdbxXmlWriter::writeText(const QString& text)
+{
+    const auto cleaned = stripInvalidXml10Chars(text);
+    if (!m_preserveCarriageReturns || !cleaned.contains('\r')) {
+        m_xml.writeCharacters(cleaned);
+        return;
+    }
+
+    const auto parts = cleaned.split('\r');
+    for (int i = 0; i < parts.size(); ++i) {
+        if (i > 0) {
+            m_xml.writeEntityReference("#13");
+        }
+        if (!parts.at(i).isEmpty()) {
+            m_xml.writeCharacters(parts.at(i));
+        }
     }
 }
 
@@ -667,4 +690,18 @@ void KdbxXmlWriter::disableInnerStreamProtection(bool disable)
 bool KdbxXmlWriter::innerStreamProtectionDisabled() const
 {
     return m_innerStreamProtectionDisabled;
+}
+
+/**
+ * Write the attachment pool into the XML Meta element even for KDBX 4+.
+ * Without it a standalone XML export contains only the attachment names with dangling references.
+ */
+void KdbxXmlWriter::setWriteBinaryPool(bool enable)
+{
+    m_writeBinaryPool = enable;
+}
+
+void KdbxXmlWriter::setPreserveCarriageReturns(bool enable)
+{
+    m_preserveCarriageReturns = enable;
 }
