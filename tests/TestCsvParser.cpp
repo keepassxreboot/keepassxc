@@ -338,10 +338,32 @@ void TestCsvParser::testMultiline()
 
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
-    QVERIFY(t.at(0).at(0) == "1\n2a:b");
-    QVERIFY(t.at(0).at(1) == "3\n4");
+    // line breaks inside quotes are kept as they are (they used to be changed to plain line feeds)
+    QVERIFY(t.at(0).at(0) == "1\r\n2a:b");
+    QVERIFY(t.at(0).at(1) == "3\r4");
     QVERIFY(t.at(1).at(0) == "2");
     QVERIFY(t.size() == 2);
+}
+
+// a cell keeps its line breaks exactly, while CR LF, CR and LF all still end a row outside of quotes
+void TestCsvParser::testLineBreaksInsideQuotesAreKept()
+{
+    writeToFile("\"a\r\nb\",\"c\rd\",\"e\nf\"\r\n"
+                "1,2,3\r"
+                "4,5,6\n"
+                "\"\r\",\"\r\n\",x\r\n");
+
+    QVERIFY(parser->parse(file.data()));
+    t = parser->getCsvTable();
+    QCOMPARE(t.size(), 4);
+    QCOMPARE(t.at(0).at(0), QString("a\r\nb"));
+    QCOMPARE(t.at(0).at(1), QString("c\rd"));
+    QCOMPARE(t.at(0).at(2), QString("e\nf"));
+    QCOMPARE(t.at(1), (QStringList{"1", "2", "3"}));
+    QCOMPARE(t.at(2), (QStringList{"4", "5", "6"}));
+    QCOMPARE(t.at(3).at(0), QString("\r"));
+    QCOMPARE(t.at(3).at(1), QString("\r\n"));
+    QCOMPARE(t.at(3).at(2), QString("x"));
 }
 
 void TestCsvParser::testReparsing()
@@ -358,8 +380,8 @@ void TestCsvParser::testReparsing()
 
     QVERIFY(parser->reparse());
     t = parser->getCsvTable();
-    QCOMPARE(t.at(0).at(0), QString("te\nxt1"));
-    QCOMPARE(t.at(0).at(1), QString("te\nxt2"));
+    QCOMPARE(t.at(0).at(0), QString("te\r\nxt1"));
+    QCOMPARE(t.at(0).at(1), QString("te\rxt2"));
     QCOMPARE(t.at(0).at(2), QString("end of \"this\n string\""));
     QCOMPARE(t.at(1).at(0), QString("2"));
     QCOMPARE(t.size(), 2);

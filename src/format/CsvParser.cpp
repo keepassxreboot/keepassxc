@@ -77,9 +77,9 @@ bool CsvParser::readFile(QIODevice* device)
     } else {
         device->close();
 
-        // Normalize on newline endings
-        m_array.replace("\r\n", "\n");
-        m_array.replace("\r", "\n");
+        // the line endings are no longer normalized here. Changing every CR LF and CR to LF changed the text
+        // inside quoted cells too (a password or notes with Windows line breaks came back different). The parser
+        // treats CR LF, CR and LF as the end of a row, and keeps them as they are inside quotes.
         if (m_array.isEmpty()) {
             appendStatusMsg(QObject::tr("file empty").append("\n"));
         }
@@ -183,7 +183,7 @@ void CsvParser::parseField(CsvRow& row)
 {
     QString field;
     peek(m_ch);
-    if (m_ch != m_separator && m_ch != '\n') {
+    if (m_ch != m_separator && m_ch != '\n' && m_ch != '\r') {
         if (isQualifier(m_ch)) {
             parseQuoted(field);
         } else {
@@ -197,7 +197,7 @@ void CsvParser::parseSimple(QString& s)
 {
     QChar c;
     getChar(c);
-    while (c != '\n' && c != m_separator && !m_isEof) {
+    while (c != '\n' && c != '\r' && c != m_separator && !m_isEof) {
         s.append(c);
         getChar(c);
     }
@@ -290,13 +290,21 @@ void CsvParser::skipLine()
 {
     // Continue at the line break so that skipEndline() consumes it. Without a line break only the last character
     // is left, as before.
-    const auto lineBreak = m_text.indexOf('\n', m_pos);
-    m_pos = lineBreak >= 0 ? lineBreak : qMax<qint64>(0, m_text.size() - 1);
+    qint64 lineBreak = m_pos;
+    while (lineBreak < m_text.size() && m_text.at(lineBreak) != '\n' && m_text.at(lineBreak) != '\r') {
+        ++lineBreak;
+    }
+    m_pos = lineBreak < m_text.size() ? lineBreak : qMax<qint64>(0, m_text.size() - 1);
 }
 
 bool CsvParser::skipEndline()
 {
     getChar(m_ch);
+    if (m_ch == '\r') {
+        // A CR LF ends the row at the CR; the LF that follows makes an empty row, which is dropped
+        m_ch = '\n';
+        return true;
+    }
     return m_ch == '\n';
 }
 

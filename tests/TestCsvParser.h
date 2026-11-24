@@ -54,6 +54,7 @@ private slots:
     void testEmptyFile();
     void testQuoted();
     void testMultiline();
+    void testLineBreaksInsideQuotesAreKept();
     void testColumns();
     void testCodec();
     void testCodec_data();

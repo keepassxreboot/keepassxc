@@ -43,6 +43,10 @@ public:
     void load(const QString& filename);
     QSharedPointer<Database> buildDatabase();
 
+    // after buildDatabase(): everything of the file that could not be restored or had to be changed, one line
+    // each, naming the row. Empty when the whole file was imported as it is. The caller shows it to the person.
+    QStringList problems() const;
+
 signals:
     void message(QString msg);
 
@@ -67,6 +71,7 @@ private:
     QStringList m_fieldSeparatorList;
     QString m_filename;
     bool m_buildingPreview = false;
+    QStringList m_problems;
 
     Q_DISABLE_COPY(CsvImportWidget)
 };

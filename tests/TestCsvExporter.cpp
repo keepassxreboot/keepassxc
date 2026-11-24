@@ -35,7 +35,9 @@ QTEST_GUILESS_MAIN(TestCsvExporter)
 const QString TestCsvExporter::ExpectedHeaderLine =
     QString("\"Group\",\"Title\",\"Username\",\"Password\",\"URL\",\"Notes\",\"TOTP\",\"Icon\",\"Last "
             "Modified\",\"Created\",\"Tags\",\"Expires\",\"Expiry Time\",\"Last Accessed\",\"Location "
-            "Changed\",\"Usage Count\",\"UUID\",\"Custom Attributes\",\"Auto-Type\",\"Attachments\",\"History\"\n");
+            "Changed\",\"Usage Count\",\"UUID\",\"Custom Attributes\",\"Auto-Type\",\"Attachments\",\"History\","
+            "\"Protected Attributes\",\"Override URL\",\"Foreground Color\",\"Background Color\",\"Exclude From "
+            "Reports\",\"Custom Data\",\"Exact Text\"\n");
 
 void TestCsvExporter::init()
 {
@@ -143,7 +145,9 @@ void TestCsvExporter::testPlainEntryLeavesStructuredColumnsEmpty()
 
     const auto csv = m_csvExporter->exportDatabase(m_db);
     QVERIFY(csv.contains(",\"false\","));
-    QVERIFY(csv.trimmed().endsWith(",\"\",\"\",\"\",\"\""));
+    // Custom attributes, auto-type, attachments, history, protected attributes, override URL and the two colors are
+    // empty; then "false" for Exclude From Reports, an empty Custom Data and an empty Exact Text
+    QVERIFY(csv.trimmed().endsWith(",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"false\",\"\",\"\""));
 }
 
 // failed writes are reported, and the previous file survives a failed export

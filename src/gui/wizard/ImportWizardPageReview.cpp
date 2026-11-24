@@ -25,6 +25,7 @@
 #include "format/OPUXReader.h"
 #include "format/OpVaultReader.h"
 #include "format/ProtonPassReader.h"
+#include "gui/MessageBox.h"
 #include "gui/csvImport/CsvImportWidget.h"
 #include "gui/wizard/ImportWizard.h"
 
@@ -106,6 +107,22 @@ bool ImportWizardPageReview::validatePage()
 {
     if (isCsvImport()) {
         m_db = m_csvWidget->buildDatabase();
+
+        // say what of the file could not be restored or had to be changed. A message bar on this page would
+        // be gone as soon as the wizard moves on, so this is a dialog.
+        const auto problems = m_csvWidget->problems();
+        if (m_db && !problems.isEmpty()) {
+            constexpr int MaxShown = 15;
+            QString text = tr(
+                "%n thing(s) of the CSV file could not be restored exactly or had to be changed:", "", problems.size());
+            for (int i = 0; i < qMin<int>(MaxShown, problems.size()); ++i) {
+                text.append("\n- ").append(problems.at(i));
+            }
+            if (problems.size() > MaxShown) {
+                text.append("\n").append(tr("... and %1 more").arg(problems.size() - MaxShown));
+            }
+            MessageBox::warning(this, tr("CSV import"), text, MessageBox::Ok);
+        }
     }
     return !m_db.isNull();
 }

@@ -24,6 +24,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Totp.h"
+#include "format/CsvExtraColumns.h"
 #include "format/CsvParser.h"
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
@@ -252,10 +253,60 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
 
     auto rows = m_parserModel->rowCount() - m_parserModel->skippedRows();
 
+    // the columns this program's CSV export writes besides the eleven mapped above (custom fields,
+    // attachments, history, ...) are recognised by their heading, so a file it wrote imports completely
+    m_problems.clear();
+    const auto table = m_parserModel->parser()->getCsvTable();
+    QHash<QString, int> extraColumns; // heading as exported -> CSV column
+    if (m_ui->checkBoxFieldNames->isChecked() && !table.isEmpty()) {
+        const auto header = table.at(0);
+        for (int c = 0; c < header.size(); ++c) {
+            for (const auto& name : CsvExtraColumns::names()) {
+                if (!extraColumns.contains(name) && name.compare(header.at(c).trimmed(), Qt::CaseInsensitive) == 0) {
+                    extraColumns.insert(name, c);
+                }
+            }
+        }
+    }
+    QSet<QUuid> usedIds;
+
+    // a cell whose text a CSV file cannot carry (half of an emoji) holds a replacement character, and its
+    // exact text is in the column "Exact Text". That text is used instead of the cell's, for the fields that were taken
+    // from the column of the same name; if the person chose another column for the field, the cell is not used and the
+    // row says so below.
+    const int skipped = m_parserModel->skippedRows();
+    QList<QHash<QString, QString>> exactTexts; // per row: heading -> exact text
+    for (int r = 0; r < rows; ++r) {
+        QHash<QString, QString> texts;
+        if (extraColumns.contains(QStringLiteral("Exact Text"))) {
+            // an unreadable cell is reported and kept as a custom field by CsvExtraColumns::apply()
+            CsvExtraColumns::exactTexts(
+                table.value(r + skipped).value(extraColumns.value(QStringLiteral("Exact Text"))), texts);
+        }
+        exactTexts << texts;
+    }
+    QList<bool> exactApplies; // per field of the form: taken from the column that has the field's own heading
+    for (int field = 0; field < m_combos.size(); ++field) {
+        const int column = m_combos.at(field)->currentIndex() - 1;
+        exactApplies << (column >= 0 && m_ui->checkBoxFieldNames->isChecked() && !table.isEmpty()
+                         && table.at(0).value(column).trimmed().compare(m_columnHeaderEnglish.at(field),
+                                                                        Qt::CaseInsensitive)
+                                == 0);
+    }
+    auto fieldText = [&](int row, int field) -> QString {
+        if (exactApplies.at(field)) {
+            const auto it = exactTexts.at(row).constFind(m_columnHeaderEnglish.at(field));
+            if (it != exactTexts.at(row).constEnd()) {
+                return it.value();
+            }
+        }
+        return m_parserModel->data(m_parserModel->index(row, field)).toString();
+    };
+
     // Check for common root group
     QString rootGroupName;
     for (int r = 0; r < rows; ++r) {
-        auto groupPath = m_parserModel->data(m_parserModel->index(r, 0)).toString();
+        auto groupPath = fieldText(r, 0);
         auto groupName = groupPath.mid(0, groupPath.indexOf('/'));
         if (!rootGroupName.isNull() && rootGroupName != groupName) {
             rootGroupName.clear();
@@ -269,8 +320,7 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
     }
 
     for (int r = 0; r < rows; ++r) {
-        auto group =
-            createGroupStructure(db.data(), m_parserModel->data(m_parserModel->index(r, 0)).toString(), rootGroupName);
+        auto group = createGroupStructure(db.data(), fieldText(r, 0), rootGroupName);
         if (!group) {
             continue;
         }
@@ -279,22 +329,26 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
         auto entry = new Entry();
         entry->setUuid(QUuid::createUuid());
         entry->setGroup(group);
-        entry->setTitle(m_parserModel->data(m_parserModel->index(r, 1)).toString());
-        entry->setUsername(m_parserModel->data(m_parserModel->index(r, 2)).toString());
-        entry->setPassword(m_parserModel->data(m_parserModel->index(r, 3)).toString());
-        entry->setUrl(m_parserModel->data(m_parserModel->index(r, 4)).toString());
-        entry->setTags(m_parserModel->data(m_parserModel->index(r, 5)).toString());
-        entry->setNotes(m_parserModel->data(m_parserModel->index(r, 6)).toString());
+        entry->setTitle(fieldText(r, 1));
+        entry->setUsername(fieldText(r, 2));
+        entry->setPassword(fieldText(r, 3));
+        entry->setUrl(fieldText(r, 4));
+        entry->setTags(fieldText(r, 5));
+        entry->setNotes(fieldText(r, 6));
 
         // TOTP
         auto otpString = m_parserModel->data(m_parserModel->index(r, 7));
-        if (otpString.isValid() && !otpString.toString().isEmpty()) {
-            auto totp = Totp::parseSettings(otpString.toString());
+        if (otpString.isValid() && !fieldText(r, 7).isEmpty()) {
+            const auto otpText = fieldText(r, 7);
+            auto totp = Totp::parseSettings(otpText);
             if (!totp || totp->key.isEmpty()) {
                 // Bare secret, use default TOTP settings
-                totp = Totp::parseSettings({}, otpString.toString());
+                totp = Totp::parseSettings({}, otpText);
             }
             entry->setTotp(totp);
+            // setTotp() keeps the entry as it was a moment ago as an "older version". The entry was only just
+            // created from the file, so that version never existed; the file's own history (if any) is added below.
+            entry->removeHistoryItems(entry->historyItems());
         }
 
         // Icon
@@ -340,10 +394,33 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
                 }
             }
         }
+
+        // the extra columns. The times of the entry are set last: adding custom fields, attachments and
+        // history stamps an entry as modified now.
+        QHash<QString, QString> cells;
+        const auto tableRow = table.value(r + skipped);
+        for (auto it = extraColumns.constBegin(); it != extraColumns.constEnd(); ++it) {
+            cells.insert(it.key(), tableRow.value(it.value()));
+        }
+        const auto rowLabel = tr("Row %1 (%2)").arg(r + skipped + 1).arg(entry->title().left(40));
+        for (int field = 0; field < m_columnHeaderEnglish.size(); ++field) {
+            if (!exactApplies.at(field) && exactTexts.at(r).contains(m_columnHeaderEnglish.at(field))) {
+                m_problems << tr("%1: the exact text of \"%2\" was not used because that field was not taken from the "
+                                 "column of the same name; the text in the column you chose was used")
+                                  .arg(rowLabel, m_columnHeaderEnglish.at(field));
+            }
+        }
+        CsvExtraColumns::apply(entry, timeInfo, cells, usedIds, rowLabel, m_problems);
+
         entry->setTimeInfo(timeInfo);
     }
 
     return db;
+}
+
+QStringList CsvImportWidget::problems() const
+{
+    return m_problems;
 }
 
 QString CsvImportWidget::formatStatusText() const
