@@ -58,6 +58,8 @@ private slots:
     void testCodec();
     void testCodec_data();
     void testUtf16();
+    void testLargeFile();
+    void testLargeFile_data();
 
 private:
     void writeToFile(const QString& contents, QStringConverter::Encoding encoding = QStringConverter::Utf8);

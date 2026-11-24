@@ -19,9 +19,62 @@
 #include "TestCsvParser.h"
 
 #include <QBuffer>
+#include <QElapsedTimer>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestCsvParser)
+
+// parsing has to stay fast on the multi-megabyte files a full CSV export produces. The parser used to move
+// through QTextStream with pos()/seek() for every character, which took minutes for a 20 MB export.
+void TestCsvParser::testLargeFile_data()
+{
+    QTest::addColumn<int>("shortFieldsPerRow");
+    QTest::addColumn<int>("jsonRepeats");
+    QTest::addColumn<int>("columns");
+
+    // Few rows with one huge quoted cell full of doubled quotes (history / attachments as JSON or base64)
+    QTest::newRow("long quoted cells") << 20 << 150 << 21;
+    // Many rows made of many short fields, like a large database
+    QTest::newRow("many short fields") << 20 << 1 << 21;
+}
+
+void TestCsvParser::testLargeFile()
+{
+    QFETCH(int, shortFieldsPerRow);
+    QFETCH(int, jsonRepeats);
+    QFETCH(int, columns);
+
+    // Every quote inside a quoted CSV cell is doubled
+    const QString json =
+        QStringLiteral("{\"\"title\"\":\"\"t\"\",\"\"username\"\":\"\"u\"\",\"\"url\"\":\"\"https://example.com\"\"},");
+    QString row;
+    for (int c = 0; c < shortFieldsPerRow; ++c) {
+        row += QString("\"cell %1 with, comma\",").arg(c);
+    }
+    row += QString("\"[%1]\"\n").arg(json.repeated(jsonRepeats));
+
+    const int rows = (4 * 1024 * 1024) / row.size();
+    QString contents;
+    contents.reserve(rows * row.size());
+    for (int r = 0; r < rows; ++r) {
+        contents += row;
+    }
+    writeToFile(contents);
+
+    QElapsedTimer timer;
+    timer.start();
+    QVERIFY(parser->parse(file.data()));
+    const auto elapsed = timer.elapsed();
+    QCOMPARE(parser->getCsvRows(), rows);
+    QCOMPARE(parser->getCsvCols(), columns);
+    // Takes well under a second; the old implementation needed more than ten seconds for the same input
+    QVERIFY2(elapsed < 3000, qPrintable(QString("parsing took %1 ms").arg(elapsed)));
+
+    // The last row must be intact
+    const auto table = parser->getCsvTable();
+    QCOMPARE(table.last().at(0), QString("cell 0 with, comma"));
+    QVERIFY(table.last().last().startsWith("[{\"title\":\"t\""));
+}
 
 void TestCsvParser::writeToFile(const QString& contents, QStringConverter::Encoding encoding)
 {

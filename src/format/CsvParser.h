@@ -70,7 +70,12 @@ private:
     QChar m_separator;
     QString m_statusMsg;
     QTextStream m_ts;
+    // the decoded text and the read position in it. Reading through QTextStream with pos()/seek() on every
+    // character discards and re-decodes the stream's read buffer each time, which made large files take minutes.
+    QString m_text;
+    qint64 m_pos = 0;
 
+    void loadText();
     void getChar(QChar& c);
     void ungetChar();
     void peek(QChar& c);
