@@ -167,6 +167,9 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     }
 
     KdbxXmlWriter xmlWriter(db->formatVersion(), idxMap);
+    // a saved database keeps hidden characters and Windows line breaks instead of deleting/changing them
+    xmlWriter.setKeepHiddenCharacters(true);
+    xmlWriter.setPreserveCarriageReturns(true);
     xmlWriter.writeDatabase(outputDevice, db, &randomStream, headerHash);
 
     // Explicitly close/reset streams so they are flushed and we can detect

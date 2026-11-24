@@ -23,6 +23,7 @@
 
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
+#include "format/ExactText.h"
 #include "format/KeePass2RandomStream.h"
 #include "streams/qtiocompressor.h"
 
@@ -325,7 +326,7 @@ void KdbxXmlWriter::writeGroup(const Group* group)
 
     // (the labels for the list of places stored as base64 are only worked out when that is switched on)
     const QString previousPlace = m_place;
-    if (m_hiddenCharactersAsBase64) {
+    if (m_recordPlaces) {
         m_place = QStringLiteral("Folder \"%1\"").arg(printableText(group->name()));
     }
     m_xml.writeStartElement("Group");
@@ -415,7 +416,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
 
     // An older version (history item) has no folder of its own: it belongs to the entry being written
     const QString previousPlace = m_place;
-    if (m_hiddenCharactersAsBase64) {
+    if (m_recordPlaces) {
         if (entry->parent()) {
             m_place = QStringLiteral("Entry \"%1\" in folder \"%2\"")
                           .arg(printableText(entry->title()), printableText(entry->group()->name()));
@@ -462,12 +463,35 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
 
         m_xml.writeStartElement("Value");
         QString value;
+        const bool innerStreamProtects = !m_innerStreamProtectionDisabled && m_randomStream;
+
+        // a field that is not protected but holds characters XML cannot hold would lose them in the saved
+        // file. Encrypt it like a protected field, which carries any text, and say on the element that this is only a
+        // carrier (ProtectedForHiddenCharacters), so it loads as the ordinary field it was. Other KeePass programs
+        // read it as a protected value with the right text.
+        const bool carriesHiddenCharacters = !protect && m_keepHiddenCharacters && innerStreamProtects
+                                             && hasInvalidXml10Chars(entry->attributes()->value(key));
+        if (carriesHiddenCharacters) {
+            protect = true;
+        }
 
         if (protect) {
-            if (!m_innerStreamProtectionDisabled && m_randomStream) {
+            if (innerStreamProtects) {
                 m_xml.writeAttribute("Protected", "True");
+                if (carriesHiddenCharacters) {
+                    m_xml.writeAttribute("ProtectedForHiddenCharacters", "True");
+                }
+                const QString plain = entry->attributes()->value(key);
+                QByteArray plaintext;
+                if (m_keepHiddenCharacters && !ExactText::utf8RoundTrips(plain)) {
+                    // UTF-8 cannot carry this text (a lone surrogate, half of an emoji): it would come back changed
+                    plaintext = ExactText::toUtf16Le(plain);
+                    m_xml.writeAttribute("PlaintextEncoding", "UTF-16LE");
+                } else {
+                    plaintext = plain.toUtf8();
+                }
                 bool ok;
-                QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8(), &ok);
+                QByteArray rawData = m_randomStream->process(plaintext, &ok);
                 if (!ok) {
                     raiseError(m_randomStream->errorString());
                 }
@@ -571,12 +595,14 @@ void KdbxXmlWriter::writeString(const QString& qualifiedName, const QString& str
 // after the element's start tag and attributes, before any other content: the base64 mark is an attribute.
 void KdbxXmlWriter::writeText(const QString& text)
 {
-    if (m_hiddenCharactersAsBase64 && hasInvalidXml10Chars(text)) {
+    const bool hasInvalid = hasInvalidXml10Chars(text);
+    if (hasInvalid && m_keepHiddenCharacters) {
         writeBase64Text(text);
         return;
     }
 
-    const auto cleaned = stripInvalidXml10Chars(text);
+    // Text without such characters is not changed by the cleaning, so it is not run
+    const auto cleaned = hasInvalid ? stripInvalidXml10Chars(text) : text;
     if (!m_preserveCarriageReturns || !cleaned.contains('\r')) {
         m_xml.writeCharacters(cleaned);
         return;
@@ -734,20 +760,20 @@ bool KdbxXmlWriter::hasInvalidXml10Chars(const QString& str)
 // UTF-8 cannot carry a lone surrogate, such as half of an emoji, and would turn it into a replacement character.
 void KdbxXmlWriter::writeBase64Text(const QString& text)
 {
-    QByteArray bytes = text.toUtf8();
-    if (QString::fromUtf8(bytes) == text) {
+    QByteArray bytes;
+    if (ExactText::utf8RoundTrips(text)) {
+        bytes = text.toUtf8();
         m_xml.writeAttribute("Base64", "UTF-8");
     } else {
-        bytes.clear();
-        bytes.reserve(text.size() * 2);
-        for (const QChar ch : text) {
-            bytes.append(static_cast<char>(ch.unicode() & 0xFF));
-            bytes.append(static_cast<char>(ch.unicode() >> 8));
-        }
+        bytes = ExactText::toUtf16Le(text);
         m_xml.writeAttribute("Base64", "UTF-16LE");
     }
 
     writeBase64Characters(bytes);
+
+    if (!m_recordPlaces) {
+        return;
+    }
 
     // Remember where this happened, so the person exporting can be told. The field is named, the value never is.
     QString field = m_field;
@@ -834,7 +860,12 @@ void KdbxXmlWriter::setPreserveCarriageReturns(bool enable)
     m_preserveCarriageReturns = enable;
 }
 
-void KdbxXmlWriter::setStoreHiddenCharactersAsBase64(bool enable)
+void KdbxXmlWriter::setKeepHiddenCharacters(bool enable)
 {
-    m_hiddenCharactersAsBase64 = enable;
+    m_keepHiddenCharacters = enable;
+}
+
+void KdbxXmlWriter::setRecordHiddenCharacterPlaces(bool enable)
+{
+    m_recordPlaces = enable;
 }

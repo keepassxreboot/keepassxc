@@ -89,6 +89,8 @@ protected:
     // reads text a Base64 attribute marked as stored in base64 (see KdbxXmlWriter::writeBase64Text); raises
     // an error and returns an empty string when it cannot be restored exactly
     QString decodeBase64Text(const QString& kind, const QString& text);
+    // bytes in the named encoding ("UTF-8" or "UTF-16LE") back to the exact text; an error for anything else
+    QString decodeText(const QString& kind, const QByteArray& bytes);
     virtual bool readBool();
     virtual QDateTime readDateTime();
     virtual QString readColor();

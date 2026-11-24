@@ -67,7 +67,22 @@ private slots:
     void testHiddenCharactersAreWrittenAsBase64();
     void testUnpairedSurrogateIsWrittenAsUtf16Base64();
     void testCleanTextIsWrittenWithoutTheBase64Mark();
-    void testNormalSaveOfTheDatabaseFileIsUnchanged();
+    // The same text when the database is saved as a database file and opened again
+    void testHiddenCharactersSurviveSavingTheDatabaseFile_data();
+    void testHiddenCharactersSurviveSavingTheDatabaseFile();
+    void testPasswordsSurviveSavingTheDatabaseFile_data();
+    void testPasswordsSurviveSavingTheDatabaseFile();
+    void testEditingAFieldThatHeldHiddenCharactersLeavesAnOrdinaryField();
+    void testNormalSaveKeepsHiddenCharactersInTitleAndPassword();
+    void testCleanDataIsWrittenTheSameWithAndWithoutKeepingHiddenCharacters();
+    void testSavedFileEncryptsEntryFieldsThatHoldHiddenCharacters();
+    void testProtectedValueEncoding_data();
+    void testProtectedValueEncoding();
+
+    // The file that lists, next to an XML export, what was stored as base64
+    void testHiddenCharacterListFileName_data();
+    void testHiddenCharacterListFileName();
+    void testHiddenCharacterListFile();
     void testExportListsWhereHiddenCharactersWereStoredAsBase64();
     void testExportListsNothingWhenThereAreNoHiddenCharacters();
 };

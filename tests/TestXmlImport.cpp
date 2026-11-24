@@ -20,6 +20,7 @@
 #include <initializer_list>
 #include <memory>
 
+#include <QBuffer>
 #include <QFile>
 #include <QIODevice>
 #include <QRandomGenerator>
@@ -35,10 +36,16 @@
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
+#include "core/HiddenCharacterList.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "crypto/SymmetricCipher.h"
 #include "crypto/kdf/Kdf.h"
+#include "format/ExactText.h"
+#include "format/KdbxXmlReader.h"
+#include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
+#include "format/KeePass2RandomStream.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockClock.h"
@@ -1508,6 +1515,11 @@ namespace
     }
 
     // "x", then every character from..to separated by "x" (skips tab, line feed and carriage return: XML holds those)
+    QByteArray toUtf16LeBytes(const QString& text)
+    {
+        return ExactText::toUtf16Le(text);
+    }
+
     QString controlsBetween(ushort from, ushort to)
     {
         QString text = "x";
@@ -1521,7 +1533,9 @@ namespace
 
     // Puts the same text into every place a person can type text, so a character lost in any of them shows up. Keys get
     // a letter in front so two keys in one place never collide.
-    void fillEveryTextFieldWith(Database& db, const QString& value)
+    // passwordText goes into the fields that are encrypted when the database is saved (the password and the protected
+    // custom field), which can only carry text UTF-8 can carry
+    void fillEveryTextFieldWith(Database& db, const QString& value, const QString& passwordText)
     {
         const QString key = "k" + value;
 
@@ -1551,19 +1565,60 @@ namespace
         entry->setGroup(group);
         entry->setTitle(value);
         entry->setUsername(value);
-        entry->setPassword(value);
+        entry->setPassword(passwordText);
         entry->setUrl(value);
         entry->setNotes(value);
         entry->setTags(value);
         entry->setOverrideUrl(value);
         entry->attributes()->set(key, value);
-        entry->attributes()->set("p" + value, value, true);
+        entry->attributes()->set("p" + value, passwordText, true);
         entry->setDefaultAutoTypeSequence(value);
         entry->autoTypeAssociations()->add({value, value});
         entry->customData()->set(key, value);
         // The state above goes into the entry's history when it is changed
         entry->beginUpdate();
-        entry->setPassword(value + "x");
+        entry->setPassword(passwordText + "x");
+        entry->endUpdate();
+    }
+
+    void fillEveryTextFieldWith(Database& db, const QString& value)
+    {
+        fillEveryTextFieldWith(db, value, value);
+    }
+
+    // The same, with only what a KDBX 3 file can hold (no tags, no custom data of folders and entries): a database that
+    // uses those is always saved as a newer version
+    void fillBasicTextFieldsWith(Database& db, const QString& value, const QString& passwordText)
+    {
+        auto* meta = db.metadata();
+        meta->setName(value);
+        meta->setDescription(value);
+        meta->setDefaultUserName(value);
+
+        auto* root = db.rootGroup();
+        root->setName(value);
+        root->setNotes(value);
+
+        auto* group = new Group();
+        group->setUuid(QUuid::createUuid());
+        group->setName(value);
+        group->setNotes(value);
+        group->setParent(root);
+
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setGroup(group);
+        entry->setTitle(value);
+        entry->setUsername(value);
+        entry->setPassword(passwordText);
+        entry->setUrl(value);
+        entry->setNotes(value);
+        entry->attributes()->set("k" + value, value);
+        entry->attributes()->set("p" + value, passwordText, true);
+        entry->setDefaultAutoTypeSequence(value);
+        entry->autoTypeAssociations()->add({value, value});
+        entry->beginUpdate();
+        entry->setPassword(passwordText + "x");
         entry->endUpdate();
     }
 
@@ -1726,40 +1781,231 @@ void TestXmlImport::testCleanTextIsWrittenWithoutTheBase64Mark()
     QVERIFY2(!xml.contains("Base64="), "text without hidden characters was marked as base64");
 }
 
-// Guard: only the XML export changed. The normal save of the database file behaves as before. A protected field (the
-// password, by default) is encrypted before it is written, so its hidden characters survive; an unprotected field (the
-// title, by default) still loses them. This is how KeePassXC has always saved, and other KeePass programs read the
-// same file format.
-void TestXmlImport::testNormalSaveOfTheDatabaseFileIsUnchanged()
+namespace
+{
+    bool hasLoneSurrogate(const QString& text)
+    {
+        for (qsizetype i = 0; i < text.size(); ++i) {
+            const QChar ch = text.at(i);
+            if (ch.isHighSurrogate() && i + 1 < text.size() && text.at(i + 1).isLowSurrogate()) {
+                ++i;
+            } else if (ch.isHighSurrogate() || ch.isLowSurrogate()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    QSharedPointer<CompositeKey> fileKey()
+    {
+        auto key = QSharedPointer<CompositeKey>::create();
+        key->addKey(QSharedPointer<PasswordKey>::create("pw"));
+        return key;
+    }
+
+    // Saves the database as a database file of the given version (3 or 4) and opens that file again. Returns an empty
+    // string when that worked, otherwise what went wrong.
+    QString saveAndReopen(Database& db, bool kdbx3, Database& reopened)
+    {
+        auto kdf = KeePass2::uuidToKdf(kdbx3 ? KeePass2::KDF_AES_KDBX3 : KeePass2::KDF_AES_KDBX4);
+        kdf->setRounds(1);
+        if (!db.changeKdf(kdf)) {
+            return "could not set the key derivation";
+        }
+        const auto key = fileKey();
+        if (!db.setKey(key)) {
+            return "could not set the key";
+        }
+
+        QTemporaryDir dir;
+        if (!dir.isValid()) {
+            return "no temporary folder";
+        }
+        const auto path = dir.filePath("saved.kdbx");
+        QString error;
+        if (!db.saveAs(path, Database::Atomic, {}, &error)) {
+            return "saving failed: " + error;
+        }
+        if (!reopened.open(path, key, &error)) {
+            return "opening the saved file failed: " + error;
+        }
+        if (kdbx3 != (reopened.formatVersion() < KeePass2::FILE_VERSION_4)) {
+            return "the file was saved as the wrong version";
+        }
+        return {};
+    }
+
+    // What went wrong with a text that went into a database file and came back out, or an empty string
+    QString saveRoundTripProblem(const QString& value, bool kdbx3)
+    {
+        StoppedClock clock;
+        // The password and the protected custom field are encrypted on the way and can only carry what UTF-8 can carry
+        const QString passwordText = hasLoneSurrogate(value) ? QString("clean password") : value;
+
+        Database source;
+        if (kdbx3) {
+            fillBasicTextFieldsWith(source, value, passwordText);
+        } else {
+            fillEveryTextFieldWith(source, value, passwordText);
+        }
+        syncProtectionFlags(source);
+
+        Database reopened;
+        const auto problem = saveAndReopen(source, kdbx3, reopened);
+        if (!problem.isEmpty()) {
+            return problem;
+        }
+
+        const auto metadataDifference = describeMetadataDifference(source.metadata(), reopened.metadata());
+        if (metadataDifference != "(unknown part)") {
+            return "database settings differ: " + metadataDifference;
+        }
+        for (const auto* group : source.rootGroup()->groupsRecursive(true)) {
+            const auto* other = group->uuid() == source.rootGroup()->uuid()
+                                    ? reopened.rootGroup()
+                                    : reopened.rootGroup()->findGroupByUuid(group->uuid());
+            if (!other) {
+                return "a folder is missing";
+            }
+            const auto difference = describeGroupDifference(group, other);
+            if (difference != "(unknown part)") {
+                return "a folder differs: " + difference;
+            }
+        }
+        const auto sourceEntries = source.rootGroup()->entriesRecursive();
+        if (sourceEntries.size() != 1 || reopened.rootGroup()->entriesRecursive().size() != 1) {
+            return "the number of entries changed";
+        }
+        const auto* before = sourceEntries.first();
+        const auto* after = reopened.rootGroup()->findEntryByUuid(before->uuid());
+        if (!after) {
+            return "the entry is missing";
+        }
+        if (!before->equals(after, CompareItemIgnoreMilliseconds)) {
+            return "the entry differs: " + describeEntryDifference(before, after);
+        }
+        if (after->historyItems().size() != 1) {
+            return "the entry's older version is missing";
+        }
+        return {};
+    }
+} // namespace
+
+void TestXmlImport::testHiddenCharactersSurviveSavingTheDatabaseFile_data()
+{
+    testHiddenCharactersSurviveXmlRoundTrip_data();
+}
+
+// Catches: a normal save of the database file deleting hidden characters from a field (it used to, from every field
+// that is not encrypted: titles, user names, notes, folder names, database settings, ...), or leaving a field
+// "protected" that was not before (the protected flag is compared as part of the entry).
+void TestXmlImport::testHiddenCharactersSurviveSavingTheDatabaseFile()
+{
+    QFETCH(QString, value);
+
+    for (const bool kdbx3 : {false, true}) {
+        const auto problem = saveRoundTripProblem(value, kdbx3);
+        QVERIFY2(problem.isEmpty(), qPrintable(QString(kdbx3 ? "KDBX 3: " : "KDBX 4: ") + problem));
+    }
+}
+
+void TestXmlImport::testPasswordsSurviveSavingTheDatabaseFile_data()
+{
+    QTest::addColumn<QString>("password");
+
+    QTest::newRow("a hidden character") << fromUnits({'a', 0x01, 'b'});
+    QTest::newRow("starts with U+FEFF") << fromUnits({0xFEFF, 'a', 'b'});
+    QTest::newRow("only U+FEFF") << fromUnits({0xFEFF});
+    QTest::newRow("starts with two U+FEFF") << fromUnits({0xFEFF, 0xFEFF, 'a'});
+    QTest::newRow("U+FEFF in the middle") << fromUnits({'a', 0xFEFF, 'b'});
+    QTest::newRow("starts with U+FEFF and has a hidden character") << fromUnits({0xFEFF, 'a', 0x01});
+    QTest::newRow("a whole emoji") << fromUnits({0xD83D, 0xDE00});
+    QTest::newRow("half of an emoji") << fromUnits({'a', 0xD83D, 'b'});
+    QTest::newRow("only a lone second half of an emoji") << fromUnits({0xDE00});
+}
+
+// Catches: a password that is not the same after the database was saved and opened again. Passwords are encrypted when
+// saved, so a hidden character in the middle always survived; the question is the odd ones.
+void TestXmlImport::testPasswordsSurviveSavingTheDatabaseFile()
+{
+    QFETCH(QString, password);
+
+    for (const bool kdbx3 : {false, true}) {
+        Database db;
+        db.metadata()->setProtectPassword(true);
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setGroup(db.rootGroup());
+        entry->setTitle("with a password");
+        entry->setPassword(password);
+
+        Database reopened;
+        const auto problem = saveAndReopen(db, kdbx3, reopened);
+        QVERIFY2(problem.isEmpty(), qPrintable(problem));
+        const auto* saved = reopened.rootGroup()->entries().value(0);
+        QVERIFY(saved);
+        QVERIFY2(saved->password() == password,
+                 qPrintable(QString("%1: the password is not the same after saving and opening again")
+                                .arg(kdbx3 ? "KDBX 3" : "KDBX 4")));
+    }
+}
+
+// Catches: a field that carried hidden characters staying special after the characters are gone: it must be an
+// ordinary, unprotected field again once it is edited.
+void TestXmlImport::testEditingAFieldThatHeldHiddenCharactersLeavesAnOrdinaryField()
+{
+    const auto hidden = fromUnits({'x', 0x02, 'y'});
+
+    for (const bool kdbx3 : {false, true}) {
+        Database db;
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setGroup(db.rootGroup());
+        entry->setTitle(hidden);
+        entry->setNotes(hidden);
+
+        Database first;
+        auto problem = saveAndReopen(db, kdbx3, first);
+        QVERIFY2(problem.isEmpty(), qPrintable(problem));
+        auto* opened = first.rootGroup()->entries().value(0);
+        QVERIFY(opened);
+        QVERIFY(opened->title() == hidden);
+        QVERIFY2(!opened->attributes()->isProtected(EntryAttributes::TitleKey), "the title became a protected field");
+        QVERIFY(!opened->attributes()->isProtected(EntryAttributes::NotesKey));
+
+        opened->setTitle("clean");
+        Database second;
+        problem = saveAndReopen(first, kdbx3, second);
+        QVERIFY2(problem.isEmpty(), qPrintable(problem));
+        const auto* again = second.rootGroup()->entries().value(0);
+        QVERIFY(again);
+        QCOMPARE(again->title(), QString("clean"));
+        QVERIFY(!again->attributes()->isProtected(EntryAttributes::TitleKey));
+        QVERIFY2(again->notes() == hidden, "the notes lost their hidden characters on the second save");
+        QVERIFY(!again->attributes()->isProtected(EntryAttributes::NotesKey));
+    }
+}
+
+// The plain statement of the change: the normal save used to delete hidden characters from a title; now it keeps them.
+void TestXmlImport::testNormalSaveKeepsHiddenCharactersInTitleAndPassword()
 {
     const auto hiddenPassword = fromUnits({'a', 0x01, 'b'});
+    const auto hiddenTitle = fromUnits({'x', 0x02, 'y'});
 
     Database db;
-    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4);
-    kdf->setRounds(1);
-    QVERIFY(db.changeKdf(kdf));
-    auto key = QSharedPointer<CompositeKey>::create();
-    key->addKey(QSharedPointer<PasswordKey>::create("pw"));
-    QVERIFY(db.setKey(key));
-
     auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
     entry->setGroup(db.rootGroup());
-    entry->setTitle(fromUnits({'x', 0x02, 'y'}));
+    entry->setTitle(hiddenTitle);
     entry->setPassword(hiddenPassword);
 
-    QTemporaryDir dir;
-    QVERIFY(dir.isValid());
-    const auto path = dir.filePath("saved.kdbx");
-    QString error;
-    QVERIFY2(db.saveAs(path, Database::Atomic, {}, &error), qPrintable(error));
-
     Database reopened;
-    QVERIFY2(reopened.open(path, key, &error), qPrintable(error));
+    const auto problem = saveAndReopen(db, false, reopened);
+    QVERIFY2(problem.isEmpty(), qPrintable(problem));
     const auto* saved = reopened.rootGroup()->entries().value(0);
     QVERIFY(saved);
-    QVERIFY2(saved->password() == hiddenPassword, "a protected password lost a hidden character in a normal save");
-    QCOMPARE(saved->title(), QString("xy"));
+    QVERIFY2(saved->password() == hiddenPassword, "the password lost a hidden character");
+    QVERIFY2(saved->title() == hiddenTitle, "the title lost a hidden character");
 }
 
 // Catches: an export that stores values as base64 without telling the user which entries and fields it did that to, or
@@ -1835,4 +2081,180 @@ void TestXmlImport::testExportListsNothingWhenThereAreNoHiddenCharacters()
     QString error;
     QVERIFY2(source.extract(xml, &error, &places), qPrintable(error));
     QVERIFY2(places.isEmpty(), qPrintable(places.join('\n')));
+}
+
+namespace
+{
+    // The XML a database file would hold inside (before it is compressed and encrypted), written with the stream cipher
+    // that protects values; the same key gives the same cipher text.
+    QByteArray innerXml(Database& db, bool keepHiddenCharacters, bool withStream)
+    {
+        KeePass2RandomStream stream;
+        if (withStream && !stream.init(SymmetricCipher::ChaCha20, QByteArray(64, 'k'))) {
+            return {};
+        }
+        KdbxXmlWriter writer(KeePass2::FILE_VERSION_4);
+        writer.setKeepHiddenCharacters(keepHiddenCharacters);
+        if (!withStream) {
+            writer.disableInnerStreamProtection(true);
+        }
+        QBuffer buffer;
+        buffer.open(QIODevice::WriteOnly);
+        writer.writeDatabase(&buffer, &db, withStream ? &stream : nullptr);
+        return buffer.data();
+    }
+} // namespace
+
+// Guard: a database with nothing XML cannot hold is written exactly as before, so nothing changes for it (a saved
+// database file cannot be compared byte for byte, it holds random salts, so this compares what goes into it).
+void TestXmlImport::testCleanDataIsWrittenTheSameWithAndWithoutKeepingHiddenCharacters()
+{
+    Database db;
+    fillEveryTextFieldWith(db, QString::fromUtf8("tab\there\r\nWindows line \xF0\x9F\x94\x92 YWJjZA== <b>&amp;</b>"));
+
+    for (const bool withStream : {false, true}) {
+        const auto before = innerXml(db, false, withStream);
+        const auto after = innerXml(db, true, withStream);
+        QVERIFY(!before.isEmpty());
+        QVERIFY2(before == after, withStream ? "differs with the stream cipher" : "differs without the stream cipher");
+    }
+}
+
+// Catches: entry fields with hidden characters being stored as base64 in the saved file (which other KeePass programs
+// would show as base64) instead of as an encrypted value (which they show correctly), or half of an emoji not getting
+// its own encoding; and a carrier that is not marked as one.
+void TestXmlImport::testSavedFileEncryptsEntryFieldsThatHoldHiddenCharacters()
+{
+    Database db;
+    auto* folder = new Group();
+    folder->setUuid(QUuid::createUuid());
+    folder->setName(fromUnits({'f', 0x01}));
+    folder->setParent(db.rootGroup());
+
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(db.rootGroup());
+    entry->setTitle(fromUnits({'t', 0x02}));
+    entry->setNotes(fromUnits({'n', 0x7F}));
+    entry->setUsername(fromUnits({'u', 0xD83D}));
+    entry->attributes()->set("custom", fromUnits({'c', 0x03}));
+    entry->setUrl("clean");
+
+    const auto xml = innerXml(db, true, true);
+    QVERIFY(!xml.isEmpty());
+    QCOMPARE(xml.count("ProtectedForHiddenCharacters=\"True\""), 4);
+    QCOMPARE(xml.count("PlaintextEncoding=\"UTF-16LE\""), 1);
+    // The folder name is not an entry field, so it cannot be encrypted: it is the only thing stored as base64
+    QCOMPARE(xml.count("Base64=\""), 1);
+    QVERIFY2(!xml.contains('\x01') && !xml.contains('\x02') && !xml.contains('\x03') && !xml.contains('\x7F'),
+             "a hidden character was written into the file itself");
+}
+
+void TestXmlImport::testHiddenCharacterListFileName_data()
+{
+    QTest::addColumn<QString>("exportPath");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("plain") << "folder/export.xml" << "folder/export.hidden-characters.txt";
+    QTest::newRow("upper case extension") << "folder/EXPORT.XML" << "folder/EXPORT.hidden-characters.txt";
+    QTest::newRow("dots in the name") << "a/my.backup.xml" << "a/my.backup.hidden-characters.txt";
+    QTest::newRow("no extension") << "a/export" << "a/export.hidden-characters.txt";
+    QTest::newRow("another extension is kept") << "a/export.dat" << "a/export.dat.hidden-characters.txt";
+}
+
+void TestXmlImport::testHiddenCharacterListFileName()
+{
+    QFETCH(QString, exportPath);
+    QFETCH(QString, expected);
+    QCOMPARE(HiddenCharacterList::filePathFor(exportPath), expected);
+}
+
+// Catches: a list that is cut short, that shows values, that leaves an older list in place, or a failure to save it
+// that nobody hears about.
+void TestXmlImport::testHiddenCharacterListFile()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("export.hidden-characters.txt");
+
+    // More lines than the message in the window can show, and one with a character that is not plain ASCII
+    QStringList places;
+    for (int i = 0; i < 500; ++i) {
+        places << QString("Entry \"Entry %1\" in folder \"Personal\": Password").arg(i);
+    }
+    places << QString::fromUtf8("Entry \"caf\xC3\xA9\" in folder \"Personal\": Notes");
+
+    QString error;
+    QVERIFY2(HiddenCharacterList::save(path, places, &error), qPrintable(error));
+
+    QFile file(path);
+    QVERIFY(file.open(QIODevice::ReadOnly));
+    const auto text = QString::fromUtf8(file.readAll());
+    file.close();
+    for (const auto& place : places) {
+        QVERIFY2(text.contains(place + "\n"), qPrintable("a line is missing: " + place));
+    }
+    QVERIFY2(text.contains("XML cannot store"), "the file does not say what the list is");
+    QVERIFY2(text.contains("501"), "the file does not say how many values there are");
+
+    // An older list is replaced, not added to
+    QVERIFY2(HiddenCharacterList::save(path, {"Entry \"Only\" in folder \"One\": Title"}, &error), qPrintable(error));
+    QVERIFY(file.open(QIODevice::ReadOnly));
+    const auto second = QString::fromUtf8(file.readAll());
+    file.close();
+    QVERIFY(second.contains("Only"));
+    QVERIFY2(!second.contains("Entry 1\""), "the older list was not replaced");
+
+    // A folder that does not exist: reported, not silently ignored
+    QString failure;
+    QVERIFY(!HiddenCharacterList::save(dir.filePath("no/such/folder/list.txt"), places, &failure));
+    QVERIFY2(!failure.isEmpty(), "a list that could not be saved must say why");
+}
+
+void TestXmlImport::testProtectedValueEncoding_data()
+{
+    QTest::addColumn<QByteArray>("plaintext");
+    QTest::addColumn<QString>("encoding");
+    QTest::addColumn<bool>("accepted");
+
+    QTest::newRow("UTF-16 text") << toUtf16LeBytes("hi") << QString("UTF-16LE") << true;
+    QTest::newRow("an encoding that does not exist") << QByteArray("hi") << QString("EBCDIC") << false;
+    QTest::newRow("UTF-16 with an odd number of bytes") << QByteArray("abc") << QString("UTF-16LE") << false;
+    QTest::newRow("invalid UTF-8") << QByteArray("\xFF\xFE") << QString("UTF-8") << false;
+}
+
+// Catches: a protected value whose encoding is wrong or unknown being accepted and turned into something else
+void TestXmlImport::testProtectedValueEncoding()
+{
+    QFETCH(QByteArray, plaintext);
+    QFETCH(QString, encoding);
+    QFETCH(bool, accepted);
+
+    const QByteArray key(64, 'k');
+    KeePass2RandomStream writeStream;
+    QVERIFY(writeStream.init(SymmetricCipher::ChaCha20, key));
+    bool ok = false;
+    const auto cipherText = writeStream.process(plaintext, &ok).toBase64();
+    QVERIFY(ok);
+
+    const auto groupUuid = uuidXml(QUuid::createUuid()).toLatin1();
+    const auto entryUuid = uuidXml(QUuid::createUuid()).toLatin1();
+    const auto xml = QByteArray(MinimalHeader) + "<KeePassFile><Root><Group><UUID>" + groupUuid + "</UUID><Entry><UUID>"
+                     + entryUuid + "</UUID><String><Key>Title</Key><Value Protected=\"True\" PlaintextEncoding=\""
+                     + encoding.toLatin1() + "\">" + cipherText
+                     + "</Value></String></Entry></Group></Root></KeePassFile>";
+
+    KeePass2RandomStream readStream;
+    QVERIFY(readStream.init(SymmetricCipher::ChaCha20, key));
+    QBuffer buffer;
+    buffer.setData(xml);
+    QVERIFY(buffer.open(QIODevice::ReadOnly));
+    Database db;
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
+    reader.readDatabase(&buffer, &db, &readStream);
+
+    QCOMPARE(!reader.hasError(), accepted);
+    if (accepted) {
+        QCOMPARE(db.rootGroup()->entries().value(0)->title(), QString("hi"));
+    }
 }

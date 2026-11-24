@@ -25,6 +25,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/DatabaseSettingsDiff.h"
+#include "core/HiddenCharacterList.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -697,7 +698,8 @@ void DatabaseTabWidget::exportToXML()
     }
 
     // say which values XML could not hold as text. They are saved as base64, so nothing is lost; this only
-    // tells the person what is in the file.
+    // tells the person what is in the file. The message shows the first few; the whole list is saved next to the export
+    // (the export itself is already complete, so a list that cannot be saved is a warning, not a failure).
     if (!hiddenCharacterPlaces.isEmpty()) {
         constexpr int MaxShown = 8;
         QString message = tr("%1 value(s) contain characters XML cannot store as text (for example hidden control "
@@ -710,7 +712,16 @@ void DatabaseTabWidget::exportToXML()
         if (hiddenCharacterPlaces.size() > MaxShown) {
             message.append("\n").append(tr("... and %1 more").arg(hiddenCharacterPlaces.size() - MaxShown));
         }
-        emit messageGlobal(message, MessageWidget::Information);
+
+        const auto listPath = HiddenCharacterList::filePathFor(fileName);
+        QString listError;
+        if (HiddenCharacterList::save(listPath, hiddenCharacterPlaces, &listError)) {
+            message.append("\n\n").append(tr("The full list was saved to %1").arg(listPath));
+            emit messageGlobal(message, MessageWidget::Information);
+        } else {
+            message.append("\n\n").append(tr("The full list could not be saved to %1: %2").arg(listPath, listError));
+            emit messageGlobal(message, MessageWidget::Warning);
+        }
     }
 }
 

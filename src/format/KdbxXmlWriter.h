@@ -53,10 +53,15 @@ public:
     // write carriage returns as character references. A raw CR is normalized to LF by every XML parser, so
     // Windows line breaks in notes would silently change in an XML export.
     void setPreserveCarriageReturns(bool enable);
-    // text XML 1.0 cannot hold (control characters, NUL, lone surrogates) is stored as base64 and the element
-    // gets a Base64 attribute naming how the text was encoded, instead of the characters being deleted. Only meant for
-    // the standalone XML export: a database file is still written the old way, which other KeePass programs read.
-    void setStoreHiddenCharactersAsBase64(bool enable);
+    // keep text XML 1.0 cannot hold (control characters, NUL, lone surrogates) instead of deleting those
+    // characters. An entry field is encrypted like a protected value when the inner stream allows it (a database
+    // file), and marked so it loads as the ordinary field it was; any other text, and everything in a standalone XML
+    // export, is stored as base64 with a Base64 attribute naming how it was encoded. Protected values that hold text
+    // UTF-8 cannot carry are stored as UTF-16 (PlaintextEncoding attribute).
+    void setKeepHiddenCharacters(bool enable);
+    // collect where text was stored as base64 (see hiddenCharacterPlaces); off by default because it works
+    // out a label for every entry and folder
+    void setRecordHiddenCharacterPlaces(bool enable);
     // after writing, one line per place whose text was stored as base64, e.g.
     // Entry "Bank" in folder "Personal": Password. Names the field, never shows the value.
     QStringList hiddenCharacterPlaces() const;
@@ -109,7 +114,8 @@ private:
     bool m_innerStreamProtectionDisabled = false;
     bool m_writeBinaryPool = false;
     bool m_preserveCarriageReturns = false;
-    bool m_hiddenCharactersAsBase64 = false;
+    bool m_keepHiddenCharacters = false;
+    bool m_recordPlaces = false;
     // What is being written right now, for the list of places stored as base64
     QString m_place;
     QString m_field;

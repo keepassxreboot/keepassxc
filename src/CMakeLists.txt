@@ -25,6 +25,7 @@ set(core_SOURCES
         core/Config.cpp
         core/CustomData.cpp
         core/DatabaseSettingsDiff.cpp
+        core/HiddenCharacterList.cpp
         core/Database.cpp
         core/DatabaseStats.cpp
         core/Entry.cpp

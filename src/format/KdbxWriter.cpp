@@ -78,8 +78,10 @@ void KdbxWriter::extractDatabase(QIODevice* device, Database* db, QStringList* h
     writer.setWriteBinaryPool(true);
     // keep Windows line breaks (CR LF) in notes and other text
     writer.setPreserveCarriageReturns(true);
-    // keep hidden characters (control characters in a password, ...) as marked base64 instead of deleting them
-    writer.setStoreHiddenCharactersAsBase64(true);
+    // keep hidden characters (control characters in a password, ...) as marked base64 instead of deleting
+    // them, and say where that was needed
+    writer.setKeepHiddenCharacters(true);
+    writer.setRecordHiddenCharacterPlaces(true);
     writer.writeDatabase(device, db);
     if (hiddenCharacterPlaces) {
         *hiddenCharacterPlaces = writer.hiddenCharacterPlaces();

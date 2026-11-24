@@ -16,6 +16,7 @@
  */
 
 #include "KdbxXmlReader.h"
+#include "ExactText.h"
 #include "KeePass2RandomStream.h"
 #include "core/Clock.h"
 #include "core/Endian.h"
@@ -1071,6 +1072,12 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     // take what the start tag says before reading the text, which moves past it
     const bool isBase64Text = attr.hasAttribute("Base64");
     const QString base64Kind = attr.value("Base64").toString();
+    // A protected value holds UTF-8 text. PlaintextEncoding says so when it holds text in another encoding (text UTF-8
+    // cannot carry). ProtectedForHiddenCharacters says the value was encrypted only to carry characters XML cannot
+    // hold: the field itself is not a protected field and must load as an ordinary one.
+    const bool hasPlaintextEncoding = attr.hasAttribute("PlaintextEncoding");
+    const QString plaintextEncoding = attr.value("PlaintextEncoding").toString();
+    const bool carriesHiddenCharacters = isTrueValue(attr.value("ProtectedForHiddenCharacters"));
     QString value = m_xml.readElementText();
 
     if (isBase64Text) {
@@ -1098,7 +1105,11 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
             return value;
         }
 
-        value = QString::fromUtf8(plaintext);
+        // ExactText::fromUtf8 keeps a leading U+FEFF, which QString::fromUtf8 drops (a password may start with one)
+        value = hasPlaintextEncoding ? decodeText(plaintextEncoding, plaintext) : ExactText::fromUtf8(plaintext);
+        if (carriesHiddenCharacters) {
+            isProtected = false;
+        }
     }
 
     return value;
@@ -1113,34 +1124,32 @@ QString KdbxXmlReader::decodeBase64Text(const QString& kind, const QString& text
         raiseError(tr("Text stored as base64 is not valid base64."));
         return {};
     }
-    const QByteArray& bytes = decoded.decoded;
+    return decodeText(kind, decoded.decoded);
+}
 
+QString KdbxXmlReader::decodeText(const QString& kind, const QByteArray& bytes)
+{
     if (kind == "UTF-8") {
-        // Re-encoding must give the same bytes back, otherwise the bytes were not valid UTF-8 (they would come out as
-        // replacement characters)
-        const auto result = QString::fromUtf8(bytes);
+        // Encoding the result again must give the same bytes back, otherwise they were not valid UTF-8 (invalid bytes
+        // would come out as replacement characters)
+        const auto result = ExactText::fromUtf8(bytes);
         if (result.toUtf8() != bytes) {
-            raiseError(tr("Text stored as base64 is not valid UTF-8."));
+            raiseError(tr("Stored text is not valid UTF-8."));
             return {};
         }
         return result;
     }
 
     if (kind == "UTF-16LE") {
-        if (bytes.size() % 2 != 0) {
-            raiseError(tr("Text stored as base64 as UTF-16 has an odd number of bytes."));
-            return {};
-        }
         QString result;
-        result.reserve(bytes.size() / 2);
-        for (qsizetype i = 0; i < bytes.size(); i += 2) {
-            result.append(QChar(
-                static_cast<ushort>(static_cast<uchar>(bytes.at(i)) | (static_cast<uchar>(bytes.at(i + 1)) << 8))));
+        if (!ExactText::fromUtf16Le(bytes, result)) {
+            raiseError(tr("Stored UTF-16 text has an odd number of bytes."));
+            return {};
         }
         return result;
     }
 
-    raiseError(tr("Text stored as base64 has an unknown kind: %1").arg(kind));
+    raiseError(tr("Stored text has an unknown encoding: %1").arg(kind));
     return {};
 }
 
