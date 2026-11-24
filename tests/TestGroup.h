@@ -35,6 +35,7 @@ private slots:
     void testDeleteSignals();
     void testCopyCustomIcon();
     void testClone();
+    void testCloneWithNewUuids();
     void testCopyCustomIcons();
     void testFindEntry();
     void testFindGroupByPath();

@@ -283,7 +283,44 @@ void DatabaseTabWidget::importFile()
                     if (group) {
                         // Extract the root group from the import database
                         auto importGroup = db->setRootGroup(new Group());
+                        // A CSV file exported by KeePassXC holds the UUIDs of its folders and entries (column
+                        // "UUID"). Importing it into a database that already has any of them (for example the
+                        // database it was exported from) would create duplicate UUIDs, which are silently merged or
+                        // lost the next time the database is opened. In that case import a copy with fresh UUIDs;
+                        // times and history are kept. The person is told how many items were copied.
+                        QStringList notes;
+                        if (m_importWizard->importType() == ImportWizard::IMPORT_CSV) {
+                            auto* targetDb = dbWidget->database().data();
+                            auto collides = [&](const QUuid& uuid) {
+                                return targetDb->rootGroup()->findGroupByUuid(uuid)
+                                       || targetDb->rootGroup()->findEntryByUuid(uuid)
+                                       || targetDb->containsDeletedObject(uuid);
+                            };
+                            int foldersInUse = 0;
+                            int entriesInUse = 0;
+                            for (const auto* importedGroup : importGroup->groupsRecursive(true)) {
+                                foldersInUse += collides(importedGroup->uuid()) ? 1 : 0;
+                            }
+                            for (const auto* importedEntry : importGroup->entriesRecursive()) {
+                                entriesInUse += collides(importedEntry->uuid()) ? 1 : 0;
+                            }
+                            if (foldersInUse > 0 || entriesInUse > 0) {
+                                auto* copy = importGroup->cloneWithNewUuids();
+                                delete importGroup;
+                                importGroup = copy;
+                                notes << tr("%1 and %2 of the file have the same id as items this database already has "
+                                            "(or had and deleted). They were added as copies with new ids; nothing "
+                                            "was merged or overwritten.")
+                                             .arg(tr("%n entry(ies)", "", entriesInUse),
+                                                  tr("%n folder(s)", "", foldersInUse));
+                            }
+                        }
+
                         importGroup->setParent(group);
+
+                        if (!notes.isEmpty()) {
+                            emit messageGlobal(notes.join("\n"), MessageWidget::Warning);
+                        }
                         setCurrentIndex(i);
                         return;
                     }
@@ -486,6 +523,29 @@ void DatabaseTabWidget::exportToCsv()
     auto db = databaseWidgetFromIndex(currentIndex())->database();
     if (!db) {
         Q_ASSERT(false);
+        return;
+    }
+
+    // a CSV file cannot hold everything a database holds (the settings of the database, folder settings,
+    // empty folders, pictures used as icons, ...). Say what, by name, before anything is saved, and offer the XML
+    // export, which keeps everything. The default answer is the one that loses nothing.
+    QString lossText = tr("A CSV file holds your entries, but not everything in the database:");
+    for (const auto& line : CsvExporter::lossReport(*db)) {
+        lossText.append("\n- ").append(line);
+    }
+    lossText.append("\n\n").append(
+        tr("The XML export keeps everything.\n\nYes: export to XML instead\nNo: save the CSV file anyway\nCancel: "
+           "export nothing"));
+    const auto lossAnswer = MessageBox::question(this,
+                                                 tr("CSV export does not keep everything"),
+                                                 lossText,
+                                                 MessageBox::Yes | MessageBox::No | MessageBox::Cancel,
+                                                 MessageBox::Yes);
+    if (lossAnswer == MessageBox::Yes) {
+        exportToXML();
+        return;
+    }
+    if (lossAnswer != MessageBox::No) {
         return;
     }
 

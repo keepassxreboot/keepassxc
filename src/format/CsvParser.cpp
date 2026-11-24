@@ -77,9 +77,9 @@ bool CsvParser::readFile(QIODevice* device)
     } else {
         device->close();
 
-        // Normalize on newline endings
-        m_array.replace("\r\n", "\n");
-        m_array.replace("\r", "\n");
+        // the line endings are no longer normalized here. Changing every CR LF and CR to LF changed the text
+        // inside quoted cells too (a password or notes with Windows line breaks came back different). The parser
+        // treats CR LF, CR and LF as the end of a row, and keeps them as they are inside quotes.
         if (m_array.isEmpty()) {
             appendStatusMsg(QObject::tr("file empty").append("\n"));
         }
@@ -99,6 +99,8 @@ void CsvParser::reset()
     m_maxCols = 0;
     m_statusMsg.clear();
     m_ts.seek(0);
+    m_pos = 0;
+    m_text.clear();
     m_table.clear();
     // the following can be overridden by the user
     // m_comment = '#';
@@ -115,8 +117,27 @@ void CsvParser::clear()
     m_array.clear();
 }
 
+// decode the whole buffer once (honours the codec and BOM handling of QTextStream) so that the parser can
+// walk it by index
+void CsvParser::loadText()
+{
+    m_ts.seek(0);
+    m_text.clear();
+    // QTextStream::readAll() takes seconds for tens of MB; reading in chunks stays linear
+    m_text.reserve(m_array.size());
+    while (!m_ts.atEnd()) {
+        const auto chunk = m_ts.read(1 << 20);
+        if (chunk.isEmpty()) {
+            break;
+        }
+        m_text.append(chunk);
+    }
+    m_pos = 0;
+}
+
 bool CsvParser::parseFile()
 {
+    loadText();
     parseRecord();
     while (!m_isEof) {
         if (!skipEndline()) {
@@ -127,6 +148,8 @@ bool CsvParser::parseFile()
         parseRecord();
     }
     fillColumns();
+    // The raw bytes are kept for reparse(); the decoded copy is not needed any more
+    m_text = QString();
     return m_isGood;
 }
 
@@ -160,7 +183,7 @@ void CsvParser::parseField(CsvRow& row)
 {
     QString field;
     peek(m_ch);
-    if (m_ch != m_separator && m_ch != '\n') {
+    if (m_ch != m_separator && m_ch != '\n' && m_ch != '\r') {
         if (isQualifier(m_ch)) {
             parseQuoted(field);
         } else {
@@ -174,7 +197,7 @@ void CsvParser::parseSimple(QString& s)
 {
     QChar c;
     getChar(c);
-    while (c != '\n' && c != m_separator && !m_isEof) {
+    while (c != '\n' && c != '\r' && c != m_separator && !m_isEof) {
         s.append(c);
         getChar(c);
     }
@@ -265,31 +288,43 @@ void CsvParser::fillColumns()
 
 void CsvParser::skipLine()
 {
-    m_ts.readLine();
-    m_ts.seek(m_ts.pos() - 1);
+    // Continue at the line break so that skipEndline() consumes it. Without a line break only the last character
+    // is left, as before.
+    qint64 lineBreak = m_pos;
+    while (lineBreak < m_text.size() && m_text.at(lineBreak) != '\n' && m_text.at(lineBreak) != '\r') {
+        ++lineBreak;
+    }
+    m_pos = lineBreak < m_text.size() ? lineBreak : qMax<qint64>(0, m_text.size() - 1);
 }
 
 bool CsvParser::skipEndline()
 {
     getChar(m_ch);
+    if (m_ch == '\r') {
+        // A CR LF ends the row at the CR; the LF that follows makes an empty row, which is dropped
+        m_ch = '\n';
+        return true;
+    }
     return m_ch == '\n';
 }
 
 void CsvParser::getChar(QChar& c)
 {
-    m_isEof = m_ts.atEnd();
+    m_isEof = m_pos >= m_text.size();
     if (!m_isEof) {
-        m_lastPos = m_ts.pos();
-        m_ts >> c;
+        m_lastPos = m_pos;
+        c = m_text.at(m_pos++);
     }
 }
 
 void CsvParser::ungetChar()
 {
-    if (!m_ts.seek(m_lastPos)) {
+    if (m_lastPos < 0) {
         qWarning("CSV Parser: unget lower bound exceeded");
         m_isGood = false;
+        return;
     }
+    m_pos = m_lastPos;
 }
 
 void CsvParser::peek(QChar& c)
@@ -312,7 +347,7 @@ bool CsvParser::isComment()
 {
     bool result = false;
     QChar c2;
-    qint64 pos = m_ts.pos();
+    const qint64 pos = m_pos;
 
     do {
         getChar(c2);
@@ -321,7 +356,7 @@ bool CsvParser::isComment()
     if (c2 == m_comment) {
         result = true;
     }
-    m_ts.seek(pos);
+    m_pos = pos;
     return result;
 }
 

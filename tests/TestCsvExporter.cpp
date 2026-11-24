@@ -19,8 +19,13 @@
 #include "TestCsvExporter.h"
 
 #include <QBuffer>
+#include <QDir>
+#include <QFile>
+#include <QTemporaryDir>
 #include <QTest>
 
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "core/Totp.h"
@@ -31,7 +36,10 @@ QTEST_GUILESS_MAIN(TestCsvExporter)
 
 const QString TestCsvExporter::ExpectedHeaderLine =
     QString("\"Group\",\"Title\",\"Username\",\"Password\",\"URL\",\"Notes\",\"TOTP\",\"Icon\",\"Last "
-            "Modified\",\"Created\"\n");
+            "Modified\",\"Created\",\"Tags\",\"Expires\",\"Expiry Time\",\"Last Accessed\",\"Location "
+            "Changed\",\"Usage Count\",\"UUID\",\"Custom Attributes\",\"Auto-Type\",\"Attachments\",\"History\","
+            "\"Protected Attributes\",\"Override URL\",\"Foreground Color\",\"Background Color\",\"Exclude From "
+            "Reports\",\"Custom Data\",\"Exact Text\"\n");
 
 void TestCsvExporter::init()
 {
@@ -79,6 +87,102 @@ void TestCsvExporter::testExport()
     exported.remove(expectedResult);
     QVERIFY(exported.contains("otpauth://"));
     QVERIFY(exported.contains(",\"5\","));
+}
+
+// the CSV carries the same entry data as the XML export, not only the ten basic columns
+void TestCsvExporter::testAllEntryData()
+{
+    auto* entry = new Entry();
+    entry->setGroup(m_db->rootGroup());
+    entry->setTitle("Full Entry");
+    entry->setPassword("current-secret");
+    entry->attributes()->set("Custom Field", "custom \"value\"");
+    entry->attributes()->set("Protected Field", "hidden", true);
+    entry->setTags("alpha;beta");
+    entry->setExpires(true);
+    entry->setExpiryTime(QDateTime(QDate(2030, 1, 2), QTime(3, 4, 5), Qt::UTC));
+    entry->setDefaultAutoTypeSequence("{USERNAME}{TAB}{PASSWORD}{ENTER}");
+    entry->autoTypeAssociations()->add({"Login - *", "{PASSWORD}"});
+    const QByteArray attachment("\x00\x01binary\xff", 9);
+    entry->attachments()->set("secret.bin", attachment);
+
+    // An earlier version of the entry ends up in the history
+    entry->beginUpdate();
+    entry->setPassword("old-secret");
+    entry->endUpdate();
+    entry->beginUpdate();
+    entry->setPassword("current-secret");
+    entry->endUpdate();
+    QVERIFY(!entry->historyItems().isEmpty());
+
+    const auto csv = m_csvExporter->exportDatabase(m_db);
+    QVERIFY(csv.startsWith(ExpectedHeaderLine));
+
+    // Custom attributes (including protected ones), tags, expiry and the UUID
+    QVERIFY(csv.contains("Custom Field"));
+    QVERIFY(csv.contains("custom \\\"\"value\\\"\"")); // JSON escaping, then CSV quote doubling
+    QVERIFY(csv.contains("Protected Field"));
+    QVERIFY(entry->tagList().size() == 2);
+    QVERIFY(csv.contains(QString("\"%1\"").arg(entry->tags()))); // comma separated, as Entry::tags() returns them
+    QVERIFY(csv.contains("\"true\",\"2030-01-02T03:04:05Z\""));
+    QVERIFY(csv.contains(entry->uuidToHex()));
+
+    // Auto-Type settings
+    QVERIFY(csv.contains("defaultSequence"));
+    QVERIFY(csv.contains("Login - *"));
+
+    // Attachments are base64 encoded, binary safe
+    QVERIFY(csv.contains(QString::fromLatin1(attachment.toBase64())));
+
+    // History keeps the previous password
+    QVERIFY(csv.contains("old-secret"));
+}
+
+// an entry without such data leaves the structured columns empty
+void TestCsvExporter::testPlainEntryLeavesStructuredColumnsEmpty()
+{
+    auto* entry = new Entry();
+    entry->setGroup(m_db->rootGroup());
+    entry->setTitle("Plain");
+
+    const auto csv = m_csvExporter->exportDatabase(m_db);
+    QVERIFY(csv.contains(",\"false\","));
+    // Custom attributes, auto-type, attachments, history, protected attributes, override URL and the two colors are
+    // empty; then "false" for Exclude From Reports, an empty Custom Data and an empty Exact Text
+    QVERIFY(csv.trimmed().endsWith(",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"false\",\"\",\"\""));
+}
+
+// failed writes are reported, and the previous file survives a failed export
+void TestCsvExporter::testWriteFailures()
+{
+    // Device that cannot be written to
+    QBuffer readOnly;
+    QByteArray data("x");
+    readOnly.setBuffer(&data);
+    QVERIFY(readOnly.open(QIODevice::ReadOnly));
+    QVERIFY(!m_csvExporter->exportDatabase(&readOnly, m_db));
+    QVERIFY(!m_csvExporter->errorString().isEmpty());
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("export.csv");
+
+    // Successful export replaces the file and leaves no temporary files behind
+    {
+        QFile existing(path);
+        QVERIFY(existing.open(QIODevice::WriteOnly));
+        existing.write("previous export");
+    }
+    QVERIFY(m_csvExporter->exportDatabase(path, m_db));
+    QFile written(path);
+    QVERIFY(written.open(QIODevice::ReadOnly));
+    QCOMPARE(QString::fromUtf8(written.readAll()), ExpectedHeaderLine);
+    written.close();
+    QCOMPARE(QDir(dir.path()).entryList(QDir::Files).size(), 1);
+
+    // Export into a path that cannot be opened fails without touching anything
+    QVERIFY(!m_csvExporter->exportDatabase(dir.filePath("missing-dir/export.csv"), m_db));
+    QVERIFY(!m_csvExporter->errorString().isEmpty());
 }
 
 void TestCsvExporter::testEmptyDatabase()
@@ -326,4 +430,81 @@ void TestCsvExporter::testAbsolutePaths()
     QCOMPARE(nameList.size(), 2);
     QCOMPARE(nameList.at(0), QString("Work"));
     QCOMPARE(nameList.at(1), QString("Subgroup1"));
+}
+
+// a database of plain entries: the only thing a CSV file cannot hold is the settings of the database itself
+void TestCsvExporter::testLossReportOfPlainData()
+{
+    auto* entry = new Entry();
+    entry->setGroup(m_db->rootGroup());
+    entry->setTitle("Plain");
+
+    const auto report = CsvExporter::lossReport(*m_db);
+    QVERIFY2(report.size() == 1, qPrintable(report.join("\n")));
+    QVERIFY(report.first().contains("settings of the database itself"));
+}
+
+// everything a CSV file cannot hold is named, with the folders and entries it concerns, and nothing else is
+void TestCsvExporter::testLossReportNamesWhatIsNotSaved()
+{
+    auto* root = m_db->rootGroup();
+    auto makeGroup = [root](const QString& name) {
+        auto* group = new Group();
+        group->setName(name);
+        group->setParent(root);
+        return group;
+    };
+    auto makeEntry = [](Group* group, const QString& title) {
+        auto* entry = new Entry();
+        entry->setGroup(group);
+        entry->setTitle(title);
+        return entry;
+    };
+
+    auto* work = makeGroup("Work");
+    work->setNotes("about work");
+    auto* merging = makeGroup("Merging"); // a merge mode of its own (the one in effect everywhere else is "keep newer")
+    merging->setMergeMode(Group::Synchronize);
+    makeEntry(merging, "in merging");
+    makeGroup("Old stuff"); // no entries
+    auto* slash = makeGroup("A/B");
+    auto* twinOne = makeGroup("Twin");
+    auto* twinTwo = makeGroup("Twin");
+    makeEntry(slash, "in slash");
+    makeEntry(twinOne, "in twin one");
+    makeEntry(twinTwo, "in twin two");
+    auto* bank = makeEntry(work, "Bank");
+    bank->setIcon(QUuid::createUuid()); // a picture of its own
+    auto* mail = makeEntry(work, "Mail");
+    mail->attachments()->set("a.bin", "data"); // (an older version keeps attachments, tags and the like in a CSV file)
+    mail->setIcon(QUuid::createUuid());
+    mail->beginUpdate();
+    mail->setUsername("changed"); // the older version uses a picture as icon, which a CSV file cannot hold
+    mail->endUpdate();
+    mail->setIcon(Entry::DefaultIconNumber); // the entry itself does not
+    makeEntry(work, "Fine"); // nothing to say about this one
+
+    const auto report = CsvExporter::lossReport(*m_db);
+    auto lineWith = [&report](const QString& marker) {
+        for (const auto& line : report) {
+            if (line.contains(marker)) {
+                return line;
+            }
+        }
+        return QString();
+    };
+
+    QVERIFY(lineWith("settings of the database itself").size() > 0);
+    QVERIFY2(lineWith("empty folder").contains("Old stuff"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("keeps only its name").contains("Work"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("keeps only its name").contains("Merging"), qPrintable(report.join("\n")));
+    QVERIFY2(!lineWith("empty folder").contains("Work"), "a folder with entries is not empty");
+    QVERIFY2(lineWith("picture of their own").contains("Bank"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("picture of their own").contains("Mail"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("same name in the same place").contains("Twin"), qPrintable(report.join("\n")));
+    QVERIFY2(lineWith("split into other folders").contains("A/B"), qPrintable(report.join("\n")));
+    for (const auto& line : report) {
+        QVERIFY2(!line.contains("Fine"), qPrintable("an entry with nothing to lose was named: " + line));
+    }
+    QCOMPARE(report.size(), 6);
 }

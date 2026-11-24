@@ -1313,6 +1313,12 @@ void TestCli::testExport()
     QByteArray csvData = m_stdout->readAll();
     QVERIFY(csvData.contains(QByteArray(
         "\"NewDatabase\",\"Sample Entry\",\"User Name\",\"Password\",\"http://www.somesite.com/\",\"Notes\"")));
+    // what a CSV file cannot hold is said on stderr (never in the CSV on stdout), unless -q is given
+    QVERIFY(m_stderr->readAll().contains(QByteArray("does not hold everything")));
+    QVERIFY(!csvData.contains(QByteArray("does not hold everything")));
+    setInput("a");
+    execCmd(exportCmd, {"export", "-f", "csv", "-q", m_dbFile->fileName()});
+    QCOMPARE(m_stderr->readAll(), QByteArray());
 
     // HTML exporting
     setInput("a");
