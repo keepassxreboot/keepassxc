@@ -18,11 +18,13 @@
 #include "DatabaseTabWidget.h"
 
 #include <QFileInfo>
+#include <QPointer>
 #include <QSaveFile>
 #include <QTabBar>
 #include <iterator>
 
 #include "autotype/AutoType.h"
+#include "core/DatabaseSettingsDiff.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -38,6 +40,7 @@
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
+#include "gui/wizard/ImportSettingsDialog.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
@@ -284,8 +287,54 @@ void DatabaseTabWidget::importFile()
                 if (!dbWidget->isLocked() && dbWidget->database()->uuid() == importInto.first) {
                     auto group = dbWidget->database()->rootGroup()->findGroupByUuid(importInto.second);
                     if (group) {
+                        // An XML file also holds settings of the database it came from. Importing into an
+                        // open database only adds the folders and entries, so show every setting that differs and let
+                        // the user choose which to apply, instead of dropping them without a word. This runs before
+                        // anything is changed or moved: cancelling leaves the open database untouched.
+                        QList<DatabaseSettingChange> chosenSettings;
+                        if (m_importWizard->importType() == ImportWizard::IMPORT_KEEPASSXML) {
+                            const auto changes = DatabaseSettingsDiff::compare(*dbWidget->database(), *db);
+                            if (!changes.isEmpty()) {
+                                // The dialog belongs to the database widget: locking the database closes it, like
+                                // every other modal widget of a database. The dialog runs its own event loop, so the
+                                // database can still be locked, replaced or closed while it is open. Locking frees
+                                // the folders of the open database; nothing below may use them without checking.
+                                QPointer<DatabaseWidget> dbWidgetGuard(dbWidget);
+                                QPointer<ImportSettingsDialog> settingsDialog(
+                                    new ImportSettingsDialog(changes, dbWidget));
+                                const bool accepted = settingsDialog->exec() == QDialog::Accepted;
+                                if (settingsDialog) {
+                                    if (accepted) {
+                                        chosenSettings = settingsDialog->chosenChanges();
+                                    }
+                                    settingsDialog->deleteLater();
+                                }
+                                if (!accepted) {
+                                    // Cancelled: nothing has been changed or moved
+                                    return;
+                                }
+                                if (!dbWidgetGuard || dbWidgetGuard->isLocked()) {
+                                    emit messageGlobal(tr("The database was locked or closed while the settings list "
+                                                          "was open. Nothing was imported."),
+                                                       MessageWidget::Warning);
+                                    return;
+                                }
+                                // The folder is looked up again, the database may have been replaced meanwhile
+                                group = dbWidgetGuard->database()->rootGroup()->findGroupByUuid(importInto.second);
+                                if (!group) {
+                                    emit messageGlobal(tr("The folder to import into no longer exists. Nothing was "
+                                                          "imported."),
+                                                       MessageWidget::Warning);
+                                    return;
+                                }
+                            }
+                        }
+
                         // Extract the root group from the import database
                         auto importGroup = db->setRootGroup(new Group());
+                        // The folders of the file -> the folders that end up in the open database (replaced below if
+                        // a copy has to be imported)
+                        auto importedFolders = DatabaseSettingsDiff::matchGroups(importGroup, importGroup);
 
                         // An XML export keeps the UUIDs of everything it contains. Importing it into a
                         // database that already has any of them (for example the database it was exported from)
@@ -308,6 +357,7 @@ void DatabaseTabWidget::importFile()
                             if (uuidInUse) {
                                 auto* copy = importGroup->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory,
                                                                 Group::CloneNewUuid | Group::CloneIncludeEntries);
+                                importedFolders = DatabaseSettingsDiff::matchGroups(importGroup, copy);
                                 delete importGroup;
                                 importGroup = copy;
                             }
@@ -321,6 +371,16 @@ void DatabaseTabWidget::importFile()
                         }
                         dbWidget->database()->metadata()->copyCustomIcons(customIcons, db->metadata());
                         importGroup->setParent(group);
+
+                        if (!chosenSettings.isEmpty()) {
+                            const auto notApplied = DatabaseSettingsDiff::apply(
+                                *dbWidget->database(), *db, chosenSettings, importedFolders);
+                            if (!notApplied.isEmpty()) {
+                                emit messageGlobal(
+                                    tr("These settings could not be applied: %1").arg(notApplied.join(", ")),
+                                    MessageWidget::Warning);
+                            }
+                        }
                         setCurrentIndex(i);
                         return;
                     }
@@ -600,15 +660,11 @@ void DatabaseTabWidget::exportToXML()
 
     // any failure must stop here. The old code showed the error and then still truncated the target file and
     // wrote whatever it had, and it never checked whether the data was written completely.
-    QByteArray xmlData;
-    QString err;
-    if (!db->extract(xmlData, &err)) {
-        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(err), MessageWidget::Error);
-        return;
-    }
-
+    //
     // Write to a temporary file and replace the target only when everything was written, so an interruption or a full
-    // disk cannot leave a truncated export in place of the previous file.
+    // disk cannot leave a truncated export in place of the previous file. The XML goes straight into that file;
+    // building it in memory first needed as much memory as the export is large, with every password in it in plain
+    // text.
     QSaveFile file(fileName);
     file.setDirectWriteFallback(true);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -616,10 +672,10 @@ void DatabaseTabWidget::exportToXML()
                            MessageWidget::Error);
         return;
     }
-    if (file.write(xmlData) != xmlData.size()) {
-        const auto reason = file.errorString();
+    QString err;
+    if (!db->extract(&file, &err)) {
         file.cancelWriting();
-        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(reason), MessageWidget::Error);
+        emit messageGlobal(tr("Writing the XML file failed").append("\n").append(err), MessageWidget::Error);
         return;
     }
     if (!file.commit()) {

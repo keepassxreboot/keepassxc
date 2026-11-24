@@ -17,13 +17,18 @@
 
 #include "TestXmlImport.h"
 
+#include <memory>
+
 #include <QFile>
+#include <QIODevice>
+#include <QRandomGenerator>
 #include <QSet>
 #include <QTemporaryDir>
 #include <QTest>
 
 #include "core/AutoTypeAssociations.h"
 #include "core/Database.h"
+#include "core/DatabaseSettingsDiff.h"
 #include "core/Entry.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
@@ -64,6 +69,67 @@ namespace
         QByteArray xml;
         QString error;
         return db->extract(xml, &error) && writeFile(path, xml);
+    }
+
+    // A write-only device that discards what is written and fails after some number of bytes (a full disk, a closed
+    // pipe).
+    class FailingDevice : public QIODevice
+    {
+    public:
+        explicit FailingDevice(qint64 failAfterBytes)
+            : m_failAfter(failAfterBytes)
+        {
+            open(QIODevice::WriteOnly);
+        }
+
+        bool isSequential() const override
+        {
+            return true;
+        }
+
+    protected:
+        qint64 readData(char*, qint64) override
+        {
+            return -1;
+        }
+
+        qint64 writeData(const char*, qint64 len) override
+        {
+            if (m_total + len > m_failAfter) {
+                setErrorString("disk full (simulated)");
+                return -1;
+            }
+            m_total += len;
+            return len;
+        }
+
+    private:
+        qint64 m_failAfter;
+        qint64 m_total = 0;
+    };
+
+    // Bytes that do not compress, so the export is large with and without gzip
+    QByteArray incompressiblePayload(int size)
+    {
+        QRandomGenerator generator(1234);
+        QByteArray data(size, 0);
+        for (int i = 0; i < size; ++i) {
+            data[i] = static_cast<char>(generator.generate() & 0xFF);
+        }
+        return data;
+    }
+
+    // A database with one entry that carries one attachment
+    std::unique_ptr<Database> databaseWithAttachment(const QByteArray& payload, bool gzip)
+    {
+        auto db = std::make_unique<Database>();
+        db->setCompressionAlgorithm(gzip ? Database::CompressionGZip : Database::CompressionNone);
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setGroup(db->rootGroup());
+        entry->setTitle("with attachment");
+        entry->attachments()->set("file.bin", payload);
+        return db;
     }
 
     const char* const MinimalHeader = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>";
@@ -824,4 +890,343 @@ void TestXmlImport::testEntityExpansion()
     } else {
         QVERIFY(!error.isEmpty());
     }
+}
+
+void TestXmlImport::testExportToDeviceRoundTripsAttachments_data()
+{
+    // Sizes around 49152 (the planned chunk of raw bytes encoded at a time) and the awkward 0, 1, 2, 3 byte cases.
+    QTest::addColumn<int>("size");
+    QTest::addColumn<bool>("gzip");
+    for (const bool gzip : {true, false}) {
+        for (const int size : {0, 1, 2, 3, 49151, 49152, 49153, 98304, 98305, 3000001}) {
+            QTest::addRow("%d bytes, %s", size, gzip ? "gzip" : "uncompressed") << size << gzip;
+        }
+    }
+}
+
+// Catches: an attachment that is cut off, padded wrongly or corrupted where one piece of the base64 text ends and
+// the next begins.
+void TestXmlImport::testExportToDeviceRoundTripsAttachments()
+{
+    QFETCH(int, size);
+    QFETCH(bool, gzip);
+
+    // Random bytes: repetitive data shrinks under gzip to less than one piece and would never reach a boundary
+    const auto payload = incompressiblePayload(size);
+    auto source = databaseWithAttachment(payload, gzip);
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("export.xml");
+    QFile file(path);
+    QVERIFY(file.open(QIODevice::WriteOnly));
+    QString error;
+    QVERIFY2(source->extract(&file, &error), qPrintable(error));
+    file.close();
+
+    Database imported;
+    QVERIFY2(imported.import(path, &error), qPrintable(error));
+    const auto* entry = imported.rootGroup()->entries().value(0);
+    QVERIFY2(entry, "the exported entry is missing after import");
+    QVERIFY2(entry->attachments()->value("file.bin") == payload, "the attachment content changed");
+}
+
+void TestXmlImport::testExportToDeviceReportsWriteFailure_data()
+{
+    QTest::addColumn<qint64>("failAfter");
+    QTest::newRow("the first write fails") << qint64(0);
+    QTest::newRow("fails inside the metadata") << qint64(600);
+    QTest::newRow("fails inside the attachment") << qint64(2000000);
+}
+
+// Catches: an export to a full disk or a closed pipe being reported as a success.
+void TestXmlImport::testExportToDeviceReportsWriteFailure()
+{
+    QFETCH(qint64, failAfter);
+
+    auto source = databaseWithAttachment(incompressiblePayload(3000000), false);
+
+    FailingDevice fullDisk(failAfter);
+    QString error;
+    QVERIFY2(!source->extract(&fullDisk, &error), "a failed write must not be reported as a success");
+    QVERIFY2(error.contains("disk full"), qPrintable(error));
+}
+
+namespace
+{
+    // Exports `source` to a real XML file and reads that file into `imported`, as the import wizard does
+    bool exportAndReadBack(Database& source, Database& imported, QTemporaryDir& dir)
+    {
+        const auto path = dir.filePath("settings.xml");
+        QString error;
+        return dir.isValid() && exportXml(&source, path) && imported.import(path, &error);
+    }
+
+    QStringList sortedIds(const QList<DatabaseSettingChange>& changes)
+    {
+        QStringList ids;
+        for (const auto& change : changes) {
+            ids << change.id;
+        }
+        ids.sort();
+        return ids;
+    }
+
+    QList<DatabaseSettingChange> only(const QList<DatabaseSettingChange>& changes, const QStringList& ids)
+    {
+        QList<DatabaseSettingChange> result;
+        for (const auto& change : changes) {
+            if (ids.contains(change.id)) {
+                result << change;
+            }
+        }
+        return result;
+    }
+
+    DatabaseSettingChange changeWithId(const QList<DatabaseSettingChange>& changes, const QString& id)
+    {
+        for (const auto& change : changes) {
+            if (change.id == id) {
+                return change;
+            }
+        }
+        return {};
+    }
+
+    Group* addFolder(Database& db, const QString& name)
+    {
+        auto* group = new Group();
+        group->setUuid(QUuid::createUuid());
+        group->setName(name);
+        group->setParent(db.rootGroup());
+        return group;
+    }
+} // namespace
+
+// Catches: a setting the XML file carries being silently left out of the list the user is shown. Every setting is
+// different from a new database here, so the list has to name every one of them.
+void TestXmlImport::testSettingsDiffOffersEverySettingTheFileCarries()
+{
+    Database open; // a new database, every setting at its default
+    Database source;
+    auto* meta = source.metadata();
+    meta->setName("Work vault");
+    meta->setDescription("Team logins");
+    meta->setDefaultUserName("teamlead");
+    meta->setColor("#112233");
+    meta->setMaintenanceHistoryDays(77);
+    meta->setMasterKeyChangeRec(90);
+    meta->setMasterKeyChangeForce(365);
+    meta->setProtectTitle(!open.metadata()->protectTitle());
+    meta->setProtectUsername(!open.metadata()->protectUsername());
+    meta->setProtectPassword(!open.metadata()->protectPassword());
+    meta->setProtectUrl(!open.metadata()->protectUrl());
+    meta->setProtectNotes(!open.metadata()->protectNotes());
+    meta->setRecycleBinEnabled(!open.metadata()->recycleBinEnabled());
+    meta->setHistoryMaxItems(33);
+    meta->setHistoryMaxSize(12345678);
+    meta->customData()->set("plugin-key", "plugin-value");
+    meta->setRecycleBin(addFolder(source, "Old bin"));
+    meta->setEntryTemplatesGroup(addFolder(source, "Old templates"));
+    meta->addCustomIcon(QUuid::createUuid(), binaryPayload(300), "Icon that no entry uses");
+    source.addDeletedObject(QUuid::createUuid());
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    const QStringList expected{"color",
+                               "customData:plugin-key",
+                               "defaultUserName",
+                               "deletedObjects",
+                               "description",
+                               "entryTemplatesGroup",
+                               "historyMaxItems",
+                               "historyMaxSize",
+                               "maintenanceHistoryDays",
+                               "masterKeyChangeForce",
+                               "masterKeyChangeRec",
+                               "name",
+                               "protectNotes",
+                               "protectPassword",
+                               "protectTitle",
+                               "protectUrl",
+                               "protectUsername",
+                               "recycleBinEnabled",
+                               "recycleBinGroup",
+                               "unusedCustomIcons"};
+    QCOMPARE(sortedIds(DatabaseSettingsDiff::compare(open, imported)), expected);
+}
+
+// Catches: settings that are the same being listed anyway (a dialog full of noise), or the program's own bookkeeping
+// (last modified time, random slug) being offered as if it were a user setting.
+void TestXmlImport::testSettingsDiffIsEmptyWhenNothingDiffers()
+{
+    Database source;
+    auto* meta = source.metadata();
+    meta->setName("Same vault");
+    meta->setHistoryMaxItems(33);
+    meta->customData()->set("plugin-key", "plugin-value");
+    meta->setRecycleBin(addFolder(source, "Bin"));
+    meta->addCustomIcon(QUuid::createUuid(), binaryPayload(300), "Icon");
+    source.addDeletedObject(QUuid::createUuid());
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    const auto changes = DatabaseSettingsDiff::compare(source, imported);
+    QVERIFY2(changes.isEmpty(), qPrintable("unexpected: " + sortedIds(changes).join(", ")));
+}
+
+// Catches: raw internal values (-1, bytes, true) shown to the user, and protected values shown in plain text.
+void TestXmlImport::testSettingsDiffShowsValuesTheWayAPersonReadsThem()
+{
+    Database open;
+    open.metadata()->setName("");
+    open.metadata()->setColor("");
+    open.metadata()->setHistoryMaxItems(10);
+    open.metadata()->setHistoryMaxSize(6 * 1024 * 1024);
+    open.metadata()->setMaintenanceHistoryDays(365);
+    open.metadata()->setMasterKeyChangeRec(-1);
+    open.metadata()->setRecycleBinEnabled(true);
+
+    Database source;
+    auto* meta = source.metadata();
+    meta->setName("Work vault");
+    meta->setColor("#112233");
+    meta->setHistoryMaxItems(-1);
+    meta->setHistoryMaxSize(12345678);
+    meta->setMaintenanceHistoryDays(77);
+    meta->setMasterKeyChangeRec(90);
+    meta->setRecycleBinEnabled(false);
+    meta->customData()->set("KPXC_BROWSER_laptop", "very secret key material");
+    meta->customData()->set("long-value", QString(200, 'x'));
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+    const auto changes = DatabaseSettingsDiff::compare(open, imported);
+
+    auto name = changeWithId(changes, "name");
+    QCOMPARE(name.currentValue, QString("(empty)"));
+    QCOMPARE(name.fileValue, QString("Work vault"));
+    QCOMPARE(changeWithId(changes, "color").currentValue, QString("(none)"));
+    QCOMPARE(changeWithId(changes, "color").fileValue, QString("#112233"));
+    QCOMPARE(changeWithId(changes, "historyMaxItems").currentValue, QString("10"));
+    QCOMPARE(changeWithId(changes, "historyMaxItems").fileValue, QString("No limit"));
+    QCOMPARE(changeWithId(changes, "historyMaxSize").currentValue, QString("6.0 MiB"));
+    QCOMPARE(changeWithId(changes, "historyMaxSize").fileValue, QString("11.8 MiB"));
+    QCOMPARE(changeWithId(changes, "maintenanceHistoryDays").fileValue, QString("77 days"));
+    QCOMPARE(changeWithId(changes, "masterKeyChangeRec").currentValue, QString("Never"));
+    QCOMPARE(changeWithId(changes, "masterKeyChangeRec").fileValue, QString("90 days"));
+    QCOMPARE(changeWithId(changes, "recycleBinEnabled").currentValue, QString("Yes"));
+    QCOMPARE(changeWithId(changes, "recycleBinEnabled").fileValue, QString("No"));
+
+    // The value of a protected item is never shown; the row says what the item is for
+    auto browserKey = changeWithId(changes, "customData:KPXC_BROWSER_laptop");
+    QCOMPARE(browserKey.fileValue, QString("(hidden)"));
+    QVERIFY2(browserKey.label.contains("browser", Qt::CaseInsensitive), qPrintable(browserKey.label));
+    QVERIFY(!browserKey.note.isEmpty());
+    // Long values are shortened
+    auto longValue = changeWithId(changes, "customData:long-value");
+    QVERIFY2(longValue.fileValue.endsWith(QChar(0x2026)) && longValue.fileValue.size() <= 61,
+             qPrintable(longValue.fileValue));
+}
+
+// Catches: choosing one setting changing others as well, or the open database being changed without a choice.
+void TestXmlImport::testSettingsApplyChangesOnlyWhatWasChosen()
+{
+    Database open;
+    open.metadata()->setName("Personal");
+    open.metadata()->setDescription("Mine");
+    open.metadata()->setHistoryMaxItems(10);
+
+    Database source;
+    source.metadata()->setName("Work vault");
+    source.metadata()->setDescription("Team logins");
+    source.metadata()->setHistoryMaxItems(33);
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+    const auto changes = DatabaseSettingsDiff::compare(open, imported);
+
+    DatabaseSettingsDiff::apply(open, imported, only(changes, {"name", "historyMaxItems"}), {});
+
+    QCOMPARE(open.metadata()->name(), QString("Work vault"));
+    QCOMPARE(open.metadata()->historyMaxItems(), 33);
+    QCOMPARE(open.metadata()->description(), QString("Mine"));
+
+    // Nothing chosen: nothing changes
+    Database untouched;
+    untouched.metadata()->setName("Personal");
+    DatabaseSettingsDiff::apply(untouched, imported, {}, {});
+    QCOMPARE(untouched.metadata()->name(), QString("Personal"));
+}
+
+// Catches: database custom data, unused icons or deletion records being listed but not actually carried over, or
+// carried over without being chosen.
+void TestXmlImport::testSettingsApplyCarriesCustomDataIconsAndDeletionRecords()
+{
+    const auto iconUuid = QUuid::createUuid();
+    const auto deletedUuid = QUuid::createUuid();
+
+    Database source;
+    source.metadata()->customData()->set("plugin-key", "plugin-value");
+    source.metadata()->customData()->set("other-key", "other-value");
+    source.metadata()->addCustomIcon(iconUuid, binaryPayload(300), "Icon that no entry uses");
+    source.addDeletedObject(deletedUuid);
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    Database open;
+    const auto changes = DatabaseSettingsDiff::compare(open, imported);
+    DatabaseSettingsDiff::apply(
+        open, imported, only(changes, {"customData:plugin-key", "unusedCustomIcons", "deletedObjects"}), {});
+
+    QCOMPARE(open.metadata()->customData()->value("plugin-key"), QString("plugin-value"));
+    QVERIFY2(!open.metadata()->customData()->contains("other-key"), "an item that was not chosen was carried over");
+    QVERIFY(open.metadata()->hasCustomIcon(iconUuid));
+    QVERIFY(open.containsDeletedObject(deletedUuid));
+}
+
+// Catches: the recycle bin / templates folder being lost because the imported folders were copied with new UUIDs (the
+// folder the file points to no longer exists) or because the pointer died when the imported tree was moved.
+void TestXmlImport::testSettingsApplyRecycleBinAndTemplatesFolderAfterTheTreeMoved()
+{
+    Database source;
+    auto* originalBin = addFolder(source, "Old bin");
+    source.metadata()->setRecycleBin(originalBin);
+    source.metadata()->setEntryTemplatesGroup(addFolder(source, "Old templates"));
+    const auto originalBinUuid = originalBin->uuid();
+
+    QTemporaryDir dir;
+    Database imported;
+    QVERIFY(exportAndReadBack(source, imported, dir));
+
+    Database open;
+    // The list is made before anything is moved
+    const auto changes = DatabaseSettingsDiff::compare(open, imported);
+
+    // What the import does next: take the folders out of the imported database and, because the open database may
+    // already use the same UUIDs, import a copy with new ones; the original is deleted
+    Group* importGroup = imported.setRootGroup(new Group());
+    Group* copy = importGroup->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory,
+                                     Group::CloneNewUuid | Group::CloneIncludeEntries);
+    const auto folders = DatabaseSettingsDiff::matchGroups(importGroup, copy);
+    delete importGroup;
+    copy->setParent(open.rootGroup());
+
+    DatabaseSettingsDiff::apply(open, imported, only(changes, {"recycleBinGroup", "entryTemplatesGroup"}), folders);
+
+    QVERIFY(open.metadata()->recycleBin());
+    QCOMPARE(open.metadata()->recycleBin()->name(), QString("Old bin"));
+    QVERIFY2(open.metadata()->recycleBin()->uuid() != originalBinUuid, "expected the copy with the new UUID");
+    QVERIFY2(open.rootGroup()->findGroupByUuid(open.metadata()->recycleBin()->uuid()),
+             "the recycle bin is not a folder of the open database");
+    QVERIFY(open.metadata()->entryTemplatesGroup());
+    QCOMPARE(open.metadata()->entryTemplatesGroup()->name(), QString("Old templates"));
 }

@@ -60,6 +60,7 @@ private slots:
     void testEstimate_data();
     void testEstimate();
     void testExport();
+    void testExportXmlFlushesBufferedStdout();
     void testGenerate_data();
     void testGenerate();
     void testImport();

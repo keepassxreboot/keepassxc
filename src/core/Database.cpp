@@ -522,6 +522,20 @@ bool Database::extract(QByteArray& xmlOutput, QString* error)
     return true;
 }
 
+bool Database::extract(QIODevice* device, QString* error)
+{
+    KeePass2Writer writer;
+    writer.extractDatabase(this, device);
+    if (writer.hasError()) {
+        if (error) {
+            *error = writer.errorString();
+        }
+        return false;
+    }
+
+    return true;
+}
+
 bool Database::import(const QString& xmlExportPath, QString* error, QStringList* warnings)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);

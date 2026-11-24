@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QBuffer>
 #include <QFile>
 
 #include "core/Group.h"
@@ -142,6 +143,14 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 
 void KeePass2Writer::extractDatabase(Database* db, QByteArray& xmlOutput)
 {
+    QBuffer buffer;
+    buffer.setBuffer(&xmlOutput);
+    buffer.open(QIODevice::WriteOnly);
+    extractDatabase(db, &buffer);
+}
+
+void KeePass2Writer::extractDatabase(Database* db, QIODevice* device)
+{
     m_error = false;
     m_errorStr.clear();
 
@@ -155,7 +164,7 @@ void KeePass2Writer::extractDatabase(Database* db, QByteArray& xmlOutput)
         m_writer.reset(new Kdbx4Writer());
     }
 
-    m_writer->extractDatabase(xmlOutput, db);
+    m_writer->extractDatabase(device, db);
 }
 
 bool KeePass2Writer::hasError() const

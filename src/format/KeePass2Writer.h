@@ -33,6 +33,8 @@ public:
     bool writeDatabase(const QString& filename, Database* db);
     bool writeDatabase(QIODevice* device, Database* db);
     void extractDatabase(Database* db, QByteArray& xmlOutput);
+    // writes the XML export straight to the device
+    void extractDatabase(Database* db, QIODevice* device);
     static quint32 kdbxVersionRequired(Database const* db, bool ignoreCurrent = false, bool ignoreKdf = false);
 
     QSharedPointer<KdbxWriter> writer() const;

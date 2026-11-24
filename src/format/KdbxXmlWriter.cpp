@@ -253,13 +253,27 @@ void KdbxXmlWriter::writeBinaries()
             data = i.value();
         }
 
-        if (!data.isEmpty()) {
-            m_xml.writeCharacters(QString::fromLatin1(data.toBase64()));
-        }
+        writeBase64Characters(data);
         m_xml.writeEndElement();
     }
 
     m_xml.writeEndElement();
+}
+
+/**
+ * write data as base64 text one piece at a time instead of as one huge string. The pieces are a multiple of
+ * 3 bytes long, so only the last one carries padding and the text is identical to encoding everything at once.
+ * Encoding everything at once needed about 8 times the size of an attachment in memory on top of it (the text in
+ * several encodings and copies, all alive together).
+ */
+void KdbxXmlWriter::writeBase64Characters(const QByteArray& data)
+{
+    constexpr qsizetype PieceBytes = 3 * 16 * 1024;
+    for (qsizetype pos = 0; pos < data.size(); pos += PieceBytes) {
+        const auto length = qMin(PieceBytes, data.size() - pos);
+        const auto piece = QByteArray::fromRawData(data.constData() + pos, length);
+        m_xml.writeCharacters(QString::fromLatin1(piece.toBase64()));
+    }
 }
 
 void KdbxXmlWriter::writeCustomData(const CustomData* customData, bool writeItemLastModified)

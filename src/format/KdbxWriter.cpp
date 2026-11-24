@@ -66,11 +66,8 @@ bool KdbxWriter::writeData(QIODevice* device, const QByteArray& data)
     return true;
 }
 
-void KdbxWriter::extractDatabase(QByteArray& xmlOutput, Database* db)
+void KdbxWriter::extractDatabase(QIODevice* device, Database* db)
 {
-    QBuffer buffer;
-    buffer.setBuffer(&xmlOutput);
-    buffer.open(QIODevice::WriteOnly);
     KdbxXmlWriter::BinaryIdxMap idxMap;
     KdbxXmlWriter writer(db->formatVersion(), idxMap);
     writer.disableInnerStreamProtection(true);
@@ -78,7 +75,11 @@ void KdbxWriter::extractDatabase(QByteArray& xmlOutput, Database* db)
     writer.setWriteBinaryPool(true);
     // keep Windows line breaks (CR LF) in notes and other text
     writer.setPreserveCarriageReturns(true);
-    writer.writeDatabase(&buffer, db);
+    writer.writeDatabase(device, db);
+    // A failed write (full disk, closed pipe) is only visible here; without this it was reported as a success
+    if (writer.hasError()) {
+        raiseError(writer.errorString());
+    }
 }
 
 /**

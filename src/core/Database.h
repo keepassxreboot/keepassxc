@@ -92,6 +92,8 @@ public:
                 const QString& backupFilePath = QString(),
                 QString* error = nullptr);
     bool extract(QByteArray&, QString* error = nullptr);
+    // writes the XML export straight to the device instead of building it in memory first
+    bool extract(QIODevice* device, QString* error = nullptr);
     // warnings (optional) receives non-fatal problems, e.g. attachments without content
     bool import(const QString& xmlExportPath, QString* error = nullptr, QStringList* warnings = nullptr);
 

@@ -56,7 +56,9 @@
 #include "cli/Utils.h"
 
 #include <QClipboard>
+#include <QFile>
 #include <QSignalSpy>
+#include <QTemporaryDir>
 #include <QTest>
 #include <QtConcurrent>
 #include <qglobal.h>
@@ -1331,6 +1333,39 @@ void TestCli::testExport()
     execCmd(exportCmd, {"export", "-f", "yaml", m_dbFile->fileName()});
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readLine(), QByteArray("Unsupported format yaml\n"));
+}
+
+// Catches: the end of the XML export staying in the buffer of a stdout that is a buffered C file (as in the real
+// command line) and never reaching the reader, so "export > file.xml" produces a truncated file.
+void TestCli::testExportXmlFlushesBufferedStdout()
+{
+    Export exportCmd;
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("stdout.xml");
+    FILE* handle = fopen(path.toLocal8Bit().constData(), "wb");
+    QVERIFY(handle);
+    QFile bufferedStdout;
+    // the same way Utils::setDefaultTextStreams opens the real stdout
+    QVERIFY(bufferedStdout.open(handle, QIODevice::WriteOnly));
+    Utils::STDOUT.setDevice(&bufferedStdout);
+
+    setInput("a");
+    const int exitCode = execCmd(exportCmd, {"export", "-q", "-f", "xml", m_dbFile->fileName()});
+
+    // Read what has arrived while the stdout file is still open, as a shell redirection would see it at exit
+    QScopedPointer<Database> db(new Database());
+    QString error;
+    const bool imported = db->import(path, &error);
+
+    Utils::STDOUT.setDevice(m_stdout.data());
+    bufferedStdout.close();
+    fclose(handle);
+
+    QCOMPARE(exitCode, static_cast<int>(EXIT_SUCCESS));
+    QVERIFY2(imported, qPrintable("the exported XML is incomplete: " + error));
+    QVERIFY(db->rootGroup()->findEntryByPath("/Sample Entry"));
 }
 
 void TestCli::testGenerate_data()

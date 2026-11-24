@@ -149,6 +149,9 @@ add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
 add_unit_test(NAME testxmlimport SOURCES TestXmlImport.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testimportsettingsdialog SOURCES TestImportSettingsDialog.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testykchallengeresponsekey SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
 

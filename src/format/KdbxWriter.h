@@ -52,7 +52,8 @@ public:
      */
     virtual bool writeDatabase(QIODevice* device, Database* db) = 0;
 
-    void extractDatabase(QByteArray& xmlOutput, Database* db);
+    // the XML export is written straight to the device instead of being built in memory first
+    void extractDatabase(QIODevice* device, Database* db);
 
     bool hasError() const;
     QString errorString() const;

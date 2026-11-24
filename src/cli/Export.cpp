@@ -24,6 +24,7 @@
 #include "format/HtmlExporter.h"
 
 #include <QCommandLineParser>
+#include <QFileDevice>
 
 const QCommandLineOption Export::FormatOption = QCommandLineOption(
     QStringList() << "f" << "format",
@@ -44,13 +45,19 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
 
     QString format = parser->value(Export::FormatOption);
     if (format.isEmpty() || format.startsWith(QStringLiteral("xml"), Qt::CaseInsensitive)) {
-        QByteArray xmlData;
+        // write the XML straight to stdout instead of building all of it in memory first. If writing fails
+        // part way, what was already written stays on stdout; the exit code and the message on stderr report it.
         QString errorMessage;
-        if (!database->extract(xmlData, &errorMessage)) {
+        out.flush();
+        const bool exported = database->extract(out.device(), &errorMessage);
+        // stdout is a buffered file; QTextStream used to flush it, writing to the device directly does not
+        if (auto* file = qobject_cast<QFileDevice*>(out.device())) {
+            file->flush();
+        }
+        if (!exported) {
             err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << Qt::endl;
             return EXIT_FAILURE;
         }
-        out.write(xmlData.constData());
     } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
         out << csvExporter.exportDatabase(database);

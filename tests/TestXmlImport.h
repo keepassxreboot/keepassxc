@@ -40,6 +40,20 @@ private slots:
     void testEntityExpansion();
     void testMissingAttachmentContentWarns();
     void testImportedGroupKeepsNestedCustomIcons();
+
+    // Streaming export (Database::extract to a device)
+    void testExportToDeviceRoundTripsAttachments_data();
+    void testExportToDeviceRoundTripsAttachments();
+    void testExportToDeviceReportsWriteFailure_data();
+    void testExportToDeviceReportsWriteFailure();
+
+    // Settings of an XML file imported into an existing database (DatabaseSettingsDiff)
+    void testSettingsDiffOffersEverySettingTheFileCarries();
+    void testSettingsDiffIsEmptyWhenNothingDiffers();
+    void testSettingsDiffShowsValuesTheWayAPersonReadsThem();
+    void testSettingsApplyChangesOnlyWhatWasChosen();
+    void testSettingsApplyCarriesCustomDataIconsAndDeletionRecords();
+    void testSettingsApplyRecycleBinAndTemplatesFolderAfterTheTreeMoved();
 };
 
 #endif // KEEPASSXC_TESTXMLIMPORT_H

@@ -24,6 +24,7 @@ set(core_SOURCES
         core/Clock.cpp
         core/Config.cpp
         core/CustomData.cpp
+        core/DatabaseSettingsDiff.cpp
         core/Database.cpp
         core/DatabaseStats.cpp
         core/Entry.cpp
@@ -202,6 +203,7 @@ set(gui_SOURCES
         gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
         gui/widgets/ShortcutWidget.cpp
+        gui/wizard/ImportSettingsDialog.cpp
         gui/wizard/ImportWizard.cpp
         gui/wizard/ImportWizardPageReview.cpp
         gui/wizard/ImportWizardPageSelect.cpp
