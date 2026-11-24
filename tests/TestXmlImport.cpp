@@ -440,6 +440,22 @@ namespace
         return parts.isEmpty() ? QString("(unknown part)") : parts.join(", ");
     }
 
+    // The program stamps every custom data collection with the time of its last change, to the second, and an import
+    // stamps it again. A test that crosses a second boundary between building its data and importing it would see a
+    // difference that is not data. Stopping the clock for the length of the test rules that out.
+    class StoppedClock
+    {
+    public:
+        StoppedClock()
+        {
+            MockClock::setup(new MockClock(2026, 1, 2, 3, 4, 5));
+        }
+        ~StoppedClock()
+        {
+            MockClock::teardown();
+        }
+    };
+
     QString describeMetadataDifference(const Metadata* a, const Metadata* b)
     {
         QStringList parts;
@@ -483,6 +499,7 @@ namespace
 // added later to Entry, Group or Metadata that the XML format loses is caught here as well.
 void TestXmlImport::testRoundTripKeepsEverything()
 {
+    StoppedClock clock;
     const auto iconUuid = QUuid::createUuid();
 
     Database source;
@@ -501,6 +518,7 @@ void TestXmlImport::testRoundTripKeepsEverything()
     meta->setProtectNotes(true);
     meta->setRecycleBinEnabled(true);
     meta->customData()->set("db-key", "db-value");
+    meta->setAutosaveDelayMin(7);
     meta->addCustomIcon(
         iconUuid, binaryPayload(200), "Named icon", QDateTime(QDate(2025, 5, 6), QTime(7, 8, 9), Qt::UTC));
     source.rootGroup()->setNotes("Root notes");
@@ -1621,22 +1639,6 @@ namespace
         entry->setPassword(passwordText + "x");
         entry->endUpdate();
     }
-
-    // The program stamps every custom data collection with the time of its last change, to the second, and an import
-    // stamps it again. A test that crosses a second boundary between building its data and importing it would see a
-    // difference that is not data. Stopping the clock for the length of the test rules that out.
-    class StoppedClock
-    {
-    public:
-        StoppedClock()
-        {
-            MockClock::setup(new MockClock(2026, 1, 2, 3, 4, 5));
-        }
-        ~StoppedClock()
-        {
-            MockClock::teardown();
-        }
-    };
 
     QByteArray exportToBytes(Database& db)
     {
