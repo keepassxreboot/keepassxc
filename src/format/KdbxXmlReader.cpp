@@ -1068,7 +1068,18 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     QXmlStreamAttributes attr = m_xml.attributes();
     isProtected = isTrueValue(attr.value("Protected"));
     protectInMemory = isTrueValue(attr.value("ProtectInMemory"));
+    // take what the start tag says before reading the text, which moves past it
+    const bool isBase64Text = attr.hasAttribute("Base64");
+    const QString base64Kind = attr.value("Base64").toString();
     QString value = m_xml.readElementText();
+
+    if (isBase64Text) {
+        if (isProtected) {
+            raiseError(tr("A value cannot be both protected and stored as base64 text."));
+            return {};
+        }
+        return decodeBase64Text(base64Kind, value);
+    }
 
     if (isProtected && !value.isEmpty()) {
         // a standalone XML file (import) has no inner stream cipher to decrypt this with
@@ -1091,6 +1102,46 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
     }
 
     return value;
+}
+
+QString KdbxXmlReader::decodeBase64Text(const QString& kind, const QString& text)
+{
+    // Strict: anything that is not clean base64 is an error, never skipped over or guessed at
+    const auto decoded = QByteArray::fromBase64Encoding(
+        text.trimmed().toLatin1(), QByteArray::Base64Encoding | QByteArray::AbortOnBase64DecodingErrors);
+    if (!decoded) {
+        raiseError(tr("Text stored as base64 is not valid base64."));
+        return {};
+    }
+    const QByteArray& bytes = decoded.decoded;
+
+    if (kind == "UTF-8") {
+        // Re-encoding must give the same bytes back, otherwise the bytes were not valid UTF-8 (they would come out as
+        // replacement characters)
+        const auto result = QString::fromUtf8(bytes);
+        if (result.toUtf8() != bytes) {
+            raiseError(tr("Text stored as base64 is not valid UTF-8."));
+            return {};
+        }
+        return result;
+    }
+
+    if (kind == "UTF-16LE") {
+        if (bytes.size() % 2 != 0) {
+            raiseError(tr("Text stored as base64 as UTF-16 has an odd number of bytes."));
+            return {};
+        }
+        QString result;
+        result.reserve(bytes.size() / 2);
+        for (qsizetype i = 0; i < bytes.size(); i += 2) {
+            result.append(QChar(
+                static_cast<ushort>(static_cast<uchar>(bytes.at(i)) | (static_cast<uchar>(bytes.at(i + 1)) << 8))));
+        }
+        return result;
+    }
+
+    raiseError(tr("Text stored as base64 has an unknown kind: %1").arg(kind));
+    return {};
 }
 
 bool KdbxXmlReader::readBool()

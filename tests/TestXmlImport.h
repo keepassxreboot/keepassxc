@@ -60,6 +60,16 @@ private slots:
     void testNewDatabaseGetsEverythingWhenNothingIsUnticked();
     void testNewDatabaseIsACompleteCopyOfTheFile();
     void testSettingsAppliedToAnOpenDatabaseAreDatedNow();
+
+    // Text XML cannot hold (hidden characters): written as base64 with a mark, restored exactly on import
+    void testHiddenCharactersSurviveXmlRoundTrip_data();
+    void testHiddenCharactersSurviveXmlRoundTrip();
+    void testHiddenCharactersAreWrittenAsBase64();
+    void testUnpairedSurrogateIsWrittenAsUtf16Base64();
+    void testCleanTextIsWrittenWithoutTheBase64Mark();
+    void testNormalSaveOfTheDatabaseFileIsUnchanged();
+    void testExportListsWhereHiddenCharactersWereStoredAsBase64();
+    void testExportListsNothingWhenThereAreNoHiddenCharacters();
 };
 
 #endif // KEEPASSXC_TESTXMLIMPORT_H

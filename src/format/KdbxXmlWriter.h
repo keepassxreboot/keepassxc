@@ -19,6 +19,8 @@
 #define KEEPASSX_KDBXXMLWRITER_H
 
 #include <QDateTime>
+#include <QSet>
+#include <QStringList>
 #include <QXmlStreamWriter>
 
 #include "core/CustomData.h"
@@ -51,6 +53,13 @@ public:
     // write carriage returns as character references. A raw CR is normalized to LF by every XML parser, so
     // Windows line breaks in notes would silently change in an XML export.
     void setPreserveCarriageReturns(bool enable);
+    // text XML 1.0 cannot hold (control characters, NUL, lone surrogates) is stored as base64 and the element
+    // gets a Base64 attribute naming how the text was encoded, instead of the characters being deleted. Only meant for
+    // the standalone XML export: a database file is still written the old way, which other KeePass programs read.
+    void setStoreHiddenCharactersAsBase64(bool enable);
+    // after writing, one line per place whose text was stored as base64, e.g.
+    // Entry "Bank" in folder "Personal": Password. Names the field, never shows the value.
+    QStringList hiddenCharacterPlaces() const;
     bool hasError();
     QString errorString();
 
@@ -88,6 +97,10 @@ private:
     void writeTriState(const QString& qualifiedName, Group::TriState triState);
     QString colorPartToString(int value);
     QString stripInvalidXml10Chars(QString str);
+    static bool isInvalidXml10Unit(QChar ch);
+    static bool hasInvalidXml10Chars(const QString& str);
+    void writeBase64Text(const QString& text);
+    static QString printableText(const QString& text);
 
     void raiseError(const QString& errorMessage);
 
@@ -96,6 +109,12 @@ private:
     bool m_innerStreamProtectionDisabled = false;
     bool m_writeBinaryPool = false;
     bool m_preserveCarriageReturns = false;
+    bool m_hiddenCharactersAsBase64 = false;
+    // What is being written right now, for the list of places stored as base64
+    QString m_place;
+    QString m_field;
+    QStringList m_hiddenCharacterPlaces;
+    QSet<QString> m_hiddenCharacterPlaceSet;
 
     QXmlStreamWriter m_xml;
     QPointer<const Database> m_db;

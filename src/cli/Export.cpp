@@ -48,8 +48,9 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
         // write the XML straight to stdout instead of building all of it in memory first. If writing fails
         // part way, what was already written stays on stdout; the exit code and the message on stderr report it.
         QString errorMessage;
+        QStringList hiddenCharacterPlaces;
         out.flush();
-        const bool exported = database->extract(out.device(), &errorMessage);
+        const bool exported = database->extract(out.device(), &errorMessage, &hiddenCharacterPlaces);
         // stdout is a buffered file; QTextStream used to flush it, writing to the device directly does not
         if (auto* file = qobject_cast<QFileDevice*>(out.device())) {
             file->flush();
@@ -57,6 +58,18 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
         if (!exported) {
             err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << Qt::endl;
             return EXIT_FAILURE;
+        }
+        // say which values XML could not hold as text. They are stored as base64 and nothing is lost; this
+        // only tells the person what is in the file. (stderr, so it never mixes into the XML on stdout.)
+        if (!hiddenCharacterPlaces.isEmpty() && !parser->isSet(Command::QuietOption)) {
+            err << QObject::tr("%1 value(s) contain characters XML cannot store as text (for example hidden control "
+                               "characters). They were saved as base64 and are restored exactly when this file is "
+                               "imported into KeePassXC:")
+                       .arg(hiddenCharacterPlaces.size())
+                << Qt::endl;
+            for (const auto& place : hiddenCharacterPlaces) {
+                err << "  " << place << Qt::endl;
+            }
         }
     } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;

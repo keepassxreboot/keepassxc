@@ -684,7 +684,8 @@ void DatabaseTabWidget::exportToXML()
         return;
     }
     QString err;
-    if (!db->extract(&file, &err)) {
+    QStringList hiddenCharacterPlaces;
+    if (!db->extract(&file, &err, &hiddenCharacterPlaces)) {
         file.cancelWriting();
         emit messageGlobal(tr("Writing the XML file failed").append("\n").append(err), MessageWidget::Error);
         return;
@@ -693,6 +694,23 @@ void DatabaseTabWidget::exportToXML()
         emit messageGlobal(tr("Writing the XML file failed").append("\n").append(file.errorString()),
                            MessageWidget::Error);
         return;
+    }
+
+    // say which values XML could not hold as text. They are saved as base64, so nothing is lost; this only
+    // tells the person what is in the file.
+    if (!hiddenCharacterPlaces.isEmpty()) {
+        constexpr int MaxShown = 8;
+        QString message = tr("%1 value(s) contain characters XML cannot store as text (for example hidden control "
+                             "characters). They were saved as base64 and are restored exactly when this file is "
+                             "imported into KeePassXC:")
+                              .arg(hiddenCharacterPlaces.size());
+        for (int i = 0; i < qMin<int>(MaxShown, hiddenCharacterPlaces.size()); ++i) {
+            message.append("\n").append(hiddenCharacterPlaces.at(i));
+        }
+        if (hiddenCharacterPlaces.size() > MaxShown) {
+            message.append("\n").append(tr("... and %1 more").arg(hiddenCharacterPlaces.size() - MaxShown));
+        }
+        emit messageGlobal(message, MessageWidget::Information);
     }
 }
 

@@ -91,9 +91,11 @@ public:
                 SaveAction action = Atomic,
                 const QString& backupFilePath = QString(),
                 QString* error = nullptr);
-    bool extract(QByteArray&, QString* error = nullptr);
+    // hiddenCharacterPlaces (optional) receives one line per entry/folder/setting field whose text XML cannot
+    // hold and was therefore stored as base64, e.g. Entry "Bank" in folder "Personal": Password. Never the values.
+    bool extract(QByteArray&, QString* error = nullptr, QStringList* hiddenCharacterPlaces = nullptr);
     // writes the XML export straight to the device instead of building it in memory first
-    bool extract(QIODevice* device, QString* error = nullptr);
+    bool extract(QIODevice* device, QString* error = nullptr, QStringList* hiddenCharacterPlaces = nullptr);
     // warnings (optional) receives non-fatal problems, e.g. attachments without content
     bool import(const QString& xmlExportPath, QString* error = nullptr, QStringList* warnings = nullptr);
 

@@ -147,7 +147,7 @@ add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
 
 # XML export/import round trip and hostile XML input
 add_unit_test(NAME testxmlimport SOURCES TestXmlImport.cpp
-        LIBS ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testimportsettingsdialog SOURCES TestImportSettingsDialog.cpp
         LIBS ${TEST_LIBRARIES})

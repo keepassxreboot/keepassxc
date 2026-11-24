@@ -134,6 +134,7 @@ void KdbxXmlWriter::fillBinaryIdxMap()
 
 void KdbxXmlWriter::writeMetadata()
 {
+    m_place = QStringLiteral("Database settings");
     m_xml.writeStartElement("Meta");
     writeString("Generator", m_meta->generator());
     if (m_kdbxVersion < KeePass2::FILE_VERSION_4 && !m_headerHash.isEmpty()) {
@@ -322,6 +323,11 @@ void KdbxXmlWriter::writeGroup(const Group* group)
 {
     Q_ASSERT(!group->uuid().isNull());
 
+    // (the labels for the list of places stored as base64 are only worked out when that is switched on)
+    const QString previousPlace = m_place;
+    if (m_hiddenCharactersAsBase64) {
+        m_place = QStringLiteral("Folder \"%1\"").arg(printableText(group->name()));
+    }
     m_xml.writeStartElement("Group");
 
     writeUuid("UUID", group->uuid());
@@ -362,6 +368,7 @@ void KdbxXmlWriter::writeGroup(const Group* group)
         writeGroup(child);
     }
 
+    m_place = previousPlace;
     m_xml.writeEndElement();
 }
 
@@ -406,6 +413,16 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
 {
     Q_ASSERT(!entry->uuid().isNull());
 
+    // An older version (history item) has no folder of its own: it belongs to the entry being written
+    const QString previousPlace = m_place;
+    if (m_hiddenCharactersAsBase64) {
+        if (entry->parent()) {
+            m_place = QStringLiteral("Entry \"%1\" in folder \"%2\"")
+                          .arg(printableText(entry->title()), printableText(entry->group()->name()));
+        } else {
+            m_place += QStringLiteral(" (older version)");
+        }
+    }
     m_xml.writeStartElement("Entry");
 
     writeUuid("UUID", entry->uuid());
@@ -464,6 +481,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         }
 
         if (!value.isEmpty()) {
+            m_field = key;
             writeText(value);
         }
         m_xml.writeEndElement();
@@ -495,6 +513,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         writeEntryHistory(entry);
     }
 
+    m_place = previousPlace;
     m_xml.writeEndElement();
 }
 
@@ -538,6 +557,7 @@ void KdbxXmlWriter::writeEntryHistory(const Entry* entry)
 
 void KdbxXmlWriter::writeString(const QString& qualifiedName, const QString& string)
 {
+    m_field = qualifiedName;
     if (string.isEmpty()) {
         m_xml.writeEmptyElement(qualifiedName);
     } else {
@@ -547,9 +567,15 @@ void KdbxXmlWriter::writeString(const QString& qualifiedName, const QString& str
     }
 }
 
-// text content, optionally keeping carriage returns (see setPreserveCarriageReturns)
+// text content, optionally keeping carriage returns (see setPreserveCarriageReturns). Must be called right
+// after the element's start tag and attributes, before any other content: the base64 mark is an attribute.
 void KdbxXmlWriter::writeText(const QString& text)
 {
+    if (m_hiddenCharactersAsBase64 && hasInvalidXml10Chars(text)) {
+        writeBase64Text(text);
+        return;
+    }
+
     const auto cleaned = stripInvalidXml10Chars(text);
     if (!m_preserveCarriageReturns || !cleaned.contains('\r')) {
         m_xml.writeCharacters(cleaned);
@@ -655,28 +681,116 @@ QString KdbxXmlWriter::colorPartToString(int value)
     return str;
 }
 
+// the test that decides what the stripping below removes, now shared with hasInvalidXml10Chars so the two can
+// never disagree about which text is "clean".
+bool KdbxXmlWriter::isInvalidXml10Unit(QChar ch)
+{
+    const ushort uc = ch.unicode();
+
+    return (uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D) // control characters
+           || (uc >= 0x7F && uc <= 0x84) // control characters, valid but discouraged by XML
+           || (uc >= 0x86 && uc <= 0x9F) // control characters, valid but discouraged by XML
+           || (uc > 0xFFFD) // noncharacter
+           || ch.isLowSurrogate() // single low surrogate
+           || ch.isHighSurrogate(); // single high surrogate
+}
+
 QString KdbxXmlWriter::stripInvalidXml10Chars(QString str)
 {
     for (int i = str.size() - 1; i >= 0; i--) {
         const QChar ch = str.at(i);
-        const ushort uc = ch.unicode();
 
         if (ch.isLowSurrogate() && i != 0 && str.at(i - 1).isHighSurrogate()) {
             // keep valid surrogate pair
             i--;
-        } else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D) // control characters
-                   || (uc >= 0x7F && uc <= 0x84) // control characters, valid but discouraged by XML
-                   || (uc >= 0x86 && uc <= 0x9F) // control characters, valid but discouraged by XML
-                   || (uc > 0xFFFD) // noncharacter
-                   || ch.isLowSurrogate() // single low surrogate
-                   || ch.isHighSurrogate()) // single high surrogate
-        {
-            qWarning("Stripping invalid XML 1.0 codepoint %x", uc);
+        } else if (isInvalidXml10Unit(ch)) {
+            qWarning("Stripping invalid XML 1.0 codepoint %x", ch.unicode());
             str.remove(i, 1);
         }
     }
 
     return str;
+}
+
+// true when stripInvalidXml10Chars would change the text
+bool KdbxXmlWriter::hasInvalidXml10Chars(const QString& str)
+{
+    for (qsizetype i = 0; i < str.size(); ++i) {
+        const QChar ch = str.at(i);
+
+        if (ch.isHighSurrogate() && i + 1 < str.size() && str.at(i + 1).isLowSurrogate()) {
+            // a valid surrogate pair
+            ++i;
+        } else if (isInvalidXml10Unit(ch)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// stores text XML cannot hold as base64, with a Base64 attribute that tells the importer how to read it back.
+// UTF-8 when that restores the text exactly (anyone can decode it by hand); UTF-16 (little endian) otherwise, because
+// UTF-8 cannot carry a lone surrogate, such as half of an emoji, and would turn it into a replacement character.
+void KdbxXmlWriter::writeBase64Text(const QString& text)
+{
+    QByteArray bytes = text.toUtf8();
+    if (QString::fromUtf8(bytes) == text) {
+        m_xml.writeAttribute("Base64", "UTF-8");
+    } else {
+        bytes.clear();
+        bytes.reserve(text.size() * 2);
+        for (const QChar ch : text) {
+            bytes.append(static_cast<char>(ch.unicode() & 0xFF));
+            bytes.append(static_cast<char>(ch.unicode() >> 8));
+        }
+        m_xml.writeAttribute("Base64", "UTF-16LE");
+    }
+
+    writeBase64Characters(bytes);
+
+    // Remember where this happened, so the person exporting can be told. The field is named, the value never is.
+    QString field = m_field;
+    if (field == QLatin1String("Key")) {
+        field = QStringLiteral("the name of a custom field or custom data item");
+    } else if (field == QLatin1String("Value")) {
+        field = QStringLiteral("the value of a custom data item");
+    }
+    const QString place = m_place + QStringLiteral(": ") + field;
+    if (!m_hiddenCharacterPlaceSet.contains(place)) {
+        m_hiddenCharacterPlaceSet.insert(place);
+        m_hiddenCharacterPlaces.append(place);
+    }
+}
+
+// text for a message: hidden characters written out (<U+0001>) so it can be read, and long text cut short
+QString KdbxXmlWriter::printableText(const QString& text)
+{
+    constexpr qsizetype MaxLength = 60;
+
+    QString result;
+    for (qsizetype i = 0; i < text.size(); ++i) {
+        const QChar ch = text.at(i);
+        if (ch.isHighSurrogate() && i + 1 < text.size() && text.at(i + 1).isLowSurrogate()) {
+            result.append(ch);
+            result.append(text.at(++i));
+        } else if (isInvalidXml10Unit(ch)) {
+            result.append(
+                QStringLiteral("<U+%1>").arg(static_cast<uint>(ch.unicode()), 4, 16, QLatin1Char('0')).toUpper());
+        } else {
+            result.append(ch);
+        }
+        if (result.size() >= MaxLength) {
+            result.append(QChar(0x2026));
+            break;
+        }
+    }
+    return result;
+}
+
+QStringList KdbxXmlWriter::hiddenCharacterPlaces() const
+{
+    return m_hiddenCharacterPlaces;
 }
 
 void KdbxXmlWriter::raiseError(const QString& errorMessage)
@@ -718,4 +832,9 @@ void KdbxXmlWriter::setWriteBinaryPool(bool enable)
 void KdbxXmlWriter::setPreserveCarriageReturns(bool enable)
 {
     m_preserveCarriageReturns = enable;
+}
+
+void KdbxXmlWriter::setStoreHiddenCharactersAsBase64(bool enable)
+{
+    m_hiddenCharactersAsBase64 = enable;
 }

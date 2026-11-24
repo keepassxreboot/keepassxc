@@ -508,10 +508,10 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     return true;
 }
 
-bool Database::extract(QByteArray& xmlOutput, QString* error)
+bool Database::extract(QByteArray& xmlOutput, QString* error, QStringList* hiddenCharacterPlaces)
 {
     KeePass2Writer writer;
-    writer.extractDatabase(this, xmlOutput);
+    writer.extractDatabase(this, xmlOutput, hiddenCharacterPlaces);
     if (writer.hasError()) {
         if (error) {
             *error = writer.errorString();
@@ -522,10 +522,10 @@ bool Database::extract(QByteArray& xmlOutput, QString* error)
     return true;
 }
 
-bool Database::extract(QIODevice* device, QString* error)
+bool Database::extract(QIODevice* device, QString* error, QStringList* hiddenCharacterPlaces)
 {
     KeePass2Writer writer;
-    writer.extractDatabase(this, device);
+    writer.extractDatabase(this, device, hiddenCharacterPlaces);
     if (writer.hasError()) {
         if (error) {
             *error = writer.errorString();

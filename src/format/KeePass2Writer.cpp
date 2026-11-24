@@ -141,15 +141,15 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     return m_writer->writeDatabase(device, db);
 }
 
-void KeePass2Writer::extractDatabase(Database* db, QByteArray& xmlOutput)
+void KeePass2Writer::extractDatabase(Database* db, QByteArray& xmlOutput, QStringList* hiddenCharacterPlaces)
 {
     QBuffer buffer;
     buffer.setBuffer(&xmlOutput);
     buffer.open(QIODevice::WriteOnly);
-    extractDatabase(db, &buffer);
+    extractDatabase(db, &buffer, hiddenCharacterPlaces);
 }
 
-void KeePass2Writer::extractDatabase(Database* db, QIODevice* device)
+void KeePass2Writer::extractDatabase(Database* db, QIODevice* device, QStringList* hiddenCharacterPlaces)
 {
     m_error = false;
     m_errorStr.clear();
@@ -164,7 +164,7 @@ void KeePass2Writer::extractDatabase(Database* db, QIODevice* device)
         m_writer.reset(new Kdbx4Writer());
     }
 
-    m_writer->extractDatabase(device, db);
+    m_writer->extractDatabase(device, db, hiddenCharacterPlaces);
 }
 
 bool KeePass2Writer::hasError() const

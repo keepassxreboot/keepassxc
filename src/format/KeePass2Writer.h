@@ -32,9 +32,9 @@ class KeePass2Writer
 public:
     bool writeDatabase(const QString& filename, Database* db);
     bool writeDatabase(QIODevice* device, Database* db);
-    void extractDatabase(Database* db, QByteArray& xmlOutput);
+    void extractDatabase(Database* db, QByteArray& xmlOutput, QStringList* hiddenCharacterPlaces = nullptr);
     // writes the XML export straight to the device
-    void extractDatabase(Database* db, QIODevice* device);
+    void extractDatabase(Database* db, QIODevice* device, QStringList* hiddenCharacterPlaces = nullptr);
     static quint32 kdbxVersionRequired(Database const* db, bool ignoreCurrent = false, bool ignoreKdf = false);
 
     QSharedPointer<KdbxWriter> writer() const;

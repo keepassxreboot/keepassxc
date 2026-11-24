@@ -86,6 +86,9 @@ protected:
 
     virtual QString readString();
     virtual QString readString(bool& isProtected, bool& protectInMemory);
+    // reads text a Base64 attribute marked as stored in base64 (see KdbxXmlWriter::writeBase64Text); raises
+    // an error and returns an empty string when it cannot be restored exactly
+    QString decodeBase64Text(const QString& kind, const QString& text);
     virtual bool readBool();
     virtual QDateTime readDateTime();
     virtual QString readColor();

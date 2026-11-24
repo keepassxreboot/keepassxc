@@ -66,8 +66,11 @@ bool KdbxWriter::writeData(QIODevice* device, const QByteArray& data)
     return true;
 }
 
-void KdbxWriter::extractDatabase(QIODevice* device, Database* db)
+void KdbxWriter::extractDatabase(QIODevice* device, Database* db, QStringList* hiddenCharacterPlaces)
 {
+    if (hiddenCharacterPlaces) {
+        hiddenCharacterPlaces->clear();
+    }
     KdbxXmlWriter::BinaryIdxMap idxMap;
     KdbxXmlWriter writer(db->formatVersion(), idxMap);
     writer.disableInnerStreamProtection(true);
@@ -75,7 +78,12 @@ void KdbxWriter::extractDatabase(QIODevice* device, Database* db)
     writer.setWriteBinaryPool(true);
     // keep Windows line breaks (CR LF) in notes and other text
     writer.setPreserveCarriageReturns(true);
+    // keep hidden characters (control characters in a password, ...) as marked base64 instead of deleting them
+    writer.setStoreHiddenCharactersAsBase64(true);
     writer.writeDatabase(device, db);
+    if (hiddenCharacterPlaces) {
+        *hiddenCharacterPlaces = writer.hiddenCharacterPlaces();
+    }
     // A failed write (full disk, closed pipe) is only visible here; without this it was reported as a success
     if (writer.hasError()) {
         raiseError(writer.errorString());

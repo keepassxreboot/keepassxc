@@ -17,6 +17,7 @@
 
 #include "TestXmlImport.h"
 
+#include <initializer_list>
 #include <memory>
 
 #include <QFile>
@@ -25,6 +26,7 @@
 #include <QSet>
 #include <QTemporaryDir>
 #include <QTest>
+#include <QXmlStreamReader>
 
 #include "core/AutoTypeAssociations.h"
 #include "core/Database.h"
@@ -35,6 +37,11 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/Kdf.h"
+#include "format/KeePass2.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
+#include "mock/MockClock.h"
 
 QTEST_GUILESS_MAIN(TestXmlImport)
 
@@ -671,6 +678,16 @@ void TestXmlImport::testMalformedInput_data()
     QTest::newRow("protected binary value")
         << header + QByteArray("<KeePassFile><Root><Group><UUID Protected=\"True\">AAAAAAAAAAAAAAAAAAAAAA==</UUID>")
                + "</Group></Root></KeePassFile>";
+    // A value marked as base64 text must decode exactly or be refused, never guessed at
+    auto marked = [&](const QByteArray& kind, const QByteArray& text) {
+        return header + QByteArray("<KeePassFile><Root><Group><UUID>") + groupUuid.toLatin1()
+               + "</UUID><Entry><String><Key>Title</Key><Value Base64=\"" + kind + "\">" + text
+               + "</Value></String></Entry></Group></Root></KeePassFile>";
+    };
+    QTest::newRow("base64 text of an unknown kind") << marked("EBCDIC", "YQ==");
+    QTest::newRow("base64 text that is not base64") << marked("UTF-8", "!!! not base64 !!!");
+    QTest::newRow("base64 text that is not valid UTF-8") << marked("UTF-8", "//4=");
+    QTest::newRow("base64 UTF-16 text with an odd number of bytes") << marked("UTF-16LE", "YQBi");
     QTest::newRow("invalid number") << header
                                            + QByteArray("<KeePassFile><Root><Group><IconID>abc</IconID></Group></Root>"
                                                         "</KeePassFile>");
@@ -1475,4 +1492,347 @@ void TestXmlImport::testSettingsAppliedToAnOpenDatabaseAreDatedNow()
     QCOMPARE(open.metadata()->name(), QString("Work vault"));
     QVERIFY2(open.metadata()->nameChanged() > file.nameChanged,
              qPrintable("dated " + open.metadata()->nameChanged().toString(Qt::ISODate)));
+}
+
+namespace
+{
+    // Text built from raw UTF-16 code units, so characters a C++ literal cannot hold (NUL, one half of an emoji) can be
+    // tested as well
+    QString fromUnits(std::initializer_list<ushort> units)
+    {
+        QString text;
+        for (const auto unit : units) {
+            text.append(QChar(unit));
+        }
+        return text;
+    }
+
+    // "x", then every character from..to separated by "x" (skips tab, line feed and carriage return: XML holds those)
+    QString controlsBetween(ushort from, ushort to)
+    {
+        QString text = "x";
+        for (ushort c = from; c <= to; ++c) {
+            if (c != 0x09 && c != 0x0A && c != 0x0D) {
+                text.append(QChar(c)).append('x');
+            }
+        }
+        return text;
+    }
+
+    // Puts the same text into every place a person can type text, so a character lost in any of them shows up. Keys get
+    // a letter in front so two keys in one place never collide.
+    void fillEveryTextFieldWith(Database& db, const QString& value)
+    {
+        const QString key = "k" + value;
+
+        auto* meta = db.metadata();
+        meta->setName(value);
+        meta->setDescription(value);
+        meta->setDefaultUserName(value);
+        meta->customData()->set(key, value);
+        meta->addCustomIcon(
+            QUuid::createUuid(), binaryPayload(20), value, QDateTime(QDate(2025, 5, 6), QTime(7, 8, 9), Qt::UTC));
+
+        auto* root = db.rootGroup();
+        root->setName(value);
+        root->setNotes(value);
+
+        auto* group = new Group();
+        group->setUuid(QUuid::createUuid());
+        group->setName(value);
+        group->setNotes(value);
+        group->setTags(value);
+        group->setDefaultAutoTypeSequence(value);
+        group->customData()->set(key, value);
+        group->setParent(root);
+
+        auto* entry = new Entry();
+        entry->setUuid(QUuid::createUuid());
+        entry->setGroup(group);
+        entry->setTitle(value);
+        entry->setUsername(value);
+        entry->setPassword(value);
+        entry->setUrl(value);
+        entry->setNotes(value);
+        entry->setTags(value);
+        entry->setOverrideUrl(value);
+        entry->attributes()->set(key, value);
+        entry->attributes()->set("p" + value, value, true);
+        entry->setDefaultAutoTypeSequence(value);
+        entry->autoTypeAssociations()->add({value, value});
+        entry->customData()->set(key, value);
+        // The state above goes into the entry's history when it is changed
+        entry->beginUpdate();
+        entry->setPassword(value + "x");
+        entry->endUpdate();
+    }
+
+    // The program stamps every custom data collection with the time of its last change, to the second, and an import
+    // stamps it again. A test that crosses a second boundary between building its data and importing it would see a
+    // difference that is not data. Stopping the clock for the length of the test rules that out.
+    class StoppedClock
+    {
+    public:
+        StoppedClock()
+        {
+            MockClock::setup(new MockClock(2026, 1, 2, 3, 4, 5));
+        }
+        ~StoppedClock()
+        {
+            MockClock::teardown();
+        }
+    };
+
+    QByteArray exportToBytes(Database& db)
+    {
+        QByteArray xml;
+        QString error;
+        if (!db.extract(xml, &error)) {
+            qWarning("export failed: %s", qPrintable(error));
+            return {};
+        }
+        return xml;
+    }
+} // namespace
+
+void TestXmlImport::testHiddenCharactersSurviveXmlRoundTrip_data()
+{
+    QTest::addColumn<QString>("value");
+
+    QTest::newRow("invisible characters inside a password") << fromUnits({'a', 'b', 0x01, 'c', 'd', 0x7F, 'e', 'f'});
+    QTest::newRow("a NUL character") << fromUnits({'a', 0x00, 'b'});
+    QTest::newRow("every low control character") << controlsBetween(0x01, 0x1F);
+    QTest::newRow("the control characters 0x7F to 0x9F") << controlsBetween(0x7F, 0x9F);
+    QTest::newRow("the two noncharacters") << fromUnits({'a', 0xFFFE, 'b', 0xFFFF, 'c'});
+    QTest::newRow("a lone first half of an emoji") << fromUnits({'a', 0xD83D, 'b'});
+    QTest::newRow("a lone second half of an emoji") << fromUnits({'a', 0xDE00, 'b'});
+    QTest::newRow("the two halves of an emoji in the wrong order") << fromUnits({0xDE00, 0xD83D});
+    QTest::newRow("emoji around a hidden character") << fromUnits({0xD83D, 0xDE00, 0x02, 0xD83D, 0xDE00});
+    QTest::newRow("Windows line breaks and a hidden character")
+        << fromUnits({'a', 0x0D, 0x0A, 'b', 0x01, 0x0D, 0x0A, 'c'});
+    QTest::newRow("two first halves of an emoji, then a second half") << fromUnits({0xD83D, 0xD83D, 0xDE00});
+    QTest::newRow("a whole emoji, then a lone second half") << fromUnits({0xD83D, 0xDE00, 0xDE00});
+    // A leading U+FEFF is a byte order mark to some decoders, which skip it
+    QTest::newRow("starts with U+FEFF and has a hidden character") << fromUnits({0xFEFF, 'a', 0x01});
+    QTest::newRow("starts with U+FEFF and has half an emoji") << fromUnits({0xFEFF, 'a', 0xD83D});
+    QTest::newRow("only a hidden character") << fromUnits({0x01});
+    QTest::newRow("hidden characters at the start and the end") << fromUnits({0x01, 'a', 0x7F});
+    QTest::newRow("markup and a hidden character") << (QString("<a href=\"x\">&amp;") + QChar(0x1B) + "</a>");
+    QTest::newRow("looks like base64 and has a hidden character") << (QString("YWJjZA==") + QChar(0x01));
+    // Longer than one 48 KiB piece of the base64 that is written
+    QTest::newRow("a long text with one hidden character in the middle")
+        << (QString(30000, 'x') + QChar(0x01) + QString(30000, 'y'));
+    // Text XML can hold must not be touched, and must not be mistaken for the marked kind
+    QTest::newRow("text that only looks like base64") << QString("YWJjZA==");
+    QTest::newRow("tabs and line breaks") << QString("a\tb\nc\r\nd");
+    QTest::newRow("a next-line character (valid XML)") << fromUnits({'a', 0x85, 'b'});
+}
+
+// Catches: a hidden character in any text of the database being deleted or changed by an XML export and import. The
+// password is the one that matters most: it is shown plainly in the file, so the character used to be dropped silently.
+void TestXmlImport::testHiddenCharactersSurviveXmlRoundTrip()
+{
+    QFETCH(QString, value);
+
+    StoppedClock clock;
+    Database source;
+    fillEveryTextFieldWith(source, value);
+    syncProtectionFlags(source);
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("export.xml");
+    QVERIFY(exportXml(&source, path));
+
+    Database imported;
+    QString error;
+    QVERIFY2(imported.import(path, &error), qPrintable(error));
+
+    QVERIFY2(describeMetadataDifference(source.metadata(), imported.metadata()) == "(unknown part)",
+             qPrintable("metadata differs: " + describeMetadataDifference(source.metadata(), imported.metadata())));
+
+    const auto sourceGroups = source.rootGroup()->groupsRecursive(true);
+    QCOMPARE(imported.rootGroup()->groupsRecursive(true).size(), sourceGroups.size());
+    for (const auto* g : sourceGroups) {
+        const auto* other = g->uuid() == source.rootGroup()->uuid() ? imported.rootGroup()
+                                                                    : imported.rootGroup()->findGroupByUuid(g->uuid());
+        QVERIFY2(other, "a group is missing after import");
+        QVERIFY2(describeGroupDifference(g, other) == "(unknown part)",
+                 qPrintable("group differs: " + describeGroupDifference(g, other)));
+    }
+
+    const auto sourceEntries = source.rootGroup()->entriesRecursive();
+    QCOMPARE(sourceEntries.size(), 1);
+    QCOMPARE(imported.rootGroup()->entriesRecursive().size(), 1);
+    const auto* before = sourceEntries.first();
+    const auto* after = imported.rootGroup()->findEntryByUuid(before->uuid());
+    QVERIFY2(after, "the entry is missing after import");
+    QVERIFY2(after->password() == before->password(), "the password is not the same after import");
+    QVERIFY2(before->equals(after, CompareItemIgnoreMilliseconds),
+             qPrintable("entry differs: " + describeEntryDifference(before, after)));
+    QCOMPARE(after->historyItems().size(), 1);
+}
+
+// Catches: the file holding text XML cannot hold in a way that is not valid XML, or not marked so the importer knows
+// to decode it.
+void TestXmlImport::testHiddenCharactersAreWrittenAsBase64()
+{
+    Database source;
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(source.rootGroup());
+    entry->setTitle("with hidden characters");
+    entry->setPassword(fromUnits({'a', 'b', 0x01, 'c', 'd', 0x7F, 'e', 'f'}));
+
+    const auto xml = exportToBytes(source);
+    QVERIFY(!xml.isEmpty());
+
+    QXmlStreamReader reader(xml);
+    while (!reader.atEnd()) {
+        reader.readNext();
+    }
+    QVERIFY2(!reader.hasError(), qPrintable("the export is not valid XML: " + reader.errorString()));
+    QVERIFY2(!xml.contains('\x01') && !xml.contains('\x7F'), "a hidden character was written into the file itself");
+    QVERIFY2(!xml.contains(">abcdef<"), "the password was written with its hidden characters removed");
+    // 61 62 01 63 64 7F 65 66 as base64
+    QVERIFY2(xml.contains("Base64=\"UTF-8\">YWIBY2R/ZWY=</Value>"), "the password is not stored as marked base64");
+}
+
+// Catches: half of an emoji (which UTF-8 cannot hold) being replaced by a placeholder character.
+void TestXmlImport::testUnpairedSurrogateIsWrittenAsUtf16Base64()
+{
+    Database source;
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(source.rootGroup());
+    entry->setTitle("with half an emoji");
+    entry->setPassword(fromUnits({'a', 0xD800, 'b'}));
+
+    const auto xml = exportToBytes(source);
+    QVERIFY(!xml.isEmpty());
+    // 61 00 00 D8 62 00 as base64
+    QVERIFY2(xml.contains("Base64=\"UTF-16LE\">YQAA2GIA</Value>"), "the text is not stored as marked UTF-16 base64");
+}
+
+// Guard: a database with nothing XML cannot hold exports exactly as before; no mark appears anywhere.
+void TestXmlImport::testCleanTextIsWrittenWithoutTheBase64Mark()
+{
+    Database source;
+    fillEveryTextFieldWith(
+        source, QString::fromUtf8("tab\there\r\nWindows line \xF0\x9F\x94\x92 YWJjZA== <b>&amp;</b> \xC2\x85"));
+
+    const auto xml = exportToBytes(source);
+    QVERIFY(!xml.isEmpty());
+    QVERIFY2(!xml.contains("Base64="), "text without hidden characters was marked as base64");
+}
+
+// Guard: only the XML export changed. The normal save of the database file behaves as before. A protected field (the
+// password, by default) is encrypted before it is written, so its hidden characters survive; an unprotected field (the
+// title, by default) still loses them. This is how KeePassXC has always saved, and other KeePass programs read the
+// same file format.
+void TestXmlImport::testNormalSaveOfTheDatabaseFileIsUnchanged()
+{
+    const auto hiddenPassword = fromUnits({'a', 0x01, 'b'});
+
+    Database db;
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4);
+    kdf->setRounds(1);
+    QVERIFY(db.changeKdf(kdf));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("pw"));
+    QVERIFY(db.setKey(key));
+
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(db.rootGroup());
+    entry->setTitle(fromUnits({'x', 0x02, 'y'}));
+    entry->setPassword(hiddenPassword);
+
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+    const auto path = dir.filePath("saved.kdbx");
+    QString error;
+    QVERIFY2(db.saveAs(path, Database::Atomic, {}, &error), qPrintable(error));
+
+    Database reopened;
+    QVERIFY2(reopened.open(path, key, &error), qPrintable(error));
+    const auto* saved = reopened.rootGroup()->entries().value(0);
+    QVERIFY(saved);
+    QVERIFY2(saved->password() == hiddenPassword, "a protected password lost a hidden character in a normal save");
+    QCOMPARE(saved->title(), QString("xy"));
+}
+
+// Catches: an export that stores values as base64 without telling the user which entries and fields it did that to, or
+// that names a value instead of the field.
+void TestXmlImport::testExportListsWhereHiddenCharactersWereStoredAsBase64()
+{
+    Database source;
+    source.metadata()->setDescription(fromUnits({'d', 0x01}));
+
+    auto* folder = new Group();
+    folder->setUuid(QUuid::createUuid());
+    folder->setName("Personal");
+    folder->setParent(source.rootGroup());
+
+    auto* bank = new Entry();
+    bank->setUuid(QUuid::createUuid());
+    bank->setGroup(folder);
+    bank->setTitle("Bank");
+    bank->setUsername("clean user");
+    bank->setPassword(QString("s3cr3t") + QChar(0x01));
+    bank->setNotes(QString("notes") + QChar(0x7F));
+    bank->attributes()->set("Pin", QString("1234") + QChar(0x02), true);
+    // The state above becomes an older version in the entry's history
+    bank->beginUpdate();
+    bank->setUsername("changed user");
+    bank->endUpdate();
+
+    auto* odd = new Entry();
+    odd->setUuid(QUuid::createUuid());
+    odd->setGroup(folder);
+    odd->setTitle(fromUnits({'o', 'd', 'd', 0x01}));
+
+    auto* clean = new Entry();
+    clean->setUuid(QUuid::createUuid());
+    clean->setGroup(folder);
+    clean->setTitle("Clean");
+    clean->setPassword("plain");
+
+    QByteArray xml;
+    QStringList places;
+    QString error;
+    QVERIFY2(source.extract(xml, &error, &places), qPrintable(error));
+
+    const QSet<QString> expected{
+        "Database settings: DatabaseDescription",
+        "Entry \"Bank\" in folder \"Personal\": Password",
+        "Entry \"Bank\" in folder \"Personal\": Notes",
+        "Entry \"Bank\" in folder \"Personal\": Pin",
+        "Entry \"Bank\" in folder \"Personal\" (older version): Password",
+        "Entry \"Bank\" in folder \"Personal\" (older version): Notes",
+        "Entry \"Bank\" in folder \"Personal\" (older version): Pin",
+        // The hidden character in a title is shown written out, so the line can be read
+        "Entry \"odd<U+0001>\" in folder \"Personal\": Title",
+    };
+    QCOMPARE(QSet<QString>(places.cbegin(), places.cend()), expected);
+    QCOMPARE(places.size(), expected.size());
+    QVERIFY2(!places.join('\n').contains("s3cr3t") && !places.join('\n').contains("1234"),
+             "the list must name fields, never show their values");
+}
+
+// Guard: nothing to report when nothing was stored as base64
+void TestXmlImport::testExportListsNothingWhenThereAreNoHiddenCharacters()
+{
+    Database source;
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(source.rootGroup());
+    entry->setTitle("Clean");
+    entry->setPassword("plain");
+
+    QByteArray xml;
+    QStringList places{"left over from before"};
+    QString error;
+    QVERIFY2(source.extract(xml, &error, &places), qPrintable(error));
+    QVERIFY2(places.isEmpty(), qPrintable(places.join('\n')));
 }
