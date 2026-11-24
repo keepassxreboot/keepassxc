@@ -83,6 +83,7 @@ private slots:
     void testHiddenCharacterListFileName_data();
     void testHiddenCharacterListFileName();
     void testHiddenCharacterListFile();
+    void testOlderHiddenCharacterListIsRemovedOnlyWhenItIsOurs();
     void testExportListsWhereHiddenCharactersWereStoredAsBase64();
     void testExportListsNothingWhenThereAreNoHiddenCharacters();
 };

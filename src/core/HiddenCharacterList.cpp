@@ -17,6 +17,7 @@
 
 #include "HiddenCharacterList.h"
 
+#include <QFile>
 #include <QObject>
 #include <QSaveFile>
 
@@ -29,18 +30,38 @@ QString HiddenCharacterList::filePathFor(const QString& exportFilePath)
     return base + QStringLiteral(".hidden-characters.txt");
 }
 
+namespace
+{
+    // The first line of every list; what removeOlderList() recognises a list by
+    QString firstLine()
+    {
+        return QObject::tr(
+            "These values contain characters that XML cannot store as text (for example hidden control characters).");
+    }
+} // namespace
+
+bool HiddenCharacterList::removeOlderList(const QString& filePath)
+{
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return false;
+    }
+    const bool isOurs = QString::fromUtf8(file.readLine()).trimmed() == firstLine();
+    file.close();
+    return isOurs && file.remove();
+}
+
 bool HiddenCharacterList::save(const QString& filePath, const QStringList& places, QString* error)
 {
     const QString text =
-        QObject::tr("These values contain characters that XML cannot store as text (for example hidden control "
-                    "characters).\n"
-                    "In the XML file they are saved as base64 and are restored exactly when the file is imported "
-                    "into KeePassXC.\n"
-                    "This list names the places only, never the values.\n"
-                    "\n"
-                    "Number of values: %1\n"
-                    "\n")
-            .arg(places.size())
+        firstLine() + QLatin1Char('\n')
+        + QObject::tr("In the XML file they are saved as base64 and are restored exactly when the file is imported "
+                      "into KeePassXC.\n"
+                      "This list names the places only, never the values.\n"
+                      "\n"
+                      "Number of values: %1\n"
+                      "\n")
+              .arg(places.size())
         + places.join(QLatin1Char('\n')) + QLatin1Char('\n');
 
     // Written to a temporary file that replaces the target only when complete, like the export itself

@@ -722,6 +722,9 @@ void DatabaseTabWidget::exportToXML()
             message.append("\n\n").append(tr("The full list could not be saved to %1: %2").arg(listPath, listError));
             emit messageGlobal(message, MessageWidget::Warning);
         }
+    } else {
+        // An older list from an earlier export to this name would now describe a file that is gone
+        HiddenCharacterList::removeOlderList(HiddenCharacterList::filePathFor(fileName));
     }
 }
 

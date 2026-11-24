@@ -33,6 +33,11 @@ namespace HiddenCharacterList
     // Writes the list (one line per place, as Database::extract reports them: they name the field, never a value).
     // Replaces an older file. Returns false and says why in error when it could not be written.
     bool save(const QString& filePath, const QStringList& places, QString* error);
+
+    // For an export that needs no list: removes an older list at filePath that would describe a file that is no longer
+    // there, but only when it is a list this program wrote (its first line is the one save() writes). Any other file
+    // with that name is left alone. Returns true when a list was removed.
+    bool removeOlderList(const QString& filePath);
 } // namespace HiddenCharacterList
 
 #endif // KEEPASSXC_HIDDENCHARACTERLIST_H

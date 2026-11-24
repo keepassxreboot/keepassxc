@@ -2211,6 +2211,28 @@ void TestXmlImport::testHiddenCharacterListFile()
     QVERIFY2(!failure.isEmpty(), "a list that could not be saved must say why");
 }
 
+// Catches: an older list staying next to a newer export that needs none (it would describe the wrong file), and the
+// opposite: a file somebody else made with that name being deleted.
+void TestXmlImport::testOlderHiddenCharacterListIsRemovedOnlyWhenItIsOurs()
+{
+    QTemporaryDir dir;
+    QVERIFY(dir.isValid());
+
+    const auto ours = dir.filePath("ours.hidden-characters.txt");
+    QString error;
+    QVERIFY2(HiddenCharacterList::save(ours, {"Entry \"Bank\" in folder \"Personal\": Password"}, &error),
+             qPrintable(error));
+    QVERIFY(HiddenCharacterList::removeOlderList(ours));
+    QVERIFY2(!QFile::exists(ours), "the older list is still there");
+
+    const auto notOurs = dir.filePath("notes.hidden-characters.txt");
+    QVERIFY(writeFile(notOurs, "my own notes\n"));
+    QVERIFY(!HiddenCharacterList::removeOlderList(notOurs));
+    QVERIFY2(QFile::exists(notOurs), "a file that is not a list was deleted");
+
+    QVERIFY(!HiddenCharacterList::removeOlderList(dir.filePath("none.hidden-characters.txt")));
+}
+
 void TestXmlImport::testProtectedValueEncoding_data()
 {
     QTest::addColumn<QByteArray>("plaintext");
