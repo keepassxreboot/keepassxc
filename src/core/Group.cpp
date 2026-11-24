@@ -970,6 +970,35 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
     return clonedGroup;
 }
 
+/**
+ * Clone this group with all of its subgroups, entries and entry history. Every group and entry gets a new UUID.
+ * In contrast to clone(), the time info of every group and entry (creation, modification, access, expiry and
+ * location changed) is kept as it is, because clone() stamps the copied items as moved just now.
+ * The caller takes ownership of the returned group.
+ */
+Group* Group::cloneWithNewUuids() const
+{
+    auto* copy =
+        clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory, Group::CloneNewUuid | Group::CloneIncludeEntries);
+
+    // clone() keeps the order of groups and entries, so the lists of both trees run in step
+    const auto originalGroups = groupsRecursive(true);
+    const auto copiedGroups = copy->groupsRecursive(true);
+    Q_ASSERT(originalGroups.size() == copiedGroups.size());
+    for (qsizetype i = 0; i < qMin(originalGroups.size(), copiedGroups.size()); ++i) {
+        copiedGroups.at(i)->setTimeInfo(originalGroups.at(i)->timeInfo());
+    }
+
+    const auto originalEntries = entriesRecursive();
+    const auto copiedEntries = copy->entriesRecursive();
+    Q_ASSERT(originalEntries.size() == copiedEntries.size());
+    for (qsizetype i = 0; i < qMin(originalEntries.size(), copiedEntries.size()); ++i) {
+        copiedEntries.at(i)->setTimeInfo(originalEntries.at(i)->timeInfo());
+    }
+
+    return copy;
+}
+
 void Group::copyDataFrom(const Group* other)
 {
     if (set(m_data, other->m_data)) {

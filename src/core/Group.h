@@ -165,6 +165,7 @@ public:
 
     Group* clone(Entry::CloneFlags entryFlags = Entry::CloneDefault,
                  Group::CloneFlags groupFlags = Group::CloneDefault) const;
+    Group* cloneWithNewUuids() const;
 
     void copyDataFrom(const Group* other);
     QString print(bool recursive = false, bool flatten = false, int depth = 0);
