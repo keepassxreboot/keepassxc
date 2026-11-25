@@ -63,6 +63,7 @@ private slots:
     void testSave();
     void testSaveBackupPath();
     void testSaveBackupPath_data();
+    void testDatabaseSettingsKeepKdfParameters();
     void testDatabaseSettings();
     void testDatabaseLocking();
     void testDragAndDropKdbxFiles();

@@ -39,6 +39,7 @@
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "gui/ActionCollection.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
@@ -66,6 +67,7 @@
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
+#include "mock/MockChallengeResponseKey.h"
 #include "mock/MockRemoteProcess.h"
 
 #define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
@@ -1733,6 +1735,102 @@ void TestGui::testSaveBackupPath()
 
     // Clean up
     QFile(expectedBackupFile).remove();
+}
+
+void TestGui::testDatabaseSettingsKeepKdfParameters()
+{
+    // Argon2 memory that is not a whole number of MiB cannot be shown exactly in the encryption settings
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID).staticCast<Argon2Kdf>();
+    kdf->setRounds(1);
+    QVERIFY(kdf->setMemory(1536));
+    QVERIFY(kdf->setParallelism(1));
+    QVERIFY(m_db->changeKdf(kdf));
+
+    triggerAction("actionDatabaseSettings");
+    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    auto* securityTabWidget = dbSettingsDialog->findChild<QTabWidget*>("securityTabWidget");
+    auto* encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto* advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+    auto* algorithmComboBox = advancedTab->findChild<QComboBox*>("algorithmComboBox");
+    auto* memorySpinBox = advancedTab->findChild<QSpinBox*>("memorySpinBox");
+    auto* parallelismSpinBox = advancedTab->findChild<QSpinBox*>("parallelismSpinBox");
+    auto showAdvancedEncryptionSettings = [&]() {
+        dbSettingsCategoryList->setCurrentCategory(1);
+        securityTabWidget->setCurrentIndex(1);
+        encryptionSettings->setCurrentWidget(advancedTab);
+        QApplication::processEvents();
+    };
+    showAdvancedEncryptionSettings();
+    QCOMPARE(memorySpinBox->value(), 1);
+
+    // Changing only the cipher keeps the KDF parameters
+    algorithmComboBox->setCurrentIndex(algorithmComboBox->findData(KeePass2::CIPHER_TWOFISH));
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->cipher(), KeePass2::CIPHER_TWOFISH);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->memory(), quint64(1536));
+
+    // Changing a KDF parameter applies it and keeps the others
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    parallelismSpinBox->setValue(2);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->kdf().staticCast<Argon2Kdf>()->parallelism(), quint32(2));
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->memory(), quint64(1536));
+
+    // Switching between Argon2d and Argon2id also keeps the parameters
+    auto* kdfComboBox = advancedTab->findChild<QComboBox*>("kdfComboBox");
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    kdfComboBox->setCurrentIndex(kdfComboBox->findData(KeePass2::KDF_ARGON2D));
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->kdf()->uuid(), KeePass2::KDF_ARGON2D);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->memory(), quint64(1536));
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->parallelism(), quint32(2));
+
+    // A memory that was changed is saved as shown
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    memorySpinBox->setValue(2);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->kdf().staticCast<Argon2Kdf>()->memory(), quint64(2048));
+
+    // Less memory than shown is not kept
+    QVERIFY(kdf->setMemory(64));
+    QVERIFY(m_db->changeKdf(kdf));
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    QCOMPARE(memorySpinBox->value(), 1);
+    algorithmComboBox->setCurrentIndex(algorithmComboBox->findData(KeePass2::CIPHER_AES256));
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->cipher(), KeePass2::CIPHER_AES256);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->memory(), quint64(1024));
+
+    // A value above the maximum of its spin box is kept
+    kdf->setRounds(3);
+    QVERIFY(m_db->changeKdf(kdf));
+    auto* transformRoundsSpinBox = advancedTab->findChild<QSpinBox*>("transformRoundsSpinBox");
+    transformRoundsSpinBox->setMaximum(2);
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    QCOMPARE(transformRoundsSpinBox->value(), 2);
+    algorithmComboBox->setCurrentIndex(algorithmComboBox->findData(KeePass2::CIPHER_TWOFISH));
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->cipher(), KeePass2::CIPHER_TWOFISH);
+    QCOMPARE(m_db->kdf()->rounds(), 3);
+
+    // Accepting the settings without changes keeps the KDF, also when the key only has a challenge-response key
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addChallengeResponseKey(QSharedPointer<MockChallengeResponseKey>::create(QByteArray("secret")));
+    QVERIFY(m_db->setKey(key));
+    const auto currentKdf = m_db->kdf();
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_VERIFY(!dbSettingsDialog->isVisible());
+    QCOMPARE(m_db->kdf(), currentKdf);
 }
 
 void TestGui::testDatabaseSettings()
