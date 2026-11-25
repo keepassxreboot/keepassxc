@@ -60,6 +60,8 @@ private slots:
     void reject();
 
 private:
+    bool closeIfDatabaseReleased();
+
     QSharedPointer<Database> m_db;
     QPointer<DatabaseSettingsWidgetGeneral> m_generalWidget;
     QPointer<QTabWidget> m_securityTabWidget;

@@ -39,6 +39,7 @@
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "gui/ActionCollection.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
@@ -1983,6 +1984,96 @@ void TestGui::testDatabaseLocking()
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+}
+
+void TestGui::testDatabaseSettingsConfirmBeforeSaving()
+{
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID).staticCast<Argon2Kdf>();
+    kdf->setRounds(1);
+    QVERIFY(kdf->setMemory(1024));
+    QVERIFY(kdf->setParallelism(1));
+    QVERIFY(m_db->changeKdf(kdf));
+    const auto key = m_db->key();
+    const auto name = m_db->metadata()->name();
+
+    triggerAction("actionDatabaseSettings");
+    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
+    auto* securityTabWidget = dbSettingsDialog->findChild<QTabWidget*>("securityTabWidget");
+    auto* encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto* advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+    auto* transformRoundsSpinBox = advancedTab->findChild<QSpinBox*>("transformRoundsSpinBox");
+    auto showAdvancedEncryptionSettings = [&]() {
+        dbSettingsCategoryList->setCurrentCategory(1);
+        securityTabWidget->setCurrentIndex(1);
+        encryptionSettings->setCurrentWidget(advancedTab);
+        QApplication::processEvents();
+    };
+
+    // Change the name and the password, which are saved before the encryption settings
+    dbSettingsDialog->findChild<QLineEdit*>("dbNameEdit")->setText("Changed name");
+    dbSettingsCategoryList->setCurrentCategory(1);
+    securityTabWidget->setCurrentIndex(0);
+    QApplication::processEvents();
+    auto* passwordEditWidget = securityTabWidget->findChild<PasswordEditWidget*>();
+    QVERIFY(passwordEditWidget);
+    QTest::mouseClick(passwordEditWidget->findChild<QPushButton*>("changeButton"), Qt::LeftButton);
+    QApplication::processEvents();
+    auto passwordWidgets = dbSettingsDialog->findChildren<PasswordWidget*>();
+    QCOMPARE(passwordWidgets.count(), 2);
+    passwordWidgets[0]->setText("b");
+    passwordWidgets[1]->setText("b");
+
+    // A very high number of rounds is confirmed before any settings are saved, and cancelling saves nothing
+    showAdvancedEncryptionSettings();
+    transformRoundsSpinBox->setValue(10001);
+    {
+        TEST_MODAL_NO_WAIT(auto* warning = qobject_cast<QMessageBox*>(QApplication::activeModalWidget());
+                           QVERIFY(warning);
+                           const auto text = warning->text();
+                           warning->defaultButton()->click();
+                           QVERIFY(text.contains("very high number of key transform rounds")););
+        QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+        QTRY_VERIFY(dialogFinished);
+    }
+    QVERIFY(dbSettingsDialog->isVisible());
+    QCOMPARE(m_db->metadata()->name(), name);
+    QCOMPARE(m_db->key(), key);
+    QCOMPARE(m_db->kdf()->rounds(), 1);
+
+    // The other changes are kept, so they are saved once the number of rounds is lowered
+    transformRoundsSpinBox->setValue(2);
+    MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_VERIFY(!dbSettingsDialog->isVisible());
+    QCOMPARE(m_db->metadata()->name(), QString("Changed name"));
+    QVERIFY(m_db->key() != key);
+    QCOMPARE(m_db->kdf()->rounds(), 2);
+
+    // If the database is reloaded while the user is asked, nothing is saved to the released database
+    const auto releasedDb = m_db;
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    transformRoundsSpinBox->setValue(10001);
+    {
+        TEST_MODAL_NO_WAIT(auto* warning = qobject_cast<QMessageBox*>(QApplication::activeModalWidget());
+                           QVERIFY(warning);
+                           m_dbWidget->replaceDatabase(QSharedPointer<Database>::create());
+                           // Answers the message that the settings were not saved
+                           MessageBox::setNextAnswer(MessageBox::Ok);
+                           for (auto* button : warning->buttons()) {
+                               if (warning->buttonRole(button) == QMessageBox::AcceptRole) {
+                                   button->click();
+                               }
+                           });
+        QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+        QTRY_VERIFY(dialogFinished);
+    }
+    m_db = m_dbWidget->database();
+    QTRY_VERIFY(!dbSettingsDialog->isVisible());
+    QVERIFY(releasedDb->kdf()->uuid() != KeePass2::KDF_ARGON2ID);
 }
 
 void TestGui::testDragAndDropKdbxFiles()

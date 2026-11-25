@@ -37,6 +37,8 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetEncryption);
     ~DatabaseSettingsWidgetEncryption() override;
 
+    bool confirmSettings() override;
+
 public slots:
     void initialize() override;
     void uninitialize() override;

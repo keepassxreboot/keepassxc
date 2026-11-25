@@ -1897,6 +1897,14 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Database settings not saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database was reloaded, so the database settings were not saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>KeeShare</source>
         <translation type="unfinished"></translation>
     </message>

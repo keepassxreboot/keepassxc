@@ -79,6 +79,10 @@ bool NewDatabaseWizardPage::validatePage()
         return false;
     }
 
+    if (!m_pageWidget->confirmSettings()) {
+        return false;
+    }
+
     bool valid = m_pageWidget->saveSettings();
     m_pageWidget->uninitialize();
     return valid;

@@ -251,6 +251,53 @@ void DatabaseSettingsWidgetEncryption::markDirty()
     m_isDirty = true;
 }
 
+/**
+ * Ask the user to confirm advanced settings that make the database very slow to open or weak.
+ * DatabaseSettingsDialog::save() calls this before any settings page is saved.
+ */
+bool DatabaseSettingsWidgetEncryption::confirmSettings()
+{
+    // Only ask about advanced settings that were changed
+    if (!isAdvancedMode() || !(m_isDirty || m_initWithAdvanced != isAdvancedMode())) {
+        return true;
+    }
+
+    auto kdfChoice = m_ui->kdfComboBox->currentData().toUuid();
+
+    // first perform safety check for KDF rounds
+    if (IS_ARGON2(kdfChoice) && m_ui->transformRoundsSpinBox->value() > 10000) {
+        QMessageBox warning;
+        warning.setIcon(QMessageBox::Warning);
+        warning.setWindowTitle(tr("Number of rounds too high", "Key transformation rounds"));
+        warning.setText(tr("You are using a very high number of key transform rounds with Argon2.\n\n"
+                           "If you keep this number, your database may take hours, days, or even longer to open."));
+        auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
+        warning.setDefaultButton(cancel);
+        warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
+        warning.exec();
+        if (warning.clickedButton() != ok) {
+            return false;
+        }
+    } else if (IS_AES_KDF(kdfChoice) && m_ui->transformRoundsSpinBox->value() < 100000) {
+        QMessageBox warning;
+        warning.setIcon(QMessageBox::Warning);
+        warning.setWindowTitle(tr("Number of rounds too low", "Key transformation rounds"));
+        warning.setText(tr("You are using a very low number of key transform rounds with AES-KDF.\n\n"
+                           "If you keep this number, your database will not be protected from brute force attacks."));
+        auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
+        warning.setDefaultButton(cancel);
+        warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
+        warning.exec();
+        if (warning.clickedButton() != ok) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool DatabaseSettingsWidgetEncryption::saveSettings()
 {
     Q_ASSERT(m_db);
@@ -295,37 +342,6 @@ bool DatabaseSettingsWidgetEncryption::saveSettings()
 
     // Advanced mode sets KDF
     auto kdfChoice = m_ui->kdfComboBox->currentData().toUuid();
-
-    // first perform safety check for KDF rounds
-    if (IS_ARGON2(kdfChoice) && m_ui->transformRoundsSpinBox->value() > 10000) {
-        QMessageBox warning;
-        warning.setIcon(QMessageBox::Warning);
-        warning.setWindowTitle(tr("Number of rounds too high", "Key transformation rounds"));
-        warning.setText(tr("You are using a very high number of key transform rounds with Argon2.\n\n"
-                           "If you keep this number, your database may take hours, days, or even longer to open."));
-        auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
-        warning.setDefaultButton(cancel);
-        warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
-        warning.exec();
-        if (warning.clickedButton() != ok) {
-            return false;
-        }
-    } else if (IS_AES_KDF(kdfChoice) && m_ui->transformRoundsSpinBox->value() < 100000) {
-        QMessageBox warning;
-        warning.setIcon(QMessageBox::Warning);
-        warning.setWindowTitle(tr("Number of rounds too low", "Key transformation rounds"));
-        warning.setText(tr("You are using a very low number of key transform rounds with AES-KDF.\n\n"
-                           "If you keep this number, your database will not be protected from brute force attacks."));
-        auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
-        warning.setDefaultButton(cancel);
-        warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
-        warning.exec();
-        if (warning.clickedButton() != ok) {
-            return false;
-        }
-    }
 
     m_db->setCipher(m_ui->algorithmComboBox->currentData().toUuid());
 
