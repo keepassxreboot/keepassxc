@@ -31,6 +31,8 @@ private slots:
     void testBrokenHeaderHash();
     void testFormat300();
     void testAttachmentIndexStability();
+    void testTransformRounds();
+    void testTransformRounds_data();
 
 protected:
     void initTestCaseImpl() override;

@@ -201,7 +201,11 @@ void KdbxReader::setTransformRounds(const QByteArray& data)
     auto rounds = Endian::bytesToSizedInt<quint64>(data, KeePass2::BYTEORDER);
     auto kdf = m_db->kdf();
     if (!kdf.isNull()) {
-        kdf->setRounds(static_cast<int>(rounds));
+        // Reject counts the KDF cannot represent instead of silently using a different number of rounds
+        if (rounds > static_cast<quint64>(INT_MAX) || !kdf->setRounds(static_cast<int>(rounds))) {
+            raiseError(tr("Unsupported number of transform rounds: %1").arg(rounds));
+            return;
+        }
     }
 }
 

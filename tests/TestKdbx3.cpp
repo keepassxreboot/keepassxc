@@ -18,6 +18,7 @@
 #include "TestKdbx3.h"
 
 #include "config-keepassx-tests.h"
+#include "core/Endian.h"
 #include "core/Metadata.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
@@ -26,6 +27,7 @@
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
 #include <QTest>
+#include <limits>
 
 QTEST_GUILESS_MAIN(TestKdbx3)
 
@@ -253,4 +255,67 @@ void TestKdbx3::testAttachmentIndexStability()
     QCOMPARE(a3->value("b"), attachment2);
     QCOMPARE(a3->value("x"), attachment3);
     QCOMPARE(a3->value("y"), attachment3);
+}
+
+void TestKdbx3::testTransformRounds()
+{
+    QFETCH(quint64, rounds);
+    QFETCH(bool, supported);
+
+    QScopedPointer<Database> db(new Database());
+    db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
+    db->setKey(QSharedPointer<CompositeKey>::create());
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, db.data()));
+
+    // Replace the value of the TransformRounds header field (field ID, 16-bit size, data)
+    QByteArray data = buffer.data();
+    int pos = 12; // skip the signatures and the format version
+    int roundsPos = -1;
+    while (pos + 3 <= data.size()) {
+        auto fieldId = static_cast<KeePass2::HeaderFieldID>(data.at(pos));
+        auto fieldSize = Endian::bytesToSizedInt<quint16>(data.mid(pos + 1, 2), KeePass2::BYTEORDER);
+        if (fieldId == KeePass2::HeaderFieldID::TransformRounds) {
+            roundsPos = pos + 3;
+            break;
+        }
+        if (fieldId == KeePass2::HeaderFieldID::EndOfHeader) {
+            break;
+        }
+        pos += 3 + fieldSize;
+    }
+    QVERIFY(roundsPos > 0);
+    data.replace(roundsPos, 8, Endian::sizedIntToBytes<quint64>(rounds, KeePass2::BYTEORDER));
+
+    // Reading the unprotected header, without a key, is enough to validate the KDF parameters
+    QBuffer patchedBuffer(&data);
+    patchedBuffer.open(QBuffer::ReadOnly);
+    KeePass2Reader reader;
+    auto db2 = QSharedPointer<Database>::create();
+    QCOMPARE(reader.readDatabase(&patchedBuffer, {}, db2.data()), supported);
+    if (supported) {
+        QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+        QCOMPARE(static_cast<quint64>(db2->kdf()->rounds()), rounds);
+    } else {
+        QVERIFY(reader.hasError());
+        QCOMPARE(reader.errorString(), QString("Unsupported number of transform rounds: %1").arg(rounds));
+    }
+}
+
+void TestKdbx3::testTransformRounds_data()
+{
+    QTest::addColumn<quint64>("rounds");
+    QTest::addColumn<bool>("supported");
+
+    QTest::newRow("1") << Q_UINT64_C(1) << true;
+    QTest::newRow("INT_MAX - 1") << static_cast<quint64>(INT_MAX - 1) << true;
+    QTest::newRow("0") << Q_UINT64_C(0) << false;
+    QTest::newRow("INT_MAX") << static_cast<quint64>(INT_MAX) << false;
+    QTest::newRow("2^32 (truncates to 0)") << Q_UINT64_C(0x100000000) << false;
+    QTest::newRow("2^32 + 1 (truncates to 1)") << Q_UINT64_C(0x100000001) << false;
+    QTest::newRow("5000000000 (truncates to 705032704)") << Q_UINT64_C(5000000000) << false;
+    QTest::newRow("UINT64_MAX") << std::numeric_limits<quint64>::max() << false;
 }

@@ -45,6 +45,8 @@ private slots:
     void testFileKey_data();
     void testCompositeKey();
     void testTwofish();
+    void testTransformRounds();
+    void testTransformRounds_data();
 #ifdef Q_OS_WIN
     void testCP1252Password();
 #endif
@@ -54,7 +56,8 @@ private:
     static void readTestDatabase(const QByteArray& entries,
                                  quint32 entryCount,
                                  KeePass1Reader& reader,
-                                 QSharedPointer<Database>& db);
+                                 QSharedPointer<Database>& db,
+                                 quint32 transformRounds = 1);
     static QDateTime genDT(int year, int month, int day, int hour, int min);
     static void reopenDatabase(QSharedPointer<Database> db, const QString& password, const QString& keyfileName);
 
