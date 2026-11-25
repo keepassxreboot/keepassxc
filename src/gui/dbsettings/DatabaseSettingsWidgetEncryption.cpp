@@ -278,19 +278,28 @@ bool DatabaseSettingsWidgetEncryption::saveSettings()
 
         QApplication::setOverrideCursor(Qt::BusyCursor);
 
+        // Change a copy, so that the current KDF stays unchanged if the new number of rounds cannot be used
+        kdf = kdf->clone();
         int time = m_ui->decryptionTimeSlider->value() * 100;
         int rounds = AsyncTask::runAndWaitForFuture([&kdf, time]() { return kdf->benchmark(time); });
-        kdf->setRounds(rounds);
 
         // TODO: we should probably use AsyncTask::runAndWaitForFuture() here,
         //       but not without making Database thread-safe
-        bool ok = m_db->changeKdf(kdf);
+        bool ok = kdf->setRounds(rounds) && m_db->changeKdf(kdf);
 
         QApplication::restoreOverrideCursor();
 
+        if (!ok) {
+            MessageBox::warning(this,
+                                tr("KDF unchanged"),
+                                tr("Failed to transform key with new KDF parameters; KDF unchanged."),
+                                QMessageBox::Ok);
+            return false;
+        }
+
         m_db->metadata()->customData()->set(CD_DECRYPTION_TIME_PREFERENCE_KEY, QString("%1").arg(time));
 
-        return ok;
+        return true;
     }
 
     // Advanced mode sets KDF
@@ -363,6 +372,7 @@ void DatabaseSettingsWidgetEncryption::benchmarkTransformRounds(int millisecs)
     QApplication::setOverrideCursor(Qt::BusyCursor);
     m_ui->transformBenchmarkButton->setEnabled(false);
     m_ui->transformRoundsSpinBox->setEnabled(false);
+    const int previousRounds = m_ui->transformRoundsSpinBox->value();
     m_ui->transformRoundsSpinBox->clear();
 
     // Create a new kdf with the current parameters
@@ -382,13 +392,24 @@ void DatabaseSettingsWidgetEncryption::benchmarkTransformRounds(int millisecs)
 
     // Determine the number of rounds required to meet 1 second delay
     int rounds = AsyncTask::runAndWaitForFuture([&kdf, millisecs]() { return kdf->benchmark(millisecs); });
+    // Keep the previous number of rounds if the benchmark failed
+    const bool ok = kdf->setRounds(rounds);
 
-    m_ui->transformRoundsSpinBox->setValue(rounds);
+    m_ui->transformRoundsSpinBox->setValue(ok ? rounds : previousRounds);
     m_ui->transformBenchmarkButton->setEnabled(true);
     m_ui->transformRoundsSpinBox->setEnabled(true);
     m_ui->transformRoundsSpinBox->setFocus();
-    m_ui->decryptionTimeSlider->setValue(millisecs / 100);
+    if (ok) {
+        m_ui->decryptionTimeSlider->setValue(millisecs / 100);
+    }
     QApplication::restoreOverrideCursor();
+
+    if (!ok) {
+        MessageBox::warning(this,
+                            tr("KDF unchanged"),
+                            tr("Failed to transform key with new KDF parameters; KDF unchanged."),
+                            QMessageBox::Ok);
+    }
 }
 
 /**

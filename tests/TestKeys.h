@@ -28,6 +28,7 @@ class TestKeys : public QObject
 private slots:
     void initTestCase();
     void testComposite();
+    void testArgon2Benchmark();
     void testFileKey();
     void testFileKey_data();
     void testCreateFileKey();

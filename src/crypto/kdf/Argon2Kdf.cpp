@@ -192,16 +192,30 @@ QSharedPointer<Kdf> Argon2Kdf::clone() const
 
 int Argon2Kdf::benchmark(int msec) const
 {
-    QByteArray key = QByteArray(16, '\x7E');
-
+    // With few rounds and little memory, a transform can take less than a millisecond, and its fixed costs would
+    // distort the result. Double the rounds until a transform takes long enough to be measured reliably.
+    constexpr qint64 minDurationMsecs = 10;
+    Argon2Kdf kdf(*this);
+    const QByteArray key(32, '\x7E');
+    QByteArray result;
     QElapsedTimer timer;
-    timer.start();
-
-    if (transform(key, key)) {
-        return static_cast<int>(rounds() * (static_cast<float>(msec) / timer.elapsed()));
+    qint64 elapsedMsecs = 0;
+    while (true) {
+        timer.start();
+        if (!kdf.transform(key, result)) {
+            // Unlike a single round, which would be a valid result, setRounds() rejects 0
+            return 0;
+        }
+        elapsedMsecs = qMax<qint64>(timer.elapsed(), 1);
+        if (elapsedMsecs >= minDurationMsecs || kdf.rounds() > (INT_MAX - 1) / 2) {
+            break;
+        }
+        kdf.setRounds(kdf.rounds() * 2);
     }
 
-    return 1;
+    // Limit the result to the valid range before converting it
+    const double benchmarkRounds = kdf.rounds() * (static_cast<double>(msec) / elapsedMsecs);
+    return static_cast<int>(qBound(1.0, benchmarkRounds, static_cast<double>(INT_MAX - 1)));
 }
 
 QString Argon2Kdf::toString() const

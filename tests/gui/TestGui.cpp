@@ -29,7 +29,9 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QRegularExpression>
 #include <QSignalSpy>
+#include <QSlider>
 #include <QSpinBox>
 #include <QTableWidget>
 #include <QTest>
@@ -39,6 +41,7 @@
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "gui/ActionCollection.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
@@ -1952,6 +1955,82 @@ void TestGui::testDatabaseSettings()
 
     // 5 Cleanup
     config()->set(Config::AutoSaveAfterEveryChange, false);
+}
+
+void TestGui::testBasicEncryptionSettings()
+{
+    // With the minimum memory, a single Argon2 pass takes far less than a millisecond
+    auto kdf = QSharedPointer<Argon2Kdf>::create(Argon2Kdf::Type::Argon2id);
+    QVERIFY(kdf->setMemory(8));
+    QVERIFY(kdf->setParallelism(1));
+    QVERIFY(kdf->setRounds(1));
+    QVERIFY(m_db->changeKdf(kdf));
+
+    // Choose a decryption time of 0.5 seconds in the basic encryption settings
+    triggerAction("actionDatabaseSettings");
+    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->findChild<CategoryListWidget*>("categoryList")->setCurrentCategory(1);
+    auto* securityTabWidget = dbSettingsDialog->findChild<QTabWidget*>("securityTabWidget");
+    securityTabWidget->setCurrentIndex(1);
+    QApplication::processEvents();
+    auto* encryptionSettings = securityTabWidget->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto* basicTab = encryptionSettings->findChild<QWidget*>("basicTab");
+    encryptionSettings->setCurrentWidget(basicTab);
+    QApplication::processEvents();
+    basicTab->findChild<QSlider*>("decryptionTimeSlider")->setValue(5);
+
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_VERIFY(!dbSettingsDialog->isVisible());
+
+    // The number of rounds was calibrated, and the other parameters were kept
+    auto newKdf = m_db->kdf().dynamicCast<Argon2Kdf>();
+    QVERIFY(newKdf);
+    QVERIFY(newKdf->rounds() > 1);
+    QCOMPARE(newKdf->memory(), quint64(8));
+    QCOMPARE(m_db->metadata()->customData()->value("KPXC_DECRYPTION_TIME_PREFERENCE"), QString("500"));
+}
+
+void TestGui::testBasicEncryptionSettingsFailure()
+{
+    // Argon2 needs at least 8 KiB of memory for every thread, so this KDF fails to transform any key
+    auto kdf = QSharedPointer<Argon2Kdf>::create(Argon2Kdf::Type::Argon2id);
+    QVERIFY(kdf->setMemory(8));
+    QVERIFY(kdf->setParallelism(2));
+    QVERIFY(kdf->setRounds(3));
+    m_db->setKdf(kdf);
+    const auto seed = kdf->seed();
+
+    // Choose a decryption time of 0.5 seconds in the basic encryption settings
+    triggerAction("actionDatabaseSettings");
+    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->findChild<CategoryListWidget*>("categoryList")->setCurrentCategory(1);
+    auto* securityTabWidget = dbSettingsDialog->findChild<QTabWidget*>("securityTabWidget");
+    securityTabWidget->setCurrentIndex(1);
+    QApplication::processEvents();
+    auto* encryptionSettings = securityTabWidget->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto* basicTab = encryptionSettings->findChild<QWidget*>("basicTab");
+    encryptionSettings->setCurrentWidget(basicTab);
+    QApplication::processEvents();
+    basicTab->findChild<QSlider*>("decryptionTimeSlider")->setValue(5);
+
+    // The failed benchmark is reported, and the settings stay open
+    QTest::ignoreMessage(QtWarningMsg, QRegularExpression("^Argon2 error: "));
+    MessageBox::setNextAnswer(MessageBox::Ok);
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QVERIFY(dbSettingsDialog->isVisible());
+
+    // Neither the KDF nor the stored decryption time changed
+    QVERIFY(m_db->kdf() == kdf);
+    QCOMPARE(kdf->rounds(), 3);
+    QCOMPARE(kdf->seed(), seed);
+    QVERIFY(!m_db->metadata()->customData()->hasKey("KPXC_DECRYPTION_TIME_PREFERENCE"));
+
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+    QTRY_VERIFY(!dbSettingsDialog->isVisible());
 }
 
 void TestGui::testDatabaseLocking()
