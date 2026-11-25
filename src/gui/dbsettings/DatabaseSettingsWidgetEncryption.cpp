@@ -43,6 +43,12 @@ namespace
         }
         return QObject::tr("%1 s", "seconds", millisecs / 1000).arg(millisecs / 1000.0, 0, 'f', 1);
     }
+
+    // The value that a spin box shows after being set to the given value
+    int shownValue(const QSpinBox* spinBox, quint64 value)
+    {
+        return static_cast<int>(qBound<quint64>(spinBox->minimum(), value, spinBox->maximum()));
+    }
 } // namespace
 
 DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* parent)
@@ -263,7 +269,7 @@ bool DatabaseSettingsWidgetEncryption::saveSettings()
         m_isDirty = true;
     }
 
-    if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
+    if (m_db->key() && !m_db->key()->isEmpty() && !m_isDirty) {
         // Nothing has changed, don't re-transform
         return true;
     }
@@ -333,13 +339,36 @@ bool DatabaseSettingsWidgetEncryption::saveSettings()
     // we don't know it until we actually run the KDF
     m_db->metadata()->customData()->remove(CD_DECRYPTION_TIME_PREFERENCE_KEY);
 
-    // Save kdf parameters
+    // Save kdf parameters. The spin boxes cannot show every value exactly: the memory is shown in whole MiB, and
+    // values above the maximum of a spin box are capped. Keep the current values that were not changed.
     auto kdf = KeePass2::uuidToKdf(kdfChoice);
-    kdf->setRounds(m_ui->transformRoundsSpinBox->value());
-    if (IS_ARGON2(kdf->uuid())) {
+    const auto currentKdf = m_db->kdf();
+    // loadKdfParameters() shows the current values if both KDFs are Argon2 or both are AES-KDF
+    const bool sameFamily = currentKdf && IS_ARGON2(currentKdf->uuid()) == IS_ARGON2(kdfChoice);
+    int rounds = m_ui->transformRoundsSpinBox->value();
+    if (sameFamily && rounds == shownValue(m_ui->transformRoundsSpinBox, currentKdf->rounds())) {
+        rounds = currentKdf->rounds();
+    }
+    kdf->setRounds(rounds);
+    if (IS_ARGON2(kdfChoice)) {
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-        argon2Kdf->setMemory(Argon2Kdf::toKibibytes(m_ui->memorySpinBox->value()));
-        argon2Kdf->setParallelism(static_cast<quint32>(m_ui->parallelismSpinBox->value()));
+        const quint64 shownMemory = Argon2Kdf::toKibibytes(m_ui->memorySpinBox->value());
+        quint64 memory = shownMemory;
+        auto parallelism = static_cast<quint32>(m_ui->parallelismSpinBox->value());
+        if (sameFamily) {
+            auto currentArgon2Kdf = currentKdf.staticCast<Argon2Kdf>();
+            if (m_ui->memorySpinBox->value()
+                == shownValue(m_ui->memorySpinBox, Argon2Kdf::toMebibytes(currentArgon2Kdf->memory()))) {
+                // Never use less memory than is shown
+                memory = qMax(currentArgon2Kdf->memory(), shownMemory);
+            }
+            if (m_ui->parallelismSpinBox->value()
+                == shownValue(m_ui->parallelismSpinBox, currentArgon2Kdf->parallelism())) {
+                parallelism = currentArgon2Kdf->parallelism();
+            }
+        }
+        argon2Kdf->setMemory(memory);
+        argon2Kdf->setParallelism(parallelism);
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
