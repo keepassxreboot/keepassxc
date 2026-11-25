@@ -43,7 +43,7 @@ QByteArray Kdf::seed() const
 
 bool Kdf::setRounds(int rounds)
 {
-    if (rounds >= 1 && rounds < INT_MAX) {
+    if (rounds >= 1 && rounds <= MAX_ROUNDS) {
         m_rounds = rounds;
         return true;
     }
@@ -64,4 +64,35 @@ bool Kdf::setSeed(const QByteArray& seed)
 void Kdf::randomizeSeed()
 {
     setSeed(randomGen()->randomArray(m_seed.size()));
+}
+
+std::optional<quint64> Kdf::unsignedParameter(const QVariantMap& p, const QString& name)
+{
+    const auto value = p.value(name);
+    switch (value.typeId()) {
+    case QMetaType::UInt:
+    case QMetaType::ULongLong:
+        return value.toULongLong();
+    case QMetaType::Int:
+    case QMetaType::LongLong:
+        if (value.toLongLong() >= 0) {
+            return value.toULongLong();
+        }
+        return {};
+    default:
+        // Other types, like strings, would be converted rather than rejected by QVariant
+        return {};
+    }
+}
+
+bool Kdf::processRoundsParameter(const QVariantMap& p, const QString& name, const QString& message, QString* error)
+{
+    const auto rounds = unsignedParameter(p, name);
+    if (!rounds || *rounds > static_cast<quint64>(MAX_ROUNDS) || !setRounds(static_cast<int>(*rounds))) {
+        if (rounds && error && *rounds > static_cast<quint64>(MAX_ROUNDS)) {
+            *error = message.arg(*rounds).arg(MAX_ROUNDS);
+        }
+        return false;
+    }
+    return true;
 }

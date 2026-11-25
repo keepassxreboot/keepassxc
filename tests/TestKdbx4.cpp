@@ -781,3 +781,72 @@ void TestKdbx4Format::testArgon2InvalidParametersInHeader()
              QString("Invalid key derivation function (KDF) parameters: "
                      "Argon2 parallelism of 129 threads exceeds the supported maximum of 128 threads."));
 }
+
+void TestKdbx4Format::testKdfParameterValidation()
+{
+    QFETCH(QUuid, kdfUuid);
+    QFETCH(QString, name);
+    QFETCH(QVariant, value);
+    QFETCH(bool, valid);
+    QFETCH(QString, expectedError);
+
+    auto source = KeePass2::uuidToKdf(kdfUuid);
+    source->randomizeSeed();
+    auto params = source->writeParameters();
+    params.insert(name, value);
+
+    QString error;
+    auto kdf = KeePass2::kdfFromParameters(params, &error);
+    QCOMPARE(!kdf.isNull(), valid);
+    QCOMPARE(error, expectedError);
+    if (valid) {
+        // Accepted values are used as they are, not truncated
+        QCOMPARE(kdf->writeParameters().value(name).toULongLong(), value.toULongLong());
+    }
+}
+
+void TestKdbx4Format::testKdfParameterValidation_data()
+{
+    QTest::addColumn<QUuid>("kdfUuid");
+    QTest::addColumn<QString>("name");
+    QTest::addColumn<QVariant>("value");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<QString>("expectedError");
+
+    const auto argon2 = KeePass2::KDF_ARGON2D;
+    const auto aes = KeePass2::KDF_AES_KDBX4;
+    const auto iterations = KeePass2::KDFPARAM_ARGON2_ITERATIONS;
+    const auto rounds = KeePass2::KDFPARAM_AES_ROUNDS;
+    const auto maxRounds = static_cast<quint64>(Kdf::MAX_ROUNDS);
+
+    QTest::newRow("Argon2 iterations: maximum") << argon2 << iterations << QVariant(maxRounds) << true << QString();
+    QTest::newRow("Argon2 iterations: above maximum")
+        << argon2 << iterations << QVariant(maxRounds + 1) << false
+        << QString("Argon2 iteration count of 2147483647 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("Argon2 iterations: 2^32 + 1, truncated to 1 as int")
+        << argon2 << iterations << QVariant(Q_UINT64_C(0x100000001)) << false
+        << QString("Argon2 iteration count of 4294967297 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("Argon2 iterations: zero") << argon2 << iterations << QVariant(Q_UINT64_C(0)) << false << QString();
+    QTest::newRow("Argon2 iterations: Int64") << argon2 << iterations << QVariant(qint64(3)) << true << QString();
+    QTest::newRow("Argon2 iterations: negative Int64")
+        << argon2 << iterations << QVariant(qint64(-1)) << false << QString();
+    QTest::newRow("Argon2 iterations: string") << argon2 << iterations << QVariant(QString("3")) << false << QString();
+    QTest::newRow("Argon2 parallelism: UInt64 2^32 + 2, truncated to 2 as UInt32")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_PARALLELISM << QVariant(Q_UINT64_C(0x100000002)) << false
+        << QString("Argon2 parallelism of 4294967298 threads exceeds the supported maximum of 128 threads.");
+    QTest::newRow("Argon2 version: UInt64 2^32 + 0x13, truncated to 0x13 as UInt32")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_VERSION << QVariant(Q_UINT64_C(0x100000013)) << false << QString();
+    QTest::newRow("Argon2 memory: string")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_MEMORY << QVariant(QString("1048576")) << false << QString();
+
+    QTest::newRow("AES-KDF rounds: maximum") << aes << rounds << QVariant(maxRounds) << true << QString();
+    QTest::newRow("AES-KDF rounds: above maximum")
+        << aes << rounds << QVariant(maxRounds + 1) << false
+        << QString("AES-KDF round count of 2147483647 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("AES-KDF rounds: 2^32 + 5, truncated to 5 as int")
+        << aes << rounds << QVariant(Q_UINT64_C(0x100000005)) << false
+        << QString("AES-KDF round count of 4294967301 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("AES-KDF rounds: zero") << aes << rounds << QVariant(Q_UINT64_C(0)) << false << QString();
+    QTest::newRow("AES-KDF rounds: string") << aes << rounds << QVariant(QString("60000")) << false << QString();
+    QTest::newRow("AES-KDF rounds: boolean") << aes << rounds << QVariant(true) << false << QString();
+}

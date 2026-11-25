@@ -38,11 +38,10 @@ AesKdf::AesKdf(bool legacyKdbx3)
 
 bool AesKdf::processParameters(const QVariantMap& p, QString* error)
 {
-    Q_UNUSED(error);
-
-    bool ok;
-    int rounds = p.value(KeePass2::KDFPARAM_AES_ROUNDS).toInt(&ok);
-    if (!ok || !setRounds(rounds)) {
+    if (!processRoundsParameter(p,
+                                KeePass2::KDFPARAM_AES_ROUNDS,
+                                QObject::tr("AES-KDF round count of %1 exceeds the supported maximum of %2."),
+                                error)) {
         return false;
     }
 

@@ -8908,6 +8908,10 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>AES-KDF round count of %1 exceeds the supported maximum of %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AES (%1 rounds)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8921,6 +8925,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Argon2 memory of %1 KiB is too low for %2 threads, at least %3 KiB are required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 iteration count of %1 exceeds the supported maximum of %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -19,6 +19,7 @@
 
 #include <QElapsedTimer>
 #include <QThread>
+#include <limits>
 
 #include <botan/pwdhash.h>
 
@@ -100,25 +101,28 @@ bool Argon2Kdf::processParameters(const QVariantMap& p, QString* error)
         return false;
     }
 
-    bool ok;
-    quint32 version = p.value(KeePass2::KDFPARAM_ARGON2_VERSION).toUInt(&ok);
-    if (!ok || !setVersion(version)) {
+    auto version = unsignedParameter(p, KeePass2::KDFPARAM_ARGON2_VERSION);
+    if (!version || *version > std::numeric_limits<quint32>::max() || !setVersion(static_cast<quint32>(*version))) {
         return false;
     }
 
-    quint32 lanes = p.value(KeePass2::KDFPARAM_ARGON2_PARALLELISM).toUInt(&ok);
-    if (!ok || !setParallelism(lanes)) {
-        if (ok && error && lanes > ARGON2_MAX_PARALLELISM) {
+    auto lanes = unsignedParameter(p, KeePass2::KDFPARAM_ARGON2_PARALLELISM);
+    if (!lanes || *lanes > ARGON2_MAX_PARALLELISM || !setParallelism(static_cast<quint32>(*lanes))) {
+        if (lanes && error && *lanes > ARGON2_MAX_PARALLELISM) {
             *error = QObject::tr("Argon2 parallelism of %1 threads exceeds the supported maximum of %2 threads.")
-                         .arg(lanes)
+                         .arg(*lanes)
                          .arg(ARGON2_MAX_PARALLELISM);
         }
         return false;
     }
 
-    quint64 memory = p.value(KeePass2::KDFPARAM_ARGON2_MEMORY).toULongLong(&ok) / 1024ULL;
-    if (!ok || !setMemory(memory)) {
-        if (ok && error && memory > ARGON2_MAX_MEMORY) {
+    auto memoryBytes = unsignedParameter(p, KeePass2::KDFPARAM_ARGON2_MEMORY);
+    if (!memoryBytes) {
+        return false;
+    }
+    quint64 memory = *memoryBytes / 1024ULL;
+    if (!setMemory(memory)) {
+        if (error && memory > ARGON2_MAX_MEMORY) {
             // Round up, so that a value just above the maximum is not displayed as the maximum itself
             *error = QObject::tr("Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.")
                          .arg(toMebibytes(memory + 1023))
@@ -127,18 +131,20 @@ bool Argon2Kdf::processParameters(const QVariantMap& p, QString* error)
         return false;
     }
 
-    if (memory < ARGON2_MIN_MEMORY_PER_THREAD * lanes) {
+    if (memory < ARGON2_MIN_MEMORY_PER_THREAD * *lanes) {
         if (error) {
             *error = QObject::tr("Argon2 memory of %1 KiB is too low for %2 threads, at least %3 KiB are required.")
                          .arg(memory)
-                         .arg(lanes)
-                         .arg(ARGON2_MIN_MEMORY_PER_THREAD * lanes);
+                         .arg(*lanes)
+                         .arg(ARGON2_MIN_MEMORY_PER_THREAD * *lanes);
         }
         return false;
     }
 
-    quint64 iterations = p.value(KeePass2::KDFPARAM_ARGON2_ITERATIONS).toULongLong(&ok);
-    if (!ok || !setRounds(iterations)) {
+    if (!processRoundsParameter(p,
+                                KeePass2::KDFPARAM_ARGON2_ITERATIONS,
+                                QObject::tr("Argon2 iteration count of %1 exceeds the supported maximum of %2."),
+                                error)) {
         return false;
     }
 
