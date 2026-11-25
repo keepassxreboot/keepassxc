@@ -150,6 +150,14 @@ YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_
 {
     m_error.clear();
 
+    // Hardware keys accept challenges of up to 64 bytes. The USB interface refuses longer ones, but the PC/SC
+    // interface would silently use only the first 64 bytes, so refuse them before choosing an interface.
+    if (challenge.size() > 64) {
+        m_error = tr("The challenge of %1 bytes is too long for a hardware key, which accepts at most 64 bytes.")
+                      .arg(challenge.size());
+        return ChallengeResult::YCR_ERROR;
+    }
+
     // Prevent re-entrant access to hardware keys
     QMutexLocker lock(&s_interfaceMutex);
 

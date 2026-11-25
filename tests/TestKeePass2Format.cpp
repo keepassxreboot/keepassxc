@@ -21,6 +21,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"
@@ -576,7 +577,9 @@ void TestKeePass2Format::testKdbxKeyChange()
     buffer.open(QBuffer::ReadWrite);
     buffer.seek(0);
     QSharedPointer<Database> db(new Database());
-    db->changeKdf(fastKdf(KeePass2::uuidToKdf(m_kdbxSourceDb->kdf()->uuid())));
+    auto kdf = fastKdf(KeePass2::uuidToKdf(m_kdbxSourceDb->kdf()->uuid()));
+    QVERIFY(kdf);
+    QVERIFY(db->changeKdf(kdf));
     auto oldGroup =
         db->setRootGroup(m_kdbxSourceDb->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
     delete oldGroup;
@@ -806,10 +809,15 @@ void TestKeePass2Format::testDuplicateAttachments()
  */
 QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf)
 {
-    kdf->setRounds(1);
+    if (!kdf->setRounds(1)) {
+        return {};
+    }
 
-    if (kdf->uuid() == KeePass2::KDF_ARGON2D or kdf->uuid() == KeePass2::KDF_ARGON2ID) {
-        kdf->processParameters({{KeePass2::KDFPARAM_ARGON2_MEMORY, 1024}, {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}});
+    if (kdf->uuid() == KeePass2::KDF_ARGON2D || kdf->uuid() == KeePass2::KDF_ARGON2ID) {
+        auto argon2 = kdf.staticCast<Argon2Kdf>();
+        if (!argon2->setMemory(1024) || !argon2->setParallelism(1)) {
+            return {};
+        }
     }
 
     return kdf;

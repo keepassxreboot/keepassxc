@@ -30,6 +30,7 @@ private slots:
 
     void testDetectDevices();
     void testKeyChallenge();
+    void testChallengeTooLong();
 };
 
 #endif // KEEPASSX_TESTYUBIKEYCHALRESP_H

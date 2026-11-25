@@ -65,9 +65,10 @@ QByteArray KeePass2::hmacKey(const QByteArray& masterSeed, const QByteArray& tra
  * Create KDF object from KDBX4+ KDF parameters.
  *
  * @param p variant map containing parameters
+ * @param error if not null, receives a description of why a parameter was rejected (may stay empty)
  * @return initialized KDF
  */
-QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p)
+QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p, QString* error)
 {
     QByteArray uuidBytes = p.value(KDFPARAM_UUID).toByteArray();
     if (uuidBytes.size() != UUID_LENGTH) {
@@ -84,7 +85,7 @@ QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p)
         return {};
     }
 
-    if (!kdf->processParameters(p)) {
+    if (!kdf->processParameters(p, error)) {
         return {};
     }
 

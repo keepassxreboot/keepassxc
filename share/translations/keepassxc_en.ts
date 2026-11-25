@@ -5118,6 +5118,10 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Invalid key derivation function (KDF) parameters: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Legacy header fields found in KDBX4 file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8904,7 +8908,31 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>AES-KDF round count of %1 exceeds the supported maximum of %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AES (%1 rounds)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 version 0x%1 is not supported, only version 0x%2 is supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 parallelism of %1 threads exceeds the supported maximum of %2 threads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 memory of %1 KiB is too low for %2 threads, at least %3 KiB are required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Argon2 iteration count of %1 exceeds the supported maximum of %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10717,6 +10745,10 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKey</name>
+    <message>
+        <source>The challenge of %1 bytes is too long for a hardware key, which accepts at most 64 bytes.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
         <translation type="unfinished"></translation>

@@ -19,6 +19,7 @@
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
@@ -655,4 +656,253 @@ void TestKdbx4Format::testChangeKdfDowngradesToKdbx3()
     QVERIFY(reader.readDatabase(&buffer, key, &reopened));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1);
     QCOMPARE(reopened.kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
+}
+
+void TestKdbx4Format::testArgon2ParameterLimits()
+{
+    Argon2Kdf kdf(Argon2Kdf::Type::Argon2id);
+
+    // The limits are those of Botan's Argon2 implementation
+    QVERIFY(kdf.setMemory(ARGON2_MAX_MEMORY));
+    QCOMPARE(kdf.memory(), ARGON2_MAX_MEMORY);
+    QVERIFY(!kdf.setMemory(ARGON2_MAX_MEMORY + 1));
+    QCOMPARE(kdf.memory(), static_cast<quint64>(ARGON2_DEFAULT_MEMORY));
+    QVERIFY(kdf.setMemory(ARGON2_MIN_MEMORY_PER_THREAD));
+    QVERIFY(!kdf.setMemory(ARGON2_MIN_MEMORY_PER_THREAD - 1));
+
+    QVERIFY(kdf.setParallelism(ARGON2_MAX_PARALLELISM));
+    QCOMPARE(kdf.parallelism(), ARGON2_MAX_PARALLELISM);
+    QVERIFY(!kdf.setParallelism(ARGON2_MAX_PARALLELISM + 1));
+    QCOMPARE(kdf.parallelism(), static_cast<quint32>(ARGON2_DEFAULT_PARALLELISM));
+    QVERIFY(!kdf.setParallelism(0));
+
+    // The lowest memory accepted for the maximum number of threads must be usable
+    kdf.setRounds(1);
+    kdf.randomizeSeed();
+    QVERIFY(kdf.setParallelism(ARGON2_MAX_PARALLELISM));
+    QVERIFY(kdf.setMemory(ARGON2_MIN_MEMORY_PER_THREAD * ARGON2_MAX_PARALLELISM));
+    QByteArray result;
+    QVERIFY(kdf.transform(QByteArray(32, 'x'), result));
+}
+
+void TestKdbx4Format::testArgon2InvalidParameters()
+{
+    QFETCH(quint64, memoryKib);
+    QFETCH(quint32, parallelism);
+    QFETCH(bool, valid);
+    QFETCH(QString, expectedError);
+
+    Argon2Kdf source(Argon2Kdf::Type::Argon2d);
+    source.randomizeSeed();
+    auto params = source.writeParameters();
+    params.insert(KeePass2::KDFPARAM_ARGON2_MEMORY, memoryKib * 1024);
+    params.insert(KeePass2::KDFPARAM_ARGON2_PARALLELISM, parallelism);
+
+    QString error;
+    auto kdf = KeePass2::kdfFromParameters(params, &error);
+    QCOMPARE(!kdf.isNull(), valid);
+    QCOMPARE(error, expectedError);
+
+    // The error string is optional
+    QCOMPARE(!KeePass2::kdfFromParameters(params).isNull(), valid);
+}
+
+void TestKdbx4Format::testArgon2InvalidParameters_data()
+{
+    QTest::addColumn<quint64>("memoryKib");
+    QTest::addColumn<quint32>("parallelism");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<QString>("expectedError");
+
+    const auto maxMemoryMib = Argon2Kdf::toMebibytes(ARGON2_MAX_MEMORY);
+
+    QTest::newRow("Defaults") << quint64(ARGON2_DEFAULT_MEMORY) << quint32(ARGON2_DEFAULT_PARALLELISM) << true
+                              << QString();
+    QTest::newRow("Maximum memory") << ARGON2_MAX_MEMORY << quint32(1) << true << QString();
+    QTest::newRow("Maximum parallelism") << quint64(ARGON2_DEFAULT_MEMORY) << ARGON2_MAX_PARALLELISM << true
+                                         << QString();
+    QTest::newRow("Minimum memory for maximum parallelism")
+        << ARGON2_MIN_MEMORY_PER_THREAD * ARGON2_MAX_PARALLELISM << ARGON2_MAX_PARALLELISM << true << QString();
+    QTest::newRow("Memory above maximum") << 2 * ARGON2_MAX_MEMORY << quint32(1) << false
+                                          << QString("Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.")
+                                                 .arg(2 * maxMemoryMib)
+                                                 .arg(maxMemoryMib);
+    QTest::newRow("Memory just above maximum")
+        << ARGON2_MAX_MEMORY + 1 << quint32(1) << false
+        << QString("Argon2 memory of %1 MiB exceeds the supported maximum of %2 MiB.")
+               .arg(maxMemoryMib + 1)
+               .arg(maxMemoryMib);
+    QTest::newRow("Parallelism above maximum")
+        << quint64(ARGON2_DEFAULT_MEMORY) << ARGON2_MAX_PARALLELISM + 1 << false
+        << QString("Argon2 parallelism of 129 threads exceeds the supported maximum of 128 threads.");
+    QTest::newRow("Memory too low for parallelism")
+        << quint64(1000) << ARGON2_MAX_PARALLELISM << false
+        << QString("Argon2 memory of 1000 KiB is too low for 128 threads, at least 1024 KiB are required.");
+    // Parameters that are invalid for other reasons keep the generic error of the caller
+    QTest::newRow("No parallelism") << quint64(ARGON2_DEFAULT_MEMORY) << quint32(0) << false << QString();
+    QTest::newRow("No memory") << quint64(0) << quint32(1) << false << QString();
+}
+
+void TestKdbx4Format::testArgon2InvalidParametersInHeader()
+{
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
+
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D).staticCast<Argon2Kdf>();
+    kdf->setRounds(1);
+    QVERIFY(kdf->setMemory(1024));
+    QVERIFY(kdf->setParallelism(2));
+
+    Database db;
+    db.setKey(key, true, true);
+    QVERIFY(db.changeKdf(kdf));
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, &db));
+
+    // Raise the parallelism in the KDF parameters of the header above the limit, as a database
+    // saved by an application with higher limits would have it: UInt32 entry "P" of the variant map
+    QByteArray data = buffer.data();
+    // Type UInt32 (04), key length 1, key "P" (50), value length 4
+    const QByteArray entry = QByteArray::fromHex("04010000005004000000");
+    const int pos = data.indexOf(entry + QByteArray::fromHex("02000000"));
+    QVERIFY(pos > 0);
+    data.replace(pos + entry.size(), 4, QByteArray::fromHex("81000000"));
+
+    QBuffer modified(&data);
+    modified.open(QBuffer::ReadOnly);
+    KeePass2Reader reader;
+    Database reopened;
+    QVERIFY(!reader.readDatabase(&modified, key, &reopened));
+    QVERIFY(reader.hasError());
+    QCOMPARE(reader.errorString(),
+             QString("Invalid key derivation function (KDF) parameters: "
+                     "Argon2 parallelism of 129 threads exceeds the supported maximum of 128 threads."));
+}
+
+void TestKdbx4Format::testKdfParameterValidation()
+{
+    QFETCH(QUuid, kdfUuid);
+    QFETCH(QString, name);
+    QFETCH(QVariant, value);
+    QFETCH(bool, valid);
+    QFETCH(QString, expectedError);
+
+    auto source = KeePass2::uuidToKdf(kdfUuid);
+    source->randomizeSeed();
+    auto params = source->writeParameters();
+    params.insert(name, value);
+
+    QString error;
+    auto kdf = KeePass2::kdfFromParameters(params, &error);
+    QCOMPARE(!kdf.isNull(), valid);
+    QCOMPARE(error, expectedError);
+    if (valid) {
+        // Accepted values are used as they are, not truncated
+        QCOMPARE(kdf->writeParameters().value(name).toULongLong(), value.toULongLong());
+    }
+}
+
+void TestKdbx4Format::testKdfParameterValidation_data()
+{
+    QTest::addColumn<QUuid>("kdfUuid");
+    QTest::addColumn<QString>("name");
+    QTest::addColumn<QVariant>("value");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<QString>("expectedError");
+
+    const auto argon2 = KeePass2::KDF_ARGON2D;
+    const auto aes = KeePass2::KDF_AES_KDBX4;
+    const auto iterations = KeePass2::KDFPARAM_ARGON2_ITERATIONS;
+    const auto version = KeePass2::KDFPARAM_ARGON2_VERSION;
+    const auto rounds = KeePass2::KDFPARAM_AES_ROUNDS;
+    const auto maxRounds = static_cast<quint64>(Kdf::MAX_ROUNDS);
+
+    QTest::newRow("Argon2 iterations: maximum") << argon2 << iterations << QVariant(maxRounds) << true << QString();
+    QTest::newRow("Argon2 iterations: above maximum")
+        << argon2 << iterations << QVariant(maxRounds + 1) << false
+        << QString("Argon2 iteration count of 2147483647 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("Argon2 iterations: 2^32 + 1, truncated to 1 as int")
+        << argon2 << iterations << QVariant(Q_UINT64_C(0x100000001)) << false
+        << QString("Argon2 iteration count of 4294967297 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("Argon2 iterations: zero") << argon2 << iterations << QVariant(Q_UINT64_C(0)) << false << QString();
+    QTest::newRow("Argon2 iterations: Int64") << argon2 << iterations << QVariant(qint64(3)) << true << QString();
+    QTest::newRow("Argon2 iterations: negative Int64")
+        << argon2 << iterations << QVariant(qint64(-1)) << false << QString();
+    QTest::newRow("Argon2 iterations: string") << argon2 << iterations << QVariant(QString("3")) << false << QString();
+    QTest::newRow("Argon2 parallelism: UInt64 2^32 + 2, truncated to 2 as UInt32")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_PARALLELISM << QVariant(Q_UINT64_C(0x100000002)) << false
+        << QString("Argon2 parallelism of 4294967298 threads exceeds the supported maximum of 128 threads.");
+    QTest::newRow("Argon2 version: 1.3") << argon2 << version << QVariant(quint32(0x13)) << true << QString();
+    QTest::newRow("Argon2 version: 1.0")
+        << argon2 << version << QVariant(quint32(0x10)) << false
+        << QString("Argon2 version 0x10 is not supported, only version 0x13 is supported.");
+    QTest::newRow("Argon2 version: 0x12")
+        << argon2 << version << QVariant(quint32(0x12)) << false
+        << QString("Argon2 version 0x12 is not supported, only version 0x13 is supported.");
+    QTest::newRow("Argon2 version: UInt64 2^32 + 0x13, truncated to 0x13 as UInt32")
+        << argon2 << version << QVariant(Q_UINT64_C(0x100000013)) << false
+        << QString("Argon2 version 0x100000013 is not supported, only version 0x13 is supported.");
+    QTest::newRow("Argon2 salt: string") << argon2 << KeePass2::KDFPARAM_ARGON2_SALT << QVariant(QString(32, 'x'))
+                                         << false << QString();
+    QTest::newRow("Argon2 memory: string")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_MEMORY << QVariant(QString("1048576")) << false << QString();
+
+    QTest::newRow("AES-KDF rounds: maximum") << aes << rounds << QVariant(maxRounds) << true << QString();
+    QTest::newRow("AES-KDF rounds: above maximum")
+        << aes << rounds << QVariant(maxRounds + 1) << false
+        << QString("AES-KDF round count of 2147483647 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("AES-KDF rounds: 2^32 + 5, truncated to 5 as int")
+        << aes << rounds << QVariant(Q_UINT64_C(0x100000005)) << false
+        << QString("AES-KDF round count of 4294967301 exceeds the supported maximum of 2147483646.");
+    QTest::newRow("AES-KDF rounds: zero") << aes << rounds << QVariant(Q_UINT64_C(0)) << false << QString();
+    QTest::newRow("AES-KDF rounds: string") << aes << rounds << QVariant(QString("60000")) << false << QString();
+    QTest::newRow("AES-KDF rounds: boolean") << aes << rounds << QVariant(true) << false << QString();
+}
+
+void TestKdbx4Format::testArgon2SaltSize()
+{
+    QFETCH(int, saltSize);
+    QFETCH(bool, valid);
+    QFETCH(QByteArray, expectedKey);
+
+    auto source = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID).staticCast<Argon2Kdf>();
+    source->setRounds(1);
+    QVERIFY(source->setMemory(1024));
+    QVERIFY(source->setParallelism(1));
+    auto params = source->writeParameters();
+    params.insert(KeePass2::KDFPARAM_ARGON2_SALT, QByteArray(saltSize, '\x02'));
+
+    auto kdf = KeePass2::kdfFromParameters(params);
+    QCOMPARE(!kdf.isNull(), valid);
+    if (!valid) {
+        return;
+    }
+    QCOMPARE(kdf->seed().size(), saltSize);
+
+    // Reference values computed with the Argon2 reference implementation
+    QByteArray result;
+    QVERIFY(kdf->transform(QByteArray(32, '\x01'), result));
+    QCOMPARE(result.toHex(), expectedKey);
+
+    // Saving the database generates a new salt of the default size
+    kdf->randomizeSeed();
+    QCOMPARE(kdf->seed().size(), 32);
+}
+
+void TestKdbx4Format::testArgon2SaltSize_data()
+{
+    QTest::addColumn<int>("saltSize");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<QByteArray>("expectedKey");
+
+    QTest::newRow("Too short") << 7 << false << QByteArray();
+    QTest::newRow("Minimum") << 8 << true
+                             << QByteArray("1e85c88689ad638067ad65186f1050e2d1c9cda75240c629c02250328aa6a798");
+    QTest::newRow("33 bytes") << 33 << true
+                              << QByteArray("5473fa75f49cda60918dee0c44385e314b7bd9968f7a0699e1257c2842b94e78");
+    QTest::newRow("64 bytes") << 64 << true
+                              << QByteArray("ecc55c8c7122433fb922e36023df4df7b45d82708009d22b363bf81df3d91968");
 }
