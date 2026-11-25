@@ -847,6 +847,10 @@ void TestKdbx4Format::testKdfParameterValidation_data()
         << QString("Argon2 version 0x100000013 is not supported, only version 0x13 is supported.");
     QTest::newRow("Argon2 salt: string") << argon2 << KeePass2::KDFPARAM_ARGON2_SALT << QVariant(QString(32, 'x'))
                                          << false << QString();
+    QTest::newRow("Argon2 secret key: string")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_SECRET << QVariant(QString("secret")) << false << QString();
+    QTest::newRow("Argon2 associated data: string")
+        << argon2 << KeePass2::KDFPARAM_ARGON2_ASSOCDATA << QVariant(QString("data")) << false << QString();
     QTest::newRow("Argon2 memory: string")
         << argon2 << KeePass2::KDFPARAM_ARGON2_MEMORY << QVariant(QString("1048576")) << false << QString();
 
@@ -905,4 +909,96 @@ void TestKdbx4Format::testArgon2SaltSize_data()
                               << QByteArray("5473fa75f49cda60918dee0c44385e314b7bd9968f7a0699e1257c2842b94e78");
     QTest::newRow("64 bytes") << 64 << true
                               << QByteArray("ecc55c8c7122433fb922e36023df4df7b45d82708009d22b363bf81df3d91968");
+}
+
+void TestKdbx4Format::testArgon2SecretKeyAndAssociatedData()
+{
+    QFETCH(QUuid, kdfUuid);
+    QFETCH(QByteArray, secret);
+    QFETCH(QByteArray, assocData);
+    QFETCH(QByteArray, expectedKey);
+
+    // Parameters of the test vectors of RFC 9106, section 5
+    QVariantMap params;
+    params.insert(KeePass2::KDFPARAM_UUID, kdfUuid.toRfc4122());
+    params.insert(KeePass2::KDFPARAM_ARGON2_VERSION, quint32(0x13));
+    params.insert(KeePass2::KDFPARAM_ARGON2_MEMORY, quint64(32 * 1024));
+    params.insert(KeePass2::KDFPARAM_ARGON2_ITERATIONS, quint64(3));
+    params.insert(KeePass2::KDFPARAM_ARGON2_PARALLELISM, quint32(4));
+    params.insert(KeePass2::KDFPARAM_ARGON2_SALT, QByteArray(16, '\x02'));
+    if (!secret.isEmpty()) {
+        params.insert(KeePass2::KDFPARAM_ARGON2_SECRET, secret);
+    }
+    if (!assocData.isEmpty()) {
+        params.insert(KeePass2::KDFPARAM_ARGON2_ASSOCDATA, assocData);
+    }
+
+    auto kdf = KeePass2::kdfFromParameters(params);
+    QVERIFY(kdf);
+    QByteArray result;
+    QVERIFY(kdf->transform(QByteArray(32, '\x01'), result));
+    QCOMPARE(result.toHex(), expectedKey);
+
+    // The secret key and associated data are written back unchanged
+    QCOMPARE(kdf->writeParameters(), params);
+}
+
+void TestKdbx4Format::testArgon2SecretKeyAndAssociatedData_data()
+{
+    QTest::addColumn<QUuid>("kdfUuid");
+    QTest::addColumn<QByteArray>("secret");
+    QTest::addColumn<QByteArray>("assocData");
+    QTest::addColumn<QByteArray>("expectedKey");
+
+    const QByteArray secret(8, '\x03');
+    const QByteArray assocData(12, '\x04');
+    // The tags of RFC 9106, section 5
+    QTest::newRow("Argon2d") << KeePass2::KDF_ARGON2D << secret << assocData
+                             << QByteArray("512b391b6f1162975371d30919734294f868e3be3984f3c1a13a4db9fabe4acb");
+    QTest::newRow("Argon2id") << KeePass2::KDF_ARGON2ID << secret << assocData
+                              << QByteArray("0d640df58d78766c08c037a34a8b53c9d01ef0452d75b65eb52520e96b01e659");
+    // Each value is optional on its own. These tags come from the reference implementation, libargon2
+    QTest::newRow("Argon2d, secret key only")
+        << KeePass2::KDF_ARGON2D << secret << QByteArray()
+        << QByteArray("86da874e0e307931560289b12e87ef05eb17d49fdcab51988a1600c54f698648");
+    QTest::newRow("Argon2d, associated data only")
+        << KeePass2::KDF_ARGON2D << QByteArray() << assocData
+        << QByteArray("5261d7a8d659b1e3dfcf1d590c8621289508ad12d2b88f4318c66ac64d6db78c");
+    QTest::newRow("Argon2id, secret key only")
+        << KeePass2::KDF_ARGON2ID << secret << QByteArray()
+        << QByteArray("0034de3c8a75efc1148100eaf5ba9b1ce6d50ba5cdf6ae4018c54a4fc03ac10d");
+    QTest::newRow("Argon2id, associated data only")
+        << KeePass2::KDF_ARGON2ID << QByteArray() << assocData
+        << QByteArray("58a04dad07148fec37788cae426e39e4c710c1b06e551346293ea3372ec4bc0d");
+}
+
+void TestKdbx4Format::testArgon2SecretKeyAndAssociatedDataInHeader()
+{
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
+
+    auto source = fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID));
+    QVERIFY(source);
+    auto params = source->writeParameters();
+    params.insert(KeePass2::KDFPARAM_ARGON2_SECRET, QByteArray(8, '\x03'));
+    params.insert(KeePass2::KDFPARAM_ARGON2_ASSOCDATA, QByteArray(12, '\x04'));
+    auto kdf = KeePass2::kdfFromParameters(params);
+    QVERIFY(kdf);
+
+    Database db;
+    db.setKey(key, true, true);
+    QVERIFY(db.changeKdf(kdf));
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, &db));
+
+    buffer.seek(0);
+    KeePass2Reader reader;
+    Database reopened;
+    QVERIFY(reader.readDatabase(&buffer, key, &reopened));
+    const auto reopenedParams = reopened.kdf()->writeParameters();
+    QCOMPARE(reopenedParams.value(KeePass2::KDFPARAM_ARGON2_SECRET).toByteArray(), QByteArray(8, '\x03'));
+    QCOMPARE(reopenedParams.value(KeePass2::KDFPARAM_ARGON2_ASSOCDATA).toByteArray(), QByteArray(12, '\x04'));
 }

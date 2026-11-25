@@ -1957,6 +1957,55 @@ void TestGui::testDatabaseSettings()
     config()->set(Config::AutoSaveAfterEveryChange, false);
 }
 
+void TestGui::testDatabaseSettingsKeepArgon2SecretAndAssocData()
+{
+    // The encryption settings don't show the optional secret key and associated data of Argon2
+    const QByteArray secret(8, '\x03');
+    const QByteArray assocData(12, '\x04');
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID).staticCast<Argon2Kdf>();
+    kdf->setRounds(1);
+    QVERIFY(kdf->setMemory(1024));
+    QVERIFY(kdf->setParallelism(1));
+    kdf->setSecret(secret);
+    kdf->setAssocData(assocData);
+    QVERIFY(m_db->changeKdf(kdf));
+
+    triggerAction("actionDatabaseSettings");
+    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    auto* securityTabWidget = dbSettingsDialog->findChild<QTabWidget*>("securityTabWidget");
+    auto* encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto* advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+    auto* algorithmComboBox = advancedTab->findChild<QComboBox*>("algorithmComboBox");
+    auto* kdfComboBox = advancedTab->findChild<QComboBox*>("kdfComboBox");
+    auto showAdvancedEncryptionSettings = [&]() {
+        dbSettingsCategoryList->setCurrentCategory(1);
+        securityTabWidget->setCurrentIndex(1);
+        encryptionSettings->setCurrentWidget(advancedTab);
+        QApplication::processEvents();
+    };
+
+    // Changing only the cipher saves new KDF parameters, which keep both values
+    showAdvancedEncryptionSettings();
+    algorithmComboBox->setCurrentIndex(algorithmComboBox->findData(KeePass2::CIPHER_TWOFISH));
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->cipher(), KeePass2::CIPHER_TWOFISH);
+    QVERIFY(m_db->kdf() != kdf);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->secret(), secret);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->assocData(), assocData);
+
+    // Switching between Argon2id and Argon2d keeps them too
+    triggerAction("actionDatabaseSettings");
+    showAdvancedEncryptionSettings();
+    kdfComboBox->setCurrentIndex(kdfComboBox->findData(KeePass2::KDF_ARGON2D));
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->kdf()->uuid(), KeePass2::KDF_ARGON2D);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->secret(), secret);
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->assocData(), assocData);
+}
+
 void TestGui::testDatabaseLocking()
 {
     QString origDbName = m_tabWidget->tabText(0);

@@ -346,6 +346,14 @@ bool DatabaseSettingsWidgetEncryption::saveSettings()
         argon2Kdf->setParallelism(static_cast<quint32>(m_ui->parallelismSpinBox->value()));
     }
 
+    // Keep the optional secret key and associated data of Argon2, which this page doesn't show
+    if (IS_ARGON2(kdfChoice) && m_db->kdf() && IS_ARGON2(m_db->kdf()->uuid())) {
+        auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
+        auto currentArgon2Kdf = m_db->kdf().staticCast<Argon2Kdf>();
+        argon2Kdf->setSecret(currentArgon2Kdf->secret());
+        argon2Kdf->setAssocData(currentArgon2Kdf->assocData());
+    }
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
     // TODO: we should probably use AsyncTask::runAndWaitForFuture() here,
     //       but not without making Database thread-safe

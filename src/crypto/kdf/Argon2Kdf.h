@@ -59,6 +59,10 @@ public:
     bool setMemory(quint64 kibibytes);
     quint32 parallelism() const;
     bool setParallelism(quint32 threads);
+    QByteArray secret() const;
+    void setSecret(const QByteArray& secret);
+    QByteArray assocData() const;
+    void setAssocData(const QByteArray& assocData);
     QString toString() const override;
 
     int benchmark(int msec) const override;
@@ -75,6 +79,12 @@ public:
     quint32 m_version;
     quint64 m_memory;
     quint32 m_parallelism;
+
+private:
+    // Optional secret key (K) and associated data (A). They are written back unless they are empty, because an empty
+    // value derives the same key as a missing one
+    QByteArray m_secret;
+    QByteArray m_assocData;
 };
 
 #endif // KEEPASSX_ARGON2KDF_H
