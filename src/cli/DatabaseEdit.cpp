@@ -80,7 +80,15 @@ int DatabaseEdit::executeWithDatabase(QSharedPointer<Database> database, QShared
             err << QObject::tr("Could not change the database key.") << Qt::endl;
             return EXIT_FAILURE;
         }
-        database->setKey(newDatabaseKey);
+        // Transforming the new key fails if, e.g., a hardware key does not respond. The database then keeps
+        // its old key, so saving it would silently keep the old credentials.
+        if (!database->setKey(newDatabaseKey)) {
+            if (!database->keyError().isEmpty()) {
+                err << database->keyError() << Qt::endl;
+            }
+            err << QObject::tr("Could not change the database key.") << Qt::endl;
+            return EXIT_FAILURE;
+        }
         databaseWasChanged = true;
     }
 

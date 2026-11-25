@@ -30,6 +30,18 @@ QByteArray MockChallengeResponseKey::rawKey() const
 
 bool MockChallengeResponseKey::challenge(const QByteArray& challenge)
 {
+    if (m_failingChallenges > 0) {
+        --m_failingChallenges;
+        setError(QStringLiteral("Mock challenge-response failure"));
+        return false;
+    }
+
+    setError({});
     m_challenge = challenge;
     return true;
+}
+
+void MockChallengeResponseKey::setFailingChallenges(int count)
+{
+    m_failingChallenges = count;
 }
