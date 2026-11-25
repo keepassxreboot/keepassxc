@@ -60,6 +60,12 @@ QVariantMap AesKdf::writeParameters()
     return p;
 }
 
+bool AesKdf::setSeed(const QByteArray& seed)
+{
+    // The seed is the AES-256 key, so it must have exactly 32 bytes
+    return seed.size() == 32 && Kdf::setSeed(seed);
+}
+
 bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
 {
     return transformKeyRaw(raw, m_seed, m_rounds, &result);
@@ -72,7 +78,9 @@ bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, int 
     }
 
     auto out = key;
-    SymmetricCipher::aesKdf(seed, rounds, out);
+    if (!SymmetricCipher::aesKdf(seed, rounds, out)) {
+        return false;
+    }
     *result = CryptoHash::hash(out, CryptoHash::Sha256);
     return true;
 }

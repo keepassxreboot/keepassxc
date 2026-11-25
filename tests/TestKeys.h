@@ -35,6 +35,8 @@ private slots:
     void testFileKeyHash();
     void testFileKeyError();
     void testCompositeKeyComponents();
+    void testAesKdfSeedSize();
+    void testAesKdfSeedSize_data();
     void benchmarkTransformKey();
 };
 
