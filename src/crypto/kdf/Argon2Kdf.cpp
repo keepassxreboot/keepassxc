@@ -48,8 +48,8 @@ quint32 Argon2Kdf::version() const
 
 bool Argon2Kdf::setVersion(quint32 version)
 {
-    // MIN=0x10; MAX=0x13)
-    if (version >= 0x10 && version <= 0x13) {
+    // Botan only implements Argon2 version 1.3 (0x13), deriving with it for any other version gives a different key
+    if (version == ARGON2_DEFAULT_VERSION) {
         m_version = version;
         return true;
     }
@@ -103,6 +103,11 @@ bool Argon2Kdf::processParameters(const QVariantMap& p, QString* error)
 
     auto version = unsignedParameter(p, KeePass2::KDFPARAM_ARGON2_VERSION);
     if (!version || *version > std::numeric_limits<quint32>::max() || !setVersion(static_cast<quint32>(*version))) {
+        if (version && error) {
+            *error = QObject::tr("Argon2 version 0x%1 is not supported, only version 0x%2 is supported.")
+                         .arg(*version, 0, 16)
+                         .arg(ARGON2_DEFAULT_VERSION, 0, 16);
+        }
         return false;
     }
 

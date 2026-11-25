@@ -816,6 +816,7 @@ void TestKdbx4Format::testKdfParameterValidation_data()
     const auto argon2 = KeePass2::KDF_ARGON2D;
     const auto aes = KeePass2::KDF_AES_KDBX4;
     const auto iterations = KeePass2::KDFPARAM_ARGON2_ITERATIONS;
+    const auto version = KeePass2::KDFPARAM_ARGON2_VERSION;
     const auto rounds = KeePass2::KDFPARAM_AES_ROUNDS;
     const auto maxRounds = static_cast<quint64>(Kdf::MAX_ROUNDS);
 
@@ -834,8 +835,16 @@ void TestKdbx4Format::testKdfParameterValidation_data()
     QTest::newRow("Argon2 parallelism: UInt64 2^32 + 2, truncated to 2 as UInt32")
         << argon2 << KeePass2::KDFPARAM_ARGON2_PARALLELISM << QVariant(Q_UINT64_C(0x100000002)) << false
         << QString("Argon2 parallelism of 4294967298 threads exceeds the supported maximum of 128 threads.");
+    QTest::newRow("Argon2 version: 1.3") << argon2 << version << QVariant(quint32(0x13)) << true << QString();
+    QTest::newRow("Argon2 version: 1.0")
+        << argon2 << version << QVariant(quint32(0x10)) << false
+        << QString("Argon2 version 0x10 is not supported, only version 0x13 is supported.");
+    QTest::newRow("Argon2 version: 0x12")
+        << argon2 << version << QVariant(quint32(0x12)) << false
+        << QString("Argon2 version 0x12 is not supported, only version 0x13 is supported.");
     QTest::newRow("Argon2 version: UInt64 2^32 + 0x13, truncated to 0x13 as UInt32")
-        << argon2 << KeePass2::KDFPARAM_ARGON2_VERSION << QVariant(Q_UINT64_C(0x100000013)) << false << QString();
+        << argon2 << version << QVariant(Q_UINT64_C(0x100000013)) << false
+        << QString("Argon2 version 0x100000013 is not supported, only version 0x13 is supported.");
     QTest::newRow("Argon2 memory: string")
         << argon2 << KeePass2::KDFPARAM_ARGON2_MEMORY << QVariant(QString("1048576")) << false << QString();
 

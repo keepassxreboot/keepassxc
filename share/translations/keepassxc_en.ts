@@ -8916,6 +8916,10 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Argon2 version 0x%1 is not supported, only version 0x%2 is supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Argon2 parallelism of %1 threads exceeds the supported maximum of %2 threads.</source>
         <translation type="unfinished"></translation>
     </message>
