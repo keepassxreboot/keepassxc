@@ -40,6 +40,9 @@ public:
 
     static QUuid UUID;
 
+protected:
+    void setError(const QString& error);
+
 private:
     Q_DISABLE_COPY(ChallengeResponseKey);
 

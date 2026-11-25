@@ -55,6 +55,7 @@ private slots:
     void testCommandParsing();
     void testCreate();
     void testDatabaseEdit();
+    void testDatabaseEditChallengeResponseFailure();
     void testDiceware();
     void testEdit();
     void testEstimate_data();

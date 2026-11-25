@@ -24,8 +24,10 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "format/KeePass2.h"
 #include "keys/FileKey.h"
 #include "keys/drivers/YubiKey.h"
+#include "mock/MockChallengeResponseKey.h"
 
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
@@ -991,6 +993,53 @@ void TestCli::testDatabaseEdit()
     // Skipping the password prompt.
     m_stderr->readLine();
     QCOMPARE(m_stderr->readLine(), QByteArray("Cannot remove all the keys from a database.\n"));
+}
+
+void TestCli::testDatabaseEditChallengeResponseFailure()
+{
+    QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+    QVERIFY(testDir->isValid());
+    QString dbFilename = testDir->path() + "/testDatabaseEditChallengeResponse.kdbx";
+
+    auto crKey = QSharedPointer<MockChallengeResponseKey>::create(QByteArray("secret"));
+    auto oldKey = QSharedPointer<CompositeKey>::create();
+    oldKey->addKey(QSharedPointer<PasswordKey>::create("a"));
+    oldKey->addChallengeResponseKey(crKey);
+
+    // KDBX 4 KDFs include the challenge-response key in the key transformation
+    auto db = QSharedPointer<Database>::create();
+    db->setKey(oldKey);
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4);
+    kdf->setRounds(1000);
+    QVERIFY(db->changeKdf(kdf));
+    QVERIFY(db->saveAs(dbFilename));
+    QFile dbFile(dbFilename);
+    QVERIFY(dbFile.open(QIODevice::ReadOnly));
+    const QByteArray savedData = dbFile.readAll();
+    dbFile.close();
+
+    // The new key keeps the challenge-response key, which does not respond to the next challenge
+    crKey->setFailingChallenges(1);
+    DatabaseEdit editCmd;
+    // Set a current database, simulating interactive mode, so that the command uses the mock key
+    editCmd.currentDatabase = db;
+    setInput({"b", "b"});
+    QCOMPARE(execCmd(editCmd, {"db-edit", "--set-password"}), EXIT_FAILURE);
+    QCOMPARE(m_stdout->readAll(), QByteArray(""));
+    // Skipping over the password setting prompts.
+    m_stderr->readLine();
+    m_stderr->readLine();
+    QCOMPARE(m_stderr->readAll(), QByteArray("Mock challenge-response failure\nCould not change the database key.\n"));
+
+    // Nothing has been saved, so the file is unchanged and still opens with the old password only
+    QVERIFY(dbFile.open(QIODevice::ReadOnly));
+    QCOMPARE(dbFile.readAll(), savedData);
+    dbFile.close();
+    auto newKey = QSharedPointer<CompositeKey>::create();
+    newKey->addKey(QSharedPointer<PasswordKey>::create("b"));
+    newKey->addChallengeResponseKey(crKey);
+    QVERIFY(!QSharedPointer<Database>::create()->open(dbFilename, newKey));
+    QVERIFY(QSharedPointer<Database>::create()->open(dbFilename, oldKey));
 }
 
 void TestCli::testInfo()

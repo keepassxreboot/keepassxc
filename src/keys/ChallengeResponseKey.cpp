@@ -48,6 +48,11 @@ QString ChallengeResponseKey::error() const
     return m_error;
 }
 
+void ChallengeResponseKey::setError(const QString& error)
+{
+    m_error = error;
+}
+
 bool ChallengeResponseKey::challenge(const QByteArray& challenge)
 {
     m_error.clear();
