@@ -1132,12 +1132,14 @@ void Database::setKdf(QSharedPointer<Kdf> kdf)
 
 bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 {
+    m_keyError.clear();
+
     kdf->randomizeSeed();
     QByteArray transformedDatabaseKey;
     if (!m_data.key) {
         m_data.key = QSharedPointer<CompositeKey>::create();
     }
-    if (!m_data.key->transform(*kdf, transformedDatabaseKey)) {
+    if (!m_data.key->transform(*kdf, transformedDatabaseKey, &m_keyError)) {
         return false;
     }
 

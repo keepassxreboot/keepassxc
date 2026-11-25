@@ -34,9 +34,18 @@ public:
 
     bool challenge(const QByteArray& challenge) override;
 
+    /**
+     * Make the next challenges fail, e.g., to simulate a hardware key that is not touched in time.
+     * A failed challenge reports the error "Mock challenge-response failure".
+     *
+     * @param count number of consecutive challenges that fail
+     */
+    void setFailingChallenges(int count);
+
 private:
     QByteArray m_challenge;
     QByteArray m_secret;
+    int m_failingChallenges = 0;
 
     Q_DISABLE_COPY(MockChallengeResponseKey);
 };
