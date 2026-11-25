@@ -270,7 +270,8 @@ void TestKeePass1Reader::testMetastreamBounds()
 void TestKeePass1Reader::readTestDatabase(const QByteArray& entries,
                                           quint32 entryCount,
                                           KeePass1Reader& reader,
-                                          QSharedPointer<Database>& db)
+                                          QSharedPointer<Database>& db,
+                                          quint32 transformRounds)
 {
     QByteArray content;
     for (const auto& id : {QByteArray::fromHex("00000000"), QByteArray::fromHex("01000000")}) {
@@ -301,7 +302,7 @@ void TestKeePass1Reader::readTestDatabase(const QByteArray& entries,
     const auto hash = CryptoHash::hash(content, CryptoHash::Sha256);
     header.writeRawData(hash.constData(), 32);
     header.writeRawData(transformSeed.constData(), 32);
-    header << static_cast<quint32>(1);
+    header << transformRounds;
     file.append(ciphertext);
 
     QBuffer buffer(&file);
@@ -422,6 +423,29 @@ void TestKeePass1Reader::testTwofish()
     QVERIFY(!reader.hasError());
     QCOMPARE(db->rootGroup()->children().size(), 1);
     QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
+}
+
+void TestKeePass1Reader::testTransformRounds()
+{
+    QFETCH(quint32, rounds);
+
+    // The header announces the given number of rounds; the reader rejects it before deriving any key
+    KeePass1Reader reader;
+    QSharedPointer<Database> db;
+    readTestDatabase({}, 0, reader, db, rounds);
+    QVERIFY(!db);
+    QVERIFY(reader.hasError());
+    QCOMPARE(reader.errorString(), QString("Unsupported number of transform rounds: %1").arg(rounds));
+}
+
+void TestKeePass1Reader::testTransformRounds_data()
+{
+    QTest::addColumn<quint32>("rounds");
+
+    QTest::newRow("0") << quint32(0);
+    QTest::newRow("INT_MAX") << static_cast<quint32>(INT_MAX);
+    QTest::newRow("2^31 (truncates to INT_MIN)") << quint32(0x80000000);
+    QTest::newRow("UINT32_MAX (truncates to -1)") << quint32(0xFFFFFFFF);
 }
 
 #ifdef Q_OS_WIN

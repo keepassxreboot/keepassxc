@@ -5254,6 +5254,10 @@ If this reoccurs, then your database file may be corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unsupported number of transform rounds: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid start bytes size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5471,6 +5475,10 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported number of transform rounds: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

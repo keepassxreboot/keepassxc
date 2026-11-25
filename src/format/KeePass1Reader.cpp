@@ -161,7 +161,11 @@ KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevi
         return {};
     }
     auto kdf = QSharedPointer<AesKdf>::create(true);
-    kdf->setRounds(m_transformRounds);
+    // Reject counts the KDF cannot represent instead of silently using a different number of rounds
+    if (m_transformRounds > static_cast<quint32>(INT_MAX) || !kdf->setRounds(static_cast<int>(m_transformRounds))) {
+        raiseError(tr("Unsupported number of transform rounds: %1").arg(m_transformRounds));
+        return {};
+    }
     kdf->setSeed(m_transformSeed);
     db->setKdf(kdf);
 
