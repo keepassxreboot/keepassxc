@@ -5592,6 +5592,17 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
 </context>
 <context>
+    <name>KeePass2Writer</name>
+    <message>
+        <source>Unable to calculate database key: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database format version does not match the key derivation function.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>

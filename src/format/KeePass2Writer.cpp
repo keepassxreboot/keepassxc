@@ -118,6 +118,8 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 {
     m_error = false;
     m_errorStr.clear();
+    // Discard the writer of a previous call, so that it cannot report its stale error state
+    m_writer.reset();
 
     m_version = kdbxVersionRequired(db);
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && m_version >= KeePass2::FILE_VERSION_4) {
@@ -125,15 +127,25 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
         // If we forget to re-transform, the database will be saved WITHOUT a challenge-response key component!
         auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4);
         kdf->setRounds(db->kdf()->rounds());
-        db->changeKdf(kdf);
+        // If the upgrade fails (e.g., a hardware key did not respond), the database still uses the legacy KDF
+        // and must not be written with the KDBX 3 writer under a KDBX 4 version number
+        if (!db->changeKdf(kdf)) {
+            raiseError(tr("Unable to calculate database key: %1").arg(db->keyError()));
+            return false;
+        }
+    }
+
+    // The KDF determines the file layout, which must match the version written to the header
+    const bool isLegacyKdf = db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3;
+    if (isLegacyKdf != (m_version < KeePass2::FILE_VERSION_4)) {
+        raiseError(tr("The database format version does not match the key derivation function."));
+        return false;
     }
 
     db->setFormatVersion(m_version);
-    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
-        Q_ASSERT(m_version <= KeePass2::FILE_VERSION_3_1);
+    if (isLegacyKdf) {
         m_writer.reset(new Kdbx3Writer());
     } else {
-        Q_ASSERT(m_version >= KeePass2::FILE_VERSION_4);
         m_writer.reset(new Kdbx4Writer());
     }
 

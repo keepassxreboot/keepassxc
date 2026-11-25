@@ -422,6 +422,61 @@ void TestKdbx4Format::testUpgradeMasterKeyIntegrity_data()
     QTest::newRow("Upgrade (implicit): entry-customdata") << QString("entry-customdata") << KeePass2::FILE_VERSION_4;
 }
 
+void TestKdbx4Format::testUpgradeChallengeResponseFailure()
+{
+    auto crKey = QSharedPointer<MockChallengeResponseKey>::create(QByteArray("azdJnbVCFE76vV6t9RJ2DS6xvSS93k"));
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
+    compositeKey->addKey(QSharedPointer<PasswordKey>::create("turXpGMQiUE6CkPvWacydAKsnp4cxz"));
+    compositeKey->addChallengeResponseKey(crKey);
+
+    QScopedPointer<Database> db(new Database());
+    db->changeKdf(fastKdf(db->kdf()));
+    QCOMPARE(db->kdf()->uuid(), KeePass2::KDF_AES_KDBX3); // default is legacy AES-KDF
+    db->setKey(compositeKey);
+
+    auto entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->attachments()->set("attachment", QByteArray("attachment content"));
+    entry->setGroup(db->rootGroup());
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(db.data()), KeePass2::FILE_VERSION_3_1);
+
+    // Save once as KDBX 3.1 with the same writer, so that the failing save below follows a successful one
+    KeePass2Writer writer;
+    QBuffer previousBuffer;
+    previousBuffer.open(QBuffer::ReadWrite);
+    QVERIFY2(writer.writeDatabase(&previousBuffer, db.data()), qPrintable(writer.errorString()));
+
+    // Recycling the entry records its previous parent group, which requires KDBX 4.1
+    db->recycleEntry(entry);
+    QCOMPARE(KeePass2Writer::kdbxVersionRequired(db.data()), KeePass2::FILE_VERSION_4_1);
+
+    // The KDBX 4 upgrade challenges the hardware key again; let that challenge fail but later ones succeed
+    crKey->setFailingChallenges(1);
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    QVERIFY(!writer.writeDatabase(&buffer, db.data()));
+    QVERIFY(writer.hasError());
+    // The error reports the failed key transformation with the reason given by the key
+    QCOMPARE(writer.errorString(), QString("Unable to calculate database key: Mock challenge-response failure"));
+
+    // Nothing has been written and the database still uses the legacy KDF, so saving again retries the upgrade
+    QCOMPARE(buffer.size(), 0);
+    QCOMPARE(db->kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
+
+    QVERIFY2(writer.writeDatabase(&buffer, db.data()), qPrintable(writer.errorString()));
+    QCOMPARE(db->kdf()->uuid(), KeePass2::KDF_AES_KDBX4);
+
+    buffer.seek(0);
+    KeePass2Reader reader;
+    auto db2 = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, compositeKey, db2.data());
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4_1);
+    auto entry2 = db2->rootGroup()->findEntryByUuid(entry->uuid());
+    QVERIFY(entry2);
+    QCOMPARE(entry2->attachments()->value("attachment"), QByteArray("attachment content"));
+}
+
 void TestKdbx4Format::testAttachmentIndexStability()
 {
     QScopedPointer<Database> db(new Database());

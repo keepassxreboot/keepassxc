@@ -65,6 +65,7 @@ private slots:
     void testFormat410Upgrade();
     void testUpgradeMasterKeyIntegrity();
     void testUpgradeMasterKeyIntegrity_data();
+    void testUpgradeChallengeResponseFailure();
     void testAttachmentIndexStability();
     void testCustomData();
     void testMinorVersionMismatchAfterSetKdf();
