@@ -2076,6 +2076,59 @@ void TestGui::testDatabaseSettingsConfirmBeforeSaving()
     QVERIFY(releasedDb->kdf()->uuid() != KeePass2::KDF_ARGON2ID);
 }
 
+void TestGui::testDatabaseSettingsArgon2MemoryLimit()
+{
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID).staticCast<Argon2Kdf>();
+    kdf->setRounds(1);
+    QVERIFY(kdf->setMemory(1024));
+    QVERIFY(kdf->setParallelism(1));
+    QVERIFY(m_db->changeKdf(kdf));
+
+    triggerAction("actionDatabaseSettings");
+    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->findChild<CategoryListWidget*>("categoryList")->setCurrentCategory(1);
+    dbSettingsDialog->findChild<QTabWidget*>("securityTabWidget")->setCurrentIndex(1);
+    auto* encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto* advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+    encryptionSettings->setCurrentWidget(advancedTab);
+    QApplication::processEvents();
+    auto* memorySpinBox = advancedTab->findChild<QSpinBox*>("memorySpinBox");
+    auto* encryptionWidget = dbSettingsDialog->findChild<DatabaseSettingsWidgetEncryption*>();
+    QVERIFY(encryptionWidget);
+
+    // 2047 MiB fits in the KDBX format, so there is no warning
+    memorySpinBox->setValue(2047);
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    QVERIFY(encryptionWidget->confirmSettings());
+    MessageBox::setNextAnswer(MessageBox::NoButton);
+
+    // 2048 MiB doesn't, so a warning asks whether to continue, with Cancel as the default
+    memorySpinBox->setValue(2048);
+    {
+        TEST_MODAL_NO_WAIT(auto* warning = qobject_cast<QMessageBox*>(QApplication::activeModalWidget());
+                           QVERIFY(warning);
+                           auto* defaultButton = warning->defaultButton();
+                           const auto defaultText = defaultButton->text();
+                           defaultButton->click();
+                           QCOMPARE(defaultText, QString("Cancel")););
+        QVERIFY(!encryptionWidget->confirmSettings());
+        QTRY_VERIFY(dialogFinished);
+    }
+    MessageBox::setNextAnswer(MessageBox::Continue);
+    QVERIFY(encryptionWidget->confirmSettings());
+
+    // Cancelling the warning keeps the KDF
+    MessageBox::setNextAnswer(MessageBox::Cancel);
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QVERIFY(dbSettingsDialog->isVisible());
+    QCOMPARE(m_db->kdf().staticCast<Argon2Kdf>()->memory(), quint64(1024));
+
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+    QTRY_VERIFY(!dbSettingsDialog->isVisible());
+}
+
 void TestGui::testDragAndDropKdbxFiles()
 {
     const int openedDatabasesCount = m_tabWidget->count();

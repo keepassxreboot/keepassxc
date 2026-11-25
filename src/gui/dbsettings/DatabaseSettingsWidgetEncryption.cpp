@@ -252,7 +252,7 @@ void DatabaseSettingsWidgetEncryption::markDirty()
 }
 
 /**
- * Ask the user to confirm advanced settings that make the database very slow to open or weak.
+ * Ask the user to confirm advanced settings that make the database very slow to open, weak or incompatible.
  * DatabaseSettingsDialog::save() calls this before any settings page is saved.
  */
 bool DatabaseSettingsWidgetEncryption::confirmSettings()
@@ -291,6 +291,20 @@ bool DatabaseSettingsWidgetEncryption::confirmSettings()
         warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
         warning.exec();
         if (warning.clickedButton() != ok) {
+            return false;
+        }
+    }
+
+    if (IS_ARGON2(kdfChoice) && Argon2Kdf::toKibibytes(m_ui->memorySpinBox->value()) > ARGON2_KDBX_MAX_MEMORY) {
+        auto answer = MessageBox::warning(
+            this,
+            tr("Memory usage too high"),
+            tr("You are using more than %1 MiB of memory with Argon2, which the KDBX format does not allow.\n\n"
+               "If you keep this setting, KeePass and other applications may not be able to open your database.")
+                .arg(Argon2Kdf::toMebibytes(ARGON2_KDBX_MAX_MEMORY)),
+            MessageBox::Continue | MessageBox::Cancel,
+            MessageBox::Cancel);
+        if (answer != MessageBox::Continue) {
             return false;
         }
     }

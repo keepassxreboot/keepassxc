@@ -66,6 +66,7 @@ private slots:
     void testDatabaseSettings();
     void testDatabaseLocking();
     void testDatabaseSettingsConfirmBeforeSaving();
+    void testDatabaseSettingsArgon2MemoryLimit();
     void testDragAndDropKdbxFiles();
     void testSortGroups();
     void testAutoType();
