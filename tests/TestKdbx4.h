@@ -75,6 +75,8 @@ private slots:
     void testArgon2InvalidParametersInHeader();
     void testKdfParameterValidation();
     void testKdfParameterValidation_data();
+    void testArgon2SaltSize();
+    void testArgon2SaltSize_data();
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H

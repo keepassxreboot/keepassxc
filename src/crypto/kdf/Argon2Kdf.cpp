@@ -23,6 +23,7 @@
 
 #include <botan/pwdhash.h>
 
+#include "crypto/Random.h"
 #include "format/KeePass2.h"
 
 /**
@@ -44,6 +45,24 @@ Argon2Kdf::Argon2Kdf(Type type)
 quint32 Argon2Kdf::version() const
 {
     return m_version;
+}
+
+bool Argon2Kdf::setSeed(const QByteArray& seed)
+{
+    // Unlike the default seed size limit, the KDBX format allows salts longer than 32 bytes for Argon2
+    if (seed.size() < KDF_MIN_SEED_SIZE || seed.size() > ARGON2_MAX_SALT_SIZE) {
+        return false;
+    }
+
+    m_seed = seed;
+    return true;
+}
+
+void Argon2Kdf::randomizeSeed()
+{
+    // Like KeePass, generate a salt of the default size even if the current one is longer: a long salt would make
+    // every save slower, and hardware keys, which receive the salt as their challenge, accept at most 64 bytes
+    setSeed(randomGen()->randomArray(KDF_MAX_SEED_SIZE));
 }
 
 bool Argon2Kdf::setVersion(quint32 version)
@@ -96,8 +115,8 @@ bool Argon2Kdf::setParallelism(quint32 threads)
 
 bool Argon2Kdf::processParameters(const QVariantMap& p, QString* error)
 {
-    QByteArray salt = p.value(KeePass2::KDFPARAM_ARGON2_SALT).toByteArray();
-    if (!setSeed(salt)) {
+    const auto salt = p.value(KeePass2::KDFPARAM_ARGON2_SALT);
+    if (salt.typeId() != QMetaType::QByteArray || !setSeed(salt.toByteArray())) {
         return false;
     }
 

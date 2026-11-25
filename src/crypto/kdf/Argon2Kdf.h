@@ -31,6 +31,8 @@ constexpr quint64 ARGON2_MAX_MEMORY = (sizeof(size_t) == 4 ? 2ULL : 8ULL) << 20;
 constexpr quint32 ARGON2_MAX_PARALLELISM = 128;
 // Minimum memory in KiB for every thread
 constexpr quint64 ARGON2_MIN_MEMORY_PER_THREAD = 8;
+// Maximum salt size in bytes allowed by the KDBX format
+constexpr int ARGON2_MAX_SALT_SIZE = 0x3FFFFFFF;
 
 class Argon2Kdf : public Kdf
 {
@@ -43,6 +45,8 @@ public:
 
     Argon2Kdf(Type type);
 
+    bool setSeed(const QByteArray& seed) override;
+    void randomizeSeed() override;
     bool processParameters(const QVariantMap& p, QString* error = nullptr) override;
     QVariantMap writeParameters() override;
     bool transform(const QByteArray& raw, QByteArray& result) const override;

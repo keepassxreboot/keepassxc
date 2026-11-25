@@ -845,6 +845,8 @@ void TestKdbx4Format::testKdfParameterValidation_data()
     QTest::newRow("Argon2 version: UInt64 2^32 + 0x13, truncated to 0x13 as UInt32")
         << argon2 << version << QVariant(Q_UINT64_C(0x100000013)) << false
         << QString("Argon2 version 0x100000013 is not supported, only version 0x13 is supported.");
+    QTest::newRow("Argon2 salt: string") << argon2 << KeePass2::KDFPARAM_ARGON2_SALT << QVariant(QString(32, 'x'))
+                                         << false << QString();
     QTest::newRow("Argon2 memory: string")
         << argon2 << KeePass2::KDFPARAM_ARGON2_MEMORY << QVariant(QString("1048576")) << false << QString();
 
@@ -858,4 +860,49 @@ void TestKdbx4Format::testKdfParameterValidation_data()
     QTest::newRow("AES-KDF rounds: zero") << aes << rounds << QVariant(Q_UINT64_C(0)) << false << QString();
     QTest::newRow("AES-KDF rounds: string") << aes << rounds << QVariant(QString("60000")) << false << QString();
     QTest::newRow("AES-KDF rounds: boolean") << aes << rounds << QVariant(true) << false << QString();
+}
+
+void TestKdbx4Format::testArgon2SaltSize()
+{
+    QFETCH(int, saltSize);
+    QFETCH(bool, valid);
+    QFETCH(QByteArray, expectedKey);
+
+    auto source = KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID).staticCast<Argon2Kdf>();
+    source->setRounds(1);
+    QVERIFY(source->setMemory(1024));
+    QVERIFY(source->setParallelism(1));
+    auto params = source->writeParameters();
+    params.insert(KeePass2::KDFPARAM_ARGON2_SALT, QByteArray(saltSize, '\x02'));
+
+    auto kdf = KeePass2::kdfFromParameters(params);
+    QCOMPARE(!kdf.isNull(), valid);
+    if (!valid) {
+        return;
+    }
+    QCOMPARE(kdf->seed().size(), saltSize);
+
+    // Reference values computed with the Argon2 reference implementation
+    QByteArray result;
+    QVERIFY(kdf->transform(QByteArray(32, '\x01'), result));
+    QCOMPARE(result.toHex(), expectedKey);
+
+    // Saving the database generates a new salt of the default size
+    kdf->randomizeSeed();
+    QCOMPARE(kdf->seed().size(), 32);
+}
+
+void TestKdbx4Format::testArgon2SaltSize_data()
+{
+    QTest::addColumn<int>("saltSize");
+    QTest::addColumn<bool>("valid");
+    QTest::addColumn<QByteArray>("expectedKey");
+
+    QTest::newRow("Too short") << 7 << false << QByteArray();
+    QTest::newRow("Minimum") << 8 << true
+                             << QByteArray("1e85c88689ad638067ad65186f1050e2d1c9cda75240c629c02250328aa6a798");
+    QTest::newRow("33 bytes") << 33 << true
+                              << QByteArray("5473fa75f49cda60918dee0c44385e314b7bd9968f7a0699e1257c2842b94e78");
+    QTest::newRow("64 bytes") << 64 << true
+                              << QByteArray("ecc55c8c7122433fb922e36023df4df7b45d82708009d22b363bf81df3d91968");
 }
