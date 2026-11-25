@@ -10746,6 +10746,10 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
+        <source>The challenge of %1 bytes is too long for a hardware key, which accepts at most 64 bytes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Could not find hardware key with serial number %1. Please connect it to continue.</source>
         <translation type="unfinished"></translation>
     </message>
