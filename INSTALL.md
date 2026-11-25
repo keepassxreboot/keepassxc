@@ -15,7 +15,7 @@ The following build tools must exist within your PATH:
 * asciidoctor (>= 2.0)
 
 The following minimum versions of libraries must exist:
-* qt (>= 5.12.0)
+* qt (>= 6.2.4)
 * botan (>= 2.19.1 or >= 3.0.0)
 * zlib (>= 1.2.0)
 
@@ -63,7 +63,7 @@ Note: These steps place the compiled KeePassXC binary inside the `./build/src/` 
 
 ## MacOS Build Notes
 
-If you installed Qt@5 via Homebrew and CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
+If you installed Qt via Homebrew and CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
 
 `-DCMAKE_PREFIX_PATH=$(brew --prefix qt)/lib/cmake`
 

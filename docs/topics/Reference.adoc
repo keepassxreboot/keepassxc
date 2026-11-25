@@ -112,7 +112,7 @@ Use regular expressions to find and replace data from a resolved placeholder. Re
 
 |{DB_FILENAME}  |The database's filename without extension
 |{TIME}        |The current time formatted as dd_MM_yyyy_hh-mm-ss.
-|{TIME:<format>}        |The current time formatted according to the format string specified by <format>. See https://doc.qt.io/qt-5/qtime.html#toString for a list of available placeholders.
+|{TIME:<format>}        |The current time formatted according to the format string specified by <format>. See https://doc.qt.io/qt-6/qdatetime.html#toString for a list of available placeholders.
 |===
 
 [grid=rows, frame=none, width=90%]
