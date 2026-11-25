@@ -224,6 +224,10 @@ The same password generation options as documented for the generate command can 
   Use the specified okon-cli program to perform offline breach checks. You can obtain okon-cli from https://github.com/stryku/okon.
   When using this option, *-H, --hibp* must point to a post-processed okon file (e.g. file.okon).
 
+=== Attachment-import options
+*-f*, *--force*::
+  Overwrites an existing attachment with the same name.
+
 === Clip options
 *-a*, *--attribute*::
   Copies the specified attribute to the clipboard.
@@ -235,7 +239,7 @@ The same password generation options as documented for the generate command can 
   Copies the current TOTP instead of the specified attribute to the clipboard.
   Will report an error if no TOTP is configured for the entry.
 
-*-b*, *--best*::
+*-b*, *--best-match*::
   Try to find and copy to clipboard a unique entry matching the input
   If a unique matching entry is found it will be copied to the clipboard.
   If multiple entries are found they will be listed to refine the search. (no clip performed)
@@ -330,6 +334,10 @@ The same password generation options as documented for the generate command can 
 *-x*, *--exclude* <__chars__>::
   Comma-separated list of characters to exclude from the generated password.
   None is excluded by default.
+
+*-c*, *--custom* <__chars__>::
+  Adds the given characters to the set used for the generated password.
+  When this option is set, only the character classes that are selected explicitly are used; lowercase, uppercase and numbers are no longer enabled by default.
 
 *--exclude-similar*::
   Exclude similar looking characters.
