@@ -209,9 +209,14 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device, Database* db)
             return false;
         }
         QVariantMap kdfParams = readVariantMap(&bufIoDevice);
-        QSharedPointer<Kdf> kdf = KeePass2::kdfFromParameters(kdfParams);
+        QString kdfError;
+        QSharedPointer<Kdf> kdf = KeePass2::kdfFromParameters(kdfParams, &kdfError);
         if (!kdf) {
-            raiseError(tr("Unsupported key derivation function (KDF) or invalid parameters"));
+            if (kdfError.isEmpty()) {
+                raiseError(tr("Unsupported key derivation function (KDF) or invalid parameters"));
+            } else {
+                raiseError(tr("Invalid key derivation function (KDF) parameters: %1").arg(kdfError));
+            }
             return false;
         }
         db->setKdf(kdf);

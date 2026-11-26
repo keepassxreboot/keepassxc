@@ -94,3 +94,13 @@ void TestYubiKeyChallengeResponse::testKeyChallenge()
     auto hash = QString(QCryptographicHash::hash(key->rawKey(), QCryptographicHash::Sha256).toHex());
     QCOMPARE(hash, QString("2f7802c7112c301303526e7737b54d546c905076dca6e9538edf761a2264cd70"));
 }
+
+void TestYubiKeyChallengeResponse::testChallengeTooLong()
+{
+    // The challenge is refused before any hardware key is used, so this needs no key
+    Botan::secure_vector<char> response;
+    QCOMPARE(YubiKey::instance()->challenge(YubiKeySlot(0, 2), QByteArray(65, 'x'), response),
+             YubiKey::ChallengeResult::YCR_ERROR);
+    QCOMPARE(YubiKey::instance()->errorMessage(),
+             QString("The challenge of 65 bytes is too long for a hardware key, which accepts at most 64 bytes."));
+}

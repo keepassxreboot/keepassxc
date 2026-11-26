@@ -56,6 +56,10 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
     connect(m_ui->compatibilitySelection, SIGNAL(currentIndexChanged(int)), SLOT(loadKdfAlgorithms()));
     m_ui->formatCannotBeChanged->setVisible(false);
 
+    // Don't offer values that the Argon2 implementation rejects
+    m_ui->memorySpinBox->setMaximum(static_cast<int>(Argon2Kdf::toMebibytes(ARGON2_MAX_MEMORY)));
+    m_ui->parallelismSpinBox->setMaximum(ARGON2_MAX_PARALLELISM);
+
     connect(m_ui->memorySpinBox, SIGNAL(valueChanged(int)), this, SLOT(memoryChanged(int)));
     connect(m_ui->parallelismSpinBox, SIGNAL(valueChanged(int)), this, SLOT(parallelismChanged(int)));
 
@@ -340,6 +344,14 @@ bool DatabaseSettingsWidgetEncryption::saveSettings()
         auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
         argon2Kdf->setMemory(Argon2Kdf::toKibibytes(m_ui->memorySpinBox->value()));
         argon2Kdf->setParallelism(static_cast<quint32>(m_ui->parallelismSpinBox->value()));
+    }
+
+    // Keep the optional secret key and associated data of Argon2, which this page doesn't show
+    if (IS_ARGON2(kdfChoice) && m_db->kdf() && IS_ARGON2(m_db->kdf()->uuid())) {
+        auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
+        auto currentArgon2Kdf = m_db->kdf().staticCast<Argon2Kdf>();
+        argon2Kdf->setSecret(currentArgon2Kdf->secret());
+        argon2Kdf->setAssocData(currentArgon2Kdf->assocData());
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);

@@ -64,6 +64,7 @@ private slots:
     void testSaveBackupPath();
     void testSaveBackupPath_data();
     void testDatabaseSettings();
+    void testDatabaseSettingsKeepArgon2SecretAndAssocData();
     void testDatabaseLocking();
     void testDragAndDropKdbxFiles();
     void testSortGroups();

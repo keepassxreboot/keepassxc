@@ -25,6 +25,15 @@ constexpr auto ARGON2_DEFAULT_ROUNDS = 10;
 constexpr auto ARGON2_DEFAULT_MEMORY = 1 << 16;
 constexpr auto ARGON2_DEFAULT_PARALLELISM = 4;
 
+// Limits enforced by Botan's Argon2 implementation, which rejects anything outside of them.
+// Maximum memory in KiB: 8 GiB, or 2 GiB on 32-bit platforms
+constexpr quint64 ARGON2_MAX_MEMORY = (sizeof(size_t) == 4 ? 2ULL : 8ULL) << 20;
+constexpr quint32 ARGON2_MAX_PARALLELISM = 128;
+// Minimum memory in KiB for every thread
+constexpr quint64 ARGON2_MIN_MEMORY_PER_THREAD = 8;
+// Maximum salt size in bytes allowed by the KDBX format
+constexpr int ARGON2_MAX_SALT_SIZE = 0x3FFFFFFF;
+
 class Argon2Kdf : public Kdf
 {
 public:
@@ -36,7 +45,9 @@ public:
 
     Argon2Kdf(Type type);
 
-    bool processParameters(const QVariantMap& p) override;
+    bool setSeed(const QByteArray& seed) override;
+    void randomizeSeed() override;
+    bool processParameters(const QVariantMap& p, QString* error = nullptr) override;
     QVariantMap writeParameters() override;
     bool transform(const QByteArray& raw, QByteArray& result) const override;
     QSharedPointer<Kdf> clone() const override;
@@ -48,6 +59,10 @@ public:
     bool setMemory(quint64 kibibytes);
     quint32 parallelism() const;
     bool setParallelism(quint32 threads);
+    QByteArray secret() const;
+    void setSecret(const QByteArray& secret);
+    QByteArray assocData() const;
+    void setAssocData(const QByteArray& assocData);
     QString toString() const override;
 
     int benchmark(int msec) const override;
@@ -64,6 +79,12 @@ public:
     quint32 m_version;
     quint64 m_memory;
     quint32 m_parallelism;
+
+private:
+    // Optional secret key (K) and associated data (A). They are written back unless they are empty, because an empty
+    // value derives the same key as a missing one
+    QByteArray m_secret;
+    QByteArray m_assocData;
 };
 
 #endif // KEEPASSX_ARGON2KDF_H
