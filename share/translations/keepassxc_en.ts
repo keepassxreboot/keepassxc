@@ -10406,6 +10406,10 @@ This option is deprecated, use --set-key-file instead.</source>
 <context>
     <name>ShareExport</name>
     <message>
+        <source>Unable to calculate database key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Could not write export container.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -19,6 +19,7 @@
 #include "TestKeys.h"
 
 #include <QBuffer>
+#include <QRegularExpression>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
@@ -28,6 +29,7 @@
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
+#include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/CompositeKey.h"
@@ -327,4 +329,44 @@ void TestKeys::testCompositeKeyComponents()
     buffer.seek(0);
     QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec4, db2.data()));
     QVERIFY(reader.hasError());
+}
+
+void TestKeys::testAesKdfSeedSize()
+{
+    QFETCH(int, seedSize);
+    QFETCH(bool, valid);
+
+    // The seed is the AES-256 key
+    auto kdf = KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4);
+    QCOMPARE(kdf->setSeed(QByteArray(seedSize, '\x4B')), valid);
+
+    // Also when it is read from the KDF parameters of a database
+    auto params = kdf->writeParameters();
+    params.insert(KeePass2::KDFPARAM_AES_SEED, QByteArray(seedSize, '\x4B'));
+    QCOMPARE(!KeePass2::kdfFromParameters(params).isNull(), valid);
+
+    // If an invalid seed is set anyway, the transformation fails instead of skipping the AES rounds
+    AesKdf aesKdf;
+    aesKdf.setRounds(1);
+    // The qualified call bypasses the size check of AesKdf::setSeed()
+    if (aesKdf.Kdf::setSeed(QByteArray(seedSize, '\x4B'))) {
+        if (!valid) {
+            QTest::ignoreMessage(QtWarningMsg, QRegularExpression("^SymmetricCipher::aesKdf: "));
+        }
+        QByteArray result;
+        QCOMPARE(aesKdf.transform(QByteArray(32, '\x7E'), result), valid);
+        QCOMPARE(result.isEmpty(), !valid);
+    }
+}
+
+void TestKeys::testAesKdfSeedSize_data()
+{
+    QTest::addColumn<int>("seedSize");
+    QTest::addColumn<bool>("valid");
+
+    QTest::newRow("8 bytes") << 8 << false;
+    QTest::newRow("16 bytes") << 16 << false;
+    QTest::newRow("31 bytes") << 31 << false;
+    QTest::newRow("32 bytes") << 32 << true;
+    QTest::newRow("33 bytes") << 33 << false;
 }

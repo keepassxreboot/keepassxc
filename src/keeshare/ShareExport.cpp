@@ -117,7 +117,12 @@ namespace
 
         auto key = QSharedPointer<CompositeKey>::create();
         key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
-        targetDb->setKey(key);
+        if (!targetDb->setKey(key)) {
+            // Don't export the entries at all if they can't be protected with the password of the share
+            delete targetRoot;
+            delete targetDb;
+            return nullptr;
+        }
 
         auto obsoleteRoot = targetDb->setRootGroup(targetRoot);
         delete obsoleteRoot;
@@ -189,6 +194,9 @@ ShareObserver::Result ShareExport::intoContainer(const QString& resolvedPath,
                                                  const Group* group)
 {
     QScopedPointer<Database> targetDb(extractIntoDatabase(reference, group));
+    if (!targetDb) {
+        return {reference.path, ShareObserver::Result::Error, ShareExport::tr("Unable to calculate database key")};
+    }
     if (resolvedPath.endsWith(".kdbx.share")) {
         // Write database to memory and sign it
         QByteArray dbData, signatureData;

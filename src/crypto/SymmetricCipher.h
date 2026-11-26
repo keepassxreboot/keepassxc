@@ -58,7 +58,7 @@ public:
     Q_REQUIRED_RESULT bool process(QByteArray& data);
     Q_REQUIRED_RESULT bool finish(QByteArray& data);
 
-    static bool aesKdf(const QByteArray& key, int rounds, QByteArray& data);
+    Q_REQUIRED_RESULT static bool aesKdf(const QByteArray& key, int rounds, QByteArray& data);
 
     void reset();
     Mode mode();

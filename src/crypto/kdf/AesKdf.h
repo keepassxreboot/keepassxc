@@ -30,6 +30,7 @@ public:
     QVariantMap writeParameters() override;
     bool transform(const QByteArray& raw, QByteArray& result) const override;
     QSharedPointer<Kdf> clone() const override;
+    bool setSeed(const QByteArray& seed) override;
     QString toString() const override;
 
     int benchmark(int msec) const override;
