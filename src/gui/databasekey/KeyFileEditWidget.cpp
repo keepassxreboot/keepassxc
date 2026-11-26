@@ -156,6 +156,15 @@ void KeyFileEditWidget::browseKeyFile()
     }
 
     if (!fileName.isEmpty()) {
+        QFileInfo fileInfo(fileName);
+        if (!fileInfo.isReadable()) {
+            MessageBox::warning(this,
+                                tr("Cannot read key file"),
+                                tr("The selected key file cannot be read.\n"
+                                   "Please check that the file exists and is readable."),
+                                MessageBox::Button::Ok);
+            return;
+        }
         m_compUi->keyFileLineEdit->setText(fileName);
     }
 }
