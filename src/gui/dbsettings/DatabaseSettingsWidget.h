@@ -36,6 +36,14 @@ public:
 
     virtual void loadSettings(QSharedPointer<Database> db);
 
+    /**
+     * Ask the user to confirm the settings, before any settings page is saved.
+     * This must not change the database, so that cancelling leaves it unchanged.
+     *
+     * @return true if the settings can be saved
+     */
+    virtual bool confirmSettings();
+
     const QSharedPointer<Database> getDatabase() const;
 
 signals:

@@ -1897,6 +1897,14 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Database settings not saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database was reloaded, so the database settings were not saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>KeeShare</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2213,6 +2221,16 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Memory usage too high</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using more than %1 MiB of memory with Argon2, which the KDBX format does not allow.
+
+If you keep this setting, KeePass and other applications may not be able to open your database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">

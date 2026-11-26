@@ -37,6 +37,11 @@ void DatabaseSettingsWidget::loadSettings(QSharedPointer<Database> db)
     initialize();
 }
 
+bool DatabaseSettingsWidget::confirmSettings()
+{
+    return true;
+}
+
 const QSharedPointer<Database> DatabaseSettingsWidget::getDatabase() const
 {
     return m_db;

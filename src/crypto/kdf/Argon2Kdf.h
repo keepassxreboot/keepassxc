@@ -24,6 +24,8 @@ constexpr auto ARGON2_DEFAULT_VERSION = 0x13;
 constexpr auto ARGON2_DEFAULT_ROUNDS = 10;
 constexpr auto ARGON2_DEFAULT_MEMORY = 1 << 16;
 constexpr auto ARGON2_DEFAULT_PARALLELISM = 4;
+// Maximum memory in KiB that the KDBX format allows, which limits it to 0x7FFFFFFF bytes
+constexpr quint64 ARGON2_KDBX_MAX_MEMORY = 0x7FFFFFFF / 1024;
 
 class Argon2Kdf : public Kdf
 {

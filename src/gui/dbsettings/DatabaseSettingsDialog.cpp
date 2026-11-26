@@ -33,6 +33,7 @@
 #include "core/Database.h"
 #include "core/Global.h"
 #include "gui/Icons.h"
+#include "gui/MessageBox.h"
 
 #include <QScrollArea>
 
@@ -129,6 +130,22 @@ void DatabaseSettingsDialog::showRemoteSettings()
 
 void DatabaseSettingsDialog::save()
 {
+    if (closeIfDatabaseReleased()) {
+        return;
+    }
+
+    // Ask before any page is saved, so that cancelling leaves the database unchanged
+    if (!m_encryptionWidget->confirmSettings()) {
+        setCurrentPage(1);
+        m_securityTabWidget->setCurrentIndex(1);
+        return;
+    }
+
+    // The database may have been reloaded while the user was asked
+    if (closeIfDatabaseReleased()) {
+        return;
+    }
+
     if (!m_generalWidget->saveSettings()) {
         setCurrentPage(0);
         return;
@@ -159,6 +176,26 @@ void DatabaseSettingsDialog::save()
 #endif
 
     emit editFinished(true);
+}
+
+/**
+ * Reloading the database replaces it and releases the one that this dialog edits, so its settings can no longer
+ * be saved. Tell the user and close the dialog in that case.
+ *
+ * @return true if the database was released
+ */
+bool DatabaseSettingsDialog::closeIfDatabaseReleased()
+{
+    // Releasing a database clears its UUID
+    if (m_db && !m_db->uuid().isNull()) {
+        return false;
+    }
+
+    MessageBox::warning(this,
+                        tr("Database settings not saved"),
+                        tr("The database was reloaded, so the database settings were not saved."));
+    emit editFinished(false);
+    return true;
 }
 
 void DatabaseSettingsDialog::reject()
