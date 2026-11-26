@@ -19,6 +19,7 @@
 #include "TestKeys.h"
 
 #include <QBuffer>
+#include <QRegularExpression>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
@@ -28,6 +29,7 @@
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
+#include "crypto/kdf/Argon2Kdf.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/CompositeKey.h"
@@ -72,6 +74,23 @@ void TestKeys::testComposite()
     auto data = compositeKey1->serialize();
     compositeKey3->deserialize(data);
     QCOMPARE(compositeKey1->rawKey(), compositeKey3->rawKey());
+}
+
+void TestKeys::testArgon2Benchmark()
+{
+    // With the minimum memory, a single Argon2 pass takes far less than a millisecond
+    Argon2Kdf kdf(Argon2Kdf::Type::Argon2id);
+    QVERIFY(kdf.setMemory(8));
+    QVERIFY(kdf.setParallelism(1));
+    QVERIFY(kdf.setRounds(1));
+    const int rounds = kdf.benchmark(100);
+    QVERIFY2(kdf.setRounds(rounds), qPrintable(QString::number(rounds)));
+
+    // A failed benchmark returns a number of rounds that setRounds() rejects.
+    // Argon2 needs at least 8 KiB of memory for every thread, so this transform fails.
+    QVERIFY(kdf.setParallelism(2));
+    QTest::ignoreMessage(QtWarningMsg, QRegularExpression("^Argon2 error: "));
+    QVERIFY(!kdf.setRounds(kdf.benchmark(100)));
 }
 
 void TestKeys::testFileKey()
