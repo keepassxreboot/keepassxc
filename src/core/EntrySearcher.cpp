@@ -22,6 +22,22 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
+#include <algorithm>
+
+namespace
+{
+    bool matches(const EntrySearcher::SearchTerm& term, const QString& str)
+    {
+        return term.regex.match(term.accentSensitive ? str : Tools::stripDiacritics(str)).hasMatch();
+    }
+
+    bool matchesAny(const EntrySearcher::SearchTerm& term, const QStringList& list)
+    {
+        return std::any_of(
+            list.cbegin(), list.cend(), [&term](const QString& str) -> bool { return matches(term, str); });
+    }
+} // namespace
+
 EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
     : m_caseSensitive(caseSensitive)
     , m_skipProtected(skipProtected)
@@ -159,46 +175,45 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
     for (const auto& term : m_searchTerms) {
         switch (term.field) {
         case Field::Title:
-            found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch();
+            found = matches(term, entry->resolvePlaceholder(entry->title()));
             break;
         case Field::Username:
-            found = term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch();
+            found = matches(term, entry->resolvePlaceholder(entry->username()));
             break;
         case Field::Password:
             if (m_skipProtected) {
                 continue;
             }
-            found = term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
+            found = matches(term, entry->resolvePlaceholder(entry->password()));
             break;
         case Field::Url:
-            found = term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch();
+            found = matches(term, entry->resolvePlaceholder(entry->url()));
             break;
         case Field::Notes:
-            found = term.regex.match(entry->notes()).hasMatch();
+            found = matches(term, entry->notes());
             break;
         case Field::AttributeKV:
-            found = !attributes.filter(term.regex).empty();
+            found = matchesAny(term, attributes);
             break;
         case Field::Attachment:
-            found = !attachments.filter(term.regex).empty();
+            found = matchesAny(term, attachments);
             break;
         case Field::AttributeValue:
             if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
                 continue;
             }
-            found = entry->attributes()->contains(term.word)
-                    && term.regex.match(entry->attributes()->value(term.word)).hasMatch();
+            found = entry->attributes()->contains(term.word) && matches(term, entry->attributes()->value(term.word));
             break;
         case Field::Group:
             // Match against the full hierarchy if the word contains a '/' otherwise just the group name
             if (term.word.contains('/')) {
-                found = term.regex.match(hierarchy).hasMatch();
+                found = matches(term, hierarchy);
             } else if (entry->group()) {
-                found = term.regex.match(entry->group()->name()).hasMatch();
+                found = matches(term, entry->group()->name());
             }
             break;
         case Field::Tag:
-            found = entry->tagList().indexOf(term.regex) != -1;
+            found = matchesAny(term, entry->tagList());
             break;
         case Field::Is:
             if (term.word.startsWith("expired", Qt::CaseInsensitive)) {
@@ -233,10 +248,10 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
-            found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
-                    || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
-                    || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
-                    || entry->tagList().indexOf(term.regex) != -1 || term.regex.match(entry->notes()).hasMatch();
+            found = matches(term, entry->resolvePlaceholder(entry->title()))
+                    || matches(term, entry->resolvePlaceholder(entry->username()))
+                    || matches(term, entry->resolvePlaceholder(entry->url())) || matchesAny(term, entry->tagList())
+                    || matches(term, entry->notes());
         }
 
         // negate the result if exclude:
@@ -296,16 +311,25 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
 
         auto mods = result.captured(1);
 
+        // Exact match modifier implies accent-sensitive matching
+        term.accentSensitive = mods.contains("+");
+
+        // Normalize term for accent-insensitive search (unless exact match)
+        auto wordForRegex = term.word;
+        if (!term.accentSensitive) {
+            wordForRegex = Tools::stripDiacritics(wordForRegex);
+        }
+
         // Convert term to regex
         int opts = m_caseSensitive ? Tools::RegexConvertOpts::CASE_SENSITIVE : Tools::RegexConvertOpts::DEFAULT;
         if (!mods.contains("*")) {
             opts |= Tools::RegexConvertOpts::WILDCARD_ALL;
         }
-        if (mods.contains("+")) {
+        if (term.accentSensitive) {
             opts |= Tools::RegexConvertOpts::EXACT_MATCH;
             opts |= Tools::RegexConvertOpts::CASE_SENSITIVE;
         }
-        term.regex = Tools::convertToRegex(term.word, opts);
+        term.regex = Tools::convertToRegex(wordForRegex, opts);
 
         // Exclude modifier
         term.exclude = mods.contains("-") || mods.contains("!");
