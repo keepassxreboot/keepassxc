@@ -56,7 +56,8 @@
     NSDictionary* userInfo = notification.userInfo;
     NSRunningApplication* app = [userInfo objectForKey:NSWorkspaceApplicationKey];
 
-    if (app.processIdentifier != [self ownProcessId]) {
+    // Skip background agents such as the Touch ID prompt (coreautha), which have no window to return to
+    if (app.processIdentifier != [self ownProcessId] && app.activationPolicy == NSApplicationActivationPolicyRegular) {
         self.lastActiveApplication = app;
     }
 }
